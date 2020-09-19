@@ -1,48 +1,63 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-FoReco
-======
+FoReco <img src="man/figures/logo.svg" align="right" alt="logo" width="150" style = "border: none; float: right;">
+==================================================================================================================
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![devel
+version](https://img.shields.io/badge/devel%20version-0.1.0-blue.svg)](https://github.com/daniGiro/FoReco)
+[![License:
+GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco)
+[![R build
+status](https://github.com/daniGiro/FoReco/workflows/R-CMD-check/badge.svg)](https://github.com/daniGiro/FoReco/actions)
 <!-- badges: end -->
 
-The goal of FoReco is to …
+The **FoReco** (**Fo**recast **Reco**nciliation) package is designed for
+point forecast reconciliation, a **post-forecasting** process aimed to
+improve the quality of the base forecasts for a system of linearly
+constrained (e.g. hierarchical/grouped) time series.
+
+It offers classical (bottom-up), optimal and heuristic combination
+forecast reconciliation procedures by exploiting cross-sectional,
+temporal, and cross-temporal relatinships linking the time series.
+
+The main functions are:
+
+-   `htsrec()`: cross-sectional (contemporaneous) forecast
+    reconciliation.
+-   `thfrec()`: forecast reconciliation for a single time series through
+    temporal hierarchies.
+-   `tcsrec()`: heuristic first-temporal-then-cross-sectional
+    cross-temporal forecast reconciliation (Kourentzes and
+    Athanasopoulos, 2019).
+-   `cstrec()`: heuristic first-cross-sectional-then-temporal
+    cross-temporal forecast reconciliation.
+-   `iterec()`: heuristic iterative cross-temporal forecast
+    reconciliation.
+-   `octrec()`: optimal cross-temporal forecast reconciliation.
 
 Installation
 ------------
 
-You can install the released version of FoReco from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the **stable** version on [R
+CRAN](https://cran.r-project.org/) (near future).
 
-    install.packages("FoReco")
+    install.packages('FoReco', dependencies = TRUE)
 
-Example
--------
+You can also install the **development** version from
+[Github](https://github.com/daniGiro/FoReco)
 
-This is a basic example which shows you how to solve a common problem:
+    # install.packages("devtools")
+    devtools::install_github("daniGiro/FoReco")
 
-    #library(FoReco)
-    ## basic example code
+Getting help
+------------
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
-
-    summary(cars)
-    #>      speed           dist       
-    #>  Min.   : 4.0   Min.   :  2.00  
-    #>  1st Qu.:12.0   1st Qu.: 26.00  
-    #>  Median :15.0   Median : 36.00  
-    #>  Mean   :15.4   Mean   : 42.98  
-    #>  3rd Qu.:19.0   3rd Qu.: 56.00  
-    #>  Max.   :25.0   Max.   :120.00
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date.
-
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub!
+If you encounter a clear bug, please file a minimal reproducible example
+on [GitHub](https://github.com/daniGiro/FoReco/issues).
