@@ -1,7 +1,7 @@
 Package: FoReco
 Type: Package
 Title: Point Forecast Reconciliation
-Version: 0.1.0
+Version: 0.0.9
 Authors@R: c(
     person("Tommaso", "Di Fonzo", role = c("aut", "fnd")),
     person("Daniele", "Girolimetto", role = c("aut", "cre", "fnd"), email = "daniele.girolimetto@studenti.unipd.it")
