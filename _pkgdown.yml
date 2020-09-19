@@ -1,0 +1,65 @@
+url: https://danigiro.github.io/FoReco/
+
+navbar:
+  type: inverse
+  structure:
+    left: [home, reference, articles, news]
+    right:  [github, rpro]
+  components:
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/daniGiro/FoReco
+    reference:
+      text: "Reference"
+      icon: fa-book
+      href: reference/index.html
+    news:
+      text: "News"
+      icon: far fa-newspaper
+      href: news/index.html
+    home:
+      text: "Home"
+      icon: fa-home
+      href: index.html
+    rpro:
+      icon: fab fa-r-project fa-lg
+      href: https://cran.r-project.org/web/packages/FoReco/index.html
+    articles:
+      text: "Vignettes"
+      icon: fa-question-circle
+      menu:
+        - text: FoReco package
+          href: articles/FoReco_package.html
+        - text: Average relative accuracy indices
+          href: articles/accuracy_indices.html
+
+reference:
+- title: Reconciliation
+  desc:  All reconciliation functions
+- contents:
+  - htsrec
+  - thfrec
+  - octrec
+  - tcsrec
+  - cstrec
+  - iterec
+  - ctbu
+
+- title: Datasets
+- contents:
+  - FoReco_data
+  - FoReco-hts
+  - FoReco-thief
+- title: Utilities
+- contents:
+  - commat
+  - score_index
+  - shrink_estim
+  - FoReco2ts
+  - Cmatrix
+  - hts_tools
+  - thf_tools
+  - ctf_tools
+- title: Package
+- contents:
+  - FoReco-package
