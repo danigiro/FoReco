@@ -52,8 +52,8 @@ You can also install the **development** version from
 devtools::install_github("daniGiro/FoReco")
 ```
 ## Links
-* source code: https://github.com/daniGiro/FoReco
-* site documentation: https://danigiro.github.io/FoReco/
+* Source code: https://github.com/daniGiro/FoReco
+* Site documentation: https://danigiro.github.io/FoReco/
 
 ## Getting help
 If you encounter a clear bug, please file a minimal reproducible example on [GitHub](https://github.com/daniGiro/FoReco/issues).

@@ -59,9 +59,9 @@ You can also install the **development** version from
 Links
 -----
 
--   source code:
+-   Source code:
     <a href="https://github.com/daniGiro/FoReco" class="uri">https://github.com/daniGiro/FoReco</a>
--   site documentation:
+-   Site documentation:
     <a href="https://danigiro.github.io/FoReco/" class="uri">https://danigiro.github.io/FoReco/</a>
 
 Getting help
