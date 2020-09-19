@@ -340,6 +340,13 @@ for(i in 1:n){
 }
 ```
 
+* Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation using *t-wls + cs-shr* (Kourentzes and Athanasopoulos, 2019)
+```{r eval=FALSE}
+tcs_recf <- tcsrec(FoReco_data$base, m = 12, C = FoReco_data$C,
+                   thf_comb = "wls", hts_comb = "shr",
+                   res = FoReco_data$res)$recf
+```
+
 * Iterative cross-temporal reconciliation (Di Fonzo and Girolimetto, 2020)
 ```{r ite, eval=FALSE, fig.width = 5, dpi=200, out.width="500px", fig.height=3.5}
 ite_recf <- iterec(FoReco_data$base,
@@ -377,13 +384,6 @@ cst_recf <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C,
                    res = FoReco_data$res)$recf
 ```
 
-* Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation using *t-acov + cs-shr* (Kourentzes and Athanasopoulos, 2019)
-```{r eval=FALSE}
-tcs_recf <- tcsrec(FoReco_data$base, m = 12, C = FoReco_data$C,
-                   thf_comb = "acov", hts_comb = "shr",
-                   res = FoReco_data$res)$recf
-```
-
 * Optimal cross-temporal reconciliation using *bdshr* (Di Fonzo and Girolimetto, 2020)
 ```{r eval=FALSE}
 oct_recf <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
@@ -403,6 +403,6 @@ Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild M, Petr
 
 Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts for Australian tourism, _Annals of Tourism Research_, 75, 393-409.
 
-Nystrup, P., Lindström, E., Pinson, P. e Madsen, H. (2020). «Temporal hierarchies with autocorrelation for load forecasting». In: _European Journal of Operational Research_,  280, 3, pp. 876–888.
+Nystrup, P., Lindström, E., Pinson, P. e Madsen, H. (2020). Temporal hierarchies with autocorrelation for load forecasting. In: _European Journal of Operational Research_,  280, 3, 876–888.
 
-Wickramasuriya, S.L., Athanasopoulos, G., Hyndman, R.J. (2019), Optimal forecast reconcilia- tion for hierarchical and grouped time series through trace minimization, _Journal of the American Statistical Association_, 114, 526, 804-819.
+Wickramasuriya, S.L., Athanasopoulos, G., Hyndman, R.J. (2019), Optimal forecast reconciliation for hierarchical and grouped time series through trace minimization, _Journal of the American Statistical Association_, 114, 526, 804-819.

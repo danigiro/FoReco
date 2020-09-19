@@ -28,20 +28,20 @@ h=1,\ldots,h_k ,
 $$
 be the forecast error, where $y$ and $\hat{y}$ are the actual and the forecasted values, respectively, suffix $i$ denotes the variable of interest, $j$ is the forecasting technique, where $j=0$ is the benchmark forecasting procedure, $t$ is the forecast origin, ${\cal K}$ is the set of the time frequencies at which the series is observed, and $h$ is the forecast horizon, whose lead time depends on the time frequency $k$.
 
-Denote by A$_{i,j}^{[k],h}$ the forecasting accuracy of the technique $j$, computed across $q$ forecast origins, for the $h$-step-ahead forecasts of the variable $i$ at the temporal aggregation level $k$. For example, A$_{i,j}^{[k],h} = MSE_{i,j}^{[k],h}$ (*type="mse"* in `score_index()` function, *default*), otherwise we might have A$_{i,j}^{[k],h} = MAE_{i,j}^{[k],h}$ (*type="mae"* in `score_index()` function) or A$_{i,j}^{[k],h} = RMSE_{i,j}^{[k],h}$, where
+Denote by A$_{i,j}^{[k],h}$ the forecasting accuracy of the technique $j$, computed across $q$ forecast origins, for the $h$-step-ahead forecasts of the variable $i$ at the temporal aggregation level $k$. For example, A$_{i,j}^{[k],h} = MSE_{i,j}^{[k],h}$, as defined in expression (\ref{MSEijkh}), otherwise we might have
+A$_{i,j}^{[k],h} = MAE_{i,j}^{[k],h}$ or A$_{i,j}^{[k],h} = RMSE_{i,j}^{[k],h}$,
+where
 $$
 \begin{array}{rcl}
-MAE_{i,j}^{[k],h} & = & \displaystyle\frac{1}{q}\displaystyle\sum_{t=1}^{q} \left(\hat{e}_{i,j}^{[k],h}\right)^2 \\
-MAE_{i,j}^{[k],h} & = & \displaystyle\frac{1}{q}\displaystyle\sum_{t=1}^{q} \left|\hat{e}_{i,j}^{[k],h}\right| \\
+MAE_{i,j}^{[k],h} & = & \displaystyle\frac{1}{q}\displaystyle\sum_{t=1}^{q} \left|\hat{e}_{i,j}^{[k],h}\right| \\[.75cm]
 RMSE_{i,j}^{[k],h} & = & \sqrt{\displaystyle\frac{1}{q}\displaystyle\sum_{t=1}^{q} \left(\hat{e}_{i,j}^{[k],h}\right)^2}
 \end{array}
 $$
 
-
 \noindent In any case, we consider the relative version of the accuracy index $A_{i,j}^{[k],h}$, given by:
 $$
 r_{i,j}^{[k],h} = \displaystyle\frac{A_{i,j}^{[k],h}}{A_{i,0}^{[k],h}} ,
-\quad i=1,\ldots,n, \quad  j=0,\ldots, J, \quad k \in {\cal K}, \quad h=1, \ldots, M_k,
+\quad i=1,\ldots,n, \quad  j=0,\ldots, J, \quad k \in {\cal K}, \quad h=1, \ldots, h_k,
 $$
 and use it to compute the Average relative accuracy index of the forecasting procedure $j$, for given $k$ and $h$, through the geometric mean:
 $$
@@ -51,29 +51,34 @@ $$
 \noindent We may consider the following average relative accuracy indices for selected groups of variables/time frequencies and forecast horizons:
 
 **Average relative accuracy indices for a single variable at a given time frequency, for multiple forecast horizons**
-
-
 $$
 \label{AvgRelAikh1h2}
-\text{AvgRelA}_{i,j}^{[k],h_1:h_2} = \left(\prod_{h=h_1}^{h_2} r_{i,j}^{[k],h}\right)^{\frac{1}{h_2 - h_1 + 1}},
-\; i=1,\ldots,n , \; j=0,\ldots, J, \; k \in {\cal K}.
+\text{AvgRelA}_{i,j}^{[k],q_1:q_2} = \left(\prod_{h=q_1}^{q_2} r_{i,j}^{[k],h}\right)^{\frac{1}{q_2 - q_1 + 1}}, \;
+\begin{array}{l}
+	i=1,\ldots,n, \\
+	j=0,\ldots,J,
+\end{array} \;
+\begin{array}{l}
+	k \in {\cal K}, \\
+	1 \le q_1 \le q_2 \le h_k
+\end{array} .
+%i=1,\ldots,n , \; j=0,\ldots, J, \; k \in {\cal K}, \; 1 \le q_1 \le q_2 \le h_k.
 $$
-
 **Average relative accuracy indices for a group of variables (either all, or selected groups, e.g. a: uts, b: bts) at a given time frequency, either for a single forecast horizon or across them**
 $$
 \begin{array}{rcll}
 \text{AvgRelA}^{[k],h}_j & = &
 \left(\displaystyle\prod_{i=1}^{n} r_{i,j}^{[k],h}\right)^{\frac{1}{n}}, &
- j=0,\ldots,J , \; k \in {\cal K}, \; h=1,\ldots,M_k \\
+ j=0,\ldots,J , \; k \in {\cal K}, \; h=1,\ldots,h_k \\[.5cm]
 \text{AvgRelA}^{[k],h}_{a,j} & = & \left(\displaystyle\prod_{i=1}^{n_a} r_{i,j}^{[k],h}\right)^{\frac{1}{n_a}}, &
- j=0,\ldots, J, \; k \in {\cal K} \\
+ j=0,\ldots, J, \; k \in {\cal K} \\[.5cm]
 \text{AvgRelA}^{[k],h}_{b,j} & = & \left(\displaystyle\prod_{i=n_a+1}^{n} r_{i,j}^{[k],h}\right)^{\frac{1}{n_b}}, &
-j=0,\ldots, J, \; k \in {\cal K} \\
-\text{AvgRelA}^{[k]}_j & = & \left(\displaystyle\prod_{i=1}^{n} \prod_{h=1}^{M_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n M_k}}, &
-\; j=0,\ldots,J, \; k \in {\cal K} \\
-\text{AvgRelA}^{[k]}_{a,j} & = &\left(\displaystyle\prod_{i=1}^{n_a} \prod_{h=1}^{M_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n_a M_k}}, &
-j=0,\ldots, J, \; k \in {\cal K} \\
-\text{AvgRelA}^{[k]}_{b,j} & = &\left(\displaystyle\prod_{i=n_a+1}^{n} \prod_{h=1}^{M_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n_b M_k}}, &
+j=0,\ldots, J, \; k \in {\cal K} \\[.5cm]
+\text{AvgRelA}^{[k]}_j & = & \left(\displaystyle\prod_{i=1}^{n} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n h_k}}, &
+\; j=0,\ldots,J, \; k \in {\cal K} \\[.5cm]
+\text{AvgRelA}^{[k]}_{a,j} & = &\left(\displaystyle\prod_{i=1}^{n_a} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n_a h_k}}, &
+j=0,\ldots, J, \; k \in {\cal K} \\[.5cm]
+\text{AvgRelA}^{[k]}_{b,j} & = &\left(\displaystyle\prod_{i=n_a+1}^{n} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n_b h_k}}, &
  j=0,\ldots, J, \; k \in {\cal K}
 \end{array}
 $$
@@ -81,13 +86,13 @@ $$
 **Average relative accuracy indices for a single variable or for a group of variables (all, a: uts, b: bts), across all time frequencies and forecast horizons**
 $$
 \begin{array}{rcll}
-\text{AvgRelA}_{i,j} & = & \left(\displaystyle\prod_{k \in {\cal K}} \prod_{h=1}^{M_k} \text{RelA}_{i,j}^{[k],h}\right)^{\frac{1}{k^*+m}}, &
+\text{AvgRelA}_{i,j} & = & \left(\displaystyle\prod_{k \in {\cal K}} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{k^*+m}}, &
 \begin{array}{l}
 i=1,\ldots,n  \\ j=0,\ldots,J
-\end{array} \\
-\text{AvgRelA}_j & = & \left(\displaystyle\prod_{i=1}^{n} \prod_{k \in {\cal K}} \prod_{h=1}^{M_k} \text{RelA}_{i,j}^{[k],h}\right)^{\frac{1}{n(k^*+m)}}  , & j=0,\ldots,J \\
-\text{AvgRelA}_{a,j} & = & \left(\displaystyle\prod_{i=1}^{n_a} \prod_{k \in {\cal K}} \prod_{h=1}^{M_k} \text{RelA}_{i,j}^{[k],h}\right)^{\frac{1}{n_a(k^*+m)}}  , & j=0,\ldots,J \\
-\text{AvgRelA}_{b,j} & = & \left(\displaystyle\prod_{i=n_a+1}^{n} \prod_{k \in {\cal K}} \prod_{h=1}^{M_k} \text{RelA}_{i,j}^{[k],h}\right)^{\frac{1}{n_b(k^*+m)}} , & j=0,\ldots,J
+\end{array} \\[.5cm]
+\text{AvgRelA}_j & = & \left(\displaystyle\prod_{i=1}^{n} \prod_{k \in {\cal K}} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n(k^*+m)}}  , & j=0,\ldots,J \\[.5cm]
+\text{AvgRelA}_{a,j} & = & \left(\displaystyle\prod_{i=1}^{n_a} \prod_{k \in {\cal K}} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n_a(k^*+m)}}  , & j=0,\ldots,J \\[.5cm]
+\text{AvgRelA}_{b,j} & = & \left(\displaystyle\prod_{i=n_a+1}^{n} \prod_{k \in {\cal K}} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n_b(k^*+m)}} , & j=0,\ldots,J
 \end{array}
 $$
 

@@ -392,9 +392,15 @@ Cross-sectional hierarchy
                          <span class="kw">res</span> <span class="kw">=</span> <span class="no">tsres</span>, <span class="kw">keep</span> <span class="kw">=</span> <span class="st">"recf"</span>)
 }</pre></body></html></div>
 <ul>
+<li>Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation using <em>t-wls + cs-shr</em> (Kourentzes and Athanasopoulos, 2019)</li>
+</ul>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">tcs_recf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/tcsrec.html">tcsrec</a></span>(<span class="no">FoReco_data</span>$<span class="no">base</span>, <span class="kw">m</span> <span class="kw">=</span> <span class="fl">12</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">C</span>,
+                   <span class="kw">thf_comb</span> <span class="kw">=</span> <span class="st">"wls"</span>, <span class="kw">hts_comb</span> <span class="kw">=</span> <span class="st">"shr"</span>,
+                   <span class="kw">res</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">res</span>)$<span class="no">recf</span></pre></body></html></div>
+<ul>
 <li>Iterative cross-temporal reconciliation (Di Fonzo and Girolimetto, 2020)</li>
 </ul>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">ite_recf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/iterec.html">iterec</a></span>(<span class="no">FoReco_data</span>$<span class="no">base</span>,
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">ite_recf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/iterec.html">iterec</a></span>(<span class="no">FoReco_data</span>$<span class="no">base</span>,
                    <span class="kw">m</span> <span class="kw">=</span> <span class="fl">12</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">C</span>,
                    <span class="kw">thf_comb</span> <span class="kw">=</span> <span class="st">"acov"</span>, <span class="kw">hts_comb</span> <span class="kw">=</span> <span class="st">"shr"</span>,
                    <span class="kw">res</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">res</span>, <span class="kw">start_rec</span> <span class="kw">=</span> <span class="st">"thf"</span>)$<span class="no">recf</span>
@@ -419,13 +425,7 @@ Cross-sectional hierarchy
 <ul>
 <li>Heuristic first-cross-sectional-then-temporal cross-temporal reconciliation using <em>t-acov + cs-shr</em> (Di Fonzo and Girolimetto, 2020)</li>
 </ul>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">cst_recf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cstrec.html">cstrec</a></span>(<span class="no">FoReco_data</span>$<span class="no">base</span>, <span class="kw">m</span> <span class="kw">=</span> <span class="fl">12</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">C</span>,
-                   <span class="kw">thf_comb</span> <span class="kw">=</span> <span class="st">"acov"</span>, <span class="kw">hts_comb</span> <span class="kw">=</span> <span class="st">"shr"</span>,
-                   <span class="kw">res</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">res</span>)$<span class="no">recf</span></pre></body></html></div>
-<ul>
-<li>Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation using <em>t-acov + cs-shr</em> (Kourentzes and Athanasopoulos, 2019)</li>
-</ul>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">tcs_recf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/tcsrec.html">tcsrec</a></span>(<span class="no">FoReco_data</span>$<span class="no">base</span>, <span class="kw">m</span> <span class="kw">=</span> <span class="fl">12</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">C</span>,
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">cst_recf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/cstrec.html">cstrec</a></span>(<span class="no">FoReco_data</span>$<span class="no">base</span>, <span class="kw">m</span> <span class="kw">=</span> <span class="fl">12</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">C</span>,
                    <span class="kw">thf_comb</span> <span class="kw">=</span> <span class="st">"acov"</span>, <span class="kw">hts_comb</span> <span class="kw">=</span> <span class="st">"shr"</span>,
                    <span class="kw">res</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">res</span>)$<span class="no">recf</span></pre></body></html></div>
 <ul>
@@ -442,8 +442,8 @@ Cross-sectional hierarchy
 <p>Di Fonzo, T., Girolimetto, D. (2020), <em>Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives</em>, Department of Statistical Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570">arXiv:2006.08570</a>.</p>
 <p>Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O’Hara-Wild M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2020). <em>forecast: Forecasting functions for time series and linear models</em> . R package version 8.13, &lt;URL: <a href="https://pkg.robjhyndman.com/forecast/" class="uri">https://pkg.robjhyndman.com/forecast/</a>&gt;.</p>
 <p>Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts for Australian tourism, <em>Annals of Tourism Research</em>, 75, 393-409.</p>
-<p>Nystrup, P., Lindström, E., Pinson, P. e Madsen, H. (2020). «Temporal hierarchies with autocorrelation for load forecasting». In: <em>European Journal of Operational Research</em>, 280, 3, pp. 876–888.</p>
-<p>Wickramasuriya, S.L., Athanasopoulos, G., Hyndman, R.J. (2019), Optimal forecast reconcilia- tion for hierarchical and grouped time series through trace minimization, <em>Journal of the American Statistical Association</em>, 114, 526, 804-819.</p>
+<p>Nystrup, P., Lindström, E., Pinson, P. e Madsen, H. (2020). Temporal hierarchies with autocorrelation for load forecasting. In: <em>European Journal of Operational Research</em>, 280, 3, 876–888.</p>
+<p>Wickramasuriya, S.L., Athanasopoulos, G., Hyndman, R.J. (2019), Optimal forecast reconciliation for hierarchical and grouped time series through trace minimization, <em>Journal of the American Statistical Association</em>, 114, 526, 804-819.</p>
 </div>
 </div>
   </div>

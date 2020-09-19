@@ -134,7 +134,7 @@ Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G., Shang, H.L. (2011), Optimal comb
 forecasts for hierarchical time series, \emph{Computational Statistics & Data
 Analysis}, 55, 9, 2579-2589.
 
-Nystrup, P., Lindstr\"{o}m, E., Pinson, P., Madsen, H. (2020),
+Nystrup, P.,  \enc{Lindström}{Lindstrom}, E., Pinson, P., Madsen, H. (2020),
 Temporal hierarchies with autocorrelation for load forecasting,
 \emph{European Journal of Operational Research}, 280, 1, 876-888.
 
