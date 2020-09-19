@@ -25,7 +25,7 @@ constrained (e.g. hierarchical/grouped) time series.
 
 It offers classical (bottom-up), optimal and heuristic combination
 forecast reconciliation procedures by exploiting cross-sectional,
-temporal, and cross-temporal relatinships linking the time series.
+temporal, and cross-temporal relationships linking the time series.
 
 The main functions are:
 
