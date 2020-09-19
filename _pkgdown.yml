@@ -28,7 +28,7 @@ navbar:
       text: "Vignettes"
       icon: fa-question-circle
       menu:
-        - text: FoReco package
+        - text: Using the FoReco package
           href: articles/FoReco_package.html
         - text: Average relative accuracy indices
           href: articles/accuracy_indices.html

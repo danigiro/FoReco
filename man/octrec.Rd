@@ -2,7 +2,7 @@
 % Please edit documentation in R/octrec.R
 \name{octrec}
 \alias{octrec}
-\title{Optimal Cross-temporal Forecast Reconciliation}
+\title{Optimal Combination Cross-temporal Forecast Reconciliation}
 \usage{
 octrec(basef, m, C, comb, res, Ut, nb, W, Sstruc,
        mse = TRUE, corpcor = FALSE, type = "M", sol = "direct",

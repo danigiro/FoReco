@@ -2,7 +2,7 @@
 % Please edit documentation in R/Cmatrix.R
 \name{Cmatrix}
 \alias{Cmatrix}
-\title{Cross-sectional (contemporaneous) matrix}
+\title{Cross-sectional (contemporaneous) aggregation matrix}
 \usage{
 Cmatrix(formula, data, sep = "_", sparse = TRUE, total_label = "Total")
 }

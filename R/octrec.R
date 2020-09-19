@@ -1,4 +1,4 @@
-#' @title Optimal Cross-temporal Forecast Reconciliation
+#' @title Optimal Combination Cross-temporal Forecast Reconciliation
 #'
 #' @description
 #' Optimal (in least squares sense) combination cross-temporal forecast reconciliation.

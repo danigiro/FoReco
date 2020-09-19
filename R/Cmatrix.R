@@ -1,4 +1,4 @@
-#' Cross-sectional (contemporaneous) matrix
+#' Cross-sectional (contemporaneous) aggregation matrix
 #'
 #'
 #' This function allows the user to easily build the (\code{na x nb}) cross-sectional

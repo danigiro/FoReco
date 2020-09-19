@@ -1,8 +1,8 @@
 ---
-title: "`FoReco` package"
+title: "Using the `FoReco` package for cross-sectional, temporal and cross-temporal point forecast reconciliation"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{`FoReco` package}
+  %\VignetteIndexEntry{Using the `FoReco` package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
