@@ -2,7 +2,7 @@
 % Please edit documentation in R/tcsrec.R
 \name{tcsrec}
 \alias{tcsrec}
-\title{Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation}
+\title{Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation}
 \usage{
 tcsrec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega,
        mse = TRUE, corpcor = FALSE, avg="KA", nn= FALSE,
@@ -68,7 +68,7 @@ This means that non-negativity is not guaranteed in the final reconciled values.
 \item{settings}{Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
 are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-\href{https://osqp.org/}{\pkg{osqp} documentation}.}
+\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al. 2019).}
 }
 \value{
 The function returns a list with two elements:
@@ -107,6 +107,21 @@ Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:200
 
 Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts
 for Australian tourism, \emph{Annals of Tourism Research}, 75, 393-409.
+
+\enc{Schäfer}{Schafer}, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
+Duarte Silva, A.P., Strimmer, K. (2017), \emph{Package `corpcor'}, R
+package version 1.6.9 (April 1, 2017), \href{https://CRAN.R-project.org/package=corpcor}{https://CRAN.R-project.org/package= corpcor}.
+
+\enc{Schäfer}{Schafer}, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
+Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
+Applications in Genetics and Molecular Biology}, 4, 1.
+
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
+An Operator Splitting Solver for Quadratic Programs, \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+
+Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
+Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+(October 10, 2019), \href{https://CRAN.R-project.org/package=osqp}{https://CRAN.R-project.org/package=osqp}.
 }
 \keyword{heuristic}
 \keyword{reconciliation}

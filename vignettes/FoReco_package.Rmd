@@ -114,7 +114,7 @@ knitr::include_graphics("../man/figures/mts.png")
 Then we compute the temporally aggregated series at annual $(k = 12)$, semi-annual $(k = 6)$, four-monthly $(k = 4)$, quarterly $(k = 3)$, and bi-monthly $(k = 2)$ frequencies. 
 
 ```{r eval = FALSE}
-# 6 BI-MONTHLY FORECASTS
+# BI-MONTHLY SERIES
 values$k2 <- ts(apply(values$k1, 2,
                       function(x) colSums(matrix(x, nrow = 2))),
                 frequency = 6)
@@ -125,7 +125,7 @@ knitr::include_graphics("../man/figures/mts2.png")
 ```
 
 ```{r eval = FALSE}
-# 4 QUARTERLY FORECASTS
+# QUARTERLY SERIES
 values$k3 <- ts(apply(values$k1, 2,
                       function(x) colSums(matrix(x, nrow = 3))),
                 frequency = 4)
@@ -136,7 +136,7 @@ knitr::include_graphics("../man/figures/mts3.png")
 ```
 
 ```{r eval = FALSE}
-# 3 FOUR-MONTHLY FORECASTS
+# FOUR-MONTHLY SERIES
 values$k4 <- ts(apply(values$k1, 2,
                       function(x) colSums(matrix(x, nrow = 4))),
                 frequency = 3)
@@ -147,7 +147,7 @@ knitr::include_graphics("../man/figures/mts4.png")
 ```
 
 ```{r eval = FALSE}
-# 2 SEMI-ANNUAL FORECASTS
+# SEMI-ANNUAL SERIES
 values$k6 <- ts(apply(values$k1, 2,
                       function(x) colSums(matrix(x, nrow = 6))),
                 frequency = 2)
@@ -158,7 +158,7 @@ knitr::include_graphics("../man/figures/mts6.png")
 ```
 
 ```{r eval = FALSE}
-# 1 ANNUAL FORECAST
+# ANNUAL SERIES
 values$k12 <- ts(apply(values$k1, 2,
                        function(x) colSums(matrix(x, nrow = 12))),
                  frequency = 1)
@@ -168,9 +168,9 @@ values$k12 <- ts(apply(values$k1, 2,
 knitr::include_graphics("../man/figures/mts12.png")
 ```
 
-The first 14 years of each simulated series are used as training set, and the last year as test set. The forecasts are obtained using the `auto.arima` function of the `forecast` package (Hyndman et al., 2020). The following plots show the actual values and the forecasts for the test year at any temporal aggregation level. 
+The first 14 years of each simulated series are used as training set, and the last year as test set. The forecasts are obtained using the `auto.arima` function of the `forecast` package (Hyndman et al., 2020).  
 ```{r eval = FALSE}
-# 12 MONTHLY FORECASTS
+# MONTHLY FORECASTS
 base$k1 <- matrix(NA, nrow = 12, ncol = ncol(values$k1))
 residuals$k1 <- matrix(NA, nrow = 168, ncol = ncol(values$k1))
 for (i in 1:ncol(values$k1)) {
@@ -186,12 +186,14 @@ colnames(residuals$k1) <- c("T", "A", "B", "AA", "AB", "BA", "BB", "C")
 test$k1 <- values$k1[-c(1:168), ]
 ```
 
+The following plots show the actual values and the forecasts for the test year at any temporal aggregation level.
+
 ```{r echo=FALSE, out.width = "500px"}
 knitr::include_graphics("../man/figures/mts_base.png")
 ```
 
 ```{r eval = FALSE}
-# 6 BI-MONTHLY FORECASTS
+# BI-MONTHLY FORECASTS
 base$k2 <- matrix(NA, nrow = 6, ncol = ncol(values$k2))
 residuals$k2 <- matrix(NA, nrow = 84, ncol = ncol(values$k2))
 for (i in 1:ncol(values$k2)) {
@@ -212,7 +214,7 @@ knitr::include_graphics("../man/figures/mts2_base.png")
 ```
 
 ```{r eval = FALSE}
-# 4 QUARTERLY FORECASTS
+# QUARTERLY FORECASTS
 base$k3 <- matrix(NA, nrow = 4, ncol = ncol(values$k3))
 residuals$k3 <- matrix(NA, nrow = 56, ncol = ncol(values$k3))
 for (i in 1:ncol(values$k3)) {
@@ -233,7 +235,7 @@ knitr::include_graphics("../man/figures/mts3_base.png")
 ```
 
 ```{r eval = FALSE}
-# 3 FOUR-MONTHLY FORECASTS
+# FOUR-MONTHLY FORECASTS
 base$k4 <- matrix(NA, nrow = 3, ncol = ncol(values$k4))
 residuals$k4 <- matrix(NA, nrow = 42, ncol = ncol(values$k4))
 for (i in 1:ncol(values$k4)) {
@@ -254,7 +256,7 @@ knitr::include_graphics("../man/figures/mts4_base.png")
 ```
 
 ```{r eval = FALSE}
-# 2 SEMI-ANNUAL FORECASTS
+# SEMI-ANNUAL FORECASTS
 base$k6 <- matrix(NA, nrow = 2, ncol = ncol(values$k6))
 residuals$k6 <- matrix(NA, nrow = 28, ncol = ncol(values$k6))
 for (i in 1:ncol(values$k6)) {
@@ -275,7 +277,7 @@ knitr::include_graphics("../man/figures/mts6_base.png")
 ```
 
 ```{r eval = FALSE}
-# 1 ANNUAL FORECAST
+# ANNUAL FORECASTS
 base$k12 <- matrix(NA, nrow = 1, ncol = ncol(values$k12))
 residuals$k12 <- matrix(NA, nrow = 14, ncol = ncol(values$k12))
 for (i in 1:ncol(values$k12)) {
@@ -383,6 +385,13 @@ tcs_recf <- tcsrec(FoReco_data$base, m = 12, C = FoReco_data$C,
                    res = FoReco_data$res)$recf
 ```
 
+* Heuristic first-cross-sectional-then-temporal cross-temporal reconciliation using *t-acov + cs-shr* (Di Fonzo and Girolimetto, 2020)
+```{r eval=FALSE}
+cst_recf <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C,
+                   thf_comb = "acov", hts_comb = "shr",
+                   res = FoReco_data$res)$recf
+```
+
 * Iterative cross-temporal reconciliation (Di Fonzo and Girolimetto, 2020)
 ```{r ite, eval=FALSE, fig.width = 5, dpi=200, out.width="500px", fig.height=3.5}
 ite_recf <- iterec(FoReco_data$base,
@@ -412,13 +421,6 @@ knitr::include_graphics("../man/figures/ite.png")
 
 The above plot shows the convergence path of both cross-sectional and temporal discrepancies. 
 
-* Heuristic first-cross-sectional-then-temporal cross-temporal reconciliation using *t-acov + cs-shr* (Di Fonzo and Girolimetto, 2020)
-```{r eval=FALSE}
-cst_recf <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C,
-                   thf_comb = "acov", hts_comb = "shr",
-                   res = FoReco_data$res)$recf
-```
-
 * Optimal cross-temporal reconciliation using *bdshr* (Di Fonzo and Girolimetto, 2020)
 ```{r eval=FALSE}
 oct_recf <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
@@ -429,7 +431,7 @@ oct_recf <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
 knitr::include_graphics("../man/figures/mts_base_rec.png")
 ```
 
-A deeper evaluation of the differences between the reconciled forecasts can be obtained by using appropriate accuracy indices, like `score_index()`.
+A deeper evaluation of the differences between the reconciled forecasts can be obtained by using appropriate accuracy indices (see `score_index`).
 
 #### References
 Di Fonzo, T., Girolimetto, D. (2020), *Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives*, Department of Statistical Sciences, University of Padua, [arXiv:2006.08570](https://arxiv.org/abs/2006.08570).
@@ -438,6 +440,6 @@ Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild M, Petr
 
 Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts for Australian tourism, _Annals of Tourism Research_, 75, 393-409.
 
-Nystrup, P., Lindström, E., Pinson, P. e Madsen, H. (2020). Temporal hierarchies with autocorrelation for load forecasting. In: _European Journal of Operational Research_,  280, 3, 876–888.
+Nystrup, P., Lindström, E., Pinson, P., Madsen, H. (2020), Temporal hierarchies with autocorrelation for load forecasting, _European Journal of Operational Research_,  280, 3, 876–888.
 
 Wickramasuriya, S.L., Athanasopoulos, G., Hyndman, R.J. (2019), Optimal forecast reconciliation for hierarchical and grouped time series through trace minimization, _Journal of the American Statistical Association_, 114, 526, 804-819.

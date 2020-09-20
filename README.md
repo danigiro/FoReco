@@ -34,13 +34,13 @@ The main functions are:
 -   `thfrec()`: forecast reconciliation for a single time series through
     temporal hierarchies.
 -   `tcsrec()`: heuristic first-temporal-then-cross-sectional
-    cross-temporal forecast reconciliation (Kourentzes and
-    Athanasopoulos, 2019).
+    cross-temporal forecast reconciliation.
 -   `cstrec()`: heuristic first-cross-sectional-then-temporal
     cross-temporal forecast reconciliation.
 -   `iterec()`: heuristic iterative cross-temporal forecast
     reconciliation.
--   `octrec()`: optimal cross-temporal forecast reconciliation.
+-   `octrec()`: optimal combination cross-temporal forecast
+    reconciliation.
 
 Installation
 ------------

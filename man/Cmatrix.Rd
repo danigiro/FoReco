@@ -4,7 +4,7 @@
 \alias{Cmatrix}
 \title{Cross-sectional (contemporaneous) aggregation matrix}
 \usage{
-Cmatrix(formula, data, sep = "_", sparse = TRUE, total_label = "Total")
+Cmatrix(formula, data, sep = "_", sparse = TRUE, top_label = "Total")
 }
 \arguments{
 \item{formula}{Specification of the hierarchical structure: grouped hierarchies are specified
@@ -18,7 +18,7 @@ and each row identifies a bottom level time series.}
 
 \item{sparse}{Option to return sparse matrix (\emph{default} is \code{TRUE}).}
 
-\item{total_label}{Label of the highest time series (\emph{default} is \code{"Total"}).}
+\item{top_label}{Label of the top level variable (\emph{default} is \code{"Total"}).}
 }
 \value{
 A (\code{na x nb}) matrix.

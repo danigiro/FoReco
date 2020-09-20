@@ -2,7 +2,7 @@
 % Please edit documentation in R/iterec.R
 \name{iterec}
 \alias{iterec}
-\title{Iterative Heuristic Cross-temporal Forecast Reconciliation}
+\title{Iterative heuristic cross-temporal forecast reconciliation}
 \usage{
 iterec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W,
        Omega, mse = TRUE, corpcor = FALSE,type = "M",
@@ -86,7 +86,7 @@ forecasts iteration i and i-1, \code{"all"} all the plots.}
 \item{settings}{Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
 are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-\href{https://osqp.org/}{\pkg{osqp} documentation}.}
+\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al. 2019).}
 }
 \value{
 \code{iterec} returns a list with:
@@ -160,6 +160,21 @@ for Australian tourism, \emph{Annals of Tourism Research}, 75, 393-409.
 
 Miller, R.E., Blair, P.D. (2009), Input-output analysis: foundations and extensions,
 2nd edition, New York, Cambridge University Press.
+
+\enc{Schäfer}{Schafer}, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
+Duarte Silva, A.P., Strimmer, K. (2017), \emph{Package `corpcor'}, R
+package version 1.6.9 (April 1, 2017), \href{https://CRAN.R-project.org/package=corpcor}{https://CRAN.R-project.org/package= corpcor}.
+
+\enc{Schäfer}{Schafer}, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
+Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
+Applications in Genetics and Molecular Biology}, 4, 1.
+
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
+An Operator Splitting Solver for Quadratic Programs, \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+
+Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
+Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+(October 10, 2019), \href{https://CRAN.R-project.org/package=osqp}{https://CRAN.R-project.org/package=osqp}.
 }
 \keyword{heuristic}
 \keyword{reconciliation}

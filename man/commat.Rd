@@ -2,7 +2,7 @@
 % Please edit documentation in R/commat.R
 \name{commat}
 \alias{commat}
-\title{Commutation Matrix}
+\title{Commutation matrix}
 \usage{
 commat(r, c)
 }

@@ -12,7 +12,7 @@
 #' and each row identifies a bottom level time series.
 #' @param sep Character to separate the names of the aggregated series (\emph{default} is \code{"_"}).
 #' @param sparse Option to return sparse matrix (\emph{default} is \code{TRUE}).
-#' @param total_label Label of the highest time series (\emph{default} is \code{"Total"}).
+#' @param top_label Label of the top level variable (\emph{default} is \code{"Total"}).
 #'
 #' @return A (\code{na x nb}) matrix.
 #'
@@ -73,7 +73,7 @@
 #'
 #' @export
 #' @import Matrix
-Cmatrix <- function(formula, data, sep = "_", sparse = TRUE, total_label = "Total") {
+Cmatrix <- function(formula, data, sep = "_", sparse = TRUE, top_label = "Total") {
   if (missing(data)) {
     stop("The data parameter is required")
   }
@@ -135,7 +135,7 @@ Cmatrix <- function(formula, data, sep = "_", sparse = TRUE, total_label = "Tota
 
   out <- out[rowSums(out) > 1 & rowSums(out) < NCOL(out), ]
   out <- rbind(Total = 1, out)
-  rownames(out)[1] <- total_label
+  rownames(out)[1] <- top_label
   cat("------ Cross-sectional information ------\n", sep="")
   cat("  Number of total time series (n): ", NROW(out) + NCOL(out),"\n", sep = "")
   cat(" Number of upper time series (na): ", NROW(out),"\n", sep = "")

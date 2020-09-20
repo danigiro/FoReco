@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation — tcsrec • FoReco</title>
+<title>Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation — tcsrec • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation — tcsrec" />
+<meta property="og:title" content="Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation — tcsrec" />
 <meta property="og:description" content="The cross-temporal forecast reconciliation procedure by
 Kourentzes and Athanasopoulos (2019) can be viewed as an ensemble forecasting
 procedure which exploits the simple averaging of different forecasts.
@@ -159,7 +159,7 @@ fulfilling both cross-sectional and temporal constraints." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation</h1>
+    <h1>Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/tcsrec.R'><code>R/tcsrec.R</code></a></small>
     <div class="hidden name"><code>tcsrec.Rd</code></div>
     </div>
@@ -272,7 +272,7 @@ This means that non-negativity is not guaranteed in the final reconciled values.
       <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>). The default options
 are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
 <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
-<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a>.</p></td>
+<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al. 2019).</p></td>
     </tr>
     </table>
 
@@ -295,6 +295,17 @@ Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:2006.08570</a>.</p>
 <p>Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts
 for Australian tourism, <em>Annals of Tourism Research</em>, 75, 393-409.</p>
+<p>Schäfer, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
+Duarte Silva, A.P., Strimmer, K. (2017), <em>Package `corpcor'</em>, R
+package version 1.6.9 (April 1, 2017), <a href='https://CRAN.R-project.org/package=corpcor'>https://CRAN.R-project.org/package= corpcor</a>.</p>
+<p>Schäfer, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
+Matrix Estimation and Implications for Functional Genomics, <em>Statistical
+Applications in Genetics and Molecular Biology</em>, 4, 1.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
+An Operator Splitting Solver for Quadratic Programs, <a href='https://arxiv.org/abs/1711.08013'>arXiv:1711.08013</a>.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
+Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+(October 10, 2019), <a href='https://CRAN.R-project.org/package=osqp'>https://CRAN.R-project.org/package=osqp</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

@@ -1,4 +1,4 @@
-#' @title Shrunk Covariance Matrix
+#' @title Shrinkage of the covariance matrix
 #'
 #' @description Shrunk covariance matrix according to \enc{Schäfer}{Schafer} and Strimmer (2005).
 #'
@@ -8,7 +8,7 @@
 #' approach (\code{FALSE}).
 #'
 #' @author
-#' This function is a public modified version of the \code{shrink_estim}() hidden function of \pkg{hts}.
+#' This function is a modified version of the \code{shrink_estim}() hidden function of \pkg{hts}.
 #'
 #' @return A list with two objects: the first (\code{$scov}) is the shrunk covariance matrix
 #' and the second (\code{$lambda}) is the shrinkage intensity coefficient.

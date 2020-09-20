@@ -1,4 +1,4 @@
-#' @title Commutation Matrix
+#' @title Commutation matrix
 #'
 #' @description This function returns the (\code{(r c) x (r c)}) commutation matrix \code{P} such that
 #' \deqn{P vec(Y) = vec(Y'),}

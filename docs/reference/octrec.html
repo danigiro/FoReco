@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Optimal Combination Cross-temporal Forecast Reconciliation — octrec • FoReco</title>
+<title>Optimal combination cross-temporal forecast reconciliation — octrec • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Optimal Combination Cross-temporal Forecast Reconciliation — octrec" />
+<meta property="og:title" content="Optimal combination cross-temporal forecast reconciliation — octrec" />
 <meta property="og:description" content="Optimal (in least squares sense) combination cross-temporal forecast reconciliation.
 The reconciled forecasts are calculated either through a projection approach
 (Byron, 1978), or the equivalent structural approach by Hyndman et al. (2011)." />
@@ -153,7 +153,7 @@ The reconciled forecasts are calculated either through a projection approach
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Optimal Combination Cross-temporal Forecast Reconciliation</h1>
+    <h1>Optimal combination cross-temporal forecast reconciliation</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/octrec.R'><code>R/octrec.R</code></a></small>
     <div class="hidden name"><code>octrec.Rd</code></div>
     </div>
@@ -279,7 +279,7 @@ program using <code><a href='https://rdrr.io/pkg/osqp/man/solve_osqp.html'>solve
       <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>). The default options
 are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
 <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
-<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a>.</p></td>
+<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al. 2019).</p></td>
     </tr>
     </table>
 
@@ -320,15 +320,16 @@ polish's status (<code>status_polish</code>).</p></dd>
 Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:2006.08570</a>.</p>
 <p>Schäfer, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
-Duarte Silva, A.P., Strimmer, K. (2017),
-<em>Package `corpcor'</em>, R package version 1.6.9 (April 1, 2017).</p>
+Duarte Silva, A.P., Strimmer, K. (2017), <em>Package `corpcor'</em>, R
+package version 1.6.9 (April 1, 2017), <a href='https://CRAN.R-project.org/package=corpcor'>https://CRAN.R-project.org/package= corpcor</a>.</p>
 <p>Schäfer, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
 Matrix Estimation and Implications for Functional Genomics, <em>Statistical
 Applications in Genetics and Molecular Biology</em>, 4, 1.</p>
-<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd and S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs. <a href='https://arxiv.org/abs/1711.08013'>arXiv:1711.08013</a>.</p>
-<p>Stone, R., Champernowne, D.G., Meade, J.E. (1942), The precision of national
-income estimates,<em>The Review of Economic Studies</em>, 9, 2, 111-125.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
+An Operator Splitting Solver for Quadratic Programs, <a href='https://arxiv.org/abs/1711.08013'>arXiv:1711.08013</a>.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
+Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+(October 10, 2019), <a href='https://CRAN.R-project.org/package=osqp'>https://CRAN.R-project.org/package=osqp</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {

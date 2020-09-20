@@ -2,7 +2,7 @@
 % Please edit documentation in R/htsrec.R
 \name{htsrec}
 \alias{htsrec}
-\title{Cross-sectional (contemporaneous) Forecast Reconciliation}
+\title{Cross-sectional (contemporaneous) forecast reconciliation}
 \usage{
 htsrec(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
        type = "M", sol = "direct", nn = FALSE, keep = "list",
@@ -69,7 +69,7 @@ program using \code{\link[osqp]{solve_osqp}}).}
 \item{settings}{Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
 are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-\href{https://osqp.org/}{\pkg{osqp} documentation}.}
+\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al. 2019).}
 }
 \value{
 If the parameter \code{keep} is equal to \code{"recf"}, then the function
@@ -135,18 +135,19 @@ Optimal combination forecasts for hierarchical time series,
 \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 
 \enc{Schäfer}{Schafer}, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
-Duarte Silva, A.P., Strimmer, K. (2017),
-\emph{Package `corpcor'}, R package version 1.6.9 (April 1, 2017).
+Duarte Silva, A.P., Strimmer, K. (2017), \emph{Package `corpcor'}, R
+package version 1.6.9 (April 1, 2017), \href{https://CRAN.R-project.org/package=corpcor}{https://CRAN.R-project.org/package= corpcor}.
 
 \enc{Schäfer}{Schafer}, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
 Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
 Applications in Genetics and Molecular Biology}, 4, 1.
 
-Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd and S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs. \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
+An Operator Splitting Solver for Quadratic Programs, \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
 
-Stone, R., Champernowne, D.G., Meade, J.E. (1942), The precision of national
-income estimates,\emph{The Review of Economic Studies}, 9, 2, 111-125.
+Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
+Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+(October 10, 2019), \href{https://CRAN.R-project.org/package=osqp}{https://CRAN.R-project.org/package=osqp}.
 
 van Erven, T., Cugliari, J. (2015), Game-theoretically Optimal Reconciliation
 of Contemporaneous Hierarchical Time Series Forecasts, in Antoniadis, A.,

@@ -2,7 +2,7 @@
 % Please edit documentation in R/shrink_estim.R
 \name{shrink_estim}
 \alias{shrink_estim}
-\title{Shrunk Covariance Matrix}
+\title{Shrinkage of the covariance matrix}
 \usage{
 shrink_estim(x, minT = T)
 }
@@ -30,6 +30,6 @@ hts: Hierarchical and Grouped Time Series, \emph{R package version 6.0.1},
 \href{https://CRAN.R-project.org/package=hts}{https://CRAN.R-project.org/package=hts}.
 }
 \author{
-This function is a public modified version of the \code{shrink_estim}() hidden function of \pkg{hts}.
+This function is a modified version of the \code{shrink_estim}() hidden function of \pkg{hts}.
 }
 \keyword{utilities}
