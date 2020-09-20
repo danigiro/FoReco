@@ -28,9 +28,7 @@ h=1,\ldots,h_k ,
 $$
 be the forecast error, where $y$ and $\hat{y}$ are the actual and the forecasted values, respectively, suffix $i$ denotes the variable of interest, $j$ is the forecasting technique, where $j=0$ is the benchmark forecasting procedure, $t$ is the forecast origin, ${\cal K}$ is the set of the time frequencies at which the series is observed, and $h$ is the forecast horizon, whose lead time depends on the time frequency $k$.
 
-Denote by A$_{i,j}^{[k],h}$ the forecasting accuracy of the technique $j$, computed across $q$ forecast origins, for the $h$-step-ahead forecasts of the variable $i$ at the temporal aggregation level $k$. For example, A$_{i,j}^{[k],h} = MSE_{i,j}^{[k],h}$, as defined in expression (\ref{MSEijkh}), otherwise we might have
-A$_{i,j}^{[k],h} = MAE_{i,j}^{[k],h}$ or A$_{i,j}^{[k],h} = RMSE_{i,j}^{[k],h}$,
-where
+Denote by A$_{i,j}^{[k],h}$ the forecasting accuracy of the technique $j$, computed across $q$ forecast origins, for the $h$-step-ahead forecasts of the variable $i$ at the temporal aggregation level $k$. For example, A$_{i,j}^{[k],h} = MSE_{i,j}^{[k],h}$ (*type="mse"* in `score_index()` function, *default*), otherwise we might have A$_{i,j}^{[k],h} = MAE_{i,j}^{[k],h}$ (*type="mae"* in `score_index()` function) or A$_{i,j}^{[k],h} = RMSE_{i,j}^{[k],h}$ (*type="rmse"* in `score_index()` function), where
 $$
 \begin{array}{rcl}
 MAE_{i,j}^{[k],h} & = & \displaystyle\frac{1}{q}\displaystyle\sum_{t=1}^{q} \left|\hat{e}_{i,j}^{[k],h}\right| \\[.75cm]

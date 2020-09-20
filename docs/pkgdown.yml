@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   FoReco_package: FoReco_package.html
   accuracy_indices: accuracy_indices.html
-last_built: 2020-09-20T09:17Z
+last_built: 2020-09-20T10:04Z
 urls:
   reference: https://danigiro.github.io/FoReco//reference
   article: https://danigiro.github.io/FoReco//articles
