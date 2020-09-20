@@ -2,7 +2,7 @@
 % Please edit documentation in R/ctf_tools.R
 \name{ctf_tools}
 \alias{ctf_tools}
-\title{Cross-Temporal Reconciliation Tools}
+\title{Cross-temporal reconciliation tools}
 \usage{
 ctf_tools(C, m, h = 1, Ut, nb, Sstruc = FALSE)
 }

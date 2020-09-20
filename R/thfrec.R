@@ -1,4 +1,4 @@
-#' @title Temporal Forecast Reconciliation
+#' @title Forecast reconciliation through temporal hierarchies (temporal reconciliation)
 #'
 #' @description
 #' Forecast reconciliation of one time series through temporal hierarchies
@@ -120,8 +120,8 @@
 #' Applications in Genetics and Molecular Biology}, 4, 1
 #'
 #' Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd and S. (2018). OSQP:
-#' An Operator Splitting Solver for Quadratic Programs. \emph{ArXiv e-prints}.
-#' 1711.08013.
+#' An Operator Splitting Solver for Quadratic Programs. \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+#'
 #'
 #' @keywords reconciliation
 #' @examples

@@ -1,4 +1,4 @@
-#' @title Bottom-up Cross-temporal Reconciliation
+#' @title Bottom-up Cross-temporal forecast reconciliation
 #'
 #' @description Cross temporal reconciled forecasts for all series at any temporal
 #' aggregation level can be easily computed by appropriate summation of the high-frequency

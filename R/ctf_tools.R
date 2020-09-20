@@ -1,4 +1,4 @@
-#' Cross-Temporal Reconciliation Tools
+#' Cross-temporal reconciliation tools
 #'
 #' Some useful tools for the cross-temporal forecast reconciliation of cross-sectionally and
 #' temporally constrained time series

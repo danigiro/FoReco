@@ -1,4 +1,4 @@
-#' Cross-Sectional Reconciliation Tools
+#' Cross-sectional reconciliation tools
 #'
 #' Some useful tools for the cross-sectional reconciliation of linearly and hierarchically constrained time series
 #'

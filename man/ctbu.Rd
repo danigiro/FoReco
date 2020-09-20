@@ -2,7 +2,7 @@
 % Please edit documentation in R/ctbu.R
 \name{ctbu}
 \alias{ctbu}
-\title{Bottom-up Cross-temporal Reconciliation}
+\title{Bottom-up Cross-temporal forecast reconciliation}
 \usage{
 ctbu(Bmat, m, C)
 }

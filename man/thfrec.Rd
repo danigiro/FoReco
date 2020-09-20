@@ -2,7 +2,7 @@
 % Please edit documentation in R/thfrec.R
 \name{thfrec}
 \alias{thfrec}
-\title{Temporal Forecast Reconciliation}
+\title{Forecast reconciliation through temporal hierarchies (temporal reconciliation)}
 \usage{
 thfrec(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
        type = "M", sol = "direct", nn = FALSE, keep = "list",
@@ -147,7 +147,6 @@ Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
 Applications in Genetics and Molecular Biology}, 4, 1
 
 Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd and S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs. \emph{ArXiv e-prints}.
-1711.08013.
+An Operator Splitting Solver for Quadratic Programs. \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
 }
 \keyword{reconciliation}

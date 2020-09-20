@@ -5,6 +5,6 @@ citEntry(
   title    = "FoReco: Point Forecast Reconciliation",
   author   = "Di Fonzo T., Girolimetto D.",
   year     = 2020,
-  url      = "https://cran.r-project.org/package=forec",
-  textVersion  = "Di Fonzo, T., Girolimetto, D. (2020). FoReco: Point Forecast Reconciliation. https://cran.r-project.org/package=forec"
+  url      = "https://cran.r-project.org/package=FoReco",
+  textVersion  = "Di Fonzo, T., Girolimetto, D. (2020). FoReco: Point Forecast Reconciliation. https://cran.r-project.org/package=FoReco"
 )

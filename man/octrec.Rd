@@ -147,8 +147,7 @@ Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
 Applications in Genetics and Molecular Biology}, 4, 1.
 
 Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd and S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs. \emph{ArXiv e-prints}.
-1711.08013.
+An Operator Splitting Solver for Quadratic Programs. \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
 
 Stone, R., Champernowne, D.G., Meade, J.E. (1942), The precision of national
 income estimates,\emph{The Review of Economic Studies}, 9, 2, 111-125.

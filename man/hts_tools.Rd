@@ -2,7 +2,7 @@
 % Please edit documentation in R/hts_tools.R
 \name{hts_tools}
 \alias{hts_tools}
-\title{Cross-Sectional Reconciliation Tools}
+\title{Cross-sectional reconciliation tools}
 \usage{
 hts_tools(C, h = 1, Ut, nb, sparse = TRUE)
 }

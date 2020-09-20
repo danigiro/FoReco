@@ -1,7 +1,7 @@
 #' Simple examples to compare \code{FoReco} and \code{thief} packages
 #'
 #' The dataset in the \code{thief} package is used to show how to get the same results with the FoReco package.
-#' In particular, we take the weakly data of Accident and Emergency demand in the UK, \code{AEdemand}, from 1 January
+#' In particular, we take the weekly data of Accident and Emergency demand in the UK, \code{AEdemand}, from 1 January
 #' 2011 to 31 December 2014.
 #'
 #' @name FoReco-thief
@@ -11,7 +11,7 @@
 #'
 #' @references
 #' Hyndman, R. J., Kourentzes, N. (2018), thief: Temporal HIErarchical Forecasting, \emph{R package version 0.3},
-#' \href{https://CRAN.R-project.org/package=thief}{https://CRAN.R-project.org/package=thief}.
+#' \href{https://cran.r-project.org/package=thief}{https://cran.r-project.org/package=thief}.
 #'
 #' @examples
 #' \dontrun{

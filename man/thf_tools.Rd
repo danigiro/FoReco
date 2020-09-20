@@ -2,7 +2,7 @@
 % Please edit documentation in R/thf_tools.R
 \name{thf_tools}
 \alias{thf_tools}
-\title{Temporal Reconciliation Tools}
+\title{Temporal reconciliation tools}
 \usage{
 thf_tools(m, h = 1, sparse = TRUE)
 }

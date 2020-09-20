@@ -1,4 +1,4 @@
-#' Temporal Reconciliation Tools
+#' Temporal reconciliation tools
 #'
 #' Some useful tools for forecast reconciliation through temporal hierarchies.
 #'

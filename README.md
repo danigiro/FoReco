@@ -54,7 +54,7 @@ You can also install the **development** version from
 [Github](https://github.com/daniGiro/FoReco)
 
     # install.packages("devtools")
-    devtools::install_github("daniGiro/FoReco")
+    devtools::install_github("daniGiro/FoReco", build_vignettes = TRUE)
 
 Links
 -----

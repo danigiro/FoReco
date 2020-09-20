@@ -27,7 +27,7 @@ bottom level). For monthly data, the observations are aggregated to annual (\cod
 semi-annual (\code{k = 6}), four-monthly (\code{k = 4}), quarterly (\code{k = 3}), and
 bi-monthly (\code{k = 2}) observations. The monthly bottom time series are simulated
 from five different SARIMA models (see
-\href{https://danigiro.github.io/FoReco/articles/forec_package.html}{\code{FoReco} package}).
+\href{https://danigiro.github.io/FoReco/articles/FoReco_package.html}{\code{Using the `FoReco` package}}).
 There are 180 (15 years) monthly observations: the first 168 values (14 years) are used as
 training set, and the last 12 form the test set.
 }
