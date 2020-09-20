@@ -54,7 +54,7 @@
 #' @param settings Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
 #' are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 #' \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-#' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al. 2019).
+#' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).
 #'
 #' @details
 #' This function performs a two-step cross-temporal forecast reconciliation using

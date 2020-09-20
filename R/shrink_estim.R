@@ -1,6 +1,6 @@
 #' @title Shrinkage of the covariance matrix
 #'
-#' @description Shrunk covariance matrix according to \enc{Schäfer}{Schafer} and Strimmer (2005).
+#' @description Shrinkage of the covariance matrix according to \enc{Schäfer}{Schafer} and Strimmer (2005).
 #'
 #' @param x residual matrix
 #' @param minT this param allows to calculate the covariance matrix according

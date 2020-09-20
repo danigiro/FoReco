@@ -131,7 +131,7 @@
 <li>
 <code><a href="../reference/thfrec.html">thfrec()</a></code>: forecast reconciliation for a single time series through temporal hierarchies.</li>
 <li>
-<code><a href="../reference/tcsrec.html">tcsrec()</a></code>: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation (Kourentzes and Athanasopoulos, 2019).</li>
+<code><a href="../reference/tcsrec.html">tcsrec()</a></code>: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.</li>
 <li>
 <code><a href="../reference/cstrec.html">cstrec()</a></code>: heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.</li>
 <li>
@@ -444,8 +444,9 @@ Cross-sectional hierarchy
 </ul>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">oct_recf</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/octrec.html">octrec</a></span>(<span class="no">FoReco_data</span>$<span class="no">base</span>, <span class="kw">m</span> <span class="kw">=</span> <span class="fl">12</span>, <span class="kw">C</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">C</span>,
                    <span class="kw">comb</span> <span class="kw">=</span> <span class="st">"bdshr"</span>, <span class="kw">res</span> <span class="kw">=</span> <span class="no">FoReco_data</span>$<span class="no">res</span>, <span class="kw">keep</span> <span class="kw">=</span> <span class="st">"recf"</span>)</pre></body></html></div>
+<p>Monthly actual and forecasted values are shown in the following figure.</p>
 <p><img src="../man/figures/mts_base_rec.png" width="600px" style="display: block; margin: auto;"></p>
-<p>A deeper evaluation of the differences between the reconciled forecasts can be obtained by using appropriate accuracy indices (see <code>score_index</code>).</p>
+<p>An evaluation of the quality of the reconciled forecasts can be obtained by using appropriate accuracy indices (see <code><a href="../reference/score_index.html">score_index()</a></code>).</p>
 </div>
 <div id="references" class="section level4">
 <h4 class="hasAnchor">

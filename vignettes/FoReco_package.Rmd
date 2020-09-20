@@ -27,7 +27,7 @@ The main functions are:
 
 * `htsrec()`: cross-sectional (contemporaneous) forecast reconciliation.
 * `thfrec()`: forecast reconciliation for a single time series through temporal hierarchies.
-* `tcsrec()`: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation (Kourentzes and Athanasopoulos, 2019).
+* `tcsrec()`: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.
 * `cstrec()`: heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.
 * `iterec()`: heuristic iterative cross-temporal forecast reconciliation.
 * `octrec()`: optimal cross-temporal forecast reconciliation.
@@ -427,11 +427,13 @@ oct_recf <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
                    comb = "bdshr", res = FoReco_data$res, keep = "recf")
 ```
 
+Monthly actual and forecasted values are shown in the following figure.
+
 ```{r echo=FALSE, out.width = "600px"}
 knitr::include_graphics("../man/figures/mts_base_rec.png")
 ```
 
-A deeper evaluation of the differences between the reconciled forecasts can be obtained by using appropriate accuracy indices (see `score_index`).
+An evaluation of the quality of the reconciled forecasts can be obtained by using appropriate accuracy indices (see `score_index()`).
 
 #### References
 Di Fonzo, T., Girolimetto, D. (2020), *Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives*, Department of Statistical Sciences, University of Padua, [arXiv:2006.08570](https://arxiv.org/abs/2006.08570).

@@ -57,7 +57,7 @@
 #' @param settings Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
 #' are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 #' \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-#' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al. 2019).
+#' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).
 #' @param tol Convergence tolerance (\code{1e-5}, \emph{default}).
 #' @param maxit Max number of iteration (\code{100}, \emph{default}).
 #' @param start_rec Dimension along with the first reconciliation step in each
