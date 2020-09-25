@@ -10,9 +10,9 @@ Authors@R:
       person(given = "Tommaso",
              family = "Di Fonzo",
              role = c("aut", "fnd")))
-Description: An R package offering classical (bottom-up), optimal and heuristic 
-    combination forecast reconciliation procedures for cross-sectional, temporal, 
-    and cross-temporal linearly constrained time series.
+Description: Provides classical (bottom-up), optimal and heuristic combination 
+    forecast reconciliation procedures for cross-sectional, temporal, and 
+    cross-temporal linearly constrained time series.
 License: GPL-3
 URL: https://github.com/daniGiro/FoReco,
     https://danigiro.github.io/FoReco/
