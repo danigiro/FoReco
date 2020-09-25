@@ -74,7 +74,7 @@ ctf_tools <- function(C, m, h = 1, Ut, nb, Sstruc = FALSE) {
     Qtilde <- commat(nb, kt) %*% bdiag(commat(ks, nb), commat(m, nb))
     Q <- bdiag(Diagonal(na * kt), Qtilde)
 
-    Htstruc <- Matrix(pracma::rref(as.matrix(Ht %*% Q)), sparse = T)
+    Htstruc <- Matrix(pracma::rref(as.matrix(Ht %*% Q)), sparse = TRUE)
     r <- nrow(Htstruc)
     c <- ncol(Htstruc)
     Cstruc <- -Htstruc[, (r + 1):c]
@@ -88,7 +88,7 @@ ctf_tools <- function(C, m, h = 1, Ut, nb, Sstruc = FALSE) {
     Htcheck2 <- all(abs(Htstruc[1, (r + 1):c] + rep(1, m * nb)) < 1e-6)
     if (!Htcheck1 | !Htcheck2) {
       flag <- 1
-      warning("Failed checks on matrix Htstruc. Check the results!", call. = F)
+      warning("Failed checks on matrix Htstruc. Check the results!", call. = FALSE)
     }
 
     out1$Htstruc <- Htstruc

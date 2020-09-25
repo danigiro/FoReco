@@ -108,7 +108,6 @@ In case of non-negativity constraints, there are two ways:
 }
 }
 \examples{
-\dontrun{
 data(FoReco_data)
 # monthly base forecasts
 id <- which(simplify2array(strsplit(colnames(FoReco_data$base),
@@ -119,7 +118,6 @@ id <- which(simplify2array(strsplit(colnames(FoReco_data$res),
                                     split = "_"))[1, ] == "k1")
 mres <- t(FoReco_data$res[, id])
 obj <- htsrec(mbase, C = FoReco_data$C, comb = "shr", res = mres)
-}
 
 }
 \references{

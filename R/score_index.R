@@ -68,7 +68,7 @@
 #' @keywords utilities
 #'
 #' @export
-score_index <- function(recf, base, test, m, nb, type = "mse", compact = T) {
+score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
 
   type <- match.arg(type, c("mse", "mae", "rmse"))
 
@@ -135,7 +135,7 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = T) {
   h <- dim(Ebase)[2] / kt
   q <- dim(Ebase)[3]
   kpos <- rep(kset, rep(rev(kset * h))) # position of k in colums of E[,,q]
-  kpos <- factor(kpos, kset, ordered = T)
+  kpos <- factor(kpos, kset, ordered = TRUE)
   if (m == 1) {
     kh <- paste("k", kpos, "h", 1:h, sep = "")
   } else {
@@ -160,24 +160,26 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = T) {
 
 
   # 24
-  AvgRelIND <- exp(mean(logRelIND_ikh, na.rm = T))
+  AvgRelIND <- exp(mean(logRelIND_ikh, na.rm = TRUE))
   # 25
-  AvgRelIND_i <- exp(rowMeans(logRelIND_ikh, na.rm = T))
+  AvgRelIND_i <- exp(rowMeans(logRelIND_ikh, na.rm = TRUE))
   # 27
-  AvgRelIND__kh <- exp(colMeans(logRelIND_ikh, na.rm = T))
-  AvgRelIND_akh <- exp(colMeans(logRelIND_ikh[1:na, , drop = F], na.rm = T))
-  AvgRelIND_bkh <- exp(colMeans(logRelIND_ikh[-c(1:na), , drop = F], na.rm = T))
+  AvgRelIND__kh <- exp(colMeans(logRelIND_ikh, na.rm = TRUE))
+  AvgRelIND_akh <- exp(colMeans(logRelIND_ikh[1:na, , drop = FALSE], na.rm = TRUE))
+  AvgRelIND_bkh <- exp(colMeans(logRelIND_ikh[-c(1:na), , drop = FALSE], na.rm = TRUE))
   Avg_k <- rbind(AvgRelIND__kh, AvgRelIND_akh, AvgRelIND_bkh)
   rownames(Avg_k) <- c("all", "uts", "bts")
 
   # solo k
-  AvgRelIND__k <- exp(tapply(colMeans(logRelIND_ikh, na.rm = T), kpos, mean, na.rm = T))
+  AvgRelIND__k <- exp(tapply(colMeans(logRelIND_ikh, na.rm = TRUE), kpos, mean, na.rm = TRUE))
 
   # bottom and aggregate
-  AvgRelIND_ak <- exp(tapply(colMeans(logRelIND_ikh[1:na, , drop = F], na.rm = T), kpos, mean, na.rm = T))
-  AvgRelIND_bk <- exp(tapply(colMeans(logRelIND_ikh[-c(1:na), , drop = F], na.rm = T), kpos, mean, na.rm = T))
-  AvgRelIND_a <- exp(mean(logRelIND_ikh[1:na, , drop = F], na.rm = T))
-  AvgRelIND_b <- exp(mean(logRelIND_ikh[-c(1:na), , drop = F], na.rm = T))
+  AvgRelIND_ak <- exp(tapply(colMeans(logRelIND_ikh[1:na, , drop = FALSE], na.rm = TRUE),
+                             kpos, mean, na.rm = TRUE))
+  AvgRelIND_bk <- exp(tapply(colMeans(logRelIND_ikh[-c(1:na), , drop = FALSE], na.rm = TRUE),
+                             kpos, mean, na.rm = TRUE))
+  AvgRelIND_a <- exp(mean(logRelIND_ikh[1:na, , drop = FALSE], na.rm = TRUE))
+  AvgRelIND_b <- exp(mean(logRelIND_ikh[-c(1:na), , drop = FALSE], na.rm = TRUE))
 
   Avg_matrix <- data.frame(
     all = c(AvgRelIND__k, AvgRelIND),
@@ -186,7 +188,7 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = T) {
   rownames(Avg_matrix) <- c(unique(kset), "all")
 
   # per ogni serie
-  AvgRelIND_ik <- exp(t(apply(logRelIND_ikh, 1, function(z) tapply(z, kpos, mean, na.rm = T))))
+  AvgRelIND_ik <- exp(t(apply(logRelIND_ikh, 1, function(z) tapply(z, kpos, mean, na.rm = TRUE))))
   all <- AvgRelIND_i
 
   if (NROW(AvgRelIND_ik) == 1) {
@@ -195,24 +197,24 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = T) {
     AvgRelIND_ik <- cbind(AvgRelIND_ik, all)
   }
 
-  if (compact == T) {
+  if (compact == TRUE) {
     if (nb == 1) {
-      return(Avg_matrix[, 1, drop = F])
+      return(Avg_matrix[, 1, drop = FALSE])
     } else if (m == 1) {
-      return(Avg_matrix[2, , drop = F])
+      return(Avg_matrix[2, , drop = FALSE])
     } else {
       return(Avg_matrix)
     }
   } else {
     if (nb == 1) {
       out <- list()
-      out$Avg_mat <- Avg_matrix[, 1, drop = F]
-      out$Avg_k <- Avg_k[1, , drop = F]
+      out$Avg_mat <- Avg_matrix[, 1, drop = FALSE]
+      out$Avg_k <- Avg_k[1, , drop = FALSE]
       return(out)
     } else if (m == 1) {
       out <- list()
-      out$Avg_mat <- Avg_matrix[2, , drop = F]
-      out$Avg_ik <- AvgRelIND_ik[, 2, drop = F]
+      out$Avg_mat <- Avg_matrix[2, , drop = FALSE]
+      out$Avg_ik <- AvgRelIND_ik[, 2, drop = FALSE]
       out$Rel_mat <- RelIND_ikh
       out$Avg_k <- Avg_k
       return(out)

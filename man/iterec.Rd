@@ -7,7 +7,7 @@
 iterec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W,
        Omega, mse = TRUE, corpcor = FALSE,type = "M",
        sol = "direct", nn = FALSE, maxit = 100, tol = 1e-5,
-       start_rec = "auto", note = TRUE, plot = "mti",
+       start_rec = "thf", note = TRUE, plot = "mti",
        settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
        eps_rel = 1e-5, polish_refine_iter = 100, polish = TRUE))
 }
@@ -73,8 +73,8 @@ program using \code{\link[osqp]{solve_osqp}}).}
 \item{tol}{Convergence tolerance (\code{1e-5}, \emph{default}).}
 
 \item{start_rec}{Dimension along with the first reconciliation step in each
-iteration is performed: it start from temporal reconciliation with "\code{thf}",
-from cross-sectional with "\code{hts}" and it does both reconciliation with "\code{auto}" (\emph{default}).}
+iteration is performed: it start from temporal reconciliation with "\code{thf}" (\emph{default}),
+from cross-sectional with "\code{hts}" and it does both reconciliation with "\code{auto}".}
 
 \item{note}{If \code{note = TRUE} (\emph{default}) the function writes some notes to the console,
 otherwise no note is produced (also no plot).}

@@ -29,7 +29,6 @@ This function allows the user to easily build the (\code{na x nb}) cross-section
 ones. (Experimental version)
 }
 \examples{
-\dontrun{
 ## Balanced hierarchy
 #         T
 #    |--------|
@@ -81,6 +80,5 @@ data_bts <- data.frame(X1 = c("A", "A", "B", "B", "A", "A", "B", "B"),
                        Y1 = c("M", "M", "M", "M", "F", "F", "F", "F"))
 # Cross-sectional aggregation matrix
 C <- Cmatrix(~ Y1 * (X1 / X2), data_bts, sep = "")
-}
 
 }

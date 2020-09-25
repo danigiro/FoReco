@@ -123,11 +123,9 @@ In case of non-negativity constraints, there are two ways:
 }
 }
 \examples{
-\dontrun{
 data(FoReco_data)
 obj <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
               comb = "bdshr", res = FoReco_data$res)
-}
 
 }
 \references{

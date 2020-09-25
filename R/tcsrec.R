@@ -92,11 +92,9 @@
 #'
 #' @keywords reconciliation heuristic
 #' @examples
-#' \dontrun{
 #' data(FoReco_data)
 #' obj <- tcsrec(FoReco_data$base, m = 12, C = FoReco_data$C, thf_comb = "acov",
 #'               hts_comb = "shr", res = FoReco_data$res)
-#' }
 #'
 #' @export
 #'
@@ -180,7 +178,7 @@ tcsrec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega,
 
   # Create list with lenght p, with time by time temporally reconciled forecasts matrices
   h <- NCOL(Y1) / kt
-  Y <- lapply(kset, function(x) Y1[, rep(kset, rev(kset) * h) == x, drop = F])
+  Y <- lapply(kset, function(x) Y1[, rep(kset, rev(kset) * h) == x, drop = FALSE])
 
 
   if (missing(res)) {
@@ -189,23 +187,23 @@ tcsrec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega,
     if (avg == "KA") {
       meanM <- apply(simplify2array(lapply(M, as.matrix)), c(1, 2), sum) / length(M)
     } else {
-      Mw <- mapply(function(a, A) a * A, A = M, a = split(kset, 1:length(kset)), SIMPLIFY = F)
+      Mw <- mapply(function(a, A) a * A, A = M, a = split(kset, 1:length(kset)), SIMPLIFY = FALSE)
       meanM <- apply(simplify2array(lapply(Mw, as.matrix)), c(1, 2), sum) / sum(kset)
     }
   } else {
     # Create list with lenght p, with time by time temporally reconciled residuals matrices
     r <- NCOL(res) / kt
-    E <- lapply(kset, function(x) res[, rep(kset, rev(kset) * r) == x, drop = F])
+    E <- lapply(kset, function(x) res[, rep(kset, rev(kset) * r) == x, drop = FALSE])
 
     ## list of time by time cross sectional M matrix
     M <- mapply(function(Y, E) hts_mod(basef = t(Y), comb = hts_comb, res = t(E))$M,
-      Y = Y, E = E, SIMPLIFY = F
+      Y = Y, E = E, SIMPLIFY = FALSE
     )
 
     if (avg == "KA") {
       meanM <- apply(simplify2array(lapply(M, as.matrix)), c(1, 2), sum) / length(M)
     } else {
-      Mw <- mapply(function(a, A) a * A, A = M, a = split(kset, 1:length(kset)), SIMPLIFY = F)
+      Mw <- mapply(function(a, A) a * A, A = M, a = split(kset, 1:length(kset)), SIMPLIFY = FALSE)
       meanM <- apply(simplify2array(lapply(Mw, as.matrix)), c(1, 2), sum) / sum(kset)
     }
   }

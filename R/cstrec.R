@@ -80,11 +80,9 @@
 #'
 #' @keywords reconciliation heuristic
 #' @examples
-#' \dontrun{
 #' data(FoReco_data)
 #' obj <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C, thf_comb = "acov",
 #'               hts_comb = "shr", res = FoReco_data$res)
-#' }
 #'
 #' @usage cstrec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega,
 #'        mse = TRUE, corpcor = FALSE, nn = FALSE,
@@ -146,14 +144,14 @@ cstrec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res,
   }
 
   h <- NCOL(basef) / kt
-  Y <- lapply(kset, function(x) basef[, rep(kset, rev(kset) * h) == x, drop = F])
+  Y <- lapply(kset, function(x) basef[, rep(kset, rev(kset) * h) == x, drop = FALSE])
 
   if (missing(res)) {
     Y1 <- lapply(Y, function(x) t(hts_mod(basef = t(x), comb = hts_comb)$recf))
   } else {
     # Create list with lenght p, with time by time temporally reconcilked residuals matrices
     r <- NCOL(res) / kt
-    E <- lapply(kset, function(x) res[, rep(kset, rev(kset) * r) == x, drop = F])
+    E <- lapply(kset, function(x) res[, rep(kset, rev(kset) * r) == x, drop = FALSE])
 
     ## list of time by time cross sectional M matrix
     Y1 <- mapply(function(Y, E) t(hts_mod(basef = t(Y), comb = hts_comb, res = t(E))$recf),
@@ -177,7 +175,7 @@ cstrec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res,
         corpcor = corpcor, type = "M", Omega = Omega
       )$M
     },
-    Y = split(Y1, row(Y1)), X = split(res, row(res)), SIMPLIFY = F
+    Y = split(Y1, row(Y1)), X = split(res, row(res)), SIMPLIFY = FALSE
     )
   }
 

@@ -127,7 +127,6 @@
 #'
 #' @keywords reconciliation
 #' @examples
-#' \dontrun{
 #' data(FoReco_data)
 #' # monthly base forecasts
 #' id <- which(simplify2array(strsplit(colnames(FoReco_data$base),
@@ -138,7 +137,6 @@
 #'                                     split = "_"))[1, ] == "k1")
 #' mres <- t(FoReco_data$res[, id])
 #' obj <- htsrec(mbase, C = FoReco_data$C, comb = "shr", res = mres)
-#' }
 #'
 #' @export
 #'
@@ -198,7 +196,7 @@ htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
   } else {
     if (!(is.matrix(C) | is(C, "Matrix"))) stop("C must be a matrix.", call. = FALSE)
 
-    C <- Matrix(C, sparse = T)
+    C <- Matrix(C, sparse = TRUE)
 
     nb <- NCOL(C)
     na <- NROW(C)

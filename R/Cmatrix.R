@@ -17,7 +17,6 @@
 #' @return A (\code{na x nb}) matrix.
 #'
 #' @examples
-#' \dontrun{
 #' ## Balanced hierarchy
 #' #         T
 #' #    |--------|
@@ -69,7 +68,6 @@
 #'                        Y1 = c("M", "M", "M", "M", "F", "F", "F", "F"))
 #' # Cross-sectional aggregation matrix
 #' C <- Cmatrix(~ Y1 * (X1 / X2), data_bts, sep = "")
-#' }
 #'
 #' @export
 #' @import Matrix
@@ -136,10 +134,10 @@ Cmatrix <- function(formula, data, sep = "_", sparse = TRUE, top_label = "Total"
   out <- out[rowSums(out) > 1 & rowSums(out) < NCOL(out), ]
   out <- rbind(Total = 1, out)
   rownames(out)[1] <- top_label
-  cat("------ Cross-sectional information ------\n", sep="")
-  cat("  Number of total time series (n): ", NROW(out) + NCOL(out),"\n", sep = "")
-  cat(" Number of upper time series (na): ", NROW(out),"\n", sep = "")
-  cat("Number of bottom time series (nb): ", NCOL(out),"\n", sep = "")
-  cat("                 Number of levels: ", length(lev)+1,"\n", sep = "")
+  message("------ Cross-sectional information ------")
+  message("  Number of total time series (n): ", NROW(out) + NCOL(out))
+  message(" Number of upper time series (na): ", NROW(out))
+  message("Number of bottom time series (nb): ", NCOL(out))
+  message("                 Number of levels: ", length(lev)+1)
   return(out)
 }

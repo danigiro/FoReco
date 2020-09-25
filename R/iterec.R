@@ -61,8 +61,8 @@
 #' @param tol Convergence tolerance (\code{1e-5}, \emph{default}).
 #' @param maxit Max number of iteration (\code{100}, \emph{default}).
 #' @param start_rec Dimension along with the first reconciliation step in each
-#' iteration is performed: it start from temporal reconciliation with "\code{thf}",
-#' from cross-sectional with "\code{hts}" and it does both reconciliation with "\code{auto}" (\emph{default}).
+#' iteration is performed: it start from temporal reconciliation with "\code{thf}" (\emph{default}),
+#' from cross-sectional with "\code{hts}" and it does both reconciliation with "\code{auto}".
 #' @param note If \code{note = TRUE} (\emph{default}) the function writes some notes to the console,
 #' otherwise no note is produced (also no plot).
 #' @param plot Some useful plots: \code{"mti"} (\emph{default}) marginal trend inconsistencies,
@@ -146,14 +146,14 @@
 #' @usage iterec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W,
 #'        Omega, mse = TRUE, corpcor = FALSE,type = "M",
 #'        sol = "direct", nn = FALSE, maxit = 100, tol = 1e-5,
-#'        start_rec = "auto", note = TRUE, plot = "mti",
+#'        start_rec = "thf", note = TRUE, plot = "mti",
 #'        settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
 #'        eps_rel = 1e-5, polish_refine_iter = 100, polish = TRUE))
 #'
 #' @export
 iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse = TRUE,
                    corpcor = FALSE, type = "M", sol = "direct", nn = FALSE, maxit = 100,
-                   tol = 1e-5, start_rec = "auto", note = TRUE, plot = "mti",
+                   tol = 1e-5, start_rec = "thf", note = TRUE, plot = "mti",
                    settings = osqpSettings(
                      verbose = FALSE, eps_abs = 1e-5, eps_rel = 1e-5,
                      polish_refine_iter = 100, polish = TRUE
@@ -293,14 +293,14 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
 
   # Time starting
   start_time <- Sys.time()
-  if (note == T) {
-    cat("---------------------------------------\n")
+  if (note == TRUE) {
+    message("---------------------------------------")
   }
   if (start_thf) {
-    if (note == T) {
-      cat("Iter #  (Cross-sectional incoherence) (Temporal incoherence) \n", sep = "")
-      cat("thf: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[1], ")  (",
-        d_te_thf[1], ")  \n",
+    if (note == TRUE) {
+      message("Iter #  (Cross-sectional incoherence) (Temporal incoherence)", sep = "")
+      message("thf: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[1], ")  (",
+        d_te_thf[1], ")",
         sep = ""
       )
     }
@@ -318,7 +318,7 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         warning(paste("thf: Program (starting from thf) stops at iteration number ", i,
           "! \nthf: Temporal reconciliation does not work. (", check, ")",
           sep = ""
-        ), call. = F)
+        ), call. = FALSE)
         break
       } else if (i > 1) {
         if (d_cs_thf[(i + 1)] > d_cs_thf[i] & d_cs_thf[i] > d_cs_thf[(i - 1)] & flag_thf < 2) {
@@ -342,14 +342,14 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         warning(paste("thf: Program (starting from thf) stops at iteration number ", i,
           "! \nthf: Cross-sectional reconciliation does not work.(", check, ")",
           sep = ""
-        ), call. = F)
+        ), call. = FALSE)
         break
       } else if (d_te_thf[i + 1] < tol) {
         if (flag_thf == -1) flag_thf <- 0
-        if (note == T) {
-          cat("thf: Convergence (starting from thf) achieved at iteration number ", i,
+        if (note == TRUE) {
+          message("thf: Convergence (starting from thf) achieved at iteration number ", i,
             "! \nthf: Temporal incoherence ", d_te_thf[i + 1], " < ", tol,
-            " tolerance\n",
+            " tolerance",
             sep = ""
           )
         }
@@ -378,8 +378,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       )
       Yi_thf <- Y2_thf
       if (note == TRUE) {
-        cat("thf: ", formatC(i, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[i + 1], ")  (",
-          d_te_thf[i + 1], ")  \n",
+        message("thf: ", formatC(i, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[i + 1], ")  (",
+          d_te_thf[i + 1], ")",
           sep = ""
         )
       }
@@ -389,22 +389,22 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       flag_thf <- -1
       warning("thf: Convergence NOT achieved (starting from thf)! Maximum number of iterations reached (",
         maxit, ")",
-        sep = "", call. = F
+        sep = "", call. = FALSE
       )
     }
-    dist_thf <- dist_thf[1:i, , drop = F]
-    if (note == T) {
-      cat("---------------------------------------\n")
+    dist_thf <- dist_thf[1:i, , drop = FALSE]
+    if (note == TRUE) {
+      message("---------------------------------------")
     }
   }
 
   end_time_thf <- Sys.time()
 
   if (start_hts) {
-    if (note == T) {
-      cat("Iter #  (Cross-sectional incoherence) (Temporal incoherence) \n", sep = "")
-      cat("hts: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[1], ")  (",
-        d_te_hts[1], ")  \n",
+    if (note == TRUE) {
+      message("Iter #  (Cross-sectional incoherence) (Temporal incoherence)", sep = "")
+      message("hts: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[1], ")  (",
+        d_te_hts[1], ")",
         sep = ""
       )
     }
@@ -424,7 +424,7 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         warning(paste("hts: Program (starting from hts) stops at iteration number ", j,
           "! \nhts: Cross-sectional reconciliation does not work.(", check, ")",
           sep = ""
-        ), call. = F)
+        ), call. = FALSE)
         break
       } else if (j > 1) {
         if (d_te_hts[(j + 1)] > d_te_hts[j] & d_te_hts[j] > d_te_hts[(j - 1)] & flag_hts < 2) {
@@ -449,10 +449,10 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         break
       } else if (d_cs_hts[j + 1] < tol) {
         if (flag_hts == -1) flag_hts <- 0
-        if (note == T) {
-          cat("hts: Convergence (starting from hts) achieved at iteration number ", j,
+        if (note == TRUE) {
+          message("hts: Convergence (starting from hts) achieved at iteration number ", j,
             "! \nhts: Cross-sectional incoherence ", d_cs_hts[j + 1], " < ", tol,
-            " tolerance\n",
+            " tolerance",
             sep = ""
           )
         }
@@ -474,8 +474,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       }
 
       if (note == TRUE) {
-        cat("hts: ", formatC(j, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[j + 1], ")  (",
-          d_te_hts[j + 1], ")  \n",
+        message("hts: ", formatC(j, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[j + 1], ")  (",
+          d_te_hts[j + 1], ")",
           sep = ""
         )
       }
@@ -494,12 +494,12 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       flag_hts <- -1
       warning("hts: Convergence NOT achieved (starting from hts)! Maximum number of iterations reached (",
         maxit, ")",
-        sep = "", call. = F
+        sep = "", call. = FALSE
       )
     }
-    dist_hts <- dist_hts[1:j, , drop = F]
-    if (note == T) {
-      cat("---------------------------------------\n")
+    dist_hts <- dist_hts[1:j, , drop = FALSE]
+    if (note == TRUE) {
+      message("---------------------------------------")
     }
   }
 
@@ -526,7 +526,7 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     tcs$diff_iter <- dist_thf
     tcs$time <- as.numeric(end_time_thf - start_time, units = "secs")
 
-    if (note == T) {
+    if (note == TRUE) {
       if (plot == "mti" | plot == "all") {
         plot(0, 0,
           type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
@@ -604,7 +604,7 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     cst$diff_iter <- dist_hts
     cst$time <- as.numeric(end_time_hts - start_time, units = "secs")
 
-    if (note == T) {
+    if (note == TRUE) {
       if (plot == "mti" | plot == "all") {
         plot(0, 0,
           type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
@@ -713,7 +713,10 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     cst$diff_iter <- dist_hts
     cst$time <- as.numeric(end_time_hts - end_time_thf, units = "secs")
 
-    if (note == T) {
+    if (note == TRUE) {
+      opar <- graphics::par(no.readonly =TRUE)
+      on.exit(graphics::par(opar))
+
       if (plot == "mti" | plot == "all") {
         graphics::par(mfrow = c(1, 2))
         plot(0, 0,
@@ -847,7 +850,7 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
 
 # Function for the cross-sectional reconciliation step
 step_hts <- function(basef, kset, h, res, hts_mod) {
-  Y <- lapply(kset, function(x) basef[, rep(kset, rev(kset) * h) == x, drop = F])
+  Y <- lapply(kset, function(x) basef[, rep(kset, rev(kset) * h) == x, drop = FALSE])
 
 
   if (missing(res)) {
@@ -855,7 +858,7 @@ step_hts <- function(basef, kset, h, res, hts_mod) {
   } else {
     # Create list with lenght p, with time by time temporally reconcilked residuals matrices
     r <- NCOL(res) / sum(kset)
-    E <- lapply(kset, function(x) res[, rep(kset, rev(kset) * r) == x, drop = F])
+    E <- lapply(kset, function(x) res[, rep(kset, rev(kset) * r) == x, drop = FALSE])
 
     ## list of time by time cross sectional M matrix
     Y1 <- mapply(function(Y, E) t(hts_mod(basef = t(Y), res = t(E))),

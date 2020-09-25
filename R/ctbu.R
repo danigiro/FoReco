@@ -22,14 +22,12 @@
 #' Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
 #'
 #' @examples
-#' \dontrun{
 #' data(FoReco_data)
 #' id <- which(simplify2array(strsplit(colnames(FoReco_data$base),
 #'                                     split = "_"))[1, ] == "k1")
 #' hfbts <- FoReco_data$base[-c(1:3), id]
 #' obj <- ctbu(Bmat = hfbts, m = 12, C = FoReco_data$C)
 #' rownames(obj) <- rownames(FoReco_data$base)
-#' }
 #'
 #' @keywords reconciliation bottom-up
 #' @import Matrix

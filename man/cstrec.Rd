@@ -79,11 +79,9 @@ average of the projection matrices obtained in the second step to the one dimens
 values obtained in the first step.
 }
 \examples{
-\dontrun{
 data(FoReco_data)
 obj <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C, thf_comb = "acov",
               hts_comb = "shr", res = FoReco_data$res)
-}
 
 }
 \references{

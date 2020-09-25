@@ -18,7 +18,6 @@
 #' A list of class \code{"ts"} objects
 #'
 #' @examples
-#' \dontrun{
 #' data(FoReco_data)
 #' # Cross-temporal framework
 #' oct_recf <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
@@ -44,7 +43,6 @@
 #' topres <- FoReco_data$res[1, ]
 #' thf_recf <- thfrec(topbase, m = 12, comb = "acov", res = topres)$recf
 #' obj_thf <- FoReco2ts(recf = thf_recf, start = c(15, 1))
-#' }
 #'
 #' @keywords utilities
 #'

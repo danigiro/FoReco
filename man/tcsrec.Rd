@@ -93,11 +93,9 @@ wished, \code{thf_comb} must be set equal to either \code{"struc"} or \code{"wls
 and \code{hts_comb} equal to either \code{"shr"} or \code{"wls"}.
 }
 \examples{
-\dontrun{
 data(FoReco_data)
 obj <- tcsrec(FoReco_data$base, m = 12, C = FoReco_data$C, thf_comb = "acov",
               hts_comb = "shr", res = FoReco_data$res)
-}
 
 }
 \references{

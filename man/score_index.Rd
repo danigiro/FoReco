@@ -4,7 +4,7 @@
 \alias{score_index}
 \title{Measuring forecasting accuracy}
 \usage{
-score_index(recf, base, test, m, nb, type = "mse", compact = T)
+score_index(recf, base, test, m, nb, type = "mse", compact = TRUE)
 }
 \arguments{
 \item{recf}{list of q (forecast origins) reconciled forecasts' matrices (\code{[n x h(k* + m)]} in the

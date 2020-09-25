@@ -127,11 +127,9 @@
 #'
 #' @keywords reconciliation
 #' @examples
-#' \dontrun{
 #' data(FoReco_data)
 #' obj <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
 #'               comb = "bdshr", res = FoReco_data$res)
-#' }
 #'
 #' @export
 #'
@@ -162,7 +160,7 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
     stop("The argument basef is not specified")
   }
 
-  tools <- thf_tools(m, sparse = T)
+  tools <- thf_tools(m, sparse = TRUE)
   kset <- tools$kset
   p <- tools$p
   kt <- tools$kt
@@ -194,11 +192,11 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
     }
 
     na <- n - nb
-    Ut <- Matrix(Ut, sparse = T)
+    Ut <- Matrix(Ut, sparse = TRUE)
   } else {
     if (!(is.matrix(C) | is(C, "Matrix"))) stop("C must be a matrix", call. = FALSE)
 
-    C <- Matrix(C, sparse = T)
+    C <- Matrix(C, sparse = TRUE)
 
     nb <- NCOL(C)
     na <- NROW(C)
@@ -230,7 +228,7 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
 
   h <- NCOL(basef) / kt
   Dh <- Dmat(h = h, kset = kset, n = n)
-  Ybase <- matrix(Dh %*% as.vector(t(basef)), nrow = h, byrow = T)
+  Ybase <- matrix(Dh %*% as.vector(t(basef)), nrow = h, byrow = TRUE)
 
   # In-sample errors
   if (any(comb == c("sam", "wlsv", "wlsh", "shr", "acov", "Ssam", "Sshr", "bdshr", "bdsam"))) {
@@ -255,7 +253,7 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
     N <- NCOL(res) / kt
 
     DN <- Dmat(h = N, kset = kset, n = n)
-    E <- matrix(DN %*% as.vector(t(res)), nrow = N, byrow = T)
+    E <- matrix(DN %*% as.vector(t(res)), nrow = N, byrow = TRUE)
 
     if (comb == "sam" & N < n * kt) {
       stop("N < n(k* + m): it could lead to singularity problems if comb == sam", call. = FALSE)
@@ -284,7 +282,7 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
     Qtilde <- commat(nb, kt) %*% bdiag(commat(ks, nb), commat(m, nb))
     Q <- bdiag(Diagonal(na * kt), Qtilde)
     if (missing(Sstruc)) {
-      Htstruc <- Matrix(pracma::rref(as.matrix(Ht %*% Q)), sparse = T)
+      Htstruc <- Matrix(pracma::rref(as.matrix(Ht %*% Q)), sparse = TRUE)
       Cstruc <- -Htstruc[, (nrow(Htstruc) + 1):ncol(Htstruc)]
       Sstruc <- rbind(Cstruc, Diagonal(m * nb))
     }
@@ -363,7 +361,7 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
     rec_sol$nn_check <- sum(rec_sol$recf < 0)
     rec_sol$rec_check <- all(rec_sol$recf %*% t(Ht) < 1e-6)
 
-    rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = T)
+    rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = TRUE)
     names(rec_sol)[names(rec_sol) == "W"] <- "Omega"
     rec_sol$W <- as.matrix(t(P) %*% rec_sol$Omega %*% P)
     dimnames(rec_sol$W) <- NULL
@@ -385,7 +383,7 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
     return(rec_sol)
   } else {
     if (length(rec_sol) == 1) {
-      rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = T)
+      rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = TRUE)
       rownames(rec_sol$recf) <- if (is.null(rownames(basef))) paste("serie", 1:n, sep = "") else rownames(basef)
       colnames(rec_sol$recf) <- paste("k", rep(kset, h * rev(kset)), "h",
         do.call("c", as.list(sapply(
@@ -396,7 +394,7 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, W, Sstruc, mse = TRUE,
       )
       return(rec_sol$recf)
     } else {
-      rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = T)
+      rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = TRUE)
       rownames(rec_sol$recf) <- if (is.null(rownames(basef))) paste("serie", 1:n, sep = "") else rownames(basef)
       colnames(rec_sol$recf) <- paste("k", rep(kset, h * rev(kset)), "h",
         do.call("c", as.list(sapply(
