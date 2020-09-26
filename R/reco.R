@@ -118,13 +118,17 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
             out$recf <- out$recf * (out$recf > 0)
             if (keep == "list") {
               lm_dx2 <- methods::as(t(S) %*% Wm1, "CsparseMatrix")
-              out$G <- S %*% solveLin(lm_sx1, lm_dx2)
+              G <- S %*% solveLin(lm_sx1, lm_dx2)
+              out$varf <- diag(G %*% W)
+              out$G <- as.matrix(G)
               out$W <- W
             }
           }
         } else if (keep == "list") {
           lm_dx2 <- methods::as(t(S) %*% Wm1, "CsparseMatrix")
-          out$G <- S %*% solveLin(lm_sx1, lm_dx2)
+          G <- S %*% solveLin(lm_sx1, lm_dx2)
+          out$varf <- diag(G %*% W)
+          out$G <- as.matrix(G)
           out$W <- W
         }
       } else {
@@ -156,12 +160,16 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
           } else {
             out$recf <- out$recf * (out$recf > 0)
             if (keep == "list") {
-              out$G <- S %*% solveLin(lm_sx1, t(Q))
+              G <- S %*% solveLin(lm_sx1, lm_dx2)
+              out$varf <- diag(G %*% W)
+              out$G <- as.matrix(G)
               out$W <- W
             }
           }
         } else if (keep == "list") {
-          out$G <- S %*% solveLin(lm_sx1, t(Q))
+          G <- S %*% solveLin(lm_sx1, lm_dx2)
+          out$varf <- diag(G %*% W)
+          out$G <- as.matrix(G)
           out$W <- W
         }
       }
