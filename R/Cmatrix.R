@@ -131,7 +131,7 @@ Cmatrix <- function(formula, data, sep = "_", sparse = TRUE, top_label = "Total"
   rownames(out) <- namerows
   colnames(out) <- namecols
 
-  out <- out[rowSums(out) > 1 & rowSums(out) < NCOL(out), ]
+  out <- out[rowSums(out) > 1 & rowSums(out) < NCOL(out), , drop = FALSE]
   out <- rbind(Total = 1, out)
   rownames(out)[1] <- top_label
   message("------ Cross-sectional information ------")
