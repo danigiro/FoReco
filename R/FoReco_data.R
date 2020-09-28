@@ -27,7 +27,7 @@
 #' }
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(FoReco_data)
 #' # Cross-sectional reconciliation for all temporal aggregation levels
 #' # (monthly, bi-monthly, ..., annual)

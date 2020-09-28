@@ -108,14 +108,12 @@ In case of non-negativity constraints, there are two ways:
 }
 }
 \examples{
-\dontrun{
 data(FoReco_data)
 # top ts base forecasts ([lowest_freq' ...  highest_freq']')
 topbase <- FoReco_data$base[1, ]
  # top ts residuals ([lowest_freq' ...  highest_freq']')
 topres <- FoReco_data$res[1, ]
 obj <- thfrec(topbase, m = 12, comb = "acov", res = topres)
-}
 
 }
 \references{

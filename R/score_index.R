@@ -27,7 +27,7 @@
 #' Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(FoReco_data)
 #'
 #' # Cross-temporal framework

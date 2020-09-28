@@ -36,7 +36,7 @@ forecasts of a cross-temporal (not only, see examples) system (more in
 \href{https://danigiro.github.io/FoReco/articles/accuracy_indices.html}{Average relative accuracy indices}).
 }
 \examples{
-\dontrun{
+\donttest{
 data(FoReco_data)
 
 # Cross-temporal framework

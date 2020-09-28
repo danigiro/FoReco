@@ -8,3 +8,5 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+* \dontrun issue: where possible, we have removed \dontrun
+* Add all authors: all authors are included

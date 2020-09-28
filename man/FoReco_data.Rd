@@ -32,7 +32,7 @@ There are 180 (15 years) monthly observations: the first 168 values (14 years) a
 training set, and the last 12 form the test set.
 }
 \examples{
-\dontrun{
+\donttest{
 data(FoReco_data)
 # Cross-sectional reconciliation for all temporal aggregation levels
 # (monthly, bi-monthly, ..., annual)

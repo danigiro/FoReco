@@ -135,7 +135,7 @@ two or more iteration (at least one time).}
 }
 }
 \examples{
-\dontrun{
+\donttest{
 data(FoReco_data)
 obj <- iterec(FoReco_data$base,
   m = 12, C = FoReco_data$C, thf_comb = "acov",
