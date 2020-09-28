@@ -9,4 +9,4 @@
 
 * This is a new release.
 * \dontrun issue: where possible, we have removed \dontrun
-* Add all authors: all authors are included
+* All authors issue: all authors are included
