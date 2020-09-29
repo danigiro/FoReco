@@ -137,7 +137,7 @@ two or more iteration (at least one time).}
 \examples{
 \donttest{
 data(FoReco_data)
-obj <- iterec(FoReco_data$base,
+obj <- iterec(FoReco_data$base, note=FALSE,
   m = 12, C = FoReco_data$C, thf_comb = "acov",
   hts_comb = "shr", res = FoReco_data$res, start_rec = "thf")
 }

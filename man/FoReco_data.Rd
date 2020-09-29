@@ -66,7 +66,7 @@ for(i in 1:n){
 }
 
 # Iterative cross-temporal reconciliation
-ite_recf <- iterec(FoReco_data$base,
+ite_recf <- iterec(FoReco_data$base, note=FALSE,
                    m = 12, C = FoReco_data$C,
                    thf_comb = "acov", hts_comb = "shr",
                    res = FoReco_data$res, start_rec = "thf")$recf

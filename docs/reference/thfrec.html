@@ -320,14 +320,12 @@ Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 (October 10, 2019), <a href='https://CRAN.R-project.org/package=osqp'>https://CRAN.R-project.org/package=osqp</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
 <span class='co'># top ts base forecasts ([lowest_freq' ...  highest_freq']')</span>
 <span class='no'>topbase</span> <span class='kw'>&lt;-</span> <span class='no'>FoReco_data</span>$<span class='no'>base</span>[<span class='fl'>1</span>, ]
  <span class='co'># top ts residuals ([lowest_freq' ...  highest_freq']')</span>
 <span class='no'>topres</span> <span class='kw'>&lt;-</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>[<span class='fl'>1</span>, ]
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>thfrec</span>(<span class='no'>topbase</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"acov"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>topres</span>)
-}</div></pre>
+<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>thfrec</span>(<span class='no'>topbase</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"acov"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>topres</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

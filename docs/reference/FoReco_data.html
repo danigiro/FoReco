@@ -195,7 +195,7 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></dd>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
 <span class='co'># Cross-sectional reconciliation for all temporal aggregation levels</span>
 <span class='co'># (monthly, bi-monthly, ..., annual)</span>
@@ -229,7 +229,7 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></dd>
 }
 
 <span class='co'># Iterative cross-temporal reconciliation</span>
-<span class='no'>ite_recf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='iterec.html'>iterec</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>,
+<span class='no'>ite_recf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='iterec.html'>iterec</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>, <span class='kw'>note</span><span class='kw'>=</span><span class='fl'>FALSE</span>,
                    <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>,
                    <span class='kw'>thf_comb</span> <span class='kw'>=</span> <span class='st'>"acov"</span>, <span class='kw'>hts_comb</span> <span class='kw'>=</span> <span class='st'>"shr"</span>,
                    <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>, <span class='kw'>start_rec</span> <span class='kw'>=</span> <span class='st'>"thf"</span>)$<span class='no'>recf</span>
@@ -247,7 +247,7 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></dd>
 <span class='co'># Optimal cross-temporal reconciliation</span>
 <span class='no'>oct_recf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='octrec.html'>octrec</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>,
                    <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"bdshr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='st'>"recf"</span>)
-}</div></pre>
+<span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

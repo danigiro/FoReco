@@ -199,8 +199,7 @@ and each row identifies a bottom level time series.</p></td>
     <p>A (<code>na x nb</code>) matrix.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'>## Balanced hierarchy</span>
+    <pre class="examples"><div class='input'><span class='co'>## Balanced hierarchy</span>
 <span class='co'>#         T</span>
 <span class='co'>#    |--------|</span>
 <span class='co'>#    A        B</span>
@@ -210,8 +209,7 @@ and each row identifies a bottom level time series.</p></td>
 <span class='no'>data_bts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>),
                        <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>))
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-
+<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 8</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 3</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 5</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 2</span></div><div class='input'>
 <span class='co'>## Unbalanced hierarchy (1)</span>
 <span class='co'>#             T</span>
 <span class='co'>#    |--------|------|</span>
@@ -222,8 +220,7 @@ and each row identifies a bottom level time series.</p></td>
 <span class='no'>data_bts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>),
                        <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>, <span class='fl'>NA</span>))
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-
+<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 9</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 3</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 6</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 2</span></div><div class='input'>
 <span class='co'>## Unbalanced hierarchy (2)</span>
 <span class='co'>#                 T</span>
 <span class='co'>#       |---------|---------|</span>
@@ -237,8 +234,7 @@ and each row identifies a bottom level time series.</p></td>
                        <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>),
                        <span class='kw'>X3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>))
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span> / <span class='no'>X3</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-
+<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span> / <span class='no'>X3</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 14</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 6</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 8</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 3</span></div><div class='input'>
 <span class='co'>## Grouped hierarchy</span>
 <span class='co'>#         C               S</span>
 <span class='co'>#    |--------|      |--------|</span>
@@ -250,8 +246,8 @@ and each row identifies a bottom level time series.</p></td>
                        <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>),
                        <span class='kw'>Y1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>))
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>Y1</span> * (<span class='no'>X1</span> / <span class='no'>X2</span>), <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-}</div></pre>
+<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>Y1</span> * (<span class='no'>X1</span> / <span class='no'>X2</span>), <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 21</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 13</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 8</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 5</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
