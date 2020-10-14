@@ -1,9 +1,9 @@
 #' Simple examples to compare \code{FoReco} and \code{hts} packages
 #'
 #' Two datasets of the \pkg{hts} package are used to show how to get the same results
-#' using \pkg{FoReco}. First, we consider the \code{htseg1} datatset
+#' using \pkg{FoReco}. First, we consider the \code{htseg1} dataset
 #' (a simulated three level hierarchy, with a total of 8 series, each of length 10).
-#' Then, we take the \code{htseg2} datatset (a simulated four level hierarchy with
+#' Then, we take the \code{htseg2} dataset (a simulated four level hierarchy with
 #' a total of 17 series, each of length 16). \code{htseg1} and \code{htseg2}
 #' are objects of class \code{hts} in \pkg{hts}.
 #'

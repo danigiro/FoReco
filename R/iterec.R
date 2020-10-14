@@ -233,13 +233,13 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
   # Incoherence vector
   d_cs_thf <- rep(NA, maxit + 1)
   d_te_thf <- rep(NA, maxit + 1)
-  d_cs_thf[1] <- abs(t(rep(1, r_u)) %*% (Ut %*% basef) %*% rep(1, h * kt))
-  d_te_thf[1] <- abs(t(rep(1, h * ks)) %*% (Zt %*% t(basef)) %*% rep(1, n))
+  d_cs_thf[1] <- sum(abs(Ut %*% basef))
+  d_te_thf[1] <- sum(abs(Zt %*% t(basef)))
 
   d_cs_hts <- rep(NA, maxit + 1)
   d_te_hts <- rep(NA, maxit + 1)
-  d_cs_hts[1] <- abs(t(rep(1, r_u)) %*% (Ut %*% basef) %*% rep(1, h * kt))
-  d_te_hts[1] <- abs(t(rep(1, h * ks)) %*% (Zt %*% t(basef)) %*% rep(1, n))
+  d_cs_hts[1] <- sum(abs(Ut %*% basef))
+  d_te_hts[1] <- sum(abs(Zt %*% t(basef)))
 
   # Check: reconciliation needed?
   if (d_cs_thf[1] < tol & d_te_thf[1] < tol) {
@@ -308,8 +308,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     for (i in 1:maxit) {
       # Step1
       Y1_thf <- step_thf(basef = Y2_thf, res = res, thf_mod = thf_mod)
-      d_cs_thf[i + 1] <- abs(t(rep(1, r_u)) %*% (Ut %*% Y1_thf) %*% rep(1, h * kt))
-      check <- as.vector(abs(t(rep(1, h * ks)) %*% (Zt %*% t(Y1_thf)) %*% rep(1, n)))
+      d_cs_thf[i + 1] <- sum(abs(Ut %*% Y1_thf))
+      check <- sum(abs(Zt %*% t(Y1_thf)))
 
       d_thf <- rbind(d_thf, c(i, d_cs_thf[i + 1], check))
       if (check > tol) {
@@ -333,8 +333,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         basef = Y1_thf, kset = kset, h = h,
         res = res, hts_mod = hts_mod
       )
-      d_te_thf[i + 1] <- abs(t(rep(1, h * ks)) %*% (Zt %*% t(Y2_thf)) %*% rep(1, n))
-      check <- as.vector(abs(t(rep(1, r_u)) %*% (Ut %*% Y2_thf) %*% rep(1, h * kt)))
+      d_te_thf[i + 1] <- sum(abs(Zt %*% t(Y2_thf)))
+      check <- sum(abs(Ut %*% Y2_thf))
 
       d_thf <- rbind(d_thf, c(i, check, d_te_thf[i + 1]))
       if (check > tol) {
@@ -415,8 +415,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         basef = Y2_hts, kset = kset, h = h,
         res = res, hts_mod = hts_mod
       )
-      d_te_hts[j + 1] <- abs(t(rep(1, h * ks)) %*% (Zt %*% t(Y1_hts)) %*% rep(1, n))
-      check <- as.vector(abs(t(rep(1, r_u)) %*% (Ut %*% Y1_hts) %*% rep(1, h * kt)))
+      d_te_hts[j + 1] <- sum(abs(Zt %*% t(Y1_hts)))
+      check <- sum(abs(Ut %*% Y1_hts))
 
       d_hts <- rbind(d_hts, c(j, check, d_te_hts[j + 1]))
       if (check > tol) {
@@ -436,8 +436,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
 
       # Step 2
       Y2_hts <- step_thf(basef = Y1_hts, res = res, thf_mod = thf_mod)
-      d_cs_hts[j + 1] <- abs(t(rep(1, r_u)) %*% (Ut %*% Y2_hts) %*% rep(1, h * kt))
-      check <- as.vector(abs(t(rep(1, h * ks)) %*% (Zt %*% t(Y2_hts)) %*% rep(1, n)))
+      d_cs_hts[j + 1] <- sum(abs(Ut %*% Y2_hts))
+      check <- sum(abs(Zt %*% t(Y2_hts)))
 
       d_hts <- rbind(d_hts, c(j, d_cs_hts[j + 1], check))
       if (check > tol) {
