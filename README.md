@@ -46,7 +46,7 @@ Installation
 ------------
 
 You can install the **stable** version on [R
-CRAN](https://cran.r-project.org/).
+CRAN](https://cran.r-project.org/)
 
     install.packages('FoReco', dependencies = TRUE)
 
