@@ -1,5 +1,11 @@
 url: https://danigiro.github.io/FoReco/
 
+template:
+  params:
+    docsearch:
+      api_key: '05a948dc40379c4ff2eaba6f8d83c86e'
+      index_name: 'danigiro'
+
 navbar:
   type: inverse
   structure:
