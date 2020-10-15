@@ -162,7 +162,7 @@ temporally constrained time series" />
 temporally constrained time series</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ctf_tools</span>(<span class='no'>C</span>, <span class='no'>m</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>Ut</span>, <span class='no'>nb</span>, <span class='kw'>Sstruc</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>ctf_tools</span><span class='op'>(</span><span class='va'>C</span>, <span class='va'>m</span>, h <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, Sstruc <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,7 +219,8 @@ thf list from <a href='thf_tools.html'>thf_tools</a>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># One level hierarchy (na = 1, nb = 2) with quarterly data</span>
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>ctf_tools</span>(<span class='kw'>C</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>), <span class='fl'>1</span>), <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>Sstruc</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div></pre>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>ctf_tools</span><span class='op'>(</span>C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span>, m <span class='op'>=</span> <span class='fl'>4</span>, Sstruc <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -235,7 +236,7 @@ thf list from <a href='thf_tools.html'>thf_tools</a>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

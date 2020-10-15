@@ -164,7 +164,7 @@ forecasts of a cross-temporal (not only, see examples) system (more in
 <a href='https://danigiro.github.io/FoReco/articles/accuracy_indices.html'>Average relative accuracy indices</a>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>score_index</span>(<span class='no'>recf</span>, <span class='no'>base</span>, <span class='no'>test</span>, <span class='no'>m</span>, <span class='no'>nb</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"mse"</span>, <span class='kw'>compact</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>score_index</span><span class='op'>(</span><span class='va'>recf</span>, <span class='va'>base</span>, <span class='va'>test</span>, <span class='va'>m</span>, <span class='va'>nb</span>, type <span class='op'>=</span> <span class='st'>"mse"</span>, compact <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -216,42 +216,44 @@ Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
 
 <span class='co'># Cross-temporal framework</span>
-<span class='no'>oct_recf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='octrec.html'>octrec</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>,
-                   <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"bdshr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>)$<span class='no'>recf</span>
-<span class='no'>oct_score</span> <span class='kw'>&lt;-</span> <span class='fu'>score_index</span>(<span class='kw'>recf</span> <span class='kw'>=</span> <span class='no'>oct_recf</span>,
-                         <span class='kw'>base</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>base</span>,
-                         <span class='kw'>test</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>test</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>nb</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='va'>oct_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='octrec.html'>octrec</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
+                   comb <span class='op'>=</span> <span class='st'>"bdshr"</span>, res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='va'>oct_score</span> <span class='op'>&lt;-</span> <span class='fu'>score_index</span><span class='op'>(</span>recf <span class='op'>=</span> <span class='va'>oct_recf</span>,
+                         base <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>,
+                         test <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>test</span>, m <span class='op'>=</span> <span class='fl'>12</span>, nb <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># Cross-sectional framework</span>
 <span class='co'># monthly base forecasts</span>
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>), <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"_"</span>))[<span class='fl'>1</span>, ] <span class='kw'>==</span> <span class='st'>"k1"</span>)
-<span class='no'>mbase</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>[, <span class='no'>id</span>])
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>)</span>, split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
+<span class='va'>mbase</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'># monthly test set</span>
-<span class='no'>mtest</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>test</span>[, <span class='no'>id</span>])
+<span class='va'>mtest</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>test</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'># monthly residuals</span>
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>res</span>), <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"_"</span>))[<span class='fl'>1</span>, ] <span class='kw'>==</span> <span class='st'>"k1"</span>)
-<span class='no'>mres</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>res</span>[, <span class='no'>id</span>])
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span>, split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
+<span class='va'>mres</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'># monthly reconciled forecasts</span>
-<span class='no'>mrecf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span>(<span class='no'>mbase</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"shr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>mres</span>)$<span class='no'>recf</span>
+<span class='va'>mrecf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>mbase</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>mres</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 <span class='co'># score</span>
-<span class='no'>hts_score</span> <span class='kw'>&lt;-</span> <span class='fu'>score_index</span>(<span class='kw'>recf</span> <span class='kw'>=</span> <span class='no'>mrecf</span>, <span class='kw'>base</span> <span class='kw'>=</span> <span class='no'>mbase</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='no'>mtest</span>, <span class='kw'>nb</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+<span class='va'>hts_score</span> <span class='op'>&lt;-</span> <span class='fu'>score_index</span><span class='op'>(</span>recf <span class='op'>=</span> <span class='va'>mrecf</span>, base <span class='op'>=</span> <span class='va'>mbase</span>, test <span class='op'>=</span> <span class='va'>mtest</span>, nb <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 
 <span class='co'># Temporal framework</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
 <span class='co'># top ts base forecasts ([lowest_freq' ...  highest_freq']')</span>
-<span class='no'>topbase</span> <span class='kw'>&lt;-</span> <span class='no'>FoReco_data</span>$<span class='no'>base</span>[<span class='fl'>1</span>, ]
+<span class='va'>topbase</span> <span class='op'>&lt;-</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span>
 <span class='co'># top ts residuals ([lowest_freq' ...  highest_freq']')</span>
-<span class='no'>topres</span> <span class='kw'>&lt;-</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>[<span class='fl'>1</span>, ]
+<span class='va'>topres</span> <span class='op'>&lt;-</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span>
 <span class='co'># top ts test ([lowest_freq' ...  highest_freq']')</span>
-<span class='no'>toptest</span> <span class='kw'>&lt;-</span> <span class='no'>FoReco_data</span>$<span class='no'>test</span>[<span class='fl'>1</span>, ]
+<span class='va'>toptest</span> <span class='op'>&lt;-</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>test</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span>
 <span class='co'># top ts recf ([lowest_freq' ...  highest_freq']')</span>
-<span class='no'>toprecf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span>(<span class='no'>topbase</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"acov"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>topres</span>)$<span class='no'>recf</span>
+<span class='va'>toprecf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span><span class='op'>(</span><span class='va'>topbase</span>, m <span class='op'>=</span> <span class='fl'>12</span>, comb <span class='op'>=</span> <span class='st'>"acov"</span>, res <span class='op'>=</span> <span class='va'>topres</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 <span class='co'># score</span>
-<span class='no'>thf_score</span> <span class='kw'>&lt;-</span> <span class='fu'>score_index</span>(<span class='kw'>recf</span> <span class='kw'>=</span> <span class='no'>toprecf</span>, <span class='kw'>base</span> <span class='kw'>=</span> <span class='no'>topbase</span>, <span class='kw'>test</span> <span class='kw'>=</span> <span class='no'>toptest</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>)
-<span class='co'># }</span></div></pre>
+<span class='va'>thf_score</span> <span class='op'>&lt;-</span> <span class='fu'>score_index</span><span class='op'>(</span>recf <span class='op'>=</span> <span class='va'>toprecf</span>, base <span class='op'>=</span> <span class='va'>topbase</span>, test <span class='op'>=</span> <span class='va'>toptest</span>, m <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
+<span class='co'># }</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -267,7 +269,7 @@ Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

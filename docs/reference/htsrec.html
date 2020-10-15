@@ -168,10 +168,10 @@ Wickramasuriya et al., 2019), or the equivalent structural approach by Hyndman
 et al. (2011). Moreover, the classic bottom-up approach is available.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>htsrec</span>(<span class='no'>basef</span>, <span class='no'>comb</span>, <span class='no'>C</span>, <span class='no'>res</span>, <span class='no'>Ut</span>, <span class='no'>nb</span>, <span class='kw'>mse</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>corpcor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>W</span>,
-       <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"M"</span>, <span class='kw'>sol</span> <span class='kw'>=</span> <span class='st'>"direct"</span>, <span class='kw'>nn</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='st'>"list"</span>,
-       <span class='kw'>settings</span> <span class='kw'>=</span> <span class='fu'>osqpSettings</span>(<span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>eps_abs</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>,
-       <span class='kw'>eps_rel</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>, <span class='kw'>polish_refine_iter</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>polish</span><span class='kw'>=</span><span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>htsrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>comb</span>, <span class='va'>C</span>, <span class='va'>res</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>W</span>,
+       type <span class='op'>=</span> <span class='st'>"M"</span>, sol <span class='op'>=</span> <span class='st'>"direct"</span>, nn <span class='op'>=</span> <span class='cn'>FALSE</span>, keep <span class='op'>=</span> <span class='st'>"list"</span>,
+       settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, eps_abs <span class='op'>=</span> <span class='fl'>1e-5</span>,
+       eps_rel <span class='op'>=</span> <span class='fl'>1e-5</span>, polish_refine_iter <span class='op'>=</span> <span class='fl'>100</span>, polish<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -325,16 +325,18 @@ reconciliation for hierarchical and grouped time series through trace minimizati
 <em>Journal of the American Statistical Association</em>, 114, 526, 804-819.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
 <span class='co'># monthly base forecasts</span>
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>),
-                                    <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"_"</span>))[<span class='fl'>1</span>, ] <span class='kw'>==</span> <span class='st'>"k1"</span>)
-<span class='no'>mbase</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>[, <span class='no'>id</span>])
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>)</span>,
+                                    split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
+<span class='va'>mbase</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'># monthly residuals</span>
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>res</span>),
-                                    <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"_"</span>))[<span class='fl'>1</span>, ] <span class='kw'>==</span> <span class='st'>"k1"</span>)
-<span class='no'>mres</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>res</span>[, <span class='no'>id</span>])
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>htsrec</span>(<span class='no'>mbase</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"shr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>mres</span>)</div></pre>
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span>,
+                                    split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
+<span class='va'>mres</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>htsrec</span><span class='op'>(</span><span class='va'>mbase</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>mres</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -350,7 +352,7 @@ reconciliation for hierarchical and grouped time series through trace minimizati
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

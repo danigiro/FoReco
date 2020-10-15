@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Simple examples to compare <code>FoReco</code> and <code>thief</code> packages — FoReco-thief • FoReco</title>
+<title>Simple examples to compare FoReco and thief packages — FoReco-thief • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,7 @@
 
 
 
-<meta property="og:title" content="Simple examples to compare <code>FoReco</code> and <code>thief</code> packages — FoReco-thief" />
+<meta property="og:title" content="Simple examples to compare FoReco and thief packages — FoReco-thief" />
 <meta property="og:description" content="The dataset in the thief package is used to show how to get the same results with the FoReco package.
 In particular, we take the weekly data of Accident and Emergency demand in the UK, AEdemand, from 1 January
 2011 to 31 December 2014." />
@@ -172,71 +172,72 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
 <a href='https://cran.r-project.org/package=thief'>https://cran.r-project.org/package=thief</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>thief</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>FoReco</span>)
-<span class='no'>dataset</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span>(<span class='no'>AEdemand</span>[, <span class='fl'>12</span>], <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2011</span>, <span class='fl'>1</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2014</span>, <span class='fl'>52</span>))
-<span class='no'>data</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/tsaggregates.html'>tsaggregates</a></span>(<span class='no'>dataset</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://pkg.robjhyndman.com/thief'>thief</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/daniGiro/FoReco'>FoReco</a></span><span class='op'>)</span>
+<span class='va'>dataset</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/window.html'>window</a></span><span class='op'>(</span><span class='va'>AEdemand</span><span class='op'>[</span>, <span class='fl'>12</span><span class='op'>]</span>, start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2011</span>, <span class='fl'>1</span><span class='op'>)</span>, end <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2014</span>, <span class='fl'>52</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/tsaggregates.html'>tsaggregates</a></span><span class='op'>(</span><span class='va'>dataset</span><span class='op'>)</span>
 <span class='co'># Base forecasts</span>
-<span class='no'>base</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>()
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>5</span>) {
-  <span class='no'>base</span><span class='kw'>[[</span><span class='no'>i</span>]] <span class='kw'>&lt;-</span> <span class='fu'>forecast</span>(<span class='fu'>auto.arima</span>(<span class='no'>data</span><span class='kw'>[[</span><span class='no'>i</span>]]))
-}
-<span class='no'>base</span><span class='kw'>[[</span><span class='fl'>6</span>]] <span class='kw'>&lt;-</span> <span class='fu'>forecast</span>(<span class='fu'>auto.arima</span>(<span class='no'>data</span><span class='kw'>[[</span><span class='fl'>6</span>]]), <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+<span class='va'>base</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>base</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'>forecast</span><span class='op'>(</span><span class='fu'>auto.arima</span><span class='op'>(</span><span class='va'>data</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>base</span><span class='op'>[[</span><span class='fl'>6</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'>forecast</span><span class='op'>(</span><span class='fu'>auto.arima</span><span class='op'>(</span><span class='va'>data</span><span class='op'>[[</span><span class='fl'>6</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>, h <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
 <span class='co'># Base forecasts vector</span>
-<span class='no'>base_vec</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>6</span>:<span class='fl'>1</span>) {
-  <span class='no'>base_vec</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>base_vec</span>, <span class='no'>base</span><span class='kw'>[[</span><span class='no'>i</span>]]$<span class='no'>mean</span>)
-}
+<span class='va'>base_vec</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>base_vec</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>base_vec</span>, <span class='va'>base</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
+<span class='op'>}</span>
 <span class='co'># Residual vector</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>6</span>:<span class='fl'>1</span>) {
-  <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>res</span>, <span class='no'>base</span><span class='kw'>[[</span><span class='no'>i</span>]]$<span class='no'>residuals</span>)
-}
+<span class='va'>res</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>res</span>, <span class='va'>base</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>residuals</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 <span class='co'># OLS</span>
-<span class='no'>obj_thief</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/thief.html'>thief</a></span>(<span class='no'>dataset</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>52</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>2</span> * <span class='fl'>52</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"ols"</span>, <span class='kw'>usemodel</span> <span class='kw'>=</span> <span class='st'>"arima"</span>)
-<span class='no'>obj_thief</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/tsaggregates.html'>tsaggregates</a></span>(<span class='no'>obj_thief</span>$<span class='no'>mean</span>)
-<span class='no'>y_thief</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>6</span>:<span class='fl'>1</span>) {
-  <span class='no'>y_thief</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>y_thief</span>, <span class='no'>obj_thief</span><span class='kw'>[[</span><span class='no'>i</span>]])
-}
-<span class='no'>obj_thief_ols</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span>(<span class='no'>base</span>, <span class='kw'>comb</span><span class='kw'>=</span><span class='st'>"ols"</span>)
-<span class='no'>y_thief_ols</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>6</span>:<span class='fl'>1</span>) {
-  <span class='no'>y_thief_ols</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>y_thief_ols</span>, <span class='no'>obj_thief_ols</span><span class='kw'>[[</span><span class='no'>i</span>]]$<span class='no'>mean</span>)
-}
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>y_thief_ols</span> - <span class='no'>y_thief</span>) <span class='kw'>&gt;</span> <span class='fl'>1e-10</span>)
-<span class='no'>y_FoReco_ols</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span>(<span class='no'>base_vec</span>, <span class='fl'>52</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"ols"</span>)$<span class='no'>recf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>y_FoReco_ols</span> - <span class='no'>y_thief_ols</span>) <span class='kw'>&gt;</span> <span class='fl'>1e-10</span>)
+<span class='va'>obj_thief</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/thief.html'>thief</a></span><span class='op'>(</span><span class='va'>dataset</span>, m <span class='op'>=</span> <span class='fl'>52</span>, h <span class='op'>=</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='fl'>52</span>, comb <span class='op'>=</span> <span class='st'>"ols"</span>, usemodel <span class='op'>=</span> <span class='st'>"arima"</span><span class='op'>)</span>
+<span class='va'>obj_thief</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/tsaggregates.html'>tsaggregates</a></span><span class='op'>(</span><span class='va'>obj_thief</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
+<span class='va'>y_thief</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>y_thief</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>y_thief</span>, <span class='va'>obj_thief</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>obj_thief_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span><span class='op'>(</span><span class='va'>base</span>, comb<span class='op'>=</span><span class='st'>"ols"</span><span class='op'>)</span>
+<span class='va'>y_thief_ols</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>y_thief_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>y_thief_ols</span>, <span class='va'>obj_thief_ols</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>y_thief_ols</span> <span class='op'>-</span> <span class='va'>y_thief</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+<span class='va'>y_FoReco_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span><span class='op'>(</span><span class='va'>base_vec</span>, <span class='fl'>52</span>, comb <span class='op'>=</span> <span class='st'>"ols"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>y_FoReco_ols</span> <span class='op'>-</span> <span class='va'>y_thief_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 
 <span class='co'># STRUC</span>
-<span class='no'>obj_thief_struc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span>(<span class='no'>base</span>, <span class='kw'>comb</span><span class='kw'>=</span><span class='st'>"struc"</span>)
-<span class='no'>y_thief_struc</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>6</span>:<span class='fl'>1</span>) {
-  <span class='no'>y_thief_struc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>y_thief_struc</span>, <span class='no'>obj_thief_struc</span><span class='kw'>[[</span><span class='no'>i</span>]]$<span class='no'>mean</span>)
-}
-<span class='no'>y_FoReco_struc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span>(<span class='no'>base_vec</span>, <span class='fl'>52</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"struc"</span>)$<span class='no'>recf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>y_FoReco_struc</span> - <span class='no'>y_thief_struc</span>) <span class='kw'>&gt;</span> <span class='fl'>1e-10</span>)
+<span class='va'>obj_thief_struc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span><span class='op'>(</span><span class='va'>base</span>, comb<span class='op'>=</span><span class='st'>"struc"</span><span class='op'>)</span>
+<span class='va'>y_thief_struc</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>y_thief_struc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>y_thief_struc</span>, <span class='va'>obj_thief_struc</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>y_FoReco_struc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span><span class='op'>(</span><span class='va'>base_vec</span>, <span class='fl'>52</span>, comb <span class='op'>=</span> <span class='st'>"struc"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>y_FoReco_struc</span> <span class='op'>-</span> <span class='va'>y_thief_struc</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 
 <span class='co'># BU</span>
-<span class='no'>obj_thief_bu</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span>(<span class='no'>base</span>, <span class='kw'>comb</span><span class='kw'>=</span><span class='st'>"bu"</span>)
-<span class='no'>y_thief_bu</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>6</span>:<span class='fl'>1</span>) {
-  <span class='no'>y_thief_bu</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>y_thief_bu</span>, <span class='no'>obj_thief_bu</span><span class='kw'>[[</span><span class='no'>i</span>]]$<span class='no'>mean</span>)
-}
-<span class='no'>y_FoReco_bu</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span>(<span class='no'>base_vec</span>, <span class='fl'>52</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"bu"</span>)$<span class='no'>recf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>y_FoReco_bu</span> - <span class='no'>y_thief_bu</span>) <span class='kw'>&gt;</span> <span class='fl'>1e-10</span>)
+<span class='va'>obj_thief_bu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span><span class='op'>(</span><span class='va'>base</span>, comb<span class='op'>=</span><span class='st'>"bu"</span><span class='op'>)</span>
+<span class='va'>y_thief_bu</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>y_thief_bu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>y_thief_bu</span>, <span class='va'>obj_thief_bu</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>y_FoReco_bu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span><span class='op'>(</span><span class='va'>base_vec</span>, <span class='fl'>52</span>, comb <span class='op'>=</span> <span class='st'>"bu"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>y_FoReco_bu</span> <span class='op'>-</span> <span class='va'>y_thief_bu</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 
 <span class='co'># SHR</span>
-<span class='no'>obj_thief_shr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span>(<span class='no'>base</span>, <span class='kw'>comb</span><span class='kw'>=</span><span class='st'>"shr"</span>)
-<span class='no'>y_thief_shr</span> <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
-<span class='kw'>for</span> (<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>6</span>:<span class='fl'>1</span>) {
-  <span class='no'>y_thief_shr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>y_thief_shr</span>, <span class='no'>obj_thief_shr</span><span class='kw'>[[</span><span class='no'>i</span>]]$<span class='no'>mean</span>)
-}
-<span class='no'>y_FoReco_shr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span>(<span class='no'>base_vec</span>, <span class='fl'>52</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"shr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>res</span>)$<span class='no'>recf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span>(<span class='no'>y_FoReco_shr</span> - <span class='no'>y_thief_shr</span>) <span class='kw'>&gt;</span> <span class='fl'>1e-10</span>)
-}</div></pre>
+<span class='va'>obj_thief_shr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/reconcilethief.html'>reconcilethief</a></span><span class='op'>(</span><span class='va'>base</span>, comb<span class='op'>=</span><span class='st'>"shr"</span><span class='op'>)</span>
+<span class='va'>y_thief_shr</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
+<span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
+  <span class='va'>y_thief_shr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>y_thief_shr</span>, <span class='va'>obj_thief_shr</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='va'>y_FoReco_shr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span><span class='op'>(</span><span class='va'>base_vec</span>, <span class='fl'>52</span>, comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>y_FoReco_shr</span> <span class='op'>-</span> <span class='va'>y_thief_shr</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+<span class='op'>}</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -252,7 +253,7 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -1,10 +1,10 @@
-pandoc: 2.10.1
-pkgdown: 1.5.1
+pandoc: 2.7.3
+pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   FoReco_package: FoReco_package.html
   accuracy_indices: accuracy_indices.html
-last_built: 2020-10-14T17:46Z
+last_built: 2020-10-15T12:25Z
 urls:
   reference: https://danigiro.github.io/FoReco//reference
   article: https://danigiro.github.io/FoReco//articles
