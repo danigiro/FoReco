@@ -37,7 +37,8 @@ ones. (Experimental version)
 # AA   AB  BA BB BC
 # Names of the bottom level variables
 data_bts <- data.frame(X1 = c("A", "A", "B", "B", "B"),
-                       X2 = c("A", "B", "A", "B", "C"))
+                       X2 = c("A", "B", "A", "B", "C"),
+                       stringsAsFactors = FALSE)
 # Cross-sectional aggregation matrix
 C <- Cmatrix(~ X1 / X2, data_bts, sep = "")
 
@@ -49,7 +50,8 @@ C <- Cmatrix(~ X1 / X2, data_bts, sep = "")
 # AA   AB  BA BB BC
 # Names of the bottom level variables
 data_bts <- data.frame(X1 = c("A", "A", "B", "B", "B", "C"),
-                       X2 = c("A", "B", "A", "B", "C", NA))
+                       X2 = c("A", "B", "A", "B", "C", NA),
+                       stringsAsFactors = FALSE)
 # Cross-sectional aggregation matrix
 C <- Cmatrix(~ X1 / X2, data_bts, sep = "")
 
@@ -64,7 +66,8 @@ C <- Cmatrix(~ X1 / X2, data_bts, sep = "")
 # Names of the bottom level variables
 data_bts <- data.frame(X1 = c("A", "A", "A", "B", "B", "B", "C", "C"),
                        X2 = c("A", "A", "B", "A", "B", "B", "A", "B"),
-                       X3 = c("A", "B", NA, NA, "A", "B", NA, NA))
+                       X3 = c("A", "B", NA, NA, "A", "B", NA, NA),
+                       stringsAsFactors = FALSE)
 # Cross-sectional aggregation matrix
 C <- Cmatrix(~ X1 / X2 / X3, data_bts, sep = "")
 
@@ -77,7 +80,8 @@ C <- Cmatrix(~ X1 / X2 / X3, data_bts, sep = "")
 # Names of the bottom level variables
 data_bts <- data.frame(X1 = c("A", "A", "B", "B", "A", "A", "B", "B"),
                        X2 = c("A", "B", "A", "B", "A", "B", "A", "B"),
-                       Y1 = c("M", "M", "M", "M", "F", "F", "F", "F"))
+                       Y1 = c("M", "M", "M", "M", "F", "F", "F", "F"),
+                       stringsAsFactors = FALSE)
 # Cross-sectional aggregation matrix
 C <- Cmatrix(~ Y1 * (X1 / X2), data_bts, sep = "")
 
