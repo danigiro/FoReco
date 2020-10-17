@@ -2,21 +2,21 @@
   "index_name": "danigiro",
   "start_urls": [
     {
-      "url": "https://danigiro.github.io/FoReco//index.html",
+      "url": "https://danigiro.github.io/FoReco/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://danigiro.github.io/FoReco//reference",
+      "url": "https://danigiro.github.io/FoReco/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://danigiro.github.io/FoReco//articles",
+      "url": "https://danigiro.github.io/FoReco/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://danigiro.github.io/FoReco//sitemap.xml"
+    "https://danigiro.github.io/FoReco/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
