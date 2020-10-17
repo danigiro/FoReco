@@ -133,37 +133,37 @@ knitr::kable(df,align='ccccccccc',escape = F, col.names = rep("",9))
 
 - **AvgRelIND$\_$ik** (if *compact = FALSE*)
 ```{r table-simple3, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
-df <- cbind(col1 = c("$\\textbf{m}$","$\\text{RelA}^{[m]}_{1,j}$","$\\vdots$",
-                         "$\\text{RelA}^{[m]}_{i,j}$","$\\vdots$","$\\text{RelA}^{[m]}_{n,j}$"),
+df <- cbind(col1 = c("$\\textbf{m}$","$\\text{AvgRelA}^{[m]}_{1,j}$","$\\vdots$",
+                         "$\\text{AvgRelA}^{[m]}_{i,j}$","$\\vdots$","$\\text{AvgRelA}^{[m]}_{n,j}$"),
             col2 = c("$\\dots$","$\\dots$","","$\\dots$","","$\\dots$"),
-            col3 = c("$\\textbf{k}$", "$\\text{RelA}^{[k]}_{1,j}$","$\\vdots$",
-                         "$\\text{RelA}^{[k]}_{i,j}$","$\\vdots$","$\\text{RelA}^{[k]}_{n,j}$"),
+            col3 = c("$\\textbf{k}$", "$\\text{AvgRelA}^{[k]}_{1,j}$","$\\vdots$",
+                         "$\\text{AvgRelA}^{[k]}_{i,j}$","$\\vdots$","$\\text{AvgRelA}^{[k]}_{n,j}$"),
             col4 = c("$\\dots$","$\\dots$","","$\\dots$","","$\\dots$"),
-            col5 = c("$\\textbf{1}$","$\\text{RelA}^{[1]}_{1,j}$","$\\vdots$",
-                         "$\\text{RelA}^{[1]}_{i,j}$","$\\vdots$","$\\text{RelA}^{[1]}_{n,j}$"),
+            col5 = c("$\\textbf{1}$","$\\text{AvgRelA}^{[1]}_{1,j}$","$\\vdots$",
+                         "$\\text{AvgRelA}^{[1]}_{i,j}$","$\\vdots$","$\\text{AvgRelA}^{[1]}_{n,j}$"),
             col6 = c("$\\dots$","$\\dots$","","$\\dots$","","$\\dots$"),
-            col7 = c("$\\mathbf{all}$","$\\text{RelA}_{1,j}$","$\\vdots$",
-                         "$\\text{RelA}_{i,j}$","$\\vdots$","$\\text{RelA}_{n,j}$"))
+            col7 = c("$\\mathbf{all}$","$\\text{AvgRelA}_{1,j}$","$\\vdots$",
+                         "$\\text{AvgRelA}_{i,j}$","$\\vdots$","$\\text{AvgRelA}_{n,j}$"))
 rownames(df) <- c("","$\\textbf{1}$","$\\vdots$","$\\textbf{i}$","$\\vdots$","$\\textbf{n}$")
 knitr::kable(df,align='ccccccc',escape = F, col.names = rep("",7))
 ```	
 	
 - **Avg$\_$k** (if *compact = FALSE*)
 ```{r table-simple4, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
-df <- cbind(col1 = c("$\\textbf{m}$","$\\textbf{1}$","$\\text{RelA}^{[m],1}_{j}$",
-                         "$\\text{RelA}^{[m],1}_{a,j}$","$\\text{RelA}^{[m],1}_{b,j}$"),
+df <- cbind(col1 = c("$\\textbf{m}$","$\\textbf{1}$","$\\text{AvgRelA}^{[m],1}_{j}$",
+                         "$\\text{AvgRelA}^{[m],1}_{a,j}$","$\\text{AvgRelA}^{[m],1}_{b,j}$"),
             col2 = c("$\\dots$","$\\dots$","$\\dots$","$\\dots$","$\\dots$"),
-            col3 = c("", "$\\textbf{1}$","$\\text{RelA}^{[k],1}_{j}$",
-                         "$\\text{RelA}^{[k],1}_{a,j}$","$\\text{RelA}^{[k],1}_{b,j}$"),
+            col3 = c("", "$\\textbf{1}$","$\\text{AvgRelA}^{[k],1}_{j}$",
+                         "$\\text{AvgRelA}^{[k],1}_{a,j}$","$\\text{AvgRelA}^{[k],1}_{b,j}$"),
             col4 = c("$\\textbf{k}$","$\\dots$","$\\dots$","$\\dots$","$\\dots$"),
-            col5 = c("", "$\\mathbf{M_k}$","$\\text{RelA}^{[k],M_k}_{j}$",
-                         "$\\text{RelA}^{[k],M_k}_{a,j}$","$\\text{RelA}^{[k],M_k}_{b,j}$"),
+            col5 = c("", "$\\mathbf{M_k}$","$\\text{AvgRelA}^{[k],M_k}_{j}$",
+                         "$\\text{AvgRelA}^{[k],M_k}_{a,j}$","$\\text{AvgRelA}^{[k],M_k}_{b,j}$"),
             col6 = c("$\\dots$","$\\dots$","$\\dots$","$\\dots$","$\\dots$"),
-            col7 = c("", "$\\textbf{1}$","$\\text{RelA}^{[1],1}_{j}$",
-                         "$\\text{RelA}^{[1],1}_{a,j}$","$\\text{RelA}^{[1],1}_{b,j}$"),
+            col7 = c("", "$\\textbf{1}$","$\\text{AvgRelA}^{[1],1}_{j}$",
+                         "$\\text{AvgRelA}^{[1],1}_{a,j}$","$\\text{AvgRelA}^{[1],1}_{b,j}$"),
             col8 = c("$\\textbf{1}$","$\\dots$","$\\dots$","$\\dots$","$\\dots$"),
-            col9 = c("", "$\\mathbf{m}$","$\\text{RelA}^{[1],m}_{j}$",
-                         "$\\text{RelA}^{[1],m}_{a,j}$","$\\text{RelA}^{[1],m}_{b,j}$"))
+            col9 = c("", "$\\mathbf{m}$","$\\text{AvgRelA}^{[1],m}_{j}$",
+                         "$\\text{AvgRelA}^{[1],m}_{a,j}$","$\\text{AvgRelA}^{[1],m}_{b,j}$"))
 rownames(df) <- c("${\\cal K}$","$\\textbf{h}$","$\\textbf{all}$","$\\textbf{a}$","$\\textbf{b}$")
 knitr::kable(df,align='ccccccccc',escape = F, col.names = rep("",9))
 ```
