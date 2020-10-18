@@ -97,7 +97,7 @@ $$
 
 ## The `score_index()` function outputs
 
-The `score_index()` function returns a summary table called **Avg$\_$mat** (if *compact* option is **TRUE**, *default*), otherwise it returns a list of four tables. So fixed method $j$, we have:
+The `score_index()` function returns a summary table called **Avg$\_$mat** (if *compact* option is **TRUE**, *default*), otherwise it returns a list of four tables. Fixed method $j$, we have:
 
 - **Avg$\_$mat** (*default* output)
 ```{r table-simple, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
