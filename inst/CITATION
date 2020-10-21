@@ -1,4 +1,4 @@
-citHeader("To cite FoReco in publications use:")
+citHeader("To cite FoReco in publications use: ")
 
 citEntry(
   entry    = "Manual",
