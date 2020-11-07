@@ -7,7 +7,8 @@
 thf_tools(m, h = 1, sparse = TRUE)
 }
 \arguments{
-\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).}
+\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \code{m}),
+or a subset of the \code{p} factors of \code{m}.}
 
 \item{h}{Forecast horizon for the lowest frequency (most temporally aggregated) time series (\emph{default} is \code{1}).}
 

@@ -4,11 +4,10 @@
 \alias{octrec}
 \title{Optimal combination cross-temporal forecast reconciliation}
 \usage{
-octrec(basef, m, C, comb, res, Ut, nb, W, Sstruc,
+octrec(basef, m, C, comb, res, Ut, nb, Sstruc,
        mse = TRUE, corpcor = FALSE, type = "M", sol = "direct",
-       nn = FALSE, keep = "list",
-       settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
-       eps_rel = 1e-5, polish_refine_iter = 100, polish=TRUE))
+       nn = FALSE, keep = "list", settings = osqpSettings(),
+       bounds = NULL, W = NULL, Omega = NULL)
 }
 \arguments{
 \item{basef}{(\code{n x h(k* + m)}) matrix of base forecasts to be reconciled;
@@ -17,7 +16,8 @@ octrec(basef, m, C, comb, res, Ut, nb, W, Sstruc,
 and \code{h} is the forecast horizon. Each row identifies, a time series, and the forecasts
 are ordered as [lowest_freq' ...  highest_freq']'.}
 
-\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).}
+\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \code{m}),
+or a subset of the \code{p} factors of \code{m}.}
 
 \item{C}{(\code{na x nb}) cross-sectional (contemporaneous) matrix mapping the bottom
 level series into the higher level ones.}
@@ -38,7 +38,8 @@ of variables:
   \item \bold{Ssam} (Series cross-covariance matrix);
   \item \bold{shr}  (Shrunk cross-covariance matrix);
   \item \bold{sam} (Sample cross-covariance matrix);
-  \item \bold{w} use your personal matrix W in param \code{W}.
+  \item \bold{w} use your personal matrix W in param \code{W};
+  \item \bold{omega} use your personal matrix Omega in param \code{Omega}.
 }}
 
 \item{res}{(\code{n x N(k* + m)}) matrix containing the residuals at all the
@@ -53,12 +54,6 @@ forecasts. It can be used instead of parameter \code{C}, but in this case \code{
 the hierarchy admits a structural representation, \code{Ut} has dimension (\code{na x n}).}
 
 \item{nb}{Number of bottom time series; if \code{C} is present, \code{nb} is not used.}
-
-\item{W}{This option permits to directly enter the covariance matrix:
-\enumerate{
-  \item \code{W} must be a p.d. (\code{n(k* + m) x n(k* + m)}) matrix;
-  \item if \code{comb} is different from "\code{w}", \code{W} is not used.
-}}
 
 \item{Sstruc}{Cross-temporal summing matrix (structural representation)\eqn{,\; \check{\textbf{S}}}{};
 can be obtained through the function \link[FoReco]{ctf_tools}.}
@@ -88,6 +83,18 @@ program using \code{\link[osqp]{solve_osqp}}).}
 are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
 \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).}
+
+\item{bounds}{(\code{n(k* + m) x 2}) matrix with bounds on the variables: the first column is the lower bound,
+and the second column is the upper bound.}
+
+\item{W, Omega}{This option permits to directly enter the covariance matrix:
+\enumerate{
+  \item \code{W} must be a p.d. (\code{n(k* + m) x n(k* + m)}) matrix or a list
+  of \code{h} matrix (one for each forecast horizon);
+  \item \code{Omega} must be a p.d. (\code{n(k* + m) x n(k* + m)}) matrix or a list
+  of \code{h} matrix (one for each forecast horizon);
+  \item if \code{comb} is different from "\code{w}" or "\code{omega}", \code{W} or \code{Omega} is not used.
+}}
 }
 \value{
 If the parameter \code{keep} is equal to \code{"recf"}, then the function

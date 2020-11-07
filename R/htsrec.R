@@ -7,10 +7,9 @@
 #' Wickramasuriya et al., 2019), or the equivalent structural approach by Hyndman
 #' et al. (2011). Moreover, the classic bottom-up approach is available.
 #'
-#' @usage htsrec(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
+#' @usage htsrec(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
 #'        type = "M", sol = "direct", nn = FALSE, keep = "list",
-#'        settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
-#'        eps_rel = 1e-5, polish_refine_iter = 100, polish=TRUE))
+#'        settings = osqpSettings(), bounds = NULL, W = NULL)
 #'
 #' @param basef (\code{h x n}) matrix of base forecasts to be reconciled;
 #' \code{h} is the forecast horizon and \code{n} is the total number of time series.
@@ -37,9 +36,10 @@
 #' @param nb Number of bottom time series; if \code{C} is present, \code{nb} is not used.
 #' @param W This option permits to directly enter the covariance matrix:
 #'   \enumerate{
-#'     \item \code{W} must be a p.d. (\code{n x n}) matrix;
+#'     \item \code{W} must be a p.d. (\code{n x n}) matrix or a list of \code{h} matrix (one for each forecast horizon);
 #'     \item if \code{comb} is different from "\code{w}", \code{W} is not used.
 #'   }
+#' If you want to reconcile h step
 #' @param mse Logical value: \code{TRUE} (\emph{default}) calculates the
 #' covariance matrix of the in-sample residuals (when necessary) according to the original
 #' \pkg{hts} and \pkg{thief} formulation: no mean correction, T as denominator.
@@ -59,6 +59,8 @@
 #' are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 #' \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
 #' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).
+#' @param bounds (\code{n x 2}) matrix with bounds on the variables: the first column is the lower bound,
+#' and the second column is the upper bound
 #'
 #' @details
 #' In case of non-negativity constraints, there are two ways:
@@ -142,15 +144,24 @@
 #'
 #' @import Matrix osqp methods
 #'
-htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
+htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
                    type = "M", sol = "direct", nn = FALSE, keep = "list",
-                   settings = osqpSettings(
-                     verbose = FALSE, eps_abs = 1e-5, eps_rel = 1e-5,
-                     polish_refine_iter = 100, polish = TRUE
-                   )) {
-  if (missing(comb)) {
-    stop("The argument comb is not specified.")
+                   settings = osqpSettings(), bounds = NULL, W = NULL) {
+
+  if(missing(comb)){
+    stop("The argument comb is not specified.", call. = FALSE)
+  }else if(comb != "w"){
+    W <-  NULL
   }
+
+  UseMethod("htsrec", W)
+}
+
+#' @export
+htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
+                           type = "M", sol = "direct", nn = FALSE, keep = "list",
+                           settings = osqpSettings(), bounds = NULL, W) {
+
   comb <- match.arg(comb, c("bu", "ols", "struc", "wls", "shr", "sam", "w"))
 
   type <- match.arg(type, c("M", "S"))
@@ -158,7 +169,7 @@ htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
 
   # base forecasts condition
   if (missing(basef)) {
-    stop("The argument basef is not specified.")
+    stop("The argument basef is not specified.", call. = FALSE)
   }
   if (NCOL(basef) == 1) {
     basef <- t(basef)
@@ -242,42 +253,42 @@ htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
   }
 
   switch(comb,
-    bu = {
-      if (n == nb) {
-        outf <- basef %*% t(S)
-      } else {
-        outf <- basef[, (na + 1):n] %*% t(S)
-      }
+         bu = {
+           if (n == nb) {
+             outf <- basef %*% t(S)
+           } else {
+             outf <- basef[, (na + 1):n] %*% t(S)
+           }
 
-      rownames(outf) <- paste("h", 1:NROW(outf), sep = "")
-      colnames(outf) <- if (is.null(colnames(basef))) paste("serie", 1:n, sep = "") else colnames(basef)
+           rownames(outf) <- paste("h", 1:NROW(outf), sep = "")
+           colnames(outf) <- if (is.null(colnames(basef))) paste("serie", 1:n, sep = "") else colnames(basef)
 
-      if (keep == "list") {
-        return(list(recf = outf, S = S, M = S %*% cbind(matrix(0, nb, na), diag(nb))))
-      } else {
-        return(outf)
-      }
-    },
-    ols =
-      W <- .sparseDiagonal(n),
-    struc =
-      W <- .sparseDiagonal(x = rowSums(S)),
-    wls = {
-      diagW <- diag(cov_mod(res))
-      W <- .sparseDiagonal(x = diagW)
-    },
-    shr = {
-      W <- shr_mod(res)
-    },
-    sam = {
-      W <- cov_mod(res)
-    },
-    w = {
-      if (missing(W)) {
-        stop("Please, put in option W your covariance matrix", call. = FALSE)
-      }
-      W <- W
-    }
+           if (keep == "list") {
+             return(list(recf = outf, S = S, M = S %*% cbind(matrix(0, nb, na), diag(nb))))
+           } else {
+             return(outf)
+           }
+         },
+         ols =
+           W <- .sparseDiagonal(n),
+         struc =
+           W <- .sparseDiagonal(x = rowSums(S)),
+         wls = {
+           diagW <- diag(cov_mod(res))
+           W <- .sparseDiagonal(x = diagW)
+         },
+         shr = {
+           W <- shr_mod(res)
+         },
+         sam = {
+           W <- cov_mod(res)
+         },
+         w = {
+           if (is.null(W)) {
+             stop("Please, put in option W your covariance matrix", call. = FALSE)
+           }
+           W <- W
+         }
   )
 
   b_pos <- c(rep(0, na), rep(1, nb))
@@ -285,12 +296,12 @@ htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
   if (type == "S") {
     rec_sol <- recoS(
       basef = basef, W = W, S = S, sol = sol, nn = nn, keep = keep,
-      settings = settings, b_pos = b_pos
+      settings = settings, b_pos = b_pos, bounds = bounds
     )
   } else {
     rec_sol <- recoM(
       basef = basef, W = W, H = Ut, sol = sol, nn = nn, keep = keep,
-      settings = settings, b_pos = b_pos
+      settings = settings, b_pos = b_pos, bounds = bounds
     )
   }
 
@@ -321,5 +332,68 @@ htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
       colnames(rec_sol$recf) <- if (is.null(colnames(basef))) paste("serie", 1:n, sep = "") else colnames(basef)
       return(rec_sol)
     }
+  }
+}
+
+
+#' @export
+htsrec.list <- function(basef, comb = "w", ..., W){
+  if(NROW(basef) == 1){
+    stop("Please put in W a matrix, not a list (the forecasts horizon is 1)", call. = FALSE)
+  }
+
+  if(NROW(basef) != length(W) | !is.list(W)){
+    stop("Wh must be a list with ", NROW(basef), " matrices", call. = FALSE)
+  }
+
+  if(comb != "w"){
+    comb <- "w"
+  }
+
+  obj <- Map(function(b, W){
+    htsrec(basef = b,         # vector of base forecasts
+           comb = "w",        # custom combination
+           W = W,             # custom W
+           ...)
+  },
+  # list of base forecasts divide by forecasts horizons
+  b = split(basef, 1:NROW(basef)),
+  # list of W divide by forecasts horizons
+  W = W)
+
+  out <- list()
+  out$recf <- do.call(rbind, lapply(obj, function(x) extract_data(x = x, name = "recf")))
+  colnames(out$recf) <- colnames(basef)
+  rownames(out$recf) <-  paste("h",1:NROW(basef), sep="")
+
+  out$varf <- do.call(rbind, lapply(obj, function(x) extract_data(x = x, name = "varf")))
+  if(all(is.na(out$varf))){
+    out$varf <- NULL
+  }else{
+    colnames(out$varf) <- colnames(basef)
+    rownames(out$varf) <-  paste("h",1:NROW(basef), sep="")
+  }
+  out$info <- do.call(rbind, lapply(obj, function(x) extract_data(x = x, name = "info")))
+  if(all(is.na(out$info))){
+    out$info <- NULL
+  }else{
+    rownames(out$info) <-  paste("h",1:NROW(basef), sep="")
+  }
+
+  return(out)
+}
+
+
+extract_data <- function(x, name){
+  if(is.list(x)){
+    if(is.null(x[[name]])){
+      NA
+    }else{
+      x[[name]]
+    }
+  }else if(name == "recf"){
+    x
+  }else{
+    NA
   }
 }

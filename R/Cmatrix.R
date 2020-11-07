@@ -77,7 +77,7 @@
 #' @import Matrix
 Cmatrix <- function(formula, data, sep = "_", sparse = TRUE, top_label = "Total") {
   if (missing(data)) {
-    stop("The data parameter is required")
+    stop("The data parameter is required", call. = FALSE)
   }
 
   if (NCOL(data) == 1) {

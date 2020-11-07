@@ -36,6 +36,10 @@ ctbu <- function(Bmat, m, C) {
   if (!(is.matrix(C))) stop("C must be a matrix", call. = FALSE)
   if (!(is.matrix(Bmat))) stop("Bmat must be a matrix", call. = FALSE)
 
+  tools <- thf_tools(m)
+  kset <- tools$kset
+  m <- max(kset)
+
   if (NCOL(Bmat) %% m != 0) {
     stop("The number of Bmat's columns doesn't match with m*h", call. = FALSE)
   } else {
@@ -43,7 +47,7 @@ ctbu <- function(Bmat, m, C) {
   }
 
   # Temporal tools for the block matrix Y
-  tools <- thf_tools(m, h = h)
+  tools <- thf_tools(m = kset, h = h)
   kset <- tools$kset
   p <- tools$p
   kt <- tools$kt
@@ -68,9 +72,9 @@ ctbu <- function(Bmat, m, C) {
   out <- as.matrix(out)
 
   rownames(out) <- paste("serie", 1:n, sep = "")
-  colnames(out) <- paste("k", rep(kset, h * rev(kset)), "h",
+  colnames(out) <- paste("k", rep(kset, h * (m/kset)), "h",
     do.call("c", as.list(sapply(
-      rev(kset) * h,
+      (m/kset) * h,
       function(x) seq(1:x)
     ))),
     sep = ""

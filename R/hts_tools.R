@@ -30,9 +30,16 @@
 #'
 hts_tools <- function(C, h = 1, Ut, nb, sparse = TRUE) {
   if (missing(C)) {
+    if(missing(Ut) | missing(nb)){
+      stop("the argument C (or Ut AND nb) is not specified", call. = FALSE)
+    }
     n <- ncol(Ut)
     na <- n - nb
   } else {
+    if (!(is.matrix(C) | is(C, "Matrix"))){
+      stop("C must be a matrix.", call. = FALSE)
+    }
+
     nb <- ncol(C)
     na <- nrow(C)
     n <- nb + na

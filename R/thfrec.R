@@ -7,14 +7,14 @@
 #' structural approach by Hyndman et al. (2011). Moreover, the classic
 #' bottom-up approach is available.
 #'
-#' @usage thfrec(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
+#' @usage thfrec(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
 #'        type = "M", sol = "direct", nn = FALSE, keep = "list",
-#'        settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
-#'        eps_rel = 1e-5, polish_refine_iter = 100, polish=TRUE))
+#'        settings = osqpSettings(), bounds = NULL, Omega = NULL)
 #'
-#' @param basef Vector of base forecasts to be reconciled, containing the forecasts
+#' @param basef (\code{h(k* + m) x 1}) vector of base forecasts to be reconciled, containing the forecasts
 #' at all the needed temporal frequencies ordered as [lowest_freq' ...  highest_freq']'.
-#' @param m Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).
+#' @param m Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \code{m}),
+#' or a subset of the \code{p} factors of \code{m}.
 #' @param comb Type of the reconciliation. Except for bottom up, all other options
 #' correspond to a different (\code{(k* + m) x (k* + m)}) covariance matrix,
 #' \code{k*} is the sum of (\code{p-1}) factors of \code{m} (excluding \code{m}):
@@ -39,7 +39,8 @@
 #' \code{"shr",} \code{"sam"\}}.
 #' @param Omega This option permits to directly enter the covariance matrix:
 #' \enumerate{
-#'   \item \code{Omega} must be a p.d. (\code{(k* + m) x (k* + m)}) matrix;
+#'   \item \code{Omega} must be a p.d. (\code{(k* + m) x (k* + m)}) matrix or a list
+#'   of \code{h} matrix (one for each forecast horizon);
 #'   \item if \code{comb} is different from "\code{omega}", \code{Omega} is not used.
 #' }
 #' @param mse Logical value: \code{TRUE} (\emph{default}) calculates the
@@ -61,6 +62,8 @@
 #' are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 #' \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
 #' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).
+#' @param bounds (\code{(k* + m) x 2}) matrix with bounds on the variables: the first column is the lower bound,
+#' and the second column is the upper bound.
 #'
 #' @details
 #' In case of non-negativity constraints, there are two ways:
@@ -139,18 +142,30 @@
 #'
 #' @import Matrix osqp
 #'
-thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
+thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
                    type = "M", sol = "direct", nn = FALSE, keep = "list",
-                   settings = osqpSettings(
-                     verbose = FALSE, eps_abs = 1e-5, eps_rel = 1e-5,
-                     polish_refine_iter = 100, polish = TRUE
-                   )) {
+                   settings = osqpSettings(), bounds = NULL, Omega = NULL) {
+
+  if(missing(comb)){
+    stop("The argument comb is not specified.", call. = FALSE)
+  }else if(comb != "omega"){
+    Omega <-  NULL
+  }
+
+  UseMethod("thfrec", Omega)
+}
+
+#' @export
+thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
+                           type = "M", sol = "direct", nn = FALSE, keep = "list",
+                           settings = osqpSettings(), bounds = NULL, Omega) {
   # m condition
   if (missing(m)) {
-    stop("The argument m is not specified")
+    stop("The argument m is not specified", call. = FALSE)
   }
   tools <- thf_tools(m)
   kset <- tools$kset
+  m <- max(kset)
   p <- tools$p
   kt <- tools$kt
   ks <- tools$ks
@@ -160,9 +175,6 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
   R <- tools$R
   Zt <- tools$Zt
 
-  if (missing(comb)) {
-    stop("The argument comb is not specified")
-  }
   comb <- match.arg(comb, c(
     "bu", "ols", "struc", "wlsv", "wlsh", "acov",
     "strar1", "sar1", "har1", "shr", "sam", "omega"
@@ -172,7 +184,7 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
 
   # base forecasts condition
   if (missing(basef)) {
-    stop("The argument basef is not specified")
+    stop("The argument basef is not specified", call. = FALSE)
   }
 
   if (NCOL(basef) != 1) {
@@ -185,7 +197,7 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
     Dh <- Dmat(h = h, kset = kset, n = 1)
     BASEF <- matrix(basef, h, m, byrow = T)
   } else if (length(basef) %% kt != 0) {
-    stop("basef vector has a number of elemnts not in line with the frequency of the series", call. = FALSE)
+    stop("basef vector has a number of elements not in line with the frequency of the series", call. = FALSE)
   } else {
     h <- length(basef) / kt
     Dh <- Dmat(h = h, kset = kset, n = 1)
@@ -208,10 +220,6 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
     N <- length(res) / kt
     DN <- Dmat(h = N, kset = kset, n = 1)
     RES <- matrix(DN %*% res, nrow = N, byrow = T)
-
-    # OLD style:
-    # index_r <- cumsum(rev(kset*N))
-    # INDEX_r <- cbind(c(1,index_r[1:length(kset[-1])]+1),index_r)
 
     # singularity problems
     if (comb == "sam" & N < kt) {
@@ -247,9 +255,9 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
 
       outf <- as.vector(t(Dh) %*% as.vector(t(OUTF)))
 
-      outf <- stats::setNames(outf, paste("k", rep(kset, h * rev(kset)), "h",
+      outf <- stats::setNames(outf, paste("k", rep(kset, h * (m/kset)), "h",
         do.call("c", as.list(sapply(
-          rev(kset) * h,
+          (m/kset) * h,
           function(x) seq(1:x)
         ))),
         sep = ""
@@ -268,39 +276,39 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
     struc =
       Omega <- .sparseDiagonal(x = rowSums(R)),
     wlsv = {
-      var_freq <- sapply(kset, function(x) cov_mod(res[rep(kset, rev(kset) * N) == x]))
-      Omega <- .sparseDiagonal(x = rep(var_freq, rev(kset)))
+      var_freq <- sapply(kset, function(x) cov_mod(res[rep(kset, (m/kset) * N) == x]))
+      Omega <- .sparseDiagonal(x = rep(var_freq, (m/kset)))
     },
     wlsh = {
       diagO <- diag(cov_mod(RES))
       Omega <- .sparseDiagonal(x = diagO)
     },
     acov = {
-      Omega <- Matrix::bdiag(lapply(kset, function(x) cov_mod(RES[, rep(kset, rev(kset)) == x])))
+      Omega <- Matrix::bdiag(lapply(kset, function(x) cov_mod(RES[, rep(kset, (m/kset)) == x])))
     },
     strar1 = {
-      rho <- lapply(kset, function(x) stats::acf(stats::na.omit(res[rep(kset, rev(kset) * N) == x]),
+      rho <- lapply(kset, function(x) stats::acf(stats::na.omit(res[rep(kset, (m/kset) * N) == x]),
                                                  1, plot = F)$acf[2, 1, 1])
-      expo <- lapply(rev(kset), function(x) toeplitz(1:x) - 1)
+      expo <- lapply((m/kset), function(x) toeplitz(1:x) - 1)
 
       Gam <- Matrix::bdiag(Map(function(x, y) x^y, x = rho, y = expo))
       Ostr2 <- .sparseDiagonal(x = apply(R, 1, sum))^0.5
       Omega <- Ostr2 %*% Gam %*% Ostr2
     },
     sar1 = {
-      rho <- lapply(kset, function(x) stats::acf(stats::na.omit(res[rep(kset, rev(kset) * N) == x]),
+      rho <- lapply(kset, function(x) stats::acf(stats::na.omit(res[rep(kset, (m/kset) * N) == x]),
                                                  1, plot = F)$acf[2, 1, 1])
-      expo <- lapply(rev(kset), function(x) toeplitz(1:x) - 1)
+      expo <- lapply((m/kset), function(x) toeplitz(1:x) - 1)
 
       Gam <- Matrix::bdiag(Map(function(x, y) x^y, x = rho, y = expo))
-      var_freq <- sapply(kset, function(x) cov_mod(res[rep(kset, rev(kset) * N) == x]))
-      Os2 <- .sparseDiagonal(x = rep(var_freq, rev(kset)))^0.5
+      var_freq <- sapply(kset, function(x) cov_mod(res[rep(kset, (m/kset) * N) == x]))
+      Os2 <- .sparseDiagonal(x = rep(var_freq, (m/kset)))^0.5
       Omega <- Os2 %*% Gam %*% Os2
     },
     har1 = {
-      rho <- lapply(kset, function(x) stats::acf(stats::na.omit(res[rep(kset, rev(kset) * N) == x]),
+      rho <- lapply(kset, function(x) stats::acf(stats::na.omit(res[rep(kset, (m/kset) * N) == x]),
                                                  1, plot = F)$acf[2, 1, 1])
-      expo <- lapply(rev(kset), function(x) toeplitz(1:x) - 1)
+      expo <- lapply((m/kset), function(x) toeplitz(1:x) - 1)
 
       Gam <- Matrix::bdiag(Map(function(x, y) x^y, x = rho, y = expo))
       diagO <- diag(cov_mod(RES))
@@ -314,7 +322,7 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
       Omega <- cov_mod(RES)
     },
     omega = {
-      if (missing(Omega)) {
+      if (is.null(Omega)) {
         stop("Please, put in option Omega your covariance matrix", call. = FALSE)
       }
       Omega <- Omega
@@ -326,12 +334,12 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
   if (type == "S") {
     rec_sol <- recoS(
       basef = BASEF, W = Omega, S = R, sol = sol, nn = nn, keep = keep,
-      settings = settings, b_pos = b_pos
+      settings = settings, b_pos = b_pos, bounds = bounds
     )
   } else {
     rec_sol <- recoM(
       basef = BASEF, W = Omega, H = Zt, sol = sol, nn = nn, keep = keep,
-      settings = settings, b_pos = b_pos
+      settings = settings, b_pos = b_pos, bounds = bounds
     )
   }
 
@@ -348,9 +356,9 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
     names_list <- names(rec_sol)
     rec_sol <- rec_sol[names_list[order(match(names_list, names_all_list))]]
 
-    rec_sol$recf <- stats::setNames(rec_sol$recf, paste("k", rep(kset, h * rev(kset)), "h",
+    rec_sol$recf <- stats::setNames(rec_sol$recf, paste("k", rep(kset, h * (m/kset)), "h",
       do.call("c", as.list(sapply(
-        rev(kset) * h,
+        (m/kset) * h,
         function(x) seq(1:x)
       ))),
       sep = ""
@@ -359,9 +367,9 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
   } else {
     if (length(rec_sol) == 1) {
       rec_sol$recf <- as.vector(t(Dh) %*% as.vector(t(rec_sol$recf)))
-      rec_sol$recf <- stats::setNames(rec_sol$recf, paste("k", rep(kset, h * rev(kset)), "h",
+      rec_sol$recf <- stats::setNames(rec_sol$recf, paste("k", rep(kset, h * (m/kset)), "h",
         do.call("c", as.list(sapply(
-          rev(kset) * h,
+          (m/kset) * h,
           function(x) seq(1:x)
         ))),
         sep = ""
@@ -369,9 +377,9 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
       return(rec_sol$recf)
     } else {
       rec_sol$recf <- as.vector(t(Dh) %*% as.vector(t(rec_sol$recf)))
-      rec_sol$recf <- stats::setNames(rec_sol$recf, paste("k", rep(kset, h * rev(kset)), "h",
+      rec_sol$recf <- stats::setNames(rec_sol$recf, paste("k", rep(kset, h * (m/kset)), "h",
         do.call("c", as.list(sapply(
-          rev(kset) * h,
+          (m/kset) * h,
           function(x) seq(1:x)
         ))),
         sep = ""
@@ -381,14 +389,72 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
   }
 }
 
-# # outM is matrix of reconcile forecasts
-# # m is the frequency of disagregate serie
-# # k is the factors of m (excluding m)
-# # return a vector [lowest_freq' ...  highest_freq']'
-# matrix_out <- function(outM, kset){
-#   index <- cumsum(rev(kset))
-#   INDEX <- cbind(c(1,index[1:length(kset[-1])]+1),index)
-#   out <- apply(INDEX,1,function(x) as.vector(t(outM[,x[1]:x[2]])))
-#   out <- do.call("c",out)
-#   return(out)
-# }
+#' @export
+thfrec.list <- function(basef, m, ..., Omega){
+  if(missing(m)){
+    stop("The argument m is not specified", call. = FALSE)
+  }
+
+  # Prepare basef
+  tools <- thf_tools(m=m)
+  m <- max(tools$kset)
+  h <- length(basef) / tools$kt
+  if(h == 1){
+    stop("You don't need thfrech for h = 1, please use thfrec()", call. = FALSE)
+  }
+
+  Dh <- Dmat(h = h, kset = tools$kset, n = 1)
+  baseh <- matrix(Dh%*%basef, nrow = h, byrow = T)
+
+  if(h != length(Omega) | !is.list(Omega)){
+    stop("Omega must be a list with ", h, " matrices", call. = FALSE)
+  }
+  # Reconciliation
+  obj <- Map(function(b, Om){
+    thfrec(basef = b,         # vector of base forecasts
+           comb = "omega",    # custom combination
+           Omega = Om,        # custom Omega
+           m = tools$kset,
+           ...)
+  },
+  # list of base forecasts divide by forecasts horizons
+  b = split(baseh, 1:NROW(baseh)),
+  # list of Omega divide by forecasts horizons
+  Om = Omega)
+
+  out <- list()
+
+  out$recf <- do.call(rbind, lapply(obj, function(x) extract_data(x = x, name = "recf")))
+  out$recf <- as.vector(t(Dh) %*% as.vector(t(out$recf)))
+  out$recf <- stats::setNames(out$recf, paste("k", rep(tools$kset, h * (m/tools$kset)), "h",
+                                              do.call("c", as.list(sapply(
+                                                (m/tools$kset) * h,
+                                                function(x) seq(1:x)
+                                              ))),
+                                              sep = ""
+  ))
+
+  out$varf <- do.call(rbind, lapply(obj, function(x) extract_data(x = x, name = "varf")))
+  if(all(is.na(out$varf))){
+    out$varf <- NULL
+  }else{
+    out$varf <- as.vector(t(Dh) %*% as.vector(t(out$varf)))
+    out$varf <- stats::setNames(out$varf, paste("k", rep(tools$kset, h * (m/tools$kset)), "h",
+                                                do.call("c", as.list(sapply(
+                                                  (m/tools$kset) * h,
+                                                  function(x) seq(1:x)
+                                                ))),
+                                                sep = ""
+    ))
+    out$varf <- out$varf[!is.na(out$varf)]
+  }
+
+  out$info <- do.call(rbind, lapply(obj, function(x) extract_data(x = x, name = "info")))
+  if(all(is.na(out$info))){
+    out$info <- NULL
+  }else{
+    rownames(out$info) <-  paste("h",1:NROW(baseh), sep="")
+  }
+
+  return(out)
+}

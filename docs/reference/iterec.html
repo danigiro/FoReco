@@ -96,7 +96,7 @@ The iterative procedure allows the user to get non-negative reconciled forecasts
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -192,12 +192,8 @@ the cross-sectional reconciliation then.
 The iterative procedure allows the user to get non-negative reconciled forecasts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>iterec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>C</span>, <span class='va'>thf_comb</span>, <span class='va'>hts_comb</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, <span class='va'>res</span>, <span class='va'>W</span>,
-       <span class='va'>Omega</span>, mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>,type <span class='op'>=</span> <span class='st'>"M"</span>,
-       sol <span class='op'>=</span> <span class='st'>"direct"</span>, nn <span class='op'>=</span> <span class='cn'>FALSE</span>, maxit <span class='op'>=</span> <span class='fl'>100</span>, tol <span class='op'>=</span> <span class='fl'>1e-5</span>,
-       start_rec <span class='op'>=</span> <span class='st'>"thf"</span>, note <span class='op'>=</span> <span class='cn'>TRUE</span>, plot <span class='op'>=</span> <span class='st'>"mti"</span>,
-       settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, eps_abs <span class='op'>=</span> <span class='fl'>1e-5</span>,
-       eps_rel <span class='op'>=</span> <span class='fl'>1e-5</span>, polish_refine_iter <span class='op'>=</span> <span class='fl'>100</span>, polish <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>iterec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>thf_comb</span>, <span class='va'>hts_comb</span>, <span class='va'>res</span>, itmax <span class='op'>=</span> <span class='fl'>100</span>, tol <span class='op'>=</span> <span class='fl'>1e-5</span>,
+       start_rec <span class='op'>=</span> <span class='st'>"thf"</span>, note <span class='op'>=</span> <span class='cn'>TRUE</span>, plot <span class='op'>=</span> <span class='st'>"mti"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,34 +207,10 @@ and <code>h</code> is the forecast horizon. Each row identifies, a time series, 
 are ordered as [lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
-      <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
-    </tr>
-    <tr>
-      <th>C</th>
-      <td><p>(<code>na x nb</code>) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.</p></td>
-    </tr>
-    <tr>
-      <th>thf_comb</th>
-      <td><p>Type of the (<code>(k* + m) x (k* + m)</code>) covariance matrix to be used in
-the temporal reconciliation, see more in <code>comb</code> param of <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>hts_comb</th>
-      <td><p>Type of the (<code>n x n</code>) covariance matrix to be used in the
-cross-sectional reconciliation, see more in <code>comb</code> param of <code><a href='htsrec.html'>htsrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>Ut</th>
-      <td><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\((\textbf{U}'\textbf{Y} = \mathbf{0})\) spanning the null space valid for the reconciled
-forecasts. It can be used instead of parameter <code>C</code>, but in this case <code>nb</code> (n = na + nb) is needed. If
-the hierarchy admits a structural representation, <code>Ut</code> has dimension (<code>na x n</code>).</p></td>
-    </tr>
-    <tr>
-      <th>nb</th>
-      <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code> is not used.</p></td>
+      <th>hts_comb, thf_comb</th>
+      <td><p>Type of covariance matrix (respectively (<code>n x n</code>) and
+(<code>(k* + m) x (k* + m)</code>)) to be used in the cross-sectional and temporal reconciliation,
+see more in <code>comb</code> param of <code><a href='htsrec.html'>htsrec</a></code> and <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
     </tr>
     <tr>
       <th>res</th>
@@ -250,47 +222,8 @@ each variable (row), needed to estimate the covariance matrix when <code>hts_com
 <code>"shr",</code> <code>"sam"}</code>. The row must be in the same order as <code>basef</code>.</p></td>
     </tr>
     <tr>
-      <th>W</th>
-      <td><p>This option permits to directly enter the covariance matrix in the
-cross-sectional reconciliation, see more in <code>W</code> param of <code><a href='htsrec.html'>htsrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>Omega</th>
-      <td><p>This option permits to directly enter the covariance matrix in the
-reconciliation through temporal hierarchies, see more in <code>Omega</code> param of <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>mse</th>
-      <td><p>Logical value: <code>TRUE</code> (<em>default</em>) calculates the
-covariance matrix of the in-sample residuals (when necessary) according to the original
-<span class="pkg">hts</span> and <span class="pkg">thief</span> formulation: no mean correction, T as denominator.</p></td>
-    </tr>
-    <tr>
-      <th>corpcor</th>
-      <td><p>Logical value: <code>TRUE</code> if <span class="pkg">corpcor</span> (Schäfer et
-al., 2017) must be used to shrink the sample covariance matrix according to
-Schäfer and Strimmer (2005), otherwise the function uses the same
-implementation as package <span class="pkg">hts</span>.</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>Approach used to compute the reconciled forecasts: <code>"M"</code> for
-the projection approach with matrix M (<em>default</em>), or <code>"S"</code> for the
-structural approach with summing matrix S.</p></td>
-    </tr>
-    <tr>
-      <th>sol</th>
-      <td><p>Solution technique for the reconciliation problem: either <code>"direct"</code> for the direct
-solution or <code>"osqp"</code> for the numerical solution (solving a linearly constrained quadratic
-program using <code><a href='https://rdrr.io/pkg/osqp/man/solve_osqp.html'>solve_osqp</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>nn</th>
-      <td><p>Logical value: <code>TRUE</code> if non-negative reconciled forecasts are wished.</p></td>
-    </tr>
-    <tr>
-      <th>maxit</th>
-      <td><p>Max number of iteration (<code>100</code>, <em>default</em>).</p></td>
+      <th>itmax</th>
+      <td><p>Max number of iteration (<code>100</code>, <em>default</em>) (old version <code>maxit</code>).</p></td>
     </tr>
     <tr>
       <th>tol</th>
@@ -314,11 +247,10 @@ otherwise no note is produced (also no plot).</p></td>
 forecasts iteration i and i-1, <code>"all"</code> all the plots.</p></td>
     </tr>
     <tr>
-      <th>settings</th>
-      <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>). The default options
-are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
-<code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
-<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2019).</p></td>
+      <th>...</th>
+      <td><p>any other options useful for <code><a href='htsrec.html'>htsrec</a></code> and
+<code><a href='thfrec.html'>thfrec</a></code>, e.g. <code>m</code>, <code>C</code> (or <code>Ut</code> and <code>nb</code>),
+<code>nn</code> (for non negativity reconciliation only at first step), ...</p></td>
     </tr>
     </table>
 
@@ -385,10 +317,11 @@ Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
-<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>iterec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, note<span class='op'>=</span><span class='cn'>FALSE</span>,
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>iterec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, note<span class='op'>=</span><span class='cn'>TRUE</span>,
   m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>, thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>,
   hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span>, start_rec <span class='op'>=</span> <span class='st'>"thf"</span><span class='op'>)</span>
-<span class='co'># }</span>
+</div><div class='output co'>#&gt; <span class='message'>---------------------------------------</span></div><div class='output co'>#&gt; <span class='message'>Iter #  (Cross-sectional incoherence) (Temporal incoherence)</span></div><div class='output co'>#&gt; <span class='message'>thf: 000  (1067.99485989205)  (1426.5513133205)</span></div><div class='output co'>#&gt; <span class='message'>thf: 001  (664.709318459475)  (564.414554571728)</span></div><div class='output co'>#&gt; <span class='message'>thf: 002  (229.380269405745)  (118.752261421519)</span></div><div class='output co'>#&gt; <span class='message'>thf: 003  (24.9431940889919)  (13.6060386528783)</span></div><div class='output co'>#&gt; <span class='message'>thf: 004  (5.37854848829375)  (2.21960789386029)</span></div><div class='output co'>#&gt; <span class='message'>thf: 005  (0.37251625538498)  (0.191544984783356)</span></div><div class='output co'>#&gt; <span class='message'>thf: 006  (0.0972170752758785)  (0.0439395488213421)</span></div><div class='output co'>#&gt; <span class='message'>thf: 007  (0.00744783958359108)  (0.00326627927896794)</span></div><div class='output co'>#&gt; <span class='message'>thf: 008  (0.00119733279655776)  (0.000555450468183949)</span></div><div class='output co'>#&gt; <span class='message'>thf: 009  (0.000118053594384548)  (6.68458906503133e-05)</span></div><div class='output co'>#&gt; <span class='message'>thf: 010  (3.40054562144587e-05)  (1.5193330327179e-05)</span></div><div class='output co'>#&gt; <span class='message'>thf: Convergence (starting from thf) achieved at iteration number 11! </span>
+#&gt; <span class='message'>thf: Temporal incoherence 1.67142842144585e-06 &lt; 1e-05 tolerance</span></div><div class='output co'>#&gt; <span class='message'>---------------------------------------</span></div><div class='img'><img src='iterec-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 </div></pre>
   </div>

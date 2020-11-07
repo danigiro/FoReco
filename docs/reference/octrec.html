@@ -88,7 +88,7 @@ The reconciled forecasts are calculated either through a projection approach
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -176,11 +176,10 @@ The reconciled forecasts are calculated either through a projection approach
 (Byron, 1978), or the equivalent structural approach by Hyndman et al. (2011).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>octrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>C</span>, <span class='va'>comb</span>, <span class='va'>res</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, <span class='va'>W</span>, <span class='va'>Sstruc</span>,
+    <pre class="usage"><span class='fu'>octrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>C</span>, <span class='va'>comb</span>, <span class='va'>res</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, <span class='va'>Sstruc</span>,
        mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>, type <span class='op'>=</span> <span class='st'>"M"</span>, sol <span class='op'>=</span> <span class='st'>"direct"</span>,
-       nn <span class='op'>=</span> <span class='cn'>FALSE</span>, keep <span class='op'>=</span> <span class='st'>"list"</span>,
-       settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, eps_abs <span class='op'>=</span> <span class='fl'>1e-5</span>,
-       eps_rel <span class='op'>=</span> <span class='fl'>1e-5</span>, polish_refine_iter <span class='op'>=</span> <span class='fl'>100</span>, polish<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></pre>
+       nn <span class='op'>=</span> <span class='cn'>FALSE</span>, keep <span class='op'>=</span> <span class='st'>"list"</span>, settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span><span class='op'>)</span>,
+       bounds <span class='op'>=</span> <span class='cn'>NULL</span>, W <span class='op'>=</span> <span class='cn'>NULL</span>, Omega <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,7 +194,8 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
+      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, <code>m</code>),
+or a subset of the <code>p</code> factors of <code>m</code>.</p></td>
     </tr>
     <tr>
       <th>C</th>
@@ -219,7 +219,8 @@ of variables:</p><ul>
 <li><p><b>Ssam</b> (Series cross-covariance matrix);</p></li>
 <li><p><b>shr</b>  (Shrunk cross-covariance matrix);</p></li>
 <li><p><b>sam</b> (Sample cross-covariance matrix);</p></li>
-<li><p><b>w</b> use your personal matrix W in param <code>W</code>.</p></li>
+<li><p><b>w</b> use your personal matrix W in param <code>W</code>;</p></li>
+<li><p><b>omega</b> use your personal matrix Omega in param <code>Omega</code>.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -240,13 +241,6 @@ the hierarchy admits a structural representation, <code>Ut</code> has dimension 
     <tr>
       <th>nb</th>
       <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code> is not used.</p></td>
-    </tr>
-    <tr>
-      <th>W</th>
-      <td><p>This option permits to directly enter the covariance matrix:</p><ol>
-<li><p><code>W</code> must be a p.d. (<code>n(k* + m) x n(k* + m)</code>) matrix;</p></li>
-<li><p>if <code>comb</code> is different from "<code>w</code>", <code>W</code> is not used.</p></li>
-</ol></td>
     </tr>
     <tr>
       <th>Sstruc</th>
@@ -292,6 +286,21 @@ program using <code><a href='https://rdrr.io/pkg/osqp/man/solve_osqp.html'>solve
 are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
 <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
 <a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2019).</p></td>
+    </tr>
+    <tr>
+      <th>bounds</th>
+      <td><p>(<code>n(k* + m) x 2</code>) matrix with bounds on the variables: the first column is the lower bound,
+and the second column is the upper bound.</p></td>
+    </tr>
+    <tr>
+      <th>W, Omega</th>
+      <td><p>This option permits to directly enter the covariance matrix:</p><ol>
+<li><p><code>W</code> must be a p.d. (<code>n(k* + m) x n(k* + m)</code>) matrix or a list
+  of <code>h</code> matrix (one for each forecast horizon);</p></li>
+<li><p><code>Omega</code> must be a p.d. (<code>n(k* + m) x n(k* + m)</code>) matrix or a list
+  of <code>h</code> matrix (one for each forecast horizon);</p></li>
+<li><p>if <code>comb</code> is different from "<code>w</code>" or "<code>omega</code>", <code>W</code> or <code>Omega</code> is not used.</p></li>
+</ol></td>
     </tr>
     </table>
 

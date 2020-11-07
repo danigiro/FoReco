@@ -4,10 +4,7 @@
 \alias{cstrec}
 \title{Heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation}
 \usage{
-cstrec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega,
-       mse = TRUE, corpcor = FALSE, nn = FALSE,
-       settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
-       eps_rel = 1e-5, polish_refine_iter = 100, polish = TRUE))
+cstrec(basef, thf_comb, hts_comb, res, ...)
 }
 \arguments{
 \item{basef}{(\code{n x h(k* + m)}) matrix of base forecasts to be reconciled;
@@ -16,23 +13,9 @@ cstrec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega,
 and \code{h} is the forecast horizon. Each row identifies, a time series, and the forecasts
 are ordered as [lowest_freq' ...  highest_freq']'.}
 
-\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).}
-
-\item{C}{(\code{na x nb}) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.}
-
-\item{thf_comb}{Type of the (\code{(k* + m) x (k* + m)}) covariance matrix to be used in
-the temporal reconciliation, see more in \code{comb} param of \code{\link[FoReco]{thfrec}}.}
-
-\item{hts_comb}{Type of the (\code{n x n}) covariance matrix to be used in the
-cross-sectional reconciliation, see more in \code{comb} param of \code{\link[FoReco]{htsrec}}.}
-
-\item{Ut}{Zero constraints cross-sectional (contemporaneous) kernel matrix
-\eqn{(\textbf{U}'\textbf{Y} = \mathbf{0})}{} spanning the null space valid for the reconciled
-forecasts. It can be used instead of parameter \code{C}, but in this case \code{nb} (n = na + nb) is needed. If
-the hierarchy admits a structural representation, \code{Ut} has dimension (\code{na x n}).}
-
-\item{nb}{Number of bottom time series; if \code{C} is present, \code{nb} is not used.}
+\item{hts_comb, thf_comb}{Type of covariance matrix (respectively (\code{n x n}) and
+(\code{(k* + m) x (k* + m)})) to be used in the cross-sectional and temporal reconciliation,
+see more in \code{comb} param of \code{\link[FoReco]{htsrec}} and \code{\link[FoReco]{thfrec}}.}
 
 \item{res}{(\code{n x N(k* + m)}) matrix containing the residuals at all the
 temporal frequencies, ordered [lowest_freq' ...  highest_freq']' (columns) for
@@ -41,29 +24,9 @@ each variable (row), needed to estimate the covariance matrix when \code{hts_com
 \code{"wlsh",} \code{"acov",} \code{"strar1",} \code{"sar1",} \code{"har1",}
 \code{"shr",} \code{"sam"\}}. The rows must be in the same order as \code{basef}.}
 
-\item{W}{This option permits to directly enter the covariance matrix in the
-cross-sectional reconciliation, see more in \code{W} param of \code{\link[FoReco]{htsrec}}.}
-
-\item{Omega}{This option permits to directly enter the covariance matrix in the
-reconciliation through temporal hierarchies, see more in \code{Omega} param of \code{\link[FoReco]{thfrec}}.}
-
-\item{mse}{Logical value: \code{TRUE} (\emph{default}) calculates the
-covariance matrix of the in-sample residuals (when necessary) according to the original
-\pkg{hts} and \pkg{thief} formulation: no mean correction, T as denominator.}
-
-\item{corpcor}{Logical value: \code{TRUE} if \pkg{corpcor} (\enc{Schäfer}{Schafer} et
-al., 2017) must be used to shrink the sample covariance matrix according to
-\enc{Schäfer}{Schafer} and Strimmer (2005), otherwise the function uses the same
-implementation as package \pkg{hts}.}
-
-\item{nn}{Logical value, \code{TRUE} if non-negative reconciled forecasts are wished. \strong{Warning},
-the two-step heuristic reconciliation allows non negativity constraints only in the first step.
-This means that non-negativity is not guaranteed in the final reconciled values.}
-
-\item{settings}{Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
-are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
-\code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).}
+\item{...}{any other options useful for \code{\link[FoReco]{htsrec}} and
+\code{\link[FoReco]{thfrec}}, e.g. \code{m}, \code{C} (or \code{Ut} and \code{nb}),
+\code{nn} (for non negativity reconciliation only at first step), ...}
 }
 \value{
 The function returns a list with two elements:

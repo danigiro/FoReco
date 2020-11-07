@@ -1,8 +1,18 @@
 # basef: base forecasts (h x col)
 #    W: covariance
 #    H: Ht in ctr, Zt in thf e Ut in hts
-recoM <- function(basef, W, H, sol = "direct", nn = FALSE, settings, b_pos = NULL, keep = "list") {
+recoM <- function(basef, W, H, sol = "direct", nn = FALSE, settings, b_pos = NULL,
+                  keep = "list", bounds = NULL) {
+
   sol <- match.arg(sol, c("direct", "osqp"))
+
+  if(!is.null(bounds)){
+    if(!is.matrix(bounds) | NCOL(bounds) != 2 | NROW(bounds) != NCOL(basef)){
+      stop("bounds must be a matrix (", NCOL(basef), "x2)", call. = FALSE)
+    } else {
+      sol <- "osqp"
+    }
+  }
 
   switch(sol,
     direct = {
@@ -24,7 +34,7 @@ recoM <- function(basef, W, H, sol = "direct", nn = FALSE, settings, b_pos = NUL
 
           rec <- apply(basef, 1, function(x) {
             M_osqp(
-              y = x, H = H, P = P, nn = nn,
+              y = x, H = H, P = P, nn = nn, bounds = bounds,
               settings = settings, b_pos = b_pos
             )
           })
@@ -64,7 +74,7 @@ recoM <- function(basef, W, H, sol = "direct", nn = FALSE, settings, b_pos = NUL
 
       rec <- apply(basef, 1, function(x) {
         M_osqp(
-          y = x, H = H, P = P, nn = nn,
+          y = x, H = H, P = P, nn = nn, bounds = bounds,
           settings = settings, b_pos = b_pos
         )
       })
@@ -82,8 +92,17 @@ recoM <- function(basef, W, H, sol = "direct", nn = FALSE, settings, b_pos = NUL
   return(out)
 }
 
-recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NULL, keep = "list") {
+recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NULL,
+                  keep = "list", bounds = NULL) {
   sol <- match.arg(sol, c("direct", "osqp"))
+
+  if(!is.null(bounds)){
+    if(!is.matrix(bounds) | NCOL(bounds) != 2 | NROW(bounds) != NCOL(basef)){
+      stop("bounds must be a matrix (", NCOL(basef), "x2)", call. = FALSE)
+    } else {
+      sol <- "osqp"
+    }
+  }
 
   switch(sol,
     direct = {
@@ -101,7 +120,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
             q <- (-1) * t(Wm1 %*% S)
             rec <- apply(basef, 1, function(x) {
               S_osqp(
-                y = x, S = S, P = P, q = q, nn = nn,
+                y = x, S = S, P = P, q = q, nn = nn, bounds = bounds,
                 settings = settings, b_pos = b_pos
               )
             })
@@ -144,7 +163,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
             q <- (-1) * t(Q)
             rec <- apply(basef, 1, function(x) {
               S_osqp(
-                y = x, S = S, P = P, q = q, nn = nn,
+                y = x, S = S, P = P, q = q, nn = nn, bounds = bounds,
                 settings = settings, b_pos = b_pos
               )
             })
@@ -187,7 +206,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
 
       rec <- apply(basef, 1, function(x) {
         S_osqp(
-          y = x, S = S, q = q, P = P, nn = nn,
+          y = x, S = S, q = q, P = P, nn = nn, bounds = bounds,
           settings = settings, b_pos = b_pos
         )
       })
@@ -207,9 +226,11 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
 }
 
 # y = riga di basef
-M_osqp <- function(y, P, H, nn, settings, b_pos) {
+M_osqp <- function(y, P = NULL, H = NULL, nn = NULL, settings = NULL,
+                   b_pos = NULL, bounds = NULL) {
   c <- ncol(H)
   r <- nrow(H)
+  # Linear constrains H = 0
   l <- rep(0, r)
   u <- rep(0, r)
   A <- H
@@ -217,9 +238,25 @@ M_osqp <- function(y, P, H, nn, settings, b_pos) {
   q <- (-1) * t(P) %*% as.vector(y)
 
   if (nn) {
+    # bts >= 0
     A <- rbind(A, Diagonal(c)[b_pos == 1, ])
     l <- c(l, rep(0, sum(b_pos)))
     u <- c(u, rep(Inf, sum(b_pos)))
+  }
+
+  if(!is.null(bounds)){
+    bounds_rows <- rowSums(abs(bounds) == Inf) < 2
+    A <- rbind(A, Diagonal(c)[bounds_rows, ])
+    l <- c(l, bounds[bounds_rows, 1, drop = TRUE])
+    u <- c(u, bounds[bounds_rows, 2, drop = TRUE])
+  }
+
+  if(length(settings)==0){
+    settings = osqpSettings(verbose = FALSE,
+                            eps_abs = 1e-5,
+                            eps_rel = 1e-5,
+                            polish_refine_iter = 100,
+                            polish=TRUE)
   }
 
   rec <- solve_osqp(P, q, A, l, u, settings)
@@ -271,7 +308,8 @@ extract <- function(l, num) {
 # }
 
 # y = riga di basef
-S_osqp <- function(y, q, P, S, nn, settings, b_pos) {
+S_osqp <- function(y, q = NULL, P = NULL, S = NULL, nn = NULL,
+                   settings = NULL, b_pos = NULL, bounds = NULL) {
   q <- q %*% y
   r <- nrow(S)
   c <- sum(b_pos)
@@ -283,6 +321,21 @@ S_osqp <- function(y, q, P, S, nn, settings, b_pos) {
     A <- .sparseDiagonal(c)
     l <- rep(0, sum(b_pos))
     u <- rep(Inf, sum(b_pos))
+  }
+
+  if(!is.null(bounds)){
+    bounds_rows <- rowSums(abs(bounds) == Inf) < 2
+    A <- .sparseDiagonal(c)[bounds_rows, ]
+    l <- bounds[bounds_rows, 1, drop = TRUE]
+    u <- bounds[bounds_rows, 2, drop = TRUE]
+  }
+
+  if(length(settings)==0){
+    settings = osqpSettings(verbose = FALSE,
+                            eps_abs = 1e-5,
+                            eps_rel = 1e-5,
+                            polish_refine_iter = 100,
+                            polish=TRUE)
   }
 
   rec <- solve_osqp(P, q, A, l, u, settings)
@@ -311,14 +364,14 @@ solveLin <- function(msx, mdx) {
     # browser()
     warning(
       "An error in LU decomposition occurred, with the following message:\n",
-      cond$message, "\n Trying QR decomposition instead..."
+      cond$message, "\n Trying QR decomposition instead...", call. = FALSE
     )
     tryCatch(solve(qr(msx), mdx), error = function(cond) {
 
       # browser()
       warning(
         "An error in QR decomposition occurred, with the following message:\n",
-        cond$message, "\n Trying chol decomposition instead..."
+        cond$message, "\n Trying chol decomposition instead...", call. = FALSE
       )
       backsolve(chol(msx), mdx)
     })

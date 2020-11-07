@@ -94,7 +94,7 @@ fulfilling both cross-sectional and temporal constraints." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -188,10 +188,7 @@ cross-sectionally reconcile the forecasts obtained at step 1, by this way
 fulfilling both cross-sectional and temporal constraints.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>C</span>, <span class='va'>thf_comb</span>, <span class='va'>hts_comb</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, <span class='va'>res</span>, <span class='va'>W</span>, <span class='va'>Omega</span>,
-       mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>, avg<span class='op'>=</span><span class='st'>"KA"</span>, nn<span class='op'>=</span> <span class='cn'>FALSE</span>,
-       settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, eps_abs <span class='op'>=</span> <span class='fl'>1e-5</span>,
-       eps_rel <span class='op'>=</span> <span class='fl'>1e-5</span>, polish_refine_iter <span class='op'>=</span> <span class='fl'>100</span>, polish <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>thf_comb</span>, <span class='va'>hts_comb</span>, <span class='va'>res</span>, avg <span class='op'>=</span> <span class='st'>"KA"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,34 +202,10 @@ and <code>h</code> is the forecast horizon. Each row identifies, a time series, 
 are ordered as [lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
-      <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
-    </tr>
-    <tr>
-      <th>C</th>
-      <td><p>(<code>na x nb</code>) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.</p></td>
-    </tr>
-    <tr>
-      <th>thf_comb</th>
-      <td><p>Type of the (<code>(k* + m) x (k* + m)</code>) covariance matrix to be used in
-the temporal reconciliation, see more in <code>comb</code> param of <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>hts_comb</th>
-      <td><p>Type of the (<code>n x n</code>) covariance matrix to be used in the
-cross-sectional reconciliation, see more in <code>comb</code> param of <code><a href='htsrec.html'>htsrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>Ut</th>
-      <td><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\(\textbf{U}'\textbf{Y} = \mathbf{0}\) spanning the null space valid for the reconciled
-forecasts. It can be used instead of parameter <code>C</code>, but needs <code>nb</code> (n = na + nb). If
-the hierarchy admits a structural representation, <code>Ut</code> has dimension (<code>na x n</code>).</p></td>
-    </tr>
-    <tr>
-      <th>nb</th>
-      <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code> is not used.</p></td>
+      <th>hts_comb, thf_comb</th>
+      <td><p>Type of covariance matrix (respectively (<code>n x n</code>) and
+(<code>(k* + m) x (k* + m)</code>)) to be used in the cross-sectional and temporal reconciliation,
+see more in <code>comb</code> param of <code><a href='htsrec.html'>htsrec</a></code> and <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
     </tr>
     <tr>
       <th>res</th>
@@ -244,29 +217,6 @@ each variable (row), needed to estimate the covariance matrix when <code>hts_com
 <code>"shr",</code> <code>"sam"}</code>. The row must be in the same order as <code>basef</code>.</p></td>
     </tr>
     <tr>
-      <th>W</th>
-      <td><p>This option permits to directly enter the covariance matrix in the
-cross-sectional reconciliation, see more in <code>W</code> param of <code><a href='htsrec.html'>htsrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>Omega</th>
-      <td><p>This option permits to directly enter the covariance matrix in the
-reconciliation through temporal hierarchies, see more in <code>Omega</code> param of <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>mse</th>
-      <td><p>Logical value: <code>TRUE</code> (<em>default</em>) calculates the
-covariance matrix of the in-sample residuals (when necessary) according to the original
-<span class="pkg">hts</span> and <span class="pkg">thief</span> formulation: no mean correction, T as denominator.</p></td>
-    </tr>
-    <tr>
-      <th>corpcor</th>
-      <td><p>Logical value: <code>TRUE</code> if <span class="pkg">corpcor</span> (Schäfer et
-al., 2017) must be used to shrink the sample covariance matrix according to
-Schäfer and Strimmer (2005), otherwise the function uses the same
-implementation as package <span class="pkg">hts</span>.</p></td>
-    </tr>
-    <tr>
       <th>avg</th>
       <td><p>If <code>avg = "KA"</code> (<em>default</em>), the final projection matrix <code>M</code> is the one proposed
 by Kourentzes and Athanasopoulos (2019), otherwise it is calculated as simple average of
@@ -274,17 +224,10 @@ all the involved projection matrices at step 2 of th procedure (see Di Fonzo and
 Girolimetto, 2020).</p></td>
     </tr>
     <tr>
-      <th>nn</th>
-      <td><p>Logical value, <code>TRUE</code> if non-negative reconciled forecasts are wished. <strong>Warning</strong>,
-the two-step heuristic reconciliation allows non negativity constraints only in the first step.
-This means that non-negativity is not guaranteed in the final reconciled values.</p></td>
-    </tr>
-    <tr>
-      <th>settings</th>
-      <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>). The default options
-are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
-<code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
-<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2019).</p></td>
+      <th>...</th>
+      <td><p>any other options useful for <code><a href='htsrec.html'>htsrec</a></code> and
+<code><a href='thfrec.html'>thfrec</a></code>, e.g. <code>m</code>, <code>C</code> (or <code>Ut</code> and <code>nb</code>),
+<code>nn</code> (for non negativity reconciliation only at first step), ...</p></td>
     </tr>
     </table>
 
@@ -300,6 +243,9 @@ are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 
 the covariance matrices chosen by the user. If the combinations used by Kourentzes and Athanasopoulos (2019) are
 wished, <code>thf_comb</code> must be set equal to either <code>"struc"</code> or <code>"wlsv"</code>,
 and <code>hts_comb</code> equal to either <code>"shr"</code> or <code>"wls"</code>.</p>
+<p><strong>Warning</strong>,
+the two-step heuristic reconciliation allows non negativity constraints only in the first step.
+This means that non-negativity is not guaranteed in the final reconciled values.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
@@ -321,8 +267,8 @@ Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
-<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>, thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>,
-              hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>, hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>,
+              res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span><span class='op'>)</span>
 
 </div></pre>
   </div>

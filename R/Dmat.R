@@ -10,9 +10,10 @@
 #
 # @return a sparse [\code{hn(ks+m) x hn(ks+m)}] matrix
 #
-Dmat <- function(h, kset, n) {
-  I <- .sparseDiagonal(h * sum(kset) * n)
-  i <- rep(rep(rep(1:h, length(kset)), rep(rev(kset), each = h)), n)
+Dmat <- function(h, kset, n){
+  m <- max(kset)
+  I <- .sparseDiagonal(h * sum(m/kset) * n)
+  i <- rep(rep(rep(1:h, length(kset)), rep(m/kset, each = h)), n)
   D <- I[order(i), ]
   return(D)
 }

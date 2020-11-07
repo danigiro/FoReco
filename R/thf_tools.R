@@ -2,7 +2,8 @@
 #'
 #' Some useful tools for forecast reconciliation through temporal hierarchies.
 #'
-#' @param m Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).
+#' @param m Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \code{m}),
+#' or a subset of the \code{p} factors of \code{m}.
 #' @param h Forecast horizon for the lowest frequency (most temporally aggregated) time series (\emph{default} is \code{1}).
 #' @param sparse Option to return sparse object (\emph{default} is \code{TRUE}).
 #'
@@ -25,19 +26,37 @@
 #' @export
 #'
 thf_tools <- function(m, h = 1, sparse = TRUE) {
-  if (m < 2) {
-    stop("m must be > 1", call. = FALSE)
-  }
 
   out <- list()
-  kset <- rev(divisors(m))
+  if(length(m)>1){
+    kset <- sort(m, decreasing = TRUE)
+    m <- max(kset)
+
+    if(m < 2){
+      stop("m must be > 1", call. = FALSE)
+    }
+
+    if(min(kset)!=1){
+      kset <- sort(c(kset, 1), decreasing = TRUE)
+    }
+
+    if(!all(kset %in% rev(divisors(m)))){
+      stop("(", paste(kset, collapse = ", "), ") is not a subset of (", paste(rev(divisors(m)), collapse = ", "), ")", call. = FALSE)
+    }
+  }else{
+    if(m < 2){
+      stop("m must be > 1", call. = FALSE)
+    }
+    kset <- rev(divisors(m))
+  }
+
   p <- length(kset)
-  ks <- sum(kset) - m
-  kt <- sum(kset)
+  ks <- sum(m/kset[-p])
+  kt <- sum(m/kset)
 
   if (sparse) {
     out$K <- do.call("rbind", Map(
-      function(x, y) kronecker(x, y), lapply(rev(kset[-1]), function(x) Diagonal(x * h)),
+      function(x, y) kronecker(x, y), lapply(m/kset[-p], function(x) Diagonal(x * h)),
       lapply(kset[-p], function(x) t(rep(1, x)))
     ))
     out$Zt <- cbind(Diagonal(h * ks), -out$K)

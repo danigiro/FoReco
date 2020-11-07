@@ -4,16 +4,16 @@
 \alias{thfrec}
 \title{Forecast reconciliation through temporal hierarchies (temporal reconciliation)}
 \usage{
-thfrec(basef, m, comb, res, mse = TRUE, corpcor = FALSE, Omega,
+thfrec(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
        type = "M", sol = "direct", nn = FALSE, keep = "list",
-       settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
-       eps_rel = 1e-5, polish_refine_iter = 100, polish=TRUE))
+       settings = osqpSettings(), bounds = NULL, Omega = NULL)
 }
 \arguments{
-\item{basef}{Vector of base forecasts to be reconciled, containing the forecasts
+\item{basef}{(\code{h(k* + m) x 1}) vector of base forecasts to be reconciled, containing the forecasts
 at all the needed temporal frequencies ordered as [lowest_freq' ...  highest_freq']'.}
 
-\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).}
+\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \code{m}),
+or a subset of the \code{p} factors of \code{m}.}
 
 \item{comb}{Type of the reconciliation. Except for bottom up, all other options
 correspond to a different (\code{(k* + m) x (k* + m)}) covariance matrix,
@@ -48,12 +48,6 @@ al., 2017) must be used to shrink the sample covariance matrix according to
 \enc{Schäfer}{Schafer} and Strimmer (2005), otherwise the function uses the same
 implementation as package \pkg{hts}.}
 
-\item{Omega}{This option permits to directly enter the covariance matrix:
-\enumerate{
-  \item \code{Omega} must be a p.d. (\code{(k* + m) x (k* + m)}) matrix;
-  \item if \code{comb} is different from "\code{omega}", \code{Omega} is not used.
-}}
-
 \item{type}{Approach used to compute the reconciled forecasts: \code{"M"} for
 the projection approach with matrix M (\emph{default}), or \code{"S"} for the
 structural approach with summing matrix S.}
@@ -70,6 +64,16 @@ program using \code{\link[osqp]{solve_osqp}}).}
 are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
 \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).}
+
+\item{bounds}{(\code{(k* + m) x 2}) matrix with bounds on the variables: the first column is the lower bound,
+and the second column is the upper bound.}
+
+\item{Omega}{This option permits to directly enter the covariance matrix:
+\enumerate{
+  \item \code{Omega} must be a p.d. (\code{(k* + m) x (k* + m)}) matrix or a list
+  of \code{h} matrix (one for each forecast horizon);
+  \item if \code{comb} is different from "\code{omega}", \code{Omega} is not used.
+}}
 }
 \value{
 If the parameter \code{keep} is equal to \code{"recf"}, then the function

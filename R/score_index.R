@@ -73,7 +73,7 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
   type <- match.arg(type, c("mse", "mae", "rmse"))
 
   if (missing(recf) | missing(base) | missing(test)) {
-    stop("The arguments recf, base and/or test are not specified.")
+    stop("The arguments recf, base and/or test are not specified.", call. = FALSE)
   }
 
   if (!is.list(recf)) {

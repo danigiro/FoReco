@@ -4,10 +4,9 @@
 \alias{htsrec}
 \title{Cross-sectional (contemporaneous) forecast reconciliation}
 \usage{
-htsrec(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE, W,
+htsrec(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
        type = "M", sol = "direct", nn = FALSE, keep = "list",
-       settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
-       eps_rel = 1e-5, polish_refine_iter = 100, polish=TRUE))
+       settings = osqpSettings(), bounds = NULL, W = NULL)
 }
 \arguments{
 \item{basef}{(\code{h x n}) matrix of base forecasts to be reconciled;
@@ -48,12 +47,6 @@ al., 2017) must be used to shrink the sample covariance matrix according to
 \enc{Schäfer}{Schafer} and Strimmer (2005), otherwise the function uses the same
 implementation as package \pkg{hts}.}
 
-\item{W}{This option permits to directly enter the covariance matrix:
-\enumerate{
-  \item \code{W} must be a p.d. (\code{n x n}) matrix;
-  \item if \code{comb} is different from "\code{w}", \code{W} is not used.
-}}
-
 \item{type}{Approach used to compute the reconciled forecasts: \code{"M"} for
 the projection approach with matrix M (\emph{default}), or \code{"S"} for the
 structural approach with summing matrix S.}
@@ -70,6 +63,16 @@ program using \code{\link[osqp]{solve_osqp}}).}
 are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
 \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
 \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).}
+
+\item{bounds}{(\code{n x 2}) matrix with bounds on the variables: the first column is the lower bound,
+and the second column is the upper bound}
+
+\item{W}{This option permits to directly enter the covariance matrix:
+  \enumerate{
+    \item \code{W} must be a p.d. (\code{n x n}) matrix or a list of \code{h} matrix (one for each forecast horizon);
+    \item if \code{comb} is different from "\code{w}", \code{W} is not used.
+  }
+If you want to reconcile h step}
 }
 \value{
 If the parameter \code{keep} is equal to \code{"recf"}, then the function

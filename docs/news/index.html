@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -166,6 +166,36 @@
       <small>Source: <a href='https://github.com/daniGiro/FoReco/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="foreco-012" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.2">
+<a href="#foreco-012" class="anchor"></a>FoReco 0.1.2<small> Unreleased </small>
+</h1>
+<p><strong>Note</strong>: <em>Documentation for this version is still under development</em></p>
+<div id="major-changes" class="section level5">
+<h5 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h5>
+<ul>
+<li>Add the possibility to use part of factors of <em>m</em> (max. order of temporal aggregation)</li>
+<li>Add the possibility for <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> to introduce a list of <em>h</em> covariance matrices in the parameters <code>W</code> and <code>Omega</code>, where <em>h</em> stands for the forecast horizon (note that for <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> this is the forecast horizon of the entire cycle)</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level5">
+<h5 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h5>
+<ul>
+<li>Now in <code><a href="../reference/octrec.html">octrec()</a></code> it is also possible to introduce the <strong>Ω</strong> covariance matrix variant through the <code>Omega</code> parameter and not only the <strong>W</strong> variant with the<code>W</code> parameter</li>
+<li>Renew <code><a href="../reference/tcsrec.html">tcsrec()</a></code>, <code><a href="../reference/cstrec.html">cstrec()</a></code> and <code><a href="../reference/iterec.html">iterec()</a></code>. Also in the iterec function the <code>maxit</code> parameter has been replaced by <code>itmax</code>, however for the moment <code>maxit</code> is still supported</li>
+</ul>
+</div>
+<div id="experimental" class="section level5">
+<h5 class="hasAnchor">
+<a href="#experimental" class="anchor"></a>Experimental</h5>
+<ul>
+<li>Add the possibility to introduce constraints through the <code>bounds</code> param in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code>.</li>
+<li>Add a (hidden) function <code>oct_bounds()</code> to organize the bounds on a singular dimension (i.e. only cross-sectional or only temporal) in a cross-temporal framework</li>
+</ul>
+</div>
+</div>
     <div id="foreco-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
 <a href="#foreco-011" class="anchor"></a>FoReco 0.1.1<small> 2020-10-17 </small>

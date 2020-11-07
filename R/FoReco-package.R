@@ -36,3 +36,4 @@ NULL
     right = paste0("FoReco ", utils::packageVersion("FoReco"))
   ))
 }
+

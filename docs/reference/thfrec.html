@@ -90,7 +90,7 @@ bottom-up approach is available." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -180,22 +180,22 @@ structural approach by Hyndman et al. (2011). Moreover, the classic
 bottom-up approach is available.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>thfrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>comb</span>, <span class='va'>res</span>, mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>Omega</span>,
+    <pre class="usage"><span class='fu'>thfrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>comb</span>, <span class='va'>res</span>, mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>,
        type <span class='op'>=</span> <span class='st'>"M"</span>, sol <span class='op'>=</span> <span class='st'>"direct"</span>, nn <span class='op'>=</span> <span class='cn'>FALSE</span>, keep <span class='op'>=</span> <span class='st'>"list"</span>,
-       settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span>verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, eps_abs <span class='op'>=</span> <span class='fl'>1e-5</span>,
-       eps_rel <span class='op'>=</span> <span class='fl'>1e-5</span>, polish_refine_iter <span class='op'>=</span> <span class='fl'>100</span>, polish<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span></pre>
+       settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span><span class='op'>)</span>, bounds <span class='op'>=</span> <span class='cn'>NULL</span>, Omega <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>basef</th>
-      <td><p>Vector of base forecasts to be reconciled, containing the forecasts
+      <td><p>(<code>h(k* + m) x 1</code>) vector of base forecasts to be reconciled, containing the forecasts
 at all the needed temporal frequencies ordered as [lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
+      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, <code>m</code>),
+or a subset of the <code>p</code> factors of <code>m</code>.</p></td>
     </tr>
     <tr>
       <th>comb</th>
@@ -238,13 +238,6 @@ Schäfer and Strimmer (2005), otherwise the function uses the same
 implementation as package <span class="pkg">hts</span>.</p></td>
     </tr>
     <tr>
-      <th>Omega</th>
-      <td><p>This option permits to directly enter the covariance matrix:</p><ol>
-<li><p><code>Omega</code> must be a p.d. (<code>(k* + m) x (k* + m)</code>) matrix;</p></li>
-<li><p>if <code>comb</code> is different from "<code>omega</code>", <code>Omega</code> is not used.</p></li>
-</ol></td>
-    </tr>
-    <tr>
       <th>type</th>
       <td><p>Approach used to compute the reconciled forecasts: <code>"M"</code> for
 the projection approach with matrix M (<em>default</em>), or <code>"S"</code> for the
@@ -270,6 +263,19 @@ program using <code><a href='https://rdrr.io/pkg/osqp/man/solve_osqp.html'>solve
 are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
 <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
 <a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2019).</p></td>
+    </tr>
+    <tr>
+      <th>bounds</th>
+      <td><p>(<code>(k* + m) x 2</code>) matrix with bounds on the variables: the first column is the lower bound,
+and the second column is the upper bound.</p></td>
+    </tr>
+    <tr>
+      <th>Omega</th>
+      <td><p>This option permits to directly enter the covariance matrix:</p><ol>
+<li><p><code>Omega</code> must be a p.d. (<code>(k* + m) x (k* + m)</code>) matrix or a list
+  of <code>h</code> matrix (one for each forecast horizon);</p></li>
+<li><p>if <code>comb</code> is different from "<code>omega</code>", <code>Omega</code> is not used.</p></li>
+</ol></td>
     </tr>
     </table>
 

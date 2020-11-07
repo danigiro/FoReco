@@ -18,48 +18,17 @@
 #' \code{k*} is the sum of (\code{p-1}) factors of \code{m}, excluding \code{m},
 #' and \code{h} is the forecast horizon. Each row identifies, a time series, and the forecasts
 #' are ordered as [lowest_freq' ...  highest_freq']'.
-#' @param m Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).
-#' @param C (\code{na x nb}) cross-sectional (contemporaneous) matrix mapping the bottom
-#' level series into the higher level ones.
-#' @param Ut Zero constraints cross-sectional (contemporaneous) kernel matrix
-#' \eqn{(\textbf{U}'\textbf{Y} = \mathbf{0})}{} spanning the null space valid for the reconciled
-#' forecasts. It can be used instead of parameter \code{C}, but in this case \code{nb} (n = na + nb) is needed. If
-#' the hierarchy admits a structural representation, \code{Ut} has dimension (\code{na x n}).
-#' @param nb Number of bottom time series; if \code{C} is present, \code{nb} is not used.
-#' @param thf_comb Type of the (\code{(k* + m) x (k* + m)}) covariance matrix to be used in
-#' the temporal reconciliation, see more in \code{comb} param of \code{\link[FoReco]{thfrec}}.
-#' @param hts_comb Type of the (\code{n x n}) covariance matrix to be used in the
-#' cross-sectional reconciliation, see more in \code{comb} param of \code{\link[FoReco]{htsrec}}.
-#' @param Omega This option permits to directly enter the covariance matrix in the
-#' reconciliation through temporal hierarchies, see more in \code{Omega} param of \code{\link[FoReco]{thfrec}}.
-#' @param W This option permits to directly enter the covariance matrix in the
-#' cross-sectional reconciliation, see more in \code{W} param of \code{\link[FoReco]{htsrec}}.
+#' @param hts_comb,thf_comb Type of covariance matrix (respectively (\code{n x n}) and
+#' (\code{(k* + m) x (k* + m)})) to be used in the cross-sectional and temporal reconciliation,
+#' see more in \code{comb} param of \code{\link[FoReco]{htsrec}} and \code{\link[FoReco]{thfrec}}.
 #' @param res (\code{n x N(k* + m)}) matrix containing the residuals at all the
 #' temporal frequencies ordered [lowest_freq' ...  highest_freq']' (columns) for
 #' each variable (row), needed to estimate the covariance matrix when \code{hts_comb =}
 #' \code{\{"wls",} \code{"shr",} \code{"sam"\}} and/or \code{hts_comb =} \code{\{"wlsv",}
 #' \code{"wlsh",} \code{"acov",} \code{"strar1",} \code{"sar1",} \code{"har1",}
 #' \code{"shr",} \code{"sam"\}}. The row must be in the same order as \code{basef}.
-#' @param mse Logical value: \code{TRUE} (\emph{default}) calculates the
-#' covariance matrix of the in-sample residuals (when necessary) according to the original
-#' \pkg{hts} and \pkg{thief} formulation: no mean correction, T as denominator.
-#' @param corpcor Logical value: \code{TRUE} if \pkg{corpcor} (\enc{Schäfer}{Schafer} et
-#' al., 2017) must be used to shrink the sample covariance matrix according to
-#' \enc{Schäfer}{Schafer} and Strimmer (2005), otherwise the function uses the same
-#' implementation as package \pkg{hts}.
-#' @param type Approach used to compute the reconciled forecasts: \code{"M"} for
-#' the projection approach with matrix M (\emph{default}), or \code{"S"} for the
-#' structural approach with summing matrix S.
-#' @param sol Solution technique for the reconciliation problem: either \code{"direct"} for the direct
-#' solution or \code{"osqp"} for the numerical solution (solving a linearly constrained quadratic
-#' program using \code{\link[osqp]{solve_osqp}}).
-#' @param nn Logical value: \code{TRUE} if non-negative reconciled forecasts are wished.
-#' @param settings Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
-#' are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
-#' \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-#' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).
 #' @param tol Convergence tolerance (\code{1e-5}, \emph{default}).
-#' @param maxit Max number of iteration (\code{100}, \emph{default}).
+#' @param itmax Max number of iteration (\code{100}, \emph{default}) (old version \code{maxit}).
 #' @param start_rec Dimension along with the first reconciliation step in each
 #' iteration is performed: it start from temporal reconciliation with "\code{thf}" (\emph{default}),
 #' from cross-sectional with "\code{hts}" and it does both reconciliation with "\code{auto}".
@@ -68,6 +37,9 @@
 #' @param plot Some useful plots: \code{"mti"} (\emph{default}) marginal trend inconsistencies,
 #' \code{"pat"} step by step inconsistency pattern for each iteration, \code{"distf"} distance
 #' forecasts iteration i and i-1, \code{"all"} all the plots.
+#' @param ... any other options useful for \code{\link[FoReco]{htsrec}} and
+#' \code{\link[FoReco]{thfrec}}, e.g. \code{m}, \code{C} (or \code{Ut} and \code{nb}),
+#' \code{nn} (for non negativity reconciliation only at first step), ...
 #'
 #' @details
 #' The above procedure can be seen as an extension of the well known iterative proportional
@@ -138,96 +110,69 @@
 #' @examples
 #' \donttest{
 #' data(FoReco_data)
-#' obj <- iterec(FoReco_data$base, note=FALSE,
+#' obj <- iterec(FoReco_data$base, note=TRUE,
 #'   m = 12, C = FoReco_data$C, thf_comb = "acov",
 #'   hts_comb = "shr", res = FoReco_data$res, start_rec = "thf")
 #' }
 #'
-#' @usage iterec(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W,
-#'        Omega, mse = TRUE, corpcor = FALSE,type = "M",
-#'        sol = "direct", nn = FALSE, maxit = 100, tol = 1e-5,
-#'        start_rec = "thf", note = TRUE, plot = "mti",
-#'        settings = osqpSettings(verbose = FALSE, eps_abs = 1e-5,
-#'        eps_rel = 1e-5, polish_refine_iter = 100, polish = TRUE))
+#' @usage iterec(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
+#'        start_rec = "thf", note = TRUE, plot = "mti", ...)
 #'
 #' @export
-iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse = TRUE,
-                   corpcor = FALSE, type = "M", sol = "direct", nn = FALSE, maxit = 100,
-                   tol = 1e-5, start_rec = "thf", note = TRUE, plot = "mti",
-                   settings = osqpSettings(
-                     verbose = FALSE, eps_abs = 1e-5, eps_rel = 1e-5,
-                     polish_refine_iter = 100, polish = TRUE
-                   )) {
+iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
+                   start_rec = "thf", note = TRUE, plot = "mti", ...) {
+  arg_input <- list(...)
+
   start_rec <- match.arg(start_rec, c("thf", "hts", "auto"))
+
+  if(any(names(arg_input)=="maxit")){
+    maxit <- arg_input$maxit
+  }else{
+    maxit <- itmax
+  }
 
   if (missing(res)) {
     res <- NULL
   }
 
-  if (missing(W)) {
-    W <- NULL
+  if (missing(basef)) {
+    stop("the argument basef is not specified", call. = FALSE)
   }
 
-  if (missing(Omega)) {
-    Omega <- NULL
+  if(all(names(arg_input)!="m")){
+    stop("the argument m is not specified", call. = FALSE)
+  }else{
+    m <- arg_input$m
   }
 
-  # Tools for cross-sectional reconciliation
-  if (missing(C)) {
-    if (missing(Ut) | missing(nb)) {
-      stop("Please, give C (or Ut AND nb)", call. = FALSE)
-    }
-    r_u <- NROW(Ut)
+  if (missing(thf_comb)) {
+    stop("the argument thf_comb is not specified", call. = FALSE)
+  }
+  if (missing(hts_comb)) {
+    stop("the argument hts_comb is not specified", call. = FALSE)
+  }
 
-    hts_mod <- function(...) {
-      out <- htsrec(
-        Ut = Ut, nb = nb, comb = hts_comb, mse = mse,
-        corpcor = corpcor, W = W, type = type, keep = "recf",
-        nn = nn, settings = settings, sol = sol, ...
-      )
-      if (is.list(out)) {
-        return(out$recf)
-      } else {
-        return(out)
-      }
-    }
-  } else {
+  if(any(names(arg_input)=="C")){
+    C <- arg_input$C
     r_u <- NROW(C)
     Ut <- cbind(diag(1, r_u), -C)
-    hts_mod <- function(...) {
-      out <- htsrec(
-        C = C, comb = hts_comb, mse = mse,
-        corpcor = corpcor, W = W, type = type, keep = "recf",
-        nn = nn, settings = settings, sol = sol, ...
-      )
-      if (is.list(out)) {
-        return(out$recf)
-      } else {
-        return(out)
-      }
-    }
-  }
-
-  thf_mod <- function(...) {
-    out <- thfrec(
-      m = m, comb = thf_comb, mse = mse, corpcor = corpcor,
-      type = type, nn = nn, settings = settings, sol = sol,
-      Omega = Omega, ...
-    )
-    if (is.list(out)) {
-      return(out$recf)
-    } else {
-      return(out)
-    }
+  }else if(any(names(arg_input)=="Ut") & any(names(arg_input)=="nb")){
+    Ut <- arg_input$Ut
+    r_u <- NROW(Ut)
+  }else{
+    stop("Please, give C (or Ut AND nb)", call. = FALSE)
   }
 
   n <- NROW(basef)
   # Tools for cross-sectional reconciliation
-  h <- ncol(basef) / thf_tools(m)$kt
-  tmp <- thf_tools(m, h = h)
-  kt <- tmp$kt
-  ks <- tmp$ks
-  kset <- tmp$kset
+  tools <- thf_tools(m)
+  kset <- tools$kset
+  m <- max(kset)
+  kt <- tools$kt
+  ks <- tools$ks
+
+  h <- ncol(basef) / kt
+  tmp <- thf_tools(m = kset, h = h)
   Zt <- tmp$Zt
 
   # Incoherence vector
@@ -243,7 +188,7 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
 
   # Check: reconciliation needed?
   if (d_cs_thf[1] < tol & d_te_thf[1] < tol) {
-    warning("basef is already reconciled!")
+    warning("basef is already reconciled!", call. = FALSE)
     out <- list()
     out$recf <- basef
     out$flag <- 3
@@ -300,14 +245,15 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     if (note == TRUE) {
       message("Iter #  (Cross-sectional incoherence) (Temporal incoherence)", sep = "")
       message("thf: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[1], ")  (",
-        d_te_thf[1], ")",
-        sep = ""
+              d_te_thf[1], ")",
+              sep = ""
       )
     }
 
     for (i in 1:maxit) {
       # Step1
-      Y1_thf <- step_thf(basef = Y2_thf, res = res, thf_mod = thf_mod)
+      Y1_thf <- step_thf(basef = Y2_thf, res = res, arg_input = arg_input,
+                         thf_comb = thf_comb)
       d_cs_thf[i + 1] <- sum(abs(Ut %*% Y1_thf))
       check <- sum(abs(Zt %*% t(Y1_thf)))
 
@@ -316,8 +262,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         Y2_thf <- Y1_thf
         flag_thf <- -2
         warning(paste("thf: Program (starting from thf) stops at iteration number ", i,
-          "! \nthf: Temporal reconciliation does not work. (", check, ")",
-          sep = ""
+                      "! \nthf: Temporal reconciliation does not work. (", check, ")",
+                      sep = ""
         ), call. = FALSE)
         break
       } else if (i > 1) {
@@ -329,10 +275,9 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       }
 
       # Step 2
-      Y2_thf <- step_hts(
-        basef = Y1_thf, kset = kset, h = h,
-        res = res, hts_mod = hts_mod
-      )
+      Y2_thf <- step_hts(basef = Y1_thf, kset = kset, h = h,
+                         res = res, arg_input = arg_input,
+                         hts_comb = hts_comb)
       d_te_thf[i + 1] <- sum(abs(Zt %*% t(Y2_thf)))
       check <- sum(abs(Ut %*% Y2_thf))
 
@@ -340,17 +285,17 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       if (check > tol) {
         flag_thf <- -2
         warning(paste("thf: Program (starting from thf) stops at iteration number ", i,
-          "! \nthf: Cross-sectional reconciliation does not work.(", check, ")",
-          sep = ""
+                      "! \nthf: Cross-sectional reconciliation does not work.(", check, ")",
+                      sep = ""
         ), call. = FALSE)
         break
       } else if (d_te_thf[i + 1] < tol) {
         if (flag_thf == -1) flag_thf <- 0
         if (note == TRUE) {
           message("thf: Convergence (starting from thf) achieved at iteration number ", i,
-            "! \nthf: Temporal incoherence ", d_te_thf[i + 1], " < ", tol,
-            " tolerance",
-            sep = ""
+                  "! \nthf: Temporal incoherence ", d_te_thf[i + 1], " < ", tol,
+                  " tolerance",
+                  sep = ""
           )
         }
         rel <- ((Y2_thf - Yi_thf) / abs(Yi_thf))
@@ -379,8 +324,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       Yi_thf <- Y2_thf
       if (note == TRUE) {
         message("thf: ", formatC(i, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[i + 1], ")  (",
-          d_te_thf[i + 1], ")",
-          sep = ""
+                d_te_thf[i + 1], ")",
+                sep = ""
         )
       }
     }
@@ -388,8 +333,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     if ((flag_thf == -1 | i == maxit) & start_rec != "hts") {
       flag_thf <- -1
       warning("thf: Convergence NOT achieved (starting from thf)! Maximum number of iterations reached (",
-        maxit, ")",
-        sep = "", call. = FALSE
+              maxit, ")",
+              sep = "", call. = FALSE
       )
     }
     dist_thf <- dist_thf[1:i, , drop = FALSE]
@@ -404,17 +349,16 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     if (note == TRUE) {
       message("Iter #  (Cross-sectional incoherence) (Temporal incoherence)", sep = "")
       message("hts: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[1], ")  (",
-        d_te_hts[1], ")",
-        sep = ""
+              d_te_hts[1], ")",
+              sep = ""
       )
     }
 
     for (j in 1:maxit) {
       # Step 1
-      Y1_hts <- step_hts(
-        basef = Y2_hts, kset = kset, h = h,
-        res = res, hts_mod = hts_mod
-      )
+      Y1_hts <- step_hts(basef = Y2_hts, kset = kset, h = h,
+                         res = res, arg_input = arg_input,
+                         hts_comb = hts_comb)
       d_te_hts[j + 1] <- sum(abs(Zt %*% t(Y1_hts)))
       check <- sum(abs(Ut %*% Y1_hts))
 
@@ -422,8 +366,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       if (check > tol) {
         flag_hts <- -2
         warning(paste("hts: Program (starting from hts) stops at iteration number ", j,
-          "! \nhts: Cross-sectional reconciliation does not work.(", check, ")",
-          sep = ""
+                      "! \nhts: Cross-sectional reconciliation does not work.(", check, ")",
+                      sep = ""
         ), call. = FALSE)
         break
       } else if (j > 1) {
@@ -435,7 +379,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       }
 
       # Step 2
-      Y2_hts <- step_thf(basef = Y1_hts, res = res, thf_mod = thf_mod)
+      Y2_hts <- step_thf(basef = Y1_hts, res = res, arg_input = arg_input,
+                         thf_comb = thf_comb)
       d_cs_hts[j + 1] <- sum(abs(Ut %*% Y2_hts))
       check <- sum(abs(Zt %*% t(Y2_hts)))
 
@@ -443,17 +388,17 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       if (check > tol) {
         flag_hts <- -2
         warning(paste("hts: Program (starting from hts) stops at iteration number ", j,
-          "! \nhts: Temporal reconciliation does not work.(", check, ")",
-          sep = ""
-        ))
+                      "! \nhts: Temporal reconciliation does not work.(", check, ")",
+                      sep = ""
+        ), call. = FALSE)
         break
       } else if (d_cs_hts[j + 1] < tol) {
         if (flag_hts == -1) flag_hts <- 0
         if (note == TRUE) {
           message("hts: Convergence (starting from hts) achieved at iteration number ", j,
-            "! \nhts: Cross-sectional incoherence ", d_cs_hts[j + 1], " < ", tol,
-            " tolerance",
-            sep = ""
+                  "! \nhts: Cross-sectional incoherence ", d_cs_hts[j + 1], " < ", tol,
+                  " tolerance",
+                  sep = ""
           )
         }
         rel <- ((Y2_hts - Yi_hts) / abs(Yi_hts))
@@ -475,8 +420,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
 
       if (note == TRUE) {
         message("hts: ", formatC(j, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[j + 1], ")  (",
-          d_te_hts[j + 1], ")",
-          sep = ""
+                d_te_hts[j + 1], ")",
+                sep = ""
         )
       }
 
@@ -493,8 +438,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     if ((flag_hts == -1 | j == maxit) & start_rec != "thf") {
       flag_hts <- -1
       warning("hts: Convergence NOT achieved (starting from hts)! Maximum number of iterations reached (",
-        maxit, ")",
-        sep = "", call. = FALSE
+              maxit, ")",
+              sep = "", call. = FALSE
       )
     }
     dist_hts <- dist_hts[1:j, , drop = FALSE]
@@ -510,12 +455,12 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     tcs <- list()
     tcs$recf <- Y2_thf
     rownames(tcs$recf) <- if (is.null(rownames(basef))) paste("serie", 1:NROW(tcs$recf), sep = "") else rownames(basef)
-    colnames(tcs$recf) <- paste("k", rep(kset, h * rev(kset)), "h",
-      do.call("c", as.list(sapply(
-        rev(kset) * h,
-        function(x) seq(1:x)
-      ))),
-      sep = ""
+    colnames(tcs$recf) <- paste("k", rep(kset, h * (m/kset)), "h",
+                                do.call("c", as.list(sapply(
+                                  (m/kset) * h,
+                                  function(x) seq(1:x)
+                                ))),
+                                sep = ""
     )
     tcs$d_cs <- d_cs_thf[!is.na(d_cs_thf)]
     tcs$d_te <- d_te_thf[!is.na(d_te_thf)]
@@ -529,46 +474,46 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     if (note == TRUE) {
       if (plot == "mti" | plot == "all") {
         plot(0, 0,
-          type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
-          main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
-          ylim = c(0, max(tcs$d_cs, tcs$d_te)),
-          xlim = c(0, i),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
+             main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
+             ylim = c(0, max(tcs$d_cs, tcs$d_te)),
+             xlim = c(0, i),
+             xaxt = "n"
         )
         graphics::axis(1, at = 0:i)
         graphics::lines(x = 0:(length(tcs$d_cs) - 1), y = tcs$d_cs, type = "b", pch = 1, col = "#fe5f55")
         graphics::lines(x = 0:(length(tcs$d_te) - 1), y = tcs$d_te, type = "b", pch = 4, col = 1)
         if (tcs$flag == 0) {
           graphics::legend("topright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
         if (tcs$flag == 1) {
           graphics::legend("bottomright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
       }
 
       if (plot == "pat" | plot == "all") {
         plot(d_thf[, 2:3],
-          type = "b", col = (d_thf[, 1] + 1), pch = 20, lty = "dotted",
-          xlim = c(0, max(d_thf[, 2])),
-          main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
-          xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
+             type = "b", col = (d_thf[, 1] + 1), pch = 20, lty = "dotted",
+             xlim = c(0, max(d_thf[, 2])),
+             main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
+             xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
         )
         graphics::text(d_thf[, 2:3], labels = d_thf[, 1], cex = 0.7, pos = 4)
       }
 
       if (plot == "distf" | plot == "all") {
         plot(1, 1,
-          type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
-          main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
-          ylim = c(min(dist_thf[, -c(1, 2, 3)]), max(dist_thf[, -c(1, 2, 3)])),
-          xlim = c(1, i),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
+             main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
+             ylim = c(min(dist_thf[, -c(1, 2, 3)]), max(dist_thf[, -c(1, 2, 3)])),
+             xlim = c(1, i),
+             xaxt = "n"
         )
 
         graphics::axis(1, at = 1:i)
@@ -578,8 +523,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         graphics::lines(x = dist_thf[, 1], y = dist_thf[, 5], type = "b", pch = 4, col = 4)
 
         graphics::legend("topright",
-          inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
-          col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
+                         inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
+                         col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
         )
       }
     }
@@ -588,12 +533,12 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     cst <- list()
     cst$recf <- Y2_hts
     rownames(cst$recf) <- if (is.null(rownames(basef))) paste("serie", 1:NROW(cst$recf), sep = "") else rownames(basef)
-    colnames(cst$recf) <- paste("k", rep(kset, h * rev(kset)), "h",
-      do.call("c", as.list(sapply(
-        rev(kset) * h,
-        function(x) seq(1:x)
-      ))),
-      sep = ""
+    colnames(cst$recf) <- paste("k", rep(kset, h * (m/kset)), "h",
+                                do.call("c", as.list(sapply(
+                                  (m/kset) * h,
+                                  function(x) seq(1:x)
+                                ))),
+                                sep = ""
     )
     cst$d_cs <- d_cs_hts[!is.na(d_cs_hts)]
     cst$d_te <- d_te_hts[!is.na(d_te_hts)]
@@ -607,46 +552,46 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     if (note == TRUE) {
       if (plot == "mti" | plot == "all") {
         plot(0, 0,
-          type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
-          main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
-          ylim = c(0, max(cst$d_cs, cst$d_te)),
-          xlim = c(0, j),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
+             main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
+             ylim = c(0, max(cst$d_cs, cst$d_te)),
+             xlim = c(0, j),
+             xaxt = "n"
         )
         graphics::axis(1, at = 0:j)
         graphics::lines(x = 0:(length(cst$d_cs) - 1), y = cst$d_cs, type = "b", pch = 1, col = "#fe5f55")
         graphics::lines(x = 0:(length(cst$d_te) - 1), y = cst$d_te, type = "b", pch = 4, col = 1)
         if (cst$flag == 0) {
           graphics::legend("topright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
         if (cst$flag == 1) {
           graphics::legend("bottomright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
       }
 
       if (plot == "pat" | plot == "all") {
         plot(d_hts[, 2:3],
-          type = "b", col = (d_hts[, 1] + 1), pch = 20, lty = "dotted",
-          xlim = c(0, max(d_hts[, 2])),
-          main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
-          xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
+             type = "b", col = (d_hts[, 1] + 1), pch = 20, lty = "dotted",
+             xlim = c(0, max(d_hts[, 2])),
+             main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
+             xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
         )
         graphics::text(d_hts[, 2:3], labels = d_hts[, 1], cex = 0.7, pos = 4)
       }
 
       if (plot == "distf" | plot == "all") {
         plot(1, 1,
-          type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
-          main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
-          ylim = c(min(dist_hts[, -c(1, 2, 3)]), max(dist_hts[, -c(1, 2, 3)])),
-          xlim = c(1, j),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
+             main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
+             ylim = c(min(dist_hts[, -c(1, 2, 3)]), max(dist_hts[, -c(1, 2, 3)])),
+             xlim = c(1, j),
+             xaxt = "n"
         )
 
         graphics::axis(1, at = 1:j)
@@ -656,8 +601,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         graphics::lines(x = dist_hts[, 1], y = dist_hts[, 5], type = "b", pch = 4, col = 4)
 
         graphics::legend("topright",
-          inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
-          col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
+                         inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
+                         col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
         )
       }
     }
@@ -677,12 +622,12 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     tcs <- list()
     tcs$recf <- Y2_thf
     rownames(tcs$recf) <- if (is.null(rownames(basef))) paste("serie", 1:NROW(tcs$recf), sep = "") else rownames(basef)
-    colnames(tcs$recf) <- paste("k", rep(kset, h * rev(kset)), "h",
-      do.call("c", as.list(sapply(
-        rev(kset) * h,
-        function(x) seq(1:x)
-      ))),
-      sep = ""
+    colnames(tcs$recf) <- paste("k", rep(kset, h * (m/kset)), "h",
+                                do.call("c", as.list(sapply(
+                                  (m/kset) * h,
+                                  function(x) seq(1:x)
+                                ))),
+                                sep = ""
     )
     tcs$d_cs <- d_cs_thf[!is.na(d_cs_thf)]
     tcs$d_te <- d_te_thf[!is.na(d_te_thf)]
@@ -696,12 +641,12 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
     cst <- list()
     cst$recf <- Y2_hts
     rownames(cst$recf) <- if (is.null(rownames(basef))) paste("serie", 1:NROW(cst$recf), sep = "") else rownames(basef)
-    colnames(cst$recf) <- paste("k", rep(kset, h * rev(kset)), "h",
-      do.call("c", as.list(sapply(
-        rev(kset) * h,
-        function(x) seq(1:x)
-      ))),
-      sep = ""
+    colnames(cst$recf) <- paste("k", rep(kset, h * (m/kset)), "h",
+                                do.call("c", as.list(sapply(
+                                  (m/kset) * h,
+                                  function(x) seq(1:x)
+                                ))),
+                                sep = ""
     )
 
     cst$d_cs <- d_cs_hts[!is.na(d_cs_hts)]
@@ -720,48 +665,48 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       if (plot == "mti" | plot == "all") {
         graphics::par(mfrow = c(1, 2))
         plot(0, 0,
-          type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
-          main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
-          ylim = c(0, max(cst$d_cs, cst$d_te)),
-          xlim = c(0, j),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
+             main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
+             ylim = c(0, max(cst$d_cs, cst$d_te)),
+             xlim = c(0, j),
+             xaxt = "n"
         )
         graphics::axis(1, at = 0:j)
         graphics::lines(x = 0:(length(cst$d_cs) - 1), y = cst$d_cs, type = "b", pch = 1, col = "#fe5f55")
         graphics::lines(x = 0:(length(cst$d_te) - 1), y = cst$d_te, type = "b", pch = 4, col = 1)
         if (cst$flag == 0) {
           graphics::legend("topright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
         if (cst$flag == 1) {
           graphics::legend("bottomright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
 
         plot(0, 0,
-          type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
-          main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
-          ylim = c(0, max(tcs$d_cs, tcs$d_te)),
-          xlim = c(0, i),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "Incoherence",
+             main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
+             ylim = c(0, max(tcs$d_cs, tcs$d_te)),
+             xlim = c(0, i),
+             xaxt = "n"
         )
         graphics::axis(1, at = 0:i)
         graphics::lines(x = 0:(length(tcs$d_cs) - 1), y = tcs$d_cs, type = "b", pch = 1, col = "#fe5f55")
         graphics::lines(x = 0:(length(tcs$d_te) - 1), y = tcs$d_te, type = "b", pch = 4, col = 1)
         if (tcs$flag == 0) {
           graphics::legend("topright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
         if (tcs$flag == 1) {
           graphics::legend("bottomright",
-            inset = 0.01, legend = c("Cross-sectional", "Temporal"),
-            col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
+                           inset = 0.01, legend = c("Cross-sectional", "Temporal"),
+                           col = c("#fe5f55", 1), lty = 1, pch = c(1, 4), bty = "n"
           )
         }
         graphics::par(mfrow = c(1, 1))
@@ -770,18 +715,18 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       if (plot == "pat" | plot == "all") {
         graphics::par(mfrow = c(1, 2))
         plot(d_hts[, 2:3],
-          type = "b", col = (d_hts[, 1] + 1), pch = 20, lty = "dotted",
-          xlim = c(0, max(d_hts[, 2])),
-          main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
-          xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
+             type = "b", col = (d_hts[, 1] + 1), pch = 20, lty = "dotted",
+             xlim = c(0, max(d_hts[, 2])),
+             main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
+             xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
         )
         graphics::text(d_hts[, 2:3], labels = d_hts[, 1], cex = 0.7, pos = 4)
 
         plot(d_thf[, 2:3],
-          type = "b", col = (d_thf[, 1] + 1), pch = 20, lty = "dotted",
-          xlim = c(0, max(d_thf[, 2])),
-          main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
-          xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
+             type = "b", col = (d_thf[, 1] + 1), pch = 20, lty = "dotted",
+             xlim = c(0, max(d_thf[, 2])),
+             main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
+             xlab = "Cross-sectional Incoherence", ylab = "Temporal Incoherence"
         )
         graphics::text(d_thf[, 2:3], labels = d_thf[, 1], cex = 0.7, pos = 4)
 
@@ -791,11 +736,11 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
       if (plot == "distf" | plot == "all") {
         graphics::par(mfrow = c(1, 2))
         plot(1, 1,
-          type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
-          main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
-          ylim = c(min(dist_hts[, -c(1, 2, 3)]), max(dist_hts[, -c(1, 2, 3)])),
-          xlim = c(1, j),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
+             main = paste("Starting hts, flag = ", cst$flag, ", tol = ", tol, sep = ""),
+             ylim = c(min(dist_hts[, -c(1, 2, 3)]), max(dist_hts[, -c(1, 2, 3)])),
+             xlim = c(1, j),
+             xaxt = "n"
         )
 
         graphics::axis(1, at = 1:j)
@@ -805,16 +750,16 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         graphics::lines(x = dist_hts[, 1], y = dist_hts[, 5], type = "b", pch = 4, col = 4)
 
         graphics::legend("topright",
-          inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
-          col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
+                         inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
+                         col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
         )
 
         plot(1, 1,
-          type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
-          main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
-          ylim = c(min(dist_thf[, -c(1, 2, 3)]), max(dist_thf[, -c(1, 2, 3)])),
-          xlim = c(1, i),
-          xaxt = "n"
+             type = "n", pch = 19, xlab = "iteration", ylab = "distance forecasts iteration i and i-1",
+             main = paste("Starting thf, flag = ", tcs$flag, ", tol = ", tol, sep = ""),
+             ylim = c(min(dist_thf[, -c(1, 2, 3)]), max(dist_thf[, -c(1, 2, 3)])),
+             xlim = c(1, i),
+             xaxt = "n"
         )
 
         graphics::axis(1, at = 1:i)
@@ -824,8 +769,8 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
         graphics::lines(x = dist_thf[, 1], y = dist_thf[, 5], type = "b", pch = 4, col = 4)
 
         graphics::legend("topright",
-          inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
-          col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
+                         inset = 0.01, legend = c("norm2", "norm1", "rel1", "rel2"),
+                         col = c(1:4), lty = 1, pch = c(1:4), bty = "n"
         )
         graphics::par(mfrow = c(1, 1))
       }
@@ -849,21 +794,39 @@ iterec <- function(basef, m, C, thf_comb, hts_comb, Ut, nb, res, W, Omega, mse =
 }
 
 # Function for the cross-sectional reconciliation step
-step_hts <- function(basef, kset, h, res, hts_mod) {
-  Y <- lapply(kset, function(x) basef[, rep(kset, rev(kset) * h) == x, drop = FALSE])
+step_hts <- function(basef, kset, h, res, arg_input, hts_comb) {
+  # Step 1
+  arg_hts <- names(as.list(args(htsrec)))
+  arg_hts <- arg_hts[!(arg_hts %in% c("basef", "keep", "res", "", "comb", "bounds"))]
 
+  Y <- lapply(kset, function(x) basef[, rep(kset, (max(kset)/kset) * h) == x, drop = FALSE])
 
   if (missing(res)) {
-    Y1 <- lapply(Y, function(x) t(hts_mod(basef = t(x))))
+    Y1 <- lapply(Y, function(x){
+      obj <- do.call("htsrec", c(list(basef = t(x), comb = hts_comb, keep = "recf"),
+                                 arg_input[which(names(arg_input) %in% arg_hts)]))
+      if (is.list(obj)) {
+        return(t(obj$recf))
+      } else {
+        return(t(obj))
+      }
+    })
   } else {
-    # Create list with lenght p, with time by time temporally reconcilked residuals matrices
-    r <- NCOL(res) / sum(kset)
-    E <- lapply(kset, function(x) res[, rep(kset, rev(kset) * r) == x, drop = FALSE])
+    # Create list with lenght p, with time by time temporally reconciled residuals matrices
+    r <- NCOL(res) / sum(max(kset)/kset)
+    E <- lapply(kset, function(x) res[, rep(kset, (max(kset)/kset) * r) == x, drop = FALSE])
 
     ## list of time by time cross sectional M matrix
-    Y1 <- mapply(function(Y, E) t(hts_mod(basef = t(Y), res = t(E))),
-      Y = Y, E = E
-    )
+    Y1 <- mapply(function(Y, E){
+      obj <- do.call("htsrec", c(list(basef = t(Y), comb = hts_comb, keep = "recf",
+                                      res = t(E)),
+                                 arg_input[which(names(arg_input) %in% arg_hts)]))
+      if (is.list(obj)) {
+        return(t(obj$recf))
+      } else {
+        return(t(obj))
+      }
+    }, Y = Y, E = E)
   }
   Y1 <- do.call("cbind", Y1)
   dimnames(Y1) <- NULL
@@ -871,12 +834,33 @@ step_hts <- function(basef, kset, h, res, hts_mod) {
 }
 
 # Function for the temporal reconciliation step
-step_thf <- function(basef, res, thf_mod) {
+step_thf <- function(basef, res, arg_input, thf_comb) {
+  arg_thf <- names(as.list(args(thfrec)))
+  arg_thf <- arg_thf[!(arg_thf %in% c("basef", "keep", "res", "", "comb", "bounds"))]
+
   if (is.null(res)) {
-    Y1 <- t(apply(basef, 1, function(x) thf_mod(basef = x)))
+    Y1 <- t(apply(basef, 1, function(x) {
+      obj <- do.call("thfrec", c(list(basef = x, comb = thf_comb, keep = "recf"),
+                                 arg_input[which(names(arg_input) %in% arg_thf)]))
+      if (is.list(obj)) {
+        return(obj$recf)
+      } else {
+        return(obj)
+      }
+    }))
   } else {
-    Y1 <- t(mapply(function(Y, X) thf_mod(basef = Y, res = X),
-      Y = split(basef, row(basef)), X = split(res, row(res))
+    Y1 <- t(mapply(function(Y, X) {
+      obj <- do.call("thfrec", c(list(basef = Y, keep = "recf", comb = thf_comb, res = X),
+                                 arg_input[which(names(arg_input) %in% arg_thf)]))
+      if (is.list(obj)) {
+        return(obj$recf)
+      } else {
+        return(obj)
+      }
+    },
+    Y = split(basef, row(basef)), X = split(res, row(res))
     ))
   }
+  dimnames(Y1) <- NULL
+  return(Y1)
 }
