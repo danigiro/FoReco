@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -43,6 +43,12 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 
+
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
 
@@ -68,7 +74,7 @@
   <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-index">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -79,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -109,7 +115,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/FoReco_package.html">FoReco package</a>
+      <a href="../articles/FoReco_package.html">Using the FoReco package</a>
     </li>
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
@@ -138,6 +144,12 @@
   </a>
 </li>
       </ul>
+      
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
       
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -178,43 +190,43 @@
         <td>
           <p><code><a href="htsrec.html">htsrec()</a></code> </p>
         </td>
-        <td><p>Cross-sectional (contemporaneous) Forecast Reconciliation</p></td>
+        <td><p>Cross-sectional (contemporaneous) forecast reconciliation</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="thfrec.html">thfrec()</a></code> </p>
         </td>
-        <td><p>Temporal Forecast Reconciliation</p></td>
+        <td><p>Forecast reconciliation through temporal hierarchies (temporal reconciliation)</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="octrec.html">octrec()</a></code> </p>
         </td>
-        <td><p>Optimal Cross-temporal Forecast Reconciliation</p></td>
+        <td><p>Optimal combination cross-temporal forecast reconciliation</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="tcsrec.html">tcsrec()</a></code> </p>
         </td>
-        <td><p>Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation</p></td>
+        <td><p>Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="cstrec.html">cstrec()</a></code> </p>
         </td>
-        <td><p>Heuristic first-Cross-sectional-then-Temporal Cross-temporal forecast reconciliation</p></td>
+        <td><p>Heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="iterec.html">iterec()</a></code> </p>
         </td>
-        <td><p>Iterative Heuristic Cross-temporal Forecast Reconciliation</p></td>
+        <td><p>Iterative heuristic cross-temporal forecast reconciliation</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="ctbu.html">ctbu()</a></code> </p>
         </td>
-        <td><p>Bottom-up Cross-temporal Reconciliation</p></td>
+        <td><p>Bottom-up Cross-temporal forecast reconciliation</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -264,7 +276,7 @@
         <td>
           <p><code><a href="commat.html">commat()</a></code> </p>
         </td>
-        <td><p>Commutation Matrix</p></td>
+        <td><p>Commutation matrix</p></td>
       </tr><tr>
         
         <td>
@@ -276,7 +288,7 @@
         <td>
           <p><code><a href="shrink_estim.html">shrink_estim()</a></code> </p>
         </td>
-        <td><p>Shrunk Covariance Matrix</p></td>
+        <td><p>Shrinkage of the covariance matrix</p></td>
       </tr><tr>
         
         <td>
@@ -288,25 +300,25 @@
         <td>
           <p><code><a href="Cmatrix.html">Cmatrix()</a></code> </p>
         </td>
-        <td><p>Cross-sectional (contemporaneous) matrix</p></td>
+        <td><p>Cross-sectional (contemporaneous) aggregation matrix</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="hts_tools.html">hts_tools()</a></code> </p>
         </td>
-        <td><p>Cross-Sectional Reconciliation Tools</p></td>
+        <td><p>Cross-sectional reconciliation tools</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="thf_tools.html">thf_tools()</a></code> </p>
         </td>
-        <td><p>Temporal Reconciliation Tools</p></td>
+        <td><p>Temporal reconciliation tools</p></td>
       </tr><tr>
         
         <td>
           <p><code><a href="ctf_tools.html">ctf_tools()</a></code> </p>
         </td>
-        <td><p>Cross-Temporal Reconciliation Tools</p></td>
+        <td><p>Cross-temporal reconciliation tools</p></td>
       </tr>
     </tbody><tbody>
       <tr>
@@ -325,7 +337,7 @@
         <td>
           <p><code><a href="FoReco-package.html">FoReco-package</a></code> </p>
         </td>
-        <td><p>FoReco: Point Forecast Reconciliation</p></td>
+        <td><p>FoReco: point forecast reconciliation</p></td>
       </tr>
     </tbody>
     </table>
@@ -341,17 +353,34 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tommaso Di Fonzo, Daniele Girolimetto.</p>
+  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '05a948dc40379c4ff2eaba6f8d83c86e',
+    indexName: 'danigiro',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>

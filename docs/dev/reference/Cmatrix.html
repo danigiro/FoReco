@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cross-sectional (contemporaneous) matrix — Cmatrix • FoReco</title>
+<title>Cross-sectional (contemporaneous) aggregation matrix — Cmatrix • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -44,9 +44,15 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Cross-sectional (contemporaneous) matrix — Cmatrix" />
+
+<meta property="og:title" content="Cross-sectional (contemporaneous) aggregation matrix — Cmatrix" />
 <meta property="og:description" content="This function allows the user to easily build the (na x nb) cross-sectional
 (contemporaneous) matrix mapping the nb bottom level series into the na higher level
 ones. (Experimental version)" />
@@ -71,7 +77,7 @@ ones. (Experimental version)" />
   <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -82,7 +88,7 @@ ones. (Experimental version)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -112,7 +118,7 @@ ones. (Experimental version)" />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/FoReco_package.html">FoReco package</a>
+      <a href="../articles/FoReco_package.html">Using the FoReco package</a>
     </li>
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
@@ -142,6 +148,12 @@ ones. (Experimental version)" />
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -153,7 +165,7 @@ ones. (Experimental version)" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cross-sectional (contemporaneous) matrix</h1>
+    <h1>Cross-sectional (contemporaneous) aggregation matrix</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/Cmatrix.R'><code>R/Cmatrix.R</code></a></small>
     <div class="hidden name"><code>Cmatrix.Rd</code></div>
     </div>
@@ -164,7 +176,7 @@ ones. (Experimental version)" />
 ones. (Experimental version)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Cmatrix</span>(<span class='no'>formula</span>, <span class='no'>data</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>"_"</span>, <span class='kw'>sparse</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>total_label</span> <span class='kw'>=</span> <span class='st'>"Total"</span>)</pre>
+    <pre class="usage"><span class='fu'>Cmatrix</span><span class='op'>(</span><span class='va'>formula</span>, <span class='va'>data</span>, sep <span class='op'>=</span> <span class='st'>"_"</span>, sparse <span class='op'>=</span> <span class='cn'>TRUE</span>, top_label <span class='op'>=</span> <span class='st'>"Total"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,8 +201,8 @@ and each row identifies a bottom level time series.</p></td>
       <td><p>Option to return sparse matrix (<em>default</em> is <code>TRUE</code>).</p></td>
     </tr>
     <tr>
-      <th>total_label</th>
-      <td><p>Label of the highest time series (<em>default</em> is <code>"Total"</code>).</p></td>
+      <th>top_label</th>
+      <td><p>Label of the top level variable (<em>default</em> is <code>"Total"</code>).</p></td>
     </tr>
     </table>
 
@@ -199,19 +211,19 @@ and each row identifies a bottom level time series.</p></td>
     <p>A (<code>na x nb</code>) matrix.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'>## Balanced hierarchy</span>
+    <pre class="examples"><div class='input'><span class='co'>## Balanced hierarchy</span>
 <span class='co'>#         T</span>
 <span class='co'>#    |--------|</span>
 <span class='co'>#    A        B</span>
 <span class='co'>#  |---|   |--|--|</span>
 <span class='co'># AA   AB  BA BB BC</span>
 <span class='co'># Names of the bottom level variables</span>
-<span class='no'>data_bts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>),
-                       <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>))
+<span class='va'>data_bts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span><span class='op'>)</span>,
+                       X2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,
+                       stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-
+<span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'>Cmatrix</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>X1</span> <span class='op'>/</span> <span class='va'>X2</span>, <span class='va'>data_bts</span>, sep <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 8</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 3</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 5</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 2</span></div><div class='input'>
 <span class='co'>## Unbalanced hierarchy (1)</span>
 <span class='co'>#             T</span>
 <span class='co'>#    |--------|------|</span>
@@ -219,11 +231,12 @@ and each row identifies a bottom level time series.</p></td>
 <span class='co'>#  |---|   |--|--|</span>
 <span class='co'># AA   AB  BA BB BC</span>
 <span class='co'># Names of the bottom level variables</span>
-<span class='no'>data_bts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>),
-                       <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>, <span class='fl'>NA</span>))
+<span class='va'>data_bts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span>,
+                       X2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+                       stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-
+<span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'>Cmatrix</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>X1</span> <span class='op'>/</span> <span class='va'>X2</span>, <span class='va'>data_bts</span>, sep <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 9</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 3</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 6</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 2</span></div><div class='input'>
 <span class='co'>## Unbalanced hierarchy (2)</span>
 <span class='co'>#                 T</span>
 <span class='co'>#       |---------|---------|</span>
@@ -233,12 +246,13 @@ and each row identifies a bottom level time series.</p></td>
 <span class='co'>#  |----|         |----|</span>
 <span class='co'># AAA  AAB       BBA  BBB</span>
 <span class='co'># Names of the bottom level variables</span>
-<span class='no'>data_bts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>, <span class='st'>"C"</span>),
-                       <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>),
-                       <span class='kw'>X3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='fl'>NA</span>, <span class='fl'>NA</span>))
+<span class='va'>data_bts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"C"</span>, <span class='st'>"C"</span><span class='op'>)</span>,
+                       X2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span>,
+                       X3 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+                       stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>X1</span> / <span class='no'>X2</span> / <span class='no'>X3</span>, <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-
+<span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'>Cmatrix</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>X1</span> <span class='op'>/</span> <span class='va'>X2</span> <span class='op'>/</span> <span class='va'>X3</span>, <span class='va'>data_bts</span>, sep <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 14</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 6</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 8</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 3</span></div><div class='input'>
 <span class='co'>## Grouped hierarchy</span>
 <span class='co'>#         C               S</span>
 <span class='co'>#    |--------|      |--------|</span>
@@ -246,12 +260,14 @@ and each row identifies a bottom level time series.</p></td>
 <span class='co'>#  |---|    |---|</span>
 <span class='co'># AA   AB  BA   BB</span>
 <span class='co'># Names of the bottom level variables</span>
-<span class='no'>data_bts</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>X1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>),
-                       <span class='kw'>X2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>),
-                       <span class='kw'>Y1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>))
+<span class='va'>data_bts</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>X1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"B"</span><span class='op'>)</span>,
+                       X2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span>, <span class='st'>"A"</span>, <span class='st'>"B"</span><span class='op'>)</span>,
+                       Y1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"M"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span>, <span class='st'>"F"</span><span class='op'>)</span>,
+                       stringsAsFactors <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='co'># Cross-sectional aggregation matrix</span>
-<span class='no'>C</span> <span class='kw'>&lt;-</span> <span class='fu'>Cmatrix</span>(~ <span class='no'>Y1</span> * (<span class='no'>X1</span> / <span class='no'>X2</span>), <span class='no'>data_bts</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)
-}</div></pre>
+<span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'>Cmatrix</span><span class='op'>(</span><span class='op'>~</span> <span class='va'>Y1</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>X1</span> <span class='op'>/</span> <span class='va'>X2</span><span class='op'>)</span>, <span class='va'>data_bts</span>, sep <span class='op'>=</span> <span class='st'>""</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>------ Cross-sectional information ------</span></div><div class='output co'>#&gt; <span class='message'>  Number of total time series (n): 21</span></div><div class='output co'>#&gt; <span class='message'> Number of upper time series (na): 13</span></div><div class='output co'>#&gt; <span class='message'>Number of bottom time series (nb): 8</span></div><div class='output co'>#&gt; <span class='message'>                 Number of levels: 5</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -263,17 +279,34 @@ and each row identifies a bottom level time series.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tommaso Di Fonzo, Daniele Girolimetto.</p>
+  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '05a948dc40379c4ff2eaba6f8d83c86e',
+    indexName: 'danigiro',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>

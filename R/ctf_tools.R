@@ -54,6 +54,7 @@ ctf_tools <- function(C, m, h = 1, Ut, nb, Sstruc = FALSE) {
   }
 
   tmp <- thf_tools(m, h = h, sparse = TRUE)
+  m <- max(tmp$kset)
   Zt <- tmp$Zt
   ks <- tmp$ks
   kt <- tmp$kt

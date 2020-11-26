@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Temporal Reconciliation Tools — thf_tools • FoReco</title>
+<title>Temporal reconciliation tools — thf_tools • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -44,9 +44,15 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Temporal Reconciliation Tools — thf_tools" />
+
+<meta property="og:title" content="Temporal reconciliation tools — thf_tools" />
 <meta property="og:description" content="Some useful tools for forecast reconciliation through temporal hierarchies." />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
 
@@ -69,7 +75,7 @@
   <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -80,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -110,7 +116,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/FoReco_package.html">FoReco package</a>
+      <a href="../articles/FoReco_package.html">Using the FoReco package</a>
     </li>
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
@@ -140,6 +146,12 @@
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -151,7 +163,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Temporal Reconciliation Tools</h1>
+    <h1>Temporal reconciliation tools</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/thf_tools.R'><code>R/thf_tools.R</code></a></small>
     <div class="hidden name"><code>thf_tools.Rd</code></div>
     </div>
@@ -160,14 +172,15 @@
     <p>Some useful tools for forecast reconciliation through temporal hierarchies.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>thf_tools</span>(<span class='no'>m</span>, <span class='kw'>h</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>sparse</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>thf_tools</span><span class='op'>(</span><span class='va'>m</span>, h <span class='op'>=</span> <span class='fl'>1</span>, sparse <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
+      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, <code>m</code>),
+or a subset of the <code>p</code> factors of <code>m</code>.</p></td>
     </tr>
     <tr>
       <th>h</th>
@@ -187,7 +200,7 @@
 <dt><code>Zt</code></dt><dd><p>Zero constraints temporal kernel matrix\(,\; \textbf{Z}_h'\textbf{Y}' =
 \mathbf{0}_{\left[hk^* \times n \right]}\).</p></dd>
 <dt><code>kset</code></dt><dd><p>Set of factors (<code>p</code>) of <code>m</code> in descending order (from <code>m</code>
-to 1)\(,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots, k_2, k_1\right\}, \; k_p=m, \; k_1=1\).</p></dd>
+to 1)\(,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots,\right.\) \(\left. k_2, k_1\right\},\) \(k_p=m, \; k_1=1\).</p></dd>
 <dt><code>p</code></dt><dd><p>Number of elements of kset\(,\;({\cal K})\).</p></dd>
 <dt><code>ks</code></dt><dd><p>Sum of <code>p-1</code> factors of <code>m</code> (out of <code>m</code> itself), \(k^*\).</p></dd>
 <dt><code>kt</code></dt><dd><p>Sum of all factors of m (\(k^{tot} = k^*+m\)).</p></dd>
@@ -195,7 +208,8 @@ to 1)\(,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots, k_2, k_1\right\}, \; k_p=m, \;
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># quarterly data</span>
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>thf_tools</span>(<span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>sparse</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div></pre>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>thf_tools</span><span class='op'>(</span>m <span class='op'>=</span> <span class='fl'>4</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -207,17 +221,34 @@ to 1)\(,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots, k_2, k_1\right\}, \; k_p=m, \;
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tommaso Di Fonzo, Daniele Girolimetto.</p>
+  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '05a948dc40379c4ff2eaba6f8d83c86e',
+    indexName: 'danigiro',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>

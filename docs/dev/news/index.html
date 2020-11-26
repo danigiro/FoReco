@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Temporal reconciliation tools — thf_tools • FoReco</title>
+<title>Changelog • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,12 +52,11 @@
 
 
 
-<meta property="og:title" content="Temporal reconciliation tools — thf_tools" />
-<meta property="og:description" content="Some useful tools for forecast reconciliation through temporal hierarchies." />
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
 
 
-
+<meta name="robots" content="noindex">
 
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
@@ -73,7 +72,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -86,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -163,59 +162,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Temporal reconciliation tools</h1>
-    <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/thf_tools.R'><code>R/thf_tools.R</code></a></small>
-    <div class="hidden name"><code>thf_tools.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/daniGiro/FoReco/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>Some useful tools for forecast reconciliation through temporal hierarchies.</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>thf_tools</span><span class='op'>(</span><span class='va'>m</span>, h <span class='op'>=</span> <span class='fl'>1</span>, sparse <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, <code>m</code>),
-or a subset of the <code>p</code> factors of <code>m</code>.</p></td>
-    </tr>
-    <tr>
-      <th>h</th>
-      <td><p>Forecast horizon for the lowest frequency (most temporally aggregated) time series (<em>default</em> is <code>1</code>).</p></td>
-    </tr>
-    <tr>
-      <th>sparse</th>
-      <td><p>Option to return sparse object (<em>default</em> is <code>TRUE</code>).</p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>A list of seven elements:</p>
-<dt><code>K</code></dt><dd><p>Temporal aggregation matrix.</p></dd>
-<dt><code>R</code></dt><dd><p>Temporal summing matrix.</p></dd>
-<dt><code>Zt</code></dt><dd><p>Zero constraints temporal kernel matrix\(,\; \textbf{Z}_h'\textbf{Y}' =
-\mathbf{0}_{\left[hk^* \times n \right]}\).</p></dd>
-<dt><code>kset</code></dt><dd><p>Set of factors (<code>p</code>) of <code>m</code> in descending order (from <code>m</code>
-to 1)\(,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots,\right.\) \(\left. k_2, k_1\right\},\) \(k_p=m, \; k_1=1\).</p></dd>
-<dt><code>p</code></dt><dd><p>Number of elements of kset\(,\;({\cal K})\).</p></dd>
-<dt><code>ks</code></dt><dd><p>Sum of <code>p-1</code> factors of <code>m</code> (out of <code>m</code> itself), \(k^*\).</p></dd>
-<dt><code>kt</code></dt><dd><p>Sum of all factors of m (\(k^{tot} = k^*+m\)).</p></dd>
-
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># quarterly data</span>
-<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>thf_tools</span><span class='op'>(</span>m <span class='op'>=</span> <span class='fl'>4</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div></pre>
+    <div id="foreco-012" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.2">
+<a href="#foreco-012" class="anchor"></a>FoReco 0.1.2<small> Unreleased </small>
+</h1>
+<p><strong>Note</strong>: <em>Documentation for this version is still under development</em></p>
+<div id="major-changes" class="section level5">
+<h5 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major changes</h5>
+<ul>
+<li>Add the possibility to use part of factors of <em>m</em> (max. order of temporal aggregation)</li>
+<li>Add the possibility for <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> to introduce a list of <em>h</em> covariance matrices in the parameters <code>W</code> and <code>Omega</code>, where <em>h</em> stands for the forecast horizon (note that for <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> this is the forecast horizon of the entire cycle)</li>
+</ul>
+</div>
+<div id="minor-changes" class="section level5">
+<h5 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h5>
+<ul>
+<li>Now in <code><a href="../reference/octrec.html">octrec()</a></code> it is also possible to introduce the <strong>Ω</strong> covariance matrix variant through the <code>Omega</code> parameter and not only the <strong>W</strong> variant with the<code>W</code> parameter</li>
+<li>Renew <code><a href="../reference/tcsrec.html">tcsrec()</a></code>, <code><a href="../reference/cstrec.html">cstrec()</a></code> and <code><a href="../reference/iterec.html">iterec()</a></code>. Also in the iterec function the <code>maxit</code> parameter has been replaced by <code>itmax</code>, however for the moment <code>maxit</code> is still supported</li>
+</ul>
+</div>
+<div id="experimental" class="section level5">
+<h5 class="hasAnchor">
+<a href="#experimental" class="anchor"></a>Experimental</h5>
+<ul>
+<li>Add the possibility to introduce constraints through the <code>bounds</code> param in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code>.</li>
+<li>Add a (hidden) function <code>oct_bounds()</code> to organize the bounds on a singular dimension (i.e. only cross-sectional or only temporal) in a cross-temporal framework</li>
+</ul>
+</div>
+</div>
+    <div id="foreco-011" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.1">
+<a href="#foreco-011" class="anchor"></a>FoReco 0.1.1<small> 2020-10-17 </small>
+</h1>
+<p>This is a small release focusing on fixing some bugs and the documentation</p>
+<ul>
+<li>Fixed a bug in <code><a href="../reference/iterec.html">iterec()</a></code> when calculating incoherence</li>
+<li>Fixed documentation</li>
+<li>Changed the contact mail (now it’s <a href="mailto:daniele.girolimetto@phd.unipd.it" class="email">daniele.girolimetto@phd.unipd.it</a>)</li>
+<li>Corrected the second section of the vignette “<code>Average relative accuracy indices</code>”</li>
+</ul>
+</div>
+    <div id="foreco-010" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.0">
+<a href="#foreco-010" class="anchor"></a>FoReco 0.1.0<small> 2020-10-01 </small>
+</h1>
+<ul>
+<li>Release on github</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 

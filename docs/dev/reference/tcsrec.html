@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation — tcsrec • FoReco</title>
+<title>Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation — tcsrec • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -44,9 +44,15 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation — tcsrec" />
+
+<meta property="og:title" content="Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation — tcsrec" />
 <meta property="og:description" content="The cross-temporal forecast reconciliation procedure by
 Kourentzes and Athanasopoulos (2019) can be viewed as an ensemble forecasting
 procedure which exploits the simple averaging of different forecasts.
@@ -77,7 +83,7 @@ fulfilling both cross-sectional and temporal constraints." />
   <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -88,7 +94,7 @@ fulfilling both cross-sectional and temporal constraints." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -118,7 +124,7 @@ fulfilling both cross-sectional and temporal constraints." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/FoReco_package.html">FoReco package</a>
+      <a href="../articles/FoReco_package.html">Using the FoReco package</a>
     </li>
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
@@ -148,6 +154,12 @@ fulfilling both cross-sectional and temporal constraints." />
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -159,7 +171,7 @@ fulfilling both cross-sectional and temporal constraints." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Heuristic first-Temporal-then-Cross-sectional Cross-temporal forecast reconciliation</h1>
+    <h1>Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/tcsrec.R'><code>R/tcsrec.R</code></a></small>
     <div class="hidden name"><code>tcsrec.Rd</code></div>
     </div>
@@ -176,10 +188,7 @@ cross-sectionally reconcile the forecasts obtained at step 1, by this way
 fulfilling both cross-sectional and temporal constraints.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tcsrec</span>(<span class='no'>basef</span>, <span class='no'>m</span>, <span class='no'>C</span>, <span class='no'>thf_comb</span>, <span class='no'>hts_comb</span>, <span class='no'>Ut</span>, <span class='no'>nb</span>, <span class='no'>res</span>, <span class='no'>W</span>, <span class='no'>Omega</span>,
-       <span class='kw'>mse</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>corpcor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>avg</span><span class='kw'>=</span><span class='st'>"KA"</span>, <span class='kw'>nn</span><span class='kw'>=</span> <span class='fl'>FALSE</span>,
-       <span class='kw'>settings</span> <span class='kw'>=</span> <span class='fu'>osqpSettings</span>(<span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>eps_abs</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>,
-       <span class='kw'>eps_rel</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>, <span class='kw'>polish_refine_iter</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>polish</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>thf_comb</span>, <span class='va'>hts_comb</span>, <span class='va'>res</span>, avg <span class='op'>=</span> <span class='st'>"KA"</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,34 +202,10 @@ and <code>h</code> is the forecast horizon. Each row identifies, a time series, 
 are ordered as [lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
-      <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
-    </tr>
-    <tr>
-      <th>C</th>
-      <td><p>(<code>na x nb</code>) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.</p></td>
-    </tr>
-    <tr>
-      <th>thf_comb</th>
-      <td><p>Type of the (<code>(k* + m) x (k* + m)</code>) covariance matrix to be used in
-the temporal reconciliation, see more in <code>comb</code> param of <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>hts_comb</th>
-      <td><p>Type of the (<code>n x n</code>) covariance matrix to be used in the
-cross-sectional reconciliation, see more in <code>comb</code> param of <code><a href='htsrec.html'>htsrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>Ut</th>
-      <td><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\(\textbf{U}'\textbf{Y} = \mathbf{0}\) spanning the null space valid for the reconciled
-forecasts. It can be used instead of parameter <code>C</code>, but needs <code>nb</code> (n = na + nb). If
-the hierarchy admits a structural representation, <code>Ut</code> has dimension (<code>na x n</code>).</p></td>
-    </tr>
-    <tr>
-      <th>nb</th>
-      <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code> is not used.</p></td>
+      <th>hts_comb, thf_comb</th>
+      <td><p>Type of covariance matrix (respectively (<code>n x n</code>) and
+(<code>(k* + m) x (k* + m)</code>)) to be used in the cross-sectional and temporal reconciliation,
+see more in <code>comb</code> param of <code><a href='htsrec.html'>htsrec</a></code> and <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
     </tr>
     <tr>
       <th>res</th>
@@ -232,29 +217,6 @@ each variable (row), needed to estimate the covariance matrix when <code>hts_com
 <code>"shr",</code> <code>"sam"}</code>. The row must be in the same order as <code>basef</code>.</p></td>
     </tr>
     <tr>
-      <th>W</th>
-      <td><p>This option permits to directly enter the covariance matrix in the
-cross-sectional reconciliation, see more in <code>W</code> param of <code><a href='htsrec.html'>htsrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>Omega</th>
-      <td><p>This option permits to directly enter the covariance matrix in the
-reconciliation through temporal hierarchies, see more in <code>Omega</code> param of <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
-    </tr>
-    <tr>
-      <th>mse</th>
-      <td><p>Logical value: <code>TRUE</code> (<em>default</em>) calculates the
-covariance matrix of the in-sample residuals (when necessary) according to the original
-<span class="pkg">hts</span> and <span class="pkg">thief</span> formulation: no mean correction, T as denominator.</p></td>
-    </tr>
-    <tr>
-      <th>corpcor</th>
-      <td><p>Logical value: <code>TRUE</code> if <span class="pkg">corpcor</span> (Schäfer et
-al., 2017) must be used to shrink the sample covariance matrix according to
-Schäfer and Strimmer (2005), otherwise the function uses the same
-implementation as package <span class="pkg">hts</span>.</p></td>
-    </tr>
-    <tr>
       <th>avg</th>
       <td><p>If <code>avg = "KA"</code> (<em>default</em>), the final projection matrix <code>M</code> is the one proposed
 by Kourentzes and Athanasopoulos (2019), otherwise it is calculated as simple average of
@@ -262,17 +224,10 @@ all the involved projection matrices at step 2 of th procedure (see Di Fonzo and
 Girolimetto, 2020).</p></td>
     </tr>
     <tr>
-      <th>nn</th>
-      <td><p>Logical value, <code>TRUE</code> if non-negative reconciled forecasts are wished. <strong>Warning</strong>,
-the two-step heuristic reconciliation allows non negativity constraints only in the first step.
-This means that non-negativity is not guaranteed in the final reconciled values.</p></td>
-    </tr>
-    <tr>
-      <th>settings</th>
-      <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>). The default options
-are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
-<code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
-<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a>.</p></td>
+      <th>...</th>
+      <td><p>any other options useful for <code><a href='htsrec.html'>htsrec</a></code> and
+<code><a href='thfrec.html'>thfrec</a></code>, e.g. <code>m</code>, <code>C</code> (or <code>Ut</code> and <code>nb</code>),
+<code>nn</code> (for non negativity reconciliation only at first step), ...</p></td>
     </tr>
     </table>
 
@@ -288,6 +243,9 @@ are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 
 the covariance matrices chosen by the user. If the combinations used by Kourentzes and Athanasopoulos (2019) are
 wished, <code>thf_comb</code> must be set equal to either <code>"struc"</code> or <code>"wlsv"</code>,
 and <code>hts_comb</code> equal to either <code>"shr"</code> or <code>"wls"</code>.</p>
+<p><strong>Warning</strong>,
+the two-step heuristic reconciliation allows non negativity constraints only in the first step.
+This means that non-negativity is not guaranteed in the final reconciled values.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
@@ -295,13 +253,24 @@ Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:2006.08570</a>.</p>
 <p>Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts
 for Australian tourism, <em>Annals of Tourism Research</em>, 75, 393-409.</p>
+<p>Schäfer, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
+Duarte Silva, A.P., Strimmer, K. (2017), <em>Package `corpcor'</em>, R
+package version 1.6.9 (April 1, 2017), <a href='https://CRAN.R-project.org/package=corpcor'>https://CRAN.R-project.org/package= corpcor</a>.</p>
+<p>Schäfer, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
+Matrix Estimation and Implications for Functional Genomics, <em>Statistical
+Applications in Genetics and Molecular Biology</em>, 4, 1.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
+An Operator Splitting Solver for Quadratic Programs, <a href='https://arxiv.org/abs/1711.08013'>arXiv:1711.08013</a>.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
+Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+(October 10, 2019), <a href='https://CRAN.R-project.org/package=osqp'>https://CRAN.R-project.org/package=osqp</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>tcsrec</span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>, <span class='kw'>thf_comb</span> <span class='kw'>=</span> <span class='st'>"acov"</span>,
-              <span class='kw'>hts_comb</span> <span class='kw'>=</span> <span class='st'>"shr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>, hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>,
+              res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -313,17 +282,34 @@ for Australian tourism, <em>Annals of Tourism Research</em>, 75, 393-409.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tommaso Di Fonzo, Daniele Girolimetto.</p>
+  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '05a948dc40379c4ff2eaba6f8d83c86e',
+    indexName: 'danigiro',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>

@@ -13,7 +13,7 @@ status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
 [![devel
-version](https://img.shields.io/badge/devel%20version-0.1.1-blue.svg)](https://github.com/daniGiro/FoReco)
+version](https://img.shields.io/badge/devel%20version-0.1.2-blue.svg)](https://github.com/daniGiro/FoReco)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 <!-- badges: end -->
@@ -48,21 +48,23 @@ Installation
 You can install the **stable** version on [R
 CRAN](https://cran.r-project.org/)
 
-    install.packages('FoReco', dependencies = TRUE)
+``` r
+install.packages('FoReco', dependencies = TRUE)
+```
 
 You can also install the **development** version from
 [Github](https://github.com/daniGiro/FoReco)
 
-    # install.packages("devtools")
-    devtools::install_github("daniGiro/FoReco", build_vignettes = TRUE)
+``` r
+# install.packages("devtools")
+devtools::install_github("daniGiro/FoReco", build_vignettes = TRUE)
+```
 
 Links
 -----
 
--   Source code:
-    <a href="https://github.com/daniGiro/FoReco" class="uri">https://github.com/daniGiro/FoReco</a>
--   Site documentation:
-    <a href="https://danigiro.github.io/FoReco/" class="uri">https://danigiro.github.io/FoReco/</a>
+-   Source code: <https://github.com/daniGiro/FoReco>
+-   Site documentation: <https://danigiro.github.io/FoReco/>
 
 Getting help
 ------------

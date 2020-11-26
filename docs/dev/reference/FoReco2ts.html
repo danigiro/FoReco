@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -43,6 +43,12 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script>
 
+
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
 
@@ -72,7 +78,7 @@ ctbu) into a list of time series objects." />
   <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -83,7 +89,7 @@ ctbu) into a list of time series objects." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -113,7 +119,7 @@ ctbu) into a list of time series objects." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/FoReco_package.html">FoReco package</a>
+      <a href="../articles/FoReco_package.html">Using the FoReco package</a>
     </li>
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
@@ -143,6 +149,12 @@ ctbu) into a list of time series objects." />
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -166,7 +178,7 @@ ctbu) into a list of time series objects." />
 <a href='ctbu.html'>ctbu</a>) into a list of time series objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>FoReco2ts</span>(<span class='no'>recf</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>FoReco2ts</span><span class='op'>(</span><span class='va'>recf</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -192,33 +204,33 @@ frequency is only required for the cross-sectional system.
     <p>A list of class <code>"ts"</code> objects</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
 <span class='co'># Cross-temporal framework</span>
-<span class='no'>oct_recf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='octrec.html'>octrec</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>,
-                   <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"bdshr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>)$<span class='no'>recf</span>
-<span class='no'>obj_oct</span> <span class='kw'>&lt;-</span> <span class='fu'>FoReco2ts</span>(<span class='kw'>recf</span> <span class='kw'>=</span> <span class='no'>oct_recf</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>, <span class='fl'>1</span>))
+<span class='va'>oct_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='octrec.html'>octrec</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
+                   comb <span class='op'>=</span> <span class='st'>"bdshr"</span>, res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='va'>obj_oct</span> <span class='op'>&lt;-</span> <span class='fu'>FoReco2ts</span><span class='op'>(</span>recf <span class='op'>=</span> <span class='va'>oct_recf</span>, start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># Cross-sectional framework</span>
 <span class='co'># monthly base forecasts</span>
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>),
-                                    <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"_"</span>))[<span class='fl'>1</span>, ] <span class='kw'>==</span> <span class='st'>"k1"</span>)
-<span class='no'>mbase</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>[, <span class='no'>id</span>])
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>)</span>,
+                                    split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
+<span class='va'>mbase</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'># monthly residuals</span>
-<span class='no'>id</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>res</span>),
-                                    <span class='kw'>split</span> <span class='kw'>=</span> <span class='st'>"_"</span>))[<span class='fl'>1</span>, ] <span class='kw'>==</span> <span class='st'>"k1"</span>)
-<span class='no'>mres</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='no'>FoReco_data</span>$<span class='no'>res</span>[, <span class='no'>id</span>])
-<span class='no'>hts_recf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span>(<span class='no'>mbase</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"shr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>mres</span>)$<span class='no'>recf</span>
-<span class='no'>obj_hts</span> <span class='kw'>&lt;-</span> <span class='fu'>FoReco2ts</span>(<span class='kw'>recf</span> <span class='kw'>=</span> <span class='no'>hts_recf</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>, <span class='fl'>1</span>), <span class='kw'>frequency</span> <span class='kw'>=</span> <span class='fl'>12</span>)
+<span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span>,
+                                    split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
+<span class='va'>mres</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
+<span class='va'>hts_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>mbase</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>mres</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='va'>obj_hts</span> <span class='op'>&lt;-</span> <span class='fu'>FoReco2ts</span><span class='op'>(</span>recf <span class='op'>=</span> <span class='va'>hts_recf</span>, start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>1</span><span class='op'>)</span>, frequency <span class='op'>=</span> <span class='fl'>12</span><span class='op'>)</span>
 
 <span class='co'># Temporal framework</span>
 <span class='co'># top ts base forecasts ([lowest_freq' ...  highest_freq']')</span>
-<span class='no'>topbase</span> <span class='kw'>&lt;-</span> <span class='no'>FoReco_data</span>$<span class='no'>base</span>[<span class='fl'>1</span>, ]
+<span class='va'>topbase</span> <span class='op'>&lt;-</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span>
  <span class='co'># top ts residuals ([lowest_freq' ...  highest_freq']')</span>
-<span class='no'>topres</span> <span class='kw'>&lt;-</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>[<span class='fl'>1</span>, ]
-<span class='no'>thf_recf</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span>(<span class='no'>topbase</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"acov"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>topres</span>)$<span class='no'>recf</span>
-<span class='no'>obj_thf</span> <span class='kw'>&lt;-</span> <span class='fu'>FoReco2ts</span>(<span class='kw'>recf</span> <span class='kw'>=</span> <span class='no'>thf_recf</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>15</span>, <span class='fl'>1</span>))
-}</div></pre>
+<span class='va'>topres</span> <span class='op'>&lt;-</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span>
+<span class='va'>thf_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span><span class='op'>(</span><span class='va'>topbase</span>, m <span class='op'>=</span> <span class='fl'>12</span>, comb <span class='op'>=</span> <span class='st'>"acov"</span>, res <span class='op'>=</span> <span class='va'>topres</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
+<span class='va'>obj_thf</span> <span class='op'>&lt;-</span> <span class='fu'>FoReco2ts</span><span class='op'>(</span>recf <span class='op'>=</span> <span class='va'>thf_recf</span>, start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>15</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -230,17 +242,34 @@ frequency is only required for the cross-sectional system.
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tommaso Di Fonzo, Daniele Girolimetto.</p>
+  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '05a948dc40379c4ff2eaba6f8d83c86e',
+    indexName: 'danigiro',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>

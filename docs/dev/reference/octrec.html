@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Optimal Cross-temporal Forecast Reconciliation — octrec • FoReco</title>
+<title>Optimal combination cross-temporal forecast reconciliation — octrec • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -44,9 +44,15 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Optimal Cross-temporal Forecast Reconciliation — octrec" />
+
+<meta property="og:title" content="Optimal combination cross-temporal forecast reconciliation — octrec" />
 <meta property="og:description" content="Optimal (in least squares sense) combination cross-temporal forecast reconciliation.
 The reconciled forecasts are calculated either through a projection approach
 (Byron, 1978), or the equivalent structural approach by Hyndman et al. (2011)." />
@@ -71,7 +77,7 @@ The reconciled forecasts are calculated either through a projection approach
   <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -82,7 +88,7 @@ The reconciled forecasts are calculated either through a projection approach
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -112,7 +118,7 @@ The reconciled forecasts are calculated either through a projection approach
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/FoReco_package.html">FoReco package</a>
+      <a href="../articles/FoReco_package.html">Using the FoReco package</a>
     </li>
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
@@ -142,6 +148,12 @@ The reconciled forecasts are calculated either through a projection approach
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -153,7 +165,7 @@ The reconciled forecasts are calculated either through a projection approach
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Optimal Cross-temporal Forecast Reconciliation</h1>
+    <h1>Optimal combination cross-temporal forecast reconciliation</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/octrec.R'><code>R/octrec.R</code></a></small>
     <div class="hidden name"><code>octrec.Rd</code></div>
     </div>
@@ -164,11 +176,10 @@ The reconciled forecasts are calculated either through a projection approach
 (Byron, 1978), or the equivalent structural approach by Hyndman et al. (2011).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>octrec</span>(<span class='no'>basef</span>, <span class='no'>m</span>, <span class='no'>C</span>, <span class='no'>comb</span>, <span class='no'>res</span>, <span class='no'>Ut</span>, <span class='no'>nb</span>, <span class='no'>W</span>, <span class='no'>Sstruc</span>,
-       <span class='kw'>mse</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>corpcor</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"M"</span>, <span class='kw'>sol</span> <span class='kw'>=</span> <span class='st'>"direct"</span>,
-       <span class='kw'>nn</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>keep</span> <span class='kw'>=</span> <span class='st'>"list"</span>,
-       <span class='kw'>settings</span> <span class='kw'>=</span> <span class='fu'>osqpSettings</span>(<span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>eps_abs</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>,
-       <span class='kw'>eps_rel</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>, <span class='kw'>polish_refine_iter</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>polish</span><span class='kw'>=</span><span class='fl'>TRUE</span>))</pre>
+    <pre class="usage"><span class='fu'>octrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>C</span>, <span class='va'>comb</span>, <span class='va'>res</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, <span class='va'>Sstruc</span>,
+       mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>, type <span class='op'>=</span> <span class='st'>"M"</span>, sol <span class='op'>=</span> <span class='st'>"direct"</span>,
+       nn <span class='op'>=</span> <span class='cn'>FALSE</span>, keep <span class='op'>=</span> <span class='st'>"list"</span>, settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span><span class='op'>)</span>,
+       bounds <span class='op'>=</span> <span class='cn'>NULL</span>, W <span class='op'>=</span> <span class='cn'>NULL</span>, Omega <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,7 +194,8 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
+      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, <code>m</code>),
+or a subset of the <code>p</code> factors of <code>m</code>.</p></td>
     </tr>
     <tr>
       <th>C</th>
@@ -207,7 +219,8 @@ of variables:</p><ul>
 <li><p><b>Ssam</b> (Series cross-covariance matrix);</p></li>
 <li><p><b>shr</b>  (Shrunk cross-covariance matrix);</p></li>
 <li><p><b>sam</b> (Sample cross-covariance matrix);</p></li>
-<li><p><b>w</b> use your personal matrix W in param <code>W</code>.</p></li>
+<li><p><b>w</b> use your personal matrix W in param <code>W</code>;</p></li>
+<li><p><b>omega</b> use your personal matrix Omega in param <code>Omega</code>.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -228,13 +241,6 @@ the hierarchy admits a structural representation, <code>Ut</code> has dimension 
     <tr>
       <th>nb</th>
       <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code> is not used.</p></td>
-    </tr>
-    <tr>
-      <th>W</th>
-      <td><p>This option permits to directly enter the covariance matrix:</p><ol>
-<li><p><code>W</code> must be a p.d. (<code>n(k* + m) x n(k* + m)</code>) matrix;</p></li>
-<li><p>if <code>comb</code> is different from "<code>w</code>", <code>W</code> is not used.</p></li>
-</ol></td>
     </tr>
     <tr>
       <th>Sstruc</th>
@@ -279,7 +285,22 @@ program using <code><a href='https://rdrr.io/pkg/osqp/man/solve_osqp.html'>solve
       <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>). The default options
 are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
 <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
-<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a>.</p></td>
+<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2019).</p></td>
+    </tr>
+    <tr>
+      <th>bounds</th>
+      <td><p>(<code>n(k* + m) x 2</code>) matrix with bounds on the variables: the first column is the lower bound,
+and the second column is the upper bound.</p></td>
+    </tr>
+    <tr>
+      <th>W, Omega</th>
+      <td><p>This option permits to directly enter the covariance matrix:</p><ol>
+<li><p><code>W</code> must be a p.d. (<code>n(k* + m) x n(k* + m)</code>) matrix or a list
+  of <code>h</code> matrix (one for each forecast horizon);</p></li>
+<li><p><code>Omega</code> must be a p.d. (<code>n(k* + m) x n(k* + m)</code>) matrix or a list
+  of <code>h</code> matrix (one for each forecast horizon);</p></li>
+<li><p>if <code>comb</code> is different from "<code>w</code>" or "<code>omega</code>", <code>W</code> or <code>Omega</code> is not used.</p></li>
+</ol></td>
     </tr>
     </table>
 
@@ -320,23 +341,23 @@ polish's status (<code>status_polish</code>).</p></dd>
 Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:2006.08570</a>.</p>
 <p>Schäfer, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
-Duarte Silva, A.P., Strimmer, K. (2017),
-<em>Package `corpcor'</em>, R package version 1.6.9 (April 1, 2017).</p>
+Duarte Silva, A.P., Strimmer, K. (2017), <em>Package `corpcor'</em>, R
+package version 1.6.9 (April 1, 2017), <a href='https://CRAN.R-project.org/package=corpcor'>https://CRAN.R-project.org/package= corpcor</a>.</p>
 <p>Schäfer, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
 Matrix Estimation and Implications for Functional Genomics, <em>Statistical
 Applications in Genetics and Molecular Biology</em>, 4, 1.</p>
-<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd and S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs. <em>ArXiv e-prints</em>.
-1711.08013.</p>
-<p>Stone, R., Champernowne, D.G., Meade, J.E. (1942), The precision of national
-income estimates,<em>The Review of Economic Studies</em>, 9, 2, 111-125.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
+An Operator Splitting Solver for Quadratic Programs, <a href='https://arxiv.org/abs/1711.08013'>arXiv:1711.08013</a>.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
+Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+(October 10, 2019), <a href='https://CRAN.R-project.org/package=osqp'>https://CRAN.R-project.org/package=osqp</a>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>FoReco_data</span>)
-<span class='no'>obj</span> <span class='kw'>&lt;-</span> <span class='fu'>octrec</span>(<span class='no'>FoReco_data</span>$<span class='no'>base</span>, <span class='kw'>m</span> <span class='kw'>=</span> <span class='fl'>12</span>, <span class='kw'>C</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>C</span>,
-              <span class='kw'>comb</span> <span class='kw'>=</span> <span class='st'>"bdshr"</span>, <span class='kw'>res</span> <span class='kw'>=</span> <span class='no'>FoReco_data</span>$<span class='no'>res</span>)
-}</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>octrec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
+              comb <span class='op'>=</span> <span class='st'>"bdshr"</span>, res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -348,17 +369,34 @@ income estimates,<em>The Review of Economic Studies</em>, 9, 2, 111-125.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tommaso Di Fonzo, Daniele Girolimetto.</p>
+  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '05a948dc40379c4ff2eaba6f8d83c86e',
+    indexName: 'danigiro',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>

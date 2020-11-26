@@ -1,13 +1,19 @@
 url: https://danigiro.github.io/FoReco
 
+development:
+  mode: unreleased
+  destination: dev
+  version_label: default
+
 template:
   params:
+    bootswatch: cosmo
     docsearch:
       api_key: '05a948dc40379c4ff2eaba6f8d83c86e'
       index_name: 'danigiro'
 
 navbar:
-  type: inverse
+#  type: inverse
   structure:
     left: [home, reference, articles, news]
     right:  [github, rpro]

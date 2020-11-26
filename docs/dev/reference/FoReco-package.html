@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FoReco: Point Forecast Reconciliation — FoReco-package • FoReco</title>
+<title>FoReco: point forecast reconciliation — FoReco-package • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -19,8 +19,8 @@
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
@@ -44,9 +44,15 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.3/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="FoReco: Point Forecast Reconciliation — FoReco-package" />
+
+<meta property="og:title" content="FoReco: point forecast reconciliation — FoReco-package" />
 <meta property="og:description" content="An R package offering classical (bottom-up), optimal and heuristic combination
 forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal
 linearly constrained time series." />
@@ -71,7 +77,7 @@ linearly constrained time series." />
   <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
@@ -82,7 +88,7 @@ linearly constrained time series." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="In-development version">0.1.2</span>
       </span>
     </div>
 
@@ -112,7 +118,7 @@ linearly constrained time series." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/FoReco_package.html">FoReco package</a>
+      <a href="../articles/FoReco_package.html">Using the FoReco package</a>
     </li>
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
@@ -142,6 +148,12 @@ linearly constrained time series." />
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -153,7 +165,7 @@ linearly constrained time series." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>FoReco: Point Forecast Reconciliation</h1>
+    <h1>FoReco: point forecast reconciliation</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/FoReco-package.R'><code>R/FoReco-package.R</code></a></small>
     <div class="hidden name"><code>FoReco-package.Rd</code></div>
     </div>
@@ -172,20 +184,24 @@ linearly constrained time series.</p>
 post-forecasting process aimed to improve the quality of the base
 forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.
 The main functions are:</p>
-<ul>
-<li><p><code><a href='htsrec.html'>htsrec</a>()</code>: cross-sectional (contemporaneous) forecast reconciliation.</p></li>
-<li><p><code><a href='thfrec.html'>thfrec</a>()</code>: forecast reconciliation for a single time series through temporal hierarchies.</p></li>
-<li><p><code><a href='tcsrec.html'>tcsrec</a>()</code>: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation (Kourentzes and Athanasopoulos, 2019).</p></li>
-<li><p><code><a href='cstrec.html'>cstrec</a>()</code>: heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.</p></li>
-<li><p><code><a href='iterec.html'>iterec</a>()</code>: heuristic iterative cross-temporal forecast reconciliation.</p></li>
-<li><p><code><a href='octrec.html'>octrec</a>()</code>: optimal combination cross-temporal forecast reconciliation.</p></li>
-</ul>
+<dl>
+  <dt><code><a href='htsrec.html'>htsrec</a>():</code></dt><dd><p>cross-sectional (contemporaneous) forecast reconciliation.</p></dd>
+  <dt><code><a href='thfrec.html'>thfrec</a>():</code></dt><dd><p>forecast reconciliation for a single time series through temporal hierarchies.</p></dd>
+  <dt><code><a href='tcsrec.html'>tcsrec</a>():</code></dt><dd><p>heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.</p></dd>
+  <dt><code><a href='cstrec.html'>cstrec</a>():</code></dt><dd><p>heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.</p></dd>
+  <dt><code><a href='iterec.html'>iterec</a>():</code></dt><dd><p>heuristic iterative cross-temporal forecast reconciliation.</p></dd>
+  <dt><code><a href='octrec.html'>octrec</a>():</code></dt><dd><p>optimal combination cross-temporal forecast reconciliation.</p></dd>
+
+</dl>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
 Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:2006.08570</a>.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Tommaso Di Fonzo and Daniele Girolimetto, Department of Statistical Sciences, University of Padua (Italy).</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -198,17 +214,34 @@ Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:
 
       <footer>
       <div class="copyright">
-  <p>Developed by Tommaso Di Fonzo, Daniele Girolimetto.</p>
+  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
    </div>
 
   
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '05a948dc40379c4ff2eaba6f8d83c86e',
+    indexName: 'danigiro',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
 
   </body>
