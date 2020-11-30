@@ -155,7 +155,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
 
         lm_dx1 <- methods::as(t(Q) %*% t(basef), "CsparseMatrix")
         lm_sx1 <- t(S) %*% Q
-        out$recf2 <- t(S %*% solveLin(lm_sx1, lm_dx1))
+        out$recf <- t(S %*% solveLin(lm_sx1, lm_dx1))
 
         if (nn) {
           if (any(out$recf < (-1e-6))) {
@@ -179,14 +179,14 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
           } else {
             out$recf <- out$recf * (out$recf > 0)
             if (keep == "list") {
-              G <- S %*% solveLin(lm_sx1, lm_dx2)
+              G <- S %*% solveLin(lm_sx1, t(Q))
               out$varf <- diag(G %*% W)
               out$G <- as.matrix(G)
               out$W <- W
             }
           }
         } else if (keep == "list") {
-          G <- S %*% solveLin(lm_sx1, lm_dx2)
+          G <- S %*% solveLin(lm_sx1, t(Q))
           out$varf <- diag(G %*% W)
           out$G <- as.matrix(G)
           out$W <- W
