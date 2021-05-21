@@ -1,48 +1,62 @@
 #' @title Iterative heuristic cross-temporal forecast reconciliation
 #'
 #' @description
+#' \loadmathjax
 #' Iterative procedure which produces cross-temporally reconciled
 #' forecasts by alternating forecast reconciliation along one single dimension
 #' (either cross-sectional or temporal) at each iteration step. \strong{Each iteration}
-#' consists in the first two steps of the heuristic KA procedure, so the forecasts are
-#' reconciled by alternating cross-sectional (contemporaneous) reconciliation, and
-#' reconciliation through temporal hierarchies in a cyclic fashion.
-#' The choice of the dimension along with the first reconciliation step in each
+#' consists in the first two steps of the heuristic procedure by Kourentzes and Athanasopoulos (2019),
+#' so the forecasts are reconciled by alternating cross-sectional (contemporaneous) reconciliation,
+#' and reconciliation through temporal hierarchies in a cyclic fashion.
+#' The choice of the dimension along which the first reconciliation step in each
 #' iteration is performed is up to the user (param \code{start_rec}), and there is
 #' no particular reason why one should perform the temporal reconciliation first, and
 #' the cross-sectional reconciliation then.
 #' The iterative procedure allows the user to get non-negative reconciled forecasts.
 #'
-#' @param basef  (\code{n x h(k* + m)}) matrix of base forecasts to be reconciled;
-#' \code{n} is the total number of variables, \code{m} is the highest frequency,
-#' \code{k*} is the sum of (\code{p-1}) factors of \code{m}, excluding \code{m},
-#' and \code{h} is the forecast horizon. Each row identifies, a time series, and the forecasts
-#' are ordered as [lowest_freq' ...  highest_freq']'.
-#' @param hts_comb,thf_comb Type of covariance matrix (respectively (\code{n x n}) and
-#' (\code{(k* + m) x (k* + m)})) to be used in the cross-sectional and temporal reconciliation,
-#' see more in \code{comb} param of \code{\link[FoReco]{htsrec}} and \code{\link[FoReco]{thfrec}}.
-#' @param res (\code{n x N(k* + m)}) matrix containing the residuals at all the
-#' temporal frequencies ordered [lowest_freq' ...  highest_freq']' (columns) for
-#' each variable (row), needed to estimate the covariance matrix when \code{hts_comb =}
-#' \code{\{"wls",} \code{"shr",} \code{"sam"\}} and/or \code{hts_comb =} \code{\{"wlsv",}
-#' \code{"wlsh",} \code{"acov",} \code{"strar1",} \code{"sar1",} \code{"har1",}
-#' \code{"shr",} \code{"sam"\}}. The row must be in the same order as \code{basef}.
+#' @param basef  (\mjseqn{n \times h(k^\ast+m)}) matrix of base forecasts to be
+#' reconciled, \mjseqn{\widehat{\mathbf{Y}}}; \mjseqn{n} is the total number of variables,
+#' \mjseqn{m} is the highest time frequency, \mjseqn{k^\ast} is the sum of (a
+#' subset of) (\mjseqn{p-1}) factors of \mjseqn{m}, excluding \mjseqn{m}, and
+#' \mjseqn{h} is the forecast horizon for the lowest frequency time series.
+#' Each row identifies a time series, and the forecasts are ordered as
+#' [lowest_freq' ...  highest_freq']'.
+#' @param hts_comb,thf_comb Type of covariance matrix (respectively
+#' (\mjseqn{n \times n}) and (\mjseqn{(k^\ast + m) \times (k^\ast + m)})) to
+#' be used in the cross-sectional and temporal reconciliation, see more in
+#' \code{comb} param of \code{\link[FoReco]{htsrec}()} and
+#' \code{\link[FoReco]{thfrec}()}.
+#' @param res (\mjseqn{n \times N(k^\ast + m)}) matrix containing the residuals
+#' at all the temporal frequencies ordered [lowest_freq' ...  highest_freq']'
+#' (columns) for each variable (row), needed to estimate the covariance matrix
+#' when \code{hts_comb =} \code{\{"wls",} \code{"shr",} \code{"sam"\}} and/or
+#' \code{hts_comb =} \code{\{"wlsv",} \code{"wlsh",} \code{"acov",}
+#' \code{"strar1",} \code{"sar1",} \code{"har1",} \code{"shr",} \code{"sam"\}}.
+#' The row must be in the same order as \code{basef}.
 #' @param tol Convergence tolerance (\code{1e-5}, \emph{default}).
-#' @param itmax Max number of iteration (\code{100}, \emph{default}) (old version \code{maxit}).
+#' @param itmax Max number of iteration (\code{100}, \emph{default})
+#' (old version \code{maxit}).
 #' @param start_rec Dimension along with the first reconciliation step in each
-#' iteration is performed: it start from temporal reconciliation with "\code{thf}" (\emph{default}),
-#' from cross-sectional with "\code{hts}" and it does both reconciliation with "\code{auto}".
-#' @param note If \code{note = TRUE} (\emph{default}) the function writes some notes to the console,
-#' otherwise no note is produced (also no plot).
-#' @param plot Some useful plots: \code{"mti"} (\emph{default}) marginal trend inconsistencies,
-#' \code{"pat"} step by step inconsistency pattern for each iteration, \code{"distf"} distance
-#' forecasts iteration i and i-1, \code{"all"} all the plots.
-#' @param ... any other options useful for \code{\link[FoReco]{htsrec}} and
-#' \code{\link[FoReco]{thfrec}}, e.g. \code{m}, \code{C} (or \code{Ut} and \code{nb}),
-#' \code{nn} (for non negativity reconciliation only at first step), ...
+#' iteration is performed: it start from temporal reconciliation with
+#' "\code{thf}" (\emph{default}), from cross-sectional with "\code{hts}" and
+#' it does both reconciliation with "\code{auto}".
+#' @param norm Norm used to calculate the temporal and the cross-sectional
+#' incoherence. There are two alternatives: "\code{inf}" (\mjseqn{\max\{|x_1|,
+#' |x_2|,\dots\}}, \emph{default}) or "\code{one}" (\mjseqn{\sum |x_i|}).
+#' @param note If \code{note = TRUE} (\emph{default}) the function writes some
+#' notes to the console, otherwise no note is produced (also no plot).
+#' @param plot Some useful plots: \code{"mti"} (\emph{default}) marginal trend
+#' inconsistencies, \code{"pat"} step by step inconsistency pattern for each
+#' iteration, \code{"distf"} distance forecasts iteration i and i-1,
+#' \code{"all"} all the plots.
+#' @param ... any other options useful for \code{\link[FoReco]{htsrec}()} and
+#' \code{\link[FoReco]{thfrec}()}, e.g. \code{m}, \code{C} (or \code{Ut} and
+#' \code{nb}), \code{nn} (for non negativity reconciliation only at first step),
+#' \code{mse}, \code{corpcor}, \code{type}, \code{sol}, \code{settings},
+#' \code{W}, \code{Omega},...
 #'
 #' @details
-#' The above procedure can be seen as an extension of the well known iterative proportional
+#' This reconciliation procedure can be seen as an extension of the well known iterative proportional
 #' fitting procedure (Deming and Stephan, 1940, Johnston and Pattie, 1993), also known as
 #' RAS method (Miller and Blair, 2009), to adjust the internal cell values of a
 #' two-dimensional matrix until they sum to some predetermined row and column
@@ -63,7 +77,7 @@
 #' }
 #'
 #' @return \code{iterec} returns a list with:
-#' \item{\code{recf}}{(\code{n x h(k* + m)}) matrix of reconciled forecasts.}
+#' \item{\code{recf}}{(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix, \mjseqn{\widetilde{\textbf{Y}}}.}
 #' \item{\code{d_cs}}{Cross-sectional incoherence at each iteration.}
 #' \item{\code{d_te}}{Temporal incoherence at each iteration.}
 #' \item{\code{start_rec}}{Starting coherence dimension (thf or hts).}
@@ -93,37 +107,49 @@
 #'
 #' \enc{Schäfer}{Schafer}, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
 #' Duarte Silva, A.P., Strimmer, K. (2017), \emph{Package `corpcor'}, R
-#' package version 1.6.9 (April 1, 2017), \href{https://CRAN.R-project.org/package=corpcor}{https://CRAN.R-project.org/package= corpcor}.
+#' package version 1.6.9 (April 1, 2017),
+#' \href{https://CRAN.R-project.org/package=corpcor}{https://CRAN.R-project.org/package= corpcor}.
 #'
 #' \enc{Schäfer}{Schafer}, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
 #' Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
 #' Applications in Genetics and Molecular Biology}, 4, 1.
 #'
-#' Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
-#' An Operator Splitting Solver for Quadratic Programs, \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+#' Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2020). OSQP:
+#' An Operator Splitting Solver for Quadratic Programs, \emph{Mathematical Programming Computation},
+#' 12, 4, 637-672.
 #'
 #' Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
-#' Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+#' Quadratic Programming Solver using the `OSQP' Library, R package version 0.6.0.3
 #' (October 10, 2019), \href{https://CRAN.R-project.org/package=osqp}{https://CRAN.R-project.org/package=osqp}.
 #'
-#' @keywords reconciliation heuristic
+#' @keywords heuristic
+#' @family reconciliation procedures
+#'
 #' @examples
 #' \donttest{
 #' data(FoReco_data)
-#' obj <- iterec(FoReco_data$base, note=TRUE,
+#' obj <- iterec(FoReco_data$base, note = FALSE,
 #'   m = 12, C = FoReco_data$C, thf_comb = "acov",
 #'   hts_comb = "shr", res = FoReco_data$res, start_rec = "thf")
 #' }
 #'
 #' @usage iterec(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
-#'        start_rec = "thf", note = TRUE, plot = "mti", ...)
+#'        start_rec = "thf", norm = "inf", note = TRUE, plot = "mti", ...)
 #'
 #' @export
 iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
-                   start_rec = "thf", note = TRUE, plot = "mti", ...) {
+                   start_rec = "thf", norm = "inf", note = TRUE, plot = "mti", ...) {
   arg_input <- list(...)
 
   start_rec <- match.arg(start_rec, c("thf", "hts", "auto"))
+
+  norm <- match.arg(norm, c("one", "inf"))
+
+  if(norm == "one"){
+    ite_norm <- function(x) sum(x)
+  }else{
+    ite_norm <- function(x) max(x)
+  }
 
   if(any(names(arg_input)=="maxit")){
     maxit <- arg_input$maxit
@@ -152,13 +178,13 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
     stop("the argument hts_comb is not specified", call. = FALSE)
   }
 
-  if(any(names(arg_input)=="C")){
+  if(any(names(arg_input)=="Ut") & any(names(arg_input)=="nb")){
+    Ut <- arg_input$Ut
+    r_u <- NROW(Ut)
+  }else if(any(names(arg_input)=="C")){
     C <- arg_input$C
     r_u <- NROW(C)
     Ut <- cbind(diag(1, r_u), -C)
-  }else if(any(names(arg_input)=="Ut") & any(names(arg_input)=="nb")){
-    Ut <- arg_input$Ut
-    r_u <- NROW(Ut)
   }else{
     stop("Please, give C (or Ut AND nb)", call. = FALSE)
   }
@@ -167,7 +193,7 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
   # Tools for cross-sectional reconciliation
   tools <- thf_tools(m)
   kset <- tools$kset
-  m <- max(kset)
+  m <- tools$m
   kt <- tools$kt
   ks <- tools$ks
 
@@ -178,13 +204,13 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
   # Incoherence vector
   d_cs_thf <- rep(NA, maxit + 1)
   d_te_thf <- rep(NA, maxit + 1)
-  d_cs_thf[1] <- sum(abs(Ut %*% basef))
-  d_te_thf[1] <- sum(abs(Zt %*% t(basef)))
+  d_cs_thf[1] <- ite_norm(abs(Ut %*% basef))
+  d_te_thf[1] <- ite_norm(abs(Zt %*% t(basef)))
 
   d_cs_hts <- rep(NA, maxit + 1)
   d_te_hts <- rep(NA, maxit + 1)
-  d_cs_hts[1] <- sum(abs(Ut %*% basef))
-  d_te_hts[1] <- sum(abs(Zt %*% t(basef)))
+  d_cs_hts[1] <- ite_norm(abs(Ut %*% basef))
+  d_te_hts[1] <- ite_norm(abs(Zt %*% t(basef)))
 
   # Check: reconciliation needed?
   if (d_cs_thf[1] < tol & d_te_thf[1] < tol) {
@@ -239,32 +265,33 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
   # Time starting
   start_time <- Sys.time()
   if (note == TRUE) {
-    message("---------------------------------------")
+    message(paste0(rep("-", 80), collapse = ""))
   }
   if (start_thf) {
     if (note == TRUE) {
-      message("Iter #  (Cross-sectional incoherence) (Temporal incoherence)", sep = "")
-      message("thf: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[1], ")  (",
-              d_te_thf[1], ")",
-              sep = ""
-      )
+      message("Iter ", formatC("#", width = 7),
+              " | ",format("Cross-sec. incoherence", width = 30, justify = "centre"),
+              " | ",format("Temporal incoherence", width = 30, justify = "centre"), " |", sep = "")
+      message("thf: ", formatC(0, width = 7, format = "d"), " | ",
+              console_incoherence(x = d_cs_thf[1], y = d_cs_thf[1]), " | ",
+              console_incoherence(x = d_te_thf[1], y = d_te_thf[1]), " |", sep = "")
     }
 
     for (i in 1:maxit) {
       # Step1
       Y1_thf <- step_thf(basef = Y2_thf, res = res, arg_input = arg_input,
                          thf_comb = thf_comb)
-      d_cs_thf[i + 1] <- sum(abs(Ut %*% Y1_thf))
-      check <- sum(abs(Zt %*% t(Y1_thf)))
+      d_cs_thf[i + 1] <- ite_norm(abs(Ut %*% Y1_thf))
+      check <- ite_norm(abs(Zt %*% t(Y1_thf)))
 
       d_thf <- rbind(d_thf, c(i, d_cs_thf[i + 1], check))
       if (check > tol) {
         Y2_thf <- Y1_thf
         flag_thf <- -2
         warning(paste("thf: Program (starting from thf) stops at iteration number ", i,
-                      "! \nthf: Temporal reconciliation does not work. (", check, ")",
-                      sep = ""
-        ), call. = FALSE)
+                      "! \nthf: Temporal reconciliation does not work. (",
+                      console_incoherence(x = check, y = d_te_thf[1], m = 8),  ")",
+                      sep = ""), call. = FALSE)
         break
       } else if (i > 1) {
         if (d_cs_thf[(i + 1)] > d_cs_thf[i] & d_cs_thf[i] > d_cs_thf[(i - 1)] & flag_thf < 2) {
@@ -278,25 +305,24 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
       Y2_thf <- step_hts(basef = Y1_thf, kset = kset, h = h,
                          res = res, arg_input = arg_input,
                          hts_comb = hts_comb)
-      d_te_thf[i + 1] <- sum(abs(Zt %*% t(Y2_thf)))
-      check <- sum(abs(Ut %*% Y2_thf))
+      d_te_thf[i + 1] <- ite_norm(abs(Zt %*% t(Y2_thf)))
+      check <- ite_norm(abs(Ut %*% Y2_thf))
 
       d_thf <- rbind(d_thf, c(i, check, d_te_thf[i + 1]))
       if (check > tol) {
         flag_thf <- -2
-        warning(paste("thf: Program (starting from thf) stops at iteration number ", i,
-                      "! \nthf: Cross-sectional reconciliation does not work.(", check, ")",
-                      sep = ""
-        ), call. = FALSE)
+        warning(paste("thf: Program (starting from thf) stops at iteration number ",
+                      i, "! \nthf: Cross-sectional reconciliation does not work. (",
+                      console_incoherence(x = check, y = d_cs_thf[1], m = 8),  ")",
+                      sep = ""), call. = FALSE)
         break
       } else if (d_te_thf[i + 1] < tol) {
         if (flag_thf == -1) flag_thf <- 0
         if (note == TRUE) {
-          message("thf: Convergence (starting from thf) achieved at iteration number ", i,
-                  "! \nthf: Temporal incoherence ", d_te_thf[i + 1], " < ", tol,
-                  " tolerance",
-                  sep = ""
-          )
+          message("thf: Convergence (starting from thf) achieved at iteration number ",
+                  i, "! \nthf: Temporal incoherence ",
+                  console_incoherence(x = d_te_thf[i + 1], y = d_te_thf[1], m = 8),
+                  " < ", tol, " tolerance", sep = "")
         }
         rel <- ((Y2_thf - Yi_thf) / abs(Yi_thf))
         dist_thf[i, ] <- c(
@@ -323,23 +349,22 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
       )
       Yi_thf <- Y2_thf
       if (note == TRUE) {
-        message("thf: ", formatC(i, width = 3, format = "d", flag = "0"), "  (", d_cs_thf[i + 1], ")  (",
-                d_te_thf[i + 1], ")",
-                sep = ""
-        )
+        message("thf: ", formatC(i, width = 7, format = "d"), " | ",
+                console_incoherence(x = d_cs_thf[i + 1], y = d_cs_thf[1]), " | ",
+                console_incoherence(x = d_te_thf[i + 1], y = d_te_thf[1]), " |",
+                sep = "")
       }
     }
 
     if ((flag_thf == -1 | i == maxit) & start_rec != "hts") {
       flag_thf <- -1
-      warning("thf: Convergence NOT achieved (starting from thf)! Maximum number of iterations reached (",
-              maxit, ")",
-              sep = "", call. = FALSE
-      )
+      warning("thf: Convergence NOT achieved (starting from thf)!",
+              "\nthf: Maximum number of iterations reached (",
+              maxit, ")", sep = "", call. = FALSE)
     }
     dist_thf <- dist_thf[1:i, , drop = FALSE]
     if (note == TRUE) {
-      message("---------------------------------------")
+      message(paste0(rep("-", 80), collapse = ""))
     }
   }
 
@@ -347,11 +372,13 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
 
   if (start_hts) {
     if (note == TRUE) {
-      message("Iter #  (Cross-sectional incoherence) (Temporal incoherence)", sep = "")
-      message("hts: ", formatC(0, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[1], ")  (",
-              d_te_hts[1], ")",
-              sep = ""
-      )
+      message("Iter ", formatC("#", width = 7),
+              " | ",format("Cross-sec. incoherence", width = 30, justify = "centre"),
+              " | ",format("Temporal incoherence", width = 30, justify = "centre"), " |", sep = "")
+      message("hts: ", formatC(0, width = 7, format = "d"), " | ",
+              console_incoherence(x = d_cs_hts[1], y = d_cs_hts[1]), " | ",
+              console_incoherence(x = d_te_hts[1], y = d_te_hts[1]), " |",
+              sep = "")
     }
 
     for (j in 1:maxit) {
@@ -359,16 +386,16 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
       Y1_hts <- step_hts(basef = Y2_hts, kset = kset, h = h,
                          res = res, arg_input = arg_input,
                          hts_comb = hts_comb)
-      d_te_hts[j + 1] <- sum(abs(Zt %*% t(Y1_hts)))
-      check <- sum(abs(Ut %*% Y1_hts))
+      d_te_hts[j + 1] <- ite_norm(abs(Zt %*% t(Y1_hts)))
+      check <- ite_norm(abs(Ut %*% Y1_hts))
 
       d_hts <- rbind(d_hts, c(j, check, d_te_hts[j + 1]))
       if (check > tol) {
         flag_hts <- -2
         warning(paste("hts: Program (starting from hts) stops at iteration number ", j,
-                      "! \nhts: Cross-sectional reconciliation does not work.(", check, ")",
-                      sep = ""
-        ), call. = FALSE)
+                      "! \nhts: Cross-sectional reconciliation does not work. (",
+                      console_incoherence(x = check, y = d_cs_hts[1]), ")",
+                      sep = ""), call. = FALSE)
         break
       } else if (j > 1) {
         if (d_te_hts[(j + 1)] > d_te_hts[j] & d_te_hts[j] > d_te_hts[(j - 1)] & flag_hts < 2) {
@@ -381,25 +408,24 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
       # Step 2
       Y2_hts <- step_thf(basef = Y1_hts, res = res, arg_input = arg_input,
                          thf_comb = thf_comb)
-      d_cs_hts[j + 1] <- sum(abs(Ut %*% Y2_hts))
-      check <- sum(abs(Zt %*% t(Y2_hts)))
+      d_cs_hts[j + 1] <- ite_norm(abs(Ut %*% Y2_hts))
+      check <- ite_norm(abs(Zt %*% t(Y2_hts)))
 
       d_hts <- rbind(d_hts, c(j, d_cs_hts[j + 1], check))
       if (check > tol) {
         flag_hts <- -2
-        warning(paste("hts: Program (starting from hts) stops at iteration number ", j,
-                      "! \nhts: Temporal reconciliation does not work.(", check, ")",
-                      sep = ""
-        ), call. = FALSE)
+        warning(paste("hts: Program (starting from hts) stops at iteration number ",
+                      j, "! \nhts: Temporal reconciliation does not work. (",
+                      console_incoherence(x = check, y = d_te_hts[1], m = 8), ")",
+                      sep = ""), call. = FALSE)
         break
       } else if (d_cs_hts[j + 1] < tol) {
         if (flag_hts == -1) flag_hts <- 0
         if (note == TRUE) {
           message("hts: Convergence (starting from hts) achieved at iteration number ", j,
-                  "! \nhts: Cross-sectional incoherence ", d_cs_hts[j + 1], " < ", tol,
-                  " tolerance",
-                  sep = ""
-          )
+                  "! \nhts: Cross-sectional incoherence ",
+                  console_incoherence(x = d_cs_hts[j + 1], y = d_cs_hts[1], m = 8),
+                  " < ", tol, " tolerance", sep = "")
         }
         rel <- ((Y2_hts - Yi_hts) / abs(Yi_hts))
         dist_hts[j, ] <- c(
@@ -419,8 +445,9 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
       }
 
       if (note == TRUE) {
-        message("hts: ", formatC(j, width = 3, format = "d", flag = "0"), "  (", d_cs_hts[j + 1], ")  (",
-                d_te_hts[j + 1], ")",
+        message("hts: ", formatC(j, width = 7, format = "d"), " | ",
+                console_incoherence(x = d_cs_hts[j + 1], y = d_cs_hts[1]), " | ",
+                console_incoherence(x = d_te_hts[j + 1], y = d_te_hts[1]), " |",
                 sep = ""
         )
       }
@@ -437,14 +464,15 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
 
     if ((flag_hts == -1 | j == maxit) & start_rec != "thf") {
       flag_hts <- -1
-      warning("hts: Convergence NOT achieved (starting from hts)! Maximum number of iterations reached (",
+      warning("hts: Convergence NOT achieved (starting from hts)!",
+              "\nhts: Maximum number of iterations reached (",
               maxit, ")",
               sep = "", call. = FALSE
       )
     }
     dist_hts <- dist_hts[1:j, , drop = FALSE]
     if (note == TRUE) {
-      message("---------------------------------------")
+      message(paste0(rep("-", 80), collapse = ""))
     }
   }
 
@@ -863,4 +891,10 @@ step_thf <- function(basef, res, arg_input, thf_comb) {
   }
   dimnames(Y1) <- NULL
   return(Y1)
+}
+
+
+console_incoherence <- function(x, y, m = 30){
+  formatC(x, width = m,
+          format = ifelse(x<1,"e", "f"), digits = 2)
 }

@@ -7,34 +7,57 @@
 hts_tools(C, h = 1, Ut, nb, sparse = TRUE)
 }
 \arguments{
-\item{C}{(\code{na x nb}) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.}
+\item{C}{(\mjseqn{n_a \times n_b}) cross-sectional (contemporaneous) matrix
+mapping the bottom level series into the higher level ones.}
 
 \item{h}{Forecast horizon (\emph{default} is \code{1}).}
 
-\item{Ut}{(\code{na x n}) zero constraints cross-sectional (contemporaneous) kernel
-matrix \eqn{\textbf{U}'\textbf{Y} = \mathbf{0}_{\left[n_a \times (k^*+m)\right]}}{}
-spanning the null space valid for the reconciled forecasts. It can be used instead of
-parameter \code{C}, but needs \code{nb} (n = na + nb).}
+\item{Ut}{Zero constraints cross-sectional (contemporaneous) kernel matrix
+\mjseqn{(\mathbf{U}'\mathbf{y} = \mathbf{0})} spanning the null space valid
+for the reconciled forecasts. It can be used instead of parameter
+\code{C}, but \code{nb} is needed if
+\mjseqn{\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]}. If the hierarchy
+admits a structural representation, \mjseqn{\mathbf{U}'} has dimension
+(\mjseqn{n_a \times n}).}
 
-\item{nb}{Number of bottom time series; if \code{C} is present, \code{nb} is not used.}
+\item{nb}{Number of bottom time series; if \code{C} is present, \code{nb}
+and \code{Ut} are not used.}
 
-\item{sparse}{Option to return sparse object (\emph{default} is \code{TRUE}).}
+\item{sparse}{Option to return sparse matrices (\emph{default} is \code{TRUE}).}
 }
 \value{
 A list of five elements:
-\item{\code{S}}{(\code{n x nb}) cross-sectional (contemporaneous) summing matrix.}
-\item{\code{Ut}}{(\code{na x n}) zero constraints cross-sectional (contemporaneous)
-kernel matrix.}
-\item{\code{n}}{Number of variables \code{na + nb}.}
+\item{\code{C}}{(\mjseqn{n \times n_b}) cross-sectional (contemporaneous) aggregation matrix.}
+\item{\code{S}}{(\mjseqn{n \times n_b}) cross-sectional (contemporaneous) summing matrix,
+\mjseqn{\mathbf{S} = \left[\begin{array}{c} \mathbf{C} \cr \mathbf{I}_{n_b}\end{array}\right].}}
+\item{\code{Ut}}{(\mjseqn{n_a \times n}) zero constraints cross-sectional (contemporaneous)
+kernel matrix. If the hierarchy admits a structural representation \mjseqn{\mathbf{U}' = [\mathbf{I} \ -\mathbf{C}]}}
+\item{\code{n}}{Number of variables \mjseqn{n_a + n_b}.}
 \item{\code{na}}{Number of upper level variables.}
 \item{\code{nb}}{Number of bottom level variables.}
 }
 \description{
-Some useful tools for the cross-sectional reconciliation of linearly and hierarchically constrained time series
+\loadmathjax
+Some useful tools for the cross-sectional forecast reconciliation of a
+linearly constrained (e.g., hierarchical/grouped) multiple time series.
 }
 \examples{
 # One level hierarchy (na = 1, nb = 2)
 obj <- hts_tools(C = matrix(c(1, 1), 1), sparse = FALSE)
+
 }
+\seealso{
+Other utilities: 
+\code{\link{Cmatrix}()},
+\code{\link{FoReco2ts}()},
+\code{\link{commat}()},
+\code{\link{ctf_tools}()},
+\code{\link{oct_bounds}()},
+\code{\link{score_index}()},
+\code{\link{shrink_estim}()},
+\code{\link{srref}()},
+\code{\link{thf_tools}()},
+\code{\link{ut2c}()}
+}
+\concept{utilities}
 \keyword{utilities}

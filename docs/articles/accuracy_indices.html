@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -48,21 +48,21 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -79,7 +79,7 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -88,13 +88,13 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -114,11 +114,13 @@
 
       
 
-      </header><script src="accuracy_indices_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><script src="accuracy_indices_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Average relative accuracy indices</h1>
+                        <h4 class="author">Daniele Girolimetto</h4>
             
+            <h4 class="date">2021-05-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/master/vignettes/accuracy_indices.Rmd"><code>vignettes/accuracy_indices.Rmd</code></a></small>
       <div class="hidden name"><code>accuracy_indices.Rmd</code></div>
@@ -364,6 +366,110 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 </table>
 <ul>
 <li>
+<strong>Rel<span class="math inline">\(\_\)</span>mat<span class="math inline">\(\_\)</span>cum </strong> (if <em>compact = FALSE</em>)</li>
+</ul>
+<table class="table">
+<colgroup>
+<col width="6%">
+<col width="14%">
+<col width="4%">
+<col width="14%">
+<col width="6%">
+<col width="15%">
+<col width="4%">
+<col width="14%">
+<col width="6%">
+<col width="14%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\({\cal K}\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{m}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\textbf{k}\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\textbf{1}\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\textbf{h}\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{1:1}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{1:1}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\mathbf{1:h_k}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{1:1}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\mathbf{1:m}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\textbf{1}\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[m],1:1}_{1,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[k],1:1}_{1,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[k],1:h_k}_{1,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[1],1:1}_{1,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[1],1:m}_{1,j}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\textbf{i}\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[m],1:1}_{i,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[k],1:1}_{i,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[k],1:h_k}_{i,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[1],1:1}_{i,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[1],1:m}_{i,j}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\textbf{n}\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[m],1:1}_{n,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[k],1:1}_{n,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[k],1:h_k}_{n,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[1],1:1}_{n,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{RelA}^{[1],1:m}_{n,j}\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
 <strong>AvgRelIND<span class="math inline">\(\_\)</span>ik</strong> (if <em>compact = FALSE</em>)</li>
 </ul>
 <table class="table">
@@ -520,11 +626,91 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 </tr>
 </tbody>
 </table>
+<ul>
+<li>
+<strong>Avg<span class="math inline">\(\_\)</span>k<span class="math inline">\(\_\)</span>cum</strong> (if <em>compact = FALSE</em>)</li>
+</ul>
+<table class="table">
+<colgroup>
+<col width="6%">
+<col width="14%">
+<col width="3%">
+<col width="14%">
+<col width="6%">
+<col width="15%">
+<col width="3%">
+<col width="14%">
+<col width="6%">
+<col width="14%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td align="left"><span class="math inline">\({\cal K}\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{m}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\textbf{k}\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"></td>
+<td align="center"><span class="math inline">\(\textbf{1}\)</span></td>
+<td align="center"></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\textbf{h}\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{1:1}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{1:1}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\mathbf{1:h_k}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\textbf{1:1}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\mathbf{1:m}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\textbf{all}\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[m],1:1}_{j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[k],1:1}_{j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[k],1:h_k}_{j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[1],1:1}_{j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[1],1:m}_{j}\)</span></td>
+</tr>
+<tr class="even">
+<td align="left"><span class="math inline">\(\textbf{a}\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[m],1:1}_{a,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[k],1:1}_{a,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[k],1:h_k}_{a,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[1],1:1}_{a,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[1],1:m}_{a,j}\)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"><span class="math inline">\(\textbf{b}\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[m],1:1}_{b,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[k],1:1}_{b,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[k],1:h_k}_{b,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[1],1:1}_{b,j}\)</span></td>
+<td align="center"><span class="math inline">\(\dots\)</span></td>
+<td align="center"><span class="math inline">\(\text{AvgRelA}^{[1],1:m}_{b,j}\)</span></td>
+</tr>
+</tbody>
+</table>
 <div id="examples" class="section level3">
 <h3 class="hasAnchor">
 <a href="#examples" class="anchor"></a>Examples</h3>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco">FoReco</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco">FoReco</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">)</span>
 
 <span class="co"># Cross-temporal framework</span>
@@ -559,7 +745,7 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 <span class="co"># top ts recf ([lowest_freq' ...  highest_freq']')</span>
 <span class="va">toprecf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thfrec.html">thfrec</a></span><span class="op">(</span><span class="va">topbase</span>, m <span class="op">=</span> <span class="fl">12</span>, comb <span class="op">=</span> <span class="st">"acov"</span>, res <span class="op">=</span> <span class="va">topres</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span>
 <span class="co"># score</span>
-<span class="va">thf_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/score_index.html">score_index</a></span><span class="op">(</span>recf <span class="op">=</span> <span class="va">toprecf</span>, base <span class="op">=</span> <span class="va">topbase</span>, test <span class="op">=</span> <span class="va">toptest</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></pre></div>
+<span class="va">thf_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/score_index.html">score_index</a></span><span class="op">(</span>recf <span class="op">=</span> <span class="va">toprecf</span>, base <span class="op">=</span> <span class="va">topbase</span>, test <span class="op">=</span> <span class="va">toptest</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="references" class="section level2">

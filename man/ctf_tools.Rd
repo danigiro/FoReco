@@ -4,49 +4,75 @@
 \alias{ctf_tools}
 \title{Cross-temporal reconciliation tools}
 \usage{
-ctf_tools(C, m, h = 1, Ut, nb, Sstruc = FALSE)
+ctf_tools(C, m, h = 1, Ut, nb, sparse = TRUE)
 }
 \arguments{
-\item{C}{(\code{na x nb}) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.}
+\item{C}{(\mjseqn{n_a \times n_b}) cross-sectional (contemporaneous) matrix
+mapping the bottom level series into the higher level ones.}
 
-\item{m}{Highest available sampling frequency per seasonal cycle (max. order of
-temporal aggregation).}
+\item{m}{Highest available sampling frequency per seasonal cycle (max. order
+of temporal aggregation, \mjseqn{m}), or a subset of the \mjseqn{p} factors
+of \mjseqn{m}.}
 
 \item{h}{Forecast horizon for the lowest frequency (most temporally aggregated) time
 series (\emph{default} is \code{1}).}
 
 \item{Ut}{Zero constraints cross-sectional (contemporaneous) kernel matrix
-\eqn{(\textbf{U}'\textbf{Y} = \mathbf{0})}{} spanning the null space valid for the reconciled
-forecasts. It can be used instead of parameter \code{C}, but in this case \code{nb} (n = na + nb) is needed. If
-the hierarchy admits a structural representation, \code{Ut} has dimension (\code{na x n}).}
+\mjseqn{(\textbf{U}'\textbf{y} = \mathbf{0})} spanning the null space valid
+for the reconciled forecasts. It can be used instead of parameter
+\code{C}, but \code{nb} (\mjseqn{n = n_a + n_b}) is needed if
+\mjseqn{\textbf{U}' \neq [\textbf{I} \ -\textbf{C}]}{}. If the hierarchy
+admits a structural representation, \mjseqn{\textbf{U}'} has dimension
+(\mjseqn{n_a \times n}).}
 
-\item{nb}{Number of bottom time series; if \code{C} is present, \code{nb} is not used.}
+\item{nb}{Number of bottom time series; if \code{C} is present, \code{nb}
+and \code{Ut} are not used.}
 
-\item{Sstruc}{If \code{Sstruc = TRUE} the function returns also the structural representation matrix of
-a cross-temporal system (\emph{default} is \code{FALSE}).}
+\item{sparse}{Option to return sparse object (\emph{default} is \code{TRUE}).}
 }
 \value{
 \strong{ctf} list with:
-\item{\code{Ht}}{Full row-rank cross-temporal zero-valued constraints (kernel)
-matrix\eqn{,\; \textbf{H}'\textbf{y} = \mathbf{0}}{}.}
-\item{\code{Htbreve}}{Complete, not full row-rank cross-temporal zero-valued
-constraints (kernel) matrix.}
-\item{\code{Htstruc}}{Zero constraints full row-rank cross-temporal kernel matrix
-(structural representation) \eqn{,\; \check{\textbf{H}}'}{}.}
-\item{\code{Sstruc}}{Cross-temporal summing matrix (structural
-representation)\eqn{,\; \check{\textbf{S}}}{}.}
+\item{\code{Ht}}{Full row-rank cross-temporal zero constraints (kernel)
+matrix coherent with \mjseqn{\mathbf{y} = \mbox{vec}(\mathbf{Y}')}: \mjseqn{\mathbf{H}'\mathbf{y} = \mathbf{0}}.}
+\item{\code{Hbrevet}}{Complete, not full row-rank cross-temporal zero
+constraints (kernel) matrix coherent with \mjseqn{\mathbf{y} = \mbox{vec}(\mathbf{Y}')}:
+\mjseqn{\breve{\mathbf{H}}'\mathbf{y} = \mathbf{0}}.}
+\item{\code{Hcheckt}}{Full row-rank cross-temporal zero constraints (kernel) matrix coherent with
+\mjseqn{\check{\mathbf{y}}} (structural representation):
+\mjseqn{\check{\mathbf{H}}' \check{\mathbf{y}} = \mathbf{0}}.}
+\item{\code{Ccheck}}{Cross-temporal aggregation matrix \mjseqn{\check{\mathbf{C}}}
+coherent with \mjseqn{\check{\mathbf{y}}} (structural representation).}
+\item{\code{Scheck}}{Cross-temporal summing matrix \mjseqn{\check{\mathbf{S}}}
+coherent with \mjseqn{\check{\mathbf{y}}} (structural representation).}
+\item{\code{Stilde}}{Cross-temporal summing matrix \mjseqn{\widetilde{\mathbf{S}}}
+coherent with \mjseqn{\mathbf{y} = \mbox{vec}(\mathbf{Y}')}.}
 
-\strong{hts} list from \code{\link{hts_tools}}
+\strong{hts} list from \code{\link{hts_tools}} .
 
-\strong{thf} list from \code{\link{thf_tools}}
+\strong{thf} list from \code{\link{thf_tools}} .
 }
 \description{
-Some useful tools for the cross-temporal forecast reconciliation of cross-sectionally and
-temporally constrained time series
+\loadmathjax
+Some useful tools for the cross-temporal forecast reconciliation of a linearly constrained
+(hierarchical/grouped) multiple time series.
 }
 \examples{
 # One level hierarchy (na = 1, nb = 2) with quarterly data
-obj <- ctf_tools(C = matrix(c(1, 1), 1), m = 4, Sstruc = TRUE)
+obj <- ctf_tools(C = matrix(c(1, 1), 1), m = 4)
+
 }
+\seealso{
+Other utilities: 
+\code{\link{Cmatrix}()},
+\code{\link{FoReco2ts}()},
+\code{\link{commat}()},
+\code{\link{hts_tools}()},
+\code{\link{oct_bounds}()},
+\code{\link{score_index}()},
+\code{\link{shrink_estim}()},
+\code{\link{srref}()},
+\code{\link{thf_tools}()},
+\code{\link{ut2c}()}
+}
+\concept{utilities}
 \keyword{utilities}

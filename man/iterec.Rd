@@ -5,48 +5,62 @@
 \title{Iterative heuristic cross-temporal forecast reconciliation}
 \usage{
 iterec(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
-       start_rec = "thf", note = TRUE, plot = "mti", ...)
+       start_rec = "thf", norm = "inf", note = TRUE, plot = "mti", ...)
 }
 \arguments{
-\item{basef}{(\code{n x h(k* + m)}) matrix of base forecasts to be reconciled;
-\code{n} is the total number of variables, \code{m} is the highest frequency,
-\code{k*} is the sum of (\code{p-1}) factors of \code{m}, excluding \code{m},
-and \code{h} is the forecast horizon. Each row identifies, a time series, and the forecasts
-are ordered as [lowest_freq' ...  highest_freq']'.}
+\item{basef}{(\mjseqn{n \times h(k^\ast+m)}) matrix of base forecasts to be
+reconciled, \mjseqn{\widehat{\mathbf{Y}}}; \mjseqn{n} is the total number of variables,
+\mjseqn{m} is the highest time frequency, \mjseqn{k^\ast} is the sum of (a
+subset of) (\mjseqn{p-1}) factors of \mjseqn{m}, excluding \mjseqn{m}, and
+\mjseqn{h} is the forecast horizon for the lowest frequency time series.
+Each row identifies a time series, and the forecasts are ordered as
+[lowest_freq' ...  highest_freq']'.}
 
-\item{hts_comb, thf_comb}{Type of covariance matrix (respectively (\code{n x n}) and
-(\code{(k* + m) x (k* + m)})) to be used in the cross-sectional and temporal reconciliation,
-see more in \code{comb} param of \code{\link[FoReco]{htsrec}} and \code{\link[FoReco]{thfrec}}.}
+\item{hts_comb, thf_comb}{Type of covariance matrix (respectively
+(\mjseqn{n \times n}) and (\mjseqn{(k^\ast + m) \times (k^\ast + m)})) to
+be used in the cross-sectional and temporal reconciliation, see more in
+\code{comb} param of \code{\link[FoReco]{htsrec}()} and
+\code{\link[FoReco]{thfrec}()}.}
 
-\item{res}{(\code{n x N(k* + m)}) matrix containing the residuals at all the
-temporal frequencies ordered [lowest_freq' ...  highest_freq']' (columns) for
-each variable (row), needed to estimate the covariance matrix when \code{hts_comb =}
-\code{\{"wls",} \code{"shr",} \code{"sam"\}} and/or \code{hts_comb =} \code{\{"wlsv",}
-\code{"wlsh",} \code{"acov",} \code{"strar1",} \code{"sar1",} \code{"har1",}
-\code{"shr",} \code{"sam"\}}. The row must be in the same order as \code{basef}.}
+\item{res}{(\mjseqn{n \times N(k^\ast + m)}) matrix containing the residuals
+at all the temporal frequencies ordered [lowest_freq' ...  highest_freq']'
+(columns) for each variable (row), needed to estimate the covariance matrix
+when \code{hts_comb =} \code{\{"wls",} \code{"shr",} \code{"sam"\}} and/or
+\code{hts_comb =} \code{\{"wlsv",} \code{"wlsh",} \code{"acov",}
+\code{"strar1",} \code{"sar1",} \code{"har1",} \code{"shr",} \code{"sam"\}}.
+The row must be in the same order as \code{basef}.}
 
-\item{itmax}{Max number of iteration (\code{100}, \emph{default}) (old version \code{maxit}).}
+\item{itmax}{Max number of iteration (\code{100}, \emph{default})
+(old version \code{maxit}).}
 
 \item{tol}{Convergence tolerance (\code{1e-5}, \emph{default}).}
 
 \item{start_rec}{Dimension along with the first reconciliation step in each
-iteration is performed: it start from temporal reconciliation with "\code{thf}" (\emph{default}),
-from cross-sectional with "\code{hts}" and it does both reconciliation with "\code{auto}".}
+iteration is performed: it start from temporal reconciliation with
+"\code{thf}" (\emph{default}), from cross-sectional with "\code{hts}" and
+it does both reconciliation with "\code{auto}".}
 
-\item{note}{If \code{note = TRUE} (\emph{default}) the function writes some notes to the console,
-otherwise no note is produced (also no plot).}
+\item{norm}{Norm used to calculate the temporal and the cross-sectional
+incoherence. There are two alternatives: "\code{inf}" (\mjseqn{\max\{|x_1|,
+|x_2|,\dots\}}, \emph{default}) or "\code{one}" (\mjseqn{\sum |x_i|}).}
 
-\item{plot}{Some useful plots: \code{"mti"} (\emph{default}) marginal trend inconsistencies,
-\code{"pat"} step by step inconsistency pattern for each iteration, \code{"distf"} distance
-forecasts iteration i and i-1, \code{"all"} all the plots.}
+\item{note}{If \code{note = TRUE} (\emph{default}) the function writes some
+notes to the console, otherwise no note is produced (also no plot).}
 
-\item{...}{any other options useful for \code{\link[FoReco]{htsrec}} and
-\code{\link[FoReco]{thfrec}}, e.g. \code{m}, \code{C} (or \code{Ut} and \code{nb}),
-\code{nn} (for non negativity reconciliation only at first step), ...}
+\item{plot}{Some useful plots: \code{"mti"} (\emph{default}) marginal trend
+inconsistencies, \code{"pat"} step by step inconsistency pattern for each
+iteration, \code{"distf"} distance forecasts iteration i and i-1,
+\code{"all"} all the plots.}
+
+\item{...}{any other options useful for \code{\link[FoReco]{htsrec}()} and
+\code{\link[FoReco]{thfrec}()}, e.g. \code{m}, \code{C} (or \code{Ut} and
+\code{nb}), \code{nn} (for non negativity reconciliation only at first step),
+\code{mse}, \code{corpcor}, \code{type}, \code{sol}, \code{settings},
+\code{W}, \code{Omega},...}
 }
 \value{
 \code{iterec} returns a list with:
-\item{\code{recf}}{(\code{n x h(k* + m)}) matrix of reconciled forecasts.}
+\item{\code{recf}}{(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix, \mjseqn{\widetilde{\textbf{Y}}}.}
 \item{\code{d_cs}}{Cross-sectional incoherence at each iteration.}
 \item{\code{d_te}}{Temporal incoherence at each iteration.}
 \item{\code{start_rec}}{Starting coherence dimension (thf or hts).}
@@ -57,20 +71,21 @@ forecasts iteration i and i-1, \code{"all"} all the plots.}
 from the base.}
 }
 \description{
+\loadmathjax
 Iterative procedure which produces cross-temporally reconciled
 forecasts by alternating forecast reconciliation along one single dimension
 (either cross-sectional or temporal) at each iteration step. \strong{Each iteration}
-consists in the first two steps of the heuristic KA procedure, so the forecasts are
-reconciled by alternating cross-sectional (contemporaneous) reconciliation, and
-reconciliation through temporal hierarchies in a cyclic fashion.
-The choice of the dimension along with the first reconciliation step in each
+consists in the first two steps of the heuristic procedure by Kourentzes and Athanasopoulos (2019),
+so the forecasts are reconciled by alternating cross-sectional (contemporaneous) reconciliation,
+and reconciliation through temporal hierarchies in a cyclic fashion.
+The choice of the dimension along which the first reconciliation step in each
 iteration is performed is up to the user (param \code{start_rec}), and there is
 no particular reason why one should perform the temporal reconciliation first, and
 the cross-sectional reconciliation then.
 The iterative procedure allows the user to get non-negative reconciled forecasts.
 }
 \details{
-The above procedure can be seen as an extension of the well known iterative proportional
+This reconciliation procedure can be seen as an extension of the well known iterative proportional
 fitting procedure (Deming and Stephan, 1940, Johnston and Pattie, 1993), also known as
 RAS method (Miller and Blair, 2009), to adjust the internal cell values of a
 two-dimensional matrix until they sum to some predetermined row and column
@@ -93,7 +108,7 @@ two or more iteration (at least one time).}
 \examples{
 \donttest{
 data(FoReco_data)
-obj <- iterec(FoReco_data$base, note=TRUE,
+obj <- iterec(FoReco_data$base, note = FALSE,
   m = 12, C = FoReco_data$C, thf_comb = "acov",
   hts_comb = "shr", res = FoReco_data$res, start_rec = "thf")
 }
@@ -119,18 +134,31 @@ Miller, R.E., Blair, P.D. (2009), Input-output analysis: foundations and extensi
 
 \enc{Schäfer}{Schafer}, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
 Duarte Silva, A.P., Strimmer, K. (2017), \emph{Package `corpcor'}, R
-package version 1.6.9 (April 1, 2017), \href{https://CRAN.R-project.org/package=corpcor}{https://CRAN.R-project.org/package= corpcor}.
+package version 1.6.9 (April 1, 2017),
+\href{https://CRAN.R-project.org/package=corpcor}{https://CRAN.R-project.org/package= corpcor}.
 
 \enc{Schäfer}{Schafer}, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
 Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
 Applications in Genetics and Molecular Biology}, 4, 1.
 
-Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs, \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2020). OSQP:
+An Operator Splitting Solver for Quadratic Programs, \emph{Mathematical Programming Computation},
+12, 4, 637-672.
 
 Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
-Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+Quadratic Programming Solver using the `OSQP' Library, R package version 0.6.0.3
 (October 10, 2019), \href{https://CRAN.R-project.org/package=osqp}{https://CRAN.R-project.org/package=osqp}.
 }
+\seealso{
+Other reconciliation procedures: 
+\code{\link{cstrec}()},
+\code{\link{ctbu}()},
+\code{\link{htsrec}()},
+\code{\link{lccrec}()},
+\code{\link{octrec}()},
+\code{\link{tcsrec}()},
+\code{\link{tdrec}()},
+\code{\link{thfrec}()}
+}
+\concept{reconciliation procedures}
 \keyword{heuristic}
-\keyword{reconciliation}

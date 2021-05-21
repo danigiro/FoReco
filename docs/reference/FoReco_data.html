@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Forecast reconciliation for a simulated hierarchical time series — FoReco_data • FoReco</title>
+<title>Forecast reconciliation for a simulated linearly constrained, genuine hierarchical multiple time series — FoReco_data • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,12 +52,13 @@
 
 
 
-<meta property="og:title" content="Forecast reconciliation for a simulated hierarchical time series — FoReco_data" />
+<meta property="og:title" content="Forecast reconciliation for a simulated linearly constrained, genuine hierarchical multiple time series — FoReco_data" />
 <meta property="og:description" content="A two-level hierarchy with n = 8 monthly time series. In the cross-sectional framework,
-at any time it is Tot = A + B + C, A = AA + AB and B = BA + BB (nb = 5  at the
-bottom level). For monthly data, the observations are aggregated to annual (k = 12),
+at any time it is Tot = A + B + C, A = AA + AB and B = BA + BB
+(the bottom time series being AA, AB, BA, BB, and C, it is nb = 5).
+The monthly observations are aggregated to their annual (k = 12),
 semi-annual (k = 6), four-monthly (k = 4), quarterly (k = 3), and
-bi-monthly (k = 2) observations. The monthly bottom time series are simulated
+bi-monthly (k = 2) counterparts. The monthly bottom time series are simulated
 from five different SARIMA models (see
 Using the `FoReco` package).
 There are 180 (15 years) monthly observations: the first 168 values (14 years) are used as
@@ -94,7 +95,7 @@ training set, and the last 12 form the test set." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -102,21 +103,21 @@ training set, and the last 12 form the test set." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -133,7 +134,7 @@ training set, and the last 12 form the test set." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -142,13 +143,13 @@ training set, and the last 12 form the test set." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -171,17 +172,18 @@ training set, and the last 12 form the test set." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Forecast reconciliation for a simulated hierarchical time series</h1>
+    <h1>Forecast reconciliation for a simulated linearly constrained, genuine hierarchical multiple time series</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/FoReco_data.R'><code>R/FoReco_data.R</code></a></small>
     <div class="hidden name"><code>FoReco_data.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>A two-level hierarchy with <code>n = 8</code> monthly time series. In the cross-sectional framework,
-at any time it is <code>Tot = A + B + C</code>, <code>A = AA + AB</code> and <code>B = BA + BB</code> (<code>nb = 5</code>  at the
-bottom level). For monthly data, the observations are aggregated to annual (<code>k = 12</code>),
+at any time it is <code>Tot = A + B + C</code>, <code>A = AA + AB</code> and <code>B = BA + BB</code>
+(the bottom time series being <code>AA</code>, <code>AB</code>, <code>BA</code>, <code>BB</code>, and <code>C</code>, it is <code>nb = 5</code>).
+The monthly observations are aggregated to their annual (<code>k = 12</code>),
 semi-annual (<code>k = 6</code>), four-monthly (<code>k = 4</code>), quarterly (<code>k = 3</code>), and
-bi-monthly (<code>k = 2</code>) observations. The monthly bottom time series are simulated
+bi-monthly (<code>k = 2</code>) counterparts. The monthly bottom time series are simulated
 from five different SARIMA models (see
 <a href='https://danigiro.github.io/FoReco/articles/FoReco_package.html'><code>Using the `FoReco` package</code></a>).
 There are 180 (15 years) monthly observations: the first 168 values (14 years) are used as
@@ -220,7 +222,7 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></dd>
   <span class='va'>mbase</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
   <span class='co'># residuals</span>
   <span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span>,
-                                      split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
+                                      split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"k"</span>, <span class='va'>K</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>, sep<span class='op'>=</span><span class='st'>""</span><span class='op'>)</span><span class='op'>)</span>
   <span class='va'>mres</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>[</span>, <span class='va'>id</span><span class='op'>]</span><span class='op'>)</span>
   <span class='va'>hts_recf</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>mbase</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"shr"</span>,
                           res <span class='op'>=</span> <span class='va'>mres</span>, keep <span class='op'>=</span> <span class='st'>"recf"</span><span class='op'>)</span>
@@ -228,6 +230,7 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></dd>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>hts_recf</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span><span class='st'>"k"</span>, <span class='va'>K</span>, sep<span class='op'>=</span><span class='st'>""</span><span class='op'>)</span>
 
 <span class='co'># Forecast reconciliation through temporal hierarchies for all time series</span>
+<span class='co'># comb = "acov"</span>
 <span class='va'>n</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NROW</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>)</span>
 <span class='va'>thf_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='va'>n</span>, <span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>NCOL</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></span><span class='op'>(</span><span class='va'>thf_recf</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/dimnames.html'>dimnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>)</span>
@@ -241,22 +244,26 @@ are ordered as [lowest_freq' ...  highest_freq']'.</p></dd>
 <span class='op'>}</span>
 
 <span class='co'># Iterative cross-temporal reconciliation</span>
+<span class='co'># Each iteration: t-acov + cs-shr</span>
 <span class='va'>ite_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='iterec.html'>iterec</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, note<span class='op'>=</span><span class='cn'>FALSE</span>,
                    m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
                    thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>, hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>,
                    res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span>, start_rec <span class='op'>=</span> <span class='st'>"thf"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 
 <span class='co'># Heuristic first-cross-sectional-then-temporal cross-temporal reconciliation</span>
+<span class='co'># cs-shr + t-acov</span>
 <span class='va'>cst_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='cstrec.html'>cstrec</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
                    thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>, hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>,
                    res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 
 <span class='co'># Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation</span>
+<span class='co'># t-acov + cs-shr</span>
 <span class='va'>tcs_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='tcsrec.html'>tcsrec</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
                    thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>, hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>,
                    res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 
 <span class='co'># Optimal cross-temporal reconciliation</span>
+<span class='co'># comb = "bdshr"</span>
 <span class='va'>oct_recf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='octrec.html'>octrec</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
                    comb <span class='op'>=</span> <span class='st'>"bdshr"</span>, res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span>, keep <span class='op'>=</span> <span class='st'>"recf"</span><span class='op'>)</span>
 <span class='co'># }</span>

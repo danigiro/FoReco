@@ -1,24 +1,37 @@
-#' @title Measuring forecasting accuracy
+#' @title Measuring accuracy in a rolling forecast experiment
 #'
-#' @description Function to calculate the accuracy indices of the reconciled point
+#' @description
+#' \loadmathjax
+#' Function to calculate the accuracy indices of the reconciled point
 #' forecasts of a cross-temporal (not only, see examples) system (more in
 #' \href{https://danigiro.github.io/FoReco/articles/accuracy_indices.html}{Average relative accuracy indices}).
+#' (\emph{Experimental version})
 #'
-#' @param recf list of q (forecast origins) reconciled forecasts' matrices (\code{[n x h(k* + m)]} in the
-#' cross-temporal, \code{[h x n]} in cross-sectional and vectors of length \code{[h(k* + m)]} in temporal framework).
-#' @param base list of q (forecast origins) base forecasts' matrices (\code{[n x h(k* + m)]} in the
-#' cross-temporal, \code{[n x h]} in cross-sectional and \code{[h(k* + m) x 1]} in temporal framework).
-#' @param test list of q (forecast origins) test observations' matrices (\code{[n x h(k* + m)]} in the
-#' cross-temporal, \code{[n x h]} in cross-sectional and \code{[h(k* + m) x 1]} in temporal framework).
-#' @param type type of accuracy measure ("\code{mse}" Mean Square Error, "\code{rmse}" Root Mean Square Error
-#' or "\code{mae}" Mean Absolute Error)
-#' @param m highest frequency of the forecasted time series.
+#' @param recf list of q (forecast origins) reconciled forecasts' matrices
+#' (\mjseqn{[n \times h(k^\ast + m)]} in the cross-temporal case,
+#' \mjseqn{[h \times n]} in the cross-sectional case, and vectors of length
+#' \mjseqn{[h(k^\ast \times m)]} in the temporal framework).
+#' @param base list of q (forecast origins) base forecasts' matrices
+#' (\mjseqn{[n \times h(k^\ast + m)]} in the cross-temporal case,
+#' \mjseqn{[h \times n]} in the cross-sectional case, and vectors of length
+#' \mjseqn{[h(k^\ast \times m)]} in the temporal framework).
+#' @param test list of q (forecast origins) test observations' matrices
+#' (\mjseqn{[n \times h(k^\ast + m)]} in the cross-temporal case,
+#' \mjseqn{[h \times n]} in the cross-sectional case, and vectors of length
+#' \mjseqn{[h(k^\ast \times m)]} in the temporal framework).
+#' @param type type of accuracy measure ("\code{mse}" Mean Square Error,
+#' "\code{rmse}" Root Mean Square Error or "\code{mae}" Mean Absolute Error).
+#' @param m Highest available sampling frequency per seasonal cycle (max. order
+#' of temporal aggregation, \mjseqn{m}), or a subset of \mjseqn{p} factors
+#' of \mjseqn{m}.
 #' @param nb number of bottom time series in the cross-sectional framework.
-#' @param compact if TRUE return only the summary matrix.
+#' @param compact if TRUE returns only the summary matrix.
+#' @param nl (\mjseqn{L \times 1}) vector containing the number of time series
+#' in each cross-sectional level of the hierarchy (\code{nl[1] = 1}).
 #'
 #' @return
 #' It returns a summary table called \code{Avg_mat} (if \code{compact} option is \code{TRUE},
-#' \emph{default}), otherwise it returns a list of four tables (more in
+#' \emph{default}), otherwise it returns a list of six tables (more in
 #' \href{https://danigiro.github.io/FoReco/articles/accuracy_indices.html}{Average relative accuracy indices}).
 #'
 #' @references
@@ -52,7 +65,6 @@
 #' hts_score <- score_index(recf = mrecf, base = mbase, test = mtest, nb = 5)
 #'
 #' # Temporal framework
-#' data(FoReco_data)
 #' # top ts base forecasts ([lowest_freq' ...  highest_freq']')
 #' topbase <- FoReco_data$base[1, ]
 #' # top ts residuals ([lowest_freq' ...  highest_freq']')
@@ -66,9 +78,10 @@
 #' }
 #'
 #' @keywords utilities
+#' @family utilities
 #'
 #' @export
-score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
+score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRUE) {
 
   type <- match.arg(type, c("mse", "mae", "rmse"))
 
@@ -127,22 +140,57 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
   }
 
   # Some usefull tools
-  kset <- rev(divisors(m))
+  if(length(m)==1){
+    if(m == 1){
+      kset <- 1
+    }else{
+      thf_obj <- thf_tools(m = m)
+      m <- thf_obj$m
+      kset <- thf_obj$kset
+    }
+  }else{
+    thf_obj <- thf_tools(m = m)
+    m <- thf_obj$m
+    kset <- thf_obj$kset
+  }
   kt <- sum(kset)
   p <- length(kset)
   n <- dim(Ebase)[1]
   na <- n - nb
   h <- dim(Ebase)[2] / kt
   q <- dim(Ebase)[3]
-  kpos <- rep(kset, rep(rev(kset * h))) # position of k in colums of E[,,q]
+  kpos <- rep(kset, rep(m/kset * h)) # position of k in colums of E[,,q]
   kpos <- factor(kpos, kset, ordered = TRUE)
   if (m == 1) {
-    kh <- paste("k", kpos, "h", 1:h, sep = "")
+    kh <- paste("h", 1:h, sep = "")
+    khc <- paste("h1:", 1:h, sep = "")
   } else {
     kh <- paste("k", kpos, "h",
-      do.call("c", as.list(sapply(rev(kset) * h, function(x) seq(1:x)))),
-      sep = ""
+                do.call("c", lapply(rev(kset) * h, function(x) seq(1:x))),
+                sep = ""
     )
+
+    khc <- paste("k", kpos, "h1:",
+                 do.call("c", lapply(rev(kset) * h, function(x) seq(1:x))),
+                 sep = ""
+    )
+  }
+
+  if(missing(nl)){
+    nl <- na
+  }else if(sum(nl) != na){
+    stop("Please, provide a valid nl vector s.t. sum(nl) == na", call. = FALSE)
+  }
+
+  nlnb <- c(nl, nb)
+  L <- length(nlnb)
+  nl <- c(1,2)
+  levpos <- rep(1:L, nlnb)
+
+  if(L>2){
+    csname <- paste0("L", 1:L)
+  }else{
+    csname <- c("uts", "bts")
   }
 
   IND_base <- apply(Qbase, c(1, 2), mean)
@@ -156,8 +204,17 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
   RelIND_ikh <- IND_recf / IND_base
   colnames(RelIND_ikh) <- kh
   logRelIND_ikh <- log(RelIND_ikh)
-  logRelIND_ikh[abs(logRelIND_ikh) == Inf] <- NA
+  #logRelIND_ikh[abs(logRelIND_ikh) == Inf] <- NA
 
+  logRelIND_ikh[logRelIND_ikh == -Inf] <- log(1e-16)
+  if(any(logRelIND_ikh == Inf)){
+    if(all(logRelIND_ikh == Inf)){
+      logRelIND_ikh[abs(logRelIND_ikh) == Inf] <- NA
+      warning("Base forecasts perfect prediction",call. = FALSE)
+    }else{
+      logRelIND_ikh[logRelIND_ikh == Inf] <- 10*max(logRelIND_ikh[logRelIND_ikh != Inf])
+    }
+  }
 
   # 24
   AvgRelIND <- exp(mean(logRelIND_ikh, na.rm = TRUE))
@@ -165,29 +222,25 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
   AvgRelIND_i <- exp(rowMeans(logRelIND_ikh, na.rm = TRUE))
   # 27
   AvgRelIND__kh <- exp(colMeans(logRelIND_ikh, na.rm = TRUE))
-  AvgRelIND_akh <- exp(colMeans(logRelIND_ikh[1:na, , drop = FALSE], na.rm = TRUE))
-  AvgRelIND_bkh <- exp(colMeans(logRelIND_ikh[-c(1:na), , drop = FALSE], na.rm = TRUE))
-  Avg_k <- rbind(AvgRelIND__kh, AvgRelIND_akh, AvgRelIND_bkh)
-  rownames(Avg_k) <- c("all", "uts", "bts")
+  AvgRelIND_lkh <- lapply(1:L, function(x) exp(colMeans(logRelIND_ikh[levpos == x, , drop = FALSE], na.rm = TRUE)))
+  AvgRelIND_lkh <- do.call(rbind, AvgRelIND_lkh)
+  Avg_k <- rbind(AvgRelIND__kh, AvgRelIND_lkh)
+  rownames(Avg_k) <- c("all", csname)
 
-  # solo k
+  # only k
   AvgRelIND__k <- exp(tapply(colMeans(logRelIND_ikh, na.rm = TRUE), kpos, mean, na.rm = TRUE))
 
   # bottom and aggregate
-  AvgRelIND_ak <- exp(tapply(colMeans(logRelIND_ikh[1:na, , drop = FALSE], na.rm = TRUE),
-                             kpos, mean, na.rm = TRUE))
-  AvgRelIND_bk <- exp(tapply(colMeans(logRelIND_ikh[-c(1:na), , drop = FALSE], na.rm = TRUE),
-                             kpos, mean, na.rm = TRUE))
-  AvgRelIND_a <- exp(mean(logRelIND_ikh[1:na, , drop = FALSE], na.rm = TRUE))
-  AvgRelIND_b <- exp(mean(logRelIND_ikh[-c(1:na), , drop = FALSE], na.rm = TRUE))
-
-  Avg_matrix <- data.frame(
-    all = c(AvgRelIND__k, AvgRelIND),
-    uts = c(AvgRelIND_ak, AvgRelIND_a), bts = c(AvgRelIND_bk, AvgRelIND_b)
-  )
+  AvgRelIND_lk <- lapply(1:L, function(x) exp(tapply(colMeans(logRelIND_ikh[levpos == x, , drop = FALSE], na.rm = TRUE),
+                                                     kpos, mean, na.rm = TRUE)))
+  AvgRelIND_l <- lapply(1:L, function(x) exp(mean(logRelIND_ikh[levpos == x, , drop = FALSE], na.rm = TRUE)))
+  Avg_matrix <- cbind(c(AvgRelIND__k, AvgRelIND),
+                      as.data.frame(t(cbind(do.call(rbind, AvgRelIND_lk),
+                                            do.call(rbind, AvgRelIND_l)))))
+  colnames(Avg_matrix) <- c("all", csname)
   rownames(Avg_matrix) <- c(unique(kset), "all")
 
-  # per ogni serie
+  # for each series
   AvgRelIND_ik <- exp(t(apply(logRelIND_ikh, 1, function(z) tapply(z, kpos, mean, na.rm = TRUE))))
   all <- AvgRelIND_i
 
@@ -197,26 +250,49 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
     AvgRelIND_ik <- cbind(AvgRelIND_ik, all)
   }
 
+  # CUMULATIVE forecast horizon
+  AvgRelIND__khc <- exp(do.call(c, lapply(unique(kpos), function(y){
+    cummean(colMeans(logRelIND_ikh[, kpos == y, drop = FALSE], na.rm = TRUE))
+  })))
+  AvgRelIND_lkhc <- lapply(1:L, function(x) exp(do.call(c, lapply(unique(kpos), function(y){
+    cummean(colMeans(logRelIND_ikh[levpos == x, kpos == y, drop = FALSE], na.rm = TRUE))
+  }))))
+  AvgRelIND_lkhc <- do.call(rbind, AvgRelIND_lkhc)
+  Avg_kc <- rbind(AvgRelIND__khc, AvgRelIND_lkhc)
+  rownames(Avg_kc) <- c("all", csname)
+  colnames(Avg_kc) <- khc
+
+  RelIND_ikhc <- t(apply(logRelIND_ikh, 1,
+                         function(x)
+                           exp(do.call(c, lapply(unique(kpos),
+                                                 function(y){
+                                                   cummean(x[kpos == y])
+                                                 })))))
+  colnames(RelIND_ikhc) <- khc
+
   if (compact == TRUE) {
     if (nb == 1) {
-      return(Avg_matrix[, 1, drop = FALSE])
+      return(Avg_matrix[, "all", drop = FALSE])
     } else if (m == 1) {
-      return(Avg_matrix[2, , drop = FALSE])
+      return(Avg_matrix["all", , drop = FALSE])
     } else {
       return(Avg_matrix)
     }
   } else {
     if (nb == 1) {
       out <- list()
-      out$Avg_mat <- Avg_matrix[, 1, drop = FALSE]
-      out$Avg_k <- Avg_k[1, , drop = FALSE]
+      out$Avg_mat <- Avg_matrix[, "all", drop = FALSE]
+      out$Avg_k <- Avg_k["all", , drop = FALSE]
+      out$Avg_k_cum <- Avg_kc["all", , drop = FALSE]
       return(out)
     } else if (m == 1) {
       out <- list()
-      out$Avg_mat <- Avg_matrix[2, , drop = FALSE]
-      out$Avg_ik <- AvgRelIND_ik[, 2, drop = FALSE]
+      out$Avg_mat <- Avg_matrix["all", , drop = FALSE]
+      out$Avg_ik <- AvgRelIND_ik[, "all", drop = FALSE]
       out$Rel_mat <- RelIND_ikh
       out$Avg_k <- Avg_k
+      out$Rel_mat_cum <- RelIND_ikhc
+      out$Avg_k_cum <- Avg_kc
       return(out)
     } else {
       out <- list()
@@ -224,7 +300,15 @@ score_index <- function(recf, base, test, m, nb, type = "mse", compact = TRUE) {
       out$Avg_ik <- AvgRelIND_ik
       out$Rel_mat <- RelIND_ikh
       out$Avg_k <- Avg_k
+      out$Rel_mat_cum <- RelIND_ikhc
+      out$Avg_k_cum <- Avg_kc
       return(out)
     }
   }
+}
+
+
+cummean <- function(x){
+  #x[is.na(x)] <- 0
+  cumsum(x) / seq_along(x)
 }

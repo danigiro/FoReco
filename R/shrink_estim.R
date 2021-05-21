@@ -23,6 +23,7 @@
 #' \href{https://CRAN.R-project.org/package=hts}{https://CRAN.R-project.org/package=hts}.
 #'
 #' @keywords utilities
+#' @family utilities
 #'
 #' @export
 shrink_estim <- function(x, minT = T) {

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Bottom-up Cross-temporal forecast reconciliation — ctbu • FoReco</title>
+<title>Bottom-up cross-temporal forecast reconciliation — ctbu • FoReco</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -52,10 +52,12 @@
 
 
 
-<meta property="og:title" content="Bottom-up Cross-temporal forecast reconciliation — ctbu" />
-<meta property="og:description" content="Cross temporal reconciled forecasts for all series at any temporal
-aggregation level can be easily computed by appropriate summation of the high-frequency
-bottom base forecasts \(\hat{\textbf{b}}_i, i = 1,...,n_b, \;\) according to a
+<meta property="og:title" content="Bottom-up cross-temporal forecast reconciliation — ctbu" />
+<meta property="og:description" content="
+
+Cross temporal reconciled forecasts for all series at any temporal
+aggregation level are computed by appropriate summation of the high-frequency
+bottom base forecasts \(\widehat{\mathbf{b}}_i, i = 1,...,n_b\), according to a
 bottom-up procedure like what is currently done in both the cross-sectional
 and temporal frameworks." />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
@@ -90,7 +92,7 @@ and temporal frameworks." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -98,21 +100,21 @@ and temporal frameworks." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -129,7 +131,7 @@ and temporal frameworks." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -138,13 +140,13 @@ and temporal frameworks." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -167,15 +169,17 @@ and temporal frameworks." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Bottom-up Cross-temporal forecast reconciliation</h1>
+    <h1>Bottom-up cross-temporal forecast reconciliation</h1>
     <small class="dont-index">Source: <a href='https://github.com/daniGiro/FoReco/blob/master/R/ctbu.R'><code>R/ctbu.R</code></a></small>
     <div class="hidden name"><code>ctbu.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Cross temporal reconciled forecasts for all series at any temporal
-aggregation level can be easily computed by appropriate summation of the high-frequency
-bottom base forecasts \(\hat{\textbf{b}}_i, i = 1,...,n_b, \;\) according to a
+    <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
+
+Cross temporal reconciled forecasts for all series at any temporal
+aggregation level are computed by appropriate summation of the high-frequency
+bottom base forecasts \(\widehat{\mathbf{b}}_i, i = 1,...,n_b\), according to a
 bottom-up procedure like what is currently done in both the cross-sectional
 and temporal frameworks.</p>
     </div>
@@ -187,33 +191,66 @@ and temporal frameworks.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>Bmat</th>
-      <td><p>(<code>nb x (h m)</code>) matrix of high-frequency bottom time series base forecasts.
+      <td><p>(\(n_b \times h m\)) matrix of high-frequency bottom time
+series base forecasts (\(\widehat{\mathbf{B}}^{[1]}\)).
 <code>h</code> is the forecast horizon for the lowest frequency (most temporally aggregated)
 time series.</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></td>
+      <td><p>Highest available sampling frequency per seasonal cycle (max. order
+of temporal aggregation, \(m\)), or a subset of the \(p\) factors
+of \(m\).</p></td>
     </tr>
     <tr>
       <th>C</th>
-      <td><p>(<code>na x nb</code>) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.</p></td>
+      <td><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+mapping the bottom level series into the higher level ones.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>The function returns a (<code>n x (h (k* + m))</code>) matrix of
-bottom-up cross-temporally reconciled forecasts.</p>
+    <p>The function returns a (\(n \times h (k^\ast + m)\)) matrix of
+bottom-up cross-temporally reconciled forecasts, \(\ddot{\mathbf{Y}}\).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Denoting by \(\ddot{\mathbf{Y}}\) the (\(n \times h (k^\ast + m)\)) matrix containing
+the bottom-up cross temporal reconciled forecasts, it is:
+\[\ddot{\mathbf{Y}} = \left[\begin{array}{cc}
+\mathbf{C}\widehat{\mathbf{B}}^{[1]}\mathbf{K}_1' & \mathbf{C}\widehat{\mathbf{B}}^{[1]} \cr
+\widehat{\mathbf{B}}^{[1]} \mathbf{K}_1' & \widehat{\mathbf{B}}^{[1]}
+\end{array}\right],\]
+where \(\mathbf{C}\) is the cross-sectional (contemporaneous) aggregation matrix,
+\(\mathbf{K}_1\) is the temporal aggregation matrix with \(h=1\), and
+\(\widehat{\mathbf{B}}^{[1]}\) is the matrix containing the high-frequency bottom
+time series base forecasts. This expression is equivalent to
+\(\mbox{vec}(\ddot{\mathbf{Y}}') = \widetilde{\mathbf{S}}
+\mbox{vec}(\widehat{\mathbf{Y}}')\) for \(h = 1\), where
+\(\widetilde{\mathbf{S}}\) is the cross-temporal summing matrix for
+\(\mbox{vec}(\widehat{\mathbf{Y}}')\), and \(\widehat{\mathbf{Y}}\)
+is the (\(n \times h (k^\ast + m)\)) matrix containing all the base forecasts
+at any temporal aggregation order.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
 Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:2006.08570</a>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other reconciliation procedures: 
+<code><a href='cstrec.html'>cstrec</a>()</code>,
+<code><a href='htsrec.html'>htsrec</a>()</code>,
+<code><a href='iterec.html'>iterec</a>()</code>,
+<code><a href='lccrec.html'>lccrec</a>()</code>,
+<code><a href='octrec.html'>octrec</a>()</code>,
+<code><a href='tcsrec.html'>tcsrec</a>()</code>,
+<code><a href='tdrec.html'>tdrec</a>()</code>,
+<code><a href='thfrec.html'>thfrec</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
+<span class='co'># monthly base forecasts</span>
 <span class='va'>id</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>simplify2array</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>)</span>,
                                     split <span class='op'>=</span> <span class='st'>"_"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span>, <span class='op'>]</span> <span class='op'>==</span> <span class='st'>"k1"</span><span class='op'>)</span>
 <span class='va'>hfbts</span> <span class='op'>&lt;-</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span><span class='op'>[</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>)</span>, <span class='va'>id</span><span class='op'>]</span>

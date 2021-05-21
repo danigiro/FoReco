@@ -7,17 +7,18 @@
 commat(r, c)
 }
 \arguments{
-\item{r}{Number of rows of \code{Y}.}
+\item{r}{Number of rows of \mjseqn{\textbf{Y}}.}
 
-\item{c}{Number of columns of \code{Y}.}
+\item{c}{Number of columns of \mjseqn{\textbf{Y}}.}
 }
 \value{
-A sparse (\code{(r c) x (r c)}) matrix.
+A sparse (\mjseqn{(r c) \times (r c)}) matrix, \mjseqn{\textbf{P}}.
 }
 \description{
-This function returns the (\code{(r c) x (r c)}) commutation matrix \code{P} such that
-\deqn{P vec(Y) = vec(Y'),}
-where \code{Y} is a (\code{r x c}) matrix.
+This function returns the (\mjseqn{(r c) \times (r c)})
+commutation matrix \mjseqn{\textbf{P}} such that
+\mjsdeqn{\textbf{P} \mbox{vec}(\textbf{Y}) = \mbox{vec}(\textbf{Y}'),}
+where \mjseqn{\textbf{Y}} is a (\mjseqn{r \times c}) matrix.
 }
 \examples{
 Y <- matrix(rnorm(30), 5, 6)
@@ -25,7 +26,22 @@ P <- commat(5, 6)
 P \%*\% as.vector(Y) == as.vector(t(Y)) # check
 }
 \references{
-Magnus, J.R., Neudecker, H. (2019), Matrix Differential Calculus with Applications
-in Statistics and Econometrics, third edition, New York, Wiley, pp. 54-55.
+Magnus, J.R., Neudecker, H. (2019), Matrix Differential Calculus
+with Applications in Statistics and Econometrics, third edition, New York,
+Wiley, pp. 54-55.
 }
+\seealso{
+Other utilities: 
+\code{\link{Cmatrix}()},
+\code{\link{FoReco2ts}()},
+\code{\link{ctf_tools}()},
+\code{\link{hts_tools}()},
+\code{\link{oct_bounds}()},
+\code{\link{score_index}()},
+\code{\link{shrink_estim}()},
+\code{\link{srref}()},
+\code{\link{thf_tools}()},
+\code{\link{ut2c}()}
+}
+\concept{utilities}
 \keyword{utilities}

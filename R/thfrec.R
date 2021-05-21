@@ -8,16 +8,19 @@
 #' bottom-up approach is available.
 #'
 #' @usage thfrec(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
-#'        type = "M", sol = "direct", nn = FALSE, keep = "list",
-#'        settings = osqpSettings(), bounds = NULL, Omega = NULL)
+#'        type = "M", sol = "direct", keep = "list", nn = FALSE,
+#'         nn_type = "osqp", settings = list(), bounds = NULL, Omega = NULL)
 #'
-#' @param basef (\code{h(k* + m) x 1}) vector of base forecasts to be reconciled, containing the forecasts
-#' at all the needed temporal frequencies ordered as [lowest_freq' ...  highest_freq']'.
-#' @param m Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \code{m}),
-#' or a subset of the \code{p} factors of \code{m}.
-#' @param comb Type of the reconciliation. Except for bottom up, all other options
-#' correspond to a different (\code{(k* + m) x (k* + m)}) covariance matrix,
-#' \code{k*} is the sum of (\code{p-1}) factors of \code{m} (excluding \code{m}):
+#' @param basef (\mjseqn{h(k^\ast + m) \times 1}) vector of base forecasts to be
+#' reconciled, containing the forecasts at all the needed temporal frequencies
+#' ordered as [lowest_freq' ...  highest_freq']'.
+#' @param m Highest available sampling frequency per seasonal cycle (max. order
+#' of temporal aggregation, \mjseqn{m}), or a subset of \mjseqn{p} factors
+#' of \mjseqn{m}.
+#' @param comb Type of the reconciliation. Except for bottom up, all other
+#' options correspond to a different (\mjseqn{(k^\ast + m) \times (k^\ast + m)})
+#' covariance matrix, \mjseqn{k^\ast} is the sum of (\mjseqn{p-1}) factors of
+#' \mjseqn{m} (excluding \mjseqn{m}):
 #' \itemize{
 #'   \item \bold{bu} (Bottom-up);
 #'   \item \bold{ols} (Identity);
@@ -32,67 +35,154 @@
 #'   \item \bold{sam} (Sample cross-covariance matrix);
 #'   \item \bold{omega} use your personal matrix Omega in param \code{Omega}.
 #' }
-#' @param res vector containing the in-sample residuals at all the temporal frequencies
-#' ordered as \code{basef}, i.e. [lowest_freq' ...  highest_freq']', needed to
-#' estimate the covariance matrix when \code{comb =} \code{\{"wlsv",} \code{"wlsh",}
-#' \code{"acov",} \code{"strar1",} \code{"sar1",} \code{"har1",}
+#' @param res vector containing the in-sample residuals at all the temporal
+#' frequencies ordered as \code{basef}, i.e. [lowest_freq' ...  highest_freq']',
+#' needed to estimate the covariance matrix when \code{comb =} \code{\{"wlsv",}
+#' \code{"wlsh",} \code{"acov",} \code{"strar1",} \code{"sar1",} \code{"har1",}
 #' \code{"shr",} \code{"sam"\}}.
 #' @param Omega This option permits to directly enter the covariance matrix:
 #' \enumerate{
-#'   \item \code{Omega} must be a p.d. (\code{(k* + m) x (k* + m)}) matrix or a list
-#'   of \code{h} matrix (one for each forecast horizon);
-#'   \item if \code{comb} is different from "\code{omega}", \code{Omega} is not used.
+#'   \item \code{Omega} must be a p.d. (\mjseqn{(k^\ast + m) \times (k^\ast + m)})
+#'   matrix or a list of \mjseqn{h} matrix (one for each forecast horizon);
+#'   \item if \code{comb} is different from "\code{omega}", \code{Omega} is
+#'   not used.
 #' }
 #' @param mse Logical value: \code{TRUE} (\emph{default}) calculates the
-#' covariance matrix of the in-sample residuals (when necessary) according to the original
-#' \pkg{hts} and \pkg{thief} formulation: no mean correction, T as denominator.
+#' covariance matrix of the in-sample residuals (when necessary) according to
+#' the original \pkg{hts} and \pkg{thief} formulation: no mean correction,
+#' T as denominator.
 #' @param corpcor Logical value: \code{TRUE} if \pkg{corpcor} (\enc{Schäfer}{Schafer} et
 #' al., 2017) must be used to shrink the sample covariance matrix according to
-#' \enc{Schäfer}{Schafer} and Strimmer (2005), otherwise the function uses the same
-#' implementation as package \pkg{hts}.
+#' \enc{Schäfer}{Schafer} and Strimmer (2005), otherwise the function uses the
+#' same implementation as package \pkg{hts}.
 #' @param type Approach used to compute the reconciled forecasts: \code{"M"} for
 #' the projection approach with matrix M (\emph{default}), or \code{"S"} for the
-#' structural approach with summing matrix S.
-#' @param keep Return a list object of the reconciled forecasts at all levels.
-#' @param sol Solution technique for the reconciliation problem: either \code{"direct"} (\emph{default}) for the direct
-#' solution or \code{"osqp"} for the numerical solution (solving a linearly constrained quadratic
-#' program using \code{\link[osqp]{solve_osqp}}).
-#' @param nn Logical value: \code{TRUE} if non-negative reconciled forecasts are wished.
-#' @param settings Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}). The default options
-#' are: \code{verbose = FALSE}, \code{eps_abs = 1e-5}, \code{eps_rel = 1e-5},
-#' \code{polish_refine_iter = 100} and \code{polish = TRUE}. For details, see the
-#' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2019).
-#' @param bounds (\code{(k* + m) x 2}) matrix with bounds on the variables: the first column is the lower bound,
-#' and the second column is the upper bound.
+#' structural approach with temporal summing matrix R.
+#' @param keep Return a list object of the reconciled forecasts at all levels
+#' (if keep = "list") or only the reconciled forecasts matrix (if keep = "recf").
+#' @param sol Solution technique for the reconciliation problem: either
+#' \code{"direct"} (\emph{default}) for the closed-form matrix solution, or
+#' \code{"osqp"} for the numerical solution (solving a linearly constrained
+#' quadratic program using \code{\link[osqp]{solve_osqp}}).
+#' @param nn Logical value: \code{TRUE} if non-negative reconciled forecasts
+#' are wished.
+#' @param nn_type "osqp" (default), "KAnn" (only \code{type == "M"}) or "sntz".
+#' @param settings Settings for \pkg{osqp} (object \code{\link[osqp]{osqpSettings}}).
+#' The default options are: \code{verbose = FALSE}, \code{eps_abs = 1e-5},
+#' \code{eps_rel = 1e-5}, \code{polish_refine_iter = 100} and \code{polish = TRUE}.
+#' For details, see the \href{https://osqp.org/}{\pkg{osqp} documentation}
+#' (Stellato et al., 2019).
+#' @param bounds (\mjseqn{(k^\ast + m) \times 2}) matrix with temporal bounds: the
+#' first column is the lower bound, and the second column is the upper bound.
 #'
 #' @details
-#' In case of non-negativity constraints, there are two ways:
-#' \enumerate{
-#'   \item \code{sol = "direct"} and \code{nn = TRUE}: the base forecasts
-#'   will be reconciled at first without non-negativity constraints, then, if negative reconciled
-#'   values are present, the \code{"osqp"} solver is used.
-#'   \item \code{sol = "osqp"} and \code{nn = TRUE}: the base forecasts will be
-#'   reconciled through the \code{"osqp"} solver.
+#' \loadmathjax
+#' Let \mjseqn{m} be the highest available
+#' sampling frequency per seasonal cycle, and denote
+#' \mjseqn{{\cal K} = \left\lbrace k_m, k_{p-1}, \ldots, k_{2}, k_1\right\rbrace}
+#' the \mjseqn{p} factors of \mjseqn{m}, in descending order, where
+#' \mjseqn{k_p=m}, and \mjseqn{k_1=1}. Define \mjseqn{\mathbf{K}}
+#' the \mjseqn{\left( k^\ast \times m\right)} temporal aggregation matrix
+#' converting the high-frequency observations into lower-frequency
+#' (temporally aggregated) ones:
+#' \mjsdeqn{ \mathbf{K} = \left[\begin{array}{c}
+#' \mathbf{1}_m' \cr
+#' \mathbf{I}_{\frac{m}{k_{p-1}}} \otimes \mathbf{1}_{k_{p-1}}' \cr
+#' \vdots \cr
+#' \mathbf{I}_{\frac{m}{k_{2}}} \otimes \mathbf{1}_{k_{2}}' \cr
+#' \end{array}\right].}
+#' Denote
+#' \mjseqn{\mathbf{R} = \left[\begin{array}{c}
+#' \mathbf{K} \cr \mathbf{I}_m
+#' \end{array}\right]} the \mjseqn{\left[(k^\ast+m) \times m \right]}
+#' \emph{temporal summing} matrix, and
+#' \mjseqn{\mathbf{Z}' = \left[ \mathbf{I}_{k^\ast} \; -\mathbf{K} \right]}
+#' the zero constraints kernel matrix.
+#'
+#' Suppose we have the \mjseqn{\left[(k^\ast+m) \times 1\right]} vector
+#' \mjseqn{\widehat{\mathbf{y}}} of unbiased base forecasts for the
+#' \mjseqn{p} temporal aggregates of a single time series \mjseqn{Y}
+#' within a complete time cycle, i.e. at the forecast horizon \mjseqn{h=1}
+#' for the lowest (most aggregated) time frequency. If the base forecasts
+#' have been independently obtained, generally they do not fulfill the
+#' temporal aggregation constraints, i.e. \mjseqn{\mathbf{Z}'
+#' \widehat{\mathbf{y}} \ne \mathbf{0}_{(k^\ast \times 1)}}.
+#' By adapting the general point forecast reconciliation according to
+#' the projection approach (\code{type = "M"}),
+#' the vector of temporally reconciled forecasts
+#' is given by:
+#' \mjsdeqn{\widetilde{\mathbf{y}} = \widehat{\mathbf{y}} -
+#' \mathbf{\Omega}\mathbf{Z}\left(\mathbf{Z}'\mathbf{\Omega}
+#' \mathbf{Z}\right)^{-1}\mathbf{Z}'\widehat{\mathbf{y}},}
+#' where \mjseqn{\mathbf{\Omega}} is a \mjseqn{\left[(k^\ast+m)
+#' \times (k^\ast+m)\right]} p.d. matrix, assumed known. The alternative
+#' equivalent solution (\code{type = "S"}) following the
+#' structural reconciliation approach by Athanasopoulos et al. (2017) is given by:
+#' \mjsdeqn{\widetilde{\mathbf{y}} = \mathbf{R}\left(\mathbf{R}'
+#' \mathbf{\Omega}^{-1}\mathbf{R}\right)^{-1}\mathbf{R}'
+#' \mathbf{\Omega}^{-1}\widehat{\mathbf{y}}.}
+#'
+#' \strong{Bounds on the reconciled forecasts}
+#'
+#' When the reconciliation makes use of the optimization package osqp,
+#' the user may impose bounds on the reconciled forecasts.
+#' The parameter \code{bounds} permits to consider lower (\mjseqn{\mathbf{a}}) and
+#' upper (\mjseqn{\mathbf{b}}) bounds like \mjseqn{\mathbf{a} \leq
+#' \widetilde{\mathbf{y}} \leq \mathbf{b}} such that:
+#' \mjsdeqn{ \begin{array}{c}
+#' a_1 \leq \widetilde{y}_1 \leq b_1 \cr
+#' \dots \cr
+#' a_{(k^\ast + m)} \leq \widetilde{y}_{(k^\ast + m)} \leq b_{(k^\ast + m)} \cr
+#' \end{array} \Rightarrow
+#' \mbox{bounds} = [\mathbf{a} \; \mathbf{b}] =
+#' \left[\begin{array}{cc}
+#' a_1 & b_1 \cr
+#' \vdots & \vdots \cr
+#' a_{(k^\ast + m)} & b_{(k^\ast + m)} \cr
+#' \end{array}\right],}
+#' where \mjseqn{a_i \in [- \infty, + \infty]} and \mjseqn{b_i \in [- \infty, + \infty]}.
+#' If \mjseqn{y_i} is unbounded, the \mjseqn{i}-th row of \code{bounds} would be equal
+#' to \code{c(-Inf, +Inf)}.
+#' Notice that if the \code{bounds} parameter is used, \code{sol = "osqp"} must be used.
+#' This is not true in the case of non-negativity constraints:
+#' \itemize{
+#'   \item \code{sol = "direct"}: first the base forecasts
+#'   are reconciled without non-negativity constraints, then, if negative reconciled
+#'   values are present, the \code{"osqp"} solver is used;
+#'   \item \code{sol = "osqp"}: the base forecasts are
+#'   reconciled using the \code{"osqp"} solver.
+#' }
+#' In this case it is not necessary to build a matrix containing
+#' the bounds, and it is sufficient to set \code{nn = "TRUE"}.
+#'
+#' Non-negative reconciled forecasts may be obtained by setting \code{nn_type} alternatively as:
+#' \itemize{
+#'   \item \code{nn_type = "KAnn"} (Kourentzes and Athanasopoulos, 2021)
+#'   \item \code{nn_type = "sntz"} ("set-negative-to-zero")
+#'   \item \code{nn_type = "osqp"} (Stellato et al., 2020)
 #' }
 #'
 #' @return
 #' If the parameter \code{keep} is equal to \code{"recf"}, then the function
-#' returns only the reconciled forecasts vector, otherwise (\code{keep="all"})
+#' returns only the (\mjseqn{h(k^\ast + m) \times 1}) reconciled forecasts vector, otherwise (\code{keep="all"})
 #' it returns a list that mainly depends on what type of representation (\code{type})
-#' and methodology (\code{sol}) have been used:
-#' \item{\code{recf}}{(\code{h(k* + m) x 1}) reconciled forecasts vector.}
-#' \item{\code{Omega}}{Covariance matrix used for forecast reconciliation.}
+#' and solution technique (\code{sol}) have been used:
+#' \item{\code{recf}}{(\mjseqn{h(k^\ast + m) \times 1}) reconciled forecasts vector, \mjseqn{\widetilde{\mathbf{y}}}.}
+#' \item{\code{Omega}}{Covariance matrix used for forecast reconciliation, \mjseqn{\mathbf{\Omega}}.}
 #' \item{\code{nn_check}}{Number of negative values (if zero, there are no values below zero).}
 #' \item{\code{rec_check}}{Logical value: has the hierarchy been respected?}
-#' \item{\code{M} (\code{type="M"} and \code{type="direct"})}{Projection matrix (projection approach)}
-#' \item{\code{G} (\code{type="S"} and \code{type="direct"})}{Projection matrix (structural approach).}
-#' \item{\code{S} (\code{type="S"} and \code{type="direct"})}{Temporal summing matrix, \strong{R}.}
-#' \item{\code{info} (\code{type="osqp"})}{matrix with some useful indicators (columns)
-#' for each forecast horizon \code{h} (rows): run time (\code{run_time}) number of iteration,
-#' norm of primal residual (\code{pri_res}), status of osqp's solution (\code{status}) and
-#' polish's status (\code{status_polish}).}
+#' \item{\code{varf} (\code{type="direct"})}{(\mjseqn{(k^\ast + m) \times 1}) reconciled forecasts variance vector for \mjseqn{h=1}, \mjseqn{\mbox{diag}(\mathbf{MW}}).}
+#' \item{\code{M} (\code{type="direct"})}{Projection matrix, \mjseqn{\mathbf{M}} (projection approach).}
+#' \item{\code{G} (\code{type="S"} and \code{type="direct"})}{Projection matrix, \mjseqn{\mathbf{G}} (structural approach, \mjseqn{\mathbf{M}=\mathbf{R}\mathbf{G}}).}
+#' \item{\code{S} (\code{type="S"} and \code{type="direct"})}{Temporal summing matrix, \mjseqn{\mathbf{R}}.}
+#' \item{\code{info} (\code{type="osqp"})}{matrix with information in columns
+#' for each forecast horizon \mjseqn{h} (rows): run time (\code{run_time}),
+#' number of iteration (\code{iter}), norm of primal residual (\code{pri_res}),
+#' status of osqp's solution (\code{status}) and polish's status
+#' (\code{status_polish}). It will also be returned with \code{nn = TRUE} if
+#' a solver (see \code{nn_type}) will be use.}
 #'
-#' Only if \code{comb = "bu"}, the function returns \code{recf}, \code{S} and \code{M}.
+#' Only if \code{comb = "bu"}, the function returns \code{recf}, \code{R} and \code{M}.
 #'
 #' @references
 #' Athanasopoulos, G., Hyndman, R.J., Kourentzes, N., Petropoulos, F. (2017),
@@ -122,14 +212,16 @@
 #' Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
 #' Applications in Genetics and Molecular Biology}, 4, 1.
 #'
-#' Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
-#' An Operator Splitting Solver for Quadratic Programs, \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+#' Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2020). OSQP:
+#' An Operator Splitting Solver for Quadratic Programs, \emph{Mathematical Programming Computation},
+#' 12, 4, 637-672.
 #'
 #' Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
 #' Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 #' (October 10, 2019), \href{https://CRAN.R-project.org/package=osqp}{https://CRAN.R-project.org/package=osqp}.
 #'
-#' @keywords reconciliation
+#' @keywords bottom-up
+#' @family reconciliation procedures
 #' @examples
 #' data(FoReco_data)
 #' # top ts base forecasts ([lowest_freq' ...  highest_freq']')
@@ -143,8 +235,8 @@
 #' @import Matrix osqp
 #'
 thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
-                   type = "M", sol = "direct", nn = FALSE, keep = "list",
-                   settings = osqpSettings(), bounds = NULL, Omega = NULL) {
+                   type = "M", sol = "direct", keep = "list", nn = FALSE,
+                   nn_type = "osqp", settings = list(), bounds = NULL, Omega = NULL) {
 
   if(missing(comb)){
     stop("The argument comb is not specified.", call. = FALSE)
@@ -157,15 +249,15 @@ thfrec <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
 
 #' @export
 thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
-                           type = "M", sol = "direct", nn = FALSE, keep = "list",
-                           settings = osqpSettings(), bounds = NULL, Omega) {
+                           type = "M", sol = "direct", keep = "list", nn = FALSE,
+                           nn_type = "osqp", settings = list(), bounds = NULL, Omega) {
   # m condition
   if (missing(m)) {
     stop("The argument m is not specified", call. = FALSE)
   }
   tools <- thf_tools(m)
   kset <- tools$kset
-  m <- max(kset)
+  m <- tools$m
   p <- tools$p
   kt <- tools$kt
   ks <- tools$ks
@@ -182,6 +274,14 @@ thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
   type <- match.arg(type, c("M", "S"))
   keep <- match.arg(keep, c("list", "recf"))
 
+  nn_type <- match.arg(nn_type, c("osqp", "KAnn", "fbpp", "sntz"))
+
+  if(nn){
+    if(nn_type == "fbpp" | nn_type == "KAnn"){
+      type = "M"
+    }
+  }
+
   # base forecasts condition
   if (missing(basef)) {
     stop("The argument basef is not specified", call. = FALSE)
@@ -194,13 +294,13 @@ thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
   # Base Forecasts matrix
   if (comb == "bu" & length(basef) %% m == 0) {
     h <- length(basef) / m
-    Dh <- Dmat(h = h, kset = kset, n = 1)
+    Dh <- Dmat(h = h, m = kset, n = 1)
     BASEF <- matrix(basef, h, m, byrow = T)
   } else if (length(basef) %% kt != 0) {
     stop("basef vector has a number of elements not in line with the frequency of the series", call. = FALSE)
   } else {
     h <- length(basef) / kt
-    Dh <- Dmat(h = h, kset = kset, n = 1)
+    Dh <- Dmat(h = h, m = kset, n = 1)
     BASEF <- matrix(Dh %*% basef, nrow = h, byrow = T)
   }
 
@@ -218,7 +318,7 @@ thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
     }
 
     N <- length(res) / kt
-    DN <- Dmat(h = N, kset = kset, n = 1)
+    DN <- Dmat(h = N, m = kset, n = 1)
     RES <- matrix(DN %*% res, nrow = N, byrow = T)
 
     # singularity problems
@@ -247,11 +347,14 @@ thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
 
   switch(comb,
     bu = {
-      if (NCOL(BASEF) == m) {
-        OUTF <- BASEF %*% t(R)
-      } else {
-        OUTF <- BASEF[, (ks + 1):kt] %*% t(R)
+      if (NCOL(BASEF) != m) {
+        BASEF <- BASEF[, (ks + 1):kt]
       }
+
+      if(nn){
+        BASEF <- BASEF * (BASEF > 0)
+      }
+      OUTF <- BASEF %*% t(R)
 
       outf <- as.vector(t(Dh) %*% as.vector(t(OUTF)))
 
@@ -264,7 +367,7 @@ thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
       ))
       if (keep == "list") {
         return(list(
-          recf = outf, S = R,
+          recf = outf, R = R,
           M = R %*% cbind(matrix(0, m, ks), diag(m))
         ))
       } else {
@@ -334,12 +437,12 @@ thfrec.default <- function(basef, m, comb, res, mse = TRUE, corpcor = FALSE,
   if (type == "S") {
     rec_sol <- recoS(
       basef = BASEF, W = Omega, S = R, sol = sol, nn = nn, keep = keep,
-      settings = settings, b_pos = b_pos, bounds = bounds
+      settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type
     )
   } else {
     rec_sol <- recoM(
-      basef = BASEF, W = Omega, H = Zt, sol = sol, nn = nn, keep = keep,
-      settings = settings, b_pos = b_pos, bounds = bounds
+      basef = BASEF, W = Omega, Ht = Zt, sol = sol, nn = nn, keep = keep, S = R,
+      settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type
     )
   }
 
@@ -403,7 +506,7 @@ thfrec.list <- function(basef, m, ..., Omega){
     stop("You don't need thfrech for h = 1, please use thfrec()", call. = FALSE)
   }
 
-  Dh <- Dmat(h = h, kset = tools$kset, n = 1)
+  Dh <- Dmat(h = h, m = tools$kset, n = 1)
   baseh <- matrix(Dh%*%basef, nrow = h, byrow = T)
 
   if(h != length(Omega) | !is.list(Omega)){

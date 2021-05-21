@@ -88,7 +88,7 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -96,21 +96,21 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -127,7 +127,7 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -136,13 +136,13 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -207,6 +207,7 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
 <span class='op'>}</span>
 
 <span class='co'># OLS</span>
+<span class='co'># two commands in thief...</span>
 <span class='va'>obj_thief</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/thief.html'>thief</a></span><span class='op'>(</span><span class='va'>dataset</span>, m <span class='op'>=</span> <span class='fl'>52</span>, h <span class='op'>=</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='fl'>52</span>, comb <span class='op'>=</span> <span class='st'>"ols"</span>, usemodel <span class='op'>=</span> <span class='st'>"arima"</span><span class='op'>)</span>
 <span class='va'>obj_thief</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://robjhyndman.github.io/thief/reference/tsaggregates.html'>tsaggregates</a></span><span class='op'>(</span><span class='va'>obj_thief</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
 <span class='va'>y_thief</span> <span class='op'>&lt;-</span> <span class='cn'>NULL</span>
@@ -218,7 +219,9 @@ In particular, we take the weekly data of Accident and Emergency demand in the U
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>6</span><span class='op'>:</span><span class='fl'>1</span><span class='op'>)</span> <span class='op'>{</span>
   <span class='va'>y_thief_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>y_thief_ols</span>, <span class='va'>obj_thief_ols</span><span class='op'>[[</span><span class='va'>i</span><span class='op'>]</span><span class='op'>]</span><span class='op'>$</span><span class='va'>mean</span><span class='op'>)</span>
 <span class='op'>}</span>
+<span class='co'># ...with the same results:</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>y_thief_ols</span> <span class='op'>-</span> <span class='va'>y_thief</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+
 <span class='va'>y_FoReco_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='thfrec.html'>thfrec</a></span><span class='op'>(</span><span class='va'>base_vec</span>, <span class='fl'>52</span>, comb <span class='op'>=</span> <span class='st'>"ols"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>y_FoReco_ols</span> <span class='op'>-</span> <span class='va'>y_thief_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 

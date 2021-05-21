@@ -53,7 +53,10 @@
 
 
 <meta property="og:title" content="Cross-sectional reconciliation tools — hts_tools" />
-<meta property="og:description" content="Some useful tools for the cross-sectional reconciliation of linearly and hierarchically constrained time series" />
+<meta property="og:description" content="
+
+Some useful tools for the cross-sectional forecast reconciliation of a
+linearly constrained (e.g., hierarchical/grouped) multiple time series." />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
 
 
@@ -86,7 +89,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -94,21 +97,21 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -125,7 +128,7 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -134,13 +137,13 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -169,7 +172,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Some useful tools for the cross-sectional reconciliation of linearly and hierarchically constrained time series</p>
+    <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
+
+Some useful tools for the cross-sectional forecast reconciliation of a
+linearly constrained (e.g., hierarchical/grouped) multiple time series.</p>
     </div>
 
     <pre class="usage"><span class='fu'>hts_tools</span><span class='op'>(</span><span class='va'>C</span>, h <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, sparse <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
@@ -179,8 +185,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>C</th>
-      <td><p>(<code>na x nb</code>) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.</p></td>
+      <td><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+mapping the bottom level series into the higher level ones.</p></td>
     </tr>
     <tr>
       <th>h</th>
@@ -188,35 +194,55 @@ level series into the higher level ones.</p></td>
     </tr>
     <tr>
       <th>Ut</th>
-      <td><p>(<code>na x n</code>) zero constraints cross-sectional (contemporaneous) kernel
-matrix \(\textbf{U}'\textbf{Y} = \mathbf{0}_{\left[n_a \times (k^*+m)\right]}\)
-spanning the null space valid for the reconciled forecasts. It can be used instead of
-parameter <code>C</code>, but needs <code>nb</code> (n = na + nb).</p></td>
+      <td><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
+\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
+for the reconciled forecasts. It can be used instead of parameter
+<code>C</code>, but <code>nb</code> is needed if
+\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
+admits a structural representation, \(\mathbf{U}'\) has dimension
+(\(n_a \times n\)).</p></td>
     </tr>
     <tr>
       <th>nb</th>
-      <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code> is not used.</p></td>
+      <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code>
+and <code>Ut</code> are not used.</p></td>
     </tr>
     <tr>
       <th>sparse</th>
-      <td><p>Option to return sparse object (<em>default</em> is <code>TRUE</code>).</p></td>
+      <td><p>Option to return sparse matrices (<em>default</em> is <code>TRUE</code>).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of five elements:</p>
-<dt><code>S</code></dt><dd><p>(<code>n x nb</code>) cross-sectional (contemporaneous) summing matrix.</p></dd>
-<dt><code>Ut</code></dt><dd><p>(<code>na x n</code>) zero constraints cross-sectional (contemporaneous)
-kernel matrix.</p></dd>
-<dt><code>n</code></dt><dd><p>Number of variables <code>na + nb</code>.</p></dd>
+<dt><code>C</code></dt><dd><p>(\(n \times n_b\)) cross-sectional (contemporaneous) aggregation matrix.</p></dd>
+<dt><code>S</code></dt><dd><p>(\(n \times n_b\)) cross-sectional (contemporaneous) summing matrix,
+\(\mathbf{S} = \left[\begin{array}{c} \mathbf{C} \cr \mathbf{I}_{n_b}\end{array}\right].\)</p></dd>
+<dt><code>Ut</code></dt><dd><p>(\(n_a \times n\)) zero constraints cross-sectional (contemporaneous)
+kernel matrix. If the hierarchy admits a structural representation \(\mathbf{U}' = [\mathbf{I} \ -\mathbf{C}]\)</p></dd>
+<dt><code>n</code></dt><dd><p>Number of variables \(n_a + n_b\).</p></dd>
 <dt><code>na</code></dt><dd><p>Number of upper level variables.</p></dd>
 <dt><code>nb</code></dt><dd><p>Number of bottom level variables.</p></dd>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other utilities: 
+<code><a href='Cmatrix.html'>Cmatrix</a>()</code>,
+<code><a href='FoReco2ts.html'>FoReco2ts</a>()</code>,
+<code><a href='commat.html'>commat</a>()</code>,
+<code><a href='ctf_tools.html'>ctf_tools</a>()</code>,
+<code><a href='oct_bounds.html'>oct_bounds</a>()</code>,
+<code><a href='score_index.html'>score_index</a>()</code>,
+<code><a href='shrink_estim.html'>shrink_estim</a>()</code>,
+<code><a href='srref.html'>srref</a>()</code>,
+<code><a href='thf_tools.html'>thf_tools</a>()</code>,
+<code><a href='ut2c.html'>ut2c</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># One level hierarchy (na = 1, nb = 2)</span>
 <span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>hts_tools</span><span class='op'>(</span>C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

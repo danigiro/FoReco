@@ -37,6 +37,7 @@
 #' }
 #'
 #' # OLS
+#' # two commands in thief...
 #' obj_thief <- thief(dataset, m = 52, h = 2 * 52, comb = "ols", usemodel = "arima")
 #' obj_thief <- tsaggregates(obj_thief$mean)
 #' y_thief <- NULL
@@ -48,7 +49,9 @@
 #' for (i in 6:1) {
 #'   y_thief_ols <- c(y_thief_ols, obj_thief_ols[[i]]$mean)
 #' }
+#' # ...with the same results:
 #' sum(abs(y_thief_ols - y_thief) > 1e-10)
+#'
 #' y_FoReco_ols <- thfrec(base_vec, 52, comb = "ols")$recf
 #' sum(abs(y_FoReco_ols - y_thief_ols) > 1e-10)
 #'

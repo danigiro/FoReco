@@ -85,7 +85,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -93,21 +93,21 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -124,7 +124,7 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -133,13 +133,13 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -166,33 +166,41 @@
       <small>Source: <a href='https://github.com/daniGiro/FoReco/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="foreco-012" class="section level1">
-<h1 class="page-header" data-toc-text="0.1.2">
-<a href="#foreco-012" class="anchor"></a>FoReco 0.1.2<small> Unreleased </small>
+    <div id="foreco-020" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.0">
+<a href="#foreco-020" class="anchor"></a>FoReco 0.2.0<small> Unreleased </small>
 </h1>
-<p><strong>Note</strong>: <em>Documentation for this version is still under development</em></p>
 <div id="major-changes" class="section level5">
 <h5 class="hasAnchor">
 <a href="#major-changes" class="anchor"></a>Major changes</h5>
 <ul>
-<li>Add the possibility to use part of factors of <em>m</em> (max. order of temporal aggregation)</li>
-<li>Add the possibility for <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> to introduce a list of <em>h</em> covariance matrices in the parameters <code>W</code> and <code>Omega</code>, where <em>h</em> stands for the forecast horizon (note that for <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> this is the forecast horizon of the entire cycle)</li>
+<li>It’s possible to use a subset of factors of <em>m</em> (max. order of temporal aggregation);</li>
+<li>Added the possibility for <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> to introduce a list of <em>h</em> covariance matrices in the parameters <code>W</code> and <code>Omega</code>, where <em>h</em> stands for the forecast horizon (note that for <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> this is the forecast horizon of the entire cycle);</li>
+<li>Param <code>Sstruc</code> is no more avaible in <code><a href="../reference/octrec.html">octrec()</a></code> and <code><a href="../reference/ctf_tools.html">ctf_tools()</a></code>. FoReco uses a fast algorithm to compute <strong>Scheck</strong>, so no external input is needed;</li>
+<li>Modified output of <code><a href="../reference/ctf_tools.html">ctf_tools()</a></code> (added <code>Ccheck</code>, <code>Htcheck</code>, <code>Scheck</code>, removed <code>Cstruc</code>, <code>Sstruc</code>), <code><a href="../reference/hts_tools.html">hts_tools()</a></code> (added <code>C</code>) and <code><a href="../reference/thf_tools.html">thf_tools()</a></code> (added <code>m</code>);</li>
+<li>Added two new not negative reconciliation techniques (“<strong>KAnn</strong>” and “<strong>sntz</strong>”) with a new parameter (<code>nn_type</code>) in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code>;</li>
+<li>Added the top-down reconciliation function <code><a href="../reference/tdrec.html">tdrec()</a></code>;</li>
+<li>Added the level conditional forecast reconciliation (with and without not-negative constraints) for genuine hierarchical/grouped time series <code>levrec()</code> (cross-sectional, temporal and cross-temporal).</li>
 </ul>
 </div>
 <div id="minor-changes" class="section level5">
 <h5 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor changes</h5>
 <ul>
-<li>Now in <code><a href="../reference/octrec.html">octrec()</a></code> it is also possible to introduce the <strong>Ω</strong> covariance matrix variant through the <code>Omega</code> parameter and not only the <strong>W</strong> variant with the<code>W</code> parameter</li>
-<li>Renew <code><a href="../reference/tcsrec.html">tcsrec()</a></code>, <code><a href="../reference/cstrec.html">cstrec()</a></code> and <code><a href="../reference/iterec.html">iterec()</a></code>. Also in the iterec function the <code>maxit</code> parameter has been replaced by <code>itmax</code>, however for the moment <code>maxit</code> is still supported</li>
+<li>Now in <code><a href="../reference/octrec.html">octrec()</a></code> it is also possible to introduce the <strong>Ω</strong> covariance matrix variant through the <code>Omega</code> parameter and not only the <strong>W</strong> variant with the <code>W</code> parameter;</li>
+<li>Updated <code><a href="../reference/tcsrec.html">tcsrec()</a></code>, <code><a href="../reference/cstrec.html">cstrec()</a></code> and <code><a href="../reference/iterec.html">iterec()</a></code>. In the iterec function the <code>maxit</code> parameter has been replaced by <code>itmax</code>, however for the moment <code>maxit</code> is still supported;</li>
+<li>Now FoReco removes null rows from the cross-sectional aggregation matrix <strong>C</strong> and it warns the user if the balanced version of an unbalanced hierarchy is considering duplicated variables;</li>
+<li>Redesigned the console output and added a new convergence norm as <em>default</em> for <code><a href="../reference/iterec.html">iterec()</a></code> (<code>norm</code> parameter).</li>
 </ul>
 </div>
 <div id="experimental" class="section level5">
 <h5 class="hasAnchor">
 <a href="#experimental" class="anchor"></a>Experimental</h5>
 <ul>
-<li>Add the possibility to introduce constraints through the <code>bounds</code> param in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code>.</li>
-<li>Add a (hidden) function <code>oct_bounds()</code> to organize the bounds on a singular dimension (i.e. only cross-sectional or only temporal) in a cross-temporal framework</li>
+<li>Add the possibility to introduce constraints through the <code>bounds</code> param in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code>;</li>
+<li>Add a function <code><a href="../reference/oct_bounds.html">oct_bounds()</a></code> to organize the bounds on a specific dimension (i.e. only cross-sectional or only temporal) in a cross-temporal framework;</li>
+<li>Added <code><a href="../reference/ut2c.html">ut2c()</a></code> and <code><a href="../reference/srref.html">srref()</a></code> to develop a cross-sectional structural representation starting from a zero constraints kernel matrix;</li>
+<li>Added in <code><a href="../reference/score_index.html">score_index()</a></code> the calculation of multiple forecast horizons index (like 1:6) and multiple cross-sectional levels for a forecasting experiment.</li>
 </ul>
 </div>
 </div>
@@ -200,9 +208,9 @@
 <h1 class="page-header" data-toc-text="0.1.1">
 <a href="#foreco-011" class="anchor"></a>FoReco 0.1.1<small> 2020-10-17 </small>
 </h1>
-<p>This is a small release focusing on fixing some bugs and the documentation</p>
+<p>Minore release, fixing some bugs and the documentation</p>
 <ul>
-<li>Fixed a bug in <code><a href="../reference/iterec.html">iterec()</a></code> when calculating incoherence</li>
+<li>Fixed a bug in <code><a href="../reference/iterec.html">iterec()</a></code> when calculating the incoherence</li>
 <li>Fixed documentation</li>
 <li>Changed the contact mail (now it’s <a href="mailto:daniele.girolimetto@phd.unipd.it" class="email">daniele.girolimetto@phd.unipd.it</a>)</li>
 <li>Corrected the second section of the vignette “<code>Average relative accuracy indices</code>”</li>

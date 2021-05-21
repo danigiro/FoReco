@@ -29,7 +29,21 @@ Hyndman, R. J., Lee, A., Wang, E., and Wickramasuriya, S. (2020).
 hts: Hierarchical and Grouped Time Series, \emph{R package version 6.0.1},
 \href{https://CRAN.R-project.org/package=hts}{https://CRAN.R-project.org/package=hts}.
 }
+\seealso{
+Other utilities: 
+\code{\link{Cmatrix}()},
+\code{\link{FoReco2ts}()},
+\code{\link{commat}()},
+\code{\link{ctf_tools}()},
+\code{\link{hts_tools}()},
+\code{\link{oct_bounds}()},
+\code{\link{score_index}()},
+\code{\link{srref}()},
+\code{\link{thf_tools}()},
+\code{\link{ut2c}()}
+}
 \author{
 This function is a modified version of the \code{shrink_estim}() hidden function of \pkg{hts}.
 }
+\concept{utilities}
 \keyword{utilities}

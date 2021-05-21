@@ -45,28 +45,33 @@ for (i in 1:n) {
 }
 colnames(res) <- colnames(data)
 
+## Comparisons
 # ols
+# two commands in hts...
 Y_hts_forecast <- forecast(htseg1, method = "comb", fmethod = "arima", weights = "ols")
 Y_hts_ols <- combinef(BASE, nodes = get_nodes(htseg1), keep = "all")
-sum((allts(Y_hts_forecast) - Y_hts_ols) > 1e-10)
+# ...with the same results:
+sum(abs(allts(Y_hts_forecast) - Y_hts_ols) > 1e-10)
+
 Y_FoReco_ols <- htsrec(BASE, C = C, comb = "ols")$recf
-sum((Y_hts_ols - Y_FoReco_ols) > 1e-10)
+sum(abs(Y_hts_ols - Y_FoReco_ols) > 1e-10)
 
 # struc
 w <- 1 / apply(smatrix(htseg1), 1, sum)
 Y_hts_struc <- combinef(BASE, nodes = get_nodes(htseg1), weights = w, keep = "all")
 Y_FoReco_struc <- htsrec(BASE, C = C, comb = "struc")$recf
-sum((Y_hts_struc - Y_FoReco_struc) > 1e-10)
+sum(abs(Y_hts_struc - Y_FoReco_struc) > 1e-10)
 
 # shr
-Y_hts_shr <- MinT(BASE, nodes = get_nodes(htseg1), keep = "all", covariance = "shr", residual = res)
+Y_hts_shr <- MinT(BASE, nodes = get_nodes(htseg1), keep = "all",
+                  covariance = "shr", residual = res)
 Y_FoReco_shr <- htsrec(BASE, C = C, comb = "shr", res = res)$recf
-sum((Y_hts_shr - Y_FoReco_shr) > 1e-10)
+sum(abs(Y_hts_shr - Y_FoReco_shr) > 1e-10)
 
-# sam - hts error "MinT needs covariance matrix to be positive definite"
-#       The covariance matrix is non-singular, but its condition number is very low,
-#       and hts considers it as non-invertible
-Y_hts_sam <- MinT(BASE, nodes = get_nodes(htseg1), keep = "all", covariance = "sam", residual = res)
+# sam - hts error "MinT needs covariance matrix to be positive definite."
+#       The covariance matrix is ill-conditioned, hts considers it as non-invertible
+Y_hts_sam <- MinT(BASE, nodes = get_nodes(htseg1), keep = "all",
+                  covariance = "sam", residual = res)
 Y_FoReco_sam <- htsrec(BASE, C = C, comb = "sam", res = res)$recf
 # sum((Y_hts_sam-Y_FoReco_sam)>1e-10)
 
@@ -77,7 +82,8 @@ nb <- NCOL(htseg2$bts)
 na <- n-nb
 C <- smatrix(htseg2)[1:na, ]
 
-## In FoReco, forecasts must be obtained externally
+## Computation of the base forecasts
+# using the auto.arima() function of the package forecast (loaded by hts)
 # List containing the base forecasts
 # Forecast horizon: 10
 base <- list()
@@ -99,11 +105,9 @@ for (i in 1:n) {
 }
 colnames(res) <- colnames(data)
 
-## Comparison
+## Comparisons
 # ols
-Y_hts_forecast <- forecast(htseg2, method = "comb", fmethod = "arima", weights = "ols")
 Y_hts_ols <- combinef(BASE, nodes = get_nodes(htseg2), keep = "all")
-sum((allts(Y_hts_forecast) - Y_hts_ols) > 1e-10)
 Y_FoReco_ols <- htsrec(BASE, C = C, comb = "ols")$recf
 sum(abs(Y_hts_ols - Y_FoReco_ols) > 1e-10)
 

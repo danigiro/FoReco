@@ -4,47 +4,63 @@
 \alias{cstrec}
 \title{Heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation}
 \usage{
-cstrec(basef, thf_comb, hts_comb, res, ...)
+cstrec(basef, hts_comb, thf_comb, res, ...)
 }
 \arguments{
-\item{basef}{(\code{n x h(k* + m)}) matrix of base forecasts to be reconciled;
-\code{n} is the total number of variables, \code{m} is the highest frequency,
-\code{k*} is the sum of (\code{p-1}) factors of \code{m}, excluding \code{m},
-and \code{h} is the forecast horizon. Each row identifies, a time series, and the forecasts
-are ordered as [lowest_freq' ...  highest_freq']'.}
+\item{basef}{(\mjseqn{n \times h(k^\ast+m)}) matrix of base forecasts to be
+reconciled, \mjseqn{\widehat{\mathbf{Y}}}; \mjseqn{n} is the total number of variables,
+\mjseqn{m} is the highest time frequency, \mjseqn{k^\ast} is the sum of (a
+subset of) (\mjseqn{p-1}) factors of \mjseqn{m}, excluding \mjseqn{m}, and
+\mjseqn{h} is the forecast horizon for the lowest frequency time series.
+Each row identifies a time series, and the forecasts are ordered as
+[lowest_freq' ...  highest_freq']'.}
 
-\item{hts_comb, thf_comb}{Type of covariance matrix (respectively (\code{n x n}) and
-(\code{(k* + m) x (k* + m)})) to be used in the cross-sectional and temporal reconciliation,
-see more in \code{comb} param of \code{\link[FoReco]{htsrec}} and \code{\link[FoReco]{thfrec}}.}
+\item{hts_comb, thf_comb}{Type of covariance matrix (respectively
+(\mjseqn{n \times n}) and (\mjseqn{(k^\ast + m) \times (k^\ast + m)})) to
+be used in the cross-sectional and temporal reconciliation, see more in
+\code{comb} param of \code{\link[FoReco]{htsrec}()} and
+\code{\link[FoReco]{thfrec}()}.}
 
-\item{res}{(\code{n x N(k* + m)}) matrix containing the residuals at all the
-temporal frequencies, ordered [lowest_freq' ...  highest_freq']' (columns) for
-each variable (row), needed to estimate the covariance matrix when \code{hts_comb =}
-\code{\{"wls",} \code{"shr",} \code{"sam"\}} and/or \code{hts_comb =} \code{\{"wlsv",}
-\code{"wlsh",} \code{"acov",} \code{"strar1",} \code{"sar1",} \code{"har1",}
-\code{"shr",} \code{"sam"\}}. The rows must be in the same order as \code{basef}.}
+\item{res}{(\mjseqn{n \times N(k^\ast + m)}) matrix containing the residuals
+at all the temporal frequencies ordered as [lowest_freq' ...  highest_freq']'
+(columns) for each variable (row), needed to estimate the covariance matrix
+when \code{hts_comb =} \code{\{"wls",} \code{"shr",} \code{"sam"\}} and/or
+\code{hts_comb =} \code{\{"wlsv",} \code{"wlsh",} \code{"acov",}
+\code{"strar1",} \code{"sar1",} \code{"har1",} \code{"shr",} \code{"sam"\}}.
+The rows must be in the same order as \code{basef}.}
 
-\item{...}{any other options useful for \code{\link[FoReco]{htsrec}} and
-\code{\link[FoReco]{thfrec}}, e.g. \code{m}, \code{C} (or \code{Ut} and \code{nb}),
-\code{nn} (for non negativity reconciliation only at first step), ...}
+\item{...}{any other options useful for \code{\link[FoReco]{htsrec}()} and
+\code{\link[FoReco]{thfrec}()}, e.g. \code{m}, \code{C} (or \code{Ut} and
+\code{nb}), \code{nn} (for non-negative reconciliation only at the first step),
+\code{mse}, \code{corpcor}, \code{type}, \code{sol}, \code{settings},
+\code{W}, \code{Omega},...}
 }
 \value{
 The function returns a list with two elements:
-\item{\code{recf}}{(\code{n x h(k* + m)}) reconciled forecasts matrix.}
-\item{\code{M}}{Projection matrix (projection approach).}
+\item{\code{recf}}{(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix, \mjseqn{\widetilde{\textbf{Y}}}.}
+\item{\code{M}}{Matrix which transforms the uni-dimensional reconciled forecasts of step 1 (projection approach) .}
 }
 \description{
-The order of application of the two reconciliation steps proposed by Kourentzes and Athanasopoulos (2019),
-implemented in the function \code{\link[FoReco]{tcsrec}}, may be inverted. The function
-\code{\link[FoReco]{cstrec}} performs cross-sectional reconciliation (\code{\link[FoReco]{htsrec}})
-first, then temporal reconciliation (\code{\link[FoReco]{thfrec}}), and finally applies the
-average of the projection matrices obtained in the second step to the one dimensional reconciled
-values obtained in the first step.
+\loadmathjax
+Cross-temporal forecast reconciliation according to the heuristic procedure by
+Kourentzes and Athanasopoulos (2019), where the order of application of the
+two reconciliation steps (temporal-first-then-cross-sectional, as in the function
+\code{\link[FoReco]{tcsrec}()}), is inverted. The function
+\code{\link[FoReco]{cstrec}()} performs cross-sectional reconciliation
+(\code{\link[FoReco]{htsrec}()}) first, then temporal reconciliation
+(\code{\link[FoReco]{thfrec}()}), and finally applies the average of the
+projection matrices obtained in the second step to the one dimensional
+reconciled values obtained in the first step.
+}
+\details{
+\strong{Warning},
+the two-step heuristic reconciliation allows non negativity constraints only in the first step.
+This means that it is not guaranteed the non-negativity of the final reconciled values.
 }
 \examples{
 data(FoReco_data)
-obj <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C, thf_comb = "acov",
-              hts_comb = "shr", res = FoReco_data$res)
+obj <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C,
+              hts_comb = "shr", thf_comb = "acov", res = FoReco_data$res)
 
 }
 \references{
@@ -63,12 +79,24 @@ package version 1.6.9 (April 1, 2017), \href{https://CRAN.R-project.org/package=
 Matrix Estimation and Implications for Functional Genomics, \emph{Statistical
 Applications in Genetics and Molecular Biology}, 4, 1.
 
-Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs, \href{https://arxiv.org/abs/1711.08013}{arXiv:1711.08013}.
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2020). OSQP:
+An Operator Splitting Solver for Quadratic Programs, \emph{Mathematical Programming Computation},
+12, 4, 637-672.
 
 Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
 Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 (October 10, 2019), \href{https://CRAN.R-project.org/package=osqp}{https://CRAN.R-project.org/package=osqp}.
 }
+\seealso{
+Other reconciliation procedures: 
+\code{\link{ctbu}()},
+\code{\link{htsrec}()},
+\code{\link{iterec}()},
+\code{\link{lccrec}()},
+\code{\link{octrec}()},
+\code{\link{tcsrec}()},
+\code{\link{tdrec}()},
+\code{\link{thfrec}()}
+}
+\concept{reconciliation procedures}
 \keyword{heuristic}
-\keyword{reconciliation}

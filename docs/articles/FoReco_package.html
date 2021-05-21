@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -48,21 +48,21 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -79,7 +79,7 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -88,13 +88,13 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -114,11 +114,13 @@
 
       
 
-      </header><script src="FoReco_package_files/header-attrs-2.4/header-attrs.js"></script><div class="row">
+      </header><script src="FoReco_package_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using the <code>FoReco</code> package for cross-sectional, temporal and cross-temporal point forecast reconciliation</h1>
+                        <h4 class="author">Daniele Girolimetto</h4>
             
+            <h4 class="date">2021-05-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/master/vignettes/FoReco_package.Rmd"><code>vignettes/FoReco_package.Rmd</code></a></small>
       <div class="hidden name"><code>FoReco_package.Rmd</code></div>
@@ -128,7 +130,7 @@
     
     
 <p>The <strong>FoReco</strong> (<strong>Fo</strong>recast <strong>Reco</strong>nciliation) package is designed for point forecast reconciliation, a <strong>post-forecasting</strong> process aimed to improve the quality of the base forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.</p>
-<p>It offers classical (bottom-up), optimal and heuristic combination forecast reconciliation procedures by exploiting cross-sectional, temporal, and cross-temporal relationships linking the time series.</p>
+<p>It offers classical (bottom-up and top-down), and modern (optimal and heuristic combination) forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal linearly constrained time series.</p>
 <div id="what-are-the-most-important-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#what-are-the-most-important-functions" class="anchor"></a>What are the most important functions?</h3>
@@ -139,25 +141,31 @@
 <li>
 <code><a href="../reference/thfrec.html">thfrec()</a></code>: forecast reconciliation for a single time series through temporal hierarchies.</li>
 <li>
+<code><a href="../reference/lccrec.html">lccrec()</a></code>: level conditional forecast reconciliation for genuine hierarchical/grouped time series.</li>
+<li>
+<code><a href="../reference/tdrec.html">tdrec()</a></code>: top-down (cross-sectional, temporal, cross-temporal) forecast reconciliation for genuine hierarchical/grouped time series.</li>
+<li>
+<code><a href="../reference/ctbu.html">ctbu()</a></code>: bottom-up cross-temporal forecast reconciliation.</li>
+<li>
 <code><a href="../reference/tcsrec.html">tcsrec()</a></code>: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.</li>
 <li>
 <code><a href="../reference/cstrec.html">cstrec()</a></code>: heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.</li>
 <li>
 <code><a href="../reference/iterec.html">iterec()</a></code>: heuristic iterative cross-temporal forecast reconciliation.</li>
 <li>
-<code><a href="../reference/octrec.html">octrec()</a></code>: optimal cross-temporal forecast reconciliation.</li>
+<code><a href="../reference/octrec.html">octrec()</a></code>: optimal combination cross-temporal forecast reconciliation.</li>
 </ul>
 </div>
 <div id="installation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h3>
 <p>You can install the <strong>stable</strong> version on <a href="https://cran.r-project.org/">R CRAN</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'FoReco'</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'FoReco'</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>You can also install the <strong>development</strong> version from <a href="https://github.com/daniGiro/FoReco">Github</a></p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"daniGiro/FoReco"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"daniGiro/FoReco"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="example-cross-temporal-data" class="section level3">
 <h3 class="hasAnchor">
@@ -172,8 +180,8 @@ Cross-sectional hierarchy
 <h4 class="hasAnchor">
 <a href="#simulation" class="anchor"></a>Simulation</h4>
 <p>In the following script we simulate five independent monthly bottom time series, each of length 180 (15 complete years of monthly data).</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco">FoReco</a></span><span class="op">)</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco">FoReco</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/">forecast</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">sarima</span><span class="op">)</span>
 <span class="va">values</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
@@ -219,43 +227,43 @@ Cross-sectional hierarchy
 <span class="va">upper</span> <span class="op">&lt;-</span> <span class="va">bottom</span><span class="op">%*%</span><span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">C</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">upper</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>
 <span class="va">values</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="va">upper</span>, <span class="va">bottom</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span></code></pre></div>
 <p>More precisely, AA is simulated from an AR(1) process, AB from an MA(1), BA from an ARIMA(0,1,1)(0,1,1), BB from an ARIMA(2,1,0), and C from an ARIMA(2,0,0)(0,1,1). The higher levels series in the hierarchy (T,A,B) are obtained by simple summation of the five bottom time series.</p>
 <p><img src="../man/figures/mts.png" width="500px" style="display: block; margin: auto;"></p>
 <p>Then we compute the temporally aggregated series at annual <span class="math inline">\((k = 12)\)</span>, semi-annual <span class="math inline">\((k = 6)\)</span>, four-monthly <span class="math inline">\((k = 4)\)</span>, quarterly <span class="math inline">\((k = 3)\)</span>, and bi-monthly <span class="math inline">\((k = 2)\)</span> frequencies.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="co"># BI-MONTHLY SERIES</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># BI-MONTHLY SERIES</span>
 <span class="va">values</span><span class="op">$</span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span>, <span class="fl">2</span>,
                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">x</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                frequency <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></pre></div>
+                frequency <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></code></pre></div>
 <p><img src="../man/figures/mts2.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co"># QUARTERLY SERIES</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># QUARTERLY SERIES</span>
 <span class="va">values</span><span class="op">$</span><span class="va">k3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span>, <span class="fl">2</span>,
                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">x</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                frequency <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></pre></div>
+                frequency <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <p><img src="../man/figures/mts3.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="co"># FOUR-MONTHLY SERIES</span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># FOUR-MONTHLY SERIES</span>
 <span class="va">values</span><span class="op">$</span><span class="va">k4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span>, <span class="fl">2</span>,
                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">x</span>, nrow <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                frequency <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></pre></div>
+                frequency <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <p><img src="../man/figures/mts4.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="co"># SEMI-ANNUAL SERIES</span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># SEMI-ANNUAL SERIES</span>
 <span class="va">values</span><span class="op">$</span><span class="va">k6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span>, <span class="fl">2</span>,
                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">x</span>, nrow <span class="op">=</span> <span class="fl">6</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                frequency <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></pre></div>
+                frequency <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="../man/figures/mts6.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="co"># ANNUAL SERIES</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># ANNUAL SERIES</span>
 <span class="va">values</span><span class="op">$</span><span class="va">k12</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span>, <span class="fl">2</span>,
                        <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="va">x</span>, nrow <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-                 frequency <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
+                 frequency <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="../man/figures/mts12.png" width="500px" style="display: block; margin: auto;"></p>
 <p>The first 14 years of each simulated series are used as training set, and the last year as test set. The forecasts are obtained using the <code>auto.arima</code> function of the <code>forecast</code> package (Hyndman et al., 2020).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="co"># MONTHLY FORECASTS</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># MONTHLY FORECASTS</span>
 <span class="va">base</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">12</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">168</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -268,11 +276,11 @@ Cross-sectional hierarchy
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k1</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
-<span class="va">test</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span>, <span class="op">]</span></pre></div>
+<span class="va">test</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
 <p>The following plots show the actual values and the forecasts for the test year at any temporal aggregation level.</p>
 <p><img src="../man/figures/mts_base.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="co"># BI-MONTHLY FORECASTS</span>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># BI-MONTHLY FORECASTS</span>
 <span class="va">base</span><span class="op">$</span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">6</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k2</span><span class="op">)</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">84</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k2</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k2</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -285,10 +293,10 @@ Cross-sectional hierarchy
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">k2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k2</span>, frequency <span class="op">=</span> <span class="fl">6</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
-<span class="va">test</span><span class="op">$</span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k2</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">84</span><span class="op">)</span>, <span class="op">]</span></pre></div>
+<span class="va">test</span><span class="op">$</span><span class="va">k2</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k2</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">84</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
 <p><img src="../man/figures/mts2_base.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="co"># QUARTERLY FORECASTS</span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># QUARTERLY FORECASTS</span>
 <span class="va">base</span><span class="op">$</span><span class="va">k3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">4</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k3</span><span class="op">)</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">56</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k3</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k3</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -301,10 +309,10 @@ Cross-sectional hierarchy
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">k3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k3</span>, frequency <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
-<span class="va">test</span><span class="op">$</span><span class="va">k3</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k3</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">56</span><span class="op">)</span>, <span class="op">]</span></pre></div>
+<span class="va">test</span><span class="op">$</span><span class="va">k3</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k3</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">56</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
 <p><img src="../man/figures/mts3_base.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="co"># FOUR-MONTHLY FORECASTS</span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># FOUR-MONTHLY FORECASTS</span>
 <span class="va">base</span><span class="op">$</span><span class="va">k4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">3</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k4</span><span class="op">)</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">42</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k4</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k4</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -317,10 +325,10 @@ Cross-sectional hierarchy
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">k4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k4</span>, frequency <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k4</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
-<span class="va">test</span><span class="op">$</span><span class="va">k4</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k4</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">42</span><span class="op">)</span>, <span class="op">]</span></pre></div>
+<span class="va">test</span><span class="op">$</span><span class="va">k4</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k4</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">42</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
 <p><img src="../man/figures/mts4_base.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="co"># SEMI-ANNUAL FORECASTS</span>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># SEMI-ANNUAL FORECASTS</span>
 <span class="va">base</span><span class="op">$</span><span class="va">k6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">2</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k6</span><span class="op">)</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">28</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k6</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k6</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -333,10 +341,10 @@ Cross-sectional hierarchy
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">k6</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k6</span>, frequency <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k6</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
-<span class="va">test</span><span class="op">$</span><span class="va">k6</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k6</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">28</span><span class="op">)</span>, <span class="op">]</span></pre></div>
+<span class="va">test</span><span class="op">$</span><span class="va">k6</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k6</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">28</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
 <p><img src="../man/figures/mts6_base.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="co"># ANNUAL FORECASTS</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># ANNUAL FORECASTS</span>
 <span class="va">base</span><span class="op">$</span><span class="va">k12</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">1</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k12</span><span class="op">)</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k12</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">14</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k12</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k12</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -349,10 +357,10 @@ Cross-sectional hierarchy
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">k12</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">residuals</span><span class="op">$</span><span class="va">k12</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html">ts</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k12</span>, frequency <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k12</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
-<span class="va">test</span><span class="op">$</span><span class="va">k12</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k12</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">)</span>, <span class="op">]</span></pre></div>
+<span class="va">test</span><span class="op">$</span><span class="va">k12</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k12</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
 <p><img src="../man/figures/mts12_base.png" width="500px" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">base</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">base</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">test</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
@@ -385,7 +393,7 @@ Cross-sectional hierarchy
                            test <span class="op">=</span> <span class="va">test</span>,
                            res <span class="op">=</span> <span class="va">res</span>,
                            C <span class="op">=</span> <span class="va">C</span>,
-                           obs <span class="op">=</span> <span class="va">obs</span><span class="op">)</span></pre></div>
+                           obs <span class="op">=</span> <span class="va">obs</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="reconciliation" class="section level4">
 <h4 class="hasAnchor">
@@ -393,8 +401,8 @@ Cross-sectional hierarchy
 <ul>
 <li>Cross-sectional reconciliation for all temporal aggregation levels (monthly, bi-monthly, …, annual) using <em>MinT-shr</em> (Wickramasuriya et al., 2019)</li>
 </ul>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">12</span><span class="op">)</span>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">12</span><span class="op">)</span>
 <span class="va">hts_recf_list</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
 <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">K</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
   <span class="co"># base forecasts</span>
@@ -412,12 +420,12 @@ Cross-sectional hierarchy
 <span class="va">hts_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">hts_recf_list</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">hts_recf_list</span><span class="op">)</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">hts_recf</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"k"</span>, 
                             <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="va">K</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">hts_recf_list</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">hts_recf_list</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, <span class="va">NROW</span><span class="op">)</span><span class="op">)</span>,
-                            <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">hts_recf</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></pre></div>
+                            <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">hts_recf</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
 <ul>
 <li>Forecast reconciliation through temporal hierarchies for all time series using <em>series-acov</em> (Nystrup et al., 2020)</li>
 </ul>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NROW</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>
 <span class="va">thf_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">n</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">NCOL</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">thf_recf</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html">dimnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>
 <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span><span class="op">{</span>
@@ -427,53 +435,51 @@ Cross-sectional hierarchy
   <span class="va">tsres</span> <span class="op">&lt;-</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>
   <span class="va">thf_recf</span><span class="op">[</span><span class="va">i</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thfrec.html">thfrec</a></span><span class="op">(</span><span class="va">tsbase</span>, m <span class="op">=</span> <span class="fl">12</span>, comb <span class="op">=</span> <span class="st">"acov"</span>,
                          res <span class="op">=</span> <span class="va">tsres</span>, keep <span class="op">=</span> <span class="st">"recf"</span><span class="op">)</span>
-<span class="op">}</span></pre></div>
+<span class="op">}</span></code></pre></div>
 <ul>
 <li>Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation using <em>t-wls + cs-shr</em> (Kourentzes and Athanasopoulos, 2019)</li>
 </ul>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="va">tcs_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tcsrec.html">tcsrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">tcs_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tcsrec.html">tcsrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
                    thf_comb <span class="op">=</span> <span class="st">"wlsv"</span>, hts_comb <span class="op">=</span> <span class="st">"shr"</span>,
-                   res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span></pre></div>
+                   res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span></code></pre></div>
 <ul>
 <li>Heuristic first-cross-sectional-then-temporal cross-temporal reconciliation using <em>t-acov + cs-shr</em> (Di Fonzo and Girolimetto, 2020)</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="va">cst_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cstrec.html">cstrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cst_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cstrec.html">cstrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
                    thf_comb <span class="op">=</span> <span class="st">"acov"</span>, hts_comb <span class="op">=</span> <span class="st">"shr"</span>,
-                   res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span></pre></div>
+                   res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span></code></pre></div>
 <ul>
 <li>Iterative cross-temporal reconciliation (Di Fonzo and Girolimetto, 2020)</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="va">ite_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iterec.html">iterec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>,
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ite_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iterec.html">iterec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>,
                    m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
                    thf_comb <span class="op">=</span> <span class="st">"acov"</span>, hts_comb <span class="op">=</span> <span class="st">"shr"</span>,
                    res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span>, start_rec <span class="op">=</span> <span class="st">"thf"</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span>
-<span class="co">#&gt; ---------------------------------------</span>
-<span class="co">#&gt; Iter #  (Cross-sectional incoherence) (Temporal incoherence)</span>
-<span class="co">#&gt; thf: 000  (1067.99485989205)  (1426.5513133205)</span>
-<span class="co">#&gt; thf: 001  (664.709318459475)  (564.414554571728)</span>
-<span class="co">#&gt; thf: 002  (229.380269405745)  (118.752261421519)</span>
-<span class="co">#&gt; thf: 003  (24.9431940889919)  (13.6060386528783)</span>
-<span class="co">#&gt; thf: 004  (5.37854848829375)  (2.21960789386029)</span>
-<span class="co">#&gt; thf: 005  (0.37251625538498)  (0.191544984783356)</span>
-<span class="co">#&gt; thf: 006  (0.0972170752758785)  (0.0439395488213421)</span>
-<span class="co">#&gt; thf: 007  (0.00744783958359108)  (0.00326627927896794)</span>
-<span class="co">#&gt; thf: 008  (0.00119733279655776)  (0.000555450468183949)</span>
-<span class="co">#&gt; thf: 009  (0.000118053594384548)  (6.68458906503133e-05)</span>
-<span class="co">#&gt; thf: 010  (3.40054562144587e-05)  (1.5193330327179e-05)</span>
-<span class="co">#&gt; thf: Convergence (starting from thf) achieved at iteration number 11! </span>
-<span class="co">#&gt; thf: Temporal incoherence 1.67142842144585e-06 &lt; 1e-05 tolerance</span>
-<span class="co">#&gt; ---------------------------------------</span></pre></div>
+<span class="co">#&gt; --------------------------------------------------------------------------------</span>
+<span class="co">#&gt; Iter       # |     Cross-sec. incoherence     |      Temporal incoherence      |</span>
+<span class="co">#&gt; thf:       0 |                         159.89 |                         187.63 |</span>
+<span class="co">#&gt; thf:       1 |                          60.11 |                          38.77 |</span>
+<span class="co">#&gt; thf:       2 |                          18.60 |                           7.73 |</span>
+<span class="co">#&gt; thf:       3 |                           1.61 |                       9.91e-01 |</span>
+<span class="co">#&gt; thf:       4 |                       4.16e-01 |                       2.07e-01 |</span>
+<span class="co">#&gt; thf:       5 |                       3.03e-02 |                       2.00e-02 |</span>
+<span class="co">#&gt; thf:       6 |                       9.18e-03 |                       5.31e-03 |</span>
+<span class="co">#&gt; thf:       7 |                       5.18e-04 |                       1.98e-04 |</span>
+<span class="co">#&gt; thf:       8 |                       1.30e-04 |                       6.45e-05 |</span>
+<span class="co">#&gt; thf: Convergence (starting from thf) achieved at iteration number 9! </span>
+<span class="co">#&gt; thf: Temporal incoherence 4.94e-06 &lt; 1e-05 tolerance</span>
+<span class="co">#&gt; --------------------------------------------------------------------------------</span></code></pre></div>
 <p><img src="../man/figures/ite.png" width="300px" style="display: block; margin: auto;"></p>
 <p>The above plot shows the convergence path of both cross-sectional and temporal discrepancies.</p>
 <ul>
 <li>Optimal cross-temporal reconciliation using <em>bdshr</em> (Di Fonzo and Girolimetto, 2020)</li>
 </ul>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="va">oct_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/octrec.html">octrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
-                   comb <span class="op">=</span> <span class="st">"bdshr"</span>, res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span>, keep <span class="op">=</span> <span class="st">"recf"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">oct_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/octrec.html">octrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
+                   comb <span class="op">=</span> <span class="st">"bdshr"</span>, res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span>, keep <span class="op">=</span> <span class="st">"recf"</span><span class="op">)</span></code></pre></div>
 <p>Monthly actual and forecasted values are shown in the following figure.</p>
 <p><img src="../man/figures/mts_base_rec.png" width="600px" style="display: block; margin: auto;"></p>
 <p>An evaluation of the quality of the reconciled forecasts can be obtained by using appropriate accuracy indices (see <code><a href="../reference/score_index.html">score_index()</a></code>).</p>

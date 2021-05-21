@@ -1,18 +1,22 @@
 #' @title Commutation matrix
 #'
-#' @description This function returns the (\code{(r c) x (r c)}) commutation matrix \code{P} such that
-#' \deqn{P vec(Y) = vec(Y'),}
-#' where \code{Y} is a (\code{r x c}) matrix.
+#' @description This function returns the (\mjseqn{(r c) \times (r c)})
+#' commutation matrix \mjseqn{\textbf{P}} such that
+#' \mjsdeqn{\textbf{P} \mbox{vec}(\textbf{Y}) = \mbox{vec}(\textbf{Y}'),}
+#' where \mjseqn{\textbf{Y}} is a (\mjseqn{r \times c}) matrix.
 #'
-#' @param r Number of rows of \code{Y}.
-#' @param c Number of columns of \code{Y}.
+#' @param r Number of rows of \mjseqn{\textbf{Y}}.
+#' @param c Number of columns of \mjseqn{\textbf{Y}}.
 #'
-#' @return A sparse (\code{(r c) x (r c)}) matrix.
+#' @return A sparse (\mjseqn{(r c) \times (r c)}) matrix, \mjseqn{\textbf{P}}.
 #'
-#' @references Magnus, J.R., Neudecker, H. (2019), Matrix Differential Calculus with Applications
-#' in Statistics and Econometrics, third edition, New York, Wiley, pp. 54-55.
+#' @references Magnus, J.R., Neudecker, H. (2019), Matrix Differential Calculus
+#' with Applications in Statistics and Econometrics, third edition, New York,
+#' Wiley, pp. 54-55.
 #'
 #' @keywords utilities
+#' @family utilities
+#'
 #' @examples
 #' Y <- matrix(rnorm(30), 5, 6)
 #' P <- commat(5, 6)

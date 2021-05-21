@@ -53,7 +53,7 @@
 
 
 <meta property="og:title" content="FoReco: point forecast reconciliation — FoReco-package" />
-<meta property="og:description" content="An R package offering classical (bottom-up), optimal and heuristic combination
+<meta property="og:description" content="An R package offering classical (bottom-up and top-down), and modern (optimal and heuristic combination)
 forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal
 linearly constrained time series." />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
@@ -88,7 +88,7 @@ linearly constrained time series." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -96,21 +96,21 @@ linearly constrained time series." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -127,7 +127,7 @@ linearly constrained time series." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -136,13 +136,13 @@ linearly constrained time series." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -171,7 +171,7 @@ linearly constrained time series." />
     </div>
 
     <div class="ref-description">
-    <p>An R package offering classical (bottom-up), optimal and heuristic combination
+    <p>An R package offering classical (bottom-up and top-down), and modern (optimal and heuristic combination)
 forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal
 linearly constrained time series.</p>
     </div>
@@ -181,12 +181,15 @@ linearly constrained time series.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The <code>FoReco</code> package is designed for point forecast reconciliation, a
-post-forecasting process aimed to improve the quality of the base
+post-forecasting process aimed to improve the accuracy of the base
 forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.
 The main functions are:</p>
 <dl>
   <dt><code><a href='htsrec.html'>htsrec</a>():</code></dt><dd><p>cross-sectional (contemporaneous) forecast reconciliation.</p></dd>
   <dt><code><a href='thfrec.html'>thfrec</a>():</code></dt><dd><p>forecast reconciliation for a single time series through temporal hierarchies.</p></dd>
+  <dt><code><a href='lccrec.html'>lccrec</a>():</code></dt><dd><p>level conditional forecast reconciliation for genuine hierarchical/grouped time series.</p></dd>
+  <dt><code><a href='tdrec.html'>tdrec</a>():</code></dt><dd><p>top-down (cross-sectional, temporal, cross-temporal) forecast reconciliation for genuine hierarchical/grouped time series.</p></dd>
+  <dt><code><a href='ctbu.html'>ctbu</a>():</code></dt><dd><p>bottom-up cross-temporal forecast reconciliation.</p></dd>
   <dt><code><a href='tcsrec.html'>tcsrec</a>():</code></dt><dd><p>heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.</p></dd>
   <dt><code><a href='cstrec.html'>cstrec</a>():</code></dt><dd><p>heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.</p></dd>
   <dt><code><a href='iterec.html'>iterec</a>():</code></dt><dd><p>heuristic iterative cross-temporal forecast reconciliation.</p></dd>
@@ -199,6 +202,7 @@ The main functions are:</p>
     <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
 Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, <a href='https://arxiv.org/abs/2006.08570'>arXiv:2006.08570</a>.</p>
+<p>Di Fonzo, T., Girolimetto, D. (2021), <em>Forecast combination based forecast reconciliation: insights and extensions</em> (mimeo).</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Tommaso Di Fonzo and Daniele Girolimetto, Department of Statistical Sciences, University of Padua (Italy).</p>

@@ -24,9 +24,10 @@ and each row identifies a bottom level time series.}
 A (\code{na x nb}) matrix.
 }
 \description{
-This function allows the user to easily build the (\code{na x nb}) cross-sectional
-(contemporaneous) matrix mapping the \code{nb} bottom level series into the \code{na} higher level
-ones. (Experimental version)
+\loadmathjax
+This function allows the user to easily build the (\mjseqn{n_a \times n_b})
+cross-sectional (contemporaneous) matrix mapping the \mjseqn{n_b} bottom
+level series into the \mjseqn{n_a} higher level ones. (\emph{Experimental version})
 }
 \examples{
 ## Balanced hierarchy
@@ -86,3 +87,18 @@ data_bts <- data.frame(X1 = c("A", "A", "B", "B", "A", "A", "B", "B"),
 C <- Cmatrix(~ Y1 * (X1 / X2), data_bts, sep = "")
 
 }
+\seealso{
+Other utilities: 
+\code{\link{FoReco2ts}()},
+\code{\link{commat}()},
+\code{\link{ctf_tools}()},
+\code{\link{hts_tools}()},
+\code{\link{oct_bounds}()},
+\code{\link{score_index}()},
+\code{\link{shrink_estim}()},
+\code{\link{srref}()},
+\code{\link{thf_tools}()},
+\code{\link{ut2c}()}
+}
+\concept{utilities}
+\keyword{utilities}

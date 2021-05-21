@@ -3,7 +3,7 @@
 \docType{data}
 \name{FoReco_data}
 \alias{FoReco_data}
-\title{Forecast reconciliation for a simulated hierarchical time series}
+\title{Forecast reconciliation for a simulated linearly constrained, genuine hierarchical multiple time series}
 \format{
 An object of class \code{"list"}:
 \describe{
@@ -22,10 +22,11 @@ data(FoReco_data)
 }
 \description{
 A two-level hierarchy with \code{n = 8} monthly time series. In the cross-sectional framework,
-at any time it is \code{Tot = A + B + C}, \code{A = AA + AB} and \code{B = BA + BB} (\code{nb = 5}  at the
-bottom level). For monthly data, the observations are aggregated to annual (\code{k = 12}),
+at any time it is \code{Tot = A + B + C}, \code{A = AA + AB} and \code{B = BA + BB}
+(the bottom time series being \code{AA}, \code{AB}, \code{BA}, \code{BB}, and \code{C}, it is \code{nb = 5}).
+The monthly observations are aggregated to their annual (\code{k = 12}),
 semi-annual (\code{k = 6}), four-monthly (\code{k = 4}), quarterly (\code{k = 3}), and
-bi-monthly (\code{k = 2}) observations. The monthly bottom time series are simulated
+bi-monthly (\code{k = 2}) counterparts. The monthly bottom time series are simulated
 from five different SARIMA models (see
 \href{https://danigiro.github.io/FoReco/articles/FoReco_package.html}{\code{Using the `FoReco` package}}).
 There are 180 (15 years) monthly observations: the first 168 values (14 years) are used as
@@ -45,7 +46,7 @@ for(i in 1:length(K)){
   mbase <- t(FoReco_data$base[, id])
   # residuals
   id <- which(simplify2array(strsplit(colnames(FoReco_data$res),
-                                      split = "_"))[1, ] == "k1")
+                                      split = "_"))[1, ] == paste("k", K[i], sep=""))
   mres <- t(FoReco_data$res[, id])
   hts_recf[[i]] <- htsrec(mbase, C = FoReco_data$C, comb = "shr",
                           res = mres, keep = "recf")
@@ -53,6 +54,7 @@ for(i in 1:length(K)){
 names(hts_recf) <- paste("k", K, sep="")
 
 # Forecast reconciliation through temporal hierarchies for all time series
+# comb = "acov"
 n <- NROW(FoReco_data$base)
 thf_recf <- matrix(NA, n, NCOL(FoReco_data$base))
 dimnames(thf_recf) <- dimnames(FoReco_data$base)
@@ -66,22 +68,26 @@ for(i in 1:n){
 }
 
 # Iterative cross-temporal reconciliation
+# Each iteration: t-acov + cs-shr
 ite_recf <- iterec(FoReco_data$base, note=FALSE,
                    m = 12, C = FoReco_data$C,
                    thf_comb = "acov", hts_comb = "shr",
                    res = FoReco_data$res, start_rec = "thf")$recf
 
 # Heuristic first-cross-sectional-then-temporal cross-temporal reconciliation
+# cs-shr + t-acov
 cst_recf <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C,
                    thf_comb = "acov", hts_comb = "shr",
                    res = FoReco_data$res)$recf
 
 # Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation
+# t-acov + cs-shr
 tcs_recf <- tcsrec(FoReco_data$base, m = 12, C = FoReco_data$C,
                    thf_comb = "acov", hts_comb = "shr",
                    res = FoReco_data$res)$recf
 
 # Optimal cross-temporal reconciliation
+# comb = "bdshr"
 oct_recf <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
                    comb = "bdshr", res = FoReco_data$res, keep = "recf")
 }

@@ -86,7 +86,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -94,21 +94,21 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -125,7 +125,7 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -134,13 +134,13 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -201,14 +201,29 @@ or a subset of the <code>p</code> factors of <code>m</code>.</p></td>
 \mathbf{0}_{\left[hk^* \times n \right]}\).</p></dd>
 <dt><code>kset</code></dt><dd><p>Set of factors (<code>p</code>) of <code>m</code> in descending order (from <code>m</code>
 to 1)\(,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots,\right.\) \(\left. k_2, k_1\right\},\) \(k_p=m, \; k_1=1\).</p></dd>
+<dt><code>m</code></dt><dd><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).</p></dd>
 <dt><code>p</code></dt><dd><p>Number of elements of kset\(,\;({\cal K})\).</p></dd>
 <dt><code>ks</code></dt><dd><p>Sum of <code>p-1</code> factors of <code>m</code> (out of <code>m</code> itself), \(k^*\).</p></dd>
 <dt><code>kt</code></dt><dd><p>Sum of all factors of m (\(k^{tot} = k^*+m\)).</p></dd>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other utilities: 
+<code><a href='Cmatrix.html'>Cmatrix</a>()</code>,
+<code><a href='FoReco2ts.html'>FoReco2ts</a>()</code>,
+<code><a href='commat.html'>commat</a>()</code>,
+<code><a href='ctf_tools.html'>ctf_tools</a>()</code>,
+<code><a href='hts_tools.html'>hts_tools</a>()</code>,
+<code><a href='oct_bounds.html'>oct_bounds</a>()</code>,
+<code><a href='score_index.html'>score_index</a>()</code>,
+<code><a href='shrink_estim.html'>shrink_estim</a>()</code>,
+<code><a href='srref.html'>srref</a>()</code>,
+<code><a href='ut2c.html'>ut2c</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># quarterly data</span>
 <span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>thf_tools</span><span class='op'>(</span>m <span class='op'>=</span> <span class='fl'>4</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

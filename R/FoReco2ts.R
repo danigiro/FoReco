@@ -1,18 +1,19 @@
 #' Reconciled forecasts matrix/vector to time-series class
 #'
-#' Function to transform the matrix/vector of reconciled forecasts (\code{recf} from
-#' \link[FoReco]{htsrec}, \link[FoReco]{thfrec}, \link[FoReco]{octrec},
-#' \link[FoReco]{tcsrec}, \link[FoReco]{cstrec}, \link[FoReco]{iterec},
-#' \link[FoReco]{ctbu}) into a list of time series objects.
+#' @description
+#' \loadmathjax
+#' Function to transform the matrix/vector of reconciled forecasts
+#' (\code{recf} from \link[FoReco]{htsrec}, \link[FoReco]{thfrec}, \link[FoReco]{tdrec},
+#' \link[FoReco]{octrec}, \link[FoReco]{lccrec}, \link[FoReco]{tcsrec}, \link[FoReco]{cstrec},
+#' \link[FoReco]{iterec}, \link[FoReco]{ctbu}) into a list of time series objects.
 #'
-#' @param recf (\code{h(k* + m) x 1}) reconciled forecasts vector from \link[FoReco]{thfrec},
-#' (\code{h x n}) reconciled forecasts matrix from \link[FoReco]{htsrec} or
-#' (\code{n x h(k* + m)}) reconciled forecasts matrix from \link[FoReco]{octrec},
+#' @param recf (\mjseqn{h(k^\ast + m) \times 1}) reconciled forecasts vector from \link[FoReco]{thfrec},
+#' (\mjseqn{h \times n}) reconciled forecasts matrix from \link[FoReco]{htsrec} or
+#' (\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix from \link[FoReco]{octrec},
 #' \link[FoReco]{tcsrec}, \link[FoReco]{cstrec}, \link[FoReco]{iterec},
 #' \link[FoReco]{ctbu}.
 #' @param ... optional arguments to \link[stats]{ts} (i.e. starting date);
-#' frequency is only required for the cross-sectional system.
-#' .
+#' frequency is required only for the cross-sectional case.
 #'
 #' @return
 #' A list of class \code{"ts"} objects
@@ -39,12 +40,13 @@
 #' # Temporal framework
 #' # top ts base forecasts ([lowest_freq' ...  highest_freq']')
 #' topbase <- FoReco_data$base[1, ]
-#'  # top ts residuals ([lowest_freq' ...  highest_freq']')
+#' # top ts residuals ([lowest_freq' ...  highest_freq']')
 #' topres <- FoReco_data$res[1, ]
 #' thf_recf <- thfrec(topbase, m = 12, comb = "acov", res = topres)$recf
 #' obj_thf <- FoReco2ts(recf = thf_recf, start = c(15, 1))
 #'
 #' @keywords utilities
+#' @family utilities
 #'
 #' @export
 FoReco2ts <- function(recf, ...) {

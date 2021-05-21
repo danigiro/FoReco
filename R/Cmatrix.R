@@ -1,9 +1,10 @@
 #' Cross-sectional (contemporaneous) aggregation matrix
 #'
-#'
-#' This function allows the user to easily build the (\code{na x nb}) cross-sectional
-#' (contemporaneous) matrix mapping the \code{nb} bottom level series into the \code{na} higher level
-#' ones. (Experimental version)
+#' @description
+#' \loadmathjax
+#' This function allows the user to easily build the (\mjseqn{n_a \times n_b})
+#' cross-sectional (contemporaneous) matrix mapping the \mjseqn{n_b} bottom
+#' level series into the \mjseqn{n_a} higher level ones. (\emph{Experimental version})
 #'
 #' @param formula  Specification of the hierarchical structure: grouped hierarchies are specified
 #' using \code{~ g1 * g2} and nested hierarchies are specified using \code{~ parent / child}.
@@ -15,6 +16,9 @@
 #' @param top_label Label of the top level variable (\emph{default} is \code{"Total"}).
 #'
 #' @return A (\code{na x nb}) matrix.
+#'
+#' @keywords utilities
+#' @family utilities
 #'
 #' @examples
 #' ## Balanced hierarchy

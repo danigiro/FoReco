@@ -53,8 +53,10 @@
 
 
 <meta property="og:title" content="Cross-temporal reconciliation tools — ctf_tools" />
-<meta property="og:description" content="Some useful tools for the cross-temporal forecast reconciliation of cross-sectionally and
-temporally constrained time series" />
+<meta property="og:description" content="
+
+Some useful tools for the cross-temporal forecast reconciliation of a linearly constrained
+(hierarchical/grouped) multiple time series." />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
 
 
@@ -87,7 +89,7 @@ temporally constrained time series" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -95,21 +97,21 @@ temporally constrained time series" />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -126,7 +128,7 @@ temporally constrained time series" />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -135,13 +137,13 @@ temporally constrained time series" />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -170,24 +172,27 @@ temporally constrained time series" />
     </div>
 
     <div class="ref-description">
-    <p>Some useful tools for the cross-temporal forecast reconciliation of cross-sectionally and
-temporally constrained time series</p>
+    <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
+
+Some useful tools for the cross-temporal forecast reconciliation of a linearly constrained
+(hierarchical/grouped) multiple time series.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ctf_tools</span><span class='op'>(</span><span class='va'>C</span>, <span class='va'>m</span>, h <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, Sstruc <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ctf_tools</span><span class='op'>(</span><span class='va'>C</span>, <span class='va'>m</span>, h <span class='op'>=</span> <span class='fl'>1</span>, <span class='va'>Ut</span>, <span class='va'>nb</span>, sparse <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>C</th>
-      <td><p>(<code>na x nb</code>) cross-sectional (contemporaneous) matrix mapping the bottom
-level series into the higher level ones.</p></td>
+      <td><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+mapping the bottom level series into the higher level ones.</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of
-temporal aggregation).</p></td>
+      <td><p>Highest available sampling frequency per seasonal cycle (max. order
+of temporal aggregation, \(m\)), or a subset of the \(p\) factors
+of \(m\).</p></td>
     </tr>
     <tr>
       <th>h</th>
@@ -197,41 +202,64 @@ series (<em>default</em> is <code>1</code>).</p></td>
     <tr>
       <th>Ut</th>
       <td><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\((\textbf{U}'\textbf{Y} = \mathbf{0})\) spanning the null space valid for the reconciled
-forecasts. It can be used instead of parameter <code>C</code>, but in this case <code>nb</code> (n = na + nb) is needed. If
-the hierarchy admits a structural representation, <code>Ut</code> has dimension (<code>na x n</code>).</p></td>
+\((\textbf{U}'\textbf{y} = \mathbf{0})\) spanning the null space valid
+for the reconciled forecasts. It can be used instead of parameter
+<code>C</code>, but <code>nb</code> (\(n = n_a + n_b\)) is needed if
+\(\textbf{U}' \neq [\textbf{I} \ -\textbf{C}]\). If the hierarchy
+admits a structural representation, \(\textbf{U}'\) has dimension
+(\(n_a \times n\)).</p></td>
     </tr>
     <tr>
       <th>nb</th>
-      <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code> is not used.</p></td>
+      <td><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code>
+and <code>Ut</code> are not used.</p></td>
     </tr>
     <tr>
-      <th>Sstruc</th>
-      <td><p>If <code>Sstruc = TRUE</code> the function returns also the structural representation matrix of
-a cross-temporal system (<em>default</em> is <code>FALSE</code>).</p></td>
+      <th>sparse</th>
+      <td><p>Option to return sparse object (<em>default</em> is <code>TRUE</code>).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><strong>ctf</strong> list with:</p>
-<dt><code>Ht</code></dt><dd><p>Full row-rank cross-temporal zero-valued constraints (kernel)
-matrix\(,\; \textbf{H}'\textbf{y} = \mathbf{0}\).</p></dd>
-<dt><code>Htbreve</code></dt><dd><p>Complete, not full row-rank cross-temporal zero-valued
-constraints (kernel) matrix.</p></dd>
-<dt><code>Htstruc</code></dt><dd><p>Zero constraints full row-rank cross-temporal kernel matrix
-(structural representation) \(,\; \check{\textbf{H}}'\).</p></dd>
-<dt><code>Sstruc</code></dt><dd><p>Cross-temporal summing matrix (structural
-representation)\(,\; \check{\textbf{S}}\).</p></dd>
+<dt><code>Ht</code></dt><dd><p>Full row-rank cross-temporal zero constraints (kernel)
+matrix coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\): \(\mathbf{H}'\mathbf{y} = \mathbf{0}\).</p></dd>
+<dt><code>Hbrevet</code></dt><dd><p>Complete, not full row-rank cross-temporal zero
+constraints (kernel) matrix coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\):
+\(\breve{\mathbf{H}}'\mathbf{y} = \mathbf{0}\).</p></dd>
+<dt><code>Hcheckt</code></dt><dd><p>Full row-rank cross-temporal zero constraints (kernel) matrix coherent with
+\(\check{\mathbf{y}}\) (structural representation):
+\(\check{\mathbf{H}}' \check{\mathbf{y}} = \mathbf{0}\).</p></dd>
+<dt><code>Ccheck</code></dt><dd><p>Cross-temporal aggregation matrix \(\check{\mathbf{C}}\)
+coherent with \(\check{\mathbf{y}}\) (structural representation).</p></dd>
+<dt><code>Scheck</code></dt><dd><p>Cross-temporal summing matrix \(\check{\mathbf{S}}\)
+coherent with \(\check{\mathbf{y}}\) (structural representation).</p></dd>
+<dt><code>Stilde</code></dt><dd><p>Cross-temporal summing matrix \(\widetilde{\mathbf{S}}\)
+coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\).</p></dd>
 
-hts list from <a href='hts_tools.html'>hts_tools</a>
+hts list from <a href='hts_tools.html'>hts_tools</a> .
 
-thf list from <a href='thf_tools.html'>thf_tools</a>
+thf list from <a href='thf_tools.html'>thf_tools</a> .
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other utilities: 
+<code><a href='Cmatrix.html'>Cmatrix</a>()</code>,
+<code><a href='FoReco2ts.html'>FoReco2ts</a>()</code>,
+<code><a href='commat.html'>commat</a>()</code>,
+<code><a href='hts_tools.html'>hts_tools</a>()</code>,
+<code><a href='oct_bounds.html'>oct_bounds</a>()</code>,
+<code><a href='score_index.html'>score_index</a>()</code>,
+<code><a href='shrink_estim.html'>shrink_estim</a>()</code>,
+<code><a href='srref.html'>srref</a>()</code>,
+<code><a href='thf_tools.html'>thf_tools</a>()</code>,
+<code><a href='ut2c.html'>ut2c</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># One level hierarchy (na = 1, nb = 2) with quarterly data</span>
-<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>ctf_tools</span><span class='op'>(</span>C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span>, m <span class='op'>=</span> <span class='fl'>4</span>, Sstruc <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>ctf_tools</span><span class='op'>(</span>C <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>)</span>, <span class='fl'>1</span><span class='op'>)</span>, m <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

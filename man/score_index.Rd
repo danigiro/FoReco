@@ -2,38 +2,51 @@
 % Please edit documentation in R/score_index.R
 \name{score_index}
 \alias{score_index}
-\title{Measuring forecasting accuracy}
+\title{Measuring accuracy in a rolling forecast experiment}
 \usage{
-score_index(recf, base, test, m, nb, type = "mse", compact = TRUE)
+score_index(recf, base, test, m, nb, nl, type = "mse", compact = TRUE)
 }
 \arguments{
-\item{recf}{list of q (forecast origins) reconciled forecasts' matrices (\code{[n x h(k* + m)]} in the
-cross-temporal, \code{[h x n]} in cross-sectional and vectors of length \code{[h(k* + m)]} in temporal framework).}
+\item{recf}{list of q (forecast origins) reconciled forecasts' matrices
+(\mjseqn{[n \times h(k^\ast + m)]} in the cross-temporal case,
+\mjseqn{[h \times n]} in the cross-sectional case, and vectors of length
+\mjseqn{[h(k^\ast \times m)]} in the temporal framework).}
 
-\item{base}{list of q (forecast origins) base forecasts' matrices (\code{[n x h(k* + m)]} in the
-cross-temporal, \code{[n x h]} in cross-sectional and \code{[h(k* + m) x 1]} in temporal framework).}
+\item{base}{list of q (forecast origins) base forecasts' matrices
+(\mjseqn{[n \times h(k^\ast + m)]} in the cross-temporal case,
+\mjseqn{[h \times n]} in the cross-sectional case, and vectors of length
+\mjseqn{[h(k^\ast \times m)]} in the temporal framework).}
 
-\item{test}{list of q (forecast origins) test observations' matrices (\code{[n x h(k* + m)]} in the
-cross-temporal, \code{[n x h]} in cross-sectional and \code{[h(k* + m) x 1]} in temporal framework).}
+\item{test}{list of q (forecast origins) test observations' matrices
+(\mjseqn{[n \times h(k^\ast + m)]} in the cross-temporal case,
+\mjseqn{[h \times n]} in the cross-sectional case, and vectors of length
+\mjseqn{[h(k^\ast \times m)]} in the temporal framework).}
 
-\item{m}{highest frequency of the forecasted time series.}
+\item{m}{Highest available sampling frequency per seasonal cycle (max. order
+of temporal aggregation, \mjseqn{m}), or a subset of \mjseqn{p} factors
+of \mjseqn{m}.}
 
 \item{nb}{number of bottom time series in the cross-sectional framework.}
 
-\item{type}{type of accuracy measure ("\code{mse}" Mean Square Error, "\code{rmse}" Root Mean Square Error
-or "\code{mae}" Mean Absolute Error)}
+\item{nl}{(\mjseqn{L \times 1}) vector containing the number of time series
+in each cross-sectional level of the hierarchy (\code{nl[1] = 1}).}
 
-\item{compact}{if TRUE return only the summary matrix.}
+\item{type}{type of accuracy measure ("\code{mse}" Mean Square Error,
+"\code{rmse}" Root Mean Square Error or "\code{mae}" Mean Absolute Error).}
+
+\item{compact}{if TRUE returns only the summary matrix.}
 }
 \value{
 It returns a summary table called \code{Avg_mat} (if \code{compact} option is \code{TRUE},
-\emph{default}), otherwise it returns a list of four tables (more in
+\emph{default}), otherwise it returns a list of six tables (more in
 \href{https://danigiro.github.io/FoReco/articles/accuracy_indices.html}{Average relative accuracy indices}).
 }
 \description{
+\loadmathjax
 Function to calculate the accuracy indices of the reconciled point
 forecasts of a cross-temporal (not only, see examples) system (more in
 \href{https://danigiro.github.io/FoReco/articles/accuracy_indices.html}{Average relative accuracy indices}).
+(\emph{Experimental version})
 }
 \examples{
 \donttest{
@@ -61,7 +74,6 @@ mrecf <- htsrec(mbase, C = FoReco_data$C, comb = "shr", res = mres)$recf
 hts_score <- score_index(recf = mrecf, base = mbase, test = mtest, nb = 5)
 
 # Temporal framework
-data(FoReco_data)
 # top ts base forecasts ([lowest_freq' ...  highest_freq']')
 topbase <- FoReco_data$base[1, ]
 # top ts residuals ([lowest_freq' ...  highest_freq']')
@@ -80,4 +92,18 @@ Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
 Optimal Combination Method and Heuristic Alternatives, Department of Statistical
 Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
 }
+\seealso{
+Other utilities: 
+\code{\link{Cmatrix}()},
+\code{\link{FoReco2ts}()},
+\code{\link{commat}()},
+\code{\link{ctf_tools}()},
+\code{\link{hts_tools}()},
+\code{\link{oct_bounds}()},
+\code{\link{shrink_estim}()},
+\code{\link{srref}()},
+\code{\link{thf_tools}()},
+\code{\link{ut2c}()}
+}
+\concept{utilities}
 \keyword{utilities}

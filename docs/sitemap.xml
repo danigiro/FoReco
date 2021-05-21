@@ -43,6 +43,12 @@
     <loc>https://danigiro.github.io/FoReco/reference/iterec.html</loc>
   </url>
   <url>
+    <loc>https://danigiro.github.io/FoReco/reference/lccrec.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/oct_bounds.html</loc>
+  </url>
+  <url>
     <loc>https://danigiro.github.io/FoReco/reference/octrec.html</loc>
   </url>
   <url>
@@ -52,13 +58,22 @@
     <loc>https://danigiro.github.io/FoReco/reference/shrink_estim.html</loc>
   </url>
   <url>
+    <loc>https://danigiro.github.io/FoReco/reference/srref.html</loc>
+  </url>
+  <url>
     <loc>https://danigiro.github.io/FoReco/reference/tcsrec.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/tdrec.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/thf_tools.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/thfrec.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/ut2c.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/articles/FoReco_package.html</loc>

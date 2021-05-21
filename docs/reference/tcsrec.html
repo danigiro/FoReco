@@ -53,13 +53,16 @@
 
 
 <meta property="og:title" content="Heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation — tcsrec" />
-<meta property="og:description" content="The cross-temporal forecast reconciliation procedure by
-Kourentzes and Athanasopoulos (2019) can be viewed as an ensemble forecasting
-procedure which exploits the simple averaging of different forecasts.
-First, for each time series the forecasts at any temporal aggregation order are
-reconciled using temporal hierarchies (thfrec), then
-time-by-time cross-sectional reconciliation is performed (htsrec).
-The projection matrices obtained at this step are then averaged and used to
+<meta property="og:description" content="
+
+The cross-temporal forecast reconciliation procedure by
+Kourentzes and Athanasopoulos (2019) can be viewed as an ensemble
+forecasting procedure which exploits the simple averaging of different
+forecasts. First, for each time series the forecasts at any temporal
+aggregation order are reconciled using temporal hierarchies
+(thfrec()), then time-by-time cross-sectional
+reconciliation is performed (htsrec()). The
+projection matrices obtained at this step are then averaged and used to
 cross-sectionally reconcile the forecasts obtained at step 1, by this way
 fulfilling both cross-sectional and temporal constraints." />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
@@ -94,7 +97,7 @@ fulfilling both cross-sectional and temporal constraints." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -102,21 +105,21 @@ fulfilling both cross-sectional and temporal constraints." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -133,7 +136,7 @@ fulfilling both cross-sectional and temporal constraints." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -142,13 +145,13 @@ fulfilling both cross-sectional and temporal constraints." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -177,13 +180,16 @@ fulfilling both cross-sectional and temporal constraints." />
     </div>
 
     <div class="ref-description">
-    <p>The cross-temporal forecast reconciliation procedure by
-Kourentzes and Athanasopoulos (2019) can be viewed as an ensemble forecasting
-procedure which exploits the simple averaging of different forecasts.
-First, for each time series the forecasts at any temporal aggregation order are
-reconciled using temporal hierarchies (<code><a href='thfrec.html'>thfrec</a></code>), then
-time-by-time cross-sectional reconciliation is performed (<code><a href='htsrec.html'>htsrec</a></code>).
-The projection matrices obtained at this step are then averaged and used to
+    <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
+
+The cross-temporal forecast reconciliation procedure by
+Kourentzes and Athanasopoulos (2019) can be viewed as an ensemble
+forecasting procedure which exploits the simple averaging of different
+forecasts. First, for each time series the forecasts at any temporal
+aggregation order are reconciled using temporal hierarchies
+(<code><a href='thfrec.html'>thfrec</a>()</code>), then time-by-time cross-sectional
+reconciliation is performed (<code><a href='htsrec.html'>htsrec</a>()</code>). The
+projection matrices obtained at this step are then averaged and used to
 cross-sectionally reconcile the forecasts obtained at step 1, by this way
 fulfilling both cross-sectional and temporal constraints.</p>
     </div>
@@ -195,47 +201,55 @@ fulfilling both cross-sectional and temporal constraints.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>basef</th>
-      <td><p>(<code>n x h(k* + m)</code>) matrix of base forecasts to be reconciled;
-<code>n</code> is the total number of variables, <code>m</code> is the highest frequency,
-<code>k*</code> is the sum of (<code>p-1</code>) factors of <code>m</code>, excluding <code>m</code>,
-and <code>h</code> is the forecast horizon. Each row identifies, a time series, and the forecasts
-are ordered as [lowest_freq' ...  highest_freq']'.</p></td>
+      <td><p>(\(n \times h(k^\ast+m)\)) matrix of base forecasts to be
+reconciled, \(\widehat{\mathbf{Y}}\); \(n\) is the total number of variables,
+\(m\) is the highest time frequency, \(k^\ast\) is the sum of (a
+subset of) (\(p-1\)) factors of \(m\), excluding \(m\), and
+\(h\) is the forecast horizon for the lowest frequency time series.
+Each row identifies a time series, and the forecasts are ordered as
+[lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
       <th>hts_comb, thf_comb</th>
-      <td><p>Type of covariance matrix (respectively (<code>n x n</code>) and
-(<code>(k* + m) x (k* + m)</code>)) to be used in the cross-sectional and temporal reconciliation,
-see more in <code>comb</code> param of <code><a href='htsrec.html'>htsrec</a></code> and <code><a href='thfrec.html'>thfrec</a></code>.</p></td>
+      <td><p>Type of covariance matrix (respectively
+(\(n \times n\)) and (\((k^\ast + m) \times (k^\ast + m)\))) to
+be used in the cross-sectional and temporal reconciliation, see more in
+<code>comb</code> param of <code><a href='htsrec.html'>htsrec</a>()</code> and
+<code><a href='thfrec.html'>thfrec</a>()</code>.</p></td>
     </tr>
     <tr>
       <th>res</th>
-      <td><p>(<code>n x N(k* + m)</code>) matrix containing the residuals at all the
-temporal frequencies ordered [lowest_freq' ...  highest_freq']' (columns) for
-each variable (row), needed to estimate the covariance matrix when <code>hts_comb =</code>
-<code>{"wls",</code> <code>"shr",</code> <code>"sam"}</code> and/or <code>hts_comb =</code> <code>{"wlsv",</code>
-<code>"wlsh",</code> <code>"acov",</code> <code>"strar1",</code> <code>"sar1",</code> <code>"har1",</code>
-<code>"shr",</code> <code>"sam"}</code>. The row must be in the same order as <code>basef</code>.</p></td>
+      <td><p>(\(n \times N(k^\ast + m)\)) matrix containing the residuals
+at all the temporal frequencies ordered [lowest_freq' ...  highest_freq']'
+(columns) for each variable (row), needed to estimate the covariance matrix
+when <code>hts_comb =</code> <code>{"wls",</code> <code>"shr",</code> <code>"sam"}</code> and/or
+<code>hts_comb =</code> <code>{"wlsv",</code> <code>"wlsh",</code> <code>"acov",</code>
+<code>"strar1",</code> <code>"sar1",</code> <code>"har1",</code> <code>"shr",</code> <code>"sam"}</code>.
+The row must be in the same order as <code>basef</code>.</p></td>
     </tr>
     <tr>
       <th>avg</th>
-      <td><p>If <code>avg = "KA"</code> (<em>default</em>), the final projection matrix <code>M</code> is the one proposed
-by Kourentzes and Athanasopoulos (2019), otherwise it is calculated as simple average of
-all the involved projection matrices at step 2 of th procedure (see Di Fonzo and
-Girolimetto, 2020).</p></td>
+      <td><p>If <code>avg = "KA"</code> (<em>default</em>), the final projection
+matrix \(\mathbf{M}\) is the one proposed by Kourentzes and
+Athanasopoulos (2019), otherwise it is calculated as simple average of
+all the involved projection matrices at step 2 of the procedure (see
+Di Fonzo and Girolimetto, 2020).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>any other options useful for <code><a href='htsrec.html'>htsrec</a></code> and
-<code><a href='thfrec.html'>thfrec</a></code>, e.g. <code>m</code>, <code>C</code> (or <code>Ut</code> and <code>nb</code>),
-<code>nn</code> (for non negativity reconciliation only at first step), ...</p></td>
+      <td><p>any other options useful for <code><a href='htsrec.html'>htsrec</a>()</code> and
+<code><a href='thfrec.html'>thfrec</a>()</code>, e.g. <code>m</code>, <code>C</code> (or <code>Ut</code> and
+<code>nb</code>), <code>nn</code> (for non negativity reconciliation only at first step),
+<code>mse</code>, <code>corpcor</code>, <code>type</code>, <code>sol</code>, <code>settings</code>,
+<code>W</code>, <code>Omega</code>,...</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The function returns a list with two elements:</p>
-<dt><code>recf</code></dt><dd><p>(<code>n x h(k* + m)</code>) reconciled forecasts matrix.</p></dd>
-<dt><code>M</code></dt><dd><p>Projection matrix (projection approach).</p></dd>
+<dt><code>recf</code></dt><dd><p>(\(n \times h(k^\ast + m)\)) reconciled forecasts matrix, \(\widetilde{\textbf{Y}}\).</p></dd>
+<dt><code>M</code></dt><dd><p>Matrix which transforms the uni-dimensional reconciled forecasts of step 1 (projection approach) .</p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -259,16 +273,28 @@ package version 1.6.9 (April 1, 2017), <a href='https://CRAN.R-project.org/packa
 <p>Schäfer, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
 Matrix Estimation and Implications for Functional Genomics, <em>Statistical
 Applications in Genetics and Molecular Biology</em>, 4, 1.</p>
-<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs, <a href='https://arxiv.org/abs/1711.08013'>arXiv:1711.08013</a>.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2020). OSQP:
+An Operator Splitting Solver for Quadratic Programs, <em>Mathematical Programming Computation</em>,
+12, 4, 637-672.</p>
 <p>Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
-Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
+Quadratic Programming Solver using the `OSQP' Library, R package version 0.6.0.3
 (October 10, 2019), <a href='https://CRAN.R-project.org/package=osqp'>https://CRAN.R-project.org/package=osqp</a>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other reconciliation procedures: 
+<code><a href='cstrec.html'>cstrec</a>()</code>,
+<code><a href='ctbu.html'>ctbu</a>()</code>,
+<code><a href='htsrec.html'>htsrec</a>()</code>,
+<code><a href='iterec.html'>iterec</a>()</code>,
+<code><a href='lccrec.html'>lccrec</a>()</code>,
+<code><a href='octrec.html'>octrec</a>()</code>,
+<code><a href='tdrec.html'>tdrec</a>()</code>,
+<code><a href='thfrec.html'>thfrec</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
-<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>, hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>,
-              res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span><span class='op'>)</span>
+<span class='va'>obj</span> <span class='op'>&lt;-</span> <span class='fu'>tcsrec</span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>base</span>, m <span class='op'>=</span> <span class='fl'>12</span>, C <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>C</span>,
+              thf_comb <span class='op'>=</span> <span class='st'>"acov"</span>, hts_comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>FoReco_data</span><span class='op'>$</span><span class='va'>res</span><span class='op'>)</span>
 
 </div></pre>
   </div>

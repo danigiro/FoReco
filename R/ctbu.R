@@ -1,20 +1,44 @@
-#' @title Bottom-up Cross-temporal forecast reconciliation
+#' @title Bottom-up cross-temporal forecast reconciliation
 #'
-#' @description Cross temporal reconciled forecasts for all series at any temporal
-#' aggregation level can be easily computed by appropriate summation of the high-frequency
-#' bottom base forecasts \eqn{\hat{\textbf{b}}_i, i = 1,...,n_b, \;}{} according to a
+#' @description
+#' \loadmathjax
+#' Cross temporal reconciled forecasts for all series at any temporal
+#' aggregation level are computed by appropriate summation of the high-frequency
+#' bottom base forecasts \mjseqn{\widehat{\mathbf{b}}_i, i = 1,...,n_b}, according to a
 #' bottom-up procedure like what is currently done in both the cross-sectional
 #' and temporal frameworks.
 #'
-#' @param Bmat (\code{nb x (h m)}) matrix of high-frequency bottom time series base forecasts.
+#' @param Bmat (\mjseqn{n_b \times h m}) matrix of high-frequency bottom time
+#' series base forecasts (\mjseqn{\widehat{\mathbf{B}}^{[1]}}).
 #' \code{h} is the forecast horizon for the lowest frequency (most temporally aggregated)
 #' time series.
-#' @param C (\code{na x nb}) cross-sectional (contemporaneous) matrix mapping the bottom
-#' level series into the higher level ones.
-#' @param m Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).
+#' @param C (\mjseqn{n_a \times n_b}) cross-sectional (contemporaneous) matrix
+#' mapping the bottom level series into the higher level ones.
+#' @param m Highest available sampling frequency per seasonal cycle (max. order
+#' of temporal aggregation, \mjseqn{m}), or a subset of the \mjseqn{p} factors
+#' of \mjseqn{m}.
 #'
-#' @return The function returns a (\code{n x (h (k* + m))}) matrix of
-#' bottom-up cross-temporally reconciled forecasts.
+#' @details
+#' Denoting by \mjseqn{\ddot{\mathbf{Y}}} the (\mjseqn{n \times h (k^\ast + m)}) matrix containing
+#' the bottom-up cross temporal reconciled forecasts, it is:
+#' \mjsdeqn{\ddot{\mathbf{Y}} = \left[\begin{array}{cc}
+#' \mathbf{C}\widehat{\mathbf{B}}^{[1]}\mathbf{K}_1' & \mathbf{C}\widehat{\mathbf{B}}^{[1]} \cr
+#' \widehat{\mathbf{B}}^{[1]} \mathbf{K}_1' & \widehat{\mathbf{B}}^{[1]}
+#' \end{array}\right],}
+#' where \mjseqn{\mathbf{C}} is the cross-sectional (contemporaneous) aggregation matrix,
+#' \mjseqn{\mathbf{K}_1} is the temporal aggregation matrix with \mjseqn{h=1}, and
+#' \mjseqn{\widehat{\mathbf{B}}^{[1]}} is the matrix containing the high-frequency bottom
+#' time series base forecasts. This expression is equivalent to
+#' \mjseqn{\mbox{vec}(\ddot{\mathbf{Y}}') = \widetilde{\mathbf{S}}
+#' \mbox{vec}(\widehat{\mathbf{Y}}')} for \mjseqn{h = 1}, where
+#' \mjseqn{\widetilde{\mathbf{S}}} is the cross-temporal summing matrix for
+#' \mjseqn{\mbox{vec}(\widehat{\mathbf{Y}}')}, and \mjseqn{\widehat{\mathbf{Y}}}
+#' is the (\mjseqn{n \times h (k^\ast + m)}) matrix containing all the base forecasts
+#' at any temporal aggregation order.
+#'
+#'
+#' @return The function returns a (\mjseqn{n \times h (k^\ast + m)}) matrix of
+#' bottom-up cross-temporally reconciled forecasts, \mjseqn{\ddot{\mathbf{Y}}}.
 #'
 #' @references
 #' Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
@@ -23,13 +47,15 @@
 #'
 #' @examples
 #' data(FoReco_data)
+#' # monthly base forecasts
 #' id <- which(simplify2array(strsplit(colnames(FoReco_data$base),
 #'                                     split = "_"))[1, ] == "k1")
 #' hfbts <- FoReco_data$base[-c(1:3), id]
 #' obj <- ctbu(Bmat = hfbts, m = 12, C = FoReco_data$C)
 #' rownames(obj) <- rownames(FoReco_data$base)
 #'
-#' @keywords reconciliation bottom-up
+#' @keywords bottom-up
+#' @family reconciliation procedures
 #' @import Matrix
 #' @export
 ctbu <- function(Bmat, m, C) {
@@ -38,7 +64,7 @@ ctbu <- function(Bmat, m, C) {
 
   tools <- thf_tools(m)
   kset <- tools$kset
-  m <- max(kset)
+  m <- tools$m
 
   if (NCOL(Bmat) %% m != 0) {
     stop("The number of Bmat's columns doesn't match with m*h", call. = FALSE)

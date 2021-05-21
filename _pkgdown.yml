@@ -56,12 +56,15 @@ reference:
   - cstrec
   - iterec
   - ctbu
+  - lccrec
+  - tdrec
 
 - title: Datasets
 - contents:
   - FoReco_data
   - FoReco-hts
   - FoReco-thief
+
 - title: Utilities
 - contents:
   - commat
@@ -72,6 +75,9 @@ reference:
   - hts_tools
   - thf_tools
   - ctf_tools
+  - srref
+  - ut2c
+  - oct_bounds
 - title: Package
 - contents:
   - FoReco-package

@@ -91,7 +91,7 @@ are objects of class hts in hts." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -99,21 +99,21 @@ are objects of class hts in hts." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -130,7 +130,7 @@ are objects of class hts in hts." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -139,13 +139,13 @@ are objects of class hts in hts." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -223,28 +223,33 @@ hts: Hierarchical and Grouped Time Series, <em>R package version 6.0.1</em>,
 <span class='op'>}</span>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
 
+<span class='co'>## Comparisons</span>
 <span class='co'># ols</span>
+<span class='co'># two commands in hts...</span>
 <span class='va'>Y_hts_forecast</span> <span class='op'>&lt;-</span> <span class='fu'>forecast</span><span class='op'>(</span><span class='va'>htseg1</span>, method <span class='op'>=</span> <span class='st'>"comb"</span>, fmethod <span class='op'>=</span> <span class='st'>"arima"</span>, weights <span class='op'>=</span> <span class='st'>"ols"</span><span class='op'>)</span>
 <span class='va'>Y_hts_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/combinef.html'>combinef</a></span><span class='op'>(</span><span class='va'>BASE</span>, nodes <span class='op'>=</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/helper-functions.html'>get_nodes</a></span><span class='op'>(</span><span class='va'>htseg1</span><span class='op'>)</span>, keep <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='http://pkg.earo.me/hts/reference/allts.html'>allts</a></span><span class='op'>(</span><span class='va'>Y_hts_forecast</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'>Y_hts_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+<span class='co'># ...with the same results:</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='fu'><a href='http://pkg.earo.me/hts/reference/allts.html'>allts</a></span><span class='op'>(</span><span class='va'>Y_hts_forecast</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'>Y_hts_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+
 <span class='va'>Y_FoReco_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>BASE</span>, C <span class='op'>=</span> <span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"ols"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>Y_hts_ols</span> <span class='op'>-</span> <span class='va'>Y_FoReco_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>Y_hts_ols</span> <span class='op'>-</span> <span class='va'>Y_FoReco_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 
 <span class='co'># struc</span>
 <span class='va'>w</span> <span class='op'>&lt;-</span> <span class='fl'>1</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span><span class='op'>(</span><span class='fu'><a href='http://pkg.earo.me/hts/reference/smatrix.html'>smatrix</a></span><span class='op'>(</span><span class='va'>htseg1</span><span class='op'>)</span>, <span class='fl'>1</span>, <span class='va'>sum</span><span class='op'>)</span>
 <span class='va'>Y_hts_struc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/combinef.html'>combinef</a></span><span class='op'>(</span><span class='va'>BASE</span>, nodes <span class='op'>=</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/helper-functions.html'>get_nodes</a></span><span class='op'>(</span><span class='va'>htseg1</span><span class='op'>)</span>, weights <span class='op'>=</span> <span class='va'>w</span>, keep <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
 <span class='va'>Y_FoReco_struc</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>BASE</span>, C <span class='op'>=</span> <span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"struc"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>Y_hts_struc</span> <span class='op'>-</span> <span class='va'>Y_FoReco_struc</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>Y_hts_struc</span> <span class='op'>-</span> <span class='va'>Y_FoReco_struc</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 
 <span class='co'># shr</span>
-<span class='va'>Y_hts_shr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/MinT.html'>MinT</a></span><span class='op'>(</span><span class='va'>BASE</span>, nodes <span class='op'>=</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/helper-functions.html'>get_nodes</a></span><span class='op'>(</span><span class='va'>htseg1</span><span class='op'>)</span>, keep <span class='op'>=</span> <span class='st'>"all"</span>, covariance <span class='op'>=</span> <span class='st'>"shr"</span>, residual <span class='op'>=</span> <span class='va'>res</span><span class='op'>)</span>
+<span class='va'>Y_hts_shr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/MinT.html'>MinT</a></span><span class='op'>(</span><span class='va'>BASE</span>, nodes <span class='op'>=</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/helper-functions.html'>get_nodes</a></span><span class='op'>(</span><span class='va'>htseg1</span><span class='op'>)</span>, keep <span class='op'>=</span> <span class='st'>"all"</span>,
+                  covariance <span class='op'>=</span> <span class='st'>"shr"</span>, residual <span class='op'>=</span> <span class='va'>res</span><span class='op'>)</span>
 <span class='va'>Y_FoReco_shr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>BASE</span>, C <span class='op'>=</span> <span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"shr"</span>, res <span class='op'>=</span> <span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>(</span><span class='va'>Y_hts_shr</span> <span class='op'>-</span> <span class='va'>Y_FoReco_shr</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>Y_hts_shr</span> <span class='op'>-</span> <span class='va'>Y_FoReco_shr</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 
-<span class='co'># sam - hts error "MinT needs covariance matrix to be positive definite"</span>
-<span class='co'>#       The covariance matrix is non-singular, but its condition number is very low,</span>
-<span class='co'>#       and hts considers it as non-invertible</span>
-<span class='va'>Y_hts_sam</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/MinT.html'>MinT</a></span><span class='op'>(</span><span class='va'>BASE</span>, nodes <span class='op'>=</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/helper-functions.html'>get_nodes</a></span><span class='op'>(</span><span class='va'>htseg1</span><span class='op'>)</span>, keep <span class='op'>=</span> <span class='st'>"all"</span>, covariance <span class='op'>=</span> <span class='st'>"sam"</span>, residual <span class='op'>=</span> <span class='va'>res</span><span class='op'>)</span>
+<span class='co'># sam - hts error "MinT needs covariance matrix to be positive definite."</span>
+<span class='co'>#       The covariance matrix is ill-conditioned, hts considers it as non-invertible</span>
+<span class='va'>Y_hts_sam</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/MinT.html'>MinT</a></span><span class='op'>(</span><span class='va'>BASE</span>, nodes <span class='op'>=</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/helper-functions.html'>get_nodes</a></span><span class='op'>(</span><span class='va'>htseg1</span><span class='op'>)</span>, keep <span class='op'>=</span> <span class='st'>"all"</span>,
+                  covariance <span class='op'>=</span> <span class='st'>"sam"</span>, residual <span class='op'>=</span> <span class='va'>res</span><span class='op'>)</span>
 <span class='va'>Y_FoReco_sam</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>BASE</span>, C <span class='op'>=</span> <span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"sam"</span>, res <span class='op'>=</span> <span class='va'>res</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 <span class='co'># sum((Y_hts_sam-Y_FoReco_sam)&gt;1e-10)</span>
 
@@ -255,7 +260,8 @@ hts: Hierarchical and Grouped Time Series, <em>R package version 6.0.1</em>,
 <span class='va'>na</span> <span class='op'>&lt;-</span> <span class='va'>n</span><span class='op'>-</span><span class='va'>nb</span>
 <span class='va'>C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/smatrix.html'>smatrix</a></span><span class='op'>(</span><span class='va'>htseg2</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='va'>na</span>, <span class='op'>]</span>
 
-<span class='co'>## In FoReco, forecasts must be obtained externally</span>
+<span class='co'>## Computation of the base forecasts</span>
+<span class='co'># using the auto.arima() function of the package forecast (loaded by hts)</span>
 <span class='co'># List containing the base forecasts</span>
 <span class='co'># Forecast horizon: 10</span>
 <span class='va'>base</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
@@ -277,11 +283,9 @@ hts: Hierarchical and Grouped Time Series, <em>R package version 6.0.1</em>,
 <span class='op'>}</span>
 <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>res</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span>
 
-<span class='co'>## Comparison</span>
+<span class='co'>## Comparisons</span>
 <span class='co'># ols</span>
-<span class='va'>Y_hts_forecast</span> <span class='op'>&lt;-</span> <span class='fu'>forecast</span><span class='op'>(</span><span class='va'>htseg2</span>, method <span class='op'>=</span> <span class='st'>"comb"</span>, fmethod <span class='op'>=</span> <span class='st'>"arima"</span>, weights <span class='op'>=</span> <span class='st'>"ols"</span><span class='op'>)</span>
 <span class='va'>Y_hts_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/combinef.html'>combinef</a></span><span class='op'>(</span><span class='va'>BASE</span>, nodes <span class='op'>=</span> <span class='fu'><a href='http://pkg.earo.me/hts/reference/helper-functions.html'>get_nodes</a></span><span class='op'>(</span><span class='va'>htseg2</span><span class='op'>)</span>, keep <span class='op'>=</span> <span class='st'>"all"</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='op'>(</span><span class='fu'><a href='http://pkg.earo.me/hts/reference/allts.html'>allts</a></span><span class='op'>(</span><span class='va'>Y_hts_forecast</span><span class='op'>)</span> <span class='op'>-</span> <span class='va'>Y_hts_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 <span class='va'>Y_FoReco_ols</span> <span class='op'>&lt;-</span> <span class='fu'><a href='htsrec.html'>htsrec</a></span><span class='op'>(</span><span class='va'>BASE</span>, C <span class='op'>=</span> <span class='va'>C</span>, comb <span class='op'>=</span> <span class='st'>"ols"</span><span class='op'>)</span><span class='op'>$</span><span class='va'>recf</span>
 <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>abs</a></span><span class='op'>(</span><span class='va'>Y_hts_ols</span> <span class='op'>-</span> <span class='va'>Y_FoReco_ols</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>1e-10</span><span class='op'>)</span>
 

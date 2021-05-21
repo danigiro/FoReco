@@ -1,6 +1,8 @@
 ---
 title: "Using the `FoReco` package for cross-sectional, temporal and cross-temporal point forecast reconciliation"
 output: rmarkdown::html_vignette
+author: Daniele Girolimetto
+date: "`r Sys.Date()`"
 vignette: >
   %\VignetteIndexEntry{Using the `FoReco` package}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,17 +22,20 @@ knitr::opts_chunk$set(
 
 The **FoReco** (**Fo**recast **Reco**nciliation) package is designed for point forecast reconciliation, a **post-forecasting** process aimed to improve the quality of the base forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.
 
-It offers classical (bottom-up), optimal and heuristic combination forecast reconciliation procedures by exploiting cross-sectional, temporal, and cross-temporal relationships linking the time series.
+It offers classical (bottom-up and top-down), and modern (optimal and heuristic combination) forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal linearly constrained time series.
 
 ### What are the most important functions?
 The main functions are:
 
 * `htsrec()`: cross-sectional (contemporaneous) forecast reconciliation.
 * `thfrec()`: forecast reconciliation for a single time series through temporal hierarchies.
+* `lccrec()`: level conditional forecast reconciliation for genuine hierarchical/grouped time series.
+* `tdrec()`: top-down (cross-sectional, temporal, cross-temporal) forecast reconciliation for genuine hierarchical/grouped time series.
+* `ctbu()`: bottom-up cross-temporal forecast reconciliation.
 * `tcsrec()`: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.
 * `cstrec()`: heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.
 * `iterec()`: heuristic iterative cross-temporal forecast reconciliation.
-* `octrec()`: optimal cross-temporal forecast reconciliation.
+* `octrec()`: optimal combination cross-temporal forecast reconciliation.
 
 ### Installation
 You can install the **stable** version on [R CRAN](https://cran.r-project.org/).
@@ -393,27 +398,25 @@ cst_recf <- cstrec(FoReco_data$base, m = 12, C = FoReco_data$C,
 ```
 
 * Iterative cross-temporal reconciliation (Di Fonzo and Girolimetto, 2020)
-```{r ite, eval=FALSE, fig.width = 5, dpi=200, out.width="500px", fig.height=3.5}
+```{r ite, eval=FALSE, message = FALSE, fig.width = 5, dpi=200, out.width="500px", fig.height=3.5}
 ite_recf <- iterec(FoReco_data$base,
                    m = 12, C = FoReco_data$C,
                    thf_comb = "acov", hts_comb = "shr",
                    res = FoReco_data$res, start_rec = "thf")$recf
-#> ---------------------------------------
-#> Iter #  (Cross-sectional incoherence) (Temporal incoherence)
-#> thf: 000  (1067.99485989205)  (1426.5513133205)
-#> thf: 001  (664.709318459475)  (564.414554571728)
-#> thf: 002  (229.380269405745)  (118.752261421519)
-#> thf: 003  (24.9431940889919)  (13.6060386528783)
-#> thf: 004  (5.37854848829375)  (2.21960789386029)
-#> thf: 005  (0.37251625538498)  (0.191544984783356)
-#> thf: 006  (0.0972170752758785)  (0.0439395488213421)
-#> thf: 007  (0.00744783958359108)  (0.00326627927896794)
-#> thf: 008  (0.00119733279655776)  (0.000555450468183949)
-#> thf: 009  (0.000118053594384548)  (6.68458906503133e-05)
-#> thf: 010  (3.40054562144587e-05)  (1.5193330327179e-05)
-#> thf: Convergence (starting from thf) achieved at iteration number 11! 
-#> thf: Temporal incoherence 1.67142842144585e-06 < 1e-05 tolerance
-#> ---------------------------------------
+#> --------------------------------------------------------------------------------
+#> Iter       # |     Cross-sec. incoherence     |      Temporal incoherence      |
+#> thf:       0 |                         159.89 |                         187.63 |
+#> thf:       1 |                          60.11 |                          38.77 |
+#> thf:       2 |                          18.60 |                           7.73 |
+#> thf:       3 |                           1.61 |                       9.91e-01 |
+#> thf:       4 |                       4.16e-01 |                       2.07e-01 |
+#> thf:       5 |                       3.03e-02 |                       2.00e-02 |
+#> thf:       6 |                       9.18e-03 |                       5.31e-03 |
+#> thf:       7 |                       5.18e-04 |                       1.98e-04 |
+#> thf:       8 |                       1.30e-04 |                       6.45e-05 |
+#> thf: Convergence (starting from thf) achieved at iteration number 9! 
+#> thf: Temporal incoherence 4.94e-06 < 1e-05 tolerance
+#> --------------------------------------------------------------------------------
 ```
 
 ```{r echo=FALSE, out.width = "300px"}

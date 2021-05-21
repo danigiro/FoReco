@@ -53,9 +53,10 @@
 
 
 <meta property="og:title" content="Commutation matrix — commat" />
-<meta property="og:description" content="This function returns the ((r c) x (r c)) commutation matrix P such that
-$$P vec(Y) = vec(Y'),$$
-where Y is a (r x c) matrix." />
+<meta property="og:description" content="This function returns the (\((r c) \times (r c)\))
+commutation matrix \(\textbf{P}\) such that
+\[\textbf{P} \mbox{vec}(\textbf{Y}) = \mbox{vec}(\textbf{Y}'),\]
+where \(\textbf{Y}\) is a (\(r \times c\)) matrix." />
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg" />
 
 
@@ -88,7 +89,7 @@ where Y is a (r x c) matrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -96,21 +97,21 @@ where Y is a (r x c) matrix." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -127,7 +128,7 @@ where Y is a (r x c) matrix." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -136,13 +137,13 @@ where Y is a (r x c) matrix." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -171,9 +172,10 @@ where Y is a (r x c) matrix." />
     </div>
 
     <div class="ref-description">
-    <p>This function returns the (<code>(r c) x (r c)</code>) commutation matrix <code>P</code> such that
-$$P vec(Y) = vec(Y'),$$
-where <code>Y</code> is a (<code>r x c</code>) matrix.</p>
+    <p>This function returns the (\((r c) \times (r c)\))
+commutation matrix \(\textbf{P}\) such that
+\[\textbf{P} \mbox{vec}(\textbf{Y}) = \mbox{vec}(\textbf{Y}'),\]
+where \(\textbf{Y}\) is a (\(r \times c\)) matrix.</p>
     </div>
 
     <pre class="usage"><span class='fu'>commat</span><span class='op'>(</span><span class='va'>r</span>, <span class='va'>c</span><span class='op'>)</span></pre>
@@ -183,21 +185,35 @@ where <code>Y</code> is a (<code>r x c</code>) matrix.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>r</th>
-      <td><p>Number of rows of <code>Y</code>.</p></td>
+      <td><p>Number of rows of \(\textbf{Y}\).</p></td>
     </tr>
     <tr>
       <th>c</th>
-      <td><p>Number of columns of <code>Y</code>.</p></td>
+      <td><p>Number of columns of \(\textbf{Y}\).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A sparse (<code>(r c) x (r c)</code>) matrix.</p>
+    <p>A sparse (\((r c) \times (r c)\)) matrix, \(\textbf{P}\).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Magnus, J.R., Neudecker, H. (2019), Matrix Differential Calculus with Applications
-in Statistics and Econometrics, third edition, New York, Wiley, pp. 54-55.</p>
+    <p>Magnus, J.R., Neudecker, H. (2019), Matrix Differential Calculus
+with Applications in Statistics and Econometrics, third edition, New York,
+Wiley, pp. 54-55.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other utilities: 
+<code><a href='Cmatrix.html'>Cmatrix</a>()</code>,
+<code><a href='FoReco2ts.html'>FoReco2ts</a>()</code>,
+<code><a href='ctf_tools.html'>ctf_tools</a>()</code>,
+<code><a href='hts_tools.html'>hts_tools</a>()</code>,
+<code><a href='oct_bounds.html'>oct_bounds</a>()</code>,
+<code><a href='score_index.html'>score_index</a>()</code>,
+<code><a href='shrink_estim.html'>shrink_estim</a>()</code>,
+<code><a href='srref.html'>srref</a>()</code>,
+<code><a href='thf_tools.html'>thf_tools</a>()</code>,
+<code><a href='ut2c.html'>ut2c</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='va'>Y</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>30</span><span class='op'>)</span>, <span class='fl'>5</span>, <span class='fl'>6</span><span class='op'>)</span>

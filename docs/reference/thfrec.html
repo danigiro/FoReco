@@ -90,7 +90,7 @@ bottom-up approach is available." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
       </span>
     </div>
 
@@ -98,21 +98,21 @@ bottom-up approach is available." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home"></span>
+    <span class="fas fa-home"></span>
      
     Home
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-question-circle"></span>
+    <span class="fas fa-question-circle"></span>
      
     Vignettes
      
@@ -129,7 +129,7 @@ bottom-up approach is available." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
+    <span class="far fa-newspaper"></span>
      
     News
   </a>
@@ -138,13 +138,13 @@ bottom-up approach is available." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/daniGiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
+    <span class="fab fa-r-project fa-lg"></span>
      
   </a>
 </li>
@@ -181,27 +181,30 @@ bottom-up approach is available.</p>
     </div>
 
     <pre class="usage"><span class='fu'>thfrec</span><span class='op'>(</span><span class='va'>basef</span>, <span class='va'>m</span>, <span class='va'>comb</span>, <span class='va'>res</span>, mse <span class='op'>=</span> <span class='cn'>TRUE</span>, corpcor <span class='op'>=</span> <span class='cn'>FALSE</span>,
-       type <span class='op'>=</span> <span class='st'>"M"</span>, sol <span class='op'>=</span> <span class='st'>"direct"</span>, nn <span class='op'>=</span> <span class='cn'>FALSE</span>, keep <span class='op'>=</span> <span class='st'>"list"</span>,
-       settings <span class='op'>=</span> <span class='fu'>osqpSettings</span><span class='op'>(</span><span class='op'>)</span>, bounds <span class='op'>=</span> <span class='cn'>NULL</span>, Omega <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+       type <span class='op'>=</span> <span class='st'>"M"</span>, sol <span class='op'>=</span> <span class='st'>"direct"</span>, keep <span class='op'>=</span> <span class='st'>"list"</span>, nn <span class='op'>=</span> <span class='cn'>FALSE</span>,
+        nn_type <span class='op'>=</span> <span class='st'>"osqp"</span>, settings <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, bounds <span class='op'>=</span> <span class='cn'>NULL</span>, Omega <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>basef</th>
-      <td><p>(<code>h(k* + m) x 1</code>) vector of base forecasts to be reconciled, containing the forecasts
-at all the needed temporal frequencies ordered as [lowest_freq' ...  highest_freq']'.</p></td>
+      <td><p>(\(h(k^\ast + m) \times 1\)) vector of base forecasts to be
+reconciled, containing the forecasts at all the needed temporal frequencies
+ordered as [lowest_freq' ...  highest_freq']'.</p></td>
     </tr>
     <tr>
       <th>m</th>
-      <td><p>Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, <code>m</code>),
-or a subset of the <code>p</code> factors of <code>m</code>.</p></td>
+      <td><p>Highest available sampling frequency per seasonal cycle (max. order
+of temporal aggregation, \(m\)), or a subset of \(p\) factors
+of \(m\).</p></td>
     </tr>
     <tr>
       <th>comb</th>
-      <td><p>Type of the reconciliation. Except for bottom up, all other options
-correspond to a different (<code>(k* + m) x (k* + m)</code>) covariance matrix,
-<code>k*</code> is the sum of (<code>p-1</code>) factors of <code>m</code> (excluding <code>m</code>):</p><ul>
+      <td><p>Type of the reconciliation. Except for bottom up, all other
+options correspond to a different (\((k^\ast + m) \times (k^\ast + m)\))
+covariance matrix, \(k^\ast\) is the sum of (\(p-1\)) factors of
+\(m\) (excluding \(m\)):</p><ul>
 <li><p><b>bu</b> (Bottom-up);</p></li>
 <li><p><b>ols</b> (Identity);</p></li>
 <li><p><b>struc</b> (Structural variances);</p></li>
@@ -218,63 +221,73 @@ correspond to a different (<code>(k* + m) x (k* + m)</code>) covariance matrix,
     </tr>
     <tr>
       <th>res</th>
-      <td><p>vector containing the in-sample residuals at all the temporal frequencies
-ordered as <code>basef</code>, i.e. [lowest_freq' ...  highest_freq']', needed to
-estimate the covariance matrix when <code>comb =</code> <code>{"wlsv",</code> <code>"wlsh",</code>
-<code>"acov",</code> <code>"strar1",</code> <code>"sar1",</code> <code>"har1",</code>
+      <td><p>vector containing the in-sample residuals at all the temporal
+frequencies ordered as <code>basef</code>, i.e. [lowest_freq' ...  highest_freq']',
+needed to estimate the covariance matrix when <code>comb =</code> <code>{"wlsv",</code>
+<code>"wlsh",</code> <code>"acov",</code> <code>"strar1",</code> <code>"sar1",</code> <code>"har1",</code>
 <code>"shr",</code> <code>"sam"}</code>.</p></td>
     </tr>
     <tr>
       <th>mse</th>
       <td><p>Logical value: <code>TRUE</code> (<em>default</em>) calculates the
-covariance matrix of the in-sample residuals (when necessary) according to the original
-<span class="pkg">hts</span> and <span class="pkg">thief</span> formulation: no mean correction, T as denominator.</p></td>
+covariance matrix of the in-sample residuals (when necessary) according to
+the original <span class="pkg">hts</span> and <span class="pkg">thief</span> formulation: no mean correction,
+T as denominator.</p></td>
     </tr>
     <tr>
       <th>corpcor</th>
       <td><p>Logical value: <code>TRUE</code> if <span class="pkg">corpcor</span> (Schäfer et
 al., 2017) must be used to shrink the sample covariance matrix according to
-Schäfer and Strimmer (2005), otherwise the function uses the same
-implementation as package <span class="pkg">hts</span>.</p></td>
+Schäfer and Strimmer (2005), otherwise the function uses the
+same implementation as package <span class="pkg">hts</span>.</p></td>
     </tr>
     <tr>
       <th>type</th>
       <td><p>Approach used to compute the reconciled forecasts: <code>"M"</code> for
 the projection approach with matrix M (<em>default</em>), or <code>"S"</code> for the
-structural approach with summing matrix S.</p></td>
+structural approach with temporal summing matrix R.</p></td>
     </tr>
     <tr>
       <th>sol</th>
-      <td><p>Solution technique for the reconciliation problem: either <code>"direct"</code> (<em>default</em>) for the direct
-solution or <code>"osqp"</code> for the numerical solution (solving a linearly constrained quadratic
-program using <code><a href='https://rdrr.io/pkg/osqp/man/solve_osqp.html'>solve_osqp</a></code>).</p></td>
-    </tr>
-    <tr>
-      <th>nn</th>
-      <td><p>Logical value: <code>TRUE</code> if non-negative reconciled forecasts are wished.</p></td>
+      <td><p>Solution technique for the reconciliation problem: either
+<code>"direct"</code> (<em>default</em>) for the closed-form matrix solution, or
+<code>"osqp"</code> for the numerical solution (solving a linearly constrained
+quadratic program using <code><a href='https://rdrr.io/pkg/osqp/man/solve_osqp.html'>solve_osqp</a></code>).</p></td>
     </tr>
     <tr>
       <th>keep</th>
-      <td><p>Return a list object of the reconciled forecasts at all levels.</p></td>
+      <td><p>Return a list object of the reconciled forecasts at all levels
+(if keep = "list") or only the reconciled forecasts matrix (if keep = "recf").</p></td>
+    </tr>
+    <tr>
+      <th>nn</th>
+      <td><p>Logical value: <code>TRUE</code> if non-negative reconciled forecasts
+are wished.</p></td>
+    </tr>
+    <tr>
+      <th>nn_type</th>
+      <td><p>"osqp" (default), "KAnn" (only <code>type == "M"</code>) or "sntz".</p></td>
     </tr>
     <tr>
       <th>settings</th>
-      <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>). The default options
-are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>, <code>eps_rel = 1e-5</code>,
-<code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>. For details, see the
-<a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2019).</p></td>
+      <td><p>Settings for <span class="pkg">osqp</span> (object <code><a href='https://rdrr.io/pkg/osqp/man/osqpSettings.html'>osqpSettings</a></code>).
+The default options are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>,
+<code>eps_rel = 1e-5</code>, <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>.
+For details, see the <a href='https://osqp.org/'><span class="pkg">osqp</span> documentation</a>
+(Stellato et al., 2019).</p></td>
     </tr>
     <tr>
       <th>bounds</th>
-      <td><p>(<code>(k* + m) x 2</code>) matrix with bounds on the variables: the first column is the lower bound,
-and the second column is the upper bound.</p></td>
+      <td><p>(\((k^\ast + m) \times 2\)) matrix with temporal bounds: the
+first column is the lower bound, and the second column is the upper bound.</p></td>
     </tr>
     <tr>
       <th>Omega</th>
       <td><p>This option permits to directly enter the covariance matrix:</p><ol>
-<li><p><code>Omega</code> must be a p.d. (<code>(k* + m) x (k* + m)</code>) matrix or a list
-  of <code>h</code> matrix (one for each forecast horizon);</p></li>
-<li><p>if <code>comb</code> is different from "<code>omega</code>", <code>Omega</code> is not used.</p></li>
+<li><p><code>Omega</code> must be a p.d. (\((k^\ast + m) \times (k^\ast + m)\))
+  matrix or a list of \(h\) matrix (one for each forecast horizon);</p></li>
+<li><p>if <code>comb</code> is different from "<code>omega</code>", <code>Omega</code> is
+  not used.</p></li>
 </ol></td>
     </tr>
     </table>
@@ -282,32 +295,107 @@ and the second column is the upper bound.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>If the parameter <code>keep</code> is equal to <code>"recf"</code>, then the function
-returns only the reconciled forecasts vector, otherwise (<code>keep="all"</code>)
+returns only the (\(h(k^\ast + m) \times 1\)) reconciled forecasts vector, otherwise (<code>keep="all"</code>)
 it returns a list that mainly depends on what type of representation (<code>type</code>)
-and methodology (<code>sol</code>) have been used:</p>
-<dt><code>recf</code></dt><dd><p>(<code>h(k* + m) x 1</code>) reconciled forecasts vector.</p></dd>
-<dt><code>Omega</code></dt><dd><p>Covariance matrix used for forecast reconciliation.</p></dd>
+and solution technique (<code>sol</code>) have been used:</p>
+<dt><code>recf</code></dt><dd><p>(\(h(k^\ast + m) \times 1\)) reconciled forecasts vector, \(\widetilde{\mathbf{y}}\).</p></dd>
+<dt><code>Omega</code></dt><dd><p>Covariance matrix used for forecast reconciliation, \(\mathbf{\Omega}\).</p></dd>
 <dt><code>nn_check</code></dt><dd><p>Number of negative values (if zero, there are no values below zero).</p></dd>
 <dt><code>rec_check</code></dt><dd><p>Logical value: has the hierarchy been respected?</p></dd>
-<dt><code>M</code> (<code>type="M"</code> and <code>type="direct"</code>)</dt><dd><p>Projection matrix (projection approach)</p></dd>
-<dt><code>G</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt><dd><p>Projection matrix (structural approach).</p></dd>
-<dt><code>S</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt><dd><p>Temporal summing matrix, <strong>R</strong>.</p></dd>
-<dt><code>info</code> (<code>type="osqp"</code>)</dt><dd><p>matrix with some useful indicators (columns)
-for each forecast horizon <code>h</code> (rows): run time (<code>run_time</code>) number of iteration,
-norm of primal residual (<code>pri_res</code>), status of osqp's solution (<code>status</code>) and
-polish's status (<code>status_polish</code>).</p></dd>
+<dt><code>varf</code> (<code>type="direct"</code>)</dt><dd><p>(\((k^\ast + m) \times 1\)) reconciled forecasts variance vector for \(h=1\), \(\mbox{diag}(\mathbf{MW}\)).</p></dd>
+<dt><code>M</code> (<code>type="direct"</code>)</dt><dd><p>Projection matrix, \(\mathbf{M}\) (projection approach).</p></dd>
+<dt><code>G</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt><dd><p>Projection matrix, \(\mathbf{G}\) (structural approach, \(\mathbf{M}=\mathbf{R}\mathbf{G}\)).</p></dd>
+<dt><code>S</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt><dd><p>Temporal summing matrix, \(\mathbf{R}\).</p></dd>
+<dt><code>info</code> (<code>type="osqp"</code>)</dt><dd><p>matrix with information in columns
+for each forecast horizon \(h\) (rows): run time (<code>run_time</code>),
+number of iteration (<code>iter</code>), norm of primal residual (<code>pri_res</code>),
+status of osqp's solution (<code>status</code>) and polish's status
+(<code>status_polish</code>). It will also be returned with <code>nn = TRUE</code> if
+a solver (see <code>nn_type</code>) will be use.</p></dd>
 
-Only if comb = "bu", the function returns recf, S and M.
+Only if comb = "bu", the function returns recf, R and M.
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>In case of non-negativity constraints, there are two ways:</p><ol>
-<li><p><code>sol = "direct"</code> and <code>nn = TRUE</code>: the base forecasts
-  will be reconciled at first without non-negativity constraints, then, if negative reconciled
-  values are present, the <code>"osqp"</code> solver is used.</p></li>
-<li><p><code>sol = "osqp"</code> and <code>nn = TRUE</code>: the base forecasts will be
-  reconciled through the <code>"osqp"</code> solver.</p></li>
-</ol>
+    <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
+
+Let \(m\) be the highest available
+sampling frequency per seasonal cycle, and denote
+\({\cal K} = \left\lbrace k_m, k_{p-1}, \ldots, k_{2}, k_1\right\rbrace\)
+the \(p\) factors of \(m\), in descending order, where
+\(k_p=m\), and \(k_1=1\). Define \(\mathbf{K}\)
+the \(\left( k^\ast \times m\right)\) temporal aggregation matrix
+converting the high-frequency observations into lower-frequency
+(temporally aggregated) ones:
+\[ \mathbf{K} = \left[\begin{array}{c}
+\mathbf{1}_m' \cr
+\mathbf{I}_{\frac{m}{k_{p-1}}} \otimes \mathbf{1}_{k_{p-1}}' \cr
+\vdots \cr
+\mathbf{I}_{\frac{m}{k_{2}}} \otimes \mathbf{1}_{k_{2}}' \cr
+\end{array}\right].\]
+Denote
+\(\mathbf{R} = \left[\begin{array}{c}
+\mathbf{K} \cr \mathbf{I}_m
+\end{array}\right]\) the \(\left[(k^\ast+m) \times m \right]\)
+<em>temporal summing</em> matrix, and
+\(\mathbf{Z}' = \left[ \mathbf{I}_{k^\ast} \; -\mathbf{K} \right]\)
+the zero constraints kernel matrix.</p>
+<p>Suppose we have the \(\left[(k^\ast+m) \times 1\right]\) vector
+\(\widehat{\mathbf{y}}\) of unbiased base forecasts for the
+\(p\) temporal aggregates of a single time series \(Y\)
+within a complete time cycle, i.e. at the forecast horizon \(h=1\)
+for the lowest (most aggregated) time frequency. If the base forecasts
+have been independently obtained, generally they do not fulfill the
+temporal aggregation constraints, i.e. \(\mathbf{Z}'
+\widehat{\mathbf{y}} \ne \mathbf{0}_{(k^\ast \times 1)}\).
+By adapting the general point forecast reconciliation according to
+the projection approach (<code>type = "M"</code>),
+the vector of temporally reconciled forecasts
+is given by:
+\[\widetilde{\mathbf{y}} = \widehat{\mathbf{y}} -
+\mathbf{\Omega}\mathbf{Z}\left(\mathbf{Z}'\mathbf{\Omega}
+\mathbf{Z}\right)^{-1}\mathbf{Z}'\widehat{\mathbf{y}},\]
+where \(\mathbf{\Omega}\) is a \(\left[(k^\ast+m)
+\times (k^\ast+m)\right]\) p.d. matrix, assumed known. The alternative
+equivalent solution (<code>type = "S"</code>) following the
+structural reconciliation approach by Athanasopoulos et al. (2017) is given by:
+\[\widetilde{\mathbf{y}} = \mathbf{R}\left(\mathbf{R}'
+\mathbf{\Omega}^{-1}\mathbf{R}\right)^{-1}\mathbf{R}'
+\mathbf{\Omega}^{-1}\widehat{\mathbf{y}}.\]</p>
+<p><strong>Bounds on the reconciled forecasts</strong></p>
+<p>When the reconciliation makes use of the optimization package osqp,
+the user may impose bounds on the reconciled forecasts.
+The parameter <code>bounds</code> permits to consider lower (\(\mathbf{a}\)) and
+upper (\(\mathbf{b}\)) bounds like \(\mathbf{a} \leq
+\widetilde{\mathbf{y}} \leq \mathbf{b}\) such that:
+\[ \begin{array}{c}
+a_1 \leq \widetilde{y}_1 \leq b_1 \cr
+\dots \cr
+a_{(k^\ast + m)} \leq \widetilde{y}_{(k^\ast + m)} \leq b_{(k^\ast + m)} \cr
+\end{array} \Rightarrow
+\mbox{bounds} = [\mathbf{a} \; \mathbf{b}] =
+\left[\begin{array}{cc}
+a_1 & b_1 \cr
+\vdots & \vdots \cr
+a_{(k^\ast + m)} & b_{(k^\ast + m)} \cr
+\end{array}\right],\]
+where \(a_i \in [- \infty, + \infty]\) and \(b_i \in [- \infty, + \infty]\).
+If \(y_i\) is unbounded, the \(i\)-th row of <code>bounds</code> would be equal
+to <code><a href='https://rdrr.io/r/base/c.html'>c(-Inf, +Inf)</a></code>.
+Notice that if the <code>bounds</code> parameter is used, <code>sol = "osqp"</code> must be used.
+This is not true in the case of non-negativity constraints:</p><ul>
+<li><p><code>sol = "direct"</code>: first the base forecasts
+  are reconciled without non-negativity constraints, then, if negative reconciled
+  values are present, the <code>"osqp"</code> solver is used;</p></li>
+<li><p><code>sol = "osqp"</code>: the base forecasts are
+  reconciled using the <code>"osqp"</code> solver.</p></li>
+</ul><p>In this case it is not necessary to build a matrix containing
+the bounds, and it is sufficient to set <code>nn = "TRUE"</code>.</p>
+<p>Non-negative reconciled forecasts may be obtained by setting <code>nn_type</code> alternatively as:</p><ul>
+<li><p><code>nn_type = "KAnn"</code> (Kourentzes and Athanasopoulos, 2021)</p></li>
+<li><p><code>nn_type = "sntz"</code> ("set-negative-to-zero")</p></li>
+<li><p><code>nn_type = "osqp"</code> (Stellato et al., 2020)</p></li>
+</ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -331,11 +419,23 @@ package version 1.6.9 (April 1, 2017), <a href='https://CRAN.R-project.org/packa
 <p>Schäfer, J.L., Strimmer, K. (2005), A Shrinkage Approach to Large-Scale Covariance
 Matrix Estimation and Implications for Functional Genomics, <em>Statistical
 Applications in Genetics and Molecular Biology</em>, 4, 1.</p>
-<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2018). OSQP:
-An Operator Splitting Solver for Quadratic Programs, <a href='https://arxiv.org/abs/1711.08013'>arXiv:1711.08013</a>.</p>
+<p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A., Boyd, S. (2020). OSQP:
+An Operator Splitting Solver for Quadratic Programs, <em>Mathematical Programming Computation</em>,
+12, 4, 637-672.</p>
 <p>Stellato, B., Banjac, G., Goulart, P., Boyd, S., Anderson, E. (2019), OSQP:
 Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 (October 10, 2019), <a href='https://CRAN.R-project.org/package=osqp'>https://CRAN.R-project.org/package=osqp</a>.</p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Other reconciliation procedures: 
+<code><a href='cstrec.html'>cstrec</a>()</code>,
+<code><a href='ctbu.html'>ctbu</a>()</code>,
+<code><a href='htsrec.html'>htsrec</a>()</code>,
+<code><a href='iterec.html'>iterec</a>()</code>,
+<code><a href='lccrec.html'>lccrec</a>()</code>,
+<code><a href='octrec.html'>octrec</a>()</code>,
+<code><a href='tcsrec.html'>tcsrec</a>()</code>,
+<code><a href='tdrec.html'>tdrec</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>FoReco_data</span><span class='op'>)</span>
