@@ -10,7 +10,7 @@ status](https://github.com/daniGiro/FoReco/workflows/R-CMD-check/badge.svg)](htt
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco)
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![devel
 version](https://img.shields.io/badge/devel%20version-0.2.0-blue.svg)](https://github.com/daniGiro/FoReco)
 [![License:
