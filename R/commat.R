@@ -1,14 +1,16 @@
 #' @title Commutation matrix
 #'
-#' @description This function returns the (\mjseqn{(r c) \times (r c)})
-#' commutation matrix \mjseqn{\textbf{P}} such that
-#' \mjsdeqn{\textbf{P} \mbox{vec}(\textbf{Y}) = \mbox{vec}(\textbf{Y}'),}
-#' where \mjseqn{\textbf{Y}} is a (\mjseqn{r \times c}) matrix.
+#' @description
+#' \loadmathjax
+#' This function returns the (\mjseqn{(r c) \times (r c)})
+#' commutation matrix \mjseqn{\mathbf{P}} such that
+#' \mjsdeqn{\mathbf{P} \mbox{vec}(\mathbf{Y}) = \mbox{vec}(\mathbf{Y}'),}
+#' where \mjseqn{\mathbf{Y}} is a (\mjseqn{r \times c}) matrix.
 #'
-#' @param r Number of rows of \mjseqn{\textbf{Y}}.
-#' @param c Number of columns of \mjseqn{\textbf{Y}}.
+#' @param r Number of rows of \mjseqn{\mathbf{Y}}.
+#' @param c Number of columns of \mjseqn{\mathbf{Y}}.
 #'
-#' @return A sparse (\mjseqn{(r c) \times (r c)}) matrix, \mjseqn{\textbf{P}}.
+#' @return A sparse (\mjseqn{(r c) \times (r c)}) matrix, \mjseqn{\mathbf{P}}.
 #'
 #' @references Magnus, J.R., Neudecker, H. (2019), Matrix Differential Calculus
 #' with Applications in Statistics and Econometrics, third edition, New York,

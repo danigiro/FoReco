@@ -97,7 +97,7 @@ reconciled forecasts, with either endogenous or exogenous constraints." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.1</span>
       </span>
     </div>
 
@@ -220,7 +220,7 @@ of \(m\).</p></td>
       <th>C</th>
       <td><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones (or a list
-of matrices forming \(\textbf{C} = [\textbf{C}_1' \; \textbf{C}_2' \; ... \; \textbf{C}_L']'\),
+of matrices forming \(\mathbf{C} = [\mathbf{C}_1' \; \mathbf{C}_2' \; ... \; \mathbf{C}_L']'\),
 \(1, ..., L\) being the number of the cross-sectional upper levels.</p></td>
     </tr>
     <tr>
@@ -230,7 +230,9 @@ in each level of the hierarchy (<code>nl[1] = 1</code>).</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>covariance matrix or a vector</p></td>
+      <td><p>covariance matrix or a vector (weights used in the reconciliation:
+either (\(n_b \times 1\)) for exogenous or (\(n \times 1\)) for
+endogenous constraints).</p></td>
     </tr>
     <tr>
       <th>bnaive</th>
@@ -284,7 +286,11 @@ FoReco.</p></td>
     <p>The function returns the level reconciled forecasts
 in case of an elementary hierarchy with one level.
 Otherwise it returns a list with</p>
-<dt><code>recf</code></dt><dd><p>the first level reconciled forecasts, if <code>CCC = FALSE</code>, or the CCC reconciled forecasts.</p></dd>
+<dt><code>recf</code></dt><dd><p>Level Conditional Coherent (<code>CCC = FALSE</code>) forecasts
+matrix/vector calculated as simple averages of upper level conditional
+reconciled forecasts, with either endogenous or exogenous constraints.
+If <code>CCC = TRUE</code> then it is the Combined Conditional Coherent matrix/vector,
+as weighted averages of LCC and bottom-up reconciled forecasts.</p></dd>
 <dt><code>levrecf</code></dt><dd><p>list of level conditional reconciled forecasts (+ BU).</p></dd>
 <dt><code>info</code> (<code>type="osqp"</code>)</dt><dd><p>matrix with some useful indicators (columns)
 for each forecast horizon \(h\) (rows): run time (<code>run_time</code>), number of iteration,

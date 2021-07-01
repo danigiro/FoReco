@@ -1,3 +1,9 @@
+# FoReco 0.2.1
+
+##### Minor changes
+* Fixed a bug in the output of `lccrec()` (now the function returns the Level Conditional Coherent or the Combined Conditional Coherent forecasts);
+* Fixed the not negative reconciliation "**KAnn**" when `keep = "list"`.
+
 # FoReco 0.2.0
 
 ##### Major changes

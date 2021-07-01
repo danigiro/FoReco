@@ -44,7 +44,7 @@
 #'
 #' @return
 #' The function returns a list with two elements:
-#' \item{\code{recf}}{(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix, \mjseqn{\widetilde{\textbf{Y}}}.}
+#' \item{\code{recf}}{(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix, \mjseqn{\widetilde{\mathbf{Y}}}.}
 #' \item{\code{M}}{Matrix which transforms the uni-dimensional reconciled forecasts of step 1 (projection approach) .}
 #'
 #' @references

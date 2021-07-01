@@ -218,6 +218,7 @@ This is not true in the case of non-negativity constraints:
   \item \code{sol = "osqp"}: the base forecasts are
   reconciled using the \code{"osqp"} solver.
 }
+
 In this case it is not necessary to build a matrix containing
 the bounds, and it is sufficient to set \code{nn = "TRUE"}.
 

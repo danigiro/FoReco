@@ -22,13 +22,15 @@ of \mjseqn{m}.}
 
 \item{C}{(\mjseqn{n_a \times n_b}) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones (or a list
-of matrices forming \mjseqn{\textbf{C} = [\textbf{C}_1' \; \textbf{C}_2' \; ... \; \textbf{C}_L']'},
+of matrices forming \mjseqn{\mathbf{C} = [\mathbf{C}_1' \; \mathbf{C}_2' \; ... \; \mathbf{C}_L']'},
 \mjseqn{1, ..., L} being the number of the cross-sectional upper levels.}
 
 \item{nl}{(\mjseqn{L \times 1}) vector containing the number of time series
 in each level of the hierarchy (\code{nl[1] = 1}).}
 
-\item{weights}{covariance matrix or a vector}
+\item{weights}{covariance matrix or a vector (weights used in the reconciliation:
+either (\mjseqn{n_b \times 1}) for exogenous or (\mjseqn{n \times 1}) for
+endogenous constraints).}
 
 \item{bnaive}{matrix/vector of naive bts base forecasts
 (e.g., seasonal averages, as in Hollyman et al., 2021):
@@ -65,7 +67,11 @@ FoReco.}
 The function returns the level reconciled forecasts
 in case of an elementary hierarchy with one level.
 Otherwise it returns a list with
-\item{\code{recf}}{the first level reconciled forecasts, if \code{CCC = FALSE}, or the CCC reconciled forecasts.}
+\item{\code{recf}}{Level Conditional Coherent (\code{CCC = FALSE}) forecasts
+matrix/vector calculated as simple averages of upper level conditional
+reconciled forecasts, with either endogenous or exogenous constraints.
+If \code{CCC = TRUE} then it is the Combined Conditional Coherent matrix/vector,
+as weighted averages of LCC and bottom-up reconciled forecasts.}
 \item{\code{levrecf}}{list of level conditional reconciled forecasts (+ BU).}
 \item{\code{info} (\code{type="osqp"})}{matrix with some useful indicators (columns)
 for each forecast horizon \mjseqn{h} (rows): run time (\code{run_time}), number of iteration,

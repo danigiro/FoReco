@@ -18,7 +18,7 @@ or a subset of the \code{p} factors of \code{m}.}
 A list of seven elements:
 \item{\code{K}}{Temporal aggregation matrix.}
 \item{\code{R}}{Temporal summing matrix.}
-\item{\code{Zt}}{Zero constraints temporal kernel matrix\eqn{,\; \textbf{Z}_h'\textbf{Y}' =
+\item{\code{Zt}}{Zero constraints temporal kernel matrix\eqn{,\; \mathbf{Z}_h'\mathbf{Y}' =
 \mathbf{0}_{\left[hk^* \times n \right]}}{}.}
 \item{\code{kset}}{Set of factors (\code{p}) of \code{m} in descending order (from \code{m}
 to 1)\eqn{,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots,\right.}{} \eqn{\left. k_2, k_1\right\},}{} \eqn{k_p=m, \; k_1=1}{}.}

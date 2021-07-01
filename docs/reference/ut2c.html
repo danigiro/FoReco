@@ -93,7 +93,7 @@ to a 'structural representation', \(\mathbf{y}=\mathbf{S}\mathbf{b}\).
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.1</span>
       </span>
     </div>
 
@@ -193,7 +193,7 @@ to a 'structural representation', \(\mathbf{y}=\mathbf{S}\mathbf{b}\).
     <tr>
       <th>Ut</th>
       <td><p>(\(r \times c\)) zero constraints cross-sectional
-(contemporaneous) kernel matrix \((\textbf{U}'\textbf{y} = \mathbf{0})\)
+(contemporaneous) kernel matrix \((\mathbf{U}'\mathbf{y} = \mathbf{0})\)
 spanning the null space valid for the target forecasts.</p></td>
     </tr>
     <tr>
@@ -244,7 +244,7 @@ Given the cross-sectional aggregation matrices of each hierarchy,
 the zero constraints cross-sectional kernel matrix \(\mathbf{U}'\),
 which accounts for the constraints of both hierarchies,
 can be built as follows:
-\[\footnotesize\mathbf{U}' = \left[\begin{array}{cccccccccccccc|c}
+\[\mathbf{U}' = \left[\begin{array}{cccccccccccccc|c}
 1 & 0 & 0 &-1 &-1 &-1 &-1 &-1 & 0 & 0 & 0 & 0 & 0 & 0 & T\cr
 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &-1 &-1 &-1 &-1 & T\cr
 0 & 1 & 0 &-1 &-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A\cr
@@ -255,8 +255,8 @@ can be built as follows:
 T & A & B & AA& AB& BA& BB& BC& X & Y & XX& XY& YX& YY&
 \end{array}\right].\]
 Function <code>ut2c</code> returns a matrix
-\(\footnotesize\mathbf{U}'_{rref} = \left[\mathbf{I}_6 \; -\mathbf{C} \right]\):
-\[\footnotesize\mathbf{U}'_{rref} = \left[\begin{array}{cccccccccccccc|c}
+\(\mathbf{U}'_{rref} = \left[\mathbf{I}_6 \; -\mathbf{C} \right]\):
+\[\mathbf{U}'_{rref} = \left[\begin{array}{cccccccccccccc|c}
 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &-1 &-1 &-1 &-1 & T\cr
 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 &-1 &-1 &-1 &-1 & A\cr
 0 & 0 & 1 & 0 & 0 & 0 & 0 &-1 &-1 &-1 & 0 & 0 & 0 & 0 & B\cr

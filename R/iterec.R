@@ -77,7 +77,7 @@
 #' }
 #'
 #' @return \code{iterec} returns a list with:
-#' \item{\code{recf}}{(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix, \mjseqn{\widetilde{\textbf{Y}}}.}
+#' \item{\code{recf}}{(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix, \mjseqn{\widetilde{\mathbf{Y}}}.}
 #' \item{\code{d_cs}}{Cross-sectional incoherence at each iteration.}
 #' \item{\code{d_te}}{Temporal incoherence at each iteration.}
 #' \item{\code{start_rec}}{Starting coherence dimension (thf or hts).}

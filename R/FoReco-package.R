@@ -31,6 +31,7 @@
 #'
 #' Di Fonzo, T., Girolimetto, D. (2021), \emph{Forecast combination based forecast reconciliation: insights and extensions} (mimeo).
 #'
+#' @import mathjaxr
 #' @docType package
 #' @name FoReco-package
 #' @keywords package
@@ -41,3 +42,5 @@ NULL
     right = paste0("FoReco ", utils::packageVersion("FoReco"))
   ))
 }
+
+

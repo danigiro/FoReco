@@ -21,11 +21,11 @@ of \mjseqn{m}.}
 mapping the bottom level series into the higher level ones.}
 
 \item{Ut}{Zero constraints cross-sectional (contemporaneous) kernel matrix
-\mjseqn{(\textbf{U}'\textbf{y} = \mathbf{0})} spanning the null space valid
+\mjseqn{(\mathbf{U}'\mathbf{y} = \mathbf{0})} spanning the null space valid
 for the reconciled forecasts. It can be used instead of parameter
 \code{C}, but \code{nb} (\mjseqn{n = n_a + n_b}) is needed if
-\mjseqn{\textbf{U}' \neq [\textbf{I} \ -\textbf{C}]}{}. If the hierarchy
-admits a structural representation, \mjseqn{\textbf{U}'} has dimension
+\mjseqn{\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]}{}. If the hierarchy
+admits a structural representation, \mjseqn{\mathbf{U}'} has dimension
 (\mjseqn{n_a \times n}).}
 }
 \value{

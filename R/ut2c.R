@@ -9,7 +9,7 @@
 #' (\emph{Experimental version})
 #'
 #' @param Ut (\mjseqn{r \times c}) zero constraints cross-sectional
-#' (contemporaneous) kernel matrix \mjseqn{(\textbf{U}'\textbf{y} = \mathbf{0})}
+#' (contemporaneous) kernel matrix \mjseqn{(\mathbf{U}'\mathbf{y} = \mathbf{0})}
 #' spanning the null space valid for the target forecasts.
 #' @param sparse Option to return sparse object (\emph{default} is \code{TRUE}).
 #' @param verbose If \code{TRUE}, print intermediate steps of \code{\link{srref}}.
@@ -34,7 +34,7 @@
 #' the zero constraints cross-sectional kernel matrix \mjseqn{\mathbf{U}'},
 #' which accounts for the constraints of both hierarchies,
 #' can be built as follows:
-#' \mjsdeqn{\footnotesize\mathbf{U}' = \left[\begin{array}{cccccccccccccc|c}
+#' \mjsdeqn{\mathbf{U}' = \left[\begin{array}{cccccccccccccc|c}
 #' 1 & 0 & 0 &-1 &-1 &-1 &-1 &-1 & 0 & 0 & 0 & 0 & 0 & 0 & T\cr
 #' 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &-1 &-1 &-1 &-1 & T\cr
 #' 0 & 1 & 0 &-1 &-1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & A\cr
@@ -45,8 +45,8 @@
 #' T & A & B & AA& AB& BA& BB& BC& X & Y & XX& XY& YX& YY&
 #' \end{array}\right].}
 #' Function \code{\link{ut2c}} returns a matrix
-#' \mjseqn{\footnotesize\mathbf{U}'_{rref} = \left[\mathbf{I}_6 \; -\mathbf{C} \right]}:
-#' \mjsdeqn{\footnotesize\mathbf{U}'_{rref} = \left[\begin{array}{cccccccccccccc|c}
+#' \mjseqn{\mathbf{U}'_{rref} = \left[\mathbf{I}_6 \; -\mathbf{C} \right]}:
+#' \mjsdeqn{\mathbf{U}'_{rref} = \left[\begin{array}{cccccccccccccc|c}
 #' 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 &-1 &-1 &-1 &-1 & T\cr
 #' 0 & 1 & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 &-1 &-1 &-1 &-1 & A\cr
 #' 0 & 0 & 1 & 0 & 0 & 0 & 0 &-1 &-1 &-1 & 0 & 0 & 0 & 0 & B\cr

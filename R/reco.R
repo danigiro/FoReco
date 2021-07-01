@@ -62,7 +62,7 @@ recoM <- function(basef, W, Ht, sol = "direct", nn = FALSE, nn_type = "osqp", se
 
                       rec <- do.call("rbind",rec)
                       out$recf <- do.call("rbind", rec[,"recf"])
-                      out$idx <- unlist(rec[,"idx"])
+                      out$idx <- as.vector(stats::na.omit(unlist(rec[,"idx"])))
                       out$info <- do.call("rbind", rec[,"info"])
                       colnames(out$info) <- c("run_time (s)", "iter", "status", "tol", "itmax", "lidx")
                       rownames(out$info) <- 1:NROW(out$recf)
@@ -444,7 +444,7 @@ M_fbpp <- function(y, Ht, W, b_pos, param, keep){
 
     if(keep == "list"){
       out$M <- .sparseDiagonal(NCOL(W)) - W %*% t(Ht) %*% solveLin(Ht %*% W %*% t(Ht), Ht)
-      out$varf <- diag(M%*%W)
+      out$varf <- diag(out$M%*%W)
     }
     return(out)
   }
@@ -516,7 +516,7 @@ M_KAnn <- function(y, Ht, W, b_pos, param, keep){
 
     if(keep == "list"){
       out$M <- .sparseDiagonal(NCOL(W)) - W %*% t(Ht) %*% solveLin(Ht %*% W %*% t(Ht), Ht)
-      out$varf <- diag(M%*%W)
+      out$varf <- diag(out$M%*%W)
     }
     return(out)
   }

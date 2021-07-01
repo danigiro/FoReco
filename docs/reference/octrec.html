@@ -91,7 +91,7 @@ by Hyndman et al. (2011)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.1</span>
       </span>
     </div>
 
@@ -347,9 +347,7 @@ polish's status (<code>status_polish</code>).</p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
-
-Considering contemporaneous and temporal dimensions in the
+    <p>Considering contemporaneous and temporal dimensions in the
 same framework requires to extend and adapt the notations
 used in <a href='htsrec.html'>htsrec</a> and <a href='thfrec.html'>thfrec</a>.
 To do that, we define the matrix containing the base forecasts
@@ -444,7 +442,9 @@ This is not true in the case of non-negativity constraints:</p><ul>
   values are present, the <code>"osqp"</code> solver is used;</p></li>
 <li><p><code>sol = "osqp"</code>: the base forecasts are
   reconciled using the <code>"osqp"</code> solver.</p></li>
-</ul><p>In this case it is not necessary to build a matrix containing
+</ul>
+
+<p>In this case it is not necessary to build a matrix containing
 the bounds, and it is sufficient to set <code>nn = "TRUE"</code>.</p>
 <p>Non-negative reconciled forecasts may be obtained by setting <code>nn_type</code> alternatively as:</p><ul>
 <li><p><code>nn_type = "KAnn"</code> (Kourentzes and Athanasopoulos, 2021)</p></li>

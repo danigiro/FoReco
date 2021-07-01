@@ -89,7 +89,7 @@ Some useful tools for the cross-temporal forecast reconciliation of a linearly c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.1</span>
       </span>
     </div>
 
@@ -202,11 +202,11 @@ series (<em>default</em> is <code>1</code>).</p></td>
     <tr>
       <th>Ut</th>
       <td><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\((\textbf{U}'\textbf{y} = \mathbf{0})\) spanning the null space valid
+\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
 for the reconciled forecasts. It can be used instead of parameter
 <code>C</code>, but <code>nb</code> (\(n = n_a + n_b\)) is needed if
-\(\textbf{U}' \neq [\textbf{I} \ -\textbf{C}]\). If the hierarchy
-admits a structural representation, \(\textbf{U}'\) has dimension
+\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
+admits a structural representation, \(\mathbf{U}'\) has dimension
 (\(n_a \times n\)).</p></td>
     </tr>
     <tr>

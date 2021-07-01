@@ -184,7 +184,6 @@ score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRU
 
   nlnb <- c(nl, nb)
   L <- length(nlnb)
-  nl <- c(1,2)
   levpos <- rep(1:L, nlnb)
 
   if(L>2){
