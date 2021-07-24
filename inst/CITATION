@@ -3,8 +3,8 @@ citHeader("To cite FoReco in publications use: ")
 citEntry(
   entry    = "Manual",
   title    = "FoReco: Point Forecast Reconciliation",
-  author   = "Tommaso Di Fonzo and Daniele Girolimetto",
-  year     = 2020,
+  author   = "Tommaso DiFonzo and Daniele Girolimetto",
+  year     = 2021,
   url      = "https://cran.r-project.org/package=FoReco",
-  textVersion  = "Di Fonzo, T., Girolimetto, D. (2020). FoReco: Point Forecast Reconciliation. https://cran.r-project.org/package=FoReco"
+  textVersion  = "Di Fonzo, T., Girolimetto, D. (2021). FoReco: Point Forecast Reconciliation. https://cran.r-project.org/package=FoReco"
 )
