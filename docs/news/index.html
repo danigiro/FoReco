@@ -166,6 +166,21 @@
       <small>Source: <a href='https://github.com/daniGiro/FoReco/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="foreco-022" class="section level1">
+<h1 class="page-header" data-toc-text="0.2.2">
+<a href="#foreco-022" class="anchor"></a>FoReco 0.2.2<small> Unreleased </small>
+</h1>
+<p>Road to FoReco 0.3</p>
+<div id="minor-changes" class="section level5">
+<h5 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor changes</h5>
+<ul>
+<li>Fixed <code><a href="../reference/score_index.html">score_index()</a></code> - (<strong>FoReco 0.2.2</strong>);</li>
+<li>Fixed BU approach when the number of columns of basef is equal to the number of bottom time series <code><a href="../reference/score_index.html">score_index()</a></code> - (<strong>FoReco 0.2.2</strong>);</li>
+<li>Add the possibility to fix base forecasts through the <code>v</code> param in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code>- (<strong>FoReco 0.2.2</strong>).</li>
+</ul>
+</div>
+</div>
     <div id="foreco-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
 <a href="#foreco-021" class="anchor"></a>FoReco 0.2.1<small> 2021-07-23 </small>
@@ -201,7 +216,7 @@
 <a href="#minor-changes-2" class="anchor"></a>Minor changes</h5>
 <ul>
 <li>Now in <code><a href="../reference/octrec.html">octrec()</a></code> it is also possible to introduce the <strong>Ω</strong> covariance matrix variant through the <code>Omega</code> parameter and not only the <strong>W</strong> variant with the <code>W</code> parameter;</li>
-<li>Updated <code><a href="../reference/tcsrec.html">tcsrec()</a></code>, <code><a href="../reference/cstrec.html">cstrec()</a></code> and <code><a href="../reference/iterec.html">iterec()</a></code>. In the iterec function the <code>maxit</code> parameter has been replaced by <code>itmax</code>, however for the moment <code>maxit</code> is still supported;</li>
+<li>Updated <code><a href="../reference/tcsrec.html">tcsrec()</a></code>, <code><a href="../reference/cstrec.html">cstrec()</a></code> and <code><a href="../reference/iterec.html">iterec()</a></code>. In the <code><a href="../reference/iterec.html">iterec()</a></code> function the <code>maxit</code> parameter has been replaced by <code>itmax</code>, however for the moment <code>maxit</code> is still supported;</li>
 <li>Now FoReco removes null rows from the cross-sectional aggregation matrix <strong>C</strong> and it warns the user if the balanced version of an unbalanced hierarchy is considering duplicated variables;</li>
 <li>Redesigned the console output and added a new convergence norm as <em>default</em> for <code><a href="../reference/iterec.html">iterec()</a></code> (<code>norm</code> parameter).</li>
 </ul>
