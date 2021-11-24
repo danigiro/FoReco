@@ -12,7 +12,7 @@ Authors@R:
              role = c("aut", "fnd")))
 Description:Classical (bottom-up and top-down), optimal and heuristic combination forecast 
     reconciliation procedures for cross-sectional, temporal, and cross-temporal linearly 
-    constrained time series.
+    constrained time series. Di Fonzo and Girolimetto (2021) <doi:10.1016/j.ijforecast.2021.08.004>
 License: GPL-3
 URL: https://github.com/daniGiro/FoReco,
     https://danigiro.github.io/FoReco/
