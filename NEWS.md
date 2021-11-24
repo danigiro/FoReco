@@ -2,6 +2,7 @@
 
 ##### Minor changes
 * Fixed `score_index()` - (**FoReco 0.2.2**);
+* Fixed BU approach when the number of columns of basef is equal to the number of bottom time series `score_index()` - (**FoReco 0.2.2**);
 * Add the possibility to fix base forecasts through the `v` param in `htsrec()`, `thfrec()` and `octrec()`-  (**FoReco 0.2.2**).
 
 # FoReco 0.2.1
