@@ -1,3 +1,9 @@
+# Road to FoReco 0.3.0
+
+##### Minor changes
+* Fixed `score_index()` - (**FoReco 0.2.2**);
+* Add the possibility to fix base forecasts through the `v` param in `htsrec()`, `thfrec()` and `octrec()`-  (**FoReco 0.2.2**).
+
 # FoReco 0.2.1
 
 ##### Minor changes

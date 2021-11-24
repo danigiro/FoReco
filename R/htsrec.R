@@ -9,7 +9,7 @@
 #' et al. (2011). Moreover, the classic bottom-up approach is available.
 #'
 #' @usage htsrec(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
-#'        type = "M", sol = "direct", keep = "list", nn = FALSE,
+#'        type = "M", sol = "direct", keep = "list",  v = NULL, nn = FALSE,
 #'        nn_type = "osqp", settings = list(), bounds = NULL, W = NULL)
 #'
 #' @param basef (\mjseqn{h \times n}) matrix of base forecasts to be reconciled;
@@ -71,6 +71,8 @@
 #' (Stellato et al., 2019).
 #' @param bounds (\mjseqn{n \times 2}) matrix containing the cross-sectional bounds:
 #' the first column is the lower bound, and the second column is the upper bound.
+#' @param v vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
+#' and \mjseqn{\code{max} < n}).
 #'
 #' @details
 #' \loadmathjax
@@ -283,7 +285,7 @@
 #' @import Matrix osqp methods
 #'
 htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
-                   type = "M", sol = "direct", keep = "list", nn = FALSE,
+                   type = "M", sol = "direct", keep = "list", v = NULL, nn = FALSE,
                    nn_type = "osqp", settings = list(), bounds = NULL, W = NULL){
 
   if(missing(comb)){
@@ -297,7 +299,7 @@ htsrec <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
 
 #' @export
 htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
-                           type = "M", sol = "direct", keep = "list", nn = FALSE,
+                           type = "M", sol = "direct", keep = "list", v = NULL, nn = FALSE,
                            nn_type = "osqp", settings = list(), bounds = NULL, W) {
 
   comb <- match.arg(comb, c("bu", "ols", "struc", "wls", "shr", "sam", "w"))
@@ -433,12 +435,18 @@ htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FA
 
   b_pos <- c(rep(0, na), rep(1, nb))
 
-  if (type == "S") {
+  if(!is.null(v)){
+    keep <- "recf"
+    rec_sol <- recoV(
+      basef = basef, W = W, Ht = Ut, sol = sol, nn = nn, keep = keep, S = S,
+      settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type, v = v
+    )
+  }else if(type == "S"){
     rec_sol <- recoS(
       basef = basef, W = W, S = S, sol = sol, nn = nn, keep = keep,
       settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type
     )
-  } else {
+  }else{
     rec_sol <- recoM(
       basef = basef, W = W, Ht = Ut, sol = sol, nn = nn, keep = keep, S = S,
       settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type
@@ -537,3 +545,4 @@ extract_data <- function(x, name){
     NA
   }
 }
+

@@ -157,7 +157,7 @@ score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRU
   p <- length(kset)
   n <- dim(Ebase)[1]
   na <- n - nb
-  h <- dim(Ebase)[2] / kt
+  h <- dim(Ebase)[2] / sum(m/kset)
   q <- dim(Ebase)[3]
   kpos <- rep(kset, rep(m/kset * h)) # position of k in colums of E[,,q]
   kpos <- factor(kpos, kset, ordered = TRUE)
@@ -166,12 +166,12 @@ score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRU
     khc <- paste("h1:", 1:h, sep = "")
   } else {
     kh <- paste("k", kpos, "h",
-                do.call("c", lapply(rev(kset) * h, function(x) seq(1:x))),
+                do.call("c", lapply(m/kset * h, function(x) seq(1:x))),
                 sep = ""
     )
 
     khc <- paste("k", kpos, "h1:",
-                 do.call("c", lapply(rev(kset) * h, function(x) seq(1:x))),
+                 do.call("c", lapply(m/kset * h, function(x) seq(1:x))),
                  sep = ""
     )
   }
@@ -192,8 +192,8 @@ score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRU
     csname <- c("uts", "bts")
   }
 
-  IND_base <- apply(Qbase, c(1, 2), mean)
-  IND_recf <- apply(Qrecf, c(1, 2), mean)
+  IND_base <- apply(Qbase, c(1, 2), mean, na.rm = TRUE)
+  IND_recf <- apply(Qrecf, c(1, 2), mean, na.rm = TRUE)
 
   if (type == "rmse") {
     IND_base <- sqrt(IND_base)
@@ -202,6 +202,7 @@ score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRU
 
   RelIND_ikh <- IND_recf / IND_base
   colnames(RelIND_ikh) <- kh
+  RelIND_ikh[is.nan(RelIND_ikh)] <- 1
   logRelIND_ikh <- log(RelIND_ikh)
   #logRelIND_ikh[abs(logRelIND_ikh) == Inf] <- NA
 
@@ -267,7 +268,12 @@ score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRU
                                                  function(y){
                                                    cummean(x[kpos == y])
                                                  })))))
-  colnames(RelIND_ikhc) <- khc
+  if(NCOL(RelIND_ikhc) != length(khc)){
+    RelIND_ikhc <- t(RelIND_ikhc)
+    colnames(RelIND_ikhc) <- khc
+  }else{
+    colnames(RelIND_ikhc) <- khc
+  }
 
   if (compact == TRUE) {
     if (nb == 1) {
@@ -305,7 +311,6 @@ score_index <- function(recf, base, test, m, nb, nl, type = "mse", compact = TRU
     }
   }
 }
-
 
 cummean <- function(x){
   #x[is.na(x)] <- 0

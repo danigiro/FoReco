@@ -4,10 +4,10 @@
 \alias{octrec}
 \title{Optimal combination cross-temporal forecast reconciliation}
 \usage{
-octrec(basef, m, C, comb, res, Ut, nb, mse = TRUE,
-       corpcor = FALSE, type = "M", sol = "direct", keep = "list",
-       nn = FALSE, nn_type = "osqp", settings = list(),
-       bounds = NULL, W = NULL, Omega = NULL)
+octrec(basef, m, C, comb, res, Ut, nb, mse = TRUE, corpcor = FALSE,
+       type = "M", sol = "direct", keep = "list", v = NULL, nn = FALSE,
+       nn_type = "osqp", settings = list(), bounds = NULL, W = NULL,
+       Omega = NULL)
 }
 \arguments{
 \item{basef}{(\mjseqn{n \times h(k^\ast+m)}) matrix of base forecasts to be
@@ -84,6 +84,9 @@ quadratic program using \code{\link[osqp]{solve_osqp}}).}
 
 \item{keep}{Return a list object of the reconciled forecasts at all levels
 (if keep = "list") or only the reconciled forecasts matrix (if keep = "recf").}
+
+\item{v}{vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
+and \mjseqn{\code{max} < n(k^\ast + m)}).}
 
 \item{nn}{Logical value: \code{TRUE} if non-negative reconciled forecasts
 are wished.}

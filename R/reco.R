@@ -401,10 +401,13 @@ S_osqp <- function(y, q = NULL, P = NULL, S = NULL, nn = NULL,
   }
 
   if(!is.null(bounds)){
+    if(NROW(bounds) > c){
+      stop("With type = S, bounds must be a (", c, " x 2) matrix of the bounds on the high-frequency bts", call. = FALSE)
+    }
     bounds_rows <- rowSums(abs(bounds) == Inf) < 2
-    A <- .sparseDiagonal(c)[bounds_rows, ]
-    l <- bounds[bounds_rows, 1, drop = TRUE]
-    u <- bounds[bounds_rows, 2, drop = TRUE]
+    A <- rbind(A, .sparseDiagonal(c)[bounds_rows, ])
+    l <- c(l, bounds[bounds_rows, 1, drop = TRUE])
+    u <- c(u, bounds[bounds_rows, 2, drop = TRUE])
   }
 
   if(length(settings)==0){
@@ -581,4 +584,33 @@ solveLin <- function(msx, mdx, verb = FALSE) {
       backsolve(chol(msx), mdx)
     })
   })
+}
+
+recoV <- function(basef, W, Ht, sol = "direct", nn = FALSE, nn_type = "osqp",
+                  settings, b_pos = NULL, keep = "list", bounds = NULL, S, v){
+  sol <- match.arg(sol, c("direct", "osqp"))
+  nn_type <- match.arg(nn_type, c("osqp", "fbpp", "KAnn", "sntz"))
+
+  if(sol != "direct"){
+    stop('Only sol = "direct" is available', call. = FALSE)
+  }
+
+  if(max(v) > NCOL(basef)){
+    stop('max(v) must be less or equal to ', NCOL(basef), call. = FALSE)
+  }
+
+  Vcons <- .sparseDiagonal(NCOL(basef))[v, ,drop = FALSE]
+  vcons <- basef[,v, drop = FALSE]
+  Vt <- rbind(Ht, Vcons)
+  vc <- cbind(Matrix(0, nrow = NROW(vcons), ncol = NROW(Ht)), vcons)
+  switch(sol,
+         direct = {
+           out <- list()
+
+           lm_dx <- methods::as(t(vc) - Vt %*% t(basef), "CsparseMatrix")
+           lm_sx <- Matrix::Matrix(Vt %*% W %*% t(Vt), sparse = TRUE, forceCheck = TRUE)
+           out$recf <- t(t(basef) + W %*% t(Vt) %*% solveLin(lm_sx, lm_dx))
+         }
+  )
+  return(out)
 }

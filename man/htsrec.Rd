@@ -5,7 +5,7 @@
 \title{Cross-sectional (contemporaneous) forecast reconciliation}
 \usage{
 htsrec(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FALSE,
-       type = "M", sol = "direct", keep = "list", nn = FALSE,
+       type = "M", sol = "direct", keep = "list",  v = NULL, nn = FALSE,
        nn_type = "osqp", settings = list(), bounds = NULL, W = NULL)
 }
 \arguments{
@@ -63,6 +63,9 @@ quadratic program using \code{\link[osqp]{solve_osqp}}).}
 
 \item{keep}{Return a list object of the reconciled forecasts at all levels
 (if keep = "list") or only the reconciled forecasts matrix (if keep = "recf").}
+
+\item{v}{vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
+and \mjseqn{\code{max} < n}).}
 
 \item{nn}{Logical value: \code{TRUE} if non-negative reconciled forecasts
 are wished.}

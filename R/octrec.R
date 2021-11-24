@@ -7,10 +7,10 @@
 #' projection approach (Byron, 1978), or the equivalent structural approach
 #' by Hyndman et al. (2011).
 #'
-#' @usage octrec(basef, m, C, comb, res, Ut, nb, mse = TRUE,
-#'        corpcor = FALSE, type = "M", sol = "direct", keep = "list",
-#'        nn = FALSE, nn_type = "osqp", settings = list(),
-#'        bounds = NULL, W = NULL, Omega = NULL)
+#' @usage octrec(basef, m, C, comb, res, Ut, nb, mse = TRUE, corpcor = FALSE,
+#'        type = "M", sol = "direct", keep = "list", v = NULL, nn = FALSE,
+#'        nn_type = "osqp", settings = list(), bounds = NULL, W = NULL,
+#'        Omega = NULL)
 #'
 #' @param basef  (\mjseqn{n \times h(k^\ast+m)}) matrix of base forecasts to be
 #' reconciled, \mjseqn{\widehat{\mathbf{Y}}}; \mjseqn{n} is the total number of variables,
@@ -95,6 +95,8 @@
 #' @param bounds (\mjseqn{n(k^\ast + m) \times 2}) matrix of the bounds on the
 #' variables: the first column is the lower bound, and the second column is the
 #' upper bound.
+#' @param v vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
+#' and \mjseqn{\code{max} < n(k^\ast + m)}).
 #'
 #' @details
 #' Considering contemporaneous and temporal dimensions in the
@@ -263,7 +265,7 @@
 #' @import Matrix osqp methods
 #'
 octrec <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE, corpcor = FALSE,
-                   type = "M", sol = "direct", keep = "list", nn = FALSE,
+                   type = "M", sol = "direct", keep = "list", v = NULL, nn = FALSE,
                    nn_type = "osqp", settings = list(), bounds = NULL, W = NULL, Omega = NULL) {
 
   if(missing(comb)){
@@ -283,9 +285,9 @@ octrec <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE, corpcor = FALSE,
 #' @export
 octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
                            corpcor = FALSE, type = "M", sol = "direct",
-                           keep = "list", nn = FALSE, nn_type = "osqp",
-                           settings = osqpSettings(), bounds = NULL,
-                           W = NULL, Omega = NULL) {
+                           keep = "list", v = NULL, nn = FALSE,
+                           nn_type = "osqp", settings = osqpSettings(),
+                           bounds = NULL, W = NULL, Omega = NULL) {
   if (missing(m)) {
     stop("The argument m is not specified", call. = FALSE)
   }
@@ -416,69 +418,75 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
   }
 
   switch(comb,
-    ols = {
-      Omega <- .sparseDiagonal(n * kt)
-    },
-    struc = {
-      Omega <- .sparseDiagonal(x = rowSums(S))
-    },
-    sam = {
-      Omega <- cov_mod(E)
-    },
-    wlsh = {
-      Omega <- .sparseDiagonal(x = diag(cov_mod(E)))
-    },
-    wlsv = {
-      var_freq <- apply(res, 1, function(z) sapply(kset, function(x) cov_mod(z[rep(kset, (m/kset) * N) == x])))
-      Omega <- .sparseDiagonal(x = rep(as.vector(var_freq), rep((m/kset), n)))
-    },
-    shr = {
-      Omega <- shr_mod(E)
-    },
-    acov = {
-      mat1 <- bdiag(rep(lapply((m/kset), function(x) matrix(1, nrow = x, ncol = x)), n))
-      cov <- cov_mod(E)
-      Omega <- cov * mat1
-    },
-    Ssam = {
-      mat1 <- bdiag(replicate(n, matrix(1, nrow = kt, ncol = kt), simplify = FALSE))
-      cov <- cov_mod(E)
-      Omega <- cov * mat1
-    },
-    Sshr = {
-      shrink <- lapply(1:n, function(x) shr_mod(E[, rep(1:n, each = kt) == x]))
-      Omega <- bdiag(shrink)
-    },
-    w = {
-      if (is.null(W)) {
-        stop("Please, put in option W your covariance matrix", call. = FALSE)
-      }
-      P <- commat(n, kt)
-      Omega <- P %*% W %*% t(P)
-    },
-    omega = {
-      if (is.null(Omega)) {
-        stop("Please, put in option Omega your covariance matrix", call. = FALSE)
-      }
-      Omega <- Omega
-    },
-    bdshr = {
-      blockW <- lapply(kset, function(x) shr_mod(t(res[, rep(kset, N * (m/kset)) == x])))
-      blockW <- rep(blockW, (m/kset))
-      P <- commat(n, kt)
-      Omega <- P %*% bdiag(blockW) %*% t(P)
-    },
-    bdsam = {
-      blockW <- lapply(kset, function(x) cov_mod(t(res[, rep(kset, N * (m/kset)) == x])))
-      blockW <- rep(blockW, (m/kset))
-      P <- commat(n, kt)
-      Omega <- P %*% bdiag(blockW) %*% t(P)
-    }
+         ols = {
+           Omega <- .sparseDiagonal(n * kt)
+         },
+         struc = {
+           Omega <- .sparseDiagonal(x = rowSums(S))
+         },
+         sam = {
+           Omega <- cov_mod(E)
+         },
+         wlsh = {
+           Omega <- .sparseDiagonal(x = diag(cov_mod(E)))
+         },
+         wlsv = {
+           var_freq <- apply(res, 1, function(z) sapply(kset, function(x) cov_mod(z[rep(kset, (m/kset) * N) == x])))
+           Omega <- .sparseDiagonal(x = rep(as.vector(var_freq), rep((m/kset), n)))
+         },
+         shr = {
+           Omega <- shr_mod(E)
+         },
+         acov = {
+           mat1 <- bdiag(rep(lapply((m/kset), function(x) matrix(1, nrow = x, ncol = x)), n))
+           cov <- cov_mod(E)
+           Omega <- cov * mat1
+         },
+         Ssam = {
+           mat1 <- bdiag(replicate(n, matrix(1, nrow = kt, ncol = kt), simplify = FALSE))
+           cov <- cov_mod(E)
+           Omega <- cov * mat1
+         },
+         Sshr = {
+           shrink <- lapply(1:n, function(x) shr_mod(E[, rep(1:n, each = kt) == x]))
+           Omega <- bdiag(shrink)
+         },
+         w = {
+           if (is.null(W)) {
+             stop("Please, put in option W your covariance matrix", call. = FALSE)
+           }
+           P <- commat(n, kt)
+           Omega <- P %*% W %*% t(P)
+         },
+         omega = {
+           if (is.null(Omega)) {
+             stop("Please, put in option Omega your covariance matrix", call. = FALSE)
+           }
+           Omega <- Omega
+         },
+         bdshr = {
+           blockW <- lapply(kset, function(x) shr_mod(t(res[, rep(kset, N * (m/kset)) == x])))
+           blockW <- rep(blockW, (m/kset))
+           P <- commat(n, kt)
+           Omega <- P %*% bdiag(blockW) %*% t(P)
+         },
+         bdsam = {
+           blockW <- lapply(kset, function(x) cov_mod(t(res[, rep(kset, N * (m/kset)) == x])))
+           blockW <- rep(blockW, (m/kset))
+           P <- commat(n, kt)
+           Omega <- P %*% bdiag(blockW) %*% t(P)
+         }
   )
 
   b_pos <- c(rep(0, na * kt), rep(rep(kset, (m/kset)), nb) == 1)
 
-  if (type == "S") {
+  if(!is.null(v)){
+    keep <- "recf"
+    rec_sol <- recoV(
+      basef = Ybase, W = Omega, Ht = Ht, sol = sol, nn = nn, keep = keep, S = S,
+      settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type, v = v
+    )
+  }else if (type == "S") {
     rec_sol <- recoS(
       basef = Ybase, W = Omega, S = S, sol = sol, nn = nn, keep = keep,
       settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type
@@ -508,11 +516,11 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
 
     rownames(rec_sol$recf) <- if (is.null(rownames(basef))) paste("serie", 1:n, sep = "") else rownames(basef)
     colnames(rec_sol$recf) <- paste("k", rep(kset, h * (m/kset)), "h",
-      do.call("c", as.list(sapply(
-        (m/kset) * h,
-        function(x) seq(1:x)
-      ))),
-      sep = ""
+                                    do.call("c", as.list(sapply(
+                                      (m/kset) * h,
+                                      function(x) seq(1:x)
+                                    ))),
+                                    sep = ""
     )
     return(rec_sol)
   } else {
@@ -520,22 +528,22 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
       rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = TRUE)
       rownames(rec_sol$recf) <- if (is.null(rownames(basef))) paste("serie", 1:n, sep = "") else rownames(basef)
       colnames(rec_sol$recf) <- paste("k", rep(kset, h * (m/kset)), "h",
-        do.call("c", as.list(sapply(
-          (m/kset) * h,
-          function(x) seq(1:x)
-        ))),
-        sep = ""
+                                      do.call("c", as.list(sapply(
+                                        (m/kset) * h,
+                                        function(x) seq(1:x)
+                                      ))),
+                                      sep = ""
       )
       return(rec_sol$recf)
     } else {
       rec_sol$recf <- matrix(t(Dh) %*% as.vector(t(rec_sol$recf)), nrow = n, byrow = TRUE)
       rownames(rec_sol$recf) <- if (is.null(rownames(basef))) paste("serie", 1:n, sep = "") else rownames(basef)
       colnames(rec_sol$recf) <- paste("k", rep(kset, h * (m/kset)), "h",
-        do.call("c", as.list(sapply(
-          (m/kset) * h,
-          function(x) seq(1:x)
-        ))),
-        sep = ""
+                                      do.call("c", as.list(sapply(
+                                        (m/kset) * h,
+                                        function(x) seq(1:x)
+                                      ))),
+                                      sep = ""
       )
       return(rec_sol)
     }
