@@ -95,8 +95,8 @@
 #' @param bounds (\mjseqn{n(k^\ast + m) \times 2}) matrix of the bounds on the
 #' variables: the first column is the lower bound, and the second column is the
 #' upper bound.
-#' @param v vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
-#' and \mjseqn{\code{max} < n(k^\ast + m)}).
+#' @param v vector index of the fixed base forecast (\mjseqn{\mbox{min}(v) > 0}
+#' and \mjseqn{\mbox{max}(v) < n(k^\ast + m)}).
 #'
 #' @details
 #' Considering contemporaneous and temporal dimensions in the

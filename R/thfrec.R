@@ -74,8 +74,8 @@
 #' (Stellato et al., 2019).
 #' @param bounds (\mjseqn{(k^\ast + m) \times 2}) matrix with temporal bounds: the
 #' first column is the lower bound, and the second column is the upper bound.
-#' @param v vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
-#' and \mjseqn{\code{max} < (k^\ast + m)}).
+#' @param v vector index of the fixed base forecast (\mjseqn{\mbox{min}(v) > 0}
+#' and \mjseqn{\mbox{max}(v) < (k^\ast + m)}).
 #'
 #' @details
 #' \loadmathjax

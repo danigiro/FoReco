@@ -71,8 +71,8 @@
 #' (Stellato et al., 2019).
 #' @param bounds (\mjseqn{n \times 2}) matrix containing the cross-sectional bounds:
 #' the first column is the lower bound, and the second column is the upper bound.
-#' @param v vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
-#' and \mjseqn{\code{max} < n}).
+#' @param v vector index of the fixed base forecast (\mjseqn{\mbox{min}(v) > 0}
+#' and \mjseqn{\mbox{max}(v) < n}).
 #'
 #' @details
 #' \loadmathjax
@@ -316,8 +316,6 @@ htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FA
     basef <- t(basef)
   }
 
-  n <- NCOL(basef)
-
   # Using Ut or C
   if (missing(C)) {
     if (missing(Ut)) {
@@ -358,8 +356,8 @@ htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FA
     }
   }
 
-  if (NCOL(basef) != n) {
-    stop("Incorrect dimension of Ut or basef (they don't have same columns).", call. = FALSE)
+  if ((NCOL(basef) != n & comb != "bu") | ((NCOL(basef) != nb & NCOL(basef) != n) & comb == "bu")) {
+    stop("Incorrect dimension of Ut, C or basef.", call. = FALSE)
   }
 
   if (any(comb == c("wls", "shr", "sam"))) {
@@ -386,10 +384,13 @@ htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FA
 
   switch(comb,
          bu = {
-           if (n != nb) {
+           if (NCOL(basef) != nb) {
              basef_bu <- basef[, (na + 1):n]
-             names_bu <- if (is.null(colnames(basef))) paste("serie", 1:n, sep = "") else colnames(basef)
+           }else{
+             basef_bu <- basef
            }
+
+           names_bu <- if (is.null(colnames(basef))) paste("serie", 1:n, sep = "") else colnames(basef)
 
            if(nn){
              basef_bu <- basef_bu * (basef_bu > 0)

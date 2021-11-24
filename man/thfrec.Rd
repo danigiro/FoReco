@@ -64,8 +64,8 @@ quadratic program using \code{\link[osqp]{solve_osqp}}).}
 \item{keep}{Return a list object of the reconciled forecasts at all levels
 (if keep = "list") or only the reconciled forecasts matrix (if keep = "recf").}
 
-\item{v}{vector index of the fixed base forecast (\mjseqn{\code{min(v)} > 0}
-and \mjseqn{\code{max} < (k^\ast + m)}).}
+\item{v}{vector index of the fixed base forecast (\mjseqn{\mbox{min}(v) > 0}
+and \mjseqn{\mbox{max}(v) < (k^\ast + m)}).}
 
 \item{nn}{Logical value: \code{TRUE} if non-negative reconciled forecasts
 are wished.}
