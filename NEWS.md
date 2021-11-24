@@ -1,4 +1,5 @@
-# Road to FoReco 0.3.0
+# FoReco 0.2.2
+Road to FoReco 0.3
 
 ##### Minor changes
 * Fixed `score_index()` - (**FoReco 0.2.2**);
@@ -24,7 +25,7 @@
 
 ##### Minor changes
 * Now in `octrec()` it is also possible to introduce the **Ω** covariance matrix variant through the `Omega` parameter and not only the **W** variant with the `W` parameter;
-* Updated `tcsrec()`, `cstrec()` and `iterec()`. In the iterec function the `maxit` parameter has been replaced by `itmax`, however for the moment `maxit` is still supported;
+* Updated `tcsrec()`, `cstrec()` and `iterec()`. In the `iterec()` function the `maxit` parameter has been replaced by `itmax`, however for the moment `maxit` is still supported;
 * Now FoReco removes null rows from the cross-sectional aggregation matrix **C** and it warns the user if the balanced version of an unbalanced hierarchy is considering duplicated variables;
 * Redesigned the console output and added a new convergence norm as *default* for `iterec()` (`norm` parameter).
 
