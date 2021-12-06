@@ -162,8 +162,8 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
   nn_type <- match.arg(nn_type, c("osqp", "sntz"))
 
   if(!is.null(bounds)){
-    if(!is.matrix(bounds) | NCOL(bounds) != 2 | NROW(bounds) != NCOL(basef)){
-      stop("bounds must be a matrix (", NCOL(basef), "x2)", call. = FALSE)
+    if(!is.matrix(bounds) | NCOL(bounds) != 2 | NROW(bounds) != sum(b_pos)){
+      stop("With type = S, bounds must be a (", sum(b_pos), " x 2) matrix with only the high-frequency bts constrains", call. = FALSE)
     } else {
       sol <- "osqp"
     }
