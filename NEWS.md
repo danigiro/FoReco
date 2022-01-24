@@ -1,11 +1,10 @@
 # FoReco 0.2.2
-Road to FoReco 0.3
 
-##### Minor changes
-* Fixed `score_index()` - (**FoReco 0.2.2**);
-* Fixed BU approach when the number of columns of basef is equal to the number of bottom time series `htsrec()` - (**FoReco 0.2.2**);
-* Fixed the `bounds` param when `type = "S"` in `htsrec()`, `thfrec()` and `octrec()` - (**FoReco 0.2.2**);
-* Add the possibility to fix base forecasts through the `v` param in `htsrec()`, `thfrec()` and `octrec()`-  (**FoReco 0.2.2**).
+* Fixed BU approach when the number of columns of basef is equal to the number of bottom time series `htsrec()`;
+* Fixed `score_index()`;
+* Fixed the `bounds` param when `type = "S"` in `htsrec()`, `thfrec()` and `octrec()`;
+* Add the possibility to fix base forecasts through the `v` param in `htsrec()`, `thfrec()` and `octrec()` - experimental;
+* Improved docs and bug fixes.
 
 # FoReco 0.2.1
 

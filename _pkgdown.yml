@@ -9,7 +9,7 @@ template:
   params:
     bootswatch: cosmo
     docsearch:
-      api_key: '05a948dc40379c4ff2eaba6f8d83c86e'
+      api_key: '5a6af113349ae3cd3a59875d1bb70d65'
       index_name: 'danigiro'
 
 navbar:
