@@ -28,6 +28,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -87,13 +89,13 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/daniGiro/FoReco">
+  <a href="https://github.com/daniGiro/FoReco" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://cran.r-project.org/web/packages/FoReco/index.html">
+  <a href="https://cran.r-project.org/web/packages/FoReco/index.html" class="external-link">
     <span class="fab fa-r-project fa-lg"></span>
      
   </a>
@@ -114,15 +116,15 @@
 
       
 
-      </header><script src="accuracy_indices_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Average relative accuracy indices</h1>
-                        <h4 class="author">Daniele Girolimetto</h4>
+                        <h4 data-toc-skip class="author">Daniele Girolimetto</h4>
             
-            <h4 class="date">2022-01-19</h4>
+            <h4 data-toc-skip class="date">2022-01-25</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/master/vignettes/accuracy_indices.Rmd"><code>vignettes/accuracy_indices.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/vignettes/accuracy_indices.Rmd" class="external-link"><code>vignettes/accuracy_indices.Rmd</code></a></small>
       <div class="hidden name"><code>accuracy_indices.Rmd</code></div>
 
     </div>
@@ -194,9 +196,9 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 \text{AvgRelA}_{b,j} &amp; = &amp; \left(\displaystyle\prod_{i=n_a+1}^{n} \prod_{k \in {\cal K}} \prod_{h=1}^{h_k} r_{i,j}^{[k],h}\right)^{\frac{1}{n_b(k^*+m)}} , &amp; j=0,\ldots,J
 \end{array}
 \]</span></p>
-<div id="the-score_index-function-outputs" class="section level2">
-<h2 class="hasAnchor">
-<a href="#the-score_index-function-outputs" class="anchor"></a>The <code>score_index()</code> function outputs</h2>
+<div class="section level2">
+<h2 id="the-score_index-function-outputs">The <code>score_index()</code> function outputs<a class="anchor" aria-label="anchor" href="#the-score_index-function-outputs"></a>
+</h2>
 <p>The <code><a href="../reference/score_index.html">score_index()</a></code> function returns a summary table called <strong>Avg<span class="math inline">\(\_\)</span>mat</strong> (if <em>compact</em> option is <strong>TRUE</strong>, <em>default</em>), otherwise it returns a list of four tables. Fixed method <span class="math inline">\(j\)</span>, we have:</p>
 <ul>
 <li>
@@ -264,7 +266,7 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 <li>
 <strong>Rel<span class="math inline">\(\_\)</span>mat</strong> (if <em>compact = FALSE</em>)</li>
 </ul>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="6%">
 <col width="14%">
@@ -368,7 +370,7 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 <li>
 <strong>Rel<span class="math inline">\(\_\)</span>mat<span class="math inline">\(\_\)</span>cum </strong> (if <em>compact = FALSE</em>)</li>
 </ul>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="6%">
 <col width="14%">
@@ -550,7 +552,7 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 <li>
 <strong>Avg<span class="math inline">\(\_\)</span>k</strong> (if <em>compact = FALSE</em>)</li>
 </ul>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
 <col width="6%">
 <col width="14%">
@@ -706,12 +708,12 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 </tr>
 </tbody>
 </table>
-<div id="examples" class="section level3">
-<h3 class="hasAnchor">
-<a href="#examples" class="anchor"></a>Examples</h3>
+<div class="section level3">
+<h3 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
+</h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco">FoReco</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco" class="external-link">FoReco</a></span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">)</span>
 
 <span class="co"># Cross-temporal framework</span>
 <span class="va">oct_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/octrec.html">octrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
@@ -722,20 +724,20 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 
 <span class="co"># Cross-sectional framework#'</span>
 <span class="co"># monthly base forecasts</span>
-<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span>
-<span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span>
+<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span>
+<span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span>
 <span class="co"># monthly test set</span>
-<span class="va">mtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">test</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span>
+<span class="va">mtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">test</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span>
 <span class="co"># monthly residuals</span>
-<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span>
-<span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span>
+<span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span>
+<span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span>
 <span class="co"># monthly reconciled forecasts</span>
 <span class="va">mrecf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/htsrec.html">htsrec</a></span><span class="op">(</span><span class="va">mbase</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">mres</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span>
 <span class="co"># score</span>
 <span class="va">hts_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/score_index.html">score_index</a></span><span class="op">(</span>recf <span class="op">=</span> <span class="va">mrecf</span>, base <span class="op">=</span> <span class="va">mbase</span>, test <span class="op">=</span> <span class="va">mtest</span>, nb <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 
 <span class="co"># Temporal framework</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">)</span>
 <span class="co"># top ts base forecasts ([lowest_freq' ...  highest_freq']')</span>
 <span class="va">topbase</span> <span class="op">&lt;-</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span>
 <span class="co"># top ts residuals ([lowest_freq' ...  highest_freq']')</span>
@@ -748,10 +750,10 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 <span class="va">thf_score</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/score_index.html">score_index</a></span><span class="op">(</span>recf <span class="op">=</span> <span class="va">toprecf</span>, base <span class="op">=</span> <span class="va">topbase</span>, test <span class="op">=</span> <span class="va">toptest</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<p>Di Fonzo, T., Girolimetto, D. (2020), <em>Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives</em>, Department of Statistical Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570">arXiv:2006.08570</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
+<p>Di Fonzo, T., Girolimetto, D. (2020), <em>Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives</em>, Department of Statistical Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
 </div>
 <div class="footnotes">
 <hr>
@@ -772,11 +774,13 @@ i=1,\ldots,n  \\ j=0,\ldots,J
 
 
       <footer><div class="copyright">
-  <p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
+  <p></p>
+<p>Developed by Daniele Girolimetto, Tommaso Di Fonzo.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -787,7 +791,7 @@ i=1,\ldots,n  \\ j=0,\ldots,J
   docsearch({
     
     
-    apiKey: '5a6af113349ae3cd3a59875d1bb70d65',
+    apiKey: '1304339aeac0094766448ba1b44faff5',
     indexName: 'danigiro',
     inputSelector: 'input#search-input.form-control',
     transformData: function(hits) {
