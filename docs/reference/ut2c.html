@@ -24,7 +24,7 @@ to a 'structural representation', \(\mathbf{y}=\mathbf{S}\mathbf{b}\).
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
       </span>
     </div>
 
@@ -227,8 +227,11 @@ Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class=
 <span class="r-in">                  <span class="st">"X"</span>, <span class="st">"Y"</span>, <span class="st">"XX"</span>, <span class="st">"XY"</span>, <span class="st">"YX"</span>, <span class="st">"YY"</span><span class="op">)</span></span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Ut</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"X"</span>, <span class="st">"Y"</span><span class="op">)</span></span>
 <span class="r-in"><span class="va">obj_ut2c</span> <span class="op">&lt;-</span> <span class="fu">ut2c</span><span class="op">(</span><span class="va">Ut</span>, sparse <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in ut2c(Ut, sparse = FALSE):</span> could not find function "ut2c"</span>
 <span class="r-in"><span class="va">Ut_struc</span> <span class="op">&lt;-</span> <span class="va">obj_ut2c</span><span class="op">$</span><span class="va">Ut_rref</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in eval(expr, envir, enclos):</span> object 'obj_ut2c' not found</span>
 <span class="r-in"><span class="va">S</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">obj_ut2c</span><span class="op">$</span><span class="va">C</span>, <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">obj_ut2c</span><span class="op">$</span><span class="va">nb</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in rbind(obj_ut2c$C, diag(1, obj_ut2c$nb)):</span> object 'obj_ut2c' not found</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

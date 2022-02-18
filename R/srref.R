@@ -1,31 +1,30 @@
-#' (Sparse) Reduced Row Echelon Form of a matrix
-#'
-#' Returns the reduced row echelon form of a (possibly sparse) matrix through Gauss-Jordan
-#' elimination. This function is used by the \code{\link{ut2c}} function
-#' to obtain a 'structural representation' of a general linearly constrained
-#' multiple time series, from its zero-constraints kernel representation
-#' (Di Fonzo and Girolimetto, 2020).
-#'
-#' @param A A numeric (possibly sparse) matrix.
-#' @param tol Tolerance for checking for 0 pivot.
-#' @param verbose If \code{TRUE}, print intermediate steps.
-#' @param sparse Option to return sparse matrices (\emph{default} is \code{TRUE}).
-#'
-#' @return A (sparse) matrix with the same dimension as \mjseqn{\mathbf{A}}
-#'
-#' @author Originally written by John Fox and modified by Geoffrey Brent to fix a bug,
-#' extended to deal with sparse matrices.
-#'
-#' @family utilities
-#'
-#' @references
-#' Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-#' Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-#' Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
-#'
-#' @export
-#'
-#' @import Matrix
+# (Sparse) Reduced Row Echelon Form of a matrix
+#
+# Returns the reduced row echelon form of a (possibly sparse) matrix through Gauss-Jordan
+# elimination. This function is used by the \code{\link{ut2c}} function
+# to obtain a 'structural representation' of a general linearly constrained
+# multiple time series, from its zero-constraints kernel representation
+# (Di Fonzo and Girolimetto, 2020).
+#
+# @param A A numeric (possibly sparse) matrix.
+# @param tol Tolerance for checking for 0 pivot.
+# @param verbose If \code{TRUE}, print intermediate steps.
+# @param sparse Option to return sparse matrices (\emph{default} is \code{TRUE}).
+#
+# @return A (sparse) matrix with the same dimension as \mjseqn{\mathbf{A}}
+#
+# @author Originally written by John Fox and modified by Geoffrey Brent to fix a bug,
+# extended to deal with sparse matrices.
+#
+# @family utilities
+#
+# @references
+# Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
+# Optimal Combination Method and Heuristic Alternatives, Department of Statistical
+# Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+#
+#
+# @import Matrix
 srref <- function(A, tol=sqrt(.Machine$double.eps), verbose=FALSE, sparse = TRUE){
   if(is.matrix(A) | is(A, "Matrix")){
     A <- as(A, "dgCMatrix")

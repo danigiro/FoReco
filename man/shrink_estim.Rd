@@ -38,9 +38,7 @@ Other utilities:
 \code{\link{hts_tools}()},
 \code{\link{oct_bounds}()},
 \code{\link{score_index}()},
-\code{\link{srref}()},
-\code{\link{thf_tools}()},
-\code{\link{ut2c}()}
+\code{\link{thf_tools}()}
 }
 \author{
 This function is a modified version of the \code{shrink_estim}() hidden function of \pkg{hts}.

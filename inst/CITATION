@@ -3,10 +3,13 @@ citHeader("To cite FoReco in publications, please use: ")
 citEntry(
   entry    = "Manual",
   title    = "FoReco: Point Forecast Reconciliation",
-  author   = "Daniele Girolimetto and Tommaso DiFonzo",
-  year     = 2021,
+  author   = c(person(given = "Daniele",
+                      family = "Girolimetto"),
+               person(given = "Tommaso",
+                      family = "Di Fonzo")),
+  year     = 2022,
   url      = "https://cran.r-project.org/package=FoReco",
-  textVersion  = "Girolimetto, D., Di Fonzo, T. (2021). FoReco: Point Forecast Reconciliation. https://cran.r-project.org/package=FoReco"
+  textVersion  = "Girolimetto, D., Di Fonzo, T. (2022). FoReco: Point Forecast Reconciliation. https://cran.r-project.org/package=FoReco"
 )
 
 citEntry(
@@ -22,5 +25,5 @@ citEntry(
   #number = 1,
   #pages = 60--74,
   doi = "10.1016/j.ijforecast.2021.08.004",
-  textVersion  = "Di Fonzo T, Girolimetto D (2021). “Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives.” International Journal of Forecasting, (in press). doi: 10.1016/j.ijforecast.2021.08.004"
+  textVersion  = "Di Fonzo T., Girolimetto D. (2021). “Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives.” International Journal of Forecasting, (in press). doi: 10.1016/j.ijforecast.2021.08.004"
 )

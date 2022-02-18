@@ -96,9 +96,7 @@ Other utilities:
 \code{\link{oct_bounds}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},
-\code{\link{srref}()},
-\code{\link{thf_tools}()},
-\code{\link{ut2c}()}
+\code{\link{thf_tools}()}
 }
 \concept{utilities}
 \keyword{utilities}

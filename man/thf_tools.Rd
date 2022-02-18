@@ -44,9 +44,7 @@ Other utilities:
 \code{\link{hts_tools}()},
 \code{\link{oct_bounds}()},
 \code{\link{score_index}()},
-\code{\link{shrink_estim}()},
-\code{\link{srref}()},
-\code{\link{ut2c}()}
+\code{\link{shrink_estim}()}
 }
 \concept{utilities}
 \keyword{utilities}
