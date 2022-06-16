@@ -5,8 +5,7 @@
 
 <!-- badges: start -->
 
-[![R build
-status](https://github.com/daniGiro/FoReco/workflows/R-CMD-check/badge.svg)](https://github.com/daniGiro/FoReco/actions)
+[![R-CMD-check](https://github.com/daniGiro/FoReco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/daniGiro/FoReco/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco)
 [![Lifecycle:
@@ -15,7 +14,6 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 version](https://img.shields.io/badge/devel%20version-0.2.4-blue.svg)](https://github.com/daniGiro/FoReco)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-[![R-CMD-check](https://github.com/daniGiro/FoReco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/daniGiro/FoReco/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The **FoReco** (**Fo**recast **Reco**nciliation) package is designed for
