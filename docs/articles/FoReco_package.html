@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -119,10 +119,13 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Using the <code>FoReco</code> package for cross-sectional, temporal and cross-temporal point forecast reconciliation</h1>
-                        <h4 data-toc-skip class="author">Daniele Girolimetto</h4>
+      <h1 data-toc-skip>Using the <code>FoReco</code> package for
+cross-sectional, temporal and cross-temporal point forecast
+reconciliation</h1>
+                        <h4 data-toc-skip class="author">Daniele
+Girolimetto</h4>
             
-            <h4 data-toc-skip class="date">2022-02-18</h4>
+            <h4 data-toc-skip class="date">2022-06-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/vignettes/FoReco_package.Rmd" class="external-link"><code>vignettes/FoReco_package.Rmd</code></a></small>
       <div class="hidden name"><code>FoReco_package.Rmd</code></div>
@@ -131,31 +134,48 @@
 
     
     
-<p>The <strong>FoReco</strong> (<strong>Fo</strong>recast <strong>Reco</strong>nciliation) package is designed for point forecast reconciliation, a <strong>post-forecasting</strong> process aimed to improve the quality of the base forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.</p>
-<p>It offers classical (bottom-up and top-down), and modern (optimal and heuristic combination) forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal linearly constrained time series.</p>
+<p>The <strong>FoReco</strong> (<strong>Fo</strong>recast
+<strong>Reco</strong>nciliation) package is designed for point forecast
+reconciliation, a <strong>post-forecasting</strong> process aimed to
+improve the quality of the base forecasts for a system of linearly
+constrained (e.g. hierarchical/grouped) time series.</p>
+<p>It offers classical (bottom-up and top-down), and modern (optimal and
+heuristic combination) forecast reconciliation procedures for
+cross-sectional, temporal, and cross-temporal linearly constrained time
+series.</p>
 <div class="section level3">
 <h3 id="what-are-the-most-important-functions">What are the most important functions?<a class="anchor" aria-label="anchor" href="#what-are-the-most-important-functions"></a>
 </h3>
 <p>The main functions are:</p>
 <ul>
 <li>
-<code><a href="../reference/htsrec.html">htsrec()</a></code>: cross-sectional (contemporaneous) forecast reconciliation.</li>
+<code><a href="../reference/htsrec.html">htsrec()</a></code>: cross-sectional (contemporaneous) forecast
+reconciliation.</li>
 <li>
-<code><a href="../reference/thfrec.html">thfrec()</a></code>: forecast reconciliation for a single time series through temporal hierarchies.</li>
+<code><a href="../reference/thfrec.html">thfrec()</a></code>: forecast reconciliation for a single time
+series through temporal hierarchies.</li>
 <li>
-<code><a href="../reference/lccrec.html">lccrec()</a></code>: level conditional forecast reconciliation for genuine hierarchical/grouped time series.</li>
+<code><a href="../reference/lccrec.html">lccrec()</a></code>: level conditional forecast reconciliation for
+genuine hierarchical/grouped time series.</li>
 <li>
-<code><a href="../reference/tdrec.html">tdrec()</a></code>: top-down (cross-sectional, temporal, cross-temporal) forecast reconciliation for genuine hierarchical/grouped time series.</li>
+<code><a href="../reference/tdrec.html">tdrec()</a></code>: top-down (cross-sectional, temporal,
+cross-temporal) forecast reconciliation for genuine hierarchical/grouped
+time series.</li>
 <li>
-<code><a href="../reference/ctbu.html">ctbu()</a></code>: bottom-up cross-temporal forecast reconciliation.</li>
+<code><a href="../reference/ctbu.html">ctbu()</a></code>: bottom-up cross-temporal forecast
+reconciliation.</li>
 <li>
-<code><a href="../reference/tcsrec.html">tcsrec()</a></code>: heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.</li>
+<code><a href="../reference/tcsrec.html">tcsrec()</a></code>: heuristic first-temporal-then-cross-sectional
+cross-temporal forecast reconciliation.</li>
 <li>
-<code><a href="../reference/cstrec.html">cstrec()</a></code>: heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.</li>
+<code><a href="../reference/cstrec.html">cstrec()</a></code>: heuristic first-cross-sectional-then-temporal
+cross-temporal forecast reconciliation.</li>
 <li>
-<code><a href="../reference/iterec.html">iterec()</a></code>: heuristic iterative cross-temporal forecast reconciliation.</li>
+<code><a href="../reference/iterec.html">iterec()</a></code>: heuristic iterative cross-temporal forecast
+reconciliation.</li>
 <li>
-<code><a href="../reference/octrec.html">octrec()</a></code>: optimal combination cross-temporal forecast reconciliation.</li>
+<code><a href="../reference/octrec.html">octrec()</a></code>: optimal combination cross-temporal forecast
+reconciliation.</li>
 </ul>
 </div>
 <div class="section level3">
@@ -172,7 +192,14 @@
 <div class="section level3">
 <h3 id="example-cross-temporal-data">Example: cross-temporal data<a class="anchor" aria-label="anchor" href="#example-cross-temporal-data"></a>
 </h3>
-<p>A two-level hierarchy with <span class="math inline">\(n = 8\)</span> monthly time series. In the cross-sectional framework, at any time it is <span class="math inline">\(Tot = A + B + C\)</span>, <span class="math inline">\(A = AA + AB\)</span> and <span class="math inline">\(B = BA + BB\)</span> (<span class="math inline">\(nb = 5\)</span> at the bottom level). For monthly data, the observations are aggregated to annual <span class="math inline">\((k = 12)\)</span>, semi-annual <span class="math inline">\((k = 6)\)</span>, four-monthly <span class="math inline">\((k = 4)\)</span>, quarterly <span class="math inline">\((k = 3)\)</span>, and bi-monthly <span class="math inline">\((k = 2)\)</span> observations. The monthly bottom time series are simulated from five different <strong>SARIMA</strong> models. There are 180 monthly observations (15 years): the first 168 values (14 years) are used as training set, and the last 12 form the test set.</p>
+<p>A two-level hierarchy with <span class="math inline">\(n = 8\)</span>
+monthly time series. In the cross-sectional framework, at any time it is
+<span class="math inline">\(Tot = A + B + C\)</span>, <span class="math inline">\(A = AA + AB\)</span> and <span class="math inline">\(B = BA + BB\)</span> (<span class="math inline">\(nb = 5\)</span> at the bottom level). For monthly
+data, the observations are aggregated to annual <span class="math inline">\((k = 12)\)</span>, semi-annual <span class="math inline">\((k = 6)\)</span>, four-monthly <span class="math inline">\((k = 4)\)</span>, quarterly <span class="math inline">\((k = 3)\)</span>, and bi-monthly <span class="math inline">\((k = 2)\)</span> observations. The monthly bottom
+time series are simulated from five different <strong>SARIMA</strong>
+models. There are 180 monthly observations (15 years): the first 168
+values (14 years) are used as training set, and the last 12 form the
+test set.</p>
 <div class="figure" style="text-align: center">
 <img src="../reference/figures/hier.png" alt="Cross-sectional hierarchy" width="500px"><p class="caption">
 Cross-sectional hierarchy
@@ -181,7 +208,8 @@ Cross-sectional hierarchy
 <div class="section level4">
 <h4 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h4>
-<p>In the following script we simulate five independent monthly bottom time series, each of length 180 (15 complete years of monthly data).</p>
+<p>In the following script we simulate five independent monthly bottom
+time series, each of length 180 (15 complete years of monthly data).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco" class="external-link">FoReco</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/" class="external-link">forecast</a></span><span class="op">)</span>
@@ -230,7 +258,11 @@ Cross-sectional hierarchy
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">upper</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span><span class="op">)</span>
 <span class="va">values</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">upper</span>, <span class="va">bottom</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span></code></pre></div>
-<p>More precisely, AA is simulated from an AR(1) process, AB from an MA(1), BA from an ARIMA(0,1,1)(0,1,1), BB from an ARIMA(2,1,0), and C from an ARIMA(2,0,0)(0,1,1). The higher levels series in the hierarchy (T,A,B) are obtained by simple summation of the five bottom time series.</p>
+<p>More precisely, AA is simulated from an AR(1) process, AB from an
+MA(1), BA from an ARIMA(0,1,1)(0,1,1), BB from an ARIMA(2,1,0), and C
+from an ARIMA(2,0,0)(0,1,1). The higher levels series in the hierarchy
+(T,A,B) are obtained by simple summation of the five bottom time
+series.</p>
 <p><img src="../reference/figures/mts.png" width="500px" style="display: block; margin: auto;"></p>
 <p>Then we compute the temporally aggregated series at annual <span class="math inline">\((k = 12)\)</span>, semi-annual <span class="math inline">\((k = 6)\)</span>, four-monthly <span class="math inline">\((k = 4)\)</span>, quarterly <span class="math inline">\((k = 3)\)</span>, and bi-monthly <span class="math inline">\((k = 2)\)</span> frequencies.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -263,7 +295,10 @@ Cross-sectional hierarchy
                        <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, nrow <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
                  frequency <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p><img src="../reference/figures/mts12.png" width="500px" style="display: block; margin: auto;"></p>
-<p>The first 14 years of each simulated series are used as training set, and the last year as test set. The forecasts are obtained using the <code>auto.arima</code> function of the <code>forecast</code> package (Hyndman et al., 2020).</p>
+<p>The first 14 years of each simulated series are used as training set,
+and the last year as test set. The forecasts are obtained using the
+<code>auto.arima</code> function of the <code>forecast</code> package
+(Hyndman et al., 2020).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># MONTHLY FORECASTS</span>
 <span class="va">base</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, nrow <span class="op">=</span> <span class="fl">12</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span><span class="op">)</span>
@@ -279,7 +314,8 @@ Cross-sectional hierarchy
 <span class="va">residuals</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k1</span>, frequency <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">residuals</span><span class="op">$</span><span class="va">k1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"AA"</span>, <span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">test</span><span class="op">$</span><span class="va">k1</span> <span class="op">&lt;-</span> <span class="va">values</span><span class="op">$</span><span class="va">k1</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">168</span><span class="op">)</span>, <span class="op">]</span></code></pre></div>
-<p>The following plots show the actual values and the forecasts for the test year at any temporal aggregation level.</p>
+<p>The following plots show the actual values and the forecasts for the
+test year at any temporal aggregation level.</p>
 <p><img src="../reference/figures/mts_base.png" width="500px" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># BI-MONTHLY FORECASTS</span>
@@ -401,7 +437,9 @@ Cross-sectional hierarchy
 <h4 id="reconciliation">Reconciliation<a class="anchor" aria-label="anchor" href="#reconciliation"></a>
 </h4>
 <ul>
-<li>Cross-sectional reconciliation for all temporal aggregation levels (monthly, bi-monthly, …, annual) using <em>MinT-shr</em> (Wickramasuriya et al., 2019)</li>
+<li>Cross-sectional reconciliation for all temporal aggregation levels
+(monthly, bi-monthly, …, annual) using <em>MinT-shr</em> (Wickramasuriya
+et al., 2019)</li>
 </ul>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">12</span><span class="op">)</span>
@@ -424,7 +462,8 @@ Cross-sectional hierarchy
                             <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">K</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">hts_recf_list</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">hts_recf_list</span><span class="op">)</span><span class="op">)</span><span class="op">]</span>, <span class="va">NROW</span><span class="op">)</span><span class="op">)</span>,
                             <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">hts_recf</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
 <ul>
-<li>Forecast reconciliation through temporal hierarchies for all time series using <em>series-acov</em> (Nystrup et al., 2020)</li>
+<li>Forecast reconciliation through temporal hierarchies for all time
+series using <em>series-acov</em> (Nystrup et al., 2020)</li>
 </ul>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>
@@ -439,21 +478,26 @@ Cross-sectional hierarchy
                          res <span class="op">=</span> <span class="va">tsres</span>, keep <span class="op">=</span> <span class="st">"recf"</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <ul>
-<li>Heuristic first-temporal-then-cross-sectional cross-temporal reconciliation using <em>t-wls + cs-shr</em> (Kourentzes and Athanasopoulos, 2019)</li>
+<li>Heuristic first-temporal-then-cross-sectional cross-temporal
+reconciliation using <em>t-wls + cs-shr</em> (Kourentzes and
+Athanasopoulos, 2019)</li>
 </ul>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tcs_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tcsrec.html">tcsrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
                    thf_comb <span class="op">=</span> <span class="st">"wlsv"</span>, hts_comb <span class="op">=</span> <span class="st">"shr"</span>,
                    res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span></code></pre></div>
 <ul>
-<li>Heuristic first-cross-sectional-then-temporal cross-temporal reconciliation using <em>t-acov + cs-shr</em> (Di Fonzo and Girolimetto, 2020)</li>
+<li>Heuristic first-cross-sectional-then-temporal cross-temporal
+reconciliation using <em>t-acov + cs-shr</em> (Di Fonzo and Girolimetto,
+2020)</li>
 </ul>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cst_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cstrec.html">cstrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
                    thf_comb <span class="op">=</span> <span class="st">"acov"</span>, hts_comb <span class="op">=</span> <span class="st">"shr"</span>,
                    res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span></code></pre></div>
 <ul>
-<li>Iterative cross-temporal reconciliation (Di Fonzo and Girolimetto, 2020)</li>
+<li>Iterative cross-temporal reconciliation (Di Fonzo and Girolimetto,
+2020)</li>
 </ul>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ite_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iterec.html">iterec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>,
@@ -475,25 +519,42 @@ Cross-sectional hierarchy
 <span class="co">#&gt; thf: Temporal incoherence 4.94e-06 &lt; 1e-05 tolerance</span>
 <span class="co">#&gt; --------------------------------------------------------------------------------</span></code></pre></div>
 <p><img src="../reference/figures/ite.png" width="300px" style="display: block; margin: auto;"></p>
-<p>The above plot shows the convergence path of both cross-sectional and temporal discrepancies.</p>
+<p>The above plot shows the convergence path of both cross-sectional and
+temporal discrepancies.</p>
 <ul>
-<li>Optimal cross-temporal reconciliation using <em>bdshr</em> (Di Fonzo and Girolimetto, 2020)</li>
+<li>Optimal cross-temporal reconciliation using <em>bdshr</em> (Di Fonzo
+and Girolimetto, 2020)</li>
 </ul>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">oct_recf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/octrec.html">octrec</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>,
                    comb <span class="op">=</span> <span class="st">"bdshr"</span>, res <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span>, keep <span class="op">=</span> <span class="st">"recf"</span><span class="op">)</span></code></pre></div>
-<p>Monthly actual and forecasted values are shown in the following figure.</p>
+<p>Monthly actual and forecasted values are shown in the following
+figure.</p>
 <p><img src="../reference/figures/mts_base_rec.png" width="600px" style="display: block; margin: auto;"></p>
-<p>An evaluation of the quality of the reconciled forecasts can be obtained by using appropriate accuracy indices (see <code><a href="../reference/score_index.html">score_index()</a></code>).</p>
+<p>An evaluation of the quality of the reconciled forecasts can be
+obtained by using appropriate accuracy indices (see
+<code><a href="../reference/score_index.html">score_index()</a></code>).</p>
 </div>
 <div class="section level4">
 <h4 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h4>
-<p>Di Fonzo, T., Girolimetto, D. (2020), <em>Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives</em>, Department of Statistical Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a>.</p>
-<p>Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O’Hara-Wild M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2020). <em>forecast: Forecasting functions for time series and linear models</em> . R package version 8.13, <a href="https://pkg.robjhyndman.com/forecast/" class="external-link uri">https://pkg.robjhyndman.com/forecast/</a>.</p>
-<p>Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts for Australian tourism, <em>Annals of Tourism Research</em>, 75, 393-409.</p>
-<p>Nystrup, P., Lindström, E., Pinson, P., Madsen, H. (2020), Temporal hierarchies with autocorrelation for load forecasting, <em>European Journal of Operational Research</em>, 280, 3, 876–888.</p>
-<p>Wickramasuriya, S.L., Athanasopoulos, G., Hyndman, R.J. (2019), Optimal forecast reconciliation for hierarchical and grouped time series through trace minimization, <em>Journal of the American Statistical Association</em>, 114, 526, 804-819.</p>
+<p>Di Fonzo, T., Girolimetto, D. (2021), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+<em>International Journal of Forecasting</em>, in press.</p>
+<p>Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L,
+O’Hara-Wild M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2020).
+<em>forecast: Forecasting functions for time series and linear
+models</em> . R package version 8.13, <a href="https://pkg.robjhyndman.com/forecast/" class="external-link uri">https://pkg.robjhyndman.com/forecast/</a>.</p>
+<p>Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent
+forecasts for Australian tourism, <em>Annals of Tourism Research</em>,
+75, 393-409.</p>
+<p>Nystrup, P., Lindström, E., Pinson, P., Madsen, H. (2020), Temporal
+hierarchies with autocorrelation for load forecasting, <em>European
+Journal of Operational Research</em>, 280, 3, 876–888.</p>
+<p>Wickramasuriya, S.L., Athanasopoulos, G., Hyndman, R.J. (2019),
+Optimal forecast reconciliation for hierarchical and grouped time series
+through trace minimization, <em>Journal of the American Statistical
+Association</em>, 114, 526, 804-819.</p>
 </div>
 </div>
   </div>
@@ -513,7 +574,7 @@ Cross-sectional hierarchy
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer>

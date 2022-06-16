@@ -52,6 +52,7 @@ Other utilities:
 \code{\link{FoReco2ts}()},
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
+\code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},

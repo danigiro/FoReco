@@ -23,7 +23,7 @@ and temporal frameworks."><meta property="og:image" content="https://danigiro.gi
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@ and temporal frameworks."><meta property="og:image" content="https://danigiro.gi
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -100,7 +100,7 @@ and temporal frameworks."><meta property="og:image" content="https://danigiro.gi
 
 Cross temporal reconciled forecasts for all series at any temporal
 aggregation level are computed by appropriate summation of the high-frequency
-bottom base forecasts \(\widehat{\mathbf{b}}_i, i = 1,...,n_b\), according to a
+bottom base forecasts <em></em>\(\widehat{\mathbf{b}}_i, i = 1,...,n_b\), according to a
 bottom-up procedure like what is currently done in both the cross-sectional
 and temporal frameworks.</p>
     </div>
@@ -112,47 +112,54 @@ and temporal frameworks.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>Bmat</dt>
-<dd><p>(\(n_b \times h m\)) matrix of high-frequency bottom time
-series base forecasts (\(\widehat{\mathbf{B}}^{[1]}\)).
+<dd><p>(<em></em>\(n_b \times h m\)) matrix of high-frequency bottom time
+series base forecasts (<em></em>\(\widehat{\mathbf{B}}^{[1]}\)).
 <code>h</code> is the forecast horizon for the lowest frequency (most temporally aggregated)
 time series.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \(m\)), or a subset of the \(p\) factors
-of \(m\).</p></dd>
+of temporal aggregation, <em></em>\(m\)), or a subset of the <em></em>\(p\) factors
+of <em></em>\(m\).</p></dd>
+
+
 <dt>C</dt>
-<dd><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+<dd><p>(<em></em>\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function returns a (\(n \times h (k^\ast + m)\)) matrix of
-bottom-up cross-temporally reconciled forecasts, \(\ddot{\mathbf{Y}}\).</p>
+    
+
+<p>The function returns a (<em></em>\(n \times h (k^\ast + m)\)) matrix of
+bottom-up cross-temporally reconciled forecasts, <em></em>\(\ddot{\mathbf{Y}}\).</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Denoting by \(\ddot{\mathbf{Y}}\) the (\(n \times h (k^\ast + m)\)) matrix containing
+    <p>Denoting by <em></em>\(\ddot{\mathbf{Y}}\) the (<em></em>\(n \times h (k^\ast + m)\)) matrix containing
 the bottom-up cross temporal reconciled forecasts, it is:
 \[\ddot{\mathbf{Y}} = \left[\begin{array}{cc}
 \mathbf{C}\widehat{\mathbf{B}}^{[1]}\mathbf{K}_1' &amp; \mathbf{C}\widehat{\mathbf{B}}^{[1]} \cr
 \widehat{\mathbf{B}}^{[1]} \mathbf{K}_1' &amp; \widehat{\mathbf{B}}^{[1]}
 \end{array}\right],\]
-where \(\mathbf{C}\) is the cross-sectional (contemporaneous) aggregation matrix,
-\(\mathbf{K}_1\) is the temporal aggregation matrix with \(h=1\), and
-\(\widehat{\mathbf{B}}^{[1]}\) is the matrix containing the high-frequency bottom
+where <em></em>\(\mathbf{C}\) is the cross-sectional (contemporaneous) aggregation matrix,
+<em></em>\(\mathbf{K}_1\) is the temporal aggregation matrix with <em></em>\(h=1\), and
+<em></em>\(\widehat{\mathbf{B}}^{[1]}\) is the matrix containing the high-frequency bottom
 time series base forecasts. This expression is equivalent to
-\(\mbox{vec}(\ddot{\mathbf{Y}}') = \widetilde{\mathbf{S}}
-\mbox{vec}(\widehat{\mathbf{Y}}')\) for \(h = 1\), where
-\(\widetilde{\mathbf{S}}\) is the cross-temporal summing matrix for
-\(\mbox{vec}(\widehat{\mathbf{Y}}')\), and \(\widehat{\mathbf{Y}}\)
-is the (\(n \times h (k^\ast + m)\)) matrix containing all the base forecasts
+<em></em>\(\mbox{vec}(\ddot{\mathbf{Y}}') = \widetilde{\mathbf{S}}
+\mbox{vec}(\widehat{\mathbf{Y}}')\) for <em></em>\(h = 1\), where
+<em></em>\(\widetilde{\mathbf{S}}\) is the cross-temporal summing matrix for
+<em></em>\(\mbox{vec}(\widehat{\mathbf{Y}}')\), and <em></em>\(\widehat{\mathbf{Y}}\)
+is the (<em></em>\(n \times h (k^\ast + m)\)) matrix containing all the base forecasts
 at any temporal aggregation order.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a>.</p>
+    <p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, <em>International Journal
+of Forecasting</em>, in press.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -191,7 +198,7 @@ Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class=
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

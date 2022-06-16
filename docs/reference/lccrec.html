@@ -28,7 +28,7 @@ reconciled forecasts, with either endogenous or exogenous constraints."><meta pr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -48,7 +48,7 @@ reconciled forecasts, with either endogenous or exogenous constraints."><meta pr
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -124,63 +124,88 @@ reconciled forecasts, with either endogenous or exogenous constraints.</p>
     <h2>Arguments</h2>
     <dl><dt>basef</dt>
 <dd><p>matrix/vector of base forecasts to be reconciled:
-(\(h \times n\)) matrix in the cross-sectional framework;
-(\(h(k^\ast + m) \times 1\)) vector in the temporal framework;
-(\(n \times h(k^\ast+m)\)) matrix in the cross-temporal framework.
-\(n\) is the total number of variables, \(m\) is the highest time
-frequency, \(k^\ast\) is the sum of (a subset of) (\(p-1\)) factors
-of \(m\), excluding \(m\), and \(h\) is the forecast horizon.</p></dd>
+(<em></em>\(h \times n\)) matrix in the cross-sectional framework;
+(<em></em>\(h(k^\ast + m) \times 1\)) vector in the temporal framework;
+(<em></em>\(n \times h(k^\ast+m)\)) matrix in the cross-temporal framework.
+<em></em>\(n\) is the total number of variables, <em></em>\(m\) is the highest time
+frequency, <em></em>\(k^\ast\) is the sum of (a subset of) (<em></em>\(p-1\)) factors
+of <em></em>\(m\), excluding <em></em>\(m\), and <em></em>\(h\) is the forecast horizon.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \(m\)), or a subset of the \(p\) factors
-of \(m\).</p></dd>
+of temporal aggregation, <em></em>\(m\)), or a subset of the <em></em>\(p\) factors
+of <em></em>\(m\).</p></dd>
+
+
 <dt>C</dt>
-<dd><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+<dd><p>(<em></em>\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones (or a list
-of matrices forming \(\mathbf{C} = [\mathbf{C}_1' \; \mathbf{C}_2' \; ... \; \mathbf{C}_L']'\),
-\(1, ..., L\) being the number of the cross-sectional upper levels.</p></dd>
+of matrices forming <em></em>\(\mathbf{C} = [\mathbf{C}_1' \; \mathbf{C}_2' \; ... \; \mathbf{C}_L']'\),
+<em></em>\(1, ..., L\) being the number of the cross-sectional upper levels.</p></dd>
+
+
 <dt>nl</dt>
-<dd><p>(\(L \times 1\)) vector containing the number of time series
+<dd><p>(<em></em>\(L \times 1\)) vector containing the number of time series
 in each level of the hierarchy (<code>nl[1] = 1</code>).</p></dd>
+
+
 <dt>weights</dt>
 <dd><p>covariance matrix or a vector (weights used in the reconciliation:
-either (\(n_b \times 1\)) for exogenous or (\(n \times 1\)) for
+either (<em></em>\(n_b \times 1\)) for exogenous or (<em></em>\(n \times 1\)) for
 endogenous constraints).</p></dd>
+
+
 <dt>bnaive</dt>
 <dd><p>matrix/vector of naive bts base forecasts
 (e.g., seasonal averages, as in Hollyman et al., 2021):
-(\(h \times n_b\)) matrix in the cross-sectional framework;
-(\(h m \times 1\)) vector in the temporal framework;
-(\(n_b \times h m\)) matrix in the cross-temporal framework.
+(<em></em>\(h \times n_b\)) matrix in the cross-sectional framework;
+(<em></em>\(h m \times 1\)) vector in the temporal framework;
+(<em></em>\(n_b \times h m\)) matrix in the cross-temporal framework.
 Ignore it, if only basef are to be used as base forecasts.</p></dd>
+
+
 <dt>const</dt>
 <dd><p><strong>exo</strong>genous (<em>default</em>) or <strong>endo</strong>genous
 constraints</p></dd>
+
+
 <dt>CCC</dt>
 <dd><p>Option to return Combined Conditional Coherent reconciled
 forecasts (<em>default</em> is TRUE).</p></dd>
+
+
 <dt>nn</dt>
 <dd><p>Logical value: <code>TRUE</code> if non-negative reconciled forecasts
 are wished.</p></dd>
+
+
 <dt>nn_type</dt>
 <dd><p>Non-negative method: "osqp" (<em>default</em>) or "sntz"
 (<em>set-negative-to-zero</em>, only if <code>CCC = TRUE</code>) with exogenous
 constraints (<code>const = "exo"</code>); "osqp" (<em>default</em>), "KAnn"
 (only <code>type == "M"</code>) or "sntz" with endogenous constraints
 (<code>const = "endo"</code>).</p></dd>
+
+
 <dt>settings</dt>
 <dd><p>Settings for <span class="pkg">osqp</span> (object <code><a href="https://rdrr.io/pkg/osqp/man/osqpSettings.html" class="external-link">osqpSettings</a></code>).
 The default options are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>,
 <code>eps_rel = 1e-5</code>, <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>.
 For details, see the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a>
 (Stellato et al., 2019).</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional functional arguments passed to <a href="htsrec.html">htsrec</a> of
 FoReco.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function returns the level reconciled forecasts
+    
+
+<p>The function returns the level reconciled forecasts
 in case of an elementary hierarchy with one level.
 Otherwise it returns a list with</p>
 <dl><dt><code>recf</code></dt>
@@ -189,35 +214,38 @@ matrix/vector calculated as simple averages of upper level conditional
 reconciled forecasts, with either endogenous or exogenous constraints.
 If <code>CCC = TRUE</code> then it is the Combined Conditional Coherent matrix/vector,
 as weighted averages of LCC and bottom-up reconciled forecasts.</p></dd>
+
 <dt><code>levrecf</code></dt>
 <dd><p>list of level conditional reconciled forecasts (+ BU).</p></dd>
+
 <dt><code>info</code> (<code>type="osqp"</code>)</dt>
 <dd><p>matrix with some useful indicators (columns)
-for each forecast horizon \(h\) (rows): run time (<code>run_time</code>), number of iteration,
+for each forecast horizon <em></em>\(h\) (rows): run time (<code>run_time</code>), number of iteration,
 norm of primal residual (<code>pri_res</code>), status of osqp's solution (<code>status</code>) and
 polish's status (<code>status_polish</code>).</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
     <p><strong>Cross-sectional hierarchies</strong></p>
 <p>To be as simple as possible, we fix the forecast horizon equal to 1.
-Let the base forecasts be a vector \(\widehat{\mathbf{y}} =
+Let the base forecasts be a vector <em></em>\(\widehat{\mathbf{y}} =
 \left[\widehat{\mathbf{a}}' \; \widehat{\mathbf{b}}'\right]'\), where
-vector \(\widehat{\mathbf{a}}\) consists of the sub-vectors forming each
-of the upper \(L\) levels of the hierarchy/grouping:
+vector <em></em>\(\widehat{\mathbf{a}}\) consists of the sub-vectors forming each
+of the upper <em></em>\(L\) levels of the hierarchy/grouping:
 \[\widehat{\mathbf{a}} = \left[\begin{array}{c}
     \widehat{a}_1 \cr \widehat{\mathbf{a}}_2 \cr \vdots \cr \widehat{\mathbf{a}}_L
     \end{array}\right],\]
-where \(\widehat{\mathbf{a}}_l\), \(l=1,\ldots, L\), has dimension
-\((n_l \times 1)\) and \(\sum_{l=1}^{L} n_l = n_a\). Denote
-\(\mathbf{C}_l\) the \((n_l \times n_b)\) matrix mapping the
-bts into the level-\(l\) uts, then the aggregation matrix
-\(\mathbf{C}\) may be written as
+where <em></em>\(\widehat{\mathbf{a}}_l\), <em></em>\(l=1,\ldots, L\), has dimension
+<em></em>\((n_l \times 1)\) and <em></em>\(\sum_{l=1}^{L} n_l = n_a\). Denote
+<em></em>\(\mathbf{C}_l\) the <em></em>\((n_l \times n_b)\) matrix mapping the
+bts into the level-<em></em>\(l\) uts, then the aggregation matrix
+<em></em>\(\mathbf{C}\) may be written as
 \[\mathbf{C} = \left[\begin{array}{c}
   \mathbf{C}_1 \cr\mathbf{C}_2 \cr \vdots \cr \mathbf{C}_L
   \end{array}\right],\]
-where the generic matrix \(\mathbf{C}_L\) is (\(n_L \times n_b\)),
-\(l=1, \ldots, L\). Given a generic level \(l\), the reconciled
+where the generic matrix <em></em>\(\mathbf{C}_L\) is (<em></em>\(n_L \times n_b\)),
+<em></em>\(l=1, \ldots, L\). Given a generic level <em></em>\(l\), the reconciled
 forecasts coherent with the base forecasts of that level are the solution to
 a quadratic minimization problem with linear
 exogenous constraints (<code>const = "exo"</code>):
@@ -230,12 +258,12 @@ exogenous constraints (<code>const = "exo"</code>):
 \mathbf{W}_b\mathbf{C}_l'\left(\mathbf{C}_l\mathbf{W}_b\mathbf{C}_l'
 \right)^{-1}\left(\widehat{\mathbf{a}}_l -\mathbf{C}_l\widehat{\mathbf{b}}
 \right), \quad l=1,\ldots,L,\end{array}\]
-where \(\mathbf{W}_b\) is a (\(n_b \times n_b\)) p.d. matrix
-(in Hollyman et al., 2021, \(\mathbf{W}_b\) is diagonal).
+where <em></em>\(\mathbf{W}_b\) is a (<em></em>\(n_b \times n_b\)) p.d. matrix
+(in Hollyman et al., 2021, <em></em>\(\mathbf{W}_b\) is diagonal).
 If endogenous constraints (<code>const = "endo"</code>) are considered,
-denote \(\widehat{\mathbf{y}}_l =
+denote <em></em>\(\widehat{\mathbf{y}}_l =
 \left[\widehat{\mathbf{a}}_l' \; \widehat{\mathbf{b}}'\right]'\) and
-\(\mathbf{U}_l' = \left[\mathbf{I}_{n_l}'  \; \mathbf{C}_l'\right]'\),
+<em></em>\(\mathbf{U}_l' = \left[\mathbf{I}_{n_l}'  \; \mathbf{C}_l'\right]'\),
 then
 \[\begin{array}{c}\widetilde{\mathbf{y}}_{l} = \arg\min_{\mathbf{y}_l}
 \left(\mathbf{y}_l - \widehat{\mathbf{y}}_l\right)'\mathbf{W}_l^{-1}
@@ -247,10 +275,10 @@ then
 \mathbf{U}_l\right)^{-1}\mathbf{U}_l'\right)\widehat{\mathbf{y}}_{l},
 \quad l=1,...,L,
 \end{array}\]
-where \(\mathbf{W}_l\) is a (\(n_l + n_b \times n_l + n_b\))
+where <em></em>\(\mathbf{W}_l\) is a (<em></em>\(n_l + n_b \times n_l + n_b\))
 p.d. matrix.
 Combined Conditional Coherent (CCC) forecasts are obtained by taking
-the simple average of the \(L\) level conditional, and of the bottom-up
+the simple average of the <em></em>\(L\) level conditional, and of the bottom-up
 reconciled forecasts, respectively (Di Fonzo and Girolimetto, 2021):
 \[\widetilde{\mathbf{y}}_{CCC}=\frac{1}{L+1}\sum_{l=1}^{L+1} \mathbf{S}\widetilde{\mathbf{b}}_l,\]
 with \[\widetilde{\mathbf{b}}_{L+1} = \widehat{\mathbf{b}}.\]</p>
@@ -277,10 +305,11 @@ and
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a>.</p>
-<p>Di Fonzo, T., Girolimetto, D. (2021), <em>Forecast combination based forecast reconciliation: insights and extensions</em> (mimeo).</p>
+    <p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, <em>International Journal
+of Forecasting</em>, in press.</p>
+<p>Di Fonzo, T., Girolimetto, D. (2021), Forecast combination based forecast reconciliation:
+insights and extensions, <a href="https://arxiv.org/abs/2106.05653" class="external-link">arXiv:2006.08570</a>.</p>
 <p>Hollyman, R., Petropoulos, F., Tipping, M.E. (2021), Understanding Forecast Reconciliation,
 <em>European Journal of Operational Research</em> (in press).</p>
     </div>
@@ -409,7 +438,7 @@ Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class=
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

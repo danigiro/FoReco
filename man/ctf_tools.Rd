@@ -44,7 +44,7 @@ constraints (kernel) matrix coherent with \mjseqn{\mathbf{y} = \mbox{vec}(\mathb
 coherent with \mjseqn{\check{\mathbf{y}}} (structural representation).}
 \item{\code{Scheck}}{Cross-temporal summing matrix \mjseqn{\check{\mathbf{S}}}
 coherent with \mjseqn{\check{\mathbf{y}}} (structural representation).}
-\item{\code{Stilde}}{Cross-temporal summing matrix \mjseqn{\widetilde{\mathbf{S}}}
+\item{\code{Fmat}}{Cross-temporal summing matrix \mjseqn{\widetilde{\mathbf{F}}}
 coherent with \mjseqn{\mathbf{y} = \mbox{vec}(\mathbf{Y}')}.}
 
 \strong{hts} list from \code{\link{hts_tools}} .
@@ -67,6 +67,7 @@ Other utilities:
 \code{\link{FoReco2ts}()},
 \code{\link{commat}()},
 \code{\link{hts_tools}()},
+\code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},

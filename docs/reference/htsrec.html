@@ -22,7 +22,7 @@ et al. (2011). Moreover, the classic bottom-up approach is available."><meta pro
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -42,7 +42,7 @@ et al. (2011). Moreover, the classic bottom-up approach is available."><meta pro
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -112,11 +112,13 @@ et al. (2011). Moreover, the classic bottom-up approach is available.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>basef</dt>
-<dd><p>(\(h \times n\)) matrix of base forecasts to be reconciled;
-\(h\) is the forecast horizon and \(n\) is the total number of time series.</p></dd>
+<dd><p>(<em></em>\(h \times n\)) matrix of base forecasts to be reconciled;
+<em></em>\(h\) is the forecast horizon and <em></em>\(n\) is the total number of time series.</p></dd>
+
+
 <dt>comb</dt>
 <dd><p>Type of the reconciliation. Except for Bottom-up, each
-option corresponds to a specific (\(n \times n\)) covariance matrix:</p><ul><li><p><b>bu</b> (Bottom-up);</p></li>
+option corresponds to a specific (<em></em>\(n \times n\)) covariance matrix:</p><ul><li><p><b>bu</b> (Bottom-up);</p></li>
 <li><p><b>ols</b> (Identity);</p></li>
 <li><p><b>struc</b> (Structural variances);</p></li>
 <li><p><b>wls</b> (Series variances) - uses res;</p></li>
@@ -124,122 +126,165 @@ option corresponds to a specific (\(n \times n\)) covariance matrix:</p><ul><li>
 <li><p><b>sam</b> (Sample covariance matrix - MinT-sam) - uses res;</p></li>
 <li><p><b>w</b> use your personal matrix W in param <code>W</code>.</p></li>
 </ul></dd>
+
+
 <dt>C</dt>
-<dd><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+<dd><p>(<em></em>\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones.</p></dd>
+
+
 <dt>res</dt>
-<dd><p>(\(N \times n\)) in-sample residuals matrix needed when <code>comb =</code>
+<dd><p>(<em></em>\(N \times n\)) in-sample residuals matrix needed when <code>comb =</code>
 <code>{"wls",</code> <code>"shr",</code> <code>"sam"}</code>. The columns must be in
 the same order as <code>basef</code>.</p></dd>
+
+
 <dt>Ut</dt>
 <dd><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
+<em></em>\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
 for the reconciled forecasts. It can be used instead of parameter
-<code>C</code>, but <code>nb</code> (\(n = n_a + n_b\)) is needed if
-\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
-admits a structural representation, \(\mathbf{U}'\) has dimension
-(\(n_a \times n\)).</p></dd>
+<code>C</code>, but <code>nb</code> (<em></em>\(n = n_a + n_b\)) is needed if
+<em></em>\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
+admits a structural representation, <em></em>\(\mathbf{U}'\) has dimension
+(<em></em>\(n_a \times n\)).</p></dd>
+
+
 <dt>nb</dt>
 <dd><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code>
 and <code>Ut</code> are not used.</p></dd>
+
+
 <dt>mse</dt>
 <dd><p>Logical value: <code>TRUE</code> (<em>default</em>) calculates the
 covariance matrix of the in-sample residuals (when necessary) according to
 the original <span class="pkg">hts</span> and <span class="pkg">thief</span> formulation: no mean correction,
 T as denominator.</p></dd>
+
+
 <dt>corpcor</dt>
 <dd><p>Logical value: <code>TRUE</code> if <span class="pkg">corpcor</span> (Schäfer et
 al., 2017) must be used to shrink the sample covariance matrix according to
 Schäfer and Strimmer (2005), otherwise the function uses the
 same implementation as package <span class="pkg">hts</span>.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Approach used to compute the reconciled forecasts: <code>"M"</code> for
 the projection approach with matrix M (<em>default</em>), or <code>"S"</code> for the
 structural approach with summing matrix S.</p></dd>
+
+
 <dt>sol</dt>
 <dd><p>Solution technique for the reconciliation problem: either
 <code>"direct"</code> (<em>default</em>) for the closed-form matrix solution, or
 <code>"osqp"</code> for the numerical solution (solving a linearly constrained
 quadratic program using <code><a href="https://rdrr.io/pkg/osqp/man/solve_osqp.html" class="external-link">solve_osqp</a></code>).</p></dd>
+
+
 <dt>keep</dt>
 <dd><p>Return a list object of the reconciled forecasts at all levels
 (if keep = "list") or only the reconciled forecasts matrix (if keep = "recf").</p></dd>
+
+
 <dt>v</dt>
-<dd><p>vector index of the fixed base forecast (\(\mbox{min}(v) &gt; 0\)
-and \(\mbox{max}(v) &lt; n\)).</p></dd>
+<dd><p>vector index of the fixed base forecast (<em></em>\(\mbox{min}(v) &gt; 0\)
+and <em></em>\(\mbox{max}(v) &lt; n\)).</p></dd>
+
+
 <dt>nn</dt>
 <dd><p>Logical value: <code>TRUE</code> if non-negative reconciled forecasts
 are wished.</p></dd>
+
+
 <dt>nn_type</dt>
 <dd><p>"osqp" (default), "KAnn" (only <code>type == "M"</code>) or "sntz".</p></dd>
+
+
 <dt>settings</dt>
 <dd><p>Settings for <span class="pkg">osqp</span> (object <code><a href="https://rdrr.io/pkg/osqp/man/osqpSettings.html" class="external-link">osqpSettings</a></code>).
 The default options are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>,
 <code>eps_rel = 1e-5</code>, <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>.
 For details, see the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a>
 (Stellato et al., 2019).</p></dd>
+
+
 <dt>bounds</dt>
-<dd><p>(\(n \times 2\)) matrix containing the cross-sectional bounds:
+<dd><p>(<em></em>\(n \times 2\)) matrix containing the cross-sectional bounds:
 the first column is the lower bound, and the second column is the upper bound.</p></dd>
+
+
 <dt>W</dt>
-<dd><p>This option permits to directly enter the covariance matrix:</p><ol><li><p><code>W</code> must be a p.d. (\(n \times n\)) matrix or a list of \(h\) matrix (one for each forecast horizon);</p></li>
+<dd><p>This option permits to directly enter the covariance matrix:</p><ol><li><p><code>W</code> must be a p.d. (<em></em>\(n \times n\)) matrix or a list of <em></em>\(h\) matrix (one for each forecast horizon);</p></li>
 <li><p>if <code>comb</code> is different from "<code>w</code>", <code>W</code> is not used.</p></li>
 </ol></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If the parameter <code>keep</code> is equal to <code>"recf"</code>, then the function
-returns only the (\(h \times n\)) reconciled forecasts matrix, otherwise (<code>keep="all"</code>)
+    
+
+<p>If the parameter <code>keep</code> is equal to <code>"recf"</code>, then the function
+returns only the (<em></em>\(h \times n\)) reconciled forecasts matrix, otherwise (<code>keep="all"</code>)
 it returns a list that mainly depends on what type of representation (<code>type</code>)
 and solution technique (<code>sol</code>) have been used:</p>
 <dl><dt><code>recf</code></dt>
-<dd><p>(\(h \times n\)) reconciled forecasts matrix, \(\widetilde{\mathbf{Y}}\).</p></dd>
+<dd><p>(<em></em>\(h \times n\)) reconciled forecasts matrix, <em></em>\(\widetilde{\mathbf{Y}}\).</p></dd>
+
 <dt><code>W</code></dt>
-<dd><p>Covariance matrix used for forecast reconciliation, \(\mathbf{W}\).</p></dd>
+<dd><p>Covariance matrix used for forecast reconciliation, <em></em>\(\mathbf{W}\).</p></dd>
+
 <dt><code>nn_check</code></dt>
 <dd><p>Number of negative values (if zero, there are no values below zero).</p></dd>
+
 <dt><code>rec_check</code></dt>
 <dd><p>Logical value: has the hierarchy been respected?</p></dd>
+
 <dt><code>varf</code> (<code>type="direct"</code>)</dt>
-<dd><p>(\(n \times 1\)) reconciled forecasts variance vector for \(h=1\), \(\mbox{diag}(\mathbf{MW}\)).</p></dd>
+<dd><p>(<em></em>\(n \times 1\)) reconciled forecasts variance vector for <em></em>\(h=1\), <em></em>\(\mbox{diag}(\mathbf{MW}\)).</p></dd>
+
 <dt><code>M</code> (<code>type="direct"</code>)</dt>
-<dd><p>Projection matrix, \(\mathbf{M}\) (projection approach).</p></dd>
+<dd><p>Projection matrix, <em></em>\(\mathbf{M}\) (projection approach).</p></dd>
+
 <dt><code>G</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt>
-<dd><p>Projection matrix, \(\mathbf{G}\) (structural approach, \(\mathbf{M}=\mathbf{S}\mathbf{G}\)).</p></dd>
+<dd><p>Projection matrix, <em></em>\(\mathbf{G}\) (structural approach, <em></em>\(\mathbf{M}=\mathbf{S}\mathbf{G}\)).</p></dd>
+
 <dt><code>S</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt>
-<dd><p>Cross-sectional summing matrix, \(\mathbf{S}\).</p></dd>
+<dd><p>Cross-sectional summing matrix, <em></em>\(\mathbf{S}\).</p></dd>
+
 <dt><code>info</code> (<code>type="osqp"</code>)</dt>
 <dd><p>matrix with information in columns
-for each forecast horizon \(h\) (rows): run time (<code>run_time</code>),
+for each forecast horizon <em></em>\(h\) (rows): run time (<code>run_time</code>),
 number of iteration (<code>iter</code>), norm of primal residual (<code>pri_res</code>),
 status of osqp's solution (<code>status</code>) and polish's status
 (<code>status_polish</code>). It will also be returned with <code>nn = TRUE</code> if
 a solver (see <code>nn_type</code>) will be used.</p></dd>
+
+
 </dl><p>Only if <code>comb = "bu"</code>, the function returns <code>recf</code>, <code>S</code> and <code>M</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
 
-Let \(\mathbf{y}\) be a (\(n \times 1\)) vector of target point
+Let <em></em>\(\mathbf{y}\) be a (<em></em>\(n \times 1\)) vector of target point
 forecasts which are wished to satisfy the system of linearly independent
 constraints \[\mathbf{U}'\mathbf{y} = \mathbf{0}_{(r \times 1)},\]
-where \(\mathbf{U}'\) is a (\(r \times n\)) matrix, with
-rank\((\mathbf{U}') = r \leq n\), and \(\mathbf{0}_{(r \times 1)}\)
-is a (\(r \times 1\)) null vector. Let \(\widehat{\mathbf{y}}\)
-be a (\(n \times 1\)) vector of unbiased point forecasts, not
-fulfilling the linear constraints (i.e., \(\mathbf{U}'\widehat{\mathbf{y}}
+where <em></em>\(\mathbf{U}'\) is a (<em></em>\(r \times n\)) matrix, with
+rank<em></em>\((\mathbf{U}') = r \leq n\), and <em></em>\(\mathbf{0}_{(r \times 1)}\)
+is a (<em></em>\(r \times 1\)) null vector. Let <em></em>\(\widehat{\mathbf{y}}\)
+be a (<em></em>\(n \times 1\)) vector of unbiased point forecasts, not
+fulfilling the linear constraints (i.e., <em></em>\(\mathbf{U}'\widehat{\mathbf{y}}
 \ne \mathbf{0}\)).</p>
 <p>We consider a regression-based reconciliation method assuming
-that \(\widehat{\mathbf{y}}\) is related to \(\mathbf{y}\) by
+that <em></em>\(\widehat{\mathbf{y}}\) is related to <em></em>\(\mathbf{y}\) by
 \[\widehat{\mathbf{y}} = \mathbf{y} + \mathbf{\varepsilon},\]
-where \(\mathbf{\varepsilon}\) is a (\(n \times 1\)) vector
+where <em></em>\(\mathbf{\varepsilon}\) is a (<em></em>\(n \times 1\)) vector
 of zero mean disturbances, with known p.d. covariance matrix
-\(\mathbf{W}\). The reconciled forecasts \(\widetilde{\mathbf{y}}\)
+<em></em>\(\mathbf{W}\). The reconciled forecasts <em></em>\(\widetilde{\mathbf{y}}\)
 are found by minimizing the generalized least squares (GLS) objective
-function \(\left(\widehat{\mathbf{y}} - \mathbf{y}\right)'\mathbf{W}^{-1}
+function <em></em>\(\left(\widehat{\mathbf{y}} - \mathbf{y}\right)'\mathbf{W}^{-1}
 \left(\widehat{\mathbf{y}} - \mathbf{y}\right)\) constrained by
-\(\mathbf{U}'\mathbf{y} = \mathbf{0}_{(r \times 1)}\):</p>
+<em></em>\(\mathbf{U}'\mathbf{y} = \mathbf{0}_{(r \times 1)}\):</p>
 <p>\[\widetilde{\mathbf{y}} = \mbox{argmin}_\mathbf{y} \left(\mathbf{y} -
 \widehat{\mathbf{y}} \right)' \mathbf{W}^{-1} \left(\mathbf{y} -
 \widehat{\mathbf{y}} \right), \quad \mbox{s.t. } \mathbf{U}'\mathbf{y} =
@@ -248,22 +293,22 @@ function \(\left(\widehat{\mathbf{y}} - \mathbf{y}\right)'\mathbf{W}^{-1}
 \[\widetilde{\mathbf{y}}= \widehat{\mathbf{y}} - \mathbf{W}\mathbf{U}
 \left(\mathbf{U}’\mathbf{WU}\right)^{-1}\mathbf{U}'\widehat{\mathbf{y}}=
 \mathbf{M}\widehat{\mathbf{y}},\]
-where \(\mathbf{M} = \mathbf{I}_n - \mathbf{W}\mathbf{U}\left(
+where <em></em>\(\mathbf{M} = \mathbf{I}_n - \mathbf{W}\mathbf{U}\left(
 \mathbf{U}’\mathbf{WU}\right)^{-1}\mathbf{U}’\)
-is a (\(n \times n\)) projection matrix. This solution is used by
+is a (<em></em>\(n \times n\)) projection matrix. This solution is used by
 <code>htsrec</code> when <code>type = "M"</code>.</p>
-<p>Denoting with \(\mathbf{d}_{\widehat{\mathbf{y}}} = \mathbf{0} -
-\mathbf{U}'\widehat{\mathbf{y}}\) the (\(r \times 1\)) vector containing
+<p>Denoting with <em></em>\(\mathbf{d}_{\widehat{\mathbf{y}}} = \mathbf{0} -
+\mathbf{U}'\widehat{\mathbf{y}}\) the (<em></em>\(r \times 1\)) vector containing
 the <em>coherency</em> errors of the base forecasts, we can re-state the solution as
 \[\widetilde{\mathbf{y}}= \widehat{\mathbf{y}} + \mathbf{WU} \left(
 \mathbf{U}'\mathbf{WU}\right)^{-1}\mathbf{d}_{\widehat{y}},\]
 which makes it clear that the reconciliation formula simply adjusts the
-vector \(\widehat{\mathbf{y}}\) with a linear
+vector <em></em>\(\widehat{\mathbf{y}}\) with a linear
 combination -- according to the smoothing matrix
-\(\mathbf{L} = \mathbf{WU} \left(\mathbf{U}’\mathbf{WU}\right)^{-1}\) --
+<em></em>\(\mathbf{L} = \mathbf{WU} \left(\mathbf{U}’\mathbf{WU}\right)^{-1}\) --
 of the coherency errors of the base forecasts.</p>
-<p>In addition, if the error term \(\mathbf{\varepsilon}\) is gaussian, the reconciliation
-error \(\widetilde{\varepsilon} = \widetilde{\mathbf{y}} - \mathbf{y}\) is
+<p>In addition, if the error term <em></em>\(\mathbf{\varepsilon}\) is gaussian, the reconciliation
+error <em></em>\(\widetilde{\varepsilon} = \widetilde{\mathbf{y}} - \mathbf{y}\) is
 a zero-mean gaussian vector with covariance matrix
 \[E\left( \widetilde{\mathbf{y}} - \mathbf{y}\right) \left(
 \widetilde{\mathbf{y}} - \mathbf{y}\right)' = \mathbf{W} - \mathbf{WU}
@@ -272,25 +317,25 @@ a zero-mean gaussian vector with covariance matrix
 equivalent, alternative formulation as for the reconciled estimates, obtained
 by GLS estimation of the model
 \[\widehat{\mathbf{y}} = \mathbf{S}\mathbf{\beta} + \mathbf{\varepsilon},\]
-where \(\mathbf{S}\) is the <em>structural summation matrix</em> describing
-the aggregation relationships operating on \(\mathbf{y}\), and
-\(\mathbf{\beta}\) is a subset of \(\mathbf{y}\) containing the
+where <em></em>\(\mathbf{S}\) is the <em>structural summation matrix</em> describing
+the aggregation relationships operating on <em></em>\(\mathbf{y}\), and
+<em></em>\(\mathbf{\beta}\) is a subset of <em></em>\(\mathbf{y}\) containing the
 target forecasts of the bottom level series, such that
-\(\mathbf{y} = \mathbf{S}\mathbf{\beta}\). Since the hypotheses on
-\(\mathbf{\varepsilon}\) remain unchanged,
+<em></em>\(\mathbf{y} = \mathbf{S}\mathbf{\beta}\). Since the hypotheses on
+<em></em>\(\mathbf{\varepsilon}\) remain unchanged,
 \[\widetilde{\mathbf{\beta}} = \left(\mathbf{S}'\mathbf{W}^{-1}\mathbf{S}
 \right)^{-1}\mathbf{S}'\mathbf{W}^{-1}\widehat{\mathbf{y}}\]
-is the best linear unbiased estimate of \(\mathbf{\beta}\), and
+is the best linear unbiased estimate of <em></em>\(\mathbf{\beta}\), and
 the whole reconciled forecasts vector is given by
 \[\widetilde{\mathbf{y}} = \mathbf{S}\widetilde{\mathbf{\beta}} = \mathbf{SG}
 \widehat{\mathbf{y}},\]
-where \(\mathbf{G} = \left(\mathbf{S}'\mathbf{W}^{-1}
-\mathbf{S}\right)^{-1}\mathbf{S}'\mathbf{W}^{-1}\), and \(\mathbf{M}=\mathbf{SG}\).
+where <em></em>\(\mathbf{G} = \left(\mathbf{S}'\mathbf{W}^{-1}
+\mathbf{S}\right)^{-1}\mathbf{S}'\mathbf{W}^{-1}\), and <em></em>\(\mathbf{M}=\mathbf{SG}\).
 This solution is used by <code>htsrec</code> when <code>type = "S"</code>.</p>
 <p><strong>Bounds on the reconciled forecasts</strong></p>
 <p>The user may impose bounds on the reconciled forecasts.
-The parameter <code>bounds</code> permits to consider lower (\(\mathbf{a}\)) and
-upper (\(\mathbf{b}\)) bounds like \(\mathbf{a} \leq
+The parameter <code>bounds</code> permits to consider lower (<em></em>\(\mathbf{a}\)) and
+upper (<em></em>\(\mathbf{b}\)) bounds like <em></em>\(\mathbf{a} \leq
 \widetilde{\mathbf{y}} \leq \mathbf{b}\) such that:
 \[ \begin{array}{c}
 a_1 \leq \widetilde{y}_1 \leq b_1 \cr
@@ -303,8 +348,8 @@ a_1 &amp; b_1 \cr
 \vdots &amp; \vdots \cr
 a_n &amp; b_n \cr
 \end{array}\right],\]
-where \(a_i \in [- \infty, + \infty]\) and \(b_i \in [- \infty, + \infty]\).
-If \(y_i\) is unbounded, the i-th row of <code>bounds</code> would be equal
+where <em></em>\(a_i \in [- \infty, + \infty]\) and <em></em>\(b_i \in [- \infty, + \infty]\).
+If <em></em>\(y_i\) is unbounded, the i-th row of <code>bounds</code> would be equal
 to <code>c(-Inf, +Inf)</code>.
 Notice that if the <code>bounds</code> parameter is used, <code>sol = "osqp"</code> must be used.
 This is not true in the case of non-negativity constraints:</p><ul><li><p><code>sol = "direct"</code>: first the base forecasts
@@ -322,9 +367,9 @@ the bounds, and it is sufficient to set <code>nn = "TRUE"</code>.</p>
     <h2>References</h2>
     <p>Byron, R.P. (1978), The estimation of large social accounts matrices,
 <em>Journal of the Royal Statistical Society A</em>, 141, 3, 359-367.</p>
-<p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a>.</p>
+<p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, <em>International Journal
+of Forecasting</em>, in press.</p>
 <p>Di Fonzo, T., Marini, M. (2011), Simultaneous and two-step reconciliation of
 systems of time series: methodological and practical issues,
 <em>Journal of the Royal Statistical Society. Series C (Applied Statistics)</em>,
@@ -403,7 +448,7 @@ reconciliation for hierarchical and grouped time series through trace minimizati
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

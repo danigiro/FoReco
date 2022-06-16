@@ -12,11 +12,11 @@ commat(r, c)
 \item{c}{Number of columns of \mjseqn{\mathbf{Y}}.}
 }
 \value{
-A sparse (\mjseqn{(r c) \times (r c)}) matrix, \mjseqn{\mathbf{P}}.
+A sparse (\mjseqn{r c \times r c}) matrix, \mjseqn{\mathbf{P}}.
 }
 \description{
 \loadmathjax
-This function returns the (\mjseqn{(r c) \times (r c)})
+This function returns the (\mjseqn{r c \times r c})
 commutation matrix \mjseqn{\mathbf{P}} such that
 \mjsdeqn{\mathbf{P} \mbox{vec}(\mathbf{Y}) = \mbox{vec}(\mathbf{Y}'),}
 where \mjseqn{\mathbf{Y}} is a (\mjseqn{r \times c}) matrix.
@@ -37,6 +37,7 @@ Other utilities:
 \code{\link{FoReco2ts}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
+\code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},

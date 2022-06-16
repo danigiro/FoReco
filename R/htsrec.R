@@ -215,9 +215,9 @@
 #' Byron, R.P. (1978), The estimation of large social accounts matrices,
 #' \emph{Journal of the Royal Statistical Society A}, 141, 3, 359-367.
 #'
-#' Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-#' Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-#' Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Optimal combination method and heuristic alternatives, \emph{International Journal
+#' of Forecasting}, in press.
 #'
 #' Di Fonzo, T., Marini, M. (2011), Simultaneous and two-step reconciliation of
 #' systems of time series: methodological and practical issues,
@@ -377,7 +377,7 @@ htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FA
   }
 
   if (corpcor) {
-    shr_mod <- function(x, ...) corpcor::cov.shrink(x, verbose = FALSE, ...)
+    shr_mod <- function(x, ...) Matrix(unclass(corpcor::cov.shrink(x, verbose = FALSE, lambda.var=0, ...)))
   } else {
     shr_mod <- function(x, ...) shrink_estim(x, minT = mse)[[1]]
   }
@@ -439,7 +439,7 @@ htsrec.default <- function(basef, comb, C, res, Ut, nb, mse = TRUE, corpcor = FA
   if(!is.null(v)){
     keep <- "recf"
     rec_sol <- recoV(
-      basef = basef, W = W, Ht = Ut, sol = sol, nn = nn, keep = keep, S = S,
+      basef = basef, W = W, Ht = Ut, sol = sol, nn = nn, keep = keep, S = S, type = type,
       settings = settings, b_pos = b_pos, bounds = bounds, nn_type = nn_type, v = v
     )
   }else if(type == "S"){

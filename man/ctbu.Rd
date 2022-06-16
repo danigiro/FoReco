@@ -60,9 +60,9 @@ rownames(obj) <- rownames(FoReco_data$base)
 
 }
 \references{
-Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, \emph{International Journal
+of Forecasting}, in press.
 }
 \seealso{
 Other reconciliation procedures: 

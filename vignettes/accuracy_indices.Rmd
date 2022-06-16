@@ -251,4 +251,4 @@ thf_score <- score_index(recf = toprecf, base = topbase, test = toptest, m = 12)
 ```
 
 ## References
-Di Fonzo, T., Girolimetto, D. (2020), *Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives*, Department of Statistical Sciences, University of Padua, [arXiv:2006.08570](https://arxiv.org/abs/2006.08570)^[Appendix 7: Average relative accuracy indices for selected groups of variables/time frequencies/forecast horizons, in a rolling forecast experiment].
+Di Fonzo, T., Girolimetto, D. (2021), Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives, _International Journal of Forecasting_, in press.

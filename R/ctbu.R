@@ -41,9 +41,9 @@
 #' bottom-up cross-temporally reconciled forecasts, \mjseqn{\ddot{\mathbf{Y}}}.
 #'
 #' @references
-#' Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-#' Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-#' Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Optimal combination method and heuristic alternatives, \emph{International Journal
+#' of Forecasting}, in press.
 #'
 #' @examples
 #' data(FoReco_data)
@@ -59,7 +59,7 @@
 #' @import Matrix
 #' @export
 ctbu <- function(Bmat, m, C) {
-  if (!(is.matrix(C))) stop("C must be a matrix", call. = FALSE)
+  if (!(is.matrix(C) | is(C, "Matrix"))) stop("C must be a matrix", call. = FALSE)
   if (!(is.matrix(Bmat))) stop("Bmat must be a matrix", call. = FALSE)
 
   tools <- thf_tools(m)

@@ -164,11 +164,12 @@
 #' polish's status (\code{status_polish}).}
 #'
 #' @references
-#' Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-#' Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-#' Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Optimal combination method and heuristic alternatives, \emph{International Journal
+#' of Forecasting}, in press.
 #'
-#' Di Fonzo, T., Girolimetto, D. (2021), \emph{Forecast combination based forecast reconciliation: insights and extensions} (mimeo).
+#' Di Fonzo, T., Girolimetto, D. (2021), Forecast combination based forecast reconciliation:
+#' insights and extensions, \href{https://arxiv.org/abs/2106.05653}{arXiv:2006.08570}.
 #'
 #' Hollyman, R., Petropoulos, F., Tipping, M.E. (2021), Understanding Forecast Reconciliation,
 #' \emph{European Journal of Operational Research} (in press).
@@ -762,7 +763,7 @@ lccrec_ctf <- function(basef, C, nl, m, weights, bnaive = NULL,
                        nn_type = "osqp", settings = list(), ...){
 
   ctf <- suppressMessages(ctf_tools(C = C, m = m,  h = 1, sparse = TRUE))
-  S <- ctf$ctf$Stilde
+  S <- ctf$ctf$Fmat
 
   n <- ctf$hts$n
   na <- ctf$hts$na

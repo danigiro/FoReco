@@ -3,3 +3,6 @@
 .Rproj.user
 .DS_Store
 
+cran-comments.md
+/doc/
+/Meta/

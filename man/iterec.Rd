@@ -119,9 +119,9 @@ Deming, E., Stephan, F.F. (1940), On a least squares adjustment of a sampled fre
 table when the expected marginal totals are known, \emph{The Annals of Mathematical
 Statistics}, 11, 4, 427–444.
 
-Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, \emph{International Journal
+of Forecasting}, in press.
 
 Johnston, R.J., Pattie, C.J. (1993), Entropy-Maximizing and the Iterative Proportional
 Fitting Procedure, \emph{The Professional Geographer}, 45, 3, 317–322.

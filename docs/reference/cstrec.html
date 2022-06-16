@@ -27,7 +27,7 @@ reconciled values obtained in the first step."><meta property="og:image" content
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -47,7 +47,7 @@ reconciled values obtained in the first step."><meta property="og:image" content
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -120,41 +120,52 @@ reconciled values obtained in the first step.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>basef</dt>
-<dd><p>(\(n \times h(k^\ast+m)\)) matrix of base forecasts to be
-reconciled, \(\widehat{\mathbf{Y}}\); \(n\) is the total number of variables,
-\(m\) is the highest time frequency, \(k^\ast\) is the sum of (a
-subset of) (\(p-1\)) factors of \(m\), excluding \(m\), and
-\(h\) is the forecast horizon for the lowest frequency time series.
+<dd><p>(<em></em>\(n \times h(k^\ast+m)\)) matrix of base forecasts to be
+reconciled, <em></em>\(\widehat{\mathbf{Y}}\); <em></em>\(n\) is the total number of variables,
+<em></em>\(m\) is the highest time frequency, <em></em>\(k^\ast\) is the sum of (a
+subset of) (<em></em>\(p-1\)) factors of <em></em>\(m\), excluding <em></em>\(m\), and
+<em></em>\(h\) is the forecast horizon for the lowest frequency time series.
 Each row identifies a time series, and the forecasts are ordered as
 [lowest_freq' ...  highest_freq']'.</p></dd>
+
+
 <dt>hts_comb, thf_comb</dt>
 <dd><p>Type of covariance matrix (respectively
-(\(n \times n\)) and (\((k^\ast + m) \times (k^\ast + m)\))) to
+(<em></em>\(n \times n\)) and (<em></em>\((k^\ast + m) \times (k^\ast + m)\))) to
 be used in the cross-sectional and temporal reconciliation, see more in
 <code>comb</code> param of <code><a href="htsrec.html">htsrec</a>()</code> and
 <code><a href="thfrec.html">thfrec</a>()</code>.</p></dd>
+
+
 <dt>res</dt>
-<dd><p>(\(n \times N(k^\ast + m)\)) matrix containing the residuals
+<dd><p>(<em></em>\(n \times N(k^\ast + m)\)) matrix containing the residuals
 at all the temporal frequencies ordered as [lowest_freq' ...  highest_freq']'
 (columns) for each variable (row), needed to estimate the covariance matrix
 when <code>hts_comb =</code> <code>{"wls",</code> <code>"shr",</code> <code>"sam"}</code> and/or
 <code>hts_comb =</code> <code>{"wlsv",</code> <code>"wlsh",</code> <code>"acov",</code>
 <code>"strar1",</code> <code>"sar1",</code> <code>"har1",</code> <code>"shr",</code> <code>"sam"}</code>.
 The rows must be in the same order as <code>basef</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>any other options useful for <code><a href="htsrec.html">htsrec</a>()</code> and
 <code><a href="thfrec.html">thfrec</a>()</code>, e.g. <code>m</code>, <code>C</code> (or <code>Ut</code> and
 <code>nb</code>), <code>nn</code> (for non-negative reconciliation only at the first step),
 <code>mse</code>, <code>corpcor</code>, <code>type</code>, <code>sol</code>, <code>settings</code>,
 <code>W</code>, <code>Omega</code>,...</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function returns a list with two elements:</p>
+    
+
+<p>The function returns a list with two elements:</p>
 <dl><dt><code>recf</code></dt>
-<dd><p>(\(n \times h(k^\ast + m)\)) reconciled forecasts matrix, \(\widetilde{\mathbf{Y}}\).</p></dd>
+<dd><p>(<em></em>\(n \times h(k^\ast + m)\)) reconciled forecasts matrix, <em></em>\(\widetilde{\mathbf{Y}}\).</p></dd>
+
 <dt><code>M</code></dt>
 <dd><p>Matrix which transforms the uni-dimensional reconciled forecasts of step 1 (projection approach) .</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -164,9 +175,9 @@ This means that it is not guaranteed the non-negativity of the final reconciled 
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a>.</p>
+    <p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, <em>International Journal
+of Forecasting</em>, in press.</p>
 <p>Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts
 for Australian tourism, <em>Annals of Tourism Research</em>, 75, 393-409.</p>
 <p>Schäfer, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
@@ -215,7 +226,7 @@ Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

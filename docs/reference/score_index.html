@@ -22,7 +22,7 @@ Average relative accuracy indices).
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -42,7 +42,7 @@ Average relative accuracy indices).
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -111,45 +111,62 @@ forecasts of a cross-temporal (not only, see examples) system (more in
     <h2>Arguments</h2>
     <dl><dt>recf</dt>
 <dd><p>list of q (forecast origins) reconciled forecasts' matrices
-(\([n \times h(k^\ast + m)]\) in the cross-temporal case,
-\([h \times n]\) in the cross-sectional case, and vectors of length
-\([h(k^\ast \times m)]\) in the temporal framework).</p></dd>
+(<em></em>\([n \times h(k^\ast + m)]\) in the cross-temporal case,
+<em></em>\([h \times n]\) in the cross-sectional case, and vectors of length
+<em></em>\([h(k^\ast \times m)]\) in the temporal framework).</p></dd>
+
+
 <dt>base</dt>
 <dd><p>list of q (forecast origins) base forecasts' matrices
-(\([n \times h(k^\ast + m)]\) in the cross-temporal case,
-\([h \times n]\) in the cross-sectional case, and vectors of length
-\([h(k^\ast \times m)]\) in the temporal framework).</p></dd>
+(<em></em>\([n \times h(k^\ast + m)]\) in the cross-temporal case,
+<em></em>\([h \times n]\) in the cross-sectional case, and vectors of length
+<em></em>\([h(k^\ast \times m)]\) in the temporal framework).</p></dd>
+
+
 <dt>test</dt>
 <dd><p>list of q (forecast origins) test observations' matrices
-(\([n \times h(k^\ast + m)]\) in the cross-temporal case,
-\([h \times n]\) in the cross-sectional case, and vectors of length
-\([h(k^\ast \times m)]\) in the temporal framework).</p></dd>
+(<em></em>\([n \times h(k^\ast + m)]\) in the cross-temporal case,
+<em></em>\([h \times n]\) in the cross-sectional case, and vectors of length
+<em></em>\([h(k^\ast \times m)]\) in the temporal framework).</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \(m\)), or a subset of \(p\) factors
-of \(m\).</p></dd>
+of temporal aggregation, <em></em>\(m\)), or a subset of <em></em>\(p\) factors
+of <em></em>\(m\).</p></dd>
+
+
 <dt>nb</dt>
 <dd><p>number of bottom time series in the cross-sectional framework.</p></dd>
+
+
 <dt>nl</dt>
-<dd><p>(\(L \times 1\)) vector containing the number of time series
+<dd><p>(<em></em>\(L \times 1\)) vector containing the number of time series
 in each cross-sectional level of the hierarchy (<code>nl[1] = 1</code>).</p></dd>
+
+
 <dt>type</dt>
 <dd><p>type of accuracy measure ("<code>mse</code>" Mean Square Error,
 "<code>rmse</code>" Root Mean Square Error or "<code>mae</code>" Mean Absolute Error).</p></dd>
+
+
 <dt>compact</dt>
 <dd><p>if TRUE returns only the summary matrix.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>It returns a summary table called <code>Avg_mat</code> (if <code>compact</code> option is <code>TRUE</code>,
+    
+
+<p>It returns a summary table called <code>Avg_mat</code> (if <code>compact</code> option is <code>TRUE</code>,
 <em>default</em>), otherwise it returns a list of six tables (more in
 <a href="https://danigiro.github.io/FoReco/articles/accuracy_indices.html">Average relative accuracy indices</a>).</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a>.</p>
+    <p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, <em>International Journal
+of Forecasting</em>, in press.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -159,6 +176,7 @@ Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class=
 <code><a href="commat.html">commat</a>()</code>,
 <code><a href="ctf_tools.html">ctf_tools</a>()</code>,
 <code><a href="hts_tools.html">hts_tools</a>()</code>,
+<code><a href="lcmat.html">lcmat</a>()</code>,
 <code><a href="oct_bounds.html">oct_bounds</a>()</code>,
 <code><a href="shrink_estim.html">shrink_estim</a>()</code>,
 <code><a href="thf_tools.html">thf_tools</a>()</code></p></div>
@@ -217,7 +235,7 @@ Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class=
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

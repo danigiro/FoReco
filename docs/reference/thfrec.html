@@ -21,7 +21,7 @@ bottom-up approach is available."><meta property="og:image" content="https://dan
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -41,7 +41,7 @@ bottom-up approach is available."><meta property="og:image" content="https://dan
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -110,18 +110,22 @@ bottom-up approach is available.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>basef</dt>
-<dd><p>(\(h(k^\ast + m) \times 1\)) vector of base forecasts to be
+<dd><p>(<em></em>\(h(k^\ast + m) \times 1\)) vector of base forecasts to be
 reconciled, containing the forecasts at all the needed temporal frequencies
 ordered as [lowest_freq' ...  highest_freq']'.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \(m\)), or a subset of \(p\) factors
-of \(m\).</p></dd>
+of temporal aggregation, <em></em>\(m\)), or a subset of <em></em>\(p\) factors
+of <em></em>\(m\).</p></dd>
+
+
 <dt>comb</dt>
 <dd><p>Type of the reconciliation. Except for bottom up, all other
-options correspond to a different (\((k^\ast + m) \times (k^\ast + m)\))
-covariance matrix, \(k^\ast\) is the sum of (\(p-1\)) factors of
-\(m\) (excluding \(m\)):</p><ul><li><p><b>bu</b> (Bottom-up);</p></li>
+options correspond to a different (<em></em>\((k^\ast + m) \times (k^\ast + m)\))
+covariance matrix, <em></em>\(k^\ast\) is the sum of (<em></em>\(p-1\)) factors of
+<em></em>\(m\) (excluding <em></em>\(m\)):</p><ul><li><p><b>bu</b> (Bottom-up);</p></li>
 <li><p><b>ols</b> (Identity);</p></li>
 <li><p><b>struc</b> (Structural variances);</p></li>
 <li><p><b>wlsv</b> (Series variances);</p></li>
@@ -134,99 +138,136 @@ covariance matrix, \(k^\ast\) is the sum of (\(p-1\)) factors of
 <li><p><b>sam</b> (Sample cross-covariance matrix);</p></li>
 <li><p><b>omega</b> use your personal matrix Omega in param <code>Omega</code>.</p></li>
 </ul></dd>
+
+
 <dt>res</dt>
 <dd><p>vector containing the in-sample residuals at all the temporal
 frequencies ordered as <code>basef</code>, i.e. [lowest_freq' ...  highest_freq']',
 needed to estimate the covariance matrix when <code>comb =</code> <code>{"wlsv",</code>
 <code>"wlsh",</code> <code>"acov",</code> <code>"strar1",</code> <code>"sar1",</code> <code>"har1",</code>
 <code>"shr",</code> <code>"sam"}</code>.</p></dd>
+
+
 <dt>mse</dt>
 <dd><p>Logical value: <code>TRUE</code> (<em>default</em>) calculates the
 covariance matrix of the in-sample residuals (when necessary) according to
 the original <span class="pkg">hts</span> and <span class="pkg">thief</span> formulation: no mean correction,
 T as denominator.</p></dd>
+
+
 <dt>corpcor</dt>
 <dd><p>Logical value: <code>TRUE</code> if <span class="pkg">corpcor</span> (Schäfer et
 al., 2017) must be used to shrink the sample covariance matrix according to
 Schäfer and Strimmer (2005), otherwise the function uses the
 same implementation as package <span class="pkg">hts</span>.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Approach used to compute the reconciled forecasts: <code>"M"</code> for
 the projection approach with matrix M (<em>default</em>), or <code>"S"</code> for the
 structural approach with temporal summing matrix R.</p></dd>
+
+
 <dt>sol</dt>
 <dd><p>Solution technique for the reconciliation problem: either
 <code>"direct"</code> (<em>default</em>) for the closed-form matrix solution, or
 <code>"osqp"</code> for the numerical solution (solving a linearly constrained
 quadratic program using <code><a href="https://rdrr.io/pkg/osqp/man/solve_osqp.html" class="external-link">solve_osqp</a></code>).</p></dd>
+
+
 <dt>keep</dt>
 <dd><p>Return a list object of the reconciled forecasts at all levels
 (if keep = "list") or only the reconciled forecasts matrix (if keep = "recf").</p></dd>
+
+
 <dt>v</dt>
-<dd><p>vector index of the fixed base forecast (\(\mbox{min}(v) &gt; 0\)
-and \(\mbox{max}(v) &lt; (k^\ast + m)\)).</p></dd>
+<dd><p>vector index of the fixed base forecast (<em></em>\(\mbox{min}(v) &gt; 0\)
+and <em></em>\(\mbox{max}(v) &lt; (k^\ast + m)\)).</p></dd>
+
+
 <dt>nn</dt>
 <dd><p>Logical value: <code>TRUE</code> if non-negative reconciled forecasts
 are wished.</p></dd>
+
+
 <dt>nn_type</dt>
 <dd><p>"osqp" (default), "KAnn" (only <code>type == "M"</code>) or "sntz".</p></dd>
+
+
 <dt>settings</dt>
 <dd><p>Settings for <span class="pkg">osqp</span> (object <code><a href="https://rdrr.io/pkg/osqp/man/osqpSettings.html" class="external-link">osqpSettings</a></code>).
 The default options are: <code>verbose = FALSE</code>, <code>eps_abs = 1e-5</code>,
 <code>eps_rel = 1e-5</code>, <code>polish_refine_iter = 100</code> and <code>polish = TRUE</code>.
 For details, see the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a>
 (Stellato et al., 2019).</p></dd>
+
+
 <dt>bounds</dt>
-<dd><p>(\((k^\ast + m) \times 2\)) matrix with temporal bounds: the
+<dd><p>(<em></em>\((k^\ast + m) \times 2\)) matrix with temporal bounds: the
 first column is the lower bound, and the second column is the upper bound.</p></dd>
+
+
 <dt>Omega</dt>
-<dd><p>This option permits to directly enter the covariance matrix:</p><ol><li><p><code>Omega</code> must be a p.d. (\((k^\ast + m) \times (k^\ast + m)\))
-  matrix or a list of \(h\) matrix (one for each forecast horizon);</p></li>
+<dd><p>This option permits to directly enter the covariance matrix:</p><ol><li><p><code>Omega</code> must be a p.d. (<em></em>\((k^\ast + m) \times (k^\ast + m)\))
+  matrix or a list of <em></em>\(h\) matrix (one for each forecast horizon);</p></li>
 <li><p>if <code>comb</code> is different from "<code>omega</code>", <code>Omega</code> is
   not used.</p></li>
 </ol></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>If the parameter <code>keep</code> is equal to <code>"recf"</code>, then the function
-returns only the (\(h(k^\ast + m) \times 1\)) reconciled forecasts vector, otherwise (<code>keep="all"</code>)
+    
+
+<p>If the parameter <code>keep</code> is equal to <code>"recf"</code>, then the function
+returns only the (<em></em>\(h(k^\ast + m) \times 1\)) reconciled forecasts vector, otherwise (<code>keep="all"</code>)
 it returns a list that mainly depends on what type of representation (<code>type</code>)
 and solution technique (<code>sol</code>) have been used:</p>
 <dl><dt><code>recf</code></dt>
-<dd><p>(\(h(k^\ast + m) \times 1\)) reconciled forecasts vector, \(\widetilde{\mathbf{y}}\).</p></dd>
+<dd><p>(<em></em>\(h(k^\ast + m) \times 1\)) reconciled forecasts vector, <em></em>\(\widetilde{\mathbf{y}}\).</p></dd>
+
 <dt><code>Omega</code></dt>
-<dd><p>Covariance matrix used for forecast reconciliation, \(\mathbf{\Omega}\).</p></dd>
+<dd><p>Covariance matrix used for forecast reconciliation, <em></em>\(\mathbf{\Omega}\).</p></dd>
+
 <dt><code>nn_check</code></dt>
 <dd><p>Number of negative values (if zero, there are no values below zero).</p></dd>
+
 <dt><code>rec_check</code></dt>
 <dd><p>Logical value: has the hierarchy been respected?</p></dd>
+
 <dt><code>varf</code> (<code>type="direct"</code>)</dt>
-<dd><p>(\((k^\ast + m) \times 1\)) reconciled forecasts variance vector for \(h=1\), \(\mbox{diag}(\mathbf{MW}\)).</p></dd>
+<dd><p>(<em></em>\((k^\ast + m) \times 1\)) reconciled forecasts variance vector for <em></em>\(h=1\), <em></em>\(\mbox{diag}(\mathbf{MW}\)).</p></dd>
+
 <dt><code>M</code> (<code>type="direct"</code>)</dt>
-<dd><p>Projection matrix, \(\mathbf{M}\) (projection approach).</p></dd>
+<dd><p>Projection matrix, <em></em>\(\mathbf{M}\) (projection approach).</p></dd>
+
 <dt><code>G</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt>
-<dd><p>Projection matrix, \(\mathbf{G}\) (structural approach, \(\mathbf{M}=\mathbf{R}\mathbf{G}\)).</p></dd>
+<dd><p>Projection matrix, <em></em>\(\mathbf{G}\) (structural approach, <em></em>\(\mathbf{M}=\mathbf{R}\mathbf{G}\)).</p></dd>
+
 <dt><code>S</code> (<code>type="S"</code> and <code>type="direct"</code>)</dt>
-<dd><p>Temporal summing matrix, \(\mathbf{R}\).</p></dd>
+<dd><p>Temporal summing matrix, <em></em>\(\mathbf{R}\).</p></dd>
+
 <dt><code>info</code> (<code>type="osqp"</code>)</dt>
 <dd><p>matrix with information in columns
-for each forecast horizon \(h\) (rows): run time (<code>run_time</code>),
+for each forecast horizon <em></em>\(h\) (rows): run time (<code>run_time</code>),
 number of iteration (<code>iter</code>), norm of primal residual (<code>pri_res</code>),
 status of osqp's solution (<code>status</code>) and polish's status
 (<code>status_polish</code>). It will also be returned with <code>nn = TRUE</code> if
 a solver (see <code>nn_type</code>) will be use.</p></dd>
+
+
 </dl><p>Only if <code>comb = "bu"</code>, the function returns <code>recf</code>, <code>R</code> and <code>M</code>.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
     <p><script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script>
 
-Let \(m\) be the highest available
+Let <em></em>\(m\) be the highest available
 sampling frequency per seasonal cycle, and denote
-\({\cal K} = \left\lbrace k_m, k_{p-1}, \ldots, k_{2}, k_1\right\rbrace\)
-the \(p\) factors of \(m\), in descending order, where
-\(k_p=m\), and \(k_1=1\). Define \(\mathbf{K}\)
-the \(\left( k^\ast \times m\right)\) temporal aggregation matrix
+<em></em>\({\cal K} = \left\lbrace k_m, k_{p-1}, \ldots, k_{2}, k_1\right\rbrace\)
+the <em></em>\(p\) factors of <em></em>\(m\), in descending order, where
+<em></em>\(k_p=m\), and <em></em>\(k_1=1\). Define <em></em>\(\mathbf{K}\)
+the <em></em>\(\left( k^\ast \times m\right)\) temporal aggregation matrix
 converting the high-frequency observations into lower-frequency
 (temporally aggregated) ones:
 \[ \mathbf{K} = \left[\begin{array}{c}
@@ -236,19 +277,19 @@ converting the high-frequency observations into lower-frequency
 \mathbf{I}_{\frac{m}{k_{2}}} \otimes \mathbf{1}_{k_{2}}' \cr
 \end{array}\right].\]
 Denote
-\(\mathbf{R} = \left[\begin{array}{c}
+<em></em>\(\mathbf{R} = \left[\begin{array}{c}
 \mathbf{K} \cr \mathbf{I}_m
-\end{array}\right]\) the \(\left[(k^\ast+m) \times m \right]\)
+\end{array}\right]\) the <em></em>\(\left[(k^\ast+m) \times m \right]\)
 <em>temporal summing</em> matrix, and
-\(\mathbf{Z}' = \left[ \mathbf{I}_{k^\ast} \; -\mathbf{K} \right]\)
+<em></em>\(\mathbf{Z}' = \left[ \mathbf{I}_{k^\ast} \; -\mathbf{K} \right]\)
 the zero constraints kernel matrix.</p>
-<p>Suppose we have the \(\left[(k^\ast+m) \times 1\right]\) vector
-\(\widehat{\mathbf{y}}\) of unbiased base forecasts for the
-\(p\) temporal aggregates of a single time series \(Y\)
-within a complete time cycle, i.e. at the forecast horizon \(h=1\)
+<p>Suppose we have the <em></em>\(\left[(k^\ast+m) \times 1\right]\) vector
+<em></em>\(\widehat{\mathbf{y}}\) of unbiased base forecasts for the
+<em></em>\(p\) temporal aggregates of a single time series <em></em>\(Y\)
+within a complete time cycle, i.e. at the forecast horizon <em></em>\(h=1\)
 for the lowest (most aggregated) time frequency. If the base forecasts
 have been independently obtained, generally they do not fulfill the
-temporal aggregation constraints, i.e. \(\mathbf{Z}'
+temporal aggregation constraints, i.e. <em></em>\(\mathbf{Z}'
 \widehat{\mathbf{y}} \ne \mathbf{0}_{(k^\ast \times 1)}\).
 By adapting the general point forecast reconciliation according to
 the projection approach (<code>type = "M"</code>),
@@ -257,7 +298,7 @@ is given by:
 \[\widetilde{\mathbf{y}} = \widehat{\mathbf{y}} -
 \mathbf{\Omega}\mathbf{Z}\left(\mathbf{Z}'\mathbf{\Omega}
 \mathbf{Z}\right)^{-1}\mathbf{Z}'\widehat{\mathbf{y}},\]
-where \(\mathbf{\Omega}\) is a \(\left[(k^\ast+m)
+where <em></em>\(\mathbf{\Omega}\) is a <em></em>\(\left[(k^\ast+m)
 \times (k^\ast+m)\right]\) p.d. matrix, assumed known. The alternative
 equivalent solution (<code>type = "S"</code>) following the
 structural reconciliation approach by Athanasopoulos et al. (2017) is given by:
@@ -267,8 +308,8 @@ structural reconciliation approach by Athanasopoulos et al. (2017) is given by:
 <p><strong>Bounds on the reconciled forecasts</strong></p>
 <p>When the reconciliation makes use of the optimization package osqp,
 the user may impose bounds on the reconciled forecasts.
-The parameter <code>bounds</code> permits to consider lower (\(\mathbf{a}\)) and
-upper (\(\mathbf{b}\)) bounds like \(\mathbf{a} \leq
+The parameter <code>bounds</code> permits to consider lower (<em></em>\(\mathbf{a}\)) and
+upper (<em></em>\(\mathbf{b}\)) bounds like <em></em>\(\mathbf{a} \leq
 \widetilde{\mathbf{y}} \leq \mathbf{b}\) such that:
 \[ \begin{array}{c}
 a_1 \leq \widetilde{y}_1 \leq b_1 \cr
@@ -281,8 +322,8 @@ a_1 &amp; b_1 \cr
 \vdots &amp; \vdots \cr
 a_{(k^\ast + m)} &amp; b_{(k^\ast + m)} \cr
 \end{array}\right],\]
-where \(a_i \in [- \infty, + \infty]\) and \(b_i \in [- \infty, + \infty]\).
-If \(y_i\) is unbounded, the \(i\)-th row of <code>bounds</code> would be equal
+where <em></em>\(a_i \in [- \infty, + \infty]\) and <em></em>\(b_i \in [- \infty, + \infty]\).
+If <em></em>\(y_i\) is unbounded, the <em></em>\(i\)-th row of <code>bounds</code> would be equal
 to <code>c(-Inf, +Inf)</code>.
 Notice that if the <code>bounds</code> parameter is used, <code>sol = "osqp"</code> must be used.
 This is not true in the case of non-negativity constraints:</p><ul><li><p><code>sol = "direct"</code>: first the base forecasts
@@ -303,9 +344,9 @@ Forecasting with Temporal Hierarchies, <em>European Journal of Operational
 Research</em>, 262, 1, 60-74.</p>
 <p>Byron, R.P. (1978), The estimation of large social accounts matrices,
 <em>Journal of the Royal Statistical Society A</em>, 141, 3, 359-367.</p>
-<p>Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, <a href="https://arxiv.org/abs/2006.08570" class="external-link">arXiv:2006.08570</a>.</p>
+<p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, <em>International Journal
+of Forecasting</em>, in press.</p>
 <p>Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G., Shang, H.L. (2011), Optimal combination
 forecasts for hierarchical time series, <em>Computational Statistics &amp; Data
 Analysis</em>, 55, 9, 2579-2589.</p>
@@ -361,7 +402,7 @@ Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

@@ -88,9 +88,9 @@ thf_score <- score_index(recf = toprecf, base = topbase, test = toptest, m = 12)
 
 }
 \references{
-Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, \emph{International Journal
+of Forecasting}, in press.
 }
 \seealso{
 Other utilities: 
@@ -99,6 +99,7 @@ Other utilities:
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
+\code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
 \code{\link{shrink_estim}()},
 \code{\link{thf_tools}()}

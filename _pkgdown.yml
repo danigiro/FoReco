@@ -76,6 +76,8 @@ reference:
   - thf_tools
   - ctf_tools
   - oct_bounds
+  - lcmat
+
 - title: Package
 - contents:
   - FoReco-package

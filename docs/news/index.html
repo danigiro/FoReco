@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -37,7 +37,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -89,13 +89,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.2.3" id="foreco-023">FoReco 0.2.3<a class="anchor" aria-label="anchor" href="#foreco-023"></a></h2>
+<h2 class="page-header" data-toc-text="0.2.4" id="foreco-024">FoReco 0.2.4<a class="anchor" aria-label="anchor" href="#foreco-024"></a></h2>
+<div class="section level6">
+<h6 id="major-changes-0-2-4">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-0-2-4"></a></h6>
+<ul><li>Added <code><a href="../reference/lcmat.html">lcmat()</a></code> function.</li>
+</ul></div>
+<div class="section level6">
+<h6 id="minor-changes-0-2-4">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-4"></a></h6>
 <ul><li>Fixed BU approach when the number of columns of basef is equal to the number of bottom time series <code><a href="../reference/htsrec.html">htsrec()</a></code>;</li>
 <li>Fixed <code><a href="../reference/score_index.html">score_index()</a></code>;</li>
 <li>Fixed the <code>bounds</code> param when <code>type = "S"</code> in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code>;</li>
 <li>Add the possibility to fix base forecasts through the <code>v</code> param in <code><a href="../reference/htsrec.html">htsrec()</a></code>, <code><a href="../reference/thfrec.html">thfrec()</a></code> and <code><a href="../reference/octrec.html">octrec()</a></code> - experimental;</li>
+<li>Add two new type of optimal cross-temporal reconciliation (<strong>cs_struc</strong> and <strong>t_struc</strong>);</li>
 <li>Improved docs and bug fixes.</li>
 </ul></div>
+</div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.2" id="foreco-022">FoReco 0.2.2<small>2022-02-17</small><a class="anchor" aria-label="anchor" href="#foreco-022"></a></h2>
 <div class="section level6">
@@ -165,7 +173,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

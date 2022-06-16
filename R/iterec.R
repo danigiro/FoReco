@@ -92,9 +92,9 @@
 #' table when the expected marginal totals are known, \emph{The Annals of Mathematical
 #' Statistics}, 11, 4, 427–444.
 #'
-#' Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-#' Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-#' Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Optimal combination method and heuristic alternatives, \emph{International Journal
+#' of Forecasting}, in press.
 #'
 #' Johnston, R.J., Pattie, C.J. (1993), Entropy-Maximizing and the Iterative Proportional
 #' Fitting Procedure, \emph{The Professional Geographer}, 45, 3, 317–322.
@@ -825,7 +825,7 @@ iterec <- function(basef, thf_comb, hts_comb, res, itmax = 100, tol = 1e-5,
 step_hts <- function(basef, kset, h, res, arg_input, hts_comb) {
   # Step 1
   arg_hts <- names(as.list(args(htsrec)))
-  arg_hts <- arg_hts[!(arg_hts %in% c("basef", "keep", "res", "", "comb", "bounds"))]
+  arg_hts <- arg_hts[!(arg_hts %in% c("basef", "keep", "res", "", "comb", "bounds", "v"))]
 
   Y <- lapply(kset, function(x) basef[, rep(kset, (max(kset)/kset) * h) == x, drop = FALSE])
 
@@ -864,7 +864,7 @@ step_hts <- function(basef, kset, h, res, arg_input, hts_comb) {
 # Function for the temporal reconciliation step
 step_thf <- function(basef, res, arg_input, thf_comb) {
   arg_thf <- names(as.list(args(thfrec)))
-  arg_thf <- arg_thf[!(arg_thf %in% c("basef", "keep", "res", "", "comb", "bounds"))]
+  arg_thf <- arg_thf[!(arg_thf %in% c("basef", "keep", "res", "", "comb", "bounds", "v"))]
 
   if (is.null(res)) {
     Y1 <- t(apply(basef, 1, function(x) {

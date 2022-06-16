@@ -20,7 +20,7 @@ linearly constrained (e.g., hierarchical/grouped) multiple time series."><meta p
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@ linearly constrained (e.g., hierarchical/grouped) multiple time series."><meta p
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -106,41 +106,58 @@ linearly constrained (e.g., hierarchical/grouped) multiple time series.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>C</dt>
-<dd><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+<dd><p>(<em></em>\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones.</p></dd>
+
+
 <dt>h</dt>
 <dd><p>Forecast horizon (<em>default</em> is <code>1</code>).</p></dd>
+
+
 <dt>Ut</dt>
 <dd><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
+<em></em>\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
 for the reconciled forecasts. It can be used instead of parameter
 <code>C</code>, but <code>nb</code> is needed if
-\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
-admits a structural representation, \(\mathbf{U}'\) has dimension
-(\(n_a \times n\)).</p></dd>
+<em></em>\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
+admits a structural representation, <em></em>\(\mathbf{U}'\) has dimension
+(<em></em>\(n_a \times n\)).</p></dd>
+
+
 <dt>nb</dt>
 <dd><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code>
 and <code>Ut</code> are not used.</p></dd>
+
+
 <dt>sparse</dt>
 <dd><p>Option to return sparse matrices (<em>default</em> is <code>TRUE</code>).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A list of five elements:</p>
+    
+
+<p>A list of five elements:</p>
 <dl><dt><code>C</code></dt>
-<dd><p>(\(n \times n_b\)) cross-sectional (contemporaneous) aggregation matrix.</p></dd>
+<dd><p>(<em></em>\(n \times n_b\)) cross-sectional (contemporaneous) aggregation matrix.</p></dd>
+
 <dt><code>S</code></dt>
-<dd><p>(\(n \times n_b\)) cross-sectional (contemporaneous) summing matrix,
-\(\mathbf{S} = \left[\begin{array}{c} \mathbf{C} \cr \mathbf{I}_{n_b}\end{array}\right].\)</p></dd>
+<dd><p>(<em></em>\(n \times n_b\)) cross-sectional (contemporaneous) summing matrix,
+<em></em>\(\mathbf{S} = \left[\begin{array}{c} \mathbf{C} \cr \mathbf{I}_{n_b}\end{array}\right].\)</p></dd>
+
 <dt><code>Ut</code></dt>
-<dd><p>(\(n_a \times n\)) zero constraints cross-sectional (contemporaneous)
-kernel matrix. If the hierarchy admits a structural representation \(\mathbf{U}' = [\mathbf{I} \ -\mathbf{C}]\)</p></dd>
+<dd><p>(<em></em>\(n_a \times n\)) zero constraints cross-sectional (contemporaneous)
+kernel matrix. If the hierarchy admits a structural representation <em></em>\(\mathbf{U}' = [\mathbf{I} \ -\mathbf{C}]\)</p></dd>
+
 <dt><code>n</code></dt>
-<dd><p>Number of variables \(n_a + n_b\).</p></dd>
+<dd><p>Number of variables <em></em>\(n_a + n_b\).</p></dd>
+
 <dt><code>na</code></dt>
 <dd><p>Number of upper level variables.</p></dd>
+
 <dt><code>nb</code></dt>
 <dd><p>Number of bottom level variables.</p></dd>
+
 </dl></div>
     <div id="see-also">
     <h2>See also</h2>
@@ -149,6 +166,7 @@ kernel matrix. If the hierarchy admits a structural representation \(\mathbf{U}'
 <code><a href="FoReco2ts.html">FoReco2ts</a>()</code>,
 <code><a href="commat.html">commat</a>()</code>,
 <code><a href="ctf_tools.html">ctf_tools</a>()</code>,
+<code><a href="lcmat.html">lcmat</a>()</code>,
 <code><a href="oct_bounds.html">oct_bounds</a>()</code>,
 <code><a href="score_index.html">score_index</a>()</code>,
 <code><a href="shrink_estim.html">shrink_estim</a>()</code>,
@@ -174,7 +192,7 @@ kernel matrix. If the hierarchy admits a structural representation \(\mathbf{U}'
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

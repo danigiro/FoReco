@@ -20,7 +20,7 @@ Some useful tools for the cross-temporal forecast reconciliation of a linearly c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@ Some useful tools for the cross-temporal forecast reconciliation of a linearly c
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -106,54 +106,76 @@ Some useful tools for the cross-temporal forecast reconciliation of a linearly c
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>C</dt>
-<dd><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+<dd><p>(<em></em>\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \(m\)), or a subset of the \(p\) factors
-of \(m\).</p></dd>
+of temporal aggregation, <em></em>\(m\)), or a subset of the <em></em>\(p\) factors
+of <em></em>\(m\).</p></dd>
+
+
 <dt>h</dt>
 <dd><p>Forecast horizon for the lowest frequency (most temporally aggregated) time
 series (<em>default</em> is <code>1</code>).</p></dd>
+
+
 <dt>Ut</dt>
 <dd><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
+<em></em>\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
 for the reconciled forecasts. It can be used instead of parameter
-<code>C</code>, but <code>nb</code> (\(n = n_a + n_b\)) is needed if
-\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
-admits a structural representation, \(\mathbf{U}'\) has dimension
-(\(n_a \times n\)).</p></dd>
+<code>C</code>, but <code>nb</code> (<em></em>\(n = n_a + n_b\)) is needed if
+<em></em>\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
+admits a structural representation, <em></em>\(\mathbf{U}'\) has dimension
+(<em></em>\(n_a \times n\)).</p></dd>
+
+
 <dt>nb</dt>
 <dd><p>Number of bottom time series; if <code>C</code> is present, <code>nb</code>
 and <code>Ut</code> are not used.</p></dd>
+
+
 <dt>sparse</dt>
 <dd><p>Option to return sparse object (<em>default</em> is <code>TRUE</code>).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p><strong>ctf</strong> list with:</p>
+    
+
+<p><strong>ctf</strong> list with:</p>
 <dl><dt><code>Ht</code></dt>
 <dd><p>Full row-rank cross-temporal zero constraints (kernel)
-matrix coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\): \(\mathbf{H}'\mathbf{y} = \mathbf{0}\).</p></dd>
+matrix coherent with <em></em>\(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\): <em></em>\(\mathbf{H}'\mathbf{y} = \mathbf{0}\).</p></dd>
+
 <dt><code>Hbrevet</code></dt>
 <dd><p>Complete, not full row-rank cross-temporal zero
-constraints (kernel) matrix coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\):
-\(\breve{\mathbf{H}}'\mathbf{y} = \mathbf{0}\).</p></dd>
+constraints (kernel) matrix coherent with <em></em>\(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\):
+<em></em>\(\breve{\mathbf{H}}'\mathbf{y} = \mathbf{0}\).</p></dd>
+
 <dt><code>Hcheckt</code></dt>
 <dd><p>Full row-rank cross-temporal zero constraints (kernel) matrix coherent with
-\(\check{\mathbf{y}}\) (structural representation):
-\(\check{\mathbf{H}}' \check{\mathbf{y}} = \mathbf{0}\).</p></dd>
+<em></em>\(\check{\mathbf{y}}\) (structural representation):
+<em></em>\(\check{\mathbf{H}}' \check{\mathbf{y}} = \mathbf{0}\).</p></dd>
+
 <dt><code>Ccheck</code></dt>
-<dd><p>Cross-temporal aggregation matrix \(\check{\mathbf{C}}\)
-coherent with \(\check{\mathbf{y}}\) (structural representation).</p></dd>
+<dd><p>Cross-temporal aggregation matrix <em></em>\(\check{\mathbf{C}}\)
+coherent with <em></em>\(\check{\mathbf{y}}\) (structural representation).</p></dd>
+
 <dt><code>Scheck</code></dt>
-<dd><p>Cross-temporal summing matrix \(\check{\mathbf{S}}\)
-coherent with \(\check{\mathbf{y}}\) (structural representation).</p></dd>
-<dt><code>Stilde</code></dt>
-<dd><p>Cross-temporal summing matrix \(\widetilde{\mathbf{S}}\)
-coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\).</p></dd>
-</dl><p><strong>hts</strong> list from <code><a href="hts_tools.html">hts_tools</a></code> .
-<strong>thf</strong> list from <code><a href="thf_tools.html">thf_tools</a></code> .</p>
+<dd><p>Cross-temporal summing matrix <em></em>\(\check{\mathbf{S}}\)
+coherent with <em></em>\(\check{\mathbf{y}}\) (structural representation).</p></dd>
+
+<dt><code>Fmat</code></dt>
+<dd><p>Cross-temporal summing matrix <em></em>\(\widetilde{\mathbf{F}}\)
+coherent with <em></em>\(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\).</p></dd>
+
+
+</dl><p><strong>hts</strong> list from <code><a href="hts_tools.html">hts_tools</a></code> .</p>
+
+
+<p><strong>thf</strong> list from <code><a href="thf_tools.html">thf_tools</a></code> .</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -162,6 +184,7 @@ coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\).</p></dd>
 <code><a href="FoReco2ts.html">FoReco2ts</a>()</code>,
 <code><a href="commat.html">commat</a>()</code>,
 <code><a href="hts_tools.html">hts_tools</a>()</code>,
+<code><a href="lcmat.html">lcmat</a>()</code>,
 <code><a href="oct_bounds.html">oct_bounds</a>()</code>,
 <code><a href="score_index.html">score_index</a>()</code>,
 <code><a href="shrink_estim.html">shrink_estim</a>()</code>,
@@ -187,7 +210,7 @@ coherent with \(\mathbf{y} = \mbox{vec}(\mathbf{Y}')\).</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

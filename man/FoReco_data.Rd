@@ -7,13 +7,13 @@
 \format{
 An object of class \code{"list"}:
 \describe{
-  \item{base}{(\code{8 x 28}) matrix of base forecasts. Each row identifies a time series and the forecasts
+  \item{base}{(\mjseqn{8 \times 28}) matrix of base forecasts. Each row identifies a time series and the forecasts
 are ordered as [lowest_freq' ...  highest_freq']'.}
-  \item{test}{(\code{8 x 28}) matrix of test set. Each row identifies a time series and the observed values
+  \item{test}{(\mjseqn{8 \times 28}) matrix of test set. Each row identifies a time series and the observed values
 are ordered as [lowest_freq' ...  highest_freq']'.}
-  \item{res}{(\code{8 x 392}) matrix of in-sample residuals. Each row identifies a time series and the in-sample residuals
+  \item{res}{(\mjseqn{8 \times 392}) matrix of in-sample residuals. Each row identifies a time series and the in-sample residuals
 are ordered as [lowest_freq' ...  highest_freq']'.}
-  \item{C}{(\code{3 x 5}) cross-sectional (contemporaneous) aggregation matrix.}
+  \item{C}{(\mjseqn{3 \times 5}) cross-sectional (contemporaneous) aggregation matrix.}
   \item{obs}{List of the observations at any levels and temporal frequencies.}
 }
 }
@@ -21,12 +21,13 @@ are ordered as [lowest_freq' ...  highest_freq']'.}
 data(FoReco_data)
 }
 \description{
-A two-level hierarchy with \code{n = 8} monthly time series. In the cross-sectional framework,
-at any time it is \code{Tot = A + B + C}, \code{A = AA + AB} and \code{B = BA + BB}
-(the bottom time series being \code{AA}, \code{AB}, \code{BA}, \code{BB}, and \code{C}, it is \code{nb = 5}).
-The monthly observations are aggregated to their annual (\code{k = 12}),
-semi-annual (\code{k = 6}), four-monthly (\code{k = 4}), quarterly (\code{k = 3}), and
-bi-monthly (\code{k = 2}) counterparts. The monthly bottom time series are simulated
+\loadmathjax
+A two-level hierarchy with \mjseqn{n = 8} monthly time series. In the cross-sectional framework,
+at any time it is \mjseqn{Tot = A + B + C}, \mjseqn{A = AA + AB} and \mjseqn{B = BA + BB}
+(the bottom time series being \mjseqn{AA}, \mjseqn{AB}, \mjseqn{BA}, \mjseqn{BB}, and \mjseqn{C}, it is \mjseqn{n_b = 5}).
+The monthly observations are aggregated to their annual (\mjseqn{k = 12}),
+semi-annual (\mjseqn{k = 6}), four-monthly (\mjseqn{k = 4}), quarterly (\mjseqn{k = 3}), and
+bi-monthly (\mjseqn{k = 2}) counterparts. The monthly bottom time series are simulated
 from five different SARIMA models (see
 \href{https://danigiro.github.io/FoReco/articles/FoReco_package.html}{\code{Using the `FoReco` package}}).
 There are 180 (15 years) monthly observations: the first 168 values (14 years) are used as

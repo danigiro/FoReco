@@ -9,3 +9,5 @@
 ^cran-comments\.md$
 ^CODE_OF_CONDUCT\.md$
 ^CRAN-RELEASE$
+^doc$
+^Meta$

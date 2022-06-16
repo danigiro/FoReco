@@ -7,10 +7,10 @@
 thf_tools(m, h = 1, sparse = TRUE)
 }
 \arguments{
-\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \code{m}),
-or a subset of the \code{p} factors of \code{m}.}
+\item{m}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation, \mjseqn{m}),
+or a subset of the \mjseqn{p} factors of \mjseqn{m}.}
 
-\item{h}{Forecast horizon for the lowest frequency (most temporally aggregated) time series (\emph{default} is \code{1}).}
+\item{h}{Forecast horizon for the lowest frequency (most temporally aggregated) time series (\emph{default} is \mjseqn{1}).}
 
 \item{sparse}{Option to return sparse object (\emph{default} is \code{TRUE}).}
 }
@@ -18,16 +18,17 @@ or a subset of the \code{p} factors of \code{m}.}
 A list of seven elements:
 \item{\code{K}}{Temporal aggregation matrix.}
 \item{\code{R}}{Temporal summing matrix.}
-\item{\code{Zt}}{Zero constraints temporal kernel matrix\eqn{,\; \mathbf{Z}_h'\mathbf{Y}' =
-\mathbf{0}_{\left[hk^* \times n \right]}}{}.}
-\item{\code{kset}}{Set of factors (\code{p}) of \code{m} in descending order (from \code{m}
-to 1)\eqn{,\;{\cal K} = \left\{k_p, k_{p-1}, \ldots,\right.}{} \eqn{\left. k_2, k_1\right\},}{} \eqn{k_p=m, \; k_1=1}{}.}
+\item{\code{Zt}}{Zero constraints temporal kernel matrix, \mjseqn{\mathbf{Z}_h'\mathbf{Y}' =
+\mathbf{0}_{\left[hk^* \times n \right]}}.}
+\item{\code{kset}}{Set of factors (\mjseqn{p}) of \mjseqn{m} in descending order (from \mjseqn{m}
+to 1), \mjseqn{{\cal K} = \left\lbrace k_p, k_{p-1}, \ldots, k_2, k_1\right\rbrace}, \mjseqn{k_p=m}, \mjseqn{k_1=1}.}
 \item{\code{m}}{Highest available sampling frequency per seasonal cycle (max. order of temporal aggregation).}
-\item{\code{p}}{Number of elements of kset\eqn{,\;({\cal K})}{}.}
-\item{\code{ks}}{Sum of \code{p-1} factors of \code{m} (out of \code{m} itself), \eqn{k^*}{k*}.}
-\item{\code{kt}}{Sum of all factors of m (\eqn{k^{tot} = k^*+m}{kt = ks + m}).}
+\item{\code{p}}{Number of elements of kset, \mjseqn{{\cal K}}.}
+\item{\code{ks}}{Sum of \mjseqn{p-1} factors of \mjseqn{m} (out of \mjseqn{m} itself), \mjseqn{k^*}.}
+\item{\code{kt}}{Sum of all factors of m, \mjseqn{k^{tot} = k^*+m}.}
 }
 \description{
+\loadmathjax
 Some useful tools for forecast reconciliation through temporal hierarchies.
 }
 \examples{
@@ -42,6 +43,7 @@ Other utilities:
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
+\code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()}

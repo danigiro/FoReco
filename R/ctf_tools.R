@@ -37,7 +37,7 @@
 #' coherent with \mjseqn{\check{\mathbf{y}}} (structural representation).}
 #' \item{\code{Scheck}}{Cross-temporal summing matrix \mjseqn{\check{\mathbf{S}}}
 #' coherent with \mjseqn{\check{\mathbf{y}}} (structural representation).}
-#' \item{\code{Stilde}}{Cross-temporal summing matrix \mjseqn{\widetilde{\mathbf{S}}}
+#' \item{\code{Fmat}}{Cross-temporal summing matrix \mjseqn{\widetilde{\mathbf{F}}}
 #' coherent with \mjseqn{\mathbf{y} = \mbox{vec}(\mathbf{Y}')}.}
 #'
 #' \strong{hts} list from \code{\link{hts_tools}} .
@@ -101,18 +101,18 @@ ctf_tools <- function(C, m, h = 1, Ut, nb, sparse = TRUE) {
     Ccheck <- rbind(kronecker(C, R),kronecker(.sparseDiagonal(nb), K))
     Hcheckt <- cbind(.sparseDiagonal(h*(na*m + n*ks)), -Ccheck)
     Scheck <- rbind(Ccheck, .sparseDiagonal(nb*m*h))
-    Stilde <- kronecker(S, R)
+    Fmat <- kronecker(S, R)
 
     if(!sparse){
       out1$Hcheckt <- as.matrix(Hcheckt)
       out1$Ccheck <- as.matrix(Ccheck)
       out1$Scheck <- as.matrix(Scheck)
-      out1$Stilde <- as.matrix(Stilde)
+      out1$Fmat <- as.matrix(Fmat)
     }else{
       out1$Hcheckt <- Hcheckt
       out1$Ccheck <- Ccheck
       out1$Scheck <- Scheck
-      out1$Stilde <- Stilde
+      out1$Fmat <- Fmat
     }
   }
 

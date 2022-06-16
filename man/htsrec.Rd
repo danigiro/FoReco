@@ -257,9 +257,9 @@ objh <- htsrec(mbase, C = FoReco_data$C, W = Wh, comb = "w")
 Byron, R.P. (1978), The estimation of large social accounts matrices,
 \emph{Journal of the Royal Statistical Society A}, 141, 3, 359-367.
 
-Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, \emph{International Journal
+of Forecasting}, in press.
 
 Di Fonzo, T., Marini, M. (2011), Simultaneous and two-step reconciliation of
 systems of time series: methodological and practical issues,

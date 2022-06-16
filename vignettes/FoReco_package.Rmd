@@ -60,6 +60,7 @@ knitr::include_graphics("../man/figures/hier.png")
 ```
 
 #### Simulation
+
 In the following script we simulate five independent monthly bottom time series, each of length 180 (15 complete years of monthly data).
 ```{r eval = FALSE}
 library(FoReco)
@@ -440,7 +441,7 @@ knitr::include_graphics("../man/figures/mts_base_rec.png")
 An evaluation of the quality of the reconciled forecasts can be obtained by using appropriate accuracy indices (see `score_index()`).
 
 #### References
-Di Fonzo, T., Girolimetto, D. (2020), *Cross-Temporal Forecast Reconciliation: Optimal Combination Method and Heuristic Alternatives*, Department of Statistical Sciences, University of Padua, [arXiv:2006.08570](https://arxiv.org/abs/2006.08570).
+Di Fonzo, T., Girolimetto, D. (2021), Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives, _International Journal of Forecasting_, in press.
 
 Hyndman R, Athanasopoulos G, Bergmeir C, Caceres G, Chhay L, O'Hara-Wild M, Petropoulos F, Razbash S, Wang E, Yasmeen F (2020). _forecast: Forecasting functions for time series and linear models_ . R package version 8.13, https://pkg.robjhyndman.com/forecast/.
 

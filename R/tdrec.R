@@ -116,7 +116,7 @@ tdrec <- function(topf, C, m, weights){
     m <- obj_ctf$thf$m
     h <- length(topf)
     kset <- obj_ctf$thf$kset
-    S <- obj_ctf$ctf$Stilde
+    S <- obj_ctf$ctf$Fmat
 
     Dh <- Dmat(h = h, m = kset, n = na+nb)
     rnames <- if (is.null(rownames(C)) | is.null(colnames(C))) {

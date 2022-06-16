@@ -29,7 +29,7 @@ in input by the user, and is not calculated automatically (see Examples)."><meta
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -49,7 +49,7 @@ in input by the user, and is not calculated automatically (see Examples)."><meta
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -124,38 +124,47 @@ in input by the user, and is not calculated automatically (see Examples).</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>topf</dt>
-<dd><p>(\(h \times 1\)) vector of the top-level base forecast to be
-disaggregated; \(h\) is the forecast horizon (for the lowest temporal
+<dd><p>(<em></em>\(h \times 1\)) vector of the top-level base forecast to be
+disaggregated; <em></em>\(h\) is the forecast horizon (for the lowest temporal
 aggregation order in temporal and cross-temporal cases).</p></dd>
+
+
 <dt>C</dt>
-<dd><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
-mapping the \(n_b\) bottom level series into the \(n_a\) higher level ones.</p></dd>
+<dd><p>(<em></em>\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+mapping the <em></em>\(n_b\) bottom level series into the <em></em>\(n_a\) higher level ones.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \(m\)), or a subset of the \(p\) factors
-of \(m\).</p></dd>
+of temporal aggregation, <em></em>\(m\)), or a subset of the <em></em>\(p\) factors
+of <em></em>\(m\).</p></dd>
+
+
 <dt>weights</dt>
 <dd><p>vector of weights to be used to disaggregate topf:
-(\(n_b \times h\)) matrix in the cross-sectional framework;
-(\(m \times h\)) matrix in the temporal framework;
-(\(n_b m \times h\)) matrix in the cross-temporal framework.</p></dd>
+(<em></em>\(n_b \times h\)) matrix in the cross-sectional framework;
+(<em></em>\(m \times h\)) matrix in the temporal framework;
+(<em></em>\(n_b m \times h\)) matrix in the cross-temporal framework.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>The function returns an (\(h \times n\)) matrix of
-cross-sectionally reconciled forecasts, or an (\(h(k^\ast + m) \times 1\))
+    
+
+<p>The function returns an (<em></em>\(h \times n\)) matrix of
+cross-sectionally reconciled forecasts, or an (<em></em>\(h(k^\ast + m) \times 1\))
 vector of top-down temporally reconciled forecasts, or an
-(\(n \times h (k^\ast + m)\)) matrix of top-down
+(<em></em>\(n \times h (k^\ast + m)\)) matrix of top-down
 cross-temporally reconciled forecasts.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Fix \(h = 1\), then
+    <p>Fix <em></em>\(h = 1\), then
 \[\widetilde{\mathbf{y}} = \mathbf{S}\mathbf{w}\widehat{a}_1\]
-where \(\widetilde{\mathbf{y}}\) is the vector of reconciled forecasts,
-\(\mathbf{S}\) is the summing matrix (whose pattern depends on which type
-of reconciliation is being performed), \(\mathbf{w}\) is the vector of weights,
-and \(\widehat{a}_1\) is the top-level value to be disaggregated.</p>
+where <em></em>\(\widetilde{\mathbf{y}}\) is the vector of reconciled forecasts,
+<em></em>\(\mathbf{S}\) is the summing matrix (whose pattern depends on which type
+of reconciliation is being performed), <em></em>\(\mathbf{w}\) is the vector of weights,
+and <em></em>\(\widehat{a}_1\) is the top-level value to be disaggregated.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -222,7 +231,7 @@ Forecasting</em>, 25, 1, 146–166.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>

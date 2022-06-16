@@ -279,11 +279,12 @@ ct_exo_CCCf <- lccrec(basef = ctbase, m = 12, C = C, nl = c(1,3),
 
 }
 \references{
-Di Fonzo, T., Girolimetto, D. (2020), Cross-Temporal Forecast Reconciliation:
-Optimal Combination Method and Heuristic Alternatives, Department of Statistical
-Sciences, University of Padua, \href{https://arxiv.org/abs/2006.08570}{arXiv:2006.08570}.
+Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Optimal combination method and heuristic alternatives, \emph{International Journal
+of Forecasting}, in press.
 
-Di Fonzo, T., Girolimetto, D. (2021), \emph{Forecast combination based forecast reconciliation: insights and extensions} (mimeo).
+Di Fonzo, T., Girolimetto, D. (2021), Forecast combination based forecast reconciliation:
+insights and extensions, \href{https://arxiv.org/abs/2106.05653}{arXiv:2006.08570}.
 
 Hollyman, R., Petropoulos, F., Tipping, M.E. (2021), Understanding Forecast Reconciliation,
 \emph{European Journal of Operational Research} (in press).

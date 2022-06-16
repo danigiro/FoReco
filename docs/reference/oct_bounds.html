@@ -20,7 +20,7 @@ temporal reconciled forecasts"><meta property="og:image" content="https://danigi
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">FoReco</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.2.4</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@ temporal reconciled forecasts"><meta property="og:image" content="https://danigi
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-question-circle"></span>
      
     Vignettes
@@ -106,30 +106,41 @@ temporal reconciled forecasts</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>hts_bounds</dt>
-<dd><p>(\(n \times 2\)) matrix with cross-sectional bounds:
+<dd><p>(<em></em>\(n \times 2\)) matrix with cross-sectional bounds:
 the first column is the lower bound, and the second column is the upper bound.</p></dd>
+
+
 <dt>thf_bounds</dt>
-<dd><p>(\((k^\ast + m) \times 2\)) matrix with temporal bounds:
+<dd><p>(<em></em>\((k^\ast + m) \times 2\)) matrix with temporal bounds:
 the first column is the lower bound, and the second column is the upper bound.</p></dd>
+
+
 <dt>m</dt>
 <dd><p>Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \(m\)), or a subset of \(p\) factors
-of \(m\).</p></dd>
+of temporal aggregation, <em></em>\(m\)), or a subset of <em></em>\(p\) factors
+of <em></em>\(m\).</p></dd>
+
+
 <dt>C</dt>
-<dd><p>(\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
+<dd><p>(<em></em>\(n_a \times n_b\)) cross-sectional (contemporaneous) matrix
 mapping the bottom level series into the higher level ones.</p></dd>
+
+
 <dt>Ut</dt>
 <dd><p>Zero constraints cross-sectional (contemporaneous) kernel matrix
-\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
+<em></em>\((\mathbf{U}'\mathbf{y} = \mathbf{0})\) spanning the null space valid
 for the reconciled forecasts. It can be used instead of parameter
-<code>C</code>, but <code>nb</code> (\(n = n_a + n_b\)) is needed if
-\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
-admits a structural representation, \(\mathbf{U}'\) has dimension
-(\(n_a \times n\)).</p></dd>
+<code>C</code>, but <code>nb</code> (<em></em>\(n = n_a + n_b\)) is needed if
+<em></em>\(\mathbf{U}' \neq [\mathbf{I} \ -\mathbf{C}]\). If the hierarchy
+admits a structural representation, <em></em>\(\mathbf{U}'\) has dimension
+(<em></em>\(n_a \times n\)).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A matrix with the cross-temporal bounds.</p>
+    
+
+<p>A matrix with the cross-temporal bounds.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -139,6 +150,7 @@ admits a structural representation, \(\mathbf{U}'\) has dimension
 <code><a href="commat.html">commat</a>()</code>,
 <code><a href="ctf_tools.html">ctf_tools</a>()</code>,
 <code><a href="hts_tools.html">hts_tools</a>()</code>,
+<code><a href="lcmat.html">lcmat</a>()</code>,
 <code><a href="score_index.html">score_index</a>()</code>,
 <code><a href="shrink_estim.html">shrink_estim</a>()</code>,
 <code><a href="thf_tools.html">thf_tools</a>()</code></p></div>
@@ -180,7 +192,7 @@ admits a structural representation, \(\mathbf{U}'\) has dimension
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
       </footer></div>
