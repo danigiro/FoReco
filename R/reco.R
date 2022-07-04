@@ -104,8 +104,7 @@ recoM <- function(basef, W, Ht, sol = "direct", nn = FALSE, nn_type = "osqp", se
                       }
                     },
                     sntz = {
-                      na <- NROW(S)-NCOL(S)
-                      bottom <- out$recf[,-c(1:na),drop = FALSE]
+                      bottom <- out$recf[,b_pos == 1,drop = FALSE]
                       bottom <- bottom*(bottom > 0)
                       out$recf <- bottom %*% t(S)
 
@@ -200,8 +199,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
                         out$recf[-id,,drop=FALSE] <- out$recf[-id,,drop=FALSE] * (out$recf[-id,,drop=FALSE] > 0)
                       },
                       sntz = {
-                        na <- NROW(S)-NCOL(S)
-                        bottom <- out$recf[,-c(1:na),drop = FALSE]
+                        bottom <- out$recf[,b_pos == 1,drop = FALSE]
                         bottom <- bottom*(bottom > 0)
                         out$recf <- bottom %*% t(S)
                       })
@@ -248,8 +246,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
                         rownames(out$info) <- id
                       },
                       sntz = {
-                        na <- NROW(S)-NCOL(S)
-                        bottom <- out$recf[,-c(1:na),drop = FALSE]
+                        bottom <- out$recf[,b_pos == 1,drop = FALSE]
                         bottom <- bottom*(bottom > 0)
                         out$recf <- bottom %*% t(S)
                       })
@@ -676,8 +673,7 @@ recoV <- function(basef, W, Ht, sol = "direct", nn = FALSE, nn_type = "osqp", ty
                       out$recf[-id,-v,drop=FALSE] <- out$recf[-id,-v,drop=FALSE] * (out$recf[-id,-v,drop=FALSE] > 0)
                     },
                     sntz = {
-                      na <- NROW(S)-NCOL(S)
-                      bottom <- out$recf[,-c(1:na),drop = FALSE]
+                      bottom <- out$recf[,b_pos == 1,drop = FALSE]
                       bottom[,-v, drop = FALSE] <- bottom[,-v, drop = FALSE]*(bottom[,-v, drop = FALSE] > 0)
                       out$recf <- bottom %*% t(S)
                     })

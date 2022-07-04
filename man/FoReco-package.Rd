@@ -32,8 +32,8 @@ Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation
 Optimal combination method and heuristic alternatives, \emph{International Journal
 of Forecasting}, in press \doi{10.1016/j.ijforecast.2021.08.004}.
 
-Di Fonzo, T., Girolimetto, D. (2021), Forecast combination based forecast reconciliation:
-insights and extensions, \href{https://arxiv.org/abs/2106.05653}{arXiv:2006.08570}.
+Di Fonzo, T., Girolimetto, D. (2022), Forecast combination based forecast reconciliation:
+insights and extensions, \emph{International Journal of Forecasting}, in press.
 }
 \author{
 Tommaso Di Fonzo and Daniele Girolimetto, Department of Statistical Sciences, University of Padua (Italy).

@@ -86,7 +86,7 @@ reconciled forecasts may be computed in cross-sectional, temporal, and
 cross-temporal frameworks. The reconciled forecasts are conditional to (i.e.,
 constrained by) the base forecasts of a specific upper level of the hierarchy
 (exogenous constraints). The linear constraints linking the variables may be
-dealt with endogenously as well (Di Fonzo and Girolimetto, 2021).
+dealt with endogenously as well (Di Fonzo and Girolimetto, 2022).
 \emph{Combined Conditional Coherent} (CCC)
 forecasts may be calculated as simple averages of LCC and bottom-up
 reconciled forecasts, with either endogenous or exogenous constraints.
@@ -145,7 +145,7 @@ where \mjseqn{\mathbf{W}_l} is a (\mjseqn{n_l + n_b \times n_l + n_b})
 p.d. matrix.
 Combined Conditional Coherent (CCC) forecasts are obtained by taking
 the simple average of the \mjseqn{L} level conditional, and of the bottom-up
-reconciled forecasts, respectively (Di Fonzo and Girolimetto, 2021):
+reconciled forecasts, respectively (Di Fonzo and Girolimetto, 2022):
 \mjsdeqn{\widetilde{\mathbf{y}}_{CCC}=\frac{1}{L+1}\sum_{l=1}^{L+1} \mathbf{S}\widetilde{\mathbf{b}}_l,}
 with \mjsdeqn{\widetilde{\mathbf{b}}_{L+1} = \widehat{\mathbf{b}}.}
 
@@ -283,8 +283,8 @@ Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation
 Optimal combination method and heuristic alternatives, \emph{International Journal
 of Forecasting}, in press.
 
-Di Fonzo, T., Girolimetto, D. (2021), Forecast combination based forecast reconciliation:
-insights and extensions, \href{https://arxiv.org/abs/2106.05653}{arXiv:2006.08570}.
+Di Fonzo, T., Girolimetto, D. (2022), Forecast combination based forecast reconciliation:
+insights and extensions, \emph{International Journal of Forecasting}, in press.
 
 Hollyman, R., Petropoulos, F., Tipping, M.E. (2021), Understanding Forecast Reconciliation,
 \emph{European Journal of Operational Research} (in press).

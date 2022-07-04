@@ -1,3 +1,9 @@
+# FoReco 0.2.5
+
+##### Minor changes
+* Fixed the not negative reconciliation "**sntz**" for `octrec()`;
+* Fixed documentation.
+
 # FoReco 0.2.4
 
 ##### Major changes
