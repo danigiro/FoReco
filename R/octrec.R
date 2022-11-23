@@ -385,10 +385,6 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
     if (NCOL(res) %% kt != 0) {
       stop("res has a number of columns not in line with frequency of the series", call. = FALSE)
     }
-
-    if (NCOL(res) %% kt != 0) {
-      stop("res has a number of columns not in line with frequency of the series", call. = FALSE)
-    }
     if (NROW(res) != n) {
       stop(paste("The number of rows of res must be", n), call. = FALSE)
     }

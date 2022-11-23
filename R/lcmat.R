@@ -114,7 +114,7 @@ lcmat <- function(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
 
   # Check inputs
   if(is.matrix(Gt) | is(Gt, "Matrix")){
-    Gt <- as(Gt, "dgCMatrix")
+    Gt <- as(Gt, "CsparseMatrix")
   }else{
     stop("Gt must be a matrix", call. = FALSE)
   }

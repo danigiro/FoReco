@@ -829,7 +829,7 @@ step_hts <- function(basef, kset, h, res, arg_input, hts_comb) {
 
   Y <- lapply(kset, function(x) basef[, rep(kset, (max(kset)/kset) * h) == x, drop = FALSE])
 
-  if (missing(res)) {
+  if (is.null(res)) {
     Y1 <- lapply(Y, function(x){
       obj <- do.call("htsrec", c(list(basef = t(x), comb = hts_comb, keep = "recf"),
                                  arg_input[which(names(arg_input) %in% arg_hts)]))

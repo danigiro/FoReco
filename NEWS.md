@@ -1,3 +1,10 @@
+# FoReco 0.2.6
+
+##### Minor changes
+* Fixed deprecation warnings in [Matrix](https://cran.r-project.org/web/packages/Matrix/news.html) (v. 1.5-0);
+* Improved docs and bug fixes;
+* Fixed `ctbu()` inputs.
+
 # FoReco 0.2.5
 
 ##### Minor changes

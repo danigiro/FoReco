@@ -1,7 +1,7 @@
 Type: Package
 Package: FoReco
 Title: Point Forecast Reconciliation
-Version: 0.2.5
+Version: 0.2.6
 Authors@R: 
     c(person(given = "Daniele",
              family = "Girolimetto",
@@ -25,4 +25,4 @@ VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 NeedsCompilation: no
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1

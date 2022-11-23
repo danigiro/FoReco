@@ -7,10 +7,11 @@ development:
 
 template:
   params:
+    bootstrap: 5
     bootswatch: cosmo
-    docsearch:
-      api_key: '1304339aeac0094766448ba1b44faff5'
-      index_name: 'danigiro'
+#    docsearch:
+#      api_key: '1304339aeac0094766448ba1b44faff5'
+#      index_name: 'danigiro'
 
 navbar:
 #  type: inverse

@@ -60,7 +60,7 @@
 #' @export
 ctbu <- function(Bmat, m, C) {
   if (!(is.matrix(C) | is(C, "Matrix"))) stop("C must be a matrix", call. = FALSE)
-  if (!(is.matrix(Bmat))) stop("Bmat must be a matrix", call. = FALSE)
+  if (!(is.matrix(Bmat) | is(Bmat, "Matrix"))) stop("Bmat must be a matrix", call. = FALSE)
 
   tools <- thf_tools(m)
   kset <- tools$kset

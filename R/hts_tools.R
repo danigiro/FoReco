@@ -90,6 +90,9 @@ hts_tools <- function(C, h = 1, Ut, nb, sparse = TRUE) {
     na <- nrow(C)
     n <- nb + na
     S <- rbind(C, .sparseDiagonal(nb))
+    if(!is.null(rownames(C)) & !is.null(colnames(C))){
+      rownames(S) <- c(rownames(C), colnames(C))
+    }
     Ut <- cbind(.sparseDiagonal(na), -C)
   }
 
