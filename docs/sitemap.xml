@@ -13,7 +13,19 @@
     <loc>https://danigiro.github.io/FoReco/articles/FoReco_package.html</loc>
   </url>
   <url>
+    <loc>https://danigiro.github.io/FoReco/articles/FoReco_prob.html</loc>
+  </url>
+  <url>
     <loc>https://danigiro.github.io/FoReco/articles/accuracy_indices.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/FoReco_prob.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/aticolo.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/aticolo.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/articles/index.html</loc>
@@ -47,6 +59,21 @@
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/FoReco_data.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/agg_ts.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/arrange_hres.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/boot_cs.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/boot_ct.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/boot_te.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/commat.html</loc>
@@ -89,6 +116,9 @@
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/octrec.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/residuals_matrix.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/score_index.html</loc>

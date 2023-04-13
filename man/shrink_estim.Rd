@@ -33,11 +33,14 @@ hts: Hierarchical and Grouped Time Series, \emph{R package version 6.0.1},
 Other utilities: 
 \code{\link{Cmatrix}()},
 \code{\link{FoReco2ts}()},
+\code{\link{agg_ts}()},
+\code{\link{arrange_hres}()},
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
 \code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
+\code{\link{residuals_matrix}()},
 \code{\link{score_index}()},
 \code{\link{thf_tools}()}
 }

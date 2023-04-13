@@ -33,21 +33,14 @@
 #' \donttest{
 #' data(FoReco_data)
 #' # Cross-sectional reconciliation for all temporal aggregation levels
-#' # (monthly, bi-monthly, ..., annual)
-#' K <- c(1,2,3,4,6,12)
-#' hts_recf <- NULL
-#' for(i in 1:length(K)){
-#'   # base forecasts
-#'   id <- which(simplify2array(strsplit(colnames(FoReco_data$base),
-#'                                       split = "_"))[1, ] == paste("k", K[i], sep=""))
-#'   mbase <- t(FoReco_data$base[, id])
-#'   # residuals
-#'   id <- which(simplify2array(strsplit(colnames(FoReco_data$res),
-#'                                       split = "_"))[1, ] == paste("k", K[i], sep=""))
-#'   mres <- t(FoReco_data$res[, id])
-#'   hts_recf[[i]] <- htsrec(mbase, C = FoReco_data$C, comb = "shr",
-#'                           res = mres, keep = "recf")
-#' }
+#' # (annual, ..., bi-monthly, monthly)
+#' K <- c(12, 6, 4, 3, 2, 1)
+#' mbase <- FoReco2matrix(FoReco_data$base, m = 12)
+#' mres <- FoReco2matrix(FoReco_data$res, m = 12)
+#' hts_recf <- lapply(K, function(k){
+#'   htsrec(mbase[[paste0("k", k)]], C = FoReco_data$C, comb = "shr",
+#'          res = mres[[paste0("k", k)]], keep = "recf")
+#' })
 #' names(hts_recf) <- paste("k", K, sep="")
 #'
 #' # Forecast reconciliation through temporal hierarchies for all time series

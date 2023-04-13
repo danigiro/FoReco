@@ -55,6 +55,9 @@ by Hyndman et al. (2011)."><meta property="og:image" content="https://danigiro.g
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -130,9 +133,9 @@ mapping the bottom level series into the higher level ones.</p></dd>
 
 <dt>comb</dt>
 <dd><p>Type of the reconciliation. It corresponds to a specific
-(<em></em>\(n(k\ast + m) \times n(k^\ast + m)\)) covariance matrix, where
-<em></em>\(k^\ast\) is the sum of (a subset of) (<em></em>\(p-1\)) factors of
-<em></em>\(m\) (<em></em>\(m\) is not considered) and <em></em>\(n\) is the number
+(<em></em>\(n(k\ast + m) \times n(k^\ast + m)\)) covariance matrix (Di Fonzo and Girolimetto 2023,
+Girolimetto et al. 2023), where <em></em>\(k^\ast\) is the sum of (a subset of) (<em></em>\(p-1\))
+factors of <em></em>\(m\) (<em></em>\(m\) is not considered) and <em></em>\(n\) is the number
 of variables:</p><ul><li><p><b>ols</b> (Identity);</p></li>
 <li><p><b>struc</b> (Cross-temporal structural variances);</p></li>
 <li><p><b>cs_struc</b> (Cross-sectional structural variances and temporal independence);</p></li>
@@ -144,8 +147,14 @@ of variables:</p><ul><li><p><b>ols</b> (Identity);</p></li>
 <li><p><b>acov</b> (Series auto-covariance matrix);</p></li>
 <li><p><b>Sshr</b> (Series shrunk cross-covariance matrix);</p></li>
 <li><p><b>Ssam</b> (Series cross-covariance matrix);</p></li>
-<li><p><b>shr</b>  (Shrunk cross-covariance matrix);</p></li>
+<li><p><b>shr</b> (Shrunk cross-covariance matrix);</p></li>
 <li><p><b>sam</b> (Sample cross-covariance matrix);</p></li>
+<li><p><b>hbshr</b> (Shrunk high frequency bottom time series cross-covariance matrix);</p></li>
+<li><p><b>hbsam</b> (Sample high frequency bottom time series cross-covariance matrix);</p></li>
+<li><p><b>bshr</b> (Shrunk bottom time series cross-covariance matrix);</p></li>
+<li><p><b>bsam</b> (Sample bottom time series cross-covariance matrix);</p></li>
+<li><p><b>hshr</b> (Shrunk high frequency cross-covariance matrix);</p></li>
+<li><p><b>hsam</b> (Sample high frequency cross-covariance matrix);</p></li>
 <li><p><b>w</b> use your personal matrix W in param <code>W</code>;</p></li>
 <li><p><b>omega</b> use your personal matrix Omega in param <code>Omega</code>.</p></li>
 </ul></dd>
@@ -154,9 +163,7 @@ of variables:</p><ul><li><p><b>ols</b> (Identity);</p></li>
 <dt>res</dt>
 <dd><p>(<em></em>\(n \times N(k^\ast + m)\)) matrix containing the residuals at
 all the temporal frequencies ordered [lowest_freq' ...  highest_freq']'
-(columns) for each variable (row), needed to estimate the covariance matrix
-when <code>comb =</code> <code>{"sam",</code> <code>"wlsv",</code> <code>"wlsh",</code>
-<code>"acov",</code> <code>"Ssam",</code> <code>"Sshr",</code> <code>"Sshr1",</code> <code>"shr"}</code>.</p></dd>
+(columns) for each variable (row), needed to estimate the covariance matrix.</p></dd>
 
 
 <dt>Ut</dt>
@@ -266,7 +273,7 @@ on what type of representation (<code>type</code>) and solution technique
 <dd><p>Number of negative values (if zero, there are no values below zero).</p></dd>
 
 <dt><code>rec_check</code></dt>
-<dd><p>Logical value: <code>rec_check = TRUE</code> when the constraints have been fulfilled,</p></dd>
+<dd><p>Logical value: <code>rec_check = TRUE</code> when the constraints have been fulfilled.</p></dd>
 
 <dt><code>varf</code> (<code>type="direct"</code>)</dt>
 <dd><p>(<em></em>\(n \times (k^\ast + m)\)) reconciled forecasts variance matrix for <em></em>\(h=1\), <em></em>\(\mbox{diag}(\mathbf{MW}\)).</p></dd>
@@ -385,17 +392,19 @@ This is not true in the case of non-negativity constraints:</p><ul><li><p><code>
   reconciled using the <code>"osqp"</code> solver.</p></li>
 </ul><p>In this case it is not necessary to build a matrix containing
 the bounds, and it is sufficient to set <code>nn = "TRUE"</code>.</p>
-<p>Non-negative reconciled forecasts may be obtained by setting <code>nn_type</code> alternatively as:</p><ul><li><p><code>nn_type = "KAnn"</code> (Kourentzes and Athanasopoulos, 2021)</p></li>
-<li><p><code>nn_type = "sntz"</code> ("set-negative-to-zero")</p></li>
+<p>Non-negative reconciled forecasts may be obtained by setting <code>nn_type</code> alternatively as:</p><ul><li><p><code>nn_type = "sntz"</code> ("set-negative-to-zero")</p></li>
 <li><p><code>nn_type = "osqp"</code> (Stellato et al., 2020)</p></li>
 </ul></div>
     <div id="references">
     <h2>References</h2>
     <p>Byron, R.P. (1978), The estimation of large social accounts matrices,
 <em>Journal of the Royal Statistical Society A</em>, 141, 3, 359-367.</p>
-<p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+<p>Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, <em>International Journal
-of Forecasting</em>, in press.</p>
+of Forecasting</em>, 39(1), 39-57.</p>
+<p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T., &amp; Hyndman, R. J. (2023),
+Cross-temporal Probabilistic Forecast Reconciliation,
+<a href="https://doi.org/10.48550/arXiv.2303.17277" class="external-link">arXiv:2303.17277</a>.</p>
 <p>Schäfer, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
 Duarte Silva, A.P., Strimmer, K. (2017), <em>Package `corpcor'</em>, R
 package version 1.6.9 (April 1, 2017), <a href="https://CRAN.R-project.org/package=corpcor" class="external-link">https://CRAN.R-project.org/package= corpcor</a>.</p>
@@ -442,7 +451,7 @@ Quadratic Programming Solver using the `OSQP' Library, R package version 0.6.0.3
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

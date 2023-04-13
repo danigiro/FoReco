@@ -90,11 +90,14 @@ C <- Cmatrix(~ Y1 * (X1 / X2), data_bts, sep = "")
 \seealso{
 Other utilities: 
 \code{\link{FoReco2ts}()},
+\code{\link{agg_ts}()},
+\code{\link{arrange_hres}()},
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
 \code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
+\code{\link{residuals_matrix}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},
 \code{\link{thf_tools}()}

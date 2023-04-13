@@ -121,15 +121,8 @@
 #' Non-negative reconciled forecasts may be obtained by setting \code{nn_type}
 #' alternatively as:
 #' \itemize{
-#'   \item to apply non-negative constraints to each level:
-#'   \itemize{
-#'     \item \code{nn_type = "KAnn"} (only \code{const = "endo"})
-#'     \item \code{nn_type = "osqp"}
-#'   }
-#'   \item to apply non-negative constraints only to the CCC forecasts:
-#'   \itemize{
-#'     \item \code{nn_type = "sntz"} ("set-negative-to-zero")
-#'   }
+#'   \item \code{nn_type = "osqp"} to apply non-negative constraints to each level:
+#'   \item \code{nn_type = "sntz"} ("set-negative-to-zero") to apply non-negative constraints only to the CCC forecasts:
 #' }
 #'
 #' \strong{Temporal hierarchies}
@@ -164,9 +157,9 @@
 #' polish's status (\code{status_polish}).}
 #'
 #' @references
-#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 #' Optimal combination method and heuristic alternatives, \emph{International Journal
-#' of Forecasting}, in press.
+#' of Forecasting}, 39(1), 39-57.
 #'
 #' Di Fonzo, T., Girolimetto, D. (2022), Forecast combination based forecast reconciliation:
 #' insights and extensions, \emph{International Journal of Forecasting}, in press.
@@ -182,11 +175,11 @@
 #' # Cross sectional aggregation matrix
 #' C <- rbind(FoReco_data$C, c(0,0,0,0,1))
 #' # monthly base forecasts
-#' id <- which(simplify2array(strsplit(colnames(FoReco_data$base), split = "_"))[1, ] == "k1")
-#' mbase <- t(FoReco_data$base[, id])[,c("T", "A","B","C","AA","AB","BA","BB","C")]
+#' mbase <- FoReco2matrix(FoReco_data$base, m = 12)$k1
+#' mbase <- mbase[, c("T", "A","B","C","AA","AB","BA","BB","C")]
 #' # residuals
-#' id <- which(simplify2array(strsplit(colnames(FoReco_data$res), split = "_"))[1, ] == "k1")
-#' mres <- t(FoReco_data$res[, id])[,c("T", "A","B","C","AA","AB","BA","BB","C")]
+#' mres <- FoReco2matrix(FoReco_data$res, m = 12)$k1
+#' mres <- mres[, c("T", "A","B","C","AA","AB","BA","BB","C")]
 #' # covariance matrix of all the base forecasts, computed using the in-sample residuals
 #' Wres <- cov(mres)
 #' # covariance matrix of the bts base forecasts, computed using the in-sample residuals

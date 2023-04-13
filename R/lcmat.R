@@ -26,7 +26,7 @@
 #' @param Gt (\mjseqn{r \times n}) coefficient matrix (\mjseqn{\mathbf{\Gamma}'})
 #' for a general linearly constrained multiple time series (\mjseqn{\mathbf{x}_t})
 #' such that \mjseqn{\mathbf{\Gamma}'\mathbf{x}_t = \mathbf{0}_{(r \times 1)}}.
-#' @param alg Technique used into trasform \mjseqn{\mathbf{\Gamma}'} in
+#' @param alg Technique used to trasform \mjseqn{\mathbf{\Gamma}'} in
 #' \mjseqn{\bar{\mathbf{U}}' = [\mathbf{I} \quad -\bar{\mathbf{C}}]}, such that
 #' \mjseqn{\bar{\mathbf{U}'}\mathbf{y}_t = \mathbf{0}_{(n_v \times 1)}}. Use
 #' \code{"rref"} for the Row Reduced Echelon Form through Gauss-Jordan elimination
@@ -54,7 +54,7 @@
 #' \end{array}}
 #' The coefficient matrix \mjseqn{\mathbf{\Gamma}'} of the linear system
 #' \mjseqn{\mathbf{\Gamma}'\mathbf{x}_t=\mathbf{0}}
-#' (\mjseqn{\mathbf{x}_t = \lbrace X, C, D, A, B, A1, A2\rbrace}) is
+#' (\mjseqn{\mathbf{x}_t = [X\; C\; D\; A\; B\; A1\; A2]}) is
 #' \mjsdeqn{\mathbf{\Gamma}' = \left[\begin{array}{ccccccc}
 #' 1 & -1 & -1 & 0 & 0 & 0 & 0 \cr
 #' 1 & 0 & 0 & -1 & -1 & 0 & 0 \cr
@@ -76,8 +76,8 @@
 #' \mathbf{v}_t \cr
 #' \mathbf{f}_t
 #' \end{array}\right] = \mathbf{0},}
-#' where \mjseqn{\mathbf{v}_t = \lbrace X, C, A\rbrace}, and
-#' \mjseqn{\mathbf{f}_t = \lbrace D, B, A1, A2\rbrace}.
+#' where \mjseqn{\mathbf{v}_t = [X\; C\; A]}, and
+#' \mjseqn{\mathbf{f}_t = [D\; B\; A1\; A2]}.
 #'
 #' @return A list with
 #' \item{\code{Cbar}}{(\mjseqn{n_v \times n_f}) linear combination matrix \mjseqn{\bar{\mathbf{C}}}}

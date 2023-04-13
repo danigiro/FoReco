@@ -56,6 +56,9 @@ and temporal frameworks."><meta property="og:image" content="https://danigiro.gi
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -109,7 +112,7 @@ and temporal frameworks.</p>
     <dl><dt>Bmat</dt>
 <dd><p>(<em></em>\(n_b \times h m\)) matrix of high-frequency bottom time
 series base forecasts (<em></em>\(\widehat{\mathbf{B}}^{[1]}\)).
-<code>h</code> is the forecast horizon for the lowest frequency (most temporally aggregated)
+<em></em>\(h\) is the forecast horizon for the lowest frequency (most temporally aggregated)
 time series.</p></dd>
 
 
@@ -152,9 +155,9 @@ at any temporal aggregation order.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+    <p>Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, <em>International Journal
-of Forecasting</em>, in press.</p>
+of Forecasting</em>, 39(1), 39-57.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -173,9 +176,7 @@ of Forecasting</em>, in press.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># monthly base forecasts</span></span></span>
-<span class="r-in"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                                    split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">hfbts</span> <span class="op">&lt;-</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, <span class="va">id</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">hfbts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="FoReco2ts.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">k1</span><span class="op">[</span>, <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu">ctbu</span><span class="op">(</span>Bmat <span class="op">=</span> <span class="va">hfbts</span>, m <span class="op">=</span> <span class="fl">12</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -193,7 +194,7 @@ of Forecasting</em>, in press.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

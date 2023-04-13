@@ -9,9 +9,6 @@ template:
   params:
     bootstrap: 5
     bootswatch: cosmo
-#    docsearch:
-#      api_key: '1304339aeac0094766448ba1b44faff5'
-#      index_name: 'danigiro'
 
 navbar:
 #  type: inverse
@@ -45,6 +42,8 @@ navbar:
           href: articles/FoReco_package.html
         - text: Average relative accuracy indices
           href: articles/accuracy_indices.html
+        - text: Probabilistic forecast reconciliation
+          href: articles/FoReco_prob.html
 
 reference:
 - title: Reconciliation
@@ -78,6 +77,15 @@ reference:
   - ctf_tools
   - oct_bounds
   - lcmat
+  - agg_ts
+  - arrange_hres
+  - residuals_matrix
+
+- title: Bootstrap
+- contents:
+  - boot_cs
+  - boot_ct
+  - boot_te
 
 - title: Package
 - contents:

@@ -65,10 +65,13 @@ obj <- ctf_tools(C = matrix(c(1, 1), 1), m = 4)
 Other utilities: 
 \code{\link{Cmatrix}()},
 \code{\link{FoReco2ts}()},
+\code{\link{agg_ts}()},
+\code{\link{arrange_hres}()},
 \code{\link{commat}()},
 \code{\link{hts_tools}()},
 \code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
+\code{\link{residuals_matrix}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},
 \code{\link{thf_tools}()}

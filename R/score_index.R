@@ -35,9 +35,9 @@
 #' \href{https://danigiro.github.io/FoReco/articles/accuracy_indices.html}{Average relative accuracy indices}).
 #'
 #' @references
-#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 #' Optimal combination method and heuristic alternatives, \emph{International Journal
-#' of Forecasting}, in press.
+#' of Forecasting}, 39(1), 39-57.
 #'
 #' @examples
 #' \donttest{
@@ -52,13 +52,11 @@
 #'
 #' # Cross-sectional framework
 #' # monthly base forecasts
-#' id <- which(simplify2array(strsplit(colnames(FoReco_data$base), split = "_"))[1, ] == "k1")
-#' mbase <- t(FoReco_data$base[, id])
+#' mbase <- FoReco2matrix(FoReco_data$base, m = 12)$k1
 #' # monthly test set
-#' mtest <- t(FoReco_data$test[, id])
+#' mtest <- FoReco2matrix(FoReco_data$test, m = 12)$k1
 #' # monthly residuals
-#' id <- which(simplify2array(strsplit(colnames(FoReco_data$res), split = "_"))[1, ] == "k1")
-#' mres <- t(FoReco_data$res[, id])
+#' mres <- FoReco2matrix(FoReco_data$res, m = 12)$k1
 #' # monthly reconciled forecasts
 #' mrecf <- htsrec(mbase, C = FoReco_data$C, comb = "shr", res = mres)$recf
 #' # score

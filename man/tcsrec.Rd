@@ -17,7 +17,7 @@ Each row identifies a time series, and the forecasts are ordered as
 
 \item{hts_comb, thf_comb}{Type of covariance matrix (respectively
 (\mjseqn{n \times n}) and (\mjseqn{(k^\ast + m) \times (k^\ast + m)})) to
-be used in the cross-sectional and temporal reconciliation, see more in
+be used in the cross-sectional and temporal reconciliation. More details in
 \code{comb} param of \code{\link[FoReco]{htsrec}()} and
 \code{\link[FoReco]{thfrec}()}.}
 
@@ -35,7 +35,7 @@ Athanasopoulos (2019), otherwise it is calculated as simple average of
 all the involved projection matrices at step 2 of the procedure (see
 Di Fonzo and Girolimetto, 2020).}
 
-\item{...}{any other options useful for \code{\link[FoReco]{htsrec}()} and
+\item{...}{Any other options useful for \code{\link[FoReco]{htsrec}()} and
 \code{\link[FoReco]{thfrec}()}, e.g. \code{m}, \code{C} (or \code{Ut} and
 \code{nb}), \code{nn} (for non negativity reconciliation only at first step),
 \code{mse}, \code{corpcor}, \code{type}, \code{sol}, \code{settings},
@@ -66,8 +66,8 @@ wished, \code{thf_comb} must be set equal to either \code{"struc"} or \code{"wls
 and \code{hts_comb} equal to either \code{"shr"} or \code{"wls"}.
 
 \strong{Warning},
-the two-step heuristic reconciliation allows non negativity constraints only in the first step.
-This means that non-negativity is not guaranteed in the final reconciled values.
+the two-step heuristic reconciliation allows considering non negativity constraints only in
+the first step. This means that non-negativity is not guaranteed in the final reconciled values.
 }
 \examples{
 data(FoReco_data)
@@ -76,9 +76,9 @@ obj <- tcsrec(FoReco_data$base, m = 12, C = FoReco_data$C,
 
 }
 \references{
-Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, in press.
+of Forecasting}, 39(1), 39-57.
 
 Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts
 for Australian tourism, \emph{Annals of Tourism Research}, 75, 393-409.

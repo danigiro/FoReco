@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Point Forecast Reconciliation • FoReco</title>
+<title>Forecast Reconciliation • FoReco</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -17,10 +17,11 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Point Forecast Reconciliation">
+<script src="pkgdown.js"></script><meta property="og:title" content="Forecast Reconciliation">
 <meta property="og:description" content="Classical (bottom-up and top-down), optimal and heuristic combination forecast 
-    reconciliation procedures for cross-sectional, temporal, and cross-temporal linearly 
-    constrained time series (Di Fonzo and Girolimetto, 2021) &lt;doi:10.1016/j.ijforecast.2021.08.004&gt;.">
+    point (Di Fonzo and Girolimetto, 2023) &lt;doi:10.1016/j.ijforecast.2021.08.004&gt; and 
+    probabilistic (Girolimetto et al. 2023) &lt;arXiv:2303.17277&gt; reconciliation procedures 
+    for cross-sectional, temporal, and cross-temporal linearly constrained time series.">
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -77,6 +78,9 @@
     <li>
       <a href="articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -118,7 +122,7 @@
 <!-- badges: start -->
 
 <!-- badges: end -->
-<p>The <strong>FoReco</strong> (<strong>Fo</strong>recast <strong>Reco</strong>nciliation) package is designed for point forecast reconciliation, a <strong>post-forecasting</strong> process aimed to improve the accuracy of the base forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.</p>
+<p>The <strong>FoReco</strong> (<strong>Fo</strong>recast <strong>Reco</strong>nciliation) package is designed for forecast reconciliation, a <strong>post-forecasting</strong> process aimed to improve the accuracy of the base forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.</p>
 <p>It offers classical (bottom-up and top-down), and modern (optimal and heuristic combination) forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal linearly constrained time series.</p>
 <p>The main functions are:</p>
 <ul>
@@ -205,8 +209,8 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Daniele Girolimetto <br><small class="roles"> Author, maintainer, funder </small>  </li>
-<li>Tommaso Di Fonzo <br><small class="roles"> Author, funder </small>  </li>
+<li>Daniele Girolimetto <br><small class="roles"> Author, maintainer, funder </small> <a href="https://orcid.org/0000-0001-9387-1232" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Tommaso Di Fonzo <br><small class="roles"> Author, funder </small> <a href="https://orcid.org/0000-0003-3388-7827" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -232,7 +236,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

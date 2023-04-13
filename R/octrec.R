@@ -23,9 +23,9 @@
 #' of temporal aggregation, \mjseqn{m}), or a subset of \mjseqn{p} factors
 #' of \mjseqn{m}.
 #' @param comb Type of the reconciliation. It corresponds to a specific
-#' (\mjseqn{n(k\ast + m) \times n(k^\ast + m)}) covariance matrix, where
-#' \mjseqn{k^\ast} is the sum of (a subset of) (\mjseqn{p-1}) factors of
-#' \mjseqn{m} (\mjseqn{m} is not considered) and \mjseqn{n} is the number
+#' (\mjseqn{n(k\ast + m) \times n(k^\ast + m)}) covariance matrix (Di Fonzo and Girolimetto 2023,
+#' Girolimetto et al. 2023), where \mjseqn{k^\ast} is the sum of (a subset of) (\mjseqn{p-1})
+#' factors of \mjseqn{m} (\mjseqn{m} is not considered) and \mjseqn{n} is the number
 #' of variables:
 #' \itemize{
 #'   \item \bold{ols} (Identity);
@@ -39,8 +39,14 @@
 #'   \item \bold{acov} (Series auto-covariance matrix);
 #'   \item \bold{Sshr} (Series shrunk cross-covariance matrix);
 #'   \item \bold{Ssam} (Series cross-covariance matrix);
-#'   \item \bold{shr}  (Shrunk cross-covariance matrix);
+#'   \item \bold{shr} (Shrunk cross-covariance matrix);
 #'   \item \bold{sam} (Sample cross-covariance matrix);
+#'   \item \bold{hbshr} (Shrunk high frequency bottom time series cross-covariance matrix);
+#'   \item \bold{hbsam} (Sample high frequency bottom time series cross-covariance matrix);
+#'   \item \bold{bshr} (Shrunk bottom time series cross-covariance matrix);
+#'   \item \bold{bsam} (Sample bottom time series cross-covariance matrix);
+#'   \item \bold{hshr} (Shrunk high frequency cross-covariance matrix);
+#'   \item \bold{hsam} (Sample high frequency cross-covariance matrix);
 #'   \item \bold{w} use your personal matrix W in param \code{W};
 #'   \item \bold{omega} use your personal matrix Omega in param \code{Omega}.
 #' }
@@ -57,9 +63,7 @@
 #' and \code{Ut} are not used.
 #' @param res (\mjseqn{n \times N(k^\ast + m)}) matrix containing the residuals at
 #' all the temporal frequencies ordered [lowest_freq' ...  highest_freq']'
-#' (columns) for each variable (row), needed to estimate the covariance matrix
-#' when \code{comb =} \code{\{"sam",} \code{"wlsv",} \code{"wlsh",}
-#' \code{"acov",} \code{"Ssam",} \code{"Sshr",} \code{"Sshr1",} \code{"shr"\}}.
+#' (columns) for each variable (row), needed to estimate the covariance matrix.
 #' @param W,Omega This option permits to directly enter the covariance matrix:
 #' \enumerate{
 #'   \item \code{W} must be a p.d. (\mjseqn{n(k^\ast + m) \times n(k^\ast + m)})
@@ -207,7 +211,6 @@
 #'
 #' Non-negative reconciled forecasts may be obtained by setting \code{nn_type} alternatively as:
 #' \itemize{
-#'   \item \code{nn_type = "KAnn"} (Kourentzes and Athanasopoulos, 2021)
 #'   \item \code{nn_type = "sntz"} ("set-negative-to-zero")
 #'   \item \code{nn_type = "osqp"} (Stellato et al., 2020)
 #' }
@@ -222,7 +225,7 @@
 #' \item{\code{Omega}}{Covariance matrix used for reconciled forecasts (\mjseqn{\mbox{vec}(\widehat{\textbf{Y}}')} representation).}
 #' \item{\code{W}}{Covariance matrix used for reconciled forecasts (\mjseqn{\mbox{vec}(\widehat{\textbf{Y}})} representation).}
 #' \item{\code{nn_check}}{Number of negative values (if zero, there are no values below zero).}
-#' \item{\code{rec_check}}{Logical value: \code{rec_check = TRUE} when the constraints have been fulfilled,}
+#' \item{\code{rec_check}}{Logical value: \code{rec_check = TRUE} when the constraints have been fulfilled.}
 #' \item{\code{varf} (\code{type="direct"})}{(\mjseqn{n \times (k^\ast + m)}) reconciled forecasts variance matrix for \mjseqn{h=1}, \mjseqn{\mbox{diag}(\mathbf{MW}}).}
 #' \item{\code{M} (\code{type="direct"})}{Projection matrix (projection approach).}
 #' \item{\code{G} (\code{type="S"} and \code{type="direct"})}{Projection matrix (structural approach, \mjseqn{\mathbf{M}=\mathbf{S}\mathbf{G}}).}
@@ -236,9 +239,13 @@
 #' Byron, R.P. (1978), The estimation of large social accounts matrices,
 #' \emph{Journal of the Royal Statistical Society A}, 141, 3, 359-367.
 #'
-#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 #' Optimal combination method and heuristic alternatives, \emph{International Journal
-#' of Forecasting}, in press.
+#' of Forecasting}, 39(1), 39-57.
+#'
+#' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T., & Hyndman, R. J. (2023),
+#' Cross-temporal Probabilistic Forecast Reconciliation,
+#' \href{https://doi.org/10.48550/arXiv.2303.17277}{arXiv:2303.17277}.
 #'
 #' \enc{Schäfer}{Schafer}, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
 #' Duarte Silva, A.P., Strimmer, K. (2017), \emph{Package `corpcor'}, R
@@ -293,11 +300,6 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
   if (missing(m)) {
     stop("The argument m is not specified", call. = FALSE)
   }
-
-  comb <- match.arg(comb, c(
-    "ols", "struc", "sam", "wlsv", "wlsh", "shr",
-    "acov", "Ssam", "Sshr", "bdshr", "bdsam", "w", "omega",
-    "cs_struc", "t_struc"))
 
   type <- match.arg(type, c("M", "S"))
   keep <- match.arg(keep, c("list", "recf"))
@@ -357,15 +359,15 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
 
   if(is.null(S)){
     if (type == "S") {
-      stop("Type = S needs the cross-sectional C matrix. \nPlease consider using gecoma() to get the right C when working with Ut.", call. = FALSE)
+      stop("Type = S needs the cross-sectional C matrix. \nPlease consider using lcmat() to get the right C when working with Ut.", call. = FALSE)
     }
 
     if(nn_type == "sntz"){
-      stop("nn_type = sntz needs the cross-sectional C matrix.\nPlease consider using gecoma() to get the right C when working with Ut.", call. = FALSE)
+      stop("nn_type = sntz needs the cross-sectional C matrix.\nPlease consider using lcmat() to get the right C when working with Ut.", call. = FALSE)
     }
 
-    if (comb == "struc" | comb == "cs_struc") {
-      stop("comb = ", comb, " needs the cross-sectional C matrix.\nPlease consider using gecoma() to get the right C when working with Ut.", call. = FALSE)
+    if (comb %in% c("struc", "cs_struc", "hbshr", "hbsam", "bshr", "bsam")) {
+      stop("comb = ", comb, " needs the cross-sectional C matrix.\nPlease consider using lcmat() to get the right C when working with Ut.", call. = FALSE)
     }
   }
 
@@ -374,7 +376,8 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
   Ybase <- matrix(Dh %*% as.vector(t(basef)), nrow = h, byrow = TRUE)
 
   # In-sample errors
-  if (any(comb == c("sam", "wlsv", "wlsh", "shr", "acov", "Ssam", "Sshr", "bdshr", "bdsam"))) {
+  if (any(comb == c("sam", "wlsv", "wlsh", "shr", "acov", "Ssam", "Sshr",
+                    "bdshr", "bdsam", "hbshr", "hbsam", "hshr", "hsam", "bshr", "bsam"))) {
     # residual condition
     if (missing(res)) {
       stop("Don't forget residuals!", call. = FALSE)
@@ -481,8 +484,69 @@ octrec.default <- function(basef, m, C, comb, res, Ut, nb, mse = TRUE,
            blockW <- rep(blockW, (m/kset))
            P <- commat(n, kt)
            Omega <- P %*% bdiag(blockW) %*% t(P)
+         },
+         hbshr = {
+           kid <- rep(rep(kset, m/kset), n)
+           nid <- rep(1:n, each = kt)
+           E <- E[, nid > na & kid == 1]
+           cov <- shr_mod(E)
+           Omega <- S %*% cov %*% t(S)
+           eps <-  min(min(diag(Omega))/100, 10^-4)
+           Omega <- Omega +  diag(eps, dim(Omega)[1])
+         },
+         hbsam = {
+           kid <- rep(rep(kset, m/kset), n)
+           nid <- rep(1:n, each = kt)
+           E <- E[, nid > na & kid == 1]
+           cov <- cov_mod(E)
+           Omega <- S %*% cov %*% t(S)
+           eps <-  min(min(diag(Omega))/100, 10^-4)
+           Omega <- Omega +  diag(eps, dim(Omega)[1])
+         },
+         hshr = {
+           kid <- rep(rep(kset, m/kset), n)
+           E <- E[, kid == 1]
+           cov <- shr_mod(E)
+           kSte <- kronecker(Diagonal(n), R)
+           Omega <- kSte %*% cov %*% t(kSte)
+           eps <-  min(min(diag(Omega))/100, 10^-4)
+           Omega <- Omega +  diag(eps, dim(Omega)[1])
+         },
+         hsam = {
+           kid <- rep(rep(kset, m/kset), n)
+           E <- E[, kid == 1]
+           cov <- cov_mod(E)
+           kSte <- kronecker(Diagonal(n), R)
+           Omega <- kSte %*% cov %*% t(kSte)
+           eps <-  min(min(diag(Omega))/100, 10^-4)
+           Omega <- Omega +  diag(eps, dim(Omega)[1])
+         },
+         bshr = {
+           nid <- rep(1:n, each = kt)
+           E <- E[, nid > na]
+           cov <- shr_mod(E)
+           kScs <- kronecker(Scs, Diagonal(kt))
+           Omega <- kScs %*% cov %*% t(kScs)
+           eps <-  min(min(diag(Omega))/100, 10^-4)
+           Omega <- Omega +  diag(eps, dim(Omega)[1])
+         },
+         bsam = {
+           nid <- rep(1:n, each = kt)
+           E <- E[, nid > na]
+           cov <- cov_mod(E)
+           kScs <- kronecker(Scs, Diagonal(kt))
+           Omega <- kScs %*% cov %*% t(kScs)
+           eps <-  min(min(diag(Omega))/100, 10^-4)
+           Omega <- Omega +  diag(eps, dim(Omega)[1])
+         },
+         {
+           stop(paste("The approach", comb, "does not correspond to any implemented one."), call. = FALSE)
          }
   )
+
+  if(type == "M" & comb %in% c("hbshr", "hbsam","bshr", "bsam","hshr", "hsam")){
+    type = "S"
+  }
 
   b_pos <- c(rep(0, na * kt), rep(rep(kset, (m/kset)), nb) == 1)
 

@@ -26,9 +26,9 @@ of \mjseqn{m}.}
 mapping the bottom level series into the higher level ones.}
 
 \item{comb}{Type of the reconciliation. It corresponds to a specific
-(\mjseqn{n(k\ast + m) \times n(k^\ast + m)}) covariance matrix, where
-\mjseqn{k^\ast} is the sum of (a subset of) (\mjseqn{p-1}) factors of
-\mjseqn{m} (\mjseqn{m} is not considered) and \mjseqn{n} is the number
+(\mjseqn{n(k\ast + m) \times n(k^\ast + m)}) covariance matrix (Di Fonzo and Girolimetto 2023,
+Girolimetto et al. 2023), where \mjseqn{k^\ast} is the sum of (a subset of) (\mjseqn{p-1})
+factors of \mjseqn{m} (\mjseqn{m} is not considered) and \mjseqn{n} is the number
 of variables:
 \itemize{
   \item \bold{ols} (Identity);
@@ -42,17 +42,21 @@ of variables:
   \item \bold{acov} (Series auto-covariance matrix);
   \item \bold{Sshr} (Series shrunk cross-covariance matrix);
   \item \bold{Ssam} (Series cross-covariance matrix);
-  \item \bold{shr}  (Shrunk cross-covariance matrix);
+  \item \bold{shr} (Shrunk cross-covariance matrix);
   \item \bold{sam} (Sample cross-covariance matrix);
+  \item \bold{hbshr} (Shrunk high frequency bottom time series cross-covariance matrix);
+  \item \bold{hbsam} (Sample high frequency bottom time series cross-covariance matrix);
+  \item \bold{bshr} (Shrunk bottom time series cross-covariance matrix);
+  \item \bold{bsam} (Sample bottom time series cross-covariance matrix);
+  \item \bold{hshr} (Shrunk high frequency cross-covariance matrix);
+  \item \bold{hsam} (Sample high frequency cross-covariance matrix);
   \item \bold{w} use your personal matrix W in param \code{W};
   \item \bold{omega} use your personal matrix Omega in param \code{Omega}.
 }}
 
 \item{res}{(\mjseqn{n \times N(k^\ast + m)}) matrix containing the residuals at
 all the temporal frequencies ordered [lowest_freq' ...  highest_freq']'
-(columns) for each variable (row), needed to estimate the covariance matrix
-when \code{comb =} \code{\{"sam",} \code{"wlsv",} \code{"wlsh",}
-\code{"acov",} \code{"Ssam",} \code{"Sshr",} \code{"Sshr1",} \code{"shr"\}}.}
+(columns) for each variable (row), needed to estimate the covariance matrix.}
 
 \item{Ut}{Zero constraints cross-sectional (contemporaneous) kernel matrix
 \mjseqn{(\textbf{U}'\textbf{y} = \mathbf{0})} spanning the null space valid
@@ -125,7 +129,7 @@ on what type of representation (\code{type}) and solution technique
 \item{\code{Omega}}{Covariance matrix used for reconciled forecasts (\mjseqn{\mbox{vec}(\widehat{\textbf{Y}}')} representation).}
 \item{\code{W}}{Covariance matrix used for reconciled forecasts (\mjseqn{\mbox{vec}(\widehat{\textbf{Y}})} representation).}
 \item{\code{nn_check}}{Number of negative values (if zero, there are no values below zero).}
-\item{\code{rec_check}}{Logical value: \code{rec_check = TRUE} when the constraints have been fulfilled,}
+\item{\code{rec_check}}{Logical value: \code{rec_check = TRUE} when the constraints have been fulfilled.}
 \item{\code{varf} (\code{type="direct"})}{(\mjseqn{n \times (k^\ast + m)}) reconciled forecasts variance matrix for \mjseqn{h=1}, \mjseqn{\mbox{diag}(\mathbf{MW}}).}
 \item{\code{M} (\code{type="direct"})}{Projection matrix (projection approach).}
 \item{\code{G} (\code{type="S"} and \code{type="direct"})}{Projection matrix (structural approach, \mjseqn{\mathbf{M}=\mathbf{S}\mathbf{G}}).}
@@ -249,7 +253,6 @@ the bounds, and it is sufficient to set \code{nn = "TRUE"}.
 
 Non-negative reconciled forecasts may be obtained by setting \code{nn_type} alternatively as:
 \itemize{
-  \item \code{nn_type = "KAnn"} (Kourentzes and Athanasopoulos, 2021)
   \item \code{nn_type = "sntz"} ("set-negative-to-zero")
   \item \code{nn_type = "osqp"} (Stellato et al., 2020)
 }
@@ -264,9 +267,13 @@ obj <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
 Byron, R.P. (1978), The estimation of large social accounts matrices,
 \emph{Journal of the Royal Statistical Society A}, 141, 3, 359-367.
 
-Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, in press.
+of Forecasting}, 39(1), 39-57.
+
+Girolimetto, D., Athanasopoulos, G., Di Fonzo, T., & Hyndman, R. J. (2023),
+Cross-temporal Probabilistic Forecast Reconciliation,
+\href{https://doi.org/10.48550/arXiv.2303.17277}{arXiv:2303.17277}.
 
 \enc{Schäfer}{Schafer}, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
 Duarte Silva, A.P., Strimmer, K. (2017), \emph{Package `corpcor'}, R

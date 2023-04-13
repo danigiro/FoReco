@@ -1,9 +1,15 @@
 # FoReco 0.2.6
 
+##### Major changes: [probabilistic forecast reconciliation](https://danigiro.github.io/FoReco/articles/FoReco_prob.html)
+* Added `boot_cs()`, `boot_te()` and `boot_ct()` to draw samples from, respectively, cross-sectional, temporal and cross-temporal joint (block) bootstrap.
+
 ##### Minor changes
 * Fixed deprecation warnings in [Matrix](https://cran.r-project.org/web/packages/Matrix/news.html) (v. 1.5-0);
 * Improved docs and bug fixes;
-* Fixed `ctbu()` inputs.
+* Fixed `ctbu()` inputs;
+* Added `FoReco2matrix()` to trasform FoReco forecasts input and output in a list of matrix/vector class;
+* Added `agg_ts()`: non-overlapping temporal aggregation of a time series according to a specific aggregation order.
+* Added `arrange_hres()` and `residuals_matrix()` functions to arrange residuals for the covariance matrix under Gaussianity;
 
 # FoReco 0.2.5
 

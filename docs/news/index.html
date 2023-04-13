@@ -50,6 +50,9 @@
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -86,10 +89,18 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.2.6" id="foreco-026">FoReco 0.2.6<a class="anchor" aria-label="anchor" href="#foreco-026"></a></h2>
 <div class="section level6">
+<h6 id="major-changes-probabilistic-forecast-reconciliation-0-2-6">Major changes: <a href="https://danigiro.github.io/FoReco/articles/FoReco_prob.html">probabilistic forecast reconciliation</a>
+<a class="anchor" aria-label="anchor" href="#major-changes-probabilistic-forecast-reconciliation-0-2-6"></a></h6>
+<ul><li>Added <code><a href="../reference/boot_cs.html">boot_cs()</a></code>, <code><a href="../reference/boot_te.html">boot_te()</a></code> and <code><a href="../reference/boot_ct.html">boot_ct()</a></code> to draw samples from, respectively, cross-sectional, temporal and cross-temporal joint (block) bootstrap.</li>
+</ul></div>
+<div class="section level6">
 <h6 id="minor-changes-0-2-6">Minor changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-2-6"></a></h6>
 <ul><li>Fixed deprecation warnings in <a href="https://cran.r-project.org/web/packages/Matrix/news.html" class="external-link">Matrix</a> (v. 1.5-0);</li>
 <li>Improved docs and bug fixes;</li>
-<li>Fixed <code><a href="../reference/ctbu.html">ctbu()</a></code> inputs.</li>
+<li>Fixed <code><a href="../reference/ctbu.html">ctbu()</a></code> inputs;</li>
+<li>Added <code><a href="../reference/FoReco2ts.html">FoReco2matrix()</a></code> to trasform FoReco forecasts input and output in a list of matrix/vector class;</li>
+<li>Added <code><a href="../reference/agg_ts.html">agg_ts()</a></code>: non-overlapping temporal aggregation of a time series according to a specific aggregation order.</li>
+<li>Added <code><a href="../reference/arrange_hres.html">arrange_hres()</a></code> and <code><a href="../reference/residuals_matrix.html">residuals_matrix()</a></code> functions to arrange residuals for the covariance matrix under Gaussianity;</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -185,7 +196,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

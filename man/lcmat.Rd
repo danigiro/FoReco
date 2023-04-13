@@ -12,7 +12,7 @@ lcmat(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
 for a general linearly constrained multiple time series (\mjseqn{\mathbf{x}_t})
 such that \mjseqn{\mathbf{\Gamma}'\mathbf{x}_t = \mathbf{0}_{(r \times 1)}}.}
 
-\item{alg}{Technique used into trasform \mjseqn{\mathbf{\Gamma}'} in
+\item{alg}{Technique used to trasform \mjseqn{\mathbf{\Gamma}'} in
 \mjseqn{\bar{\mathbf{U}}' = [\mathbf{I} \quad -\bar{\mathbf{C}}]}, such that
 \mjseqn{\bar{\mathbf{U}'}\mathbf{y}_t = \mathbf{0}_{(n_v \times 1)}}. Use
 \code{"rref"} for the Row Reduced Echelon Form through Gauss-Jordan elimination
@@ -72,7 +72,7 @@ with a common top-level series (\mjseqn{X}):
 \end{array}}
 The coefficient matrix \mjseqn{\mathbf{\Gamma}'} of the linear system
 \mjseqn{\mathbf{\Gamma}'\mathbf{x}_t=\mathbf{0}}
-(\mjseqn{\mathbf{x}_t = \lbrace X, C, D, A, B, A1, A2\rbrace}) is
+(\mjseqn{\mathbf{x}_t = [X\; C\; D\; A\; B\; A1\; A2]}) is
 \mjsdeqn{\mathbf{\Gamma}' = \left[\begin{array}{ccccccc}
 1 & -1 & -1 & 0 & 0 & 0 & 0 \cr
 1 & 0 & 0 & -1 & -1 & 0 & 0 \cr
@@ -94,8 +94,8 @@ Then
 \mathbf{v}_t \cr
 \mathbf{f}_t
 \end{array}\right] = \mathbf{0},}
-where \mjseqn{\mathbf{v}_t = \lbrace X, C, A\rbrace}, and
-\mjseqn{\mathbf{f}_t = \lbrace D, B, A1, A2\rbrace}.
+where \mjseqn{\mathbf{v}_t = [X\; C\; A]}, and
+\mjseqn{\mathbf{f}_t = [D\; B\; A1\; A2]}.
 }
 \examples{
 Gt <- matrix(c(1,-1,-1,0,0,0,0,
@@ -115,10 +115,13 @@ Strang, G., (2019), \emph{Linear algebra and learning from data}, Wellesley, Cam
 Other utilities: 
 \code{\link{Cmatrix}()},
 \code{\link{FoReco2ts}()},
+\code{\link{agg_ts}()},
+\code{\link{arrange_hres}()},
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
 \code{\link{oct_bounds}()},
+\code{\link{residuals_matrix}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},
 \code{\link{thf_tools}()}

@@ -21,7 +21,7 @@
 #' [lowest_freq' ...  highest_freq']'.
 #' @param hts_comb,thf_comb Type of covariance matrix (respectively
 #' (\mjseqn{n \times n}) and (\mjseqn{(k^\ast + m) \times (k^\ast + m)})) to
-#' be used in the cross-sectional and temporal reconciliation, see more in
+#' be used in the cross-sectional and temporal reconciliation. More details in
 #' \code{comb} param of \code{\link[FoReco]{htsrec}()} and
 #' \code{\link[FoReco]{thfrec}()}.
 #' @param res (\mjseqn{n \times N(k^\ast + m)}) matrix containing the residuals
@@ -31,7 +31,7 @@
 #' \code{hts_comb =} \code{\{"wlsv",} \code{"wlsh",} \code{"acov",}
 #' \code{"strar1",} \code{"sar1",} \code{"har1",} \code{"shr",} \code{"sam"\}}.
 #' The rows must be in the same order as \code{basef}.
-#' @param ... any other options useful for \code{\link[FoReco]{htsrec}()} and
+#' @param ... Any other options useful for \code{\link[FoReco]{htsrec}()} and
 #' \code{\link[FoReco]{thfrec}()}, e.g. \code{m}, \code{C} (or \code{Ut} and
 #' \code{nb}), \code{nn} (for non-negative reconciliation only at the first step),
 #' \code{mse}, \code{corpcor}, \code{type}, \code{sol}, \code{settings},
@@ -39,8 +39,8 @@
 #'
 #' @details
 #' \strong{Warning},
-#' the two-step heuristic reconciliation allows non negativity constraints only in the first step.
-#' This means that it is not guaranteed the non-negativity of the final reconciled values.
+#' the two-step heuristic reconciliation allows considering non negativity constraints only in
+#' the first step. This means that non-negativity is not guaranteed in the final reconciled values.
 #'
 #' @return
 #' The function returns a list with two elements:
@@ -48,9 +48,9 @@
 #' \item{\code{M}}{Matrix which transforms the uni-dimensional reconciled forecasts of step 1 (projection approach) .}
 #'
 #' @references
-#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 #' Optimal combination method and heuristic alternatives, \emph{International Journal
-#' of Forecasting}, in press.
+#' of Forecasting}, 39(1), 39-57.
 #'
 #' Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts
 #' for Australian tourism, \emph{Annals of Tourism Research}, 75, 393-409.

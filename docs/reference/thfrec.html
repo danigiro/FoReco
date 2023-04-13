@@ -54,6 +54,9 @@ bottom-up approach is available."><meta property="og:image" content="https://dan
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -228,7 +231,7 @@ and solution technique (<code>sol</code>) have been used:</p>
 <dd><p>Number of negative values (if zero, there are no values below zero).</p></dd>
 
 <dt><code>rec_check</code></dt>
-<dd><p>Logical value: has the hierarchy been respected?</p></dd>
+<dd><p>Logical value: <code>rec_check = TRUE</code> when the constraints have been fulfilled.</p></dd>
 
 <dt><code>varf</code> (<code>type="direct"</code>)</dt>
 <dd><p>(<em></em>\((k^\ast + m) \times 1\)) reconciled forecasts variance vector for <em></em>\(h=1\), <em></em>\(\mbox{diag}(\mathbf{MW}\)).</p></dd>
@@ -328,8 +331,7 @@ This is not true in the case of non-negativity constraints:</p><ul><li><p><code>
   reconciled using the <code>"osqp"</code> solver.</p></li>
 </ul><p>In this case it is not necessary to build a matrix containing
 the bounds, and it is sufficient to set <code>nn = "TRUE"</code>.</p>
-<p>Non-negative reconciled forecasts may be obtained by setting <code>nn_type</code> alternatively as:</p><ul><li><p><code>nn_type = "KAnn"</code> (Kourentzes and Athanasopoulos, 2021)</p></li>
-<li><p><code>nn_type = "sntz"</code> ("set-negative-to-zero")</p></li>
+<p>Non-negative reconciled forecasts may be obtained by setting <code>nn_type</code> alternatively as:</p><ul><li><p><code>nn_type = "sntz"</code> ("set-negative-to-zero")</p></li>
 <li><p><code>nn_type = "osqp"</code> (Stellato et al., 2020)</p></li>
 </ul></div>
     <div id="references">
@@ -339,9 +341,9 @@ Forecasting with Temporal Hierarchies, <em>European Journal of Operational
 Research</em>, 262, 1, 60-74.</p>
 <p>Byron, R.P. (1978), The estimation of large social accounts matrices,
 <em>Journal of the Royal Statistical Society A</em>, 141, 3, 359-367.</p>
-<p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+<p>Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, <em>International Journal
-of Forecasting</em>, in press.</p>
+of Forecasting</em>, 39(1), 39-57.</p>
 <p>Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G., Shang, H.L. (2011), Optimal combination
 forecasts for hierarchical time series, <em>Computational Statistics &amp; Data
 Analysis</em>, 55, 9, 2579-2589.</p>
@@ -397,7 +399,7 @@ Quadratic Programming Solver using the 'OSQP' Library, R package version 0.6.0.3
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

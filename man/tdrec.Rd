@@ -38,10 +38,12 @@ is disaggregated according to a proportional scheme given by a vector
 of proportions (weights).
 Besides the fulfillment of any aggregation constraint,
 the top-down reconciled forecasts should respect two main properties:
-- the top-level value remains unchanged;
-- all the bottom time series reconciled forecasts are non-negative.
+\itemize{
+  \item the top-level value remains unchanged;
+  \item all the bottom time series reconciled forecasts are non-negative.
+}
 The top-down procedure is extended to deal with both temporal and cross-temporal cases.
-Since this is a post forecasting function, the weight vector must be given
+Since this is a post-forecasting function, the vector of weights must be given
 in input by the user, and is not calculated automatically (see Examples).
 }
 \details{
@@ -58,8 +60,7 @@ data(FoReco_data)
 # Cross sectional aggregation matrix
 C <- FoReco_data$C
 # monthly base forecasts
-id <- which(simplify2array(strsplit(colnames(FoReco_data$base), split = "_"))[1, ] == "k1")
-mbase <- t(FoReco_data$base[, id])
+mbase <- FoReco2matrix(FoReco_data$base, m = 12)$k1
 obs_1 <- FoReco_data$obs$k1
 # average historical proportions
 props <- colMeans(obs_1[1:168,-c(1:3)]/obs_1[1:168,1])

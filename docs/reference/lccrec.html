@@ -61,6 +61,9 @@ reconciled forecasts, with either endogenous or exogenous constraints."><meta pr
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -278,11 +281,8 @@ reconciled forecasts, respectively (Di Fonzo and Girolimetto, 2022):
 \[\widetilde{\mathbf{y}}_{CCC}=\frac{1}{L+1}\sum_{l=1}^{L+1} \mathbf{S}\widetilde{\mathbf{b}}_l,\]
 with \[\widetilde{\mathbf{b}}_{L+1} = \widehat{\mathbf{b}}.\]</p>
 <p>Non-negative reconciled forecasts may be obtained by setting <code>nn_type</code>
-alternatively as:</p><ul><li><p>to apply non-negative constraints to each level:</p><ul><li><p><code>nn_type = "KAnn"</code> (only <code>const = "endo"</code>)</p></li>
-<li><p><code>nn_type = "osqp"</code></p></li>
-</ul></li>
-<li><p>to apply non-negative constraints only to the CCC forecasts:</p><ul><li><p><code>nn_type = "sntz"</code> ("set-negative-to-zero")</p></li>
-</ul></li>
+alternatively as:</p><ul><li><p><code>nn_type = "osqp"</code> to apply non-negative constraints to each level:</p></li>
+<li><p><code>nn_type = "sntz"</code> ("set-negative-to-zero") to apply non-negative constraints only to the CCC forecasts:</p></li>
 </ul><p><strong>Temporal hierarchies</strong></p>
 <p>The extension to the case of <strong>temporal hierarchies</strong> is quite simple.
 Using the same notation as in <code><a href="thfrec.html">thfrec</a>()</code>, the
@@ -300,9 +300,9 @@ and
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+    <p>Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, <em>International Journal
-of Forecasting</em>, in press.</p>
+of Forecasting</em>, 39(1), 39-57.</p>
 <p>Di Fonzo, T., Girolimetto, D. (2022), Forecast combination based forecast reconciliation:
 insights and extensions, <em>International Journal of Forecasting</em>, in press.</p>
 <p>Hollyman, R., Petropoulos, F., Tipping, M.E. (2021), Understanding Forecast Reconciliation,
@@ -328,11 +328,9 @@ insights and extensions, <em>International Journal of Forecasting</em>, in press
 <span class="r-in"><span><span class="co"># Cross sectional aggregation matrix</span></span></span>
 <span class="r-in"><span><span class="va">C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># monthly base forecasts</span></span></span>
-<span class="r-in"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"AA"</span>,<span class="st">"AB"</span>,<span class="st">"BA"</span>,<span class="st">"BB"</span>,<span class="st">"C"</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="FoReco2ts.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">k1</span></span></span>
 <span class="r-in"><span><span class="co"># residuals</span></span></span>
-<span class="r-in"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"A"</span>,<span class="st">"B"</span>,<span class="st">"C"</span>,<span class="st">"AA"</span>,<span class="st">"AB"</span>,<span class="st">"BA"</span>,<span class="st">"BB"</span>,<span class="st">"C"</span><span class="op">)</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="FoReco2ts.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">k1</span></span></span>
 <span class="r-in"><span><span class="co"># covariance matrix of all the base forecasts, computed using the in-sample residuals</span></span></span>
 <span class="r-in"><span><span class="va">Wres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="va">mres</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># covariance matrix of the bts base forecasts, computed using the in-sample residuals</span></span></span>
@@ -357,6 +355,7 @@ insights and extensions, <em>International Journal of Forecasting</em>, in press
 <span class="r-in"><span><span class="co"># L3: Bottom-Up reconciled forecasts</span></span></span>
 <span class="r-in"><span><span class="va">exo_LCd</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">Wb</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                 CCC <span class="op">=</span> <span class="cn">FALSE</span>, bnaive <span class="op">=</span> <span class="va">bts_sm</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Combined Conditional Coherent (CCC) reconciled forecasts</span></span></span>
 <span class="r-in"><span><span class="co"># recf: CCC reconciled forecasts matrix</span></span></span>
@@ -364,12 +363,15 @@ insights and extensions, <em>International Journal of Forecasting</em>, in press
 <span class="r-in"><span><span class="co"># L2: Middle-Out reconciled forecasts hinging on Level 2 conditional reconciled forecasts</span></span></span>
 <span class="r-in"><span><span class="co"># L3: Bottom-Up reconciled forecasts</span></span></span>
 <span class="r-in"><span><span class="va">exo_CCCd</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">Wb</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## EXOGENOUS CONSTRAINTS AND FULL COVARIANCE MATRIX</span></span></span>
 <span class="r-in"><span><span class="co"># Simply substitute weights=diag(Wb) with weights=Wb</span></span></span>
 <span class="r-in"><span><span class="va">exo_EHf</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>,<span class="st">"AA"</span>,<span class="st">"AB"</span>, <span class="st">"BA"</span>, <span class="st">"BB"</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">]</span>, weights <span class="op">=</span> <span class="va">Wb</span>, bnaive <span class="op">=</span> <span class="va">bts_sm</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">exo_LCf</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, weights <span class="op">=</span> <span class="va">Wb</span>, CCC <span class="op">=</span> <span class="cn">FALSE</span>, bnaive <span class="op">=</span> <span class="va">bts_sm</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span><span class="va">exo_CCCf</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, weights <span class="op">=</span> <span class="va">Wb</span>, bnaive <span class="op">=</span> <span class="va">bts_sm</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ENDOGENOUS CONSTRAINTS AND DIAGONAL COVARIANCE MATRIX</span></span></span>
 <span class="r-in"><span><span class="co"># parameters of function htsrec(), like "type" and "nn_type" may be used</span></span></span>
@@ -383,10 +385,12 @@ insights and extensions, <em>International Journal of Forecasting</em>, in press
 <span class="r-in"><span><span class="co"># Level conditional reconciled forecasts with endogenous constraints</span></span></span>
 <span class="r-in"><span><span class="va">endo_LCd</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">Wres</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                  const <span class="op">=</span> <span class="st">"endo"</span>, CCC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Combined Conditional Coherent (CCC) reconciled forecasts with endogenous constraints</span></span></span>
 <span class="r-in"><span><span class="va">endo_CCCd</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                    weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">Wres</span><span class="op">)</span>, const <span class="op">=</span> <span class="st">"endo"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ENDOGENOUS CONSTRAINTS AND FULL COVARIANCE MATRIX</span></span></span>
 <span class="r-in"><span><span class="co"># Simply substitute weights=diag(Wres) with weights=Wres</span></span></span>
@@ -395,8 +399,10 @@ insights and extensions, <em>International Journal of Forecasting</em>, in press
 <span class="r-in"><span>                   const <span class="op">=</span> <span class="st">"endo"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">endo_LCf</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   weights <span class="op">=</span> <span class="va">Wres</span>, const <span class="op">=</span> <span class="st">"endo"</span>, CCC <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span><span class="va">endo_CCCf</span> <span class="op">&lt;-</span> <span class="fu">lccrec</span><span class="op">(</span>basef <span class="op">=</span> <span class="va">mbase</span><span class="op">-</span><span class="fl">40</span>, C <span class="op">=</span> <span class="va">C</span>, nl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                   weights <span class="op">=</span> <span class="va">Wres</span>, const <span class="op">=</span> <span class="st">"endo"</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error:</span> columns numb of basef != nb + na!</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">### LCC and CCC TEMPORAL FORECAST RECONCILIATION</span></span></span>
 <span class="r-in"><span><span class="co"># top ts base forecasts ([lowest_freq' ...  highest_freq']')</span></span></span>
@@ -433,7 +439,7 @@ insights and extensions, <em>International Journal of Forecasting</em>, in press
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -10,7 +10,7 @@
 #'
 #' @param Bmat (\mjseqn{n_b \times h m}) matrix of high-frequency bottom time
 #' series base forecasts (\mjseqn{\widehat{\mathbf{B}}^{[1]}}).
-#' \code{h} is the forecast horizon for the lowest frequency (most temporally aggregated)
+#' \mjseqn{h} is the forecast horizon for the lowest frequency (most temporally aggregated)
 #' time series.
 #' @param C (\mjseqn{n_a \times n_b}) cross-sectional (contemporaneous) matrix
 #' mapping the bottom level series into the higher level ones.
@@ -41,16 +41,14 @@
 #' bottom-up cross-temporally reconciled forecasts, \mjseqn{\ddot{\mathbf{Y}}}.
 #'
 #' @references
-#' Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+#' Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 #' Optimal combination method and heuristic alternatives, \emph{International Journal
-#' of Forecasting}, in press.
+#' of Forecasting}, 39(1), 39-57.
 #'
 #' @examples
 #' data(FoReco_data)
 #' # monthly base forecasts
-#' id <- which(simplify2array(strsplit(colnames(FoReco_data$base),
-#'                                     split = "_"))[1, ] == "k1")
-#' hfbts <- FoReco_data$base[-c(1:3), id]
+#' hfbts <- t(FoReco2matrix(FoReco_data$base, m = 12)$k1[, -c(1:3), drop = FALSE])
 #' obj <- ctbu(Bmat = hfbts, m = 12, C = FoReco_data$C)
 #' rownames(obj) <- rownames(FoReco_data$base)
 #'

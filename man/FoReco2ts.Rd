@@ -2,48 +2,52 @@
 % Please edit documentation in R/FoReco2ts.R
 \name{FoReco2ts}
 \alias{FoReco2ts}
+\alias{FoReco2matrix}
 \title{Reconciled forecasts matrix/vector to time-series class}
 \usage{
-FoReco2ts(recf, ...)
+FoReco2ts(recf, m, ...)
+
+FoReco2matrix(recf, m)
 }
 \arguments{
-\item{recf}{(\mjseqn{h(k^\ast + m) \times 1}) reconciled forecasts vector from \link[FoReco]{thfrec},
-(\mjseqn{h \times n}) reconciled forecasts matrix from \link[FoReco]{htsrec} or
-(\mjseqn{n \times h(k^\ast + m)}) reconciled forecasts matrix from \link[FoReco]{octrec},
+\item{recf}{(\mjseqn{h(k^\ast + m) \times 1}) forecasts vector from \link[FoReco]{thfrec},
+(\mjseqn{h \times n}) forecasts matrix from \link[FoReco]{htsrec} or
+(\mjseqn{n \times h(k^\ast + m)}) forecasts matrix from \link[FoReco]{octrec},
 \link[FoReco]{tcsrec}, \link[FoReco]{cstrec}, \link[FoReco]{iterec},
 \link[FoReco]{ctbu}.}
+
+\item{m}{Highest available sampling frequency per seasonal cycle (max. order
+of temporal aggregation, \mjseqn{m}), or a subset of \mjseqn{p} factors
+of \mjseqn{m}.}
 
 \item{...}{optional arguments to \link[stats]{ts} (i.e. starting date);
 frequency is required only for the cross-sectional case.}
 }
 \value{
-A list of class \code{"ts"} objects
+A list of class \code{"ts"} objects for \link[FoReco]{FoReco2ts} and a list of
+matrix/vector for \link[FoReco]{FoReco2matrix}
 }
 \description{
 \loadmathjax
-Function to transform the matrix/vector of reconciled forecasts
-(\code{recf} from \link[FoReco]{htsrec}, \link[FoReco]{thfrec}, \link[FoReco]{tdrec},
-\link[FoReco]{octrec}, \link[FoReco]{lccrec}, \link[FoReco]{tcsrec}, \link[FoReco]{cstrec},
-\link[FoReco]{iterec}, \link[FoReco]{ctbu}) into a list of time series objects.
+Function to transform the matrix/vector of FoReco forecasts input and output into a list of
+time series/matrix/vector objects.
 }
 \examples{
 data(FoReco_data)
 # Cross-temporal framework
 oct_recf <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C,
                    comb = "bdshr", res = FoReco_data$res)$recf
-obj_oct <- FoReco2ts(recf = oct_recf, start = c(15, 1))
+ts_oct <- FoReco2ts(recf = oct_recf, m = 12, start = c(15, 1))
+mat_oct <- FoReco2matrix(recf = oct_recf, m = 12)
 
 # Cross-sectional framework
 # monthly base forecasts
-id <- which(simplify2array(strsplit(colnames(FoReco_data$base),
-                                    split = "_"))[1, ] == "k1")
-mbase <- t(FoReco_data$base[, id])
+mbase <- FoReco2matrix(FoReco_data$base, m = 12)$k1
 # monthly residuals
-id <- which(simplify2array(strsplit(colnames(FoReco_data$res),
-                                    split = "_"))[1, ] == "k1")
-mres <- t(FoReco_data$res[, id])
+mres <- FoReco2matrix(FoReco_data$res, m = 12)$k1
 hts_recf <- htsrec(mbase, C = FoReco_data$C, comb = "shr", res = mres)$recf
-obj_hts <- FoReco2ts(recf = hts_recf, start = c(15, 1), frequency = 12)
+ts_hts <- FoReco2ts(recf = hts_recf, start = c(15, 1), frequency = 12)
+mat_hts <- FoReco2matrix(recf = hts_recf)
 
 # Temporal framework
 # top ts base forecasts ([lowest_freq' ...  highest_freq']')
@@ -51,17 +55,21 @@ topbase <- FoReco_data$base[1, ]
 # top ts residuals ([lowest_freq' ...  highest_freq']')
 topres <- FoReco_data$res[1, ]
 thf_recf <- thfrec(topbase, m = 12, comb = "acov", res = topres)$recf
-obj_thf <- FoReco2ts(recf = thf_recf, start = c(15, 1))
+ts_thf <- FoReco2ts(recf = thf_recf, m = 12, start = c(15, 1))
+mat_thf <- FoReco2matrix(recf = thf_recf, m = 12)
 
 }
 \seealso{
 Other utilities: 
 \code{\link{Cmatrix}()},
+\code{\link{agg_ts}()},
+\code{\link{arrange_hres}()},
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
 \code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
+\code{\link{residuals_matrix}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},
 \code{\link{thf_tools}()}

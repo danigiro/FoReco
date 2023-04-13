@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
   cache.path = "../inst/cache/")
 ```
 
-The **FoReco** (**Fo**recast **Reco**nciliation) package is designed for point forecast reconciliation, a **post-forecasting** process aimed to improve the quality of the base forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.
+The **FoReco** (**Fo**recast **Reco**nciliation) package is designed for forecast reconciliation, a **post-forecasting** process aimed to improve the quality of the base forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.
 
 It offers classical (bottom-up and top-down), and modern (optimal and heuristic combination) forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal linearly constrained time series.
 

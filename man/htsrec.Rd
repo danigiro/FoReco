@@ -95,7 +95,7 @@ and solution technique (\code{sol}) have been used:
 \item{\code{recf}}{(\mjseqn{h \times n}) reconciled forecasts matrix, \mjseqn{\widetilde{\mathbf{Y}}}.}
 \item{\code{W}}{Covariance matrix used for forecast reconciliation, \mjseqn{\mathbf{W}}.}
 \item{\code{nn_check}}{Number of negative values (if zero, there are no values below zero).}
-\item{\code{rec_check}}{Logical value: has the hierarchy been respected?}
+\item{\code{rec_check}}{Logical value: \code{rec_check = TRUE} when the constraints have been fulfilled.}
 \item{\code{varf} (\code{type="direct"})}{(\mjseqn{n \times 1}) reconciled forecasts variance vector for \mjseqn{h=1}, \mjseqn{\mbox{diag}(\mathbf{MW}}).}
 \item{\code{M} (\code{type="direct"})}{Projection matrix, \mjseqn{\mathbf{M}} (projection approach).}
 \item{\code{G} (\code{type="S"} and \code{type="direct"})}{Projection matrix, \mjseqn{\mathbf{G}} (structural approach, \mjseqn{\mathbf{M}=\mathbf{S}\mathbf{G}}).}
@@ -227,7 +227,6 @@ the bounds, and it is sufficient to set \code{nn = "TRUE"}.
 
 Non-negative reconciled forecasts may be obtained by setting \code{nn_type} alternatively as:
 \itemize{
-  \item \code{nn_type = "KAnn"} (Kourentzes and Athanasopoulos, 2021)
   \item \code{nn_type = "sntz"} ("set-negative-to-zero")
   \item \code{nn_type = "osqp"} (Stellato et al., 2020)
 }
@@ -235,11 +234,9 @@ Non-negative reconciled forecasts may be obtained by setting \code{nn_type} alte
 \examples{
 data(FoReco_data)
 # monthly base forecasts
-id <- which(simplify2array(strsplit(colnames(FoReco_data$base),split = "_"))[1, ] == "k1")
-mbase <- t(FoReco_data$base[, id])
+mbase <- FoReco2matrix(FoReco_data$base, m = 12)$k1
 # monthly residuals
-id <- which(simplify2array(strsplit(colnames(FoReco_data$res),split = "_"))[1, ] == "k1")
-mres <- t(FoReco_data$res[, id])
+mres <- FoReco2matrix(FoReco_data$res, m = 12)$k1
 obj <- htsrec(mbase, C = FoReco_data$C, comb = "shr", res = mres)
 
 # FoReco is able to work also with covariance matrix that are not equal
@@ -257,9 +254,9 @@ objh <- htsrec(mbase, C = FoReco_data$C, W = Wh, comb = "w")
 Byron, R.P. (1978), The estimation of large social accounts matrices,
 \emph{Journal of the Royal Statistical Society A}, 141, 3, 359-367.
 
-Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, in press.
+of Forecasting}, 39(1), 39-57.
 
 Di Fonzo, T., Marini, M. (2011), Simultaneous and two-step reconciliation of
 systems of time series: methodological and practical issues,

@@ -7,10 +7,10 @@ is disaggregated according to a proportional scheme given by a vector
 of proportions (weights).
 Besides the fulfillment of any aggregation constraint,
 the top-down reconciled forecasts should respect two main properties:
-- the top-level value remains unchanged;
-- all the bottom time series reconciled forecasts are non-negative.
+the top-level value remains unchanged;
+all the bottom time series reconciled forecasts are non-negative.
 The top-down procedure is extended to deal with both temporal and cross-temporal cases.
-Since this is a post forecasting function, the weight vector must be given
+Since this is a post-forecasting function, the vector of weights must be given
 in input by the user, and is not calculated automatically (see Examples)."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -62,6 +62,9 @@ in input by the user, and is not calculated automatically (see Examples)."><meta
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -104,11 +107,10 @@ where the forecast of a `Total' (top-level series, expected to be positive)
 is disaggregated according to a proportional scheme given by a vector
 of proportions (weights).
 Besides the fulfillment of any aggregation constraint,
-the top-down reconciled forecasts should respect two main properties:
-- the top-level value remains unchanged;
-- all the bottom time series reconciled forecasts are non-negative.
-The top-down procedure is extended to deal with both temporal and cross-temporal cases.
-Since this is a post forecasting function, the weight vector must be given
+the top-down reconciled forecasts should respect two main properties:</p><ul><li><p>the top-level value remains unchanged;</p></li>
+<li><p>all the bottom time series reconciled forecasts are non-negative.</p></li>
+</ul><p>The top-down procedure is extended to deal with both temporal and cross-temporal cases.
+Since this is a post-forecasting function, the vector of weights must be given
 in input by the user, and is not calculated automatically (see Examples).</p>
     </div>
 
@@ -187,8 +189,7 @@ Forecasting</em>, 25, 1, 146–166.</p>
 <span class="r-in"><span><span class="co"># Cross sectional aggregation matrix</span></span></span>
 <span class="r-in"><span><span class="va">C</span> <span class="op">&lt;-</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span></span></span>
 <span class="r-in"><span><span class="co"># monthly base forecasts</span></span></span>
-<span class="r-in"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="FoReco2ts.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">k1</span></span></span>
 <span class="r-in"><span><span class="va">obs_1</span> <span class="op">&lt;-</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">obs</span><span class="op">$</span><span class="va">k1</span></span></span>
 <span class="r-in"><span><span class="co"># average historical proportions</span></span></span>
 <span class="r-in"><span><span class="va">props</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">obs_1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">168</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span><span class="op">/</span><span class="va">obs_1</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">168</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></span>
@@ -226,7 +227,7 @@ Forecasting</em>, 25, 1, 146–166.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

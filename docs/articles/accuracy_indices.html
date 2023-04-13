@@ -75,6 +75,9 @@
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -115,7 +118,7 @@
                         <h4 data-toc-skip class="author">Daniele
 Girolimetto</h4>
             
-            <h4 data-toc-skip class="date">2022-11-23</h4>
+            <h4 data-toc-skip class="date">2023-04-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/vignettes/accuracy_indices.Rmd" class="external-link"><code>vignettes/accuracy_indices.Rmd</code></a></small>
       <div class="hidden name"><code>accuracy_indices.Rmd</code></div>
@@ -782,13 +785,11 @@ FALSE</em>)</li>
 <span></span>
 <span><span class="co"># Cross-sectional framework#'</span></span>
 <span><span class="co"># monthly base forecasts</span></span>
-<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span></span>
-<span><span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">mbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FoReco2ts.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">base</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">k1</span></span>
 <span><span class="co"># monthly test set</span></span>
-<span><span class="va">mtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">test</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">mtest</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FoReco2ts.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">test</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">k1</span></span>
 <span><span class="co"># monthly residuals</span></span>
-<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html" class="external-link">strsplit</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">)</span>, split <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span>, <span class="op">]</span> <span class="op">==</span> <span class="st">"k1"</span><span class="op">)</span></span>
-<span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span><span class="op">[</span>, <span class="va">id</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/FoReco2ts.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">FoReco_data</span><span class="op">$</span><span class="va">res</span>, m <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">k1</span></span>
 <span><span class="co"># monthly reconciled forecasts</span></span>
 <span><span class="va">mrecf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/htsrec.html">htsrec</a></span><span class="op">(</span><span class="va">mbase</span>, C <span class="op">=</span> <span class="va">FoReco_data</span><span class="op">$</span><span class="va">C</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">mres</span><span class="op">)</span><span class="op">$</span><span class="va">recf</span></span>
 <span><span class="co"># score</span></span>
@@ -834,7 +835,7 @@ reconciliation: Optimal combination method and heuristic alternatives,
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

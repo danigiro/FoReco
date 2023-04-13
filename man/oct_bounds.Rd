@@ -39,11 +39,9 @@ temporal reconciled forecasts
 \examples{
 data(FoReco_data)
 # monthly base forecasts
-mbase <- t(FoReco_data$base[, which(simplify2array(strsplit(
-  colnames(FoReco_data$base), split = "_"))[1, ] == "k1")])
-#' # monthly residuals
-mres <- t(FoReco_data$res[, which(simplify2array(strsplit(
-  colnames(FoReco_data$res),split = "_"))[1, ] == "k1")])
+mbase <- FoReco2matrix(FoReco_data$base, m = 12)$k1
+# monthly residuals
+mres <- FoReco2matrix(FoReco_data$res, m = 12)$k1
 
 # For example, in FoReco_data we want that BA > 78, and C > 50
 cs_bound <- matrix(c(rep(-Inf, 5), 78, -Inf, 50, rep(+Inf, 8)), ncol = 2)
@@ -61,10 +59,13 @@ obj <- octrec(FoReco_data$base, m = 12, C = FoReco_data$C, comb = "bdshr",
 Other utilities: 
 \code{\link{Cmatrix}()},
 \code{\link{FoReco2ts}()},
+\code{\link{agg_ts}()},
+\code{\link{arrange_hres}()},
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
 \code{\link{lcmat}()},
+\code{\link{residuals_matrix}()},
 \code{\link{score_index}()},
 \code{\link{shrink_estim}()},
 \code{\link{thf_tools}()}

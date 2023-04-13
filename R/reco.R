@@ -20,7 +20,7 @@ recoM <- function(basef, W, Ht, sol = "direct", nn = FALSE, nn_type = "osqp", se
            out <- list()
 
            lm_dx <- methods::as(Ht %*% t(basef), "CsparseMatrix")
-           lm_sx <- Matrix::Matrix(Ht %*% W %*% t(Ht), sparse = TRUE, forceCheck = TRUE)
+           lm_sx <- methods::as(Ht %*% W %*% t(Ht), "CsparseMatrix")
            out$recf <- t(.sparseDiagonal(NCOL(W)) %*% t(basef) - W %*% t(Ht) %*% solveLin(lm_sx, lm_dx))
 
            if(nn & any(out$recf < (-sqrt(.Machine$double.eps)))){
@@ -175,7 +175,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
            if(isDiagonal(W)){
              Wm1 <- .sparseDiagonal(x = diag(W)^(-1))
              lm_dx1 <- methods::as(t(S) %*% Wm1 %*% t(basef), "CsparseMatrix")
-             lm_sx1 <- t(S) %*% Wm1 %*% S
+             lm_sx1 <- methods::as(t(S) %*% Wm1 %*% S, "CsparseMatrix")
              out$recf <- t(S %*% solveLin(lm_sx1, lm_dx1))
 
              if(nn & any(out$recf < (-sqrt(.Machine$double.eps)))){
@@ -225,7 +225,7 @@ recoS <- function(basef, W, S, sol = "direct", nn = FALSE, settings, b_pos = NUL
              Q <- solveLin(W, S)
 
              lm_dx1 <- methods::as(t(Q) %*% t(basef), "CsparseMatrix")
-             lm_sx1 <- t(S) %*% Q
+             lm_sx1 <- methods::as(t(S) %*% Q, "CsparseMatrix")
              out$recf <- t(S %*% solveLin(lm_sx1, lm_dx1))
 
              if(nn & any(out$recf < (-sqrt(.Machine$double.eps)))){

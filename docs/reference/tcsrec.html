@@ -61,6 +61,9 @@ fulfilling both cross-sectional and temporal constraints."><meta property="og:im
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -129,7 +132,7 @@ Each row identifies a time series, and the forecasts are ordered as
 <dt>hts_comb, thf_comb</dt>
 <dd><p>Type of covariance matrix (respectively
 (<em></em>\(n \times n\)) and (<em></em>\((k^\ast + m) \times (k^\ast + m)\))) to
-be used in the cross-sectional and temporal reconciliation, see more in
+be used in the cross-sectional and temporal reconciliation. More details in
 <code>comb</code> param of <code><a href="htsrec.html">htsrec</a>()</code> and
 <code><a href="thfrec.html">thfrec</a>()</code>.</p></dd>
 
@@ -153,7 +156,7 @@ Di Fonzo and Girolimetto, 2020).</p></dd>
 
 
 <dt>...</dt>
-<dd><p>any other options useful for <code><a href="htsrec.html">htsrec</a>()</code> and
+<dd><p>Any other options useful for <code><a href="htsrec.html">htsrec</a>()</code> and
 <code><a href="thfrec.html">thfrec</a>()</code>, e.g. <code>m</code>, <code>C</code> (or <code>Ut</code> and
 <code>nb</code>), <code>nn</code> (for non negativity reconciliation only at first step),
 <code>mse</code>, <code>corpcor</code>, <code>type</code>, <code>sol</code>, <code>settings</code>,
@@ -179,14 +182,14 @@ the covariance matrices chosen by the user. If the combinations used by Kourentz
 wished, <code>thf_comb</code> must be set equal to either <code>"struc"</code> or <code>"wlsv"</code>,
 and <code>hts_comb</code> equal to either <code>"shr"</code> or <code>"wls"</code>.</p>
 <p><strong>Warning</strong>,
-the two-step heuristic reconciliation allows non negativity constraints only in the first step.
-This means that non-negativity is not guaranteed in the final reconciled values.</p>
+the two-step heuristic reconciliation allows considering non negativity constraints only in
+the first step. This means that non-negativity is not guaranteed in the final reconciled values.</p>
     </div>
     <div id="references">
     <h2>References</h2>
-    <p>Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+    <p>Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, <em>International Journal
-of Forecasting</em>, in press.</p>
+of Forecasting</em>, 39(1), 39-57.</p>
 <p>Kourentzes, N., Athanasopoulos, G. (2019), Cross-temporal coherent forecasts
 for Australian tourism, <em>Annals of Tourism Research</em>, 75, 393-409.</p>
 <p>Schäfer, J.L., Opgen-Rhein, R., Zuber, V., Ahdesmaki, M.,
@@ -235,7 +238,7 @@ Quadratic Programming Solver using the `OSQP' Library, R package version 0.6.0.3
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

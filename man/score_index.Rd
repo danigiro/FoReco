@@ -61,13 +61,11 @@ oct_score <- score_index(recf = oct_recf,
 
 # Cross-sectional framework
 # monthly base forecasts
-id <- which(simplify2array(strsplit(colnames(FoReco_data$base), split = "_"))[1, ] == "k1")
-mbase <- t(FoReco_data$base[, id])
+mbase <- FoReco2matrix(FoReco_data$base, m = 12)$k1
 # monthly test set
-mtest <- t(FoReco_data$test[, id])
+mtest <- FoReco2matrix(FoReco_data$test, m = 12)$k1
 # monthly residuals
-id <- which(simplify2array(strsplit(colnames(FoReco_data$res), split = "_"))[1, ] == "k1")
-mres <- t(FoReco_data$res[, id])
+mres <- FoReco2matrix(FoReco_data$res, m = 12)$k1
 # monthly reconciled forecasts
 mrecf <- htsrec(mbase, C = FoReco_data$C, comb = "shr", res = mres)$recf
 # score
@@ -88,19 +86,22 @@ thf_score <- score_index(recf = toprecf, base = topbase, test = toptest, m = 12)
 
 }
 \references{
-Di Fonzo, T., and Girolimetto, D. (2021), Cross-temporal forecast reconciliation:
+Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, in press.
+of Forecasting}, 39(1), 39-57.
 }
 \seealso{
 Other utilities: 
 \code{\link{Cmatrix}()},
 \code{\link{FoReco2ts}()},
+\code{\link{agg_ts}()},
+\code{\link{arrange_hres}()},
 \code{\link{commat}()},
 \code{\link{ctf_tools}()},
 \code{\link{hts_tools}()},
 \code{\link{lcmat}()},
 \code{\link{oct_bounds}()},
+\code{\link{residuals_matrix}()},
 \code{\link{shrink_estim}()},
 \code{\link{thf_tools}()}
 }

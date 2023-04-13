@@ -50,6 +50,9 @@
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -155,7 +158,7 @@
         </td>
         <td><p>Shrinkage of the covariance matrix</p></td>
       </tr><tr><td>
-          <p><code><a href="FoReco2ts.html">FoReco2ts()</a></code> </p>
+          <p><code><a href="FoReco2ts.html">FoReco2ts()</a></code> <code><a href="FoReco2ts.html">FoReco2matrix()</a></code> </p>
         </td>
         <td><p>Reconciled forecasts matrix/vector to time-series class</p></td>
       </tr><tr><td>
@@ -182,6 +185,34 @@
           <p><code><a href="lcmat.html">lcmat()</a></code> </p>
         </td>
         <td><p>Linear Combination Matrix for a general linearly constrained multiple time series</p></td>
+      </tr><tr><td>
+          <p><code><a href="agg_ts.html">agg_ts()</a></code> </p>
+        </td>
+        <td><p>Non-overlapping temporal aggregation of a time series</p></td>
+      </tr><tr><td>
+          <p><code><a href="arrange_hres.html">arrange_hres()</a></code> </p>
+        </td>
+        <td><p>Re-arrange the multi-step residuals</p></td>
+      </tr><tr><td>
+          <p><code><a href="residuals_matrix.html">residuals_matrix()</a></code> </p>
+        </td>
+        <td><p>Arrange temporal and cross-temporal residuals in a matrix form</p></td>
+      </tr></tbody><tbody><tr><th colspan="2">
+          <h2 id="bootstrap">Bootstrap <a href="#bootstrap" class="anchor" aria-hidden="true"></a></h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr></tbody><tbody><tr><td>
+          <p><code><a href="boot_cs.html">boot_cs()</a></code> </p>
+        </td>
+        <td><p>Cross-sectional Joint Bootstrap</p></td>
+      </tr><tr><td>
+          <p><code><a href="boot_ct.html">boot_ct()</a></code> </p>
+        </td>
+        <td><p>Cross-temporal Joint Bootstrap</p></td>
+      </tr><tr><td>
+          <p><code><a href="boot_te.html">boot_te()</a></code> </p>
+        </td>
+        <td><p>Temporal Joint Bootstrap</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="package">Package <a href="#package" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -189,7 +220,7 @@
       </tr></tbody><tbody><tr><td>
           <p><code><a href="FoReco-package.html">FoReco-package</a></code> </p>
         </td>
-        <td><p>FoReco: point forecast reconciliation</p></td>
+        <td><p>FoReco: forecast reconciliation</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -203,7 +234,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

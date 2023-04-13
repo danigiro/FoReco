@@ -71,6 +71,9 @@ such that \(\mathbf{v}_t = \bar{\mathbf{C}}\mathbf{f}_t\),
     <li>
       <a href="../articles/accuracy_indices.html">Average relative accuracy indices</a>
     </li>
+    <li>
+      <a href="../articles/FoReco_prob.html">Probabilistic forecast reconciliation</a>
+    </li>
   </ul></li>
 <li>
   <a href="../news/index.html">
@@ -144,7 +147,7 @@ such that <em></em>\(\mathbf{\Gamma}'\mathbf{x}_t = \mathbf{0}_{(r \times 1)}\).
 
 
 <dt>alg</dt>
-<dd><p>Technique used into trasform <em></em>\(\mathbf{\Gamma}'\) in
+<dd><p>Technique used to trasform <em></em>\(\mathbf{\Gamma}'\) in
 <em></em>\(\bar{\mathbf{U}}' = [\mathbf{I} \quad -\bar{\mathbf{C}}]\), such that
 <em></em>\(\bar{\mathbf{U}'}\mathbf{y}_t = \mathbf{0}_{(n_v \times 1)}\). Use
 <code>"rref"</code> for the Row Reduced Echelon Form through Gauss-Jordan elimination
@@ -196,7 +199,7 @@ with a common top-level series (<em></em>\(X\)):
 \end{array}\]
 The coefficient matrix <em></em>\(\mathbf{\Gamma}'\) of the linear system
 <em></em>\(\mathbf{\Gamma}'\mathbf{x}_t=\mathbf{0}\)
-(<em></em>\(\mathbf{x}_t = \lbrace X, C, D, A, B, A1, A2\rbrace\)) is
+(<em></em>\(\mathbf{x}_t = [X\; C\; D\; A\; B\; A1\; A2]\)) is
 \[\mathbf{\Gamma}' = \left[\begin{array}{ccccccc}
 1 &amp; -1 &amp; -1 &amp; 0 &amp; 0 &amp; 0 &amp; 0 \cr
 1 &amp; 0 &amp; 0 &amp; -1 &amp; -1 &amp; 0 &amp; 0 \cr
@@ -218,8 +221,8 @@ Then
 \mathbf{v}_t \cr
 \mathbf{f}_t
 \end{array}\right] = \mathbf{0},\]
-where <em></em>\(\mathbf{v}_t = \lbrace X, C, A\rbrace\), and
-<em></em>\(\mathbf{f}_t = \lbrace D, B, A1, A2\rbrace\).</p>
+where <em></em>\(\mathbf{v}_t = [X\; C\; A]\), and
+<em></em>\(\mathbf{f}_t = [D\; B\; A1\; A2]\).</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -232,10 +235,13 @@ for general linearly constrained multiple time series</em> (mimeo).</p>
     <div class="dont-index"><p>Other utilities: 
 <code><a href="Cmatrix.html">Cmatrix</a>()</code>,
 <code><a href="FoReco2ts.html">FoReco2ts</a>()</code>,
+<code><a href="agg_ts.html">agg_ts</a>()</code>,
+<code><a href="arrange_hres.html">arrange_hres</a>()</code>,
 <code><a href="commat.html">commat</a>()</code>,
 <code><a href="ctf_tools.html">ctf_tools</a>()</code>,
 <code><a href="hts_tools.html">hts_tools</a>()</code>,
 <code><a href="oct_bounds.html">oct_bounds</a>()</code>,
+<code><a href="residuals_matrix.html">residuals_matrix</a>()</code>,
 <code><a href="score_index.html">score_index</a>()</code>,
 <code><a href="shrink_estim.html">shrink_estim</a>()</code>,
 <code><a href="thf_tools.html">thf_tools</a>()</code></p></div>
@@ -263,7 +269,7 @@ for general linearly constrained multiple time series</em> (mimeo).</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
