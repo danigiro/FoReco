@@ -35,7 +35,7 @@ the correlation between different time series and temporal aggregation order at 
 \references{
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T., & Hyndman, R. J. (2023),
 Cross-temporal Probabilistic Forecast Reconciliation,
-\href{https://doi.org/10.48550/arXiv.2303.17277}{arXiv:2303.17277}.
+\doi{10.48550/arXiv.2303.17277}.
 }
 \seealso{
 Other bootstrap: 

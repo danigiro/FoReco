@@ -1,29 +1,46 @@
 citHeader("To cite FoReco in publications, please use: ")
 
-citEntry(
-  entry    = "Manual",
-  title    = "FoReco: Point Forecast Reconciliation",
-  author   = c(person(given = "Daniele",
-                      family = "Girolimetto"),
+bibentry(
+  bibtype = "Manual",
+  title   = "FoReco: Point Forecast Reconciliation",
+  author  =  c(person(given = "Daniele",
+                      family = "Girolimetto",
+                      role = c("aut", "cre", "fnd")),
                person(given = "Tommaso",
-                      family = "Di Fonzo")),
-  year     = 2022,
-  url      = "https://cran.r-project.org/package=FoReco",
-  textVersion  = "Girolimetto, D., Di Fonzo, T. (2022). FoReco: Point Forecast Reconciliation. https://cran.r-project.org/package=FoReco"
+                      family = "Di Fonzo",
+                      role = c("aut", "fnd"))),
+  note    = "R package version 2.6",
+  year    = 2023,
+  url     = "https://cran.r-project.org/package=FoReco"
 )
 
-citEntry(
-  entry    = "Article",
-  title    = "Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives",
-  author   = c(person(given = "Tommaso",
-                      family = "Di Fonzo"),
-               person(given = "Daniele",
-                      family = "Girolimetto")),
+bibentry(
+  bibtype = "Article",
+  title   = "Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives",
+  author  = c(person(given = "Tommaso",
+                     family = "Di Fonzo"),
+              person(given = "Daniele",
+                     family = "Girolimetto")),
   journal = "International Journal of Forecasting",
-  year     = 2021,
-  volume = "(in press)",
-  #number = 1,
-  #pages = 60--74,
-  doi = "10.1016/j.ijforecast.2021.08.004",
-  textVersion  = "Di Fonzo T., Girolimetto D. (2021). “Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives.” International Journal of Forecasting, (in press). doi: 10.1016/j.ijforecast.2021.08.004"
+  volume  = 39,
+  year    = 2023,
+  number  = 1,
+  pages   = 60--74,
+  doi     = "10.1016/j.ijforecast.2021.08.004"
+)
+
+bibentry(
+  bibtype = "Article",
+  title   = "Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives",
+  author  = c(person(given = "Daniele",
+                     family = "Girolimetto"),
+              person(given = "George",
+                     family = "Athanasopoulos"),
+              person(given = "Tommaso",
+                     family = "Di Fonzo"),
+              person(given = "Rob J",
+                     family = "Hyndman")),
+  journal = "arXiv",
+  year    = 2023,
+  doi     = "10.48550/arXiv.2303.17277"
 )

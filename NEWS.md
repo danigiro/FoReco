@@ -4,7 +4,7 @@
 * Added `boot_cs()`, `boot_te()` and `boot_ct()` to draw samples from, respectively, cross-sectional, temporal and cross-temporal joint (block) bootstrap.
 
 ##### Minor changes
-* Fixed deprecation warnings in [Matrix](https://cran.r-project.org/web/packages/Matrix/news.html) (v. 1.5-0);
+* Fixed deprecation warnings in [Matrix](https://CRAN.R-project.org/package=Matrix) (v. 1.5-0);
 * Improved docs and bug fixes;
 * Fixed `ctbu()` inputs;
 * Added `FoReco2matrix()` to trasform FoReco forecasts input and output in a list of matrix/vector class;
