@@ -27,7 +27,7 @@ recoM <- function(basef, W, Ht, sol = "direct", nn = FALSE, nn_type = "osqp", se
              switch(nn_type,
                     osqp = {
                       if(isDiagonal(W)){
-                        P <- .sparseDiagonal(x = diag(W)^(-1))
+                        P <- Diagonal(x = diag(W)^(-1))
                       }else{
                         R <- chol(W)
                         P <- chol2inv(R)
