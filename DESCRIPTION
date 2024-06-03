@@ -1,7 +1,7 @@
 Type: Package
 Package: FoReco
 Title: Forecast Reconciliation
-Version: 0.2.6
+Version: 0.2.6.9000
 Authors@R: 
     c(person(given = "Daniele",
              family = "Girolimetto",
