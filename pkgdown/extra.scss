@@ -1,0 +1,111 @@
+/* custom changes =========================================================== */
+
+a {
+    text-decoration: none !important;
+    color: #03638e;
+}
+
+.text-default {
+    --bs-text-opacity: 1;
+    color: #03638e;
+}
+
+.navbar-dark {
+    background-color: #222222 !important;
+    border-bottom: 1px solid #000 !important;
+}
+
+.bg-light {
+    background-color: #222222 !important;
+    border-bottom: 1px solid #000 !important;
+    color: #FFF !important;
+}
+
+body {
+    font-size: 1em !important;
+}
+
+.navbar-light {
+    color: #FFF !important;
+    background-color: #222222 !important;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #FFF !important;
+    background-color: #222222 !important;
+}
+
+.navbar-toggler {
+  padding: none;
+  background-color: #fff;
+}
+
+.template-home .page-header {
+    min-height: 5px !important;
+}
+
+.navbar-brand {
+  color: #FFF !important;
+}
+
+/* control page width ====================================================== */
+
+.row > main {
+  max-width: none;
+}
+
+// Boost font size and give big (but not infinite) margin on sidebar
+@include media-breakpoint-up(xxl) {
+  .col-md-3 { margin-left: 0rem !important; }
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right :auto;
+  margin-left: auto
+}
+@media (min-width:768px) {
+  .container {
+    width: 750px
+  }
+}
+@media (min-width:992px) {
+  .container {
+    width: 970px
+  }
+}
+@media (min-width:1200px) {
+  .container {
+    width: 1170px
+  }
+}
+
+pre {
+  padding: 0.5rem;
+}
+
+.date {
+  font-size: 0.75rem;
+}
+
+.author {
+  font-size: 0.75rem;
+}
+
+#toc > .nav a.nav-link.active {
+  background-color: rgba(13,110,253,0.05);;
+}
+
+p {
+  margin-bottom: 0.5rem !important;
+}
+
+dd {
+  margin-bottom: 0rem !important;
+}
+
+dt {
+  font-family: var(--bs-font-monospace) !important;
+}
+

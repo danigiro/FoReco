@@ -1,0 +1,110 @@
+url: https://danigiro.github.io/FoReco
+
+development:
+  mode: auto
+  version_label: default
+  version_tooltip: "Version"
+
+template:
+  bootstrap: 5
+
+navbar:
+  structure:
+    left: [home, reference, articles, news]
+    right:  [github, rpro]
+  components:
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/daniGiro/FoReco
+    reference:
+      text: "Reference"
+      icon: fa-book
+      href: reference/index.html
+    news:
+      text: "News"
+      icon: far fa-newspaper
+      href: news/index.html
+    home:
+      text: "Home"
+      icon: fa-home
+      href: index.html
+    rpro:
+      icon: fab fa-r-project fa-lg
+      href: https://cran.r-project.org/web/packages/FoReco/index.html
+    articles:
+      text: "Vignettes"
+      icon: fa-question-circle
+      menu:
+       # - text: Introduction to `FoReco`
+      #    href: articles/Introduction-to-FoReco.html
+        - text: The `vndata` and `itagdp` dataset
+          href: articles/Dataset-vndata-and-itagdp.html
+        - text: Cross-sectional forecast reconciliation
+          href: articles/Cross-sectional-forecast-reconciliation.html
+        - text: Temporal forecast reconciliation
+          href: articles/Temporal-forecast-reconciliation.html
+        - text: Cross-temporal forecast reconciliation
+          href: articles/Cross-temporal-forecast-reconciliation.html
+        - text: Replicate the `hts` package
+          href: articles/Replicate-the-hts-package.html
+        - text: Replicate the `thief` package
+          href: articles/Replicate-the-thief-package.html
+
+reference:
+  - title: Cross-sectional reconciliation
+    desc: All the reconciliation functions for the cross-sectional framework
+    contents:
+      - csbu
+      - csmo
+      - cstd
+      - cslcc
+      - csrec
+  - title: Temporal reconciliation
+    desc:  All the reconciliation functions for the temporal framework
+    contents:
+      - tebu
+      - temo
+      - tetd
+      - telcc
+      - terec
+  - title: Cross-temporal reconciliation
+    desc:  All the reconciliation functions for the temporal framework
+    contents:
+      - ctbu
+      - ctmo
+      - cttd
+      - ctlcc
+      - ctrec
+      - tcsrec
+      - iterec
+  - title: Datasets
+    contents:
+      - itagdp
+      - vndata
+  - title: Utilities
+    contents:
+      - aggts
+      - balance_hierarchy
+      - commat
+      - cscov
+      - csboot
+      - csprojmat
+      - cstools
+      - ctcov
+      - ctboot
+      - ctprojmat
+      - cttools
+      - df2aggmat
+      - FoReco2matrix
+      - lcmat
+      - recoinfo
+      - res2matrix
+      - shrink_estim
+      - tecov
+      - teboot
+      - teprojmat
+      - tetools
+      - unbalance_hierarchy
+  - title: Package
+    contents:
+      - FoReco-package

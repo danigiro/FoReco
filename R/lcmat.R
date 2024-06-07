@@ -1,143 +1,90 @@
-#' Linear Combination Matrix for a general linearly constrained multiple time series
+#' Linear combination (aggregation) matrix for a general linearly constrained multiple time series
 #'
 #' @description
-#' \loadmathjax
-#' When working with a general linearly constrained multiple (\mjseqn{n}-variate) time series
-#' (\mjseqn{\mathbf{x}_t}), getting a linear combination matrix
-#' \mjseqn{\bar{\mathbf{C}}} is a critical step to obtain a \emph{structural-like}
-#' representation such that, for \mjseqn{t = 1, ..., T},
-#' \mjsdeqn{\bar{\mathbf{U}}'= [\mathbf{I} \quad -\bar{\mathbf{C}}] \quad \Rightarrow
-#' \quad \mathbf{y}_t = \mathbf{P}\mathbf{x}_t = \left[\begin{array}{c}
-#' \mathbf{v}_t\cr
-#' \mathbf{f}_t
-#' \end{array}\right] = \left[\begin{array}{c}
-#' \mathbf{\bar{\mathbf{C}}}\cr
-#' \mathbf{I}
-#' \end{array}\right]\mathbf{f}_t = \mathbf{\bar{\mathbf{S}}}\mathbf{f}_t,}
-#' where \mjseqn{\bar{\mathbf{U}}'} is the (\mjseqn{n_v \times n}) full rank zero constraints matrix,
-#' \mjseqn{\bar{\mathbf{S}}} is the (\mjseqn{n \times n_f}) matrix analogous of the summing matrix
-#' \mjseqn{\mathbf{S}} for a genuine hierarchical/groupped times series,
-#' \mjseqn{\bar{\mathbf{C}}} is the (\mjseqn{n_v \times n_f}) linear combination matrix
-#' such that \mjseqn{\mathbf{v}_t = \bar{\mathbf{C}}\mathbf{f}_t},
-#' \mjseqn{\mathbf{v}_t} is the (\mjseqn{n_v \times 1}) vector of ‘basic’ variables, and
-#' \mjseqn{\mathbf{f}_t} is the (\mjseqn{n_f \times 1}) vector of ‘free’ variables
-#' (Di Fonzo and Girolimetto, 2022).
+#' This function transforms a general (possibly redundant) zero constraints matrix into a
+#' linear combination (aggregation) matrix \eqn{\mathbf{A}_{cs}}.
+#' When working with a general linearly constrained multiple (\eqn{n}-variate)
+#' time series, getting a linear combination matrix \eqn{\mathbf{A}_{cs}} is a critical
+#' step to obtain a structural-like representation such that
+#' \deqn{\mathbf{C}_{cs} = [\mathbf{I} \quad -\mathbf{A}],}
+#' where \eqn{\mathbf{C}_{cs}} is the full rank zero constraints matrix (Girolimetto and
+#' Di Fonzo, 2023).
 #'
-#' @param Gt (\mjseqn{r \times n}) coefficient matrix (\mjseqn{\mathbf{\Gamma}'})
-#' for a general linearly constrained multiple time series (\mjseqn{\mathbf{x}_t})
-#' such that \mjseqn{\mathbf{\Gamma}'\mathbf{x}_t = \mathbf{0}_{(r \times 1)}}.
-#' @param alg Technique used to trasform \mjseqn{\mathbf{\Gamma}'} in
-#' \mjseqn{\bar{\mathbf{U}}' = [\mathbf{I} \quad -\bar{\mathbf{C}}]}, such that
-#' \mjseqn{\bar{\mathbf{U}'}\mathbf{y}_t = \mathbf{0}_{(n_v \times 1)}}. Use
-#' \code{"rref"} for the Row Reduced Echelon Form through Gauss-Jordan elimination
-#' (\emph{default}), or \code{"qr"} for the (pivoting) QR decomposition (Strang, 2019).
-#' @param tol Tolerance for the \code{"rref"} or  \code{"qr"} algorithm.
+#' @param cons_mat A (\eqn{r \times n}) numeric matrix representing the cross-sectional
+#' zero constraints.
+#' @param method  Method to use: "\code{rref}" for the Reduced Row Echelon
+#' Form through Gauss-Jordan elimination (\emph{default}), or "\code{qr}"
+#' for the (pivoting) QR decomposition (Strang, 2019).
+#' @param tol Tolerance for the "\code{rref}" or "\code{qr}" method.
 #' @param verbose If \code{TRUE}, intermediate steps are printed (\emph{default} is \code{FALSE}).
-#' @param sparse Option to return a sparse \mjseqn{\bar{\mathbf{C}}}
-#' matrix (\emph{default} is \code{TRUE}).
+#' @param sparse Option to return a sparse matrix (\emph{default} is \code{TRUE}).
 #'
-#' @details
-#' Looking for an analogous of the summing matrix \mjseqn{\mathbf{S}}, say
-#' \mjseqn{\bar{\mathbf{S}} = \left[\begin{array}{c}
-#' \mathbf{\bar{\mathbf{C}}}\cr
-#' \mathbf{I}
-#' \end{array}\right]}, the \code{lcmat} function transforms  \mjseqn{\mathbf{\Gamma}'} into
-#' \mjseqn{\bar{\mathbf{U}}' = [\mathbf{I} \quad -\bar{\mathbf{C}}]}, such that
-#' \mjseqn{\bar{\mathbf{U}}'\mathbf{y}_t = \mathbf{0}_{(n_v \times 1)}}.
-#' Consider the simple example of a linearly constrained multiple time series consisting
-#' of two hierarchies, each with distinct bottom time series,
-#' with a common top-level series (\mjseqn{X}):
-#' \mjsdeqn{\begin{array}{l}
-#' 1)\; X = C + D,\cr
-#' 2)\; X = A + B, \cr
-#' 3)\; A = A1 + A2.
-#' \end{array}}
-#' The coefficient matrix \mjseqn{\mathbf{\Gamma}'} of the linear system
-#' \mjseqn{\mathbf{\Gamma}'\mathbf{x}_t=\mathbf{0}}
-#' (\mjseqn{\mathbf{x}_t = [X\; C\; D\; A\; B\; A1\; A2]}) is
-#' \mjsdeqn{\mathbf{\Gamma}' = \left[\begin{array}{ccccccc}
-#' 1 & -1 & -1 & 0 & 0 & 0 & 0 \cr
-#' 1 & 0 & 0 & -1 & -1 & 0 & 0 \cr
-#' 0 & 0 & 0 & 1 & 0 & -1 & -1
-#' \end{array}\right].}
-#' The \link[FoReco]{lcmat} function returns
-#' \mjsdeqn{\bar{\mathbf{C}} = \left[\begin{array}{cccc}
-#' 0 & 1 & 1 & 1 \cr
-#' -1 & 1 & 1 & 1 \cr
-#' 0 & 0 & -1 & -1
-#' \end{array}\right].}
-#' Then
-#' \mjsdeqn{\bar{\mathbf{U}}' = \left[\begin{array}{ccc|cccc}
-#' 1 & 0 & 0 & 0 & -1 & -1 & -1 \cr
-#' 0 & 1 & 0 & 1 & -1 & -1 & -1 \cr
-#' 0 & 0 & 1 & 0 & 0 & 1 & 1
-#' \end{array}\right], \quad \mbox{with} \quad
-#' \bar{\mathbf{U}}'\mathbf{y}_t = \bar{\mathbf{U}}' \left[\begin{array}{c}
-#' \mathbf{v}_t \cr
-#' \mathbf{f}_t
-#' \end{array}\right] = \mathbf{0},}
-#' where \mjseqn{\mathbf{v}_t = [X\; C\; A]}, and
-#' \mjseqn{\mathbf{f}_t = [D\; B\; A1\; A2]}.
-#'
-#' @return A list with
-#' \item{\code{Cbar}}{(\mjseqn{n_v \times n_f}) linear combination matrix \mjseqn{\bar{\mathbf{C}}}}
-#' \item{\code{pivot}}{(\mjseqn{n \times 1}) vector of the column permutations
-#' s.t. \mjseqn{\mathbf{P} = \mathbf{I}[,\mbox{pivot}]}}
+#' @returns A list with two elements: (i) the linear combination (aggregation) matrix
+#' (\code{agg_mat}) and (ii) the vector of the column permutations (\code{pivot}).
 #'
 #' @examples
-#' Gt <- matrix(c(1,-1,-1,0,0,0,0,
+#' ## Two hierarchy sharing the same top-level variable, but not sharing the bottom variables
+#' #        X            X
+#' #    |-------|    |-------|
+#' #    A       B    C       D
+#' #  |---|
+#' # A1   A2
+#' # 1) X = C + D,
+#' # 2) X = A + B,
+#' # 3) A = A1 + A2.
+#' cons_mat <- matrix(c(1,-1,-1,0,0,0,0,
 #'                1,0,0,-1,-1,0,0,
 #'                0,0,0,1,0,-1,-1), nrow = 3, byrow = TRUE)
-#' Cbar <- lcmat(Gt = Gt)$Cbar
-#' P <- diag(1, NCOL(Gt))[,lcmat(Gt = Gt)$pivot]
+#' obj <- lcmat(cons_mat = cons_mat, verbose = TRUE)
+#' agg_mat <- obj$agg_mat # linear combination matrix
+#' pivot <- obj$pivot # Pivot vector
 #'
-#' @usage lcmat(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
+#' @usage lcmat(cons_mat, method = "rref", tol = sqrt(.Machine$double.eps),
 #'        verbose = FALSE, sparse = TRUE)
 #'
 #' @references
-#' Di Fonzo, T., Girolimetto, D. (2022), \emph{Point and probabilistic forecast reconciliation
-#' for general linearly constrained multiple time series} (mimeo).
+#' Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
+#' for general linearly constrained multiple time series,
+#' \emph{Statistical Methods & Applications}, in press. \doi{10.1007/s10260-023-00738-6}.
 #'
-#' Strang, G., (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
+#' Strang, G. (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
 #'
-#' @keywords utilities
-#' @family utilities
-#'
-#' @import Matrix
+#' @family Utilities
 #'
 #' @export
 #'
-lcmat <- function(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
+lcmat <- function(cons_mat, method = "rref", tol = sqrt(.Machine$double.eps),
                   verbose = FALSE, sparse = TRUE){
 
-  alg <- match.arg(alg, c("rref", "qr"))
+  method <- match.arg(method, c("rref", "qr"))
 
   # Check inputs
-  if(is.matrix(Gt) | is(Gt, "Matrix")){
-    Gt <- as(Gt, "CsparseMatrix")
+  if(is.matrix(cons_mat) | is(cons_mat, "Matrix")){
+    cons_mat <- as(cons_mat, "CsparseMatrix")
   }else{
-    stop("Gt must be a matrix", call. = FALSE)
+    cli_abort("{.arg cons_mat} is not a numeric matrix.", call = NULL)
   }
-  Ut <- Gt
-  if(alg == "rref"){
-    # Reduced Row Echelon Form
-    if(verbose){
-      message("RREF step")
-    }
-
+  cons_mat <- cons_mat
+  if(method == "rref"){ # Reduced Row Echelon Form
     # Info matrix
-    cnames <- colnames(Ut)
-    n <- nrow(Ut)
-    m <- ncol(Ut)
+    cnames <- colnames(cons_mat)
+    n <- nrow(cons_mat)
+    m <- ncol(cons_mat)
 
     # Verbose condition
+    prog <- FALSE
     if(verbose){
       if(min(n, m) < 100){
-        quant <- n + m
+        prog <- FALSE
       }else{
-        quant <- round(stats::quantile(1:min(n, m),
-                                       probs = seq(0, 1, 0.25)[-1]))
-        message("Gauss-Jordan elimination (%): 0% ", appendLF = FALSE)
+        prog <- TRUE
+        message("Gauss-Jordan elimination (%): |", appendLF = FALSE)
+
+        if(min(n, m)==n){
+          stepcheck <- round(seq(2, n, length.out = 10))
+        }else{
+          stepcheck <- round(seq(2, m, length.out = 10))
+        }
       }
     }
 
@@ -146,7 +93,7 @@ lcmat <- function(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
 
     # Gauss-Jordan elimination:
     while((xpos <= m) & (ypos <= n)){
-      col <- as(Ut[,xpos], "sparseVector")
+      col <- as(cons_mat[,xpos], "sparseVector")
       col[1:n < ypos] <- 0
 
       if(sum(abs(col)) < tol){
@@ -160,66 +107,51 @@ lcmat <- function(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
         xpos <- xpos+1     # check for 0 pivot
       }else{
         if(whc > ypos){  # exchange rows
-          id <- Ut@i
-          lp <- Ut@i
+          id <- cons_mat@i
+          lp <- cons_mat@i
           lp[id == (whc - 1)] <- ypos - 1
 
           lp[id == (ypos - 1)] <- whc - 1
-          Ut <- sparseMatrix(i = lp + 1, p = Ut@p, x = Ut@x)
+          cons_mat <- sparseMatrix(i = lp + 1, p = cons_mat@p, x = cons_mat@x)
         }
 
-        Ut[ypos,] <- Ut[ypos,]/pivot # pivot
+        cons_mat[ypos,] <- cons_mat[ypos,]/pivot # pivot
 
-        row <-as(Ut[ypos,], "sparseVector")
-        Ut <- Ut - Ut[,xpos, drop = FALSE] %*% t(row)
-        Ut[ypos,] <- row # restore current row
+        row <-as(cons_mat[ypos,], "sparseVector")
+        cons_mat <- cons_mat - cons_mat[,xpos, drop = FALSE] %*% t(row)
+        cons_mat[ypos,] <- row # restore current row
         xpos <- xpos+1
         ypos <- ypos+1
       }
 
-      if(verbose){
+      if(verbose & prog){
         if(min(n, m) == n){
           step <- ypos
         }else{
           step <- xpos
         }
-
-        printstep <- (step%%quant == 0)
-        if(any(printstep)){
-          message(names(quant[printstep]), appendLF = FALSE)
-          quant <- quant[-1]
-
-          if(length(quant) > 0){
-            message(" ", appendLF = FALSE)
-          }
+        if(step%in% stepcheck){
+          message("=", appendLF = FALSE)
         }
-
       }
     }
-
+    if(verbose & prog){
+      message("| done\n", appendLF = FALSE)
+    }
     # Generalized Reduced Zero constraints cross-sectional kernel matrix
-    Ut <- drop0(Ut, tol = tol)
-    Ut <- Ut[rowSums(abs(Ut))!=0,, drop = FALSE]
-    colnames(Ut) <- cnames
+    cons_mat <- drop0(cons_mat, tol = tol)
+    cons_mat <- cons_mat[rowSums(abs(cons_mat))!=0,, drop = FALSE]
+    colnames(cons_mat) <- cnames
 
     # Generalized cross-sectional combination matrix
-    pivot <- apply(Ut, 1, function(x) which(x == 1)[1])
-    Cbar <- -Ut[, setdiff(1:NCOL(Ut), pivot), drop = FALSE]
-    pivot <- c(pivot, setdiff(1:NCOL(Ut), pivot))
-    rownames(Cbar) <- cnames[pivot[1:NROW(Cbar)]]
-    if(!sparse){
-      Cbar <- as.matrix(Cbar)
-    }
+    pivot <- apply(cons_mat, 1, function(x) which(x == 1)[1])
+    agg_mat <- -cons_mat[, setdiff(1:NCOL(cons_mat), pivot), drop = FALSE]
+    pivot <- c(pivot, setdiff(1:NCOL(cons_mat), pivot))
+    rownames(agg_mat) <- cnames[pivot[1:NROW(agg_mat)]]
+    agg_mat <- sparse2dense(agg_mat, sparse = sparse)
 
-    # Ite return
-    return(list(Cbar = Cbar, pivot = pivot))
-  }else{
-    # QR decomposition
-    if(verbose){
-      message("QR decomposition step")
-    }
-
-    QR <- base::qr(Ut, tol = tol)
+  }else{ # QR decomposition
+    QR <- base::qr(cons_mat, tol = tol)
     id_qr <- order(QR$pivot)
     R <- qr.R(QR) # Row Echelon Form
 
@@ -231,25 +163,27 @@ lcmat <- function(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
     # basic variable
     i_dep <- sort(i_dep[indep_rows])
     # free variable
-    i_indep <- setdiff(1:NCOL(Ut), i_dep)
+    i_indep <- setdiff(1:NCOL(cons_mat), i_dep)
 
     # R = [R1 | R2]
     R1 <- Matrix(R[indep_rows, i_dep, drop = FALSE], sparse = TRUE)
     R2 <- Matrix(R[indep_rows, i_indep, drop = FALSE], sparse = TRUE)
 
     # Generalized cross-sectional combination matrix
-    Cbar <- -solve(R1, R2)
-    Cbar <- Cbar[, id_qr[id_qr>NROW(Cbar)]-NROW(Cbar), drop = FALSE]
+    agg_mat <- -solve(R1, R2)
+    agg_mat <- agg_mat[, id_qr[id_qr>NROW(agg_mat)]-NROW(agg_mat), drop = FALSE]
 
     # Adjust output
-    Cbar <- drop0(Cbar, tol = tol)
-    if(!sparse){
-      Cbar <- as.matrix(Cbar)
-    }
+    agg_mat <- drop0(agg_mat, tol = tol)
+    agg_mat <- sparse2dense(agg_mat, sparse = sparse)
 
-    # QR return
-    return(list(Cbar = Cbar,
-                pivot = c(QR$pivot[1:NROW(Cbar)],
-                          sort(QR$pivot[-c(1:NROW(Cbar))]))))
+    # QR pivot
+    pivot <- c(QR$pivot[1:NROW(agg_mat)],
+               sort(QR$pivot[-c(1:NROW(agg_mat))]))
   }
+  if(any(pivot != 1:length(pivot)) & verbose){
+    cli_bullets(c("!"="A pivot is performed. Remember to apply the pivot also to the base forecast.",
+                "i"="E.g. {.code base[, pivot]} in cross-sectional or {.code base[pivot, ]} in cross-temporal."))
+  }
+  return(list(agg_mat = agg_mat, pivot = pivot))
 }

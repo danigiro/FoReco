@@ -2,43 +2,28 @@
 % Please edit documentation in R/FoReco-package.R
 \docType{package}
 \name{FoReco-package}
+\alias{FoReco}
 \alias{FoReco-package}
-\title{FoReco: forecast reconciliation}
+\title{FoReco: Forecast Reconciliation}
 \description{
-An R package offering classical (bottom-up and top-down), and modern (optimal and heuristic combination)
-forecast reconciliation procedures for cross-sectional, temporal, and cross-temporal
-linearly constrained time series.
+Classical (bottom-up and top-down), optimal combination and heuristic point (Di Fonzo and Girolimetto, 2023 \doi{10.1016/j.ijforecast.2021.08.004}) and probabilistic (Girolimetto et al. 2023 \doi{10.1016/j.ijforecast.2023.10.003}) forecast reconciliation procedures for linearly constrained time series (e.g., hierarchical or grouped time series) in cross-sectional, temporal, or cross-temporal frameworks.
 }
-\details{
-The \code{FoReco} package is designed for forecast reconciliation, a
-post-forecasting process aimed to improve the accuracy of the base
-forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series.
-The main functions are:
-
-\describe{
-  \item{\code{\link[FoReco]{htsrec}():}}{cross-sectional (contemporaneous) forecast reconciliation.}
-  \item{\code{\link[FoReco]{thfrec}():}}{forecast reconciliation for a single time series through temporal hierarchies.}
-  \item{\code{\link[FoReco]{lccrec}():}}{level conditional forecast reconciliation for genuine hierarchical/grouped time series.}
-  \item{\code{\link[FoReco]{tdrec}():}}{top-down (cross-sectional, temporal, cross-temporal) forecast reconciliation for genuine hierarchical/grouped time series.}
-  \item{\code{\link[FoReco]{ctbu}():}}{bottom-up cross-temporal forecast reconciliation.}
-  \item{\code{\link[FoReco]{tcsrec}():}}{heuristic first-temporal-then-cross-sectional cross-temporal forecast reconciliation.}
-  \item{\code{\link[FoReco]{cstrec}():}}{heuristic first-cross-sectional-then-temporal cross-temporal forecast reconciliation.}
-  \item{\code{\link[FoReco]{iterec}():}}{heuristic iterative cross-temporal forecast reconciliation.}
-  \item{\code{\link[FoReco]{octrec}():}}{optimal combination cross-temporal forecast reconciliation.}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/daniGiro/FoReco}
+  \item \url{https://danigiro.github.io/FoReco/}
+  \item Report bugs at \url{https://github.com/daniGiro/FoReco/issues}
 }
-}
-\references{
-Di Fonzo, T., and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, 39(1), 39-57 \doi{10.1016/j.ijforecast.2021.08.004}.
 
-Di Fonzo, T., Girolimetto, D. (2022), Forecast combination based forecast reconciliation:
-insights and extensions, \emph{International Journal of Forecasting}, in press.
-
-Girolimetto, D., Athanasopoulos, G., Di Fonzo, T., and Hyndman, R. J. (2023),
-Cross-temporal Probabilistic Forecast Reconciliation, \doi{10.48550/arXiv.2303.17277}.
 }
 \author{
-Tommaso Di Fonzo and Daniele Girolimetto, Department of Statistical Sciences, University of Padua (Italy).
+\strong{Maintainer}: Daniele Girolimetto \email{daniele.girolimetto@phd.unipd.it} (\href{https://orcid.org/0000-0001-9387-1232}{ORCID}) [funder]
+
+Authors:
+\itemize{
+  \item Tommaso Di Fonzo (\href{https://orcid.org/0000-0003-3388-7827}{ORCID}) [funder]
+}
+
 }
 \keyword{package}

@@ -2,129 +2,80 @@
 % Please edit documentation in R/lcmat.R
 \name{lcmat}
 \alias{lcmat}
-\title{Linear Combination Matrix for a general linearly constrained multiple time series}
+\title{Linear combination (aggregation) matrix for a general linearly constrained multiple time series}
 \usage{
-lcmat(Gt, alg = "rref", tol = sqrt(.Machine$double.eps),
+lcmat(cons_mat, method = "rref", tol = sqrt(.Machine$double.eps),
        verbose = FALSE, sparse = TRUE)
 }
 \arguments{
-\item{Gt}{(\mjseqn{r \times n}) coefficient matrix (\mjseqn{\mathbf{\Gamma}'})
-for a general linearly constrained multiple time series (\mjseqn{\mathbf{x}_t})
-such that \mjseqn{\mathbf{\Gamma}'\mathbf{x}_t = \mathbf{0}_{(r \times 1)}}.}
+\item{cons_mat}{A (\eqn{r \times n}) numeric matrix representing the cross-sectional
+zero constraints.}
 
-\item{alg}{Technique used to trasform \mjseqn{\mathbf{\Gamma}'} in
-\mjseqn{\bar{\mathbf{U}}' = [\mathbf{I} \quad -\bar{\mathbf{C}}]}, such that
-\mjseqn{\bar{\mathbf{U}'}\mathbf{y}_t = \mathbf{0}_{(n_v \times 1)}}. Use
-\code{"rref"} for the Row Reduced Echelon Form through Gauss-Jordan elimination
-(\emph{default}), or \code{"qr"} for the (pivoting) QR decomposition (Strang, 2019).}
+\item{method}{Method to use: "\code{rref}" for the Reduced Row Echelon
+Form through Gauss-Jordan elimination (\emph{default}), or "\code{qr}"
+for the (pivoting) QR decomposition (Strang, 2019).}
 
-\item{tol}{Tolerance for the \code{"rref"} or  \code{"qr"} algorithm.}
+\item{tol}{Tolerance for the "\code{rref}" or "\code{qr}" method.}
 
 \item{verbose}{If \code{TRUE}, intermediate steps are printed (\emph{default} is \code{FALSE}).}
 
-\item{sparse}{Option to return a sparse \mjseqn{\bar{\mathbf{C}}}
-matrix (\emph{default} is \code{TRUE}).}
+\item{sparse}{Option to return a sparse matrix (\emph{default} is \code{TRUE}).}
 }
 \value{
-A list with
-\item{\code{Cbar}}{(\mjseqn{n_v \times n_f}) linear combination matrix \mjseqn{\bar{\mathbf{C}}}}
-\item{\code{pivot}}{(\mjseqn{n \times 1}) vector of the column permutations
-s.t. \mjseqn{\mathbf{P} = \mathbf{I}[,\mbox{pivot}]}}
+A list with two elements: (i) the linear combination (aggregation) matrix
+(\code{agg_mat}) and (ii) the vector of the column permutations (\code{pivot}).
 }
 \description{
-\loadmathjax
-When working with a general linearly constrained multiple (\mjseqn{n}-variate) time series
-(\mjseqn{\mathbf{x}_t}), getting a linear combination matrix
-\mjseqn{\bar{\mathbf{C}}} is a critical step to obtain a \emph{structural-like}
-representation such that, for \mjseqn{t = 1, ..., T},
-\mjsdeqn{\bar{\mathbf{U}}'= [\mathbf{I} \quad -\bar{\mathbf{C}}] \quad \Rightarrow
-\quad \mathbf{y}_t = \mathbf{P}\mathbf{x}_t = \left[\begin{array}{c}
-\mathbf{v}_t\cr
-\mathbf{f}_t
-\end{array}\right] = \left[\begin{array}{c}
-\mathbf{\bar{\mathbf{C}}}\cr
-\mathbf{I}
-\end{array}\right]\mathbf{f}_t = \mathbf{\bar{\mathbf{S}}}\mathbf{f}_t,}
-where \mjseqn{\bar{\mathbf{U}}'} is the (\mjseqn{n_v \times n}) full rank zero constraints matrix,
-\mjseqn{\bar{\mathbf{S}}} is the (\mjseqn{n \times n_f}) matrix analogous of the summing matrix
-\mjseqn{\mathbf{S}} for a genuine hierarchical/groupped times series,
-\mjseqn{\bar{\mathbf{C}}} is the (\mjseqn{n_v \times n_f}) linear combination matrix
-such that \mjseqn{\mathbf{v}_t = \bar{\mathbf{C}}\mathbf{f}_t},
-\mjseqn{\mathbf{v}_t} is the (\mjseqn{n_v \times 1}) vector of ‘basic’ variables, and
-\mjseqn{\mathbf{f}_t} is the (\mjseqn{n_f \times 1}) vector of ‘free’ variables
-(Di Fonzo and Girolimetto, 2022).
-}
-\details{
-Looking for an analogous of the summing matrix \mjseqn{\mathbf{S}}, say
-\mjseqn{\bar{\mathbf{S}} = \left[\begin{array}{c}
-\mathbf{\bar{\mathbf{C}}}\cr
-\mathbf{I}
-\end{array}\right]}, the \code{lcmat} function transforms  \mjseqn{\mathbf{\Gamma}'} into
-\mjseqn{\bar{\mathbf{U}}' = [\mathbf{I} \quad -\bar{\mathbf{C}}]}, such that
-\mjseqn{\bar{\mathbf{U}}'\mathbf{y}_t = \mathbf{0}_{(n_v \times 1)}}.
-Consider the simple example of a linearly constrained multiple time series consisting
-of two hierarchies, each with distinct bottom time series,
-with a common top-level series (\mjseqn{X}):
-\mjsdeqn{\begin{array}{l}
-1)\; X = C + D,\cr
-2)\; X = A + B, \cr
-3)\; A = A1 + A2.
-\end{array}}
-The coefficient matrix \mjseqn{\mathbf{\Gamma}'} of the linear system
-\mjseqn{\mathbf{\Gamma}'\mathbf{x}_t=\mathbf{0}}
-(\mjseqn{\mathbf{x}_t = [X\; C\; D\; A\; B\; A1\; A2]}) is
-\mjsdeqn{\mathbf{\Gamma}' = \left[\begin{array}{ccccccc}
-1 & -1 & -1 & 0 & 0 & 0 & 0 \cr
-1 & 0 & 0 & -1 & -1 & 0 & 0 \cr
-0 & 0 & 0 & 1 & 0 & -1 & -1
-\end{array}\right].}
-The \link[FoReco]{lcmat} function returns
-\mjsdeqn{\bar{\mathbf{C}} = \left[\begin{array}{cccc}
-0 & 1 & 1 & 1 \cr
--1 & 1 & 1 & 1 \cr
-0 & 0 & -1 & -1
-\end{array}\right].}
-Then
-\mjsdeqn{\bar{\mathbf{U}}' = \left[\begin{array}{ccc|cccc}
-1 & 0 & 0 & 0 & -1 & -1 & -1 \cr
-0 & 1 & 0 & 1 & -1 & -1 & -1 \cr
-0 & 0 & 1 & 0 & 0 & 1 & 1
-\end{array}\right], \quad \mbox{with} \quad
-\bar{\mathbf{U}}'\mathbf{y}_t = \bar{\mathbf{U}}' \left[\begin{array}{c}
-\mathbf{v}_t \cr
-\mathbf{f}_t
-\end{array}\right] = \mathbf{0},}
-where \mjseqn{\mathbf{v}_t = [X\; C\; A]}, and
-\mjseqn{\mathbf{f}_t = [D\; B\; A1\; A2]}.
+This function transforms a general (possibly redundant) zero constraints matrix into a
+linear combination (aggregation) matrix \eqn{\mathbf{A}_{cs}}.
+When working with a general linearly constrained multiple (\eqn{n}-variate)
+time series, getting a linear combination matrix \eqn{\mathbf{A}_{cs}} is a critical
+step to obtain a structural-like representation such that
+\deqn{\mathbf{C}_{cs} = [\mathbf{I} \quad -\mathbf{A}],}
+where \eqn{\mathbf{C}_{cs}} is the full rank zero constraints matrix (Girolimetto and
+Di Fonzo, 2023).
 }
 \examples{
-Gt <- matrix(c(1,-1,-1,0,0,0,0,
+## Two hierarchy sharing the same top-level variable, but not sharing the bottom variables
+#        X            X
+#    |-------|    |-------|
+#    A       B    C       D
+#  |---|
+# A1   A2
+# 1) X = C + D,
+# 2) X = A + B,
+# 3) A = A1 + A2.
+cons_mat <- matrix(c(1,-1,-1,0,0,0,0,
                1,0,0,-1,-1,0,0,
                0,0,0,1,0,-1,-1), nrow = 3, byrow = TRUE)
-Cbar <- lcmat(Gt = Gt)$Cbar
-P <- diag(1, NCOL(Gt))[,lcmat(Gt = Gt)$pivot]
+obj <- lcmat(cons_mat = cons_mat, verbose = TRUE)
+agg_mat <- obj$agg_mat # linear combination matrix
+pivot <- obj$pivot # Pivot vector
 
 }
 \references{
-Di Fonzo, T., Girolimetto, D. (2022), \emph{Point and probabilistic forecast reconciliation
-for general linearly constrained multiple time series} (mimeo).
+Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
+for general linearly constrained multiple time series,
+\emph{Statistical Methods & Applications}, in press. \doi{10.1007/s10260-023-00738-6}.
 
-Strang, G., (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
+Strang, G. (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
 }
 \seealso{
-Other utilities: 
-\code{\link{Cmatrix}()},
-\code{\link{FoReco2ts}()},
-\code{\link{agg_ts}()},
-\code{\link{arrange_hres}()},
+Utilities: 
+\code{\link{FoReco2matrix}()},
+\code{\link{aggts}()},
+\code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
-\code{\link{ctf_tools}()},
-\code{\link{hts_tools}()},
-\code{\link{oct_bounds}()},
-\code{\link{residuals_matrix}()},
-\code{\link{score_index}()},
+\code{\link{csprojmat}()},
+\code{\link{cstools}()},
+\code{\link{ctprojmat}()},
+\code{\link{cttools}()},
+\code{\link{df2aggmat}()},
+\code{\link{recoinfo}()},
+\code{\link{res2matrix}()},
 \code{\link{shrink_estim}()},
-\code{\link{thf_tools}()}
+\code{\link{teprojmat}()},
+\code{\link{tetools}()},
+\code{\link{unbalance_hierarchy}()}
 }
-\concept{utilities}
-\keyword{utilities}
+\concept{Utilities}

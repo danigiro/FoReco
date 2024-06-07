@@ -1,0 +1,165 @@
+---
+title: "Replicate the hts package"
+author: "Daniele Girolimetto"
+date: "`r Sys.Date()`"
+package: FoReco
+output: 
+  bookdown::html_vignette2:
+    fig_caption: yes
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Replicate the hts package}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r}
+#| label: knitr
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+In this vignette, the [`htseg2`](https://pkg.earo.me/hts/reference/htseg1.html) dataset (a simulated four level hierarchy with a total of 17 series, each of length 16) of the [`hts`](https://pkg.earo.me/hts) package is used to show how to get the same results using [`FoReco`](https://danigiro.github.io/FoReco).
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+library(FoReco)
+library(hts)
+```
+
+# Base forecasts
+
+```{r}
+#| label: base
+data <- allts(htseg2)
+n <- NCOL(data)
+nb <- NCOL(htseg2$bts)
+na <- n-nb
+A <- smatrix(htseg2)[1:na, ]
+dimnames(A) <- list(colnames(data)[1:na], colnames(data)[-c(1:na)])
+
+# List containing the base forecasts
+# Forecast horizon: 10
+fc_obj <- list()
+for (i in 1:n) {
+  fc_obj[[i]] <- forecast(auto.arima(data[, i]))
+}
+
+# Create the matrix of base forecasts
+base <- NULL
+for (i in 1:n) {
+  base <- cbind(base, fc_obj[[i]]$mean)
+}
+colnames(base) <- colnames(data)
+
+# Create the matrix of residuals
+res <- NULL
+for (i in 1:n) {
+  res <- cbind(res, fc_obj[[i]]$residuals)
+}
+colnames(res) <- colnames(data)
+```
+
+# Comparisons
+
+In this section we compare reconciliation methods available in both [`hts`](https://pkg.earo.me/hts) and [`FoReco`](https://danigiro.github.io/FoReco) packages and we show the equivalence between them. 
+We explore bottom-up, top-down, and optimal reconciliation approaches.
+
+
+## Bottom-up and top-down reconciliation
+
+```{r}
+#| label: check-classic
+# Tollerance setting
+tol <- 1e-7
+
+## Bottom-up
+hts_bu <- forecast(htseg2, method = "bu", fmethod = "arima")
+FoReco_bu <- csbu(base[, colnames(A)], agg_mat = A)
+sum(abs(allts(hts_bu) - FoReco_bu) > tol)
+
+## Top-down
+
+### Average historical proportions - Gross-Sohl method A
+hts_gsa <- forecast(htseg2, method = "tdgsa", fmethod = "arima")
+p_gsa <- colMeans(apply(htseg2$bts, 2, function(x) x/rowSums(htseg2$bts)))
+FoReco_gsa <- cstd(base[, 1], agg_mat = A, weights = p_gsa)
+sum(abs(allts(hts_gsa) - FoReco_gsa) > tol)
+
+## Proportions of the historical averages - Gross-Sohl method F
+hts_gsf <- forecast(htseg2, method = "tdgsf", fmethod = "arima")
+p_gsf <- colMeans(htseg2$bts)/mean(rowSums(htseg2$bts))
+FoReco_gsf <- cstd(base[, 1], agg_mat = A, weights = p_gsf)
+sum(abs(allts(hts_gsf) - FoReco_gsf) > tol)
+
+### Forecast proportions
+hts_fp <- forecast(htseg2, method = "tdfp", fmethod = "arima")
+# FoReco needs the forecast proportions as input
+levels <- c(1, 2, 4, 10)
+S <- cstools(A)$strc_mat
+p_fp <- matrix(NA, nrow = NROW(base), ncol = NCOL(S))
+for(i in 1:NROW(base)){
+  idl <- rep(1:length(levels), levels)
+  for(j in 1:NCOL(S)){
+    cs <- S[, j]
+    id2 <- rev(which(cs==1))
+    out <- NULL
+    for(k in 1:length(id2[-1])){
+      tmp <- S[which(idl == idl[id2[k]]-1), , drop = FALSE]
+      idf <- rowSums(S[idl == idl[id2[k]], tmp[tmp[,j]==1, ] == 1, drop = FALSE]) != 0
+      out <- c(out, base[i, id2[k]]/sum(sum(base[i, idl == idl[id2[k]]][idf])))
+    }
+    p_fp[i, j] <- prod(out)
+  }
+}
+FoReco_fp <- cstd(base[, 1], agg_mat = A, weights = p_fp, normalize = F)
+sum(abs(allts(hts_fp) - FoReco_fp) > tol)
+```
+
+## Optimal forecast reconciliation
+
+```{r}
+#| label: check-opt
+## Ordinary least squares (identity error covariance matrix)
+hts_ols <- combinef(base, nodes = get_nodes(htseg2), keep = "all")
+FoReco_ols <- csrec(base, agg_mat = A, comb = "ols")
+sum(abs(hts_ols - FoReco_ols) > tol)
+
+## Weighted least squares (structural variances)
+hts_str <- combinef(base, nodes = get_nodes(htseg2), 
+                    weights = 1/apply(smatrix(htseg2), 1, sum), 
+                    keep = "all")
+FoReco_str <- csrec(base, agg_mat = A, comb = "str")
+sum(abs(hts_str - FoReco_str) > tol)
+
+## Generalized least squares (shrunk covariance matrix)
+hts_shr <- MinT(base, nodes = get_nodes(htseg2), keep = "all",
+                  covariance = "shr", residual = res)
+FoReco_shr <- csrec(base, agg_mat = A, comb = "shr", res = res)
+sum(abs(hts_shr - FoReco_shr) > tol)
+
+## Generalized least squares (sample covariance matrix)
+hts_sam <- MinT(base, nodes = get_nodes(htseg2), keep = "all",
+                  covariance = "sam", residual = res)
+FoReco_sam <- csrec(base, agg_mat = A, comb = "sam", res = res)
+sum(abs(hts_sam-FoReco_sam) > tol)
+```
+
+
+
+
+
+
+
+
+
+
+
+

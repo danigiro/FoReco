@@ -1,13 +1,55 @@
+# FoReco 1.0.0
+
+**Note** – The latest release of FoReco, a popular R package for forecast reconciliation, introduces significant changes to its function notation and adds several new features. This major update, FoReco 1.0, is not compatible with previous versions due to the substantial changes made to the package's core structure. The previous version is available on [Github](https://github.com/danigiro/FoReco026) ([docs](https://danigiro.github.io/FoReco026/)).
+
+Due to the significant changes in FoReco 1.0, users are advised to carefully review the updated documentation and examples before using the new version. The latest documentation and release notes are available on [danigiro.github.io/FoReco/](https://danigiro.github.io/FoReco/)
+
+
+* **Updated Function Notation:** All functions related to cross-sectional, temporal, and cross-temporal frameworks now use the prefixes "cs," "te," and "ct," respectively. For example, the optimal combination reconciliation functions are now `csrec()`, `terec()`, and `ctrec()`.
+
+* **Simplified Function Outputs:** Reconciliation functions now return only matrices. Additional information can be accessed using `attr(., "FoReco")` or the `recoinfo()` function.
+
+* **New Datasets:** Two new datasets, `itagdp` (Italian Quarterly National Accounts) and `vndata` (Australian Tourism Demand), are included along with their respective aggregation or constraint matrices.
+
+* **Classic Approach:** The middle-out approach (`csmo()`, `temo()`, and `ctmo()`) has been implemented alongside the classic bottom-up (`csbu()`, `tebu()`, and `ctbu()`) and top-down (`cstd()`, `tetd()`, and `cttd()`) methods.
+
+* **Level Conditional Coherent Reconciliation:** Level conditional coherent reconciliation is now available for all constraints: `cslcc()` (cross-sectional), `telcc()` (temporal), and `ctlcc()` (cross-temporal).
+
+* **Immutable reconciliation:** The `immutable()` parameter has been added to the reconciliation functions (`csrec()`, `terec()`, and `ctrec()`) to prevent the base forecasts from being modified with both the structural (`approach='strc'`) and the zero-constrained (`approach='proj'`) approach.
+
+* **Balanced and unbalanced hierarchy:** added `balance_hierarchy()` and `unbalance_hierarchy()` for dealing with balanced and unbalanced hierarchies. 
+
+* **Projection Matrix Functions:** Functions `csprojmat()`, `teprojmat()`, and `ctprojmat()` have been added to obtain projection matrices.
+
+* **Covariance Matrix Functions:** Functions `cscov()`, `tecov()`, and `ctcov()` have been added to obtain covariance matrices.
+
+* **Function Renaming:** Several functions have been renamed to improve consistency and clarity
+
+    - `Cmatrix()` -> `df2aggmat()`
+    - `hts_tools()` -> `cstools()`
+    - `thf_tools()` -> `tetools()`
+    - `ctf_tools()` -> `cttools()`
+    - `agg_ts()` -> `aggts()`
+    - `residuals_matrix()` -> `res2matrix()`
+    - `boot_cs()` -> `csboot()`
+    - `boot_te()` -> `teboot()`
+    - `boot_ct()` -> `ctboot()`
+    - `htsrec()` -> `csrec()`
+    - `thfrec()` -> `terec()`
+    - `octrec()` -> `ctrec()`
+    - `lccrec()` -> `cslcc()`
+
+
 # FoReco 0.2.6
 
-##### Major changes: [probabilistic forecast reconciliation](https://danigiro.github.io/FoReco/articles/FoReco_prob.html)
+##### Major changes: probabilistic forecast reconciliation
 * Added `boot_cs()`, `boot_te()` and `boot_ct()` to draw samples from, respectively, cross-sectional, temporal and cross-temporal joint (block) bootstrap.
 
 ##### Minor changes
 * Fixed deprecation warnings in [Matrix](https://CRAN.R-project.org/package=Matrix) (v. 1.5-0);
 * Improved docs and bug fixes;
 * Fixed `ctbu()` inputs;
-* Added `FoReco2matrix()` to trasform FoReco forecasts input and output in a list of matrix/vector class;
+* Added `FoReco2matrix()` to transform FoReco forecasts input and output in a list of matrix/vector class;
 * Added `agg_ts()`: non-overlapping temporal aggregation of a time series according to a specific aggregation order.
 * Added `arrange_hres()` and `residuals_matrix()` functions to arrange residuals for the covariance matrix under Gaussianity;
 

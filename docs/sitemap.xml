@@ -10,22 +10,40 @@
     <loc>https://danigiro.github.io/FoReco/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/articles/FoReco_package.html</loc>
+    <loc>https://danigiro.github.io/FoReco/articles/Cross-sectional-forecast-reconciliation.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/articles/FoReco_prob.html</loc>
+    <loc>https://danigiro.github.io/FoReco/articles/Cross-temporal-forecast-reconciliation.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/articles/accuracy_indices.html</loc>
+    <loc>https://danigiro.github.io/FoReco/articles/Dataset-vndata-and-itagdp.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/articles/articles/FoReco_prob.html</loc>
+    <loc>https://danigiro.github.io/FoReco/articles/Replicate-the-hts-package.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/articles/articles/aticolo.html</loc>
+    <loc>https://danigiro.github.io/FoReco/articles/Replicate-the-thief-package.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/articles/aticolo.html</loc>
+    <loc>https://danigiro.github.io/FoReco/articles/Temporal-forecast-reconciliation.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/Cross-sectional-forecast-reconciliation.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/Cross-temporal-forecast-reconciliation.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/Dataset-vndata-and-itagdp.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/Replicate-the-hts-package.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/Replicate-the-thief-package.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/articles/articles/Temporal-forecast-reconciliation.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/articles/index.html</loc>
@@ -40,108 +58,132 @@
     <loc>https://danigiro.github.io/FoReco/news/index.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/Cmatrix.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/Dmat.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/FoReco-hts.html</loc>
-  </url>
-  <url>
     <loc>https://danigiro.github.io/FoReco/reference/FoReco-package.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/FoReco-thief.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/FoReco2matrix.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/FoReco2ts.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/aggts.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/FoReco_data.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/agg_ts.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/arrange_hres.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/boot_cs.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/boot_ct.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/boot_te.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/balance_hierarchy.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/commat.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/cstrec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/csboot.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/csbu.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/cscov.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/cslcc.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/csmo.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/csprojmat.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/csrec.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/cstd.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/cstools.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/ctboot.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/ctbu.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/ctf_tools.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/ctcov.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/gecoma.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/ctlcc.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/hts_tools.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/ctmo.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/htsrec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/ctprojmat.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/ctrec.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/cttd.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/cttools.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/df2aggmat.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/heuristic-reco.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/iterec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/itagdp.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/lccrec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/iterec.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/lcmat.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/levrec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/recoinfo.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/oct_bounds.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/octrec.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/residuals_matrix.html</loc>
-  </url>
-  <url>
-    <loc>https://danigiro.github.io/FoReco/reference/score_index.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/residuals.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/shrink_estim.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/srref.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/teboot.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/tcsrec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/tebu.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/tdrec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/tecov.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/thf_tools.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/telcc.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/thfrec.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/temo.html</loc>
   </url>
   <url>
-    <loc>https://danigiro.github.io/FoReco/reference/ut2c.html</loc>
+    <loc>https://danigiro.github.io/FoReco/reference/teprojmat.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/terec.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/tetd.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/tetools.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/unbalance_hierarchy.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/vndata.html</loc>
   </url>
 </urlset>

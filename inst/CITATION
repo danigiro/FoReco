@@ -2,15 +2,15 @@ citHeader("To cite FoReco in publications, please use: ")
 
 bibentry(
   bibtype = "Manual",
-  title   = "FoReco: Point Forecast Reconciliation",
+  title   = "FoReco: Forecast Reconciliation",
   author  =  c(person(given = "Daniele",
                       family = "Girolimetto",
                       role = c("aut", "cre", "fnd")),
                person(given = "Tommaso",
                       family = "Di Fonzo",
                       role = c("aut", "fnd"))),
-  note    = "R package version 2.6",
-  year    = 2023,
+  note    = "R package version 1.0",
+  year    = 2024,
   url     = "https://cran.r-project.org/package=FoReco"
 )
 
@@ -40,7 +40,10 @@ bibentry(
                      family = "Di Fonzo"),
               person(given = "Rob J",
                      family = "Hyndman")),
-  journal = "arXiv",
-  year    = 2023,
-  doi     = "10.48550/arXiv.2303.17277"
+  journal = "International Journal of Forecasting",
+  volume  = 40,
+  year    = 2024,
+  number  = 3,
+  pages   = 1134--1151,
+  doi     = "10.1016/j.ijforecast.2023.10.003"
 )

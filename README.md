@@ -1,6 +1,4 @@
 
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
 # FoReco <img src="man/figures/logo.svg" alt="logo" align="right" width="150" style="border: none; float: right;"/>
 
 <!-- badges: start -->
@@ -11,40 +9,37 @@ status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![devel
-version](https://img.shields.io/badge/devel%20version-0.2.6-blue.svg)](https://github.com/daniGiro/FoReco)
+version](https://img.shields.io/badge/devel%20version-1.0.0-blue.svg)](https://github.com/daniGiro/FoReco)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
 <!-- badges: end -->
 
-The **FoReco** (**Fo**recast **Reco**nciliation) package is designed for
-forecast reconciliation, a **post-forecasting** process aimed to improve
-the accuracy of the base forecasts for a system of linearly constrained
-(e.g. hierarchical/grouped) time series.
+**Fo**recast **Reco**nciliation is a a post-forecasting process aimed to
+improve the accuracy and align forecasts for a system of linearly
+constrained (e.g. hierarchical/grouped) time series. The **FoReco**
+package provides a comprehensive set of classical (bottom-up, top-down
+and middle-out), and modern (optimal and heuristic combination) forecast
+reconciliation procedures in different frameworks including
+cross-sectional, temporal, or cross-temporal settings.
 
-It offers classical (bottom-up and top-down), and modern (optimal and
-heuristic combination) forecast reconciliation procedures for
-cross-sectional, temporal, and cross-temporal linearly constrained time
-series.
+The core functions for reconciliation categorized by framework are as
+follows:
 
-The main functions are:
+| **Reconciliation**                |                         **Cross-sectional**                         |                            **Temporal**                             |                         **Cross-Temporal**                          |
+|-----------------------------------|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|
+| *Classical reconciliation*        |                                                                     |                                                                     |                                                                     |
+| Top-down: `*td()`                 |  [`cstd()`](https://danigiro.github.io/FoReco/reference/cstd.html)  |  [`tetd()`](https://danigiro.github.io/FoReco/reference/tetd.html)  |  [`cttd()`](https://danigiro.github.io/FoReco/reference/cttd.html)  |
+| Bottom-up: `*bu()`                |  [`csbu()`](https://danigiro.github.io/FoReco/reference/csbu.html)  |  [`tebu()`](https://danigiro.github.io/FoReco/reference/tebu.html)  |  [`ctbu()`](https://danigiro.github.io/FoReco/reference/ctbu.html)  |
+| Middle-out: `*mo()`               |  [`csmo()`](https://danigiro.github.io/FoReco/reference/csmo.html)  |  [`temo()`](https://danigiro.github.io/FoReco/reference/temo.html)  |  [`ctmo()`](https://danigiro.github.io/FoReco/reference/ctmo.html)  |
+| *Regression‑based reconciliation* |                                                                     |                                                                     |                                                                     |
+| Least squares: `*rec()`           | [`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.html) | [`terec()`](https://danigiro.github.io/FoReco/reference/terec.html) | [`ctrec()`](https://danigiro.github.io/FoReco/reference/ctrec.html) |
+| LCC: `*lcc()`                     | [`cslcc()`](https://danigiro.github.io/FoReco/reference/cslcc.html) | [`telcc()`](https://danigiro.github.io/FoReco/reference/telcc.html) | [`ctlcc()`](https://danigiro.github.io/FoReco/reference/ctlcc.html) |
 
-- `htsrec()`: cross-sectional (contemporaneous) forecast reconciliation.
-- `thfrec()`: forecast reconciliation for a single time series through
-  temporal hierarchies.
-- `lccrec()`: level conditional forecast reconciliation for genuine
-  hierarchical/grouped time series.
-- `tdrec()`: top-down (cross-sectional, temporal, cross-temporal)
-  forecast reconciliation for genuine hierarchical/grouped time series.
-- `ctbu()`: bottom-up cross-temporal forecast reconciliation.
-- `tcsrec()`: heuristic first-temporal-then-cross-sectional
-  cross-temporal forecast reconciliation.
-- `cstrec()`: heuristic first-cross-sectional-then-temporal
-  cross-temporal forecast reconciliation.
-- `iterec()`: heuristic iterative cross-temporal forecast
-  reconciliation.
-- `octrec()`: optimal combination cross-temporal forecast
-  reconciliation.
+Additionally, **FoReco** provides various functions for different
+aspects of forecast reconciliation, including aggregating time series,
+balancing hierarchies, computing projection and covariance matrices, and
+more.
 
 ## Installation
 
@@ -63,12 +58,36 @@ You can also install the **development** version from
 devtools::install_github("daniGiro/FoReco")
 ```
 
-## Links
+## Getting Started
 
-- Source code: <https://github.com/daniGiro/FoReco>
-- Site documentation: <https://danigiro.github.io/FoReco/>
+To get started with using the FoReco package, refer to the
+[documentation](https://danigiro.github.io/FoReco/) for detailed
+information on how to apply different forecast reconciliation procedures
+to your data.
 
-## Getting help
+<!-- - [Introduction to `FoReco`](https://danigiro.github.io/FoReco/articles/Introduction-to-FoReco.html) -->
 
-If you encounter a clear bug, please file a minimal reproducible example
-on [GitHub](https://github.com/daniGiro/FoReco/issues).
+- [The `vndata` and `itagdp`
+  dataset](https://danigiro.github.io/FoReco/articles/Dataset-vndata-and-itagdp.html)
+
+- [Cross-sectional forecast
+  reconciliation](https://danigiro.github.io/FoReco/articles/Cross-sectional-forecast-reconciliation.html)
+
+- [Temporal forecast
+  reconciliation](https://danigiro.github.io/FoReco/articles/Temporal-forecast-reconciliation.html)
+
+- [Cross-temporal forecast
+  reconciliation](https://danigiro.github.io/FoReco/articles/Cross-temporal-forecast-reconciliation.html)
+
+- [Replicate the `hts`
+  package](https://danigiro.github.io/FoReco/articles/Replicate-the-hts-package.html)
+
+- [Replicate the `thief`
+  package](https://danigiro.github.io/FoReco/articles/Replicate-the-thief-package.html)
+
+## Issues and Contributions
+
+If you encounter any bugs or have suggestions for improvements, please
+feel free to report them on [GitHub Issues
+page](https://github.com/daniGiro/FoReco/issues). Contributions are also
+welcome!

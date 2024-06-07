@@ -1,0 +1,138 @@
+---
+title: "The vndata and itagdp dataset"
+author: "Daniele Girolimetto"
+date: "`r Sys.Date()`"
+package: FoReco
+bibliography: references.bib
+csl: apa.csl
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{The vndata and itagdp dataset}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r}
+#| label: knitr
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+Load the packages:
+```{r setup, warning = FALSE, message = FALSE}
+library(FoReco) # the datasets
+
+# Plot and analysis
+library(ggplot2) 
+library(forecast) 
+library(gridExtra)
+library(reshape2)
+```
+
+
+# `vndata`: Groupped monthly time series
+
+```{r info, echo=FALSE, fig.align="center", out.width = '75%', fig.cap="Australian Tourism Demand cross-sectional and temporal structure"}
+knitr::include_graphics("images/infoVN.png")
+``` 
+
+The Australian Tourism Demand dataset [@Wickramasuriya2019; @Girolimetto2023-jm] measures the number of nights Australians spent away from home. It includes 228 monthly observations of Visitor Nights (VNs) from January 1998 to December 2016, and has a cross-sectional grouped structure based on a geographic hierarchy crossed by purpose of travel. The monthly bottom times series are available at [robjhyndman.com/data/TourismData_v3.csv](https://robjhyndman.com/data/TourismData_v3.csv).
+
+```{r data, dpi=300, out.width = '90%', fig.align='center', fig.show="hold", fig.dim = c(12, 8)}
+#| label: "data"
+# Dataset
+data(vndata) 
+str(vndata)
+
+# Aggregation matrix
+data(vnaggmat)
+str(vnaggmat)
+
+id_bts <- colnames(vnaggmat)[round(seq(1, NCOL(vnaggmat), length.out = 10))]
+states <- c("NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT")
+colnames(vndata)[colnames(vndata) %in% LETTERS[1:7]] <- states
+
+marrangeGrob(list(autoplot(vndata[,"Total"], y = NULL, 
+         main = "Australia (total)") + theme_minimal(),
+autoplot(vndata[, states], y = NULL, 
+         main = "States") + theme_minimal(),
+autoplot(vndata[, c("Hol", "Vis", "Bus", "Oth")], y = NULL, 
+         main = "Purpose of travel") + theme_minimal(),
+autoplot(vndata[,id_bts], y = NULL, 
+         main = "Bottom time series") + theme_minimal()), 
+             top = NULL, nrow = 2, ncol = 2)
+
+```
+
+The geographic hierarchy comprises 7 states, 27 zones, and 76 regions, for a total of 111 nested geographic divisions. Six of these zones are each formed by a single region, resulting in 105 unique nodes in the hierarchy. The purpose of travel comprises four categories: holiday, visiting friends and relatives, business, and other. To avoid redundancies [@DiFonzo2024-ijf], 24 nodes (6 zones are formed by a single region) are not considered, resulting in an unbalanced hierarchy of 525 unique nodes instead of the theoretical 555 with duplicated nodes. The data can be temporally aggregated into two, three, four, six, or twelve months ($\mathcal{K}=\{12, 6, 4, 3, 2, 1\}$).
+
+```{r fig-balh, echo=FALSE, fig.margin=TRUE, out.width = '60%', fig.align="center", fig.cap="A simple unbalanced hierarchy (left) and its balanced version (right). Source: @DiFonzo2024-ijf."}
+knitr::include_graphics("images/bal_unb.png")
+``` 
+
+
+# `itagdp`: general linearly constrained multiple quarterly time series
+
+The National Accounts are a coherent and consistent set of macroeconomic indicators that are used mostly for economic research and forecasting, policy design, and coordination mechanisms. In this dataset, GDP is a key macroeconomic quantity that is measured using three main approaches, namely output (or production), income and expenditure. These parallel systems internally present a well-defned hierarchical structure of variables with relevant economic signifcance, such as Final consumption, on the expenditure side, Gross operating surplus and mixed income on the income side, and Total gross value added on the output side. In the EU countries, the data is processed on the basis of the ESA 2010 classifcation and are released by Eurostat. The dataset `itagdp` ([https://ec.europa.eu/eurostat/web/national-accounts/](https://ec.europa.eu/eurostat/web/national-accounts/)) contains the Italian Gross Domestic Product (GDP) at  at current prices (in euro), with time series spanning the period 2000:Q1-2019:Q4.
+
+```{r itagdp, dpi=300, out.width = '90%', fig.align='center', fig.show="hold", fig.dim = c(10, 6)}
+# Dataset
+data(itagdp) 
+str(itagdp)
+autoplot(itagdp, y = NULL) + theme_minimal()
+```
+
+The output, income and expenditure approaches are represented as three differente hierarchies that share the same top-level series ($GDP$), but not the bottom-level series.
+
+```{r plot-itagdp, dpi=300, out.width = '50%', fig.align='center', fig.show="hold", fig.dim = c(6, 4)}
+plot_mat <- function(mat, font_size = 8, caption_label = NULL){
+    melt(mat) |>
+    ggplot(aes(x = Var2, y = Var1)) + 
+    geom_tile(aes(fill=as.character(value)), color = "grey") + 
+    scale_fill_manual(values = c("-1" = "red", "0" = "white", "1" = "black")) +
+    labs(x=NULL, y=NULL, title=NULL) +
+    scale_y_discrete(limits=rev) + 
+    scale_x_discrete(position = "top") +
+    labs(caption = caption_label) +
+    coord_fixed() + 
+    theme_void() +
+    theme(axis.text.x=element_text(size=font_size, vjust=0.5, angle = 90, hjust=0),
+          axis.text.y=element_text(size=font_size, hjust=1), 
+          plot.caption = element_text(size=rel(0.9), hjust=0.5, face = "bold"),
+          legend.position = "none")
+
+}
+marrangeGrob(list(plot_mat(incside$agg_mat, caption_label = "Income hierarchy"),
+                  plot_mat(outside$agg_mat, caption_label = "Output hierarchy"), 
+                  plot_mat(expside$agg_mat, caption_label = "Expenditure hierarchy")), 
+             top = NULL, layout_matrix = matrix(c(1, 2, 3, 3, 3, 3, 3,3), 2, 4))
+```
+
+The complete  $(9 \times 21)$ zero constraints matrix encompassing output, expenditure and income sides is represented in the following figure. 
+
+```{r gdpconsmat, dpi=300, out.width = '90%', fig.align='center', fig.show="hold", fig.dim = c(11, 4)}
+rownames(gdpconsmat)[c(1,2,4)] <- c("GDP[O]", "GDP[I]", "GDP[E]")
+rownames(gdpconsmat)[-c(1,2,4)] <- colnames(gdpconsmat)[2:7] 
+plot_mat(gdpconsmat)
+```
+
+A linear combination matrix for a general linearly constrained multiple time series may be construct [@Girolimetto2023-ft].
+
+```{r lcmat-gdp, dpi=300, out.width = '90%', fig.align='center', fig.show="hold", fig.dim = c(11, 4)}
+obj <- lcmat(gdpconsmat) 
+A <- obj$agg_mat
+plot_mat(as.matrix(A), caption_label = "Income, Output and Expenditure linear combination matrix")
+```
+
+# References
+
+::: {#refs}
+:::
+
+
+

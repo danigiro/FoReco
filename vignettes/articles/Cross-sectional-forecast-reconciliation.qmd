@@ -1,0 +1,387 @@
+---
+title: "Cross-sectional forecast reconciliation"
+author: "Daniele Girolimetto"
+date: "`r Sys.Date()`"
+package: FoReco
+output: rmarkdown::html_vignette
+bibliography: references.bib
+csl: apa.csl
+---
+
+```{r, include = FALSE}
+#| label: knitr
+#| include: false
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Introduction
+
+This vignette demonstrates the use of the `FoReco` package for cross-sectional forecast reconciliation. We will work through examples using grouped and general linearly constrained time series, showing how to obtain base forecasts, reconcile these forecasts, and address practical challenges such as non-negativity constraints and immutable forecasts. We will also explore probabilistic forecast reconciliation.
+
+## Packages
+
+First, we load the necessary packages. 
+
+```{r setup, warning = FALSE, message = FALSE}
+library(FoReco)   # -> To perform reconciliation
+library(forecast)  # -> To obtain base forecasts
+```
+
+# `vndata`: Groupped time series
+
+We will use the `vndata` dataset [@Wickramasuriya2019], which contains grouped time series data, and `vnaggmat`, which is the corresponding aggregation matrix. See the [dataset vignette](Dataset-vndata-and-itagdp.html) for more details.
+
+```{r}
+#| label: data-vn
+data(vndata)      # dataset
+data(vnaggmat)    # Agg mat matrix
+```
+
+## Base forecast
+
+To obtained the base forecasts, we fit an ETS model with log transformation to each series. We handle zeros by replacing them with half the minimum non-zero value in the series [@Wickramasuriya2020-zk], then fit the ETS model and generate forecasts.
+
+```{r}
+#| label: base-vn
+model <- setNames(vector(mode='list', length=NCOL(vndata)), colnames(vndata))
+fc_obj <- setNames(vector(mode='list', length=NCOL(vndata)), colnames(vndata))
+
+# ETS model with log transformation
+ets_log <- function(x, ...){
+  x[x==0] <- min(x[x!=0])/2
+  ets(x, lambda = 0, ...)
+}
+
+for(i in 1:NCOL(vndata)){
+  model[[i]] <- ets_log(vndata[, i])
+  fc_obj[[i]] <- forecast(model[[i]], h = 12)
+}
+```
+We extract the point forecasts and residuals from the fitted models.
+```{r}
+#| label: point-vn
+# Point forecasts
+base <- do.call(cbind, lapply(fc_obj, function(x) x$mean))
+str(base, give.attr = FALSE)
+# Residuals
+res <- do.call(cbind, lapply(fc_obj, residuals, type = "response"))
+str(res, give.attr = FALSE)
+```
+
+## Point forecast reconciliation
+
+We apply various reconciliation methods to the base forecasts to ensure they add up correctly across different levels of aggregation.
+
+Bottom-up reconciliation [@Dunn1976-kv] aggregates forecasts from the lowest level to higher levels.
+
+```{r}
+#| label: bu-vn
+fc_bts <- base[, colnames(vnaggmat)]
+rf_bu <- csbu(fc_bts, agg_mat = vnaggmat)
+str(rf_bu, give.attr = FALSE)
+```
+
+In the top-down reconciliation for genuine hierarchical/grouped time series [@Gross1990-uf], the forecast of `Total` (top-level series, expected to be positive) is disaggregated according to a proportional scheme (weights) such that:
+
+- the top-level value remains unchanged;
+
+- all the bottom time series reconciled forecasts are non-negative.
+
+
+```{r}
+#| label: td-vn
+bts <- vndata[, colnames(vnaggmat)]
+total <- vndata[, "Total"]
+fc_total <- base[, "Total"]
+
+# Average historical proportions - Gross-Sohl method A
+p_gsa <- colMeans(apply(bts, 2, function(x) x/total))
+rf_td_gsa <- cstd(fc_total, agg_mat = vnaggmat, weights = p_gsa)
+str(rf_td_gsa, give.attr = FALSE)
+
+# Proportions of the historical averages - Gross-Sohl method F
+p_gsf <- colMeans(bts)/mean(total)
+rf_td_gsf <- cstd(fc_total, agg_mat = vnaggmat, weights = p_gsf)
+str(rf_td_gsf, give.attr = FALSE)
+```
+
+The level conditional coherent reconciliation (LCC) is a generalization of the the original proposal by @Hollyman2021-zq where the reconciled forecasts are conditional to (i.e., constrained by) the base forecasts of a specific upper level of the hierarchy [@DiFonzo2024-ijf].
+
+```{r}
+#| label: lcc-vn
+rf_lcc <- cslcc(base = base, agg_mat = vnaggmat,
+                res = res, comb = "wls")
+str(rf_lcc, give.attr = FALSE)
+```
+
+Finally we can obtained the optimal (in least squares sense) combination cross-sectional reconciled forecast [@Wickramasuriya2019; @Panagiotelis2021-rh; @Girolimetto2023-ft].
+
+```{r}
+#| label: opt-vn
+rf_opt <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr")
+str(rf_opt, give.attr = FALSE)
+```
+
+The following table shows some options for the optimal combination cross-sectional reconciliation function `csrec()`. 
+
+<style type="text/css">
+.tg .tr-bottom{border:hidden;border-bottom:1px solid black;}
+.tg .tg-center{text-align:center;}
+.tg .tg-right{text-align:right;}
+.tg .tg-left{text-align:left;}
+.tg .tg-rvxo{font-size:small;font-style:italic;text-align:left;}
+.tg a{color:inherit;text-decoration:none;}
+</style>
+
+<table class="tg" style="table-layout:fixed;width:75%;">
+<thead>
+  <tr style="border: hidden;border-top-style:solid;border-bottom-style:solid;">
+    <th class="tg-center">Projection approach</th>
+    <th class="tg-center">Structural approach</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td class="tg-center" colspan = 2 style="font-size:small;font-style:italic;">Standard</td>
+  </tr>
+  <tr class="tr-bottom">
+    <td class="tg-center" style="border-right-style:double;">`approach="proj"`
+    $$
+    \tilde{\mathbf{y}}_h = \left[\mathbf{I}_n - \mathbf{W}\mathbf{C}'(\mathbf{C}\mathbf{W}\mathbf{C}')^{-1}\mathbf{C}\right] \hat{\mathbf{y}}_h
+    $$
+    </td>
+    <td class="tg-center">`approach="strc"` 
+    $$
+    \tilde{\mathbf{y}}_h = \mathbf{S}(\mathbf{S}'\mathbf{W}^{-1}\mathbf{S})^{-1}\mathbf{S}'\mathbf{W}^{-1} \hat{\mathbf{y}}_h
+    $$
+</td>
+  </tr>
+  <tr>
+    <td class="tg-center" colspan = 2 style="font-size:small;font-style:italic;border-top-style:solid;">Non-negative forecast reconciliation (osqp)</td>
+  </tr>
+  <tr class="tr-bottom">
+    <td class="tg-center" style="border-right-style:double;">`approach="proj"` + `nn="osqp"` </br></br> or </br> `nn="proj_osqp"`</td>
+    <td class="tg-center">`approach="strc"` + `nn="osqp"` </br> or </br>  `nn="strc_osqp"`</td>
+  </tr>
+  <tr>
+    <td class="tg-center" colspan = 2 style="font-size:small;font-style:italic;border-top-style:solid;">Non-negative forecast reconciliation (sntz)</td>
+  </tr>
+  <tr class="tr-bottom">
+    <td class="tg-center" style="border-right-style:double;">not supported*</td>
+    <td class="tg-center">`nn="sntz"`</td>
+  </tr>
+  <tr>
+    <td class="tg-center" colspan = 2 style="font-size:small;font-style:italic;border-top-style:solid;">Immutable forecast reconciliation</td>
+  </tr>
+  <tr class="tr-bottom">
+    <td class="tg-center" style="border-right-style:double;">supported</td>
+    <td class="tg-center">supported</td>
+  </tr>
+</tbody>
+  <tfoot style="border:hidden;border-top:1px solid black;font-size:small;"><tr><td colspan="2">*&nbsp;If the cross-sectional zero-constraints matrix is $\mathbf{C} = [\mathbf{I}\quad-\mathbf{A}]$, then `nn="sntz"` is supported.</td></tr></tfoot>
+</table>
+
+## Practical challenges
+
+### Non negativity issues
+
+Unfortunately, our reconciled forecasts contain negative values, even though we used non-negative base forecasts during the reconciliation.
+```{r}
+#| label: nn-opt-vn
+recoinfo(rf_opt)
+```
+To address this issue, we can use two approaches:
+
+- State-of-the-art numerical optimization procedure, **osqp** [@Stellato2020-jd].
+
+```{r oct-rec-osqp}
+#| label: osqp-opt-vn
+rf_osqp <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", nn = "osqp")
+tmp <- recoinfo(rf_osqp)
+tmp$info # OSQP information matrix 
+```
+
+- Simple heuristic strategy: set-negative-to-zero, **sntz** [@Di_Fonzo2023-ae].
+
+```{r oct-rec-sntz}
+#| label: sntz-opt-vn
+rf_sntz <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", 
+                     nn = "sntz")
+recoinfo(rf_sntz)
+```
+
+### A priori constrained (immutable) forecasts
+
+Sometimes we may wish to incorporate a priori knowledge during the reconciliation process [@Zhang2023-yj] in order to improve the accuracy of the reconciled forecasts. For example, suppose we want to fix the forecasts of the states level series at the base forecasts values.
+
+```{r}
+#| label: imm-vn
+rf_imm <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", immutable = c(2:8))
+str(rf_imm, give.attr = FALSE)
+```
+
+```{r}
+#| label: check_imm-vn
+round(rf_imm[, 2:8] - base[, 2:8], 6)
+```
+
+## Probabilistic forecast reconciliation
+
+@Panagiotelis2023-se shows that a sample from the reconciled distribution can be obtained by reconciling a sample from the incoherent distribution. This distinction between the incoherent sample and the reconciliation allows us to separate the two steps.
+
+We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
+
+```{r}
+#| label: csjb-vn
+# Base forecasts' sample:
+# we simulate from the base models by sampling errors 
+# while keeping the cross-sectional dimension fixed.
+B <- 100
+base_csjb <- csboot(model, B, 12)$sample
+
+# Reconciled forecasts' sample: 
+# we reconcile each member of a sample from the incoherent distribution.
+reco_csjb <- apply(base_csjb, 3, csrec, agg_mat = vnaggmat, res = res, nn = "sntz",
+                   comb = "shr", keep = "recf", simplify = FALSE)
+reco_csjb <- simplify2array(reco_csjb)
+rownames(reco_csjb) <- rownames(base_csjb)
+str(reco_csjb, give.attr = FALSE)
+```
+A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts.
+```{r}
+#| label: gauss-vn
+# Multi-step residuals
+hres <- lapply(1:12, function(h) 
+  sapply(model, residuals, type='response', h = h))
+# List of H=12 covariance matrix (one for each forecast horizon)
+cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
+
+# Base forecasts' sample:
+# we simulate from a multivariate normal distribution.
+base_csg <- lapply(1:12, function(h) MASS::mvrnorm(n = B, mu = base[h, ], Sigma = cov_shr[[h]]))
+base_csg <- simplify2array(base_csg)
+dimnames(base_csg) <- dimnames(base_csjb)
+
+# Reconciled forecasts' sample:
+# we reconcile each member of the base forecasts' sample.
+reco_csg <- apply(base_csg, 3, csrec, agg_mat = vnaggmat, res = res, nn = "sntz",
+                   comb = "shr", keep = "recf", simplify = FALSE)
+reco_csg <- simplify2array(reco_csg)
+rownames(reco_csg) <- rownames(base_csg)
+str(reco_csg, give.attr = FALSE)
+```
+
+
+# `itagdp`: general linearly constrained multiple time series
+
+In this section, we work with the `itagdp` dataset and the corresponding zero-constrained matrix `gdpconsmat`. This dataset illustrates reconciliation under more complex linear constraints where an unique aggregation is not available. See the [dataset vignette](Dataset-vndata-and-itagdp.html) for more details.
+
+```{r}
+#| label: data-gdp
+data(itagdp)      # dataset
+data(gdpconsmat)  # Zero-constrained matrix
+```
+
+## Base forecasts
+
+We fit ARIMA models to each series and generate base forecasts. 
+
+```{r}
+#| label: base-gdp
+model <- setNames(vector(mode='list', length=NCOL(itagdp)), colnames(itagdp))
+fc_obj <- setNames(vector(mode='list', length=NCOL(itagdp)), colnames(itagdp))
+for(i in 1:NCOL(itagdp)){
+  model[[i]] <- auto.arima(itagdp[, i])
+  fc_obj[[i]] <- forecast(model[[i]], h = 4)
+}
+```
+
+```{r}
+#| label: point-gdp
+# Point forecasts
+base <- do.call(cbind, lapply(fc_obj, function(x) x$mean))
+str(base, give.attr = FALSE)
+# Residuals
+res <- do.call(cbind, lapply(fc_obj, function(x) x$residuals))
+str(res, give.attr = FALSE)
+
+```
+
+## Point forecast reconciliation
+
+We apply the optimal reconciliation method to the base forecasts, considering the linear constraints defined by `gdpconsmat`.
+
+```{r}
+#| label: opt-gdp
+rf_opt <- csrec(base = base, cons_mat = gdpconsmat, res = res, comb = "wls")
+str(rf_opt, give.attr = FALSE)
+```
+
+### Practical challenge: immutable forecast
+In this case, we want to fix the forecasts of the top level series ($GDP$) at the base forecasts values.
+```{r}
+#| label: imm-gdp
+rf_imm <- csrec(base = base, cons_mat = gdpconsmat, res = res, comb = "wls", immutable = c(1))
+str(rf_imm, give.attr = FALSE)
+```
+
+```{r}
+#| label: check-imm-gdp
+rf_imm[,1]-base[,1]
+```
+
+## Probabilistic forecast reconciliation
+
+We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
+
+```{r}
+#| label: csjb-gdp
+# Base forecasts' sample:
+# we simulate from the base models by sampling errors 
+# while keeping the cross-sectional dimension fixed.
+B <- 100
+base_csjb <- csboot(model, B, 4)$sample
+
+# Reconciled forecasts' sample: 
+# we reconcile each member of a sample from the incoherent distribution.
+reco_csjb <- apply(base_csjb, 3, csrec, cons_mat = gdpconsmat, res = res, 
+                   comb = "shr", keep = "recf", simplify = FALSE)
+reco_csjb <- simplify2array(reco_csjb)
+rownames(reco_csjb) <- rownames(base_csjb)
+str(reco_csjb, give.attr = FALSE)
+```
+Alternatively, we can use a parametric method.
+
+```{r}
+#| label: gauss-gdp
+# Multi-step residuals
+hres <- lapply(1:4, function(h) 
+  sapply(model, residuals, type='response', h = h))
+# List of H=12 covariance matrix (one for each forecast horizon)
+cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
+
+# Base forecasts' sample:
+# we simulate from a multivariate normal distribution.
+base_csg <- lapply(1:4, function(h) MASS::mvrnorm(n = B, mu = base[h, ], Sigma = cov_shr[[h]]))
+base_csg <- simplify2array(base_csg)
+dimnames(base_csg) <- dimnames(base_csjb)
+
+# Reconciled forecasts' sample:
+# we reconcile each member of the base forecasts' sample.
+reco_csg <- apply(base_csg, 3, csrec, cons_mat = gdpconsmat, res = res, 
+                   comb = "shr", keep = "recf", simplify = FALSE)
+reco_csg <- simplify2array(reco_csg)
+rownames(reco_csg) <- rownames(base_csg)
+str(reco_csg, give.attr = FALSE)
+```
+
+# References
+
+::: {#refs}
+:::
+
+
+
