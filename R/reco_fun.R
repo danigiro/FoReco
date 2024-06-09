@@ -84,7 +84,6 @@ reco.strc <- function(base, strc_mat, cov_mat, ...){
     lm_sx1 <- methods::as(StWm %*% strc_mat, "CsparseMatrix")
     lm_dx1 <- methods::as(Matrix::tcrossprod(StWm, base), "CsparseMatrix")
     reco <- t(strc_mat %*% lin_sys(lm_sx1, lm_dx1))
-    #system.time(reco <- t(strc_mat %*% lin_sys(lm_sx1, lm_dx1)))
     return(as.matrix(reco))
   } else {
     Q <- lin_sys(cov_mat, strc_mat)
@@ -173,7 +172,7 @@ reco.proj_osqp <- function(base, cons_mat, cov_mat,
       polish = TRUE
     )
   }
-  #browser()
+
   # OSQP
   osqp_step <- apply(base[id, , drop = FALSE], 1, function(x){
     if(!is.null(immutable)){
@@ -510,7 +509,7 @@ reco.proj_immutable2 <- function(base, cons_mat, cov_mat, immutable, ...){
     rowSums(base[, immutable, drop = FALSE]%*%w))
   cov_mat_red <- cov_mat[-immutable , -immutable, drop = FALSE]
   base_red <- base[, -immutable, drop = FALSE]
-  #browser()
+
   if(length(immutable)>2){
     check <- which(rowSums(cons_mat_red != 0) == 0)
     if(length(check) > 0 && any(cons_vec[, check] > sqrt(.Machine$double.eps))){
@@ -695,7 +694,7 @@ reco.kann <- function(base, cons_mat, cov_mat, nn = NULL,
                                  immutable = immutable)
       }
       x <- as.numeric(x)
-      #browser()
+
       if(all(x >= (-tol))){
         flag <- 1
         break
@@ -799,7 +798,7 @@ reco.fbpp <- function(base, cons_mat, cov_mat, id_nn = NULL, nn = NULL,
                                  immutable = immutable)
       }
       x <- as.numeric(x)
-      #browser()
+
       if(all(x >= (-tol))){
         flag <- 1
         break

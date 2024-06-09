@@ -65,10 +65,12 @@ shrink_estim <- function(x, mse = TRUE){
 
   # Lambda
   xs <- scale(x, center = FALSE, scale = sqrt(diag(covm)))
+  xs[is.nan(xs)] <- 0
   xs <- xs[stats::complete.cases(xs), ]
   vS <- (1 / (n * (n - 1))) * (crossprod(xs^2) - ((1 / n) * (crossprod(xs))^2))
   diag(vS) <- 0
   corm <- covcor(covm)
+  corm[is.nan(corm)] <- 0
   diag(corm) <- diag(corm)-1
   corm <- corm^2
   lambda <- sum(vS) / sum(corm)
@@ -645,7 +647,6 @@ aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE){
       }else{
         cli_abort("{.code {tew}} is not implemented yet.", call = NULL)
       }
-      #browser()
 
       if(is.character(align)){
         if(align=='end' & n%%k != 0){

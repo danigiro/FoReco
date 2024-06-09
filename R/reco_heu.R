@@ -132,7 +132,6 @@ iterec <- function(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
   }
   names_label <- c("cs" = "Cross-sectional",
                    "te" = "Temporal")
-
   flag <- -1
   tmp <- base
   dmat <- array(NA, dim = c(2, 3, itmax+1, 2),
@@ -144,7 +143,6 @@ iterec <- function(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
                                                 te_const_mat = te_const_mat)
 
   pwidth <- max(nchar(round(dmat[, norm, 1,1], digits = 2)), 15)
-
   if(verbose){
     cli_rule("{.strong Iterative heuristic cross-temporal forecast reconciliation}")
     cli_text("{.emph Legend: i\u00a0=\u00a0iteration; s\u00a0=\u00a0step. Norm\u00a0=\u00a0\"{norm}\".}")
@@ -171,6 +169,7 @@ iterec <- function(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
 
   csc_list <- cscov_list(cslist = cslist, kset = kset, res = res, n = NROW(base))
   tec_list <- tecov_list(telist = telist, n = NROW(base), res = res)
+
   for(i in 1:itmax){
     tmp <- step1_func(base = tmp, telist = telist, cslist = cslist, kset = kset,
                       csc_list = csc_list, tec_list = tec_list)
@@ -200,6 +199,7 @@ iterec <- function(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
     cli_rule()
     #cat("-------------------------------------------------------------------\n")
   }
+
   out <- as.matrix(tmp)
   colnames(out) <- namesTE(kset = kset, h = h)
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base))
@@ -496,18 +496,35 @@ temeanM <- function(telist, res = NULL, n, ...){
 }
 
 # Cross-sectional covariance matrices: list
+# cscov_list <- function(cslist, res = NULL, kset, n, ...){
+#   input_list <- NULL
+#   cslist$n <- n
+#   input_list[as.character(kset)] <- list(cslist)
+#   if(!is.null(res)){
+#     res <- mat2list(res, kset)
+#   }
+#
+#   out <- lapply(as.character(kset), function(k){
+#     input_list[[k]]$res <- res[[k]]
+#     do.call("cscov", input_list[[k]])
+#   })
+#   names(out) <- as.character(kset)
+#   return(out)
+# }
 cscov_list <- function(cslist, res = NULL, kset, n, ...){
   input_list <- NULL
   cslist$n <- n
   input_list[as.character(kset)] <- list(cslist)
-  if(!is.null(res)){
+  if(is.null(cslist$comb) || cslist$comb %in% c("ols", "str")){
+    out <- rep(cslist$comb, length(kset))
+  }else{
     res <- mat2list(res, kset)
+    out <- lapply(as.character(kset), function(k){
+      input_list[[k]]$res <- res[[k]]
+      do.call("cscov", input_list[[k]])
+    })
   }
 
-  out <- lapply(as.character(kset), function(k){
-    input_list[[k]]$res <- res[[k]]
-    do.call("cscov", input_list[[k]])
-  })
   names(out) <- as.character(kset)
   return(out)
 }
@@ -516,30 +533,38 @@ cscov_list <- function(cslist, res = NULL, kset, n, ...){
 tecov_list <- function(telist, res = NULL, n, ...){
   input_list <- NULL
   input_list[1:n] <- list(telist)
-  if(!is.null(res)){
+  if(is.null(telist$comb) || telist$comb %in% c("ols", "str")){
+    out <- rep(telist$comb, n)
+  }else{
     res <- split(res, 1:NROW(res))
-  }
 
-  out <- lapply(1:n, function(i){
-    input_list[[i]]$res <- res[[i]]
-    do.call("tecov", input_list[[i]])
-  })
+    out <- lapply(1:n, function(i){
+      input_list[[i]]$res <- res[[i]]
+      do.call("tecov", input_list[[i]])
+    })
+  }
 
   return(out)
 }
 
 # Cross-sectional reconciliation step
 csstep <- function(base, cslist, csc_list, kset, ...){
-  base <- mat2list(base, kset)
-  input_list <- NULL
-  input_list[as.character(kset)] <- list(cslist)
+  if(is.null(cslist$comb) || cslist$comb %in% c("ols", "str")){
+    cslist$base <- t(base)
+    out <- do.call("csrec", cslist)
+    return(unname(t(out)))
+  }else{
+    base <- mat2list(base, kset)
+    input_list <- NULL
+    input_list[as.character(kset)] <- list(cslist)
 
-  out <- sapply(as.character(kset), function(k){
-    input_list[[k]]$base <- base[[k]]
-    input_list[[k]]$comb <- csc_list[[k]]
-    do.call("csrec", input_list[[k]])
-  })
-  unname(t(do.call("rbind", out)))
+    out <- sapply(as.character(kset), function(k){
+      input_list[[k]]$base <- base[[k]]
+      input_list[[k]]$comb <- csc_list[[k]]
+      do.call("csrec", input_list[[k]])
+    })
+    return(unname(t(do.call("rbind", out))))
+  }
 }
 
 csstepM <- function(base, cslist, res = NULL, kset, ...){
@@ -559,19 +584,25 @@ csstepM <- function(base, cslist, res = NULL, kset, ...){
 }
 
 # Temporal reconciliation step
-testep <- function(base, telist, tec_list, ...){
-  base <- split(base, 1:NROW(base))
-  input_list <- NULL
-  input_list[1:NROW(base)] <- list(telist)
-  if(!is.null(res)){
-    res <- split(res, 1:NROW(res))
-  }
+testep <- function(base, telist, tec_list, kset, ...){
+  if(is.null(telist$comb) || telist$comb %in% c("ols", "str")){
+    h <- NCOL(base)/sum(max(kset)/kset)
+    n <- NROW(base)
+    id <- rep(rep(rev(kset), h*max(kset)/kset), n)
+    telist$base <- as.vector(t(base))[order(id)]
+    out <- do.call("terec", telist)[order(order(id))]
+    out <- matrix(out, ncol = n)
+  }else{
+    base <- split(base, 1:NROW(base))
+    input_list <- NULL
+    input_list[1:NROW(base)] <- list(telist)
 
-  out <- sapply(1:NROW(base), function(i){
-    input_list[[i]]$base <- base[[i]]
-    input_list[[i]]$comb <- tec_list[[i]]
-    do.call("terec", input_list[[i]])
-  })
+    out <- sapply(1:NROW(base), function(i){
+      input_list[[i]]$base <- base[[i]]
+      input_list[[i]]$comb <- tec_list[[i]]
+      do.call("terec", input_list[[i]])
+    })
+  }
   unname(t(out))
 }
 
