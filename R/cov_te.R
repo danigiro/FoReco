@@ -89,16 +89,23 @@ tecov.ols <- function(comb = "ols", ..., agg_order = NULL){
   if(is.null(agg_order)){
     cli_abort("Argument {.arg agg_order} is NULL.", call = NULL)
   }
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
   .sparseDiagonal(sum(max(kset)/kset))
 }
 
 #' @export
-tecov.str <- function(comb = "str", ..., agg_order = NULL, tew = "sum"){
-  if(is.null(agg_order)){
-    cli_abort("Argument {.arg agg_order} is NULL.", call = NULL)
+tecov.str <- function(comb = "str", ..., agg_order = NULL, tew = "sum", strc_mat = NULL){
+  if(is.null(strc_mat)){
+    if(is.null(agg_order)){
+      cli_abort("Argument {.arg agg_order} is NULL.", call = NULL)
+    }
+    strc_mat <- tetools(agg_order = agg_order, tew = tew)$strc_mat
   }
-  strc_mat <- tetools(agg_order = agg_order, tew = tew)$strc_mat
+
   .sparseDiagonal(x = rowSums(strc_mat))
 }
 
@@ -112,7 +119,11 @@ tecov.wlsv <- function(comb = "wlsv", ..., agg_order = NULL, res = NULL, mse = T
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) != 1){
     cli_abort("{.arg res} is not a vector.", call = NULL)
@@ -138,7 +149,11 @@ tecov.wlsh <- function(comb = "wlsh", ..., agg_order = NULL, res = NULL, mse = T
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) != 1){
     cli_abort("{.arg res} is not a vector.", call = NULL)
@@ -161,7 +176,11 @@ tecov.acov <- function(comb = "acov", ..., agg_order = NULL, res = NULL, mse = T
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) != 1){
     cli_abort("{.arg res} is not a vector.", call = NULL)
@@ -220,7 +239,11 @@ tecov.sar1 <- function(comb = "sar1", ..., agg_order = NULL, res = NULL,
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) != 1){
     cli_abort("{.arg res} is not a vector.", call = NULL)
@@ -251,7 +274,11 @@ tecov.har1 <- function(comb = "har1", ..., agg_order = NULL, res = NULL, mse = T
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) != 1){
     cli_abort("{.arg res} is not a vector.", call = NULL)
@@ -284,7 +311,11 @@ tecov.shr <- function(comb = "shr", ..., agg_order = NULL, res = NULL,
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) != 1){
     cli_abort("{.arg res} is not a vector.", call = NULL)
@@ -307,7 +338,11 @@ tecov.sam <- function(comb = "sam", ..., agg_order = NULL, res = NULL, mse = TRU
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) != 1){
     cli_abort("{.arg res} is not a vector.", call = NULL)

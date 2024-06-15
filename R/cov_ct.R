@@ -115,17 +115,25 @@ ctcov.ols <- function(comb = "ols", ..., n = NULL, agg_order = NULL){
     cli_abort("Argument {.arg n} and/or {.arg agg_order} are NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
+
   .sparseDiagonal(n * sum(max(kset)/kset)) # Omega
 }
 
 #' @export
-ctcov.str <- function(comb = "str", ..., agg_mat = NULL, agg_order = NULL, tew = "sum"){
-  if(is.null(agg_mat) || is.null(agg_order)){
-    cli_abort("Argument {.arg agg_mat} and/or {.arg agg_order} are NULL.", call = NULL)
+ctcov.str <- function(comb = "str", ..., agg_mat = NULL, agg_order = NULL, tew = "sum", strc_mat = NULL){
+  if(is.null(strc_mat)){
+    if(is.null(agg_mat) || is.null(agg_order)){
+      cli_abort("Argument {.arg agg_mat} and/or {.arg agg_order} are NULL.", call = NULL)
+    }
+
+    strc_mat <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)$strc_mat
   }
 
-  strc_mat <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)$strc_mat
   .sparseDiagonal(x = rowSums(strc_mat)) # Omega
 }
 
@@ -135,7 +143,12 @@ ctcov.csstr <- function(comb = "csstr", ..., agg_mat = NULL, agg_order = NULL){
     cli_abort("Argument {.arg agg_mat} and/or {.arg agg_order} are NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
+
   Scs <- cstools(agg_mat = agg_mat)$strc_mat
   .sparseDiagonal(x = rep(rowSums(Scs), each = sum(max(kset)/kset))) # Omega
 }
@@ -160,7 +173,12 @@ ctcov.sam <- function(comb = "sam", ..., agg_order = NULL, res = NULL, mse = TRU
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -181,7 +199,12 @@ ctcov.wlsh <- function(comb = "wlsh", ..., agg_order = NULL, res = NULL, mse = T
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -203,7 +226,12 @@ ctcov.wlsv <- function(comb = "wlsv", ..., agg_order = NULL, res = NULL, mse = T
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -228,7 +256,12 @@ ctcov.shr <- function(comb = "shr", ..., agg_order = NULL, res = NULL,
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -249,7 +282,12 @@ ctcov.acov <- function(comb = "acov", ..., agg_order = NULL, res = NULL, mse = T
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -273,7 +311,11 @@ ctcov.Ssam <- function(comb = "Ssam", ..., agg_order = NULL, res = NULL, mse = T
 
   n <- NROW(res)
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -298,7 +340,12 @@ ctcov.Sshr <- function(comb = "Sshr", ..., agg_order = NULL, res = NULL,
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -322,7 +369,12 @@ ctcov.bdshr <- function(comb = "bdshr", ..., agg_order = NULL, res = NULL,
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -347,7 +399,12 @@ ctcov.bdsam <- function(comb = "bdsam", ..., agg_order = NULL, res = NULL, mse =
   }
 
   n <- NROW(res)
-  kset <- tetools(agg_order = agg_order)$set
+
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -372,7 +429,12 @@ ctcov.hbshr <- function(comb = "hbshr", ..., agg_mat = NULL, agg_order = NULL, r
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
+
   strc_mat <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)$strc_mat
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
@@ -407,7 +469,12 @@ ctcov.hbsam <- function(comb = "hbsam", ..., agg_mat = NULL, agg_order = NULL, r
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
+
   strc_mat <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)$strc_mat
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
@@ -512,7 +579,11 @@ ctcov.bshr <- function(comb = "bshr", ..., agg_mat = NULL, agg_order = NULL, res
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
@@ -545,7 +616,11 @@ ctcov.bsam <- function(comb = "bsam", ..., agg_mat = NULL, agg_order = NULL, res
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
 
-  kset <- tetools(agg_order = agg_order)$set
+  if(length(agg_order)>1){
+    kset <- sort(agg_order, decreasing = TRUE)
+  }else{
+    kset <- rev(all_factors(agg_order))
+  }
 
   if(NCOL(res) %% sum(max(kset)/kset) != 0){
     cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)

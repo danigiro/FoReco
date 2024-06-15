@@ -95,11 +95,16 @@ cscov.ols <- function(comb = "ols", ..., n = NULL){
 }
 
 #' @export
-cscov.str <- function(comb = "str", ..., agg_mat = NULL){
-  if(is.null(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is NULL.", call = NULL)
+cscov.str <- function(comb = "str", ..., agg_mat = NULL, strc_mat = NULL){
+  if(is.null(strc_mat)){
+    if(is.null(agg_mat)){
+      cli_abort("Argument {.arg agg_mat} is NULL.", call = NULL)
+    }
+
+    strc_mat <- cstools(agg_mat = agg_mat)$strc_mat
   }
-  .sparseDiagonal(x = rowSums(cstools(agg_mat = agg_mat)$strc_mat))
+
+  .sparseDiagonal(x = rowSums(strc_mat))
 }
 
 #' @export

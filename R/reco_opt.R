@@ -142,7 +142,7 @@ csrec <- function(base, agg_mat, cons_mat,
   if(is(comb, "Matrix") | is(comb, "matrix")){
     cov_mat <- comb
   }else{
-    cov_mat <- cscov(comb = comb, n = n, agg_mat = agg_mat, res = res, ...)
+    cov_mat <- cscov(comb = comb, n = n, agg_mat = agg_mat, res = res, strc_mat = strc_mat, ...)
   }
   if(NROW(cov_mat) != n | NCOL(cov_mat) != n){
     cli_abort(c("Incorrect covariance dimensions.",
@@ -335,7 +335,7 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
   if(is(comb, "Matrix") | is(comb, "matrix")){
     cov_mat <- comb
   }else{
-    cov_mat <- tecov(comb = comb, res = res, agg_order = agg_order, tew = tew, ...)
+    cov_mat <- tecov(comb = comb, res = res, agg_order = kset, tew = tew, strc_mat = strc_mat, ...)
   }
 
   if(NROW(cov_mat) != kt | NCOL(cov_mat) != kt){
@@ -585,8 +585,8 @@ ctrec <- function(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
   if(is(comb, "Matrix") | is(comb, "matrix")){
     cov_mat <- comb
   }else{
-    cov_mat <- ctcov(comb = comb, res = res, agg_order = agg_order, agg_mat = agg_mat,
-                     n = tmp$dim[["n"]], tew = tew, ...)
+    cov_mat <- ctcov(comb = comb, res = res, agg_order = tmp$set, agg_mat = agg_mat,
+                     n = tmp$dim[["n"]], tew = tew, strc_mat = strc_mat, ...)
   }
   if(NROW(cov_mat) != prod(tmp$dim[c("kt", "n")]) | NCOL(cov_mat) != prod(tmp$dim[c("kt", "n")])){
     cli_abort(c("Incorrect covariance dimensions.",
