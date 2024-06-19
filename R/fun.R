@@ -107,7 +107,7 @@ lin_sys <- function(msx, mdx){
 # Fast cov2cor
 covcor <- function(V){
   p <- (d <- dim(V))[1L]
-  if(!is.numeric(V) || length(d) != 2L || p != d[2L])
+  if(length(d) != 2L || p != d[2L])
     cli_abort("{.arg V} is not a square numeric matrix", call = NULL)
   Is <- sqrt(1/diag(V))
   if(any(!is.finite(Is)))
