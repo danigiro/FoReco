@@ -9,8 +9,9 @@ bibentry(
                person(given = "Tommaso",
                       family = "Di Fonzo",
                       role = c("aut", "fnd"))),
-  note    = "R package version 1.0",
+  organization    = "R package version 1.0",
   year    = 2024,
+  doi     = "10.32614/CRAN.package.FoReco",
   url     = "https://cran.r-project.org/package=FoReco"
 )
 
@@ -31,7 +32,7 @@ bibentry(
 
 bibentry(
   bibtype = "Article",
-  title   = "Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives",
+  title   = "Cross-temporal probabilistic forecast reconciliation: Methodological and practical issues",
   author  = c(person(given = "Daniele",
                      family = "Girolimetto"),
               person(given = "George",
