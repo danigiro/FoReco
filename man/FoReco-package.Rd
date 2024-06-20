@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Daniele Girolimetto \email{daniele.girolimetto@phd.unipd.it} (\href{https://orcid.org/0000-0001-9387-1232}{ORCID}) [funder]
+\strong{Maintainer}: Daniele Girolimetto \email{daniele.girolimetto@unipd.it} (\href{https://orcid.org/0000-0001-9387-1232}{ORCID}) [funder]
 
 Authors:
 \itemize{

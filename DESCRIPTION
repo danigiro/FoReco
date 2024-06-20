@@ -6,7 +6,7 @@ Authors@R:
     c(person(given = "Daniele",
              family = "Girolimetto",
              role = c("aut", "cre", "fnd"),
-             email = "daniele.girolimetto@phd.unipd.it",
+             email = "daniele.girolimetto@unipd.it",
              comment = c(ORCID = "0000-0001-9387-1232")),
       person(given = "Tommaso",
              family = "Di Fonzo",
