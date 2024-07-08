@@ -147,24 +147,24 @@ balance_hierarchy <- function(agg_mat, nodes = "auto", sparse = TRUE){
   lev_na <- rep(1:length(nodes), nodes)
   Ident <- .sparseDiagonal(nb)
 
-  id_base <- NULL
-  new_nodes <- NULL
-  bam <- do.call(rbind,
-                 lapply(1:length(nodes),
-                        function(id){
-                          idna <- which(lev_na == id)
-                          lev_mat <- agg_mat[idna,,drop = FALSE]
-                          if(!all(colSums(lev_mat) %in% c(1,0))){
-                            cli_warn("In level {id} at least one bottom time
+  tmp <- lapply(1:length(nodes),
+                function(id){
+                  idna <- which(lev_na == id)
+                  lev_mat <- agg_mat[idna,,drop = FALSE]
+                  if(!all(colSums(lev_mat) %in% c(1,0))){
+                    cli_warn("In level {id} at least one bottom time
                                      series is present in two upper time series.
                                      Check {.arg agg_mat}.", call = NULL)
-                          }
-                          id_unb <- which(colSums(lev_mat)==0)
-                          id_base <<- c(id_base, idna, na+id_unb)
-                          bal_mat <- rbind(lev_mat, Ident[id_unb,,drop = FALSE])
-                          new_nodes <<- c(new_nodes, NROW(bal_mat))
-                          return(bal_mat)
-                        }))
+                  }
+                  id_unb <- which(colSums(lev_mat)==0)
+                  id_base <- c(idna, na+id_unb)
+                  bal_mat <- rbind(lev_mat, Ident[id_unb,,drop = FALSE])
+                  new_nodes <- NROW(bal_mat)
+                  return(list(bam = bal_mat, id_base = id_base, new_nodes = new_nodes))
+                })
+  bam <- do.call(rbind, lapply(tmp, "[[", "bam"))
+  id_base <- do.call(c, lapply(tmp, "[[", "id_base"))
+  new_nodes <- do.call(c, lapply(tmp, "[[", "new_nodes"))
 
   out <- list(bam = bam,
               agg_mat = agg_mat,

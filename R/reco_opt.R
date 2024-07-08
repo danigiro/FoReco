@@ -566,12 +566,11 @@ ctrec <- function(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
     }else{
       imm_mat <- sparseMatrix(integer(), integer(), x = numeric(),
                               dims = c(tmp$dim[["n"]], tmp$dim[["kt"]]))
-      zzz <- apply(immutable, 1, function(x){
-        id <- which(rep(tmp$set, tmp$dim[["m"]]/tmp$set) == x[2] &
-                      do.call(c, sapply(tmp$dim[["m"]]/tmp$set, seq.int)) == x[3])
-        imm_mat[x[1], id] <<- 1
-        return(NULL)
+      col_id <- apply(immutable, 1, function(x){
+        which(rep(tmp$set, tmp$dim[["m"]]/tmp$set) == x[2] &
+                do.call(c, sapply(tmp$dim[["m"]]/tmp$set, seq.int)) == x[3])
       })
+      imm_mat[immutable[,1], col_id] <- 1
       imm_vec <- as(t(imm_mat), "sparseVector")
       immutable <- imm_vec@i
     }
