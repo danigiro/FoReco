@@ -1,8 +1,8 @@
 # FoReco 1.0.0
 
-**Note** – The latest release of FoReco, a popular R package for forecast reconciliation, introduces significant changes to its function notation and adds several new features. This major update, FoReco 1.0, is not compatible with previous versions due to the substantial changes made to the package's core structure. The previous version is available on [Github](https://github.com/danigiro/FoReco026) ([docs](https://danigiro.github.io/FoReco026/)).
-
-Due to the significant changes in FoReco 1.0, users are advised to carefully review the updated documentation and examples before using the new version. The latest documentation and release notes are available on [danigiro.github.io/FoReco/](https://danigiro.github.io/FoReco/)
+>**Note** – The latest release of FoReco introduces significant changes to its function notation and adds several new features. This major update, FoReco 1.0, is not compatible with previous versions due to the substantial changes made to the package's core structure. The previous version is available on [Github](https://github.com/danigiro/FoReco026) ([docs](https://danigiro.github.io/FoReco026/)).
+>
+>Due to the significant changes in FoReco 1.0, users are advised to carefully review the updated documentation and examples before using the new version. The latest documentation and release notes are available on [danigiro.github.io/FoReco/](https://danigiro.github.io/FoReco/)
 
 
 * **Updated Function Notation:** All functions related to cross-sectional, temporal, and cross-temporal frameworks now use the prefixes "cs," "te," and "ct," respectively. For example, the optimal combination reconciliation functions are now `csrec()`, `terec()`, and `ctrec()`.
