@@ -5,7 +5,7 @@
 >Due to the significant changes in FoReco 1.0, users are advised to carefully review the updated documentation and examples before using the new version. The latest documentation and release notes are available on [danigiro.github.io/FoReco/](https://danigiro.github.io/FoReco/)
 
 
-* **Updated Function Notation:** All functions related to cross-sectional, temporal, and cross-temporal frameworks now use the prefixes "cs," "te," and "ct," respectively. For example, the optimal combination reconciliation functions are now `csrec()`, `terec()`, and `ctrec()`.
+* **Updated Function Notation:** All functions related to cross-sectional, temporal, and cross-temporal frameworks now use the prefixes **cs**, **te**, and **ct**, respectively. For example, the optimal combination reconciliation functions are now `csrec()`, `terec()`, and `ctrec()`.
 
 * **Simplified Function Outputs:** Reconciliation functions now return only matrices. Additional information can be accessed using `attr(., "FoReco")` or the `recoinfo()` function.
 
