@@ -338,6 +338,12 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
                 do.call(c, sapply(m/kset, seq.int)) == x[2])
       }
     })
+    if (length(immutable) > m) {
+      cli_abort("The number of immutable forecasts {.code NROW(immutable)} can not be bigger than {m}.")
+    }
+    if (rankMatrix(strc_mat[immutable,,drop=FALSE]) < length(immutable)) {
+      cli_abort("The immutable set is infeasible.")
+    }
     if(is.null(immutable)){
       cli_warn("No immutable forecasts", call = NULL)
     }
