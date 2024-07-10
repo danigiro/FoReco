@@ -108,6 +108,7 @@ csrec <- function(base, agg_mat, cons_mat,
   }
 
   n <- tmp$dim[["n"]]
+  nb <- tmp$dim[["nb"]]
   strc_mat <- tmp$strc_mat
   cons_mat <- tmp$cons_mat
 
@@ -135,6 +136,17 @@ csrec <- function(base, agg_mat, cons_mat,
     }
     if(max(immutable) > n){
       cli_abort("{.code max(immutable)} must be less or equal to {n}", call = NULL)
+    }
+    if (length(immutable) > nb) {
+      cli_abort("{.code length(immutable)} must be less or equal to {nb}", call = NULL)
+    }
+    if (!missing(agg_mat)) {
+      agg_immu <- rbind(agg_mat, .sparseDiagonal(nb))[immutable,]
+    } else if (!missing(cons_mat)) {
+      agg_immu <- rbind(cons_mat, .sparseDiagonal(NCOL(base))[immutable, , drop = FALSE])
+    }
+    if (rankMatrix(agg_immu) < min(dim(agg_immu))) {
+      cli_abort("The immutable set {immutable} is infeasible.", call = NULL)
     }
   }
 
