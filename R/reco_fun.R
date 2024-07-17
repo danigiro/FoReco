@@ -468,6 +468,19 @@ reco.proj_immutable <- function(base, cons_mat, cov_mat, immutable = NULL, ...){
     cli_abort("{.code max(immutable)} must be less or equal to {NCOL(base)}", call = NULL)
   }
 
+  # check immutable feasibility
+  # TODO: can proj_immutable2 be more stable than proj_immutable?
+  # Answer issue: https://github.com/danigiro/FoReco/issues/6#issue-2397642027 (@AngelPone)
+  cons_mat_red <- cons_mat[ , -immutable, drop = FALSE]
+  cons_vec <- apply(-cons_mat[ , immutable, drop = FALSE], 1, function(w)
+    rowSums(base[, immutable, drop = FALSE]%*%w))
+  if(length(immutable)>2){
+    check <- which(rowSums(cons_mat_red != 0) == 0)
+    if(length(check) > 0 && any(cons_vec[, check] > sqrt(.Machine$double.eps))){
+      cli_abort("There is no solution with this {.arg immutable} set.",  call = NULL)
+    }
+  }
+
   # Complete constraints matrix (immutable forecasts + linear constraints)
   imm_cons_mat <- .sparseDiagonal(NCOL(base))[immutable, , drop = FALSE]
   imm_cons_vec <- base[, immutable, drop = FALSE]
@@ -554,42 +567,6 @@ reco.strc_immutable <- function(base, strc_mat, cov_mat, immutable = NULL, ...){
     cli_abort("{.code max(immutable)} must be less or equal to {NCOL(base)}", call = NULL)
   }
 
-  # bts <- find_bts(strc_mat)
-  # id <- idrev <- 1:NCOL(cons_mat)
-  # if(any(!(immutable %in% bts))){
-  #   if(is.null(cons_mat)){
-  #     agg_mat <- strc_mat[-bts, , drop = FALSE]
-  #     cons_mat <- Matrix(0, nrow = NROW(agg_mat), ncol = NROW(strc_mat))
-  #     cons_mat[, bts] <- -agg_mat
-  #     cons_mat[, -bts] <- .sparseDiagonal(NROW(cons_mat))
-  #   }
-  #   id <- c(id[!(id%in%immutable) & !(id%in%bts)], id[!(id%in%immutable) & (id%in%bts)], immutable)
-  #   qr <- lcmat(cons_mat[,id, drop = FALSE], method = "rref", verbose = TRUE)
-  #   strc_mat <- rbind(qr$agg_mat, .sparseDiagonal(NCOL(qr$agg_mat)))
-  #   id <- id[qr$pivot]
-  #   idrev <- sort(id, index.return = TRUE)$ix
-  #   base <- base[, id , drop = FALSE]
-  #   cov_mat <- cov_mat[id, id , drop = FALSE]
-  #   bts <- find_bts(strc_mat)
-  #   immutable <- which(id %in% immutable)
-  #   if(any(!(immutable %in% bts))){
-  #     cli_abort("There is no solution with this {.arg immutable} set.", call = NULL)
-  #   }
-  # }
-  #
-  # S1 <- strc_mat[-immutable, -c(immutable-NROW(cons_mat)), drop = FALSE]
-  # S2 <- strc_mat[-bts, c(immutable-NROW(cons_mat)), drop = FALSE]
-  # S2u <- base[, immutable, drop = FALSE]%*%t(S2)
-  # base2 <- Matrix(base)
-  # base2[, !(1:NCOL(base2) %in% bts)] <- (base[, -bts] - S2u)
-  # reco_bts <- base2[, bts, drop = FALSE]
-  # cov_mat_red <- cov_mat[-immutable, -immutable, drop = FALSE]
-  # tmp <- reco.strc(base2[,-immutable, drop = FALSE], strc_mat = S1,
-  #                   cov_mat = cov_mat_red)[, (NROW(S1)-NCOL(S1)+1):NROW(S1), drop = FALSE]
-  # reco_bts[, !(bts %in% immutable)] <- tmp
-  # reco <- reco_bts %*% t(strc_mat)
-  # return(as.matrix(reco[,idrev, drop = FALSE]))
-
   # Code idea: https://github.com/AngelPone/chf
   bts <- find_bts(strc_mat)
   immutable <- sort(immutable)
@@ -608,7 +585,7 @@ reco.strc_immutable <- function(base, strc_mat, cov_mat, immutable = NULL, ...){
           i <- i - 1
           next
         }else{
-          cli_abort("Can not describe the hierarchy.",  call = NULL)
+          cli_abort("There is no solution with this {.arg immutable} set.",  call = NULL)
         }
       }
       determined <- determined[determined != immutable[i]]
@@ -632,7 +609,6 @@ reco.strc_immutable <- function(base, strc_mat, cov_mat, immutable = NULL, ...){
   reco <- reco_bts %*% t(snew)
   return(as.matrix(reco))
 }
-
 
 transform_strc_mat <- function(strc_mat, bts){
   if (length(bts) != NCOL(strc_mat)){

@@ -133,8 +133,14 @@ csrec <- function(base, agg_mat, cons_mat,
     if(NCOL(immutable) != 1){
       cli_abort("{.arg immutable} is not a vector.", call = NULL)
     }
-    if(max(immutable) > n){
+
+    if(max(immutable) >= n){
       cli_abort("{.code max(immutable)} must be less or equal to {n}", call = NULL)
+    }
+
+    if(length(immutable) >= n){
+      # Answer issue: https://github.com/danigiro/FoReco/issues/6#issue-2397642027 (@AngelPone)
+      cli_abort("{.code length(immutable)} must be less than {n}", call = NULL)
     }
   }
 
@@ -309,7 +315,6 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 
   # Check immutable
   if(!is.null(immutable)){
-
     if(is.vector(immutable)){
       immutable <- matrix(immutable, ncol = length(immutable))
     }
@@ -326,8 +331,12 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
                 do.call(c, sapply(m/kset, seq.int)) == x[2])
       }
     })
+
     if(is.null(immutable)){
       cli_warn("No immutable forecasts", call = NULL)
+    }else if(length(immutable) >= kt){
+      # Answer issue: https://github.com/danigiro/FoReco/issues/6#issue-2397642027 (@AngelPone)
+      cli_abort("The number of immutable constraints must be less than {kt}", call = NULL)
     }
   }
 
@@ -573,6 +582,12 @@ ctrec <- function(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
       imm_mat[immutable[,1], col_id] <- 1
       imm_vec <- as(t(imm_mat), "sparseVector")
       immutable <- imm_vec@i
+
+      if(length(immutable) >= tmp$dim[["n"]]*tmp$dim[["kt"]]){
+        # Answer issue: https://github.com/danigiro/FoReco/issues/6#issue-2397642027 (@AngelPone)
+        cli_abort("The number of immutable constraints must be less than {tmp$dim[['n']]*tmp$dim[['kt']]}",
+                  call = NULL)
+      }
     }
   }
 
