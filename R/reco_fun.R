@@ -544,13 +544,13 @@ reco.strc_immutable <- function(base, strc_mat, cov_mat, immutable = NULL, ...){
               call = NULL)
   }
 
-  if(NROW(strc_mat) != NROW(cov_mat) | NCOL(base) != NROW(cov_mat)){
-    cli_abort("The size of the matrices does not match.", call = NULL)
-  }
-
   if(is.null(strc_mat)){
     cli_abort("Please provide a valid {.arg agg_mat} for the structural approach.",
               call = NULL)
+  }
+
+  if(NROW(strc_mat) != NROW(cov_mat) | NCOL(base) != NROW(cov_mat)){
+    cli_abort("The size of the matrices does not match.", call = NULL)
   }
 
   if(is.null(immutable)){
