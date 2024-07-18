@@ -134,7 +134,7 @@ csrec <- function(base, agg_mat, cons_mat,
       cli_abort("{.arg immutable} is not a vector.", call = NULL)
     }
 
-    if(max(immutable) >= n){
+    if(max(immutable) > n){
       cli_abort("{.code max(immutable)} must be less or equal to {n}", call = NULL)
     }
 

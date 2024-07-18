@@ -468,19 +468,6 @@ reco.proj_immutable <- function(base, cons_mat, cov_mat, immutable = NULL, ...){
     cli_abort("{.code max(immutable)} must be less or equal to {NCOL(base)}", call = NULL)
   }
 
-  # check immutable feasibility
-  # TODO: can proj_immutable2 be more stable than proj_immutable?
-  # Answer issue: https://github.com/danigiro/FoReco/issues/6#issue-2397642027 (@AngelPone)
-  cons_mat_red <- cons_mat[ , -immutable, drop = FALSE]
-  cons_vec <- apply(-cons_mat[ , immutable, drop = FALSE], 1, function(w)
-    rowSums(base[, immutable, drop = FALSE]%*%w))
-  if(length(immutable)>2){
-    check <- which(rowSums(cons_mat_red != 0) == 0)
-    if(length(check) > 0 && any(cons_vec[, check] > sqrt(.Machine$double.eps))){
-      cli_abort("There is no solution with this {.arg immutable} set.",  call = NULL)
-    }
-  }
-
   # Complete constraints matrix (immutable forecasts + linear constraints)
   imm_cons_mat <- .sparseDiagonal(NCOL(base))[immutable, , drop = FALSE]
   imm_cons_vec <- base[, immutable, drop = FALSE]
@@ -489,6 +476,13 @@ reco.proj_immutable <- function(base, cons_mat, cov_mat, immutable = NULL, ...){
     Matrix(0, nrow = NROW(imm_cons_vec), ncol = NROW(cons_mat)),
     imm_cons_vec
   )
+
+  # check immutable feasibility
+  # TODO: can proj_immutable2 be more stable than proj_immutable?
+  # Answer issue: https://github.com/danigiro/FoReco/issues/6#issue-2397642027 (@AngelPone)
+  if(rankMatrix(cons_mat) + length(immutable) != rankMatrix(compl_cons_mat)){
+    cli_abort("There is no solution with this {.arg immutable} set.",  call = NULL)
+  }
 
   # Point reconciled forecasts
   lm_dx <- t(compl_cons_vec) - Matrix::tcrossprod(compl_cons_mat, base)
