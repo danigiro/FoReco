@@ -28,12 +28,12 @@ A (\eqn{h \times n}) numeric matrix of cross-sectional reconciled forecasts.
 }
 \description{
 The middle-out forecast reconciliation (Athanasopoulos et al., 2009) combines
-top-down ([cstd]) and bottom-up ([csbu]) for genuine hierarchical/grouped
+top-down (\link{cstd}) and bottom-up (\link{csbu}) for genuine hierarchical/grouped
 time series. Given the base forecasts of variables at an intermediate
 level \eqn{l}, it performs
 \itemize{
-  \item a top-down approach for the levels \eqn{<l};
-  \item a bottom-up approach for the levels \eqn{>l}.
+\item a top-down approach for the levels \eqn{<l};
+\item a bottom-up approach for the levels \eqn{>l}.
 }
 }
 \examples{

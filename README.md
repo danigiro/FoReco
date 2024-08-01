@@ -55,7 +55,7 @@ You can also install the **development** version from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("daniGiro/FoReco")
+devtools::install_github("danigiro/FoReco")
 ```
 
 ## Getting Started

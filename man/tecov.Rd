@@ -21,24 +21,24 @@ tecov(comb, agg_order = NULL, res = NULL, tew = "sum",
 \arguments{
 \item{comb}{A string specifying the reconciliation method.
 \itemize{
-   \item Ordinary least squares:
-   \itemize{
-   \item "\code{ols}" (\emph{default}) - identity error covariance.
-   }
-  \item Weighted least squares:
-   \itemize{
-   \item "\code{str}" - structural variances.
-   \item "\code{wlsh}" - hierarchy variances (uses \code{res}).
-   \item "\code{wlsv}" - series variances (uses \code{res}).
-   }
-  \item Generalized least squares (uses \code{res}):
-   \itemize{
-   \item "\code{acov}" - series auto-covariance.
-   \item "\code{strar1}" - structural Markov covariance.
-   \item "\code{sar1}" - series Markov covariance.
-   \item "\code{har1}" - hierarchy Markov covariance.
-   \item "\code{shr}"/"\code{sam}" - shrunk/sample covariance.
-   }
+\item Ordinary least squares:
+\itemize{
+\item "\code{ols}" (\emph{default}) - identity error covariance.
+}
+\item Weighted least squares:
+\itemize{
+\item "\code{str}" - structural variances.
+\item "\code{wlsh}" - hierarchy variances (uses \code{res}).
+\item "\code{wlsv}" - series variances (uses \code{res}).
+}
+\item Generalized least squares (uses \code{res}):
+\itemize{
+\item "\code{acov}" - series auto-covariance.
+\item "\code{strar1}" - structural Markov covariance.
+\item "\code{sar1}" - series Markov covariance.
+\item "\code{har1}" - hierarchy Markov covariance.
+\item "\code{shr}"/"\code{sam}" - shrunk/sample covariance.
+}
 }}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
@@ -57,7 +57,7 @@ to the highest frequency. This vector is used to compute come covariance matrice
 \item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
 
-\item{shrink_fun}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default})}
+\item{shrink_fun}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default})}
 
 \item{...}{Not used.}
 }

@@ -24,7 +24,7 @@ zero constraints matrix according to output, income or expenditure side, respect
 encompassing output, expenditure and income sides.
 }
 \source{
-<https://ec.europa.eu/eurostat/web/national-accounts/>
+\url{https://ec.europa.eu/eurostat/web/national-accounts/}
 }
 \usage{
 # 21 time series of the Italian Quarterly National Accounts

@@ -21,7 +21,7 @@ variables into the \eqn{n_a} upper (constrained) variables.}
 in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
 value is the string "\code{auto}" which calculates the number of variables in each level.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see [cscov].}
+\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{cscov}.}
 
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the in-sample
 residuals. This matrix is used to compute some covariance matrices.}
@@ -31,8 +31,8 @@ forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{
 
 \item{const}{A string specifying the reconciliation constraints:
 \itemize{
-  \item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
-  \item "\code{endogenous}": Coherently revises both the top and bottom levels.
+\item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
+\item "\code{endogenous}": Coherently revises both the top and bottom levels.
 }}
 
 \item{bts}{A (\eqn{h \times n_b}) numeric matrix or multivariate time series (\code{mts} class)
@@ -42,14 +42,14 @@ This parameter can be omitted if only base forecasts are used
 
 \item{approach}{A string specifying the approach used to compute the reconciled
 forecasts. Options include:
-  \itemize{
-  \item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-  \item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-  \item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-  for projection approach.
-  \item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-  for structural approach.
-  }}
+\itemize{
+\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
+for projection approach.
+\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
+for structural approach.
+}}
 
 \item{nn}{A string specifying the algorithm to compute non-negative reconciled forecasts:
 \itemize{
@@ -67,7 +67,7 @@ for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
   \describe{
     \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
-    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default}).}
+    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
   }}
 }
 \value{

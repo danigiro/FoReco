@@ -36,8 +36,8 @@ of the most aggregated temporal level is disaggregated according to a proportion
 scheme (weights). Besides fulfilling any aggregation constraint, the
 top-down reconciled forecasts should respect two main properties:
 \itemize{
-  \item the top-level value remains unchanged;
-  \item all the bottom time series reconciled forecasts are non-negative.
+\item the top-level value remains unchanged;
+\item all the bottom time series reconciled forecasts are non-negative.
 }
 }
 \examples{

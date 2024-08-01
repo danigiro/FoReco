@@ -14,7 +14,7 @@ variables into the \eqn{n_a} upper (constrained) variables.}
 \item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
 zero constraints. It spans the null space for the reconciled forecasts.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see [cscov].}
+\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{cscov}.}
 
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the in-sample
 residuals. This matrix is used to compute some covariance matrices.}
@@ -27,7 +27,7 @@ residuals. This matrix is used to compute some covariance matrices.}
   \describe{
     \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
-    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default}).}
+    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
   }}
 }
 \value{

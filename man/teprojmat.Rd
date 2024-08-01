@@ -11,7 +11,7 @@ teprojmat(agg_order, comb = "ols", res = NULL, mat = "M", tew = "sum", ...)
 of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
 of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see [tecov].}
+\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{tecov}.}
 
 \item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing the
 in-sample residuals at all the temporal frequencies ordered from the lowest frequency
@@ -30,7 +30,7 @@ to the highest frequency. This vector is used to compute come covariance matrice
   \describe{
     \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
-    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default})}
+    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default})}
   }}
 }
 \value{

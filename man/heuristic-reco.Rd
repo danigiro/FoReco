@@ -20,10 +20,10 @@ The row identifies a time series, and the forecasts in each row are ordered from
 lowest frequency (most temporally aggregated) to the highest frequency.}
 
 \item{cslist}{A list of elements for the cross-sectional reconciliation.
-See [csrec] for a complete list (excluded \code{base} and \code{res}).}
+See \link{csrec} for a complete list (excluded \code{base} and \code{res}).}
 
 \item{telist}{A list of elements for the temporal reconciliation.
-See [terec] for a complete list (excluded \code{base} and \code{res}).}
+See \link{terec} for a complete list (excluded \code{base} and \code{res}).}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
 in-sample residuals at all the temporal frequencies ordered from the lowest frequency
@@ -40,14 +40,14 @@ Di Fonzo and Girolimetto, 2023).}
 A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
 }
 \description{
-[tcsrec] replicates the procedure by Kourentzes and Athanasopoulos (2019):
+\link{tcsrec} replicates the procedure by Kourentzes and Athanasopoulos (2019):
 (i) for each time series the forecasts at any temporal aggregation order are
 reconciled using temporal hierarchies; (ii) time-by-time cross-sectional
 reconciliation is performed; and (iii) the projection matrices obtained at
 step (ii) are then averaged and used to cross-sectionally reconcile the
-forecasts obtained at step (i). In [cstrec], the order of application of the
+forecasts obtained at step (i). In \link{cstrec}, the order of application of the
 two reconciliation steps (temporal first, then cross-sectional), is inverted
-compared to [tcsrec] (Di Fonzo and Girolimetto, 2023).
+compared to \link{tcsrec} (Di Fonzo and Girolimetto, 2023).
 }
 \section{Warning}{
 

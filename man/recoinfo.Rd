@@ -13,17 +13,17 @@ recoinfo(x, verbose = TRUE)
 }
 \value{
 A list containing the following reconciliation process informations:
-  \item{rfun}{the reconciliation function.}
-  \item{cs_n}{the cross-sectional number of variables.}
-  \item{te_set}{the set of temporal aggregation orders.}
-  \item{forecast_horizon}{the forecast horizon
-  (in temporal and cross-temporal frameworks, for the most temporally aggregated series).}
-  \item{framework}{the reconciliation framework (cross-sectional, temporal or cross-temporal).}
-  \item{info}{non-negative reconciled forecast convergence information.}
-  \item{lcc}{list of level conditional reconciled forecasts (+ BU) for
-  [cslcc], [telcc] and [ctlcc].}
-  \item{nn}{if \code{TRUE}, all the forecasts are not negative.}
-  \item{comb}{the covariance approximation.}
+\item{rfun}{the reconciliation function.}
+\item{cs_n}{the cross-sectional number of variables.}
+\item{te_set}{the set of temporal aggregation orders.}
+\item{forecast_horizon}{the forecast horizon
+(in temporal and cross-temporal frameworks, for the most temporally aggregated series).}
+\item{framework}{the reconciliation framework (cross-sectional, temporal or cross-temporal).}
+\item{info}{non-negative reconciled forecast convergence information.}
+\item{lcc}{list of level conditional reconciled forecasts (+ BU) for
+\link{cslcc}, \link{telcc} and \link{ctlcc}.}
+\item{nn}{if \code{TRUE}, all the forecasts are not negative.}
+\item{comb}{the covariance approximation.}
 }
 \description{
 This function extracts reconciliation information from the output of any reconciled

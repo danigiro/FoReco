@@ -24,22 +24,22 @@ can be either a (\eqn{T \times 1}) vector (temporal framework) or a (\eqn{T \tim
 matrix (cross-temporal framework).}
 }
 \value{
-[res2matrix] returns a (\eqn{N \times n(k^\ast + m)}) matrix, where \eqn{n = 1}
+\link{res2matrix} returns a (\eqn{N \times n(k^\ast + m)}) matrix, where \eqn{n = 1}
 for the temporal framework.
 
-[arrange_hres] returns a (\eqn{N(k^\ast+m) \times 1}) vector (temporal framework)
+\link{arrange_hres} returns a (\eqn{N(k^\ast+m) \times 1}) vector (temporal framework)
 or a (\eqn{n \times N(k^\ast+m)}) matrix  (cross-temporal framework) of multi-step residuals.
 }
 \description{
 These functions can be used to arrange residuals to reconcile temporal or
 cross-temporal forecasts.
 
-[res2matrix] takes as input a set of temporal and cross-temporal residuals and
+\link{res2matrix} takes as input a set of temporal and cross-temporal residuals and
 re-organizes them into a matrix where the rows correspond to different forecast
 horizons, capturing the temporal dimension. Meanwhile, the columns are ordered
 based on the specific arrangement as described in Di Fonzo and Girolimetto (2023).
 
-[arrange_hres] takes as input a list of multi-step residuals and is
+\link{arrange_hres} takes as input a list of multi-step residuals and is
 designed to organize them in accordance with their time order (Girolimetto et al.
 2023). When applied, this function ensures that the sequence of multi-step
 residuals aligns with the chronological order in which they occurred.
@@ -51,7 +51,7 @@ residuals such us
 where \eqn{\widehat{Z}_{t+h|t}} is the \eqn{h}-step fitted value, calculated as the \eqn{h}-step ahead
 forecast condition to the information up to time \eqn{t}. Given the list of errors at different steps
 \deqn{\left([\widehat{\varepsilon}_{1,1}, \; \dots, \; \widehat{\varepsilon}_{1,T}], \dots, [\widehat{\varepsilon}_{H,1}, \; \dots, \; \widehat{\varepsilon}_{H,T}]\right),}
-[arrange_hres] returns a \eqn{T}-vector with the residuals, organized in the following way:
+\link{arrange_hres} returns a \eqn{T}-vector with the residuals, organized in the following way:
 \deqn{[\varepsilon_{1,1} \; \varepsilon_{2,2} \; \dots \; \varepsilon_{H,H} \; \varepsilon_{1,H+1} \; \dots \; \varepsilon_{H,T-H}]'}
 A similar organisation can be apply to a multivariate time series.
 }

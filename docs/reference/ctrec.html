@@ -133,7 +133,7 @@ of \(m\).</p></dd>
 
 
 <dt>comb</dt>
-<dd><p>A string specifying the reconciliation method. For a complete list, see [ctcov].</p></dd>
+<dd><p>A string specifying the reconciliation method. For a complete list, see <a href="ctcov.html">ctcov</a>.</p></dd>
 
 
 <dt>res</dt>
@@ -155,9 +155,9 @@ to compute some covariance matrices.</p></dd>
 forecasts. Options include:</p><ul><li><p>"<code>proj</code>" (<em>default</em>): Projection approach according to Byron (1978, 1979).</p></li>
 <li><p>"<code>strc</code>": Structural approach as proposed by Hyndman et al. (2011).</p></li>
 <li><p>"<code>proj_osqp</code>": Numerical solution using <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a>
-  for projection approach.</p></li>
+for projection approach.</p></li>
 <li><p>"<code>strc_osqp</code>": Numerical solution using <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a>
-  for structural approach.</p></li>
+for structural approach.</p></li>
 </ul></dd>
 
 
@@ -184,10 +184,10 @@ second column represents the upper bound.</p></dd>
 <dd><p>A matrix with three columns (\(i,k,j\)), such that</p><dl><dt>Column 1</dt>
 <dd><p>Represents the cross-sectional series (\(i = 1, \dots, n\)).</p></dd>
 
-  <dt>Column 2</dt>
+<dt>Column 2</dt>
 <dd><p>Denotes the temporal aggregation order (\(k = m,\dots,1\)).</p></dd>
 
-  <dt>Column 3</dt>
+<dt>Column 3</dt>
 <dd><p>Indicates the temporal forecast horizon (\(j = 1,\dots,m/k\)).</p></dd>
 
 
@@ -202,7 +202,7 @@ second column represents the upper bound.</p></dd>
 matrix are not mean-corrected.</p></dd>
 
     <dt><code>shrink_fun</code></dt>
-<dd><p>Shrinkage function of the covariance matrix, [shrink_estim] (<em>default</em>).</p></dd>
+<dd><p>Shrinkage function of the covariance matrix, <a href="shrink_estim.html">shrink_estim</a> (<em>default</em>).</p></dd>
 
   
 </dl></dd>
@@ -286,7 +286,7 @@ An Operator Splitting solver for Quadratic Programs,
 <span class="r-in"><span>                res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">nnreco</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">info</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     obj_val   run_time iter      pri_res status status_polish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -635.7645 8.3583e-05   25 1.284524e-15      1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -635.7645 9.3916e-05   25 1.284524e-15      1             1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

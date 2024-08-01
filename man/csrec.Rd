@@ -19,21 +19,21 @@ variables into the \eqn{n_a} upper (constrained) variables.}
 \item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
 zero constraints. It spans the null space for the reconciled forecasts.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see [cscov].}
+\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{cscov}.}
 
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the in-sample
 residuals. This matrix is used to compute some covariance matrices.}
 
 \item{approach}{A string specifying the approach used to compute the reconciled
 forecasts. Options include:
-  \itemize{
-  \item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-  \item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-  \item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-  for projection approach.
-  \item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-  for structural approach.
-  }}
+\itemize{
+\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
+for projection approach.
+\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
+for structural approach.
+}}
 
 \item{nn}{A string specifying the algorithm to compute non-negative reconciled forecasts:
 \itemize{
@@ -57,7 +57,7 @@ The first column represents the lower bound, and the second column represents th
   \describe{
     \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
-    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default}).}
+    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
   }}
 }
 \value{

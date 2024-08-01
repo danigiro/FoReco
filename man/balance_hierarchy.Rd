@@ -31,7 +31,7 @@ A hierarchy with \eqn{L} upper levels is said to be balanced if each variable at
 \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't hold, the hierarchy
 is unbalanced. This function transforms an aggregation matrix of an unbalanced hierarchy
 into an aggregation matrix of a balanced one. This function is used to reconcile forecasts
-with [cslcc], which operates exclusively with balanced hierarchies.
+with \link{cslcc}, which operates exclusively with balanced hierarchies.
 }
 \examples{
 #    Unbalanced     ->      Balanced

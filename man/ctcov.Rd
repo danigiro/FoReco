@@ -30,28 +30,28 @@ ctcov(comb = "ols", n = NULL, agg_mat = NULL, agg_order = NULL, res = NULL,
 \arguments{
 \item{comb}{A string specifying the reconciliation method.
 \itemize{
-   \item Ordinary least squares:
-   \itemize{
-   \item "\code{ols}" (\emph{default}) - identity error covariance.
-   }
-  \item Weighted least squares:
-   \itemize{
-   \item "\code{str}" - structural variances.
-   \item "\code{csstr}" - cross-sectional structural variances.
-   \item "\code{testr}" - temporal structural variances.
-   \item "\code{wlsh}" - hierarchy variances (uses \code{res}).
-   \item "\code{wlsv}" - series variances (uses \code{res}).
-   }
-  \item Generalized least squares (uses \code{res}):
-   \itemize{
-   \item "\code{acov}" - series auto-covariance.
-   \item "\code{bdshr}"/"\code{bdsam}" - shrunk/sample block diagonal cross-sectional covariance.
-   \item "\code{Sshr}"/"\code{Ssam}" - series shrunk/sample covariance.
-   \item "\code{shr}"/"\code{sam}" - shrunk/sample covariance.
-   \item "\code{hbshr}"/"\code{hbsam}" - shrunk/sample high frequency bottom time series covariance.
-   \item "\code{bshr}"/"\code{bsam}" - shrunk/sample bottom time series covariance.
-   \item "\code{hshr}"/"\code{hsam}" - shrunk/sample high frequency covariance.
-   }
+\item Ordinary least squares:
+\itemize{
+\item "\code{ols}" (\emph{default}) - identity error covariance.
+}
+\item Weighted least squares:
+\itemize{
+\item "\code{str}" - structural variances.
+\item "\code{csstr}" - cross-sectional structural variances.
+\item "\code{testr}" - temporal structural variances.
+\item "\code{wlsh}" - hierarchy variances (uses \code{res}).
+\item "\code{wlsv}" - series variances (uses \code{res}).
+}
+\item Generalized least squares (uses \code{res}):
+\itemize{
+\item "\code{acov}" - series auto-covariance.
+\item "\code{bdshr}"/"\code{bdsam}" - shrunk/sample block diagonal cross-sectional covariance.
+\item "\code{Sshr}"/"\code{Ssam}" - series shrunk/sample covariance.
+\item "\code{shr}"/"\code{sam}" - shrunk/sample covariance.
+\item "\code{hbshr}"/"\code{hbsam}" - shrunk/sample high frequency bottom time series covariance.
+\item "\code{bshr}"/"\code{bsam}" - shrunk/sample bottom time series covariance.
+\item "\code{hshr}"/"\code{hsam}" - shrunk/sample high frequency covariance.
+}
 }}
 
 \item{n}{Cross-sectional number of variables.}
@@ -77,7 +77,7 @@ to compute some covariance matrices.}
 \item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
 
-\item{shrink_fun}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default}).}
+\item{shrink_fun}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
 
 \item{...}{Not used.}
 }

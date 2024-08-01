@@ -19,7 +19,7 @@ zero constraints. It spans the null space for the reconciled forecasts.}
 of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
 of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see [ctcov].}
+\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{ctcov}.}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
 in-sample residuals at all the temporal frequencies ordered from the lowest frequency
@@ -39,7 +39,7 @@ to compute some covariance matrices.}
   \describe{
     \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
-    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default}).}
+    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
   }}
 }
 \value{

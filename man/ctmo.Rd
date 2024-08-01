@@ -43,14 +43,14 @@ A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forec
 }
 \description{
 The cross-temporal middle-out forecast reconciliation combines top-down
-([cttd]) and bottom-up ([ctbu]) methods in the cross-temporal framework for
+(\link{cttd}) and bottom-up (\link{ctbu}) methods in the cross-temporal framework for
 genuine hierarchical/grouped time series. Given the base forecasts of an
 intermediate cross-sectional level \eqn{l} and aggregation order \eqn{k},
 it performs
 \itemize{
-  \item a top-down approach for the aggregation orders \eqn{\geq k} and
-  cross-sectional levels \eqn{\geq l};
-  \item a bottom-up approach, otherwise.
+\item a top-down approach for the aggregation orders \eqn{\geq k} and
+cross-sectional levels \eqn{\geq l};
+\item a bottom-up approach, otherwise.
 }
 }
 \examples{

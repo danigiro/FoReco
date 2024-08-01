@@ -12,7 +12,7 @@
 \code{vnaggmat} is the \eqn{(221 \times 304)} aggregation matrix.
 }
 \source{
-<https://robjhyndman.com/publications/mint/>
+\url{https://robjhyndman.com/publications/mint/}
 }
 \usage{
 # 525 time series of the Australian Tourism Demand dataset

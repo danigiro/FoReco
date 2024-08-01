@@ -16,19 +16,19 @@ cscov(comb = "ols", n = NULL, agg_mat = NULL, res, mse = TRUE,
 \arguments{
 \item{comb}{A string specifying the reconciliation method.
 \itemize{
-   \item Ordinary least squares:
-   \itemize{
-   \item "\code{ols}" (\emph{default}) - identity error covariance matrix.
-   }
-  \item Weighted least squares:
-   \itemize{
-   \item "\code{str}" - structural variances.
-   \item "\code{wls}" - series variances (uses \code{res}).
-   }
-  \item Generalized least squares:
-   \itemize{
-   \item "\code{shr}"/"\code{sam}" - shrunk/sample covariance (uses \code{res}).
-   }
+\item Ordinary least squares:
+\itemize{
+\item "\code{ols}" (\emph{default}) - identity error covariance matrix.
+}
+\item Weighted least squares:
+\itemize{
+\item "\code{str}" - structural variances.
+\item "\code{wls}" - series variances (uses \code{res}).
+}
+\item Generalized least squares:
+\itemize{
+\item "\code{shr}"/"\code{sam}" - shrunk/sample covariance (uses \code{res}).
+}
 }}
 
 \item{n}{Number of variables (\eqn{n = n_a + n_b}).}
@@ -43,7 +43,7 @@ residuals. This matrix is used to compute some covariance matrices.}
 \item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
 
-\item{shrink_fun}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default}).}
+\item{shrink_fun}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
 
 \item{...}{Not used.}
 }

@@ -16,10 +16,10 @@ The row identifies a time series, and the forecasts in each row are ordered from
 lowest frequency (most temporally aggregated) to the highest frequency.}
 
 \item{cslist}{A list of elements for the cross-sectional reconciliation.
-See [csrec] for a complete list (excluded \code{base} and \code{res}).}
+See \link{csrec} for a complete list (excluded \code{base} and \code{res}).}
 
 \item{telist}{A list of elements for the temporal reconciliation.
-See [terec] for a complete list (excluded \code{base} and \code{res}).}
+See \link{terec} for a complete list (excluded \code{base} and \code{res}).}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
 in-sample residuals at all the temporal frequencies ordered from the lowest frequency

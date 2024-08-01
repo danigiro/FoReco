@@ -35,11 +35,11 @@ A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal reconciled forecasts.
 }
 \description{
 The middle-out forecast reconciliation for temporal hierarchies
-combines top-down ([tetd]) and bottom-up ([tebu]) methods. Given
+combines top-down (\link{tetd}) and bottom-up (\link{tebu}) methods. Given
 the base forecasts of an intermediate temporal aggregation order \eqn{k}, it performs
 \itemize{
-  \item a top-down approach for the aggregation orders \eqn{<k};
-  \item a bottom-up approach for the aggregation orders \eqn{>k}.
+\item a top-down approach for the aggregation orders \eqn{<k};
+\item a bottom-up approach for the aggregation orders \eqn{>k}.
 }
 }
 \examples{

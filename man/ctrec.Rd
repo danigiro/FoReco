@@ -27,7 +27,7 @@ zero constraints. It spans the null space for the reconciled forecasts.}
 of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
 of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see [ctcov].}
+\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{ctcov}.}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
 in-sample residuals at all the temporal frequencies ordered from the lowest frequency
@@ -41,14 +41,14 @@ to compute some covariance matrices.}
 
 \item{approach}{A string specifying the approach used to compute the reconciled
 forecasts. Options include:
-  \itemize{
-  \item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-  \item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-  \item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-  for projection approach.
-  \item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-  for structural approach.
-  }}
+\itemize{
+\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
+for projection approach.
+\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
+for structural approach.
+}}
 
 \item{nn}{A string specifying the algorithm to compute non-negative reconciled forecasts:
 \itemize{
@@ -67,14 +67,14 @@ second column represents the upper bound.}
 
 \item{immutable}{A matrix with three columns (\eqn{i,k,j}), such that
 \describe{
-  \item{Column 1}{Represents the cross-sectional series (\eqn{i = 1, \dots, n}).}
-  \item{Column 2}{Denotes the temporal aggregation order (\eqn{k = m,\dots,1}).}
-  \item{Column 3}{Indicates the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).}
+\item{Column 1}{Represents the cross-sectional series (\eqn{i = 1, \dots, n}).}
+\item{Column 2}{Denotes the temporal aggregation order (\eqn{k = m,\dots,1}).}
+\item{Column 3}{Indicates the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).}
 }
 For example, when working with a quarterly multivariate time series (\eqn{n = 3}):
 \itemize{
-  \item \code{t(c(1, 4, 1))} - Fix the one step ahead annual forecast of the first time series.
-  \item \code{t(c(2, 1, 2))} - Fix the two step ahead quarterly forecast of the second time series.
+\item \code{t(c(1, 4, 1))} - Fix the one step ahead annual forecast of the first time series.
+\item \code{t(c(2, 1, 2))} - Fix the two step ahead quarterly forecast of the second time series.
 }}
 
 \item{...}{
@@ -82,7 +82,7 @@ For example, when working with a quarterly multivariate time series (\eqn{n = 3}
   \describe{
     \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
-    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, [shrink_estim] (\emph{default}).}
+    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
   }}
 }
 \value{
