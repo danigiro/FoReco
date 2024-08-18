@@ -26,7 +26,7 @@
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
 #' practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-#' \doi{10.1016/j.ijforecast.2023. 10.003}
+#' \doi{10.1016/j.ijforecast.2023.10.003}
 #'
 #' @family Utilities
 #' @rdname residuals

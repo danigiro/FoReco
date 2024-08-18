@@ -143,7 +143,7 @@ forecasts, \emph{Solar Energy}, 251, 13–29. \doi{10.1016/j.solener.2023.01.003
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
 practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023. 10.003}
+\doi{10.1016/j.ijforecast.2023.10.003}
 
 Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,

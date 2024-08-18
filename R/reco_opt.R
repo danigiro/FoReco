@@ -62,7 +62,7 @@
 #' Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal forecast
 #' reconciliation for hierarchical and grouped time series through trace minimization,
 #' \emph{Journal of the American Statistical Association}, 114, 526, 804-819.
-#' \doi{10.1080/ 01621459.2018.1448825}
+#' \doi{10.1080/01621459.2018.1448825}
 #'
 #' Zhang, B., Kang, Y., Panagiotelis, A. and Li, F. (2023), Optimal reconciliation with
 #' immutable forecasts, \emph{European Journal of Operational Research}, 308(2), 650–660.
@@ -467,7 +467,7 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
 #' practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-#' \doi{10.1016/j.ijforecast.2023. 10.003}
+#' \doi{10.1016/j.ijforecast.2023.10.003}
 #'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,

@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-The dataset in the `thief` package is used to show how to get the same results with the `FoReco` package. In particular, we take the weekly data of Accident and Emergency demand in the UK, AEdemand, from 1 January 2011 to 31 December 2014.
+The dataset [`AEdemand`](http://pkg.robjhyndman.com/thief/reference/AEdemand.html) in the [`thief`](http://pkg.robjhyndman.com/thief/) package is used to show how to get the same results with [`FoReco`](https://danigiro.github.io/FoReco). In particular, we take the weekly data of Accident and Emergency demand in the UK, AEdemand, from 1 January 2011 to 31 December 2014.
 
 ```{r}
 #| label: setup
@@ -73,22 +73,22 @@ tol <- 1e-7
 ## Bottom-up
 thief_bu <- reconcilethief(fc_obj, comb="bu")
 FoReco_bu <- tebu(fc_obj[[1]]$mean, agg_order = 52)
-sum(abs(FoReco_bu - extract_thief(thief_bu)) > 1e-10)
+sum(abs(FoReco_bu - extract_thief(thief_bu)) > tol)
 
 ## Ordinary least squares (identity error covariance matrix)
 thief_ols <- reconcilethief(fc_obj, comb="ols")
 FoReco_ols <- terec(base, 52, comb = "ols")
-sum(abs(FoReco_ols - extract_thief(thief_ols)) > 1e-10)
+sum(abs(FoReco_ols - extract_thief(thief_ols)) > tol)
 
 ## Weighted least squares (structural variances)
 thief_str <- reconcilethief(fc_obj, comb="struc")
 FoReco_str <- terec(base, 52, comb = "str")
-sum(abs(FoReco_str - extract_thief(thief_str)) > 1e-10)
+sum(abs(FoReco_str - extract_thief(thief_str)) > tol)
 
 ## Generalized least squares (shrunk covariance matrix)
 thief_shr <- reconcilethief(fc_obj, comb="shr")
 FoReco_shr <- terec(base, 52, comb = "shr", res = res)
-sum(abs(FoReco_shr - extract_thief(thief_shr)) > 1e-10)
+sum(abs(FoReco_shr - extract_thief(thief_shr)) > tol)
 ```
 
 

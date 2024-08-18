@@ -112,7 +112,7 @@
                         <h4 data-toc-skip class="author">Daniele
 Girolimetto</h4>
             
-            <h4 data-toc-skip class="date">2024-06-07</h4>
+            <h4 data-toc-skip class="date">2024-08-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/vignettes/articles/Replicate-the-thief-package.qmd" class="external-link"><code>vignettes/articles/Replicate-the-thief-package.qmd</code></a></small>
       <div class="d-none name"><code>Replicate-the-thief-package.qmd</code></div>
@@ -123,8 +123,9 @@ Girolimetto</h4>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>The dataset in the <code>thief</code> package is used to show how to
-get the same results with the <code>FoReco</code> package. In
+<p>The dataset <a href="http://pkg.robjhyndman.com/thief/reference/AEdemand.html" class="external-link"><code>AEdemand</code></a>
+in the <a href="http://pkg.robjhyndman.com/thief/" class="external-link"><code>thief</code></a> package
+is used to show how to get the same results with <a href="https://danigiro.github.io/FoReco"><code>FoReco</code></a>. In
 particular, we take the weekly data of Accident and Emergency demand in
 the UK, AEdemand, from 1 January 2011 to 31 December 2014.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -172,25 +173,25 @@ the UK, AEdemand, from 1 January 2011 to 31 December 2014.</p>
 <span><span class="co">## Bottom-up</span></span>
 <span><span class="va">thief_bu</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://robjhyndman.github.io/thief/reference/reconcilethief.html" class="external-link">reconcilethief</a></span><span class="op">(</span><span class="va">fc_obj</span>, comb<span class="op">=</span><span class="st">"bu"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_bu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tebu.html">tebu</a></span><span class="op">(</span><span class="va">fc_obj</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">mean</span>, agg_order <span class="op">=</span> <span class="fl">52</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_bu</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_bu</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1e-10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_bu</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_bu</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
 <span><span class="co">## Ordinary least squares (identity error covariance matrix)</span></span>
 <span><span class="va">thief_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://robjhyndman.github.io/thief/reference/reconcilethief.html" class="external-link">reconcilethief</a></span><span class="op">(</span><span class="va">fc_obj</span>, comb<span class="op">=</span><span class="st">"ols"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span><span class="va">base</span>, <span class="fl">52</span>, comb <span class="op">=</span> <span class="st">"ols"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_ols</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_ols</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1e-10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_ols</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_ols</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
 <span><span class="co">## Weighted least squares (structural variances)</span></span>
 <span><span class="va">thief_str</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://robjhyndman.github.io/thief/reference/reconcilethief.html" class="external-link">reconcilethief</a></span><span class="op">(</span><span class="va">fc_obj</span>, comb<span class="op">=</span><span class="st">"struc"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_str</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span><span class="va">base</span>, <span class="fl">52</span>, comb <span class="op">=</span> <span class="st">"str"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_str</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_str</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1e-10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_str</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_str</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
 <span><span class="co">## Generalized least squares (shrunk covariance matrix)</span></span>
 <span><span class="va">thief_shr</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://robjhyndman.github.io/thief/reference/reconcilethief.html" class="external-link">reconcilethief</a></span><span class="op">(</span><span class="va">fc_obj</span>, comb<span class="op">=</span><span class="st">"shr"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_shr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span><span class="va">base</span>, <span class="fl">52</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_shr</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_shr</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">1e-10</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_shr</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_shr</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

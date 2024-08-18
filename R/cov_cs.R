@@ -60,7 +60,7 @@
 #' Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal forecast
 #' reconciliation for hierarchical and grouped time series through trace minimization,
 #' \emph{Journal of the American Statistical Association}, 114, 526, 804-819.
-#' \doi{10.1080/01621459. 2018.1448825}
+#' \doi{10.1080/01621459.2018.1448825}
 #'
 #' @export
 cscov <- function(comb = "ols", n = NULL, agg_mat = NULL, res = NULL, mse = TRUE,

@@ -38,11 +38,11 @@ hierarchy of 525 (304 bottom and 221 upper time series) unique nodes instead of 
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
 practical issues. \emph{International Journal of Forecasting},  40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023. 10.003}
+\doi{10.1016/j.ijforecast.2023.10.003}
 
 Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal forecast
 reconciliation for hierarchical and grouped time series through trace minimization,
 \emph{Journal of the American Statistical Association}, 114, 526, 804-819.
-\doi{10.1080/ 01621459.2018.1448825}
+\doi{10.1080/01621459.2018.1448825}
 }
 \keyword{datasets}
