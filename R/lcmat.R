@@ -45,7 +45,7 @@
 #' @references
 #' Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
 #' for general linearly constrained multiple time series,
-#' \emph{Statistical Methods & Applications}, in press. \doi{10.1007/s10260-023-00738-6}.
+#' \emph{Statistical Methods & Applications}, 33, 581-607. \doi{10.1007/s10260-023-00738-6}.
 #'
 #' Strang, G. (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
 #'

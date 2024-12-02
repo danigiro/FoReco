@@ -1,5 +1,5 @@
 
-# FoReco <img src="man/figures/logo.svg" alt="logo" align="right" width="150" style="border: none; float: right;"/>
+# FoReco <img src="man/figures/logo.svg" alt="logo" align="right" style="border: none; float: right; width:150px;"/>
 
 <!-- badges: start -->
 
@@ -26,15 +26,15 @@ cross-sectional, temporal, or cross-temporal settings.
 The core functions for reconciliation categorized by framework are as
 follows:
 
-| **Reconciliation**                |                         **Cross-sectional**                         |                            **Temporal**                             |                         **Cross-Temporal**                          |
-|-----------------------------------|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|:-------------------------------------------------------------------:|
-| *Classical reconciliation*        |                                                                     |                                                                     |                                                                     |
-| Top-down: `*td()`                 |  [`cstd()`](https://danigiro.github.io/FoReco/reference/cstd.html)  |  [`tetd()`](https://danigiro.github.io/FoReco/reference/tetd.html)  |  [`cttd()`](https://danigiro.github.io/FoReco/reference/cttd.html)  |
-| Bottom-up: `*bu()`                |  [`csbu()`](https://danigiro.github.io/FoReco/reference/csbu.html)  |  [`tebu()`](https://danigiro.github.io/FoReco/reference/tebu.html)  |  [`ctbu()`](https://danigiro.github.io/FoReco/reference/ctbu.html)  |
-| Middle-out: `*mo()`               |  [`csmo()`](https://danigiro.github.io/FoReco/reference/csmo.html)  |  [`temo()`](https://danigiro.github.io/FoReco/reference/temo.html)  |  [`ctmo()`](https://danigiro.github.io/FoReco/reference/ctmo.html)  |
-| *Regression‑based reconciliation* |                                                                     |                                                                     |                                                                     |
-| Least squares: `*rec()`           | [`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.html) | [`terec()`](https://danigiro.github.io/FoReco/reference/terec.html) | [`ctrec()`](https://danigiro.github.io/FoReco/reference/ctrec.html) |
-| LCC: `*lcc()`                     | [`cslcc()`](https://danigiro.github.io/FoReco/reference/cslcc.html) | [`telcc()`](https://danigiro.github.io/FoReco/reference/telcc.html) | [`ctlcc()`](https://danigiro.github.io/FoReco/reference/ctlcc.html) |
+| **Reconciliation** | **Cross-sectional** | **Temporal** | **Cross-Temporal** |
+|----|:--:|:--:|:--:|
+| *Classical reconciliation* |  |  |  |
+| Top-down: `*td()` | [`cstd()`](https://danigiro.github.io/FoReco/reference/cstd.html) | [`tetd()`](https://danigiro.github.io/FoReco/reference/tetd.html) | [`cttd()`](https://danigiro.github.io/FoReco/reference/cttd.html) |
+| Bottom-up: `*bu()` | [`csbu()`](https://danigiro.github.io/FoReco/reference/csbu.html) | [`tebu()`](https://danigiro.github.io/FoReco/reference/tebu.html) | [`ctbu()`](https://danigiro.github.io/FoReco/reference/ctbu.html) |
+| Middle-out: `*mo()` | [`csmo()`](https://danigiro.github.io/FoReco/reference/csmo.html) | [`temo()`](https://danigiro.github.io/FoReco/reference/temo.html) | [`ctmo()`](https://danigiro.github.io/FoReco/reference/ctmo.html) |
+| *Regression‑based reconciliation* |  |  |  |
+| Least squares: `*rec()` | [`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.html) | [`terec()`](https://danigiro.github.io/FoReco/reference/terec.html) | [`ctrec()`](https://danigiro.github.io/FoReco/reference/ctrec.html) |
+| LCC: `*lcc()` | [`cslcc()`](https://danigiro.github.io/FoReco/reference/cslcc.html) | [`telcc()`](https://danigiro.github.io/FoReco/reference/telcc.html) | [`ctlcc()`](https://danigiro.github.io/FoReco/reference/ctlcc.html) |
 
 Additionally, **FoReco** provides various functions for different
 aspects of forecast reconciliation, including aggregating time series,

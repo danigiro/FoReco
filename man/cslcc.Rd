@@ -51,16 +51,26 @@ for projection approach.
 for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative reconciled forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
+\item "\code{bpv}": block principal pivoting algorithm.
 \item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
 }}
 
-\item{settings}{An object of class \code{osqpSettings} specifying settings
+\item{settings}{A list of control parameters.
+\itemize{
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
 for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).}
+\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
+or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
+may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
+criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
+tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
+\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+}}
 
 \item{...}{
   Arguments passed on to \code{\link[=cscov]{cscov}}

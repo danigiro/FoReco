@@ -38,7 +38,7 @@ the correlation between variables at different temporal aggregation orders
 \references{
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2023), Cross-temporal
 probabilistic forecast reconciliation: Methodological and practical issues.
-\emph{International Journal of Forecasting}, in press. \doi{10.1016/j.ijforecast.2023.10.003}
+\emph{International Journal of Forecasting}, 40(3), 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
 Bootstrap samples: 

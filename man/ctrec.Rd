@@ -21,7 +21,10 @@ aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
 variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-zero constraints. It spans the null space for the reconciled forecasts.}
+zero constraints: each row represents a constraint equation, and each column represents
+a variable. The matrix can be of full rank, meaning the rows are linearly independent,
+but this is not a strict requirement, as the function allows for redundancy in the
+constraints.}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
 of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
@@ -50,26 +53,40 @@ for projection approach.
 for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative reconciled forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
+\item "\code{bpv}": block principal pivoting algorithm.
 \item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
 }}
 
-\item{settings}{An object of class \code{osqpSettings} specifying settings
+\item{settings}{A list of control parameters.
+\itemize{
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
 for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).}
+\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
+or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
+may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
+criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
+tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
+\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+}}
 
-\item{bounds}{A (\eqn{n(k^\ast + m) \times 2}) numeric matrix specifying the
-cross-temporal bounds. The first column represents the lower bound, and the
-second column represents the upper bound.}
+\item{bounds}{A matrix (see \link{set_bounds}) with 5 columns (\eqn{i,k,j,lower,upper}), such that
+\itemize{
+\item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
+\item Column 2 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+\item Column 3 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
+\item Columns 4 and 5 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+}}
 
 \item{immutable}{A matrix with three columns (\eqn{i,k,j}), such that
-\describe{
-\item{Column 1}{Represents the cross-sectional series (\eqn{i = 1, \dots, n}).}
-\item{Column 2}{Denotes the temporal aggregation order (\eqn{k = m,\dots,1}).}
-\item{Column 3}{Indicates the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).}
+\itemize{
+\item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
+\item Column 2 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+\item Column 3 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
 }
 For example, when working with a quarterly multivariate time series (\eqn{n = 3}):
 \itemize{

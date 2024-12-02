@@ -58,9 +58,11 @@ if(require(testthat)){
                 approach = "proj", nn = "proj_osqp")
     r3 <- csrec(base = base, agg_mat = A, comb = comb, res = res,
                 approach = "proj", nn = "sntz")
-
+    r4 <- csrec(base = base, agg_mat = A, comb = comb, res = res,
+                approach = "proj", nn = "bpv")
 
     expect_equal(r1, r2, ignore_attr = TRUE)
+    expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(max(abs(C%*%t(r1))), 0)
     expect_equal(max(abs(C%*%t(r3))), 0)
   })
@@ -139,4 +141,12 @@ if(require(testthat)){
 
     expect_equal(M, S%*%G, ignore_attr = TRUE)
   })
+
+  test_that("Covariance", {
+    for(i in c("ols", "str", "wls", "shr", "sam", "oasd")){
+      expect_no_error(csrec(base = base, agg_mat = A, comb = i,
+                            res = res))
+    }
+  })
+
 }

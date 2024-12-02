@@ -54,7 +54,73 @@ shrink_estim <- function(x, mse = TRUE){
   if(is.matrix(x) == TRUE && is.numeric(x) == FALSE){
     cli_abort("{.arg x} is not a numeric matrix.", call = NULL)
   }
-  x <- stats::na.omit(x)
+  x <- remove_na(x)
+  n <- nrow(x)
+
+  # Full
+  covm <- sample_estim(x = x, mse = mse)
+
+  # Target
+  tar <- Diagonal(x = diag(covm))
+
+  x <- na.omit(x)
+  if(NROW(x)>3){
+    # Lambda
+    xs <- scale(x, center = FALSE, scale = sqrt(diag(covm)))
+    xs[is.nan(xs)] <- xs[is.na(xs)] <- 0
+    #xs <- xs[stats::complete.cases(xs), ]
+    vS <- (1 / (n * (n - 1))) * (crossprod(xs^2) - ((1 / n) * (crossprod(xs))^2))
+    diag(vS) <- 0
+    corm <- covcor(covm)
+    corm[is.nan(corm)] <- 0
+    diag(corm) <- diag(corm)-1
+    corm <- corm^2
+    lambda <- sum(vS) / sum(corm)
+    if(is.nan(lambda)){
+      lambda <- 1
+    }
+    lambda <- max(min(lambda, 1), 0)
+  }else{
+    lambda <- 1
+  }
+
+  # Shrinkage
+  shrink_cov <- lambda * tar + (1 - lambda) * covm
+  shrink_cov <- drop0(shrink_cov)
+  attr(shrink_cov, "lambda") <- lambda
+
+  return(shrink_cov)
+}
+
+#' @title Shrinkage of the covariance matrix using the Oracle approximation
+#'
+#' @description
+#' Shrinkage of the covariance matrix according to the Oracle Approximating Shrinkage (OAS)
+#' of Chen et al. (2009) and Ando and Xiao (2023).
+#'
+#' @param x A numeric matrix containing the in-sample residuals.
+#' @param mse If \code{TRUE} (\emph{default}), the residuals used to compute the covariance
+#' matrix are not mean-corrected.
+#'
+#' @returns A shrunk covariance matrix.
+#'
+#' @references
+#' Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
+#' shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257), A001.
+#' \doi{10.5089/9798400260780.001.A001}
+#'
+#' Chen, Y., Wiesel, A., and Hero, A. O. (2009), Shrinkage estimation of high dimensional
+#' covariance matrices, \emph{2009 IEEE international conference on acoustics, speech and
+#' signal processing}, 2937–2940. IEEE.
+#'
+#' @family Utilities
+#'
+#' @export
+shrink_oasd <- function(x, mse = TRUE){
+  if(is.matrix(x) == TRUE && is.numeric(x) == FALSE){
+    cli_abort("{.arg x} is not a numeric matrix.", call = NULL)
+  }
+  x <- remove_na(x)
   n <- nrow(x)
 
   # Full
@@ -63,18 +129,14 @@ shrink_estim <- function(x, mse = TRUE){
   # Target
   tar <- diag(diag(covm))
 
-  # Lambda
-  xs <- scale(x, center = FALSE, scale = sqrt(diag(covm)))
-  xs[is.nan(xs)] <- 0
-  xs <- xs[stats::complete.cases(xs), ]
-  vS <- (1 / (n * (n - 1))) * (crossprod(xs^2) - ((1 / n) * (crossprod(xs))^2))
-  diag(vS) <- 0
-  corm <- covcor(covm)
-  corm[is.nan(corm)] <- 0
-  diag(corm) <- diag(corm)-1
-  corm <- corm^2
-  lambda <- sum(vS) / sum(corm)
-  lambda <- max(min(lambda, 1), 0)
+  # lambda
+  tr_ss <- sum(diag(covm%*%covm))
+  var <- diag(covm)
+  tr_s <- sum(var^2)
+  num <- tr_ss - tr_s
+  den <- tr_ss + sum(var)^2 - 2*tr_s
+  phi <- num/den
+  lambda <- min(1, 1/((n+1)*phi))
 
   # Shrinkage
   shrink_cov <- lambda * tar + (1 - lambda) * covm
@@ -690,3 +752,153 @@ aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE){
   }
 }
 
+#' Set bounds for bounded forecast reconciliation
+#'
+#' This function defines the bounds matrix considering cross-sectional,
+#' temporal, or cross-temporal frameworks. The output matrix can be used as
+#' input for the \code{bounds} parameter in functions such as [csrec], [terec],
+#' or [ctrec], to perform bounded reconciliations.
+#'
+#' @usage set_bounds(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds = NULL)
+#'
+#' @param n A (\eqn{b \times 1}) vector representing the \eqn{i}th cross-sectional
+#' series (\eqn{i = 1, \dots, n}), where \eqn{b} is the number of bounds to be set.
+#' @param k A (\eqn{b \times 1}) vector specifying the temporal aggregation orders
+#' (\eqn{k = m, \dots, 1}).
+#' @param h A (\eqn{b \times 1}) vector representing the forecast horizons
+#' (\eqn{j = 1, \dots, m/k}).
+#' @param lb,ub A (\eqn{b \times 1}) vector of lower and upper bounds.
+#' @param approach A string specifying the algorithm to compute bounded reconciled forecasts:
+#'   \itemize{
+#'   \item "\code{osqp}": quadratic programming optimization
+#'   (\href{https://osqp.org/}{\pkg{osqp}} solver).
+#'   \item "\code{sftb}": heuristic "set-forecasts-to-bounds", which adjusts the reconciled
+#'   forecasts to be within specified bounds without further optimization.
+#'   }
+#' @param bounds A matrix of previous bounds to be added. If not specified,
+#' new bounds will be computed.
+#'
+#' @return A numeric matrix representing the computed bounds, which can be:
+#' \itemize{
+#'   \item Cross-sectional (\eqn{b \times 3}) matrix for cross-sectional reconciliation ([csrec]).
+#'   \item Temporal (\eqn{b \times 4}) matrix for temporal reconciliation ([terec]).
+#'   \item Cross-temporal (\eqn{b \times 5}) matrix for cross-temporal reconciliation ([ctrec]).
+#' }
+#'
+#' @family Utilities
+#'
+#' @examples
+#' # Example 1
+#' # Two cross-sectional series (i = 2,3),
+#' # with each series required to be between 0 and 1.
+#' n <- c(2, 3)
+#' lb <- c(0, 0)
+#' ub <- c(1,1)
+#' bounds_mat <- set_bounds(n = c(2, 3),
+#'                          lb = rep(0, 2), # or lb = 0
+#'                          ub = rep(1, 2)) # or ub = 1
+#'
+#' # Example 2
+#' # All the monthly values are between 0 and 1.
+#' bounds_mat <- set_bounds(k = rep(1, 12),  # or k = 1
+#'                          h = 1:12,
+#'                          lb = rep(0, 12), # or lb = 0
+#'                          ub = rep(1, 12)) # or ub = 1
+#'
+#' # Example 3
+#' # For two cross-sectional series (i = 2,3),
+#' # all the monthly values are between 0 and 1.
+#' bounds_mat <- set_bounds(n = rep(c(2, 3), each = 12),
+#'                          k = 1,
+#'                          h = rep(1:12, 2),
+#'                          lb = 0, # or lb = 0
+#'                          ub = 1) # or ub = 1
+#'
+#' @export
+set_bounds <- function(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds = NULL){
+  bounds_old <- bounds
+
+  if(!missing(n) & !missing(k)){
+    if(missing(h)){
+      cli_abort("Argument {.arg h} is missing, with no default.", call = NULL)
+    }
+
+    max_size <- max(length(k), length(h), length(lb), length(ub), length(n))
+
+    if(length(n) != 1 & length(n) != max_size){
+      cli_abort("{.arg n} length must be either 1 or {max_size}")
+    }
+
+    if(length(k) != 1 & length(k) != max_size){
+      cli_abort("{.arg k} length must be either 1 or {max_size}")
+    }
+
+    if(length(h) != 1 & length(h) != max_size){
+      cli_abort("{.arg h} length must be either 1 or {max_size}")
+    }
+
+    if(length(lb) != 1 & length(lb) != max_size){
+      cli_abort("{.arg lb} length must be either 1 or {max_size}")
+    }
+
+    if(length(ub) != 1 & length(ub) != max_size){
+      cli_abort("{.arg up} length must be either 1 or {max_size}")
+    }
+
+    bounds <- cbind(n, k, h, lb, ub)
+
+  }else if(!missing(n)){
+
+    max_size = max(length(lb), length(ub), length(n))
+
+    if(length(n) != 1 & length(n) != max_size){
+      cli_abort("{.arg n} length must be either 1 or {max_size}")
+    }
+
+    if(length(lb) != 1 & length(lb) != max_size){
+      cli_abort("{.arg lb} length must be either 1 or {max_size}")
+    }
+
+    if(length(ub) != 1 & length(ub) != max_size){
+      cli_abort("{.arg up} length must be either 1 or {max_size}")
+    }
+
+    bounds <- cbind(n, lb, ub)
+
+  }else if(!missing(k)){
+    max_size = max(length(k), length(h), length(lb), length(ub))
+    if(length(k) != 1 & length(k) != max_size){
+      cli_abort("{.arg k} length must be either 1 or {max_size}")
+    }
+
+    if(length(h) != 1 & length(h) != max_size){
+      cli_abort("{.arg h} length must be either 1 or {max_size}")
+    }
+
+    if(length(lb) != 1 & length(lb) != max_size){
+      cli_abort("{.arg lb} length must be either 1 or {max_size}")
+    }
+
+    if(length(ub) != 1 & length(ub) != max_size){
+      cli_abort("{.arg up} length must be either 1 or {max_size}")
+    }
+
+    bounds <- cbind(k, h, lb, ub)
+  }else{
+    cli_abort("No arguments provide.")
+  }
+
+  if(!is.null(bounds_old)){
+    bounds <- unique(rbind(bounds, bounds_old))
+    app_old <- attr(bounds_old, "approach")
+
+    if(!is.null(app_old)){
+      attr(bounds, "approach") <- app_old
+    }else{
+      attr(bounds, "approach") <- approach
+    }
+  }else{
+    attr(bounds, "approach") <- approach
+  }
+  return(bounds)
+}

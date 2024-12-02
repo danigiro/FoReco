@@ -134,7 +134,7 @@ ctcov.str <- function(comb = "str", ..., agg_mat = NULL, agg_order = NULL, tew =
     strc_mat <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)$strc_mat
   }
 
-  .sparseDiagonal(x = rowSums(strc_mat)) # Omega
+  .sparseDiagonal(x = rowSums(abs(strc_mat))) # Omega
 }
 
 #' @export
@@ -211,8 +211,8 @@ ctcov.wlsh <- function(comb = "wlsh", ..., agg_order = NULL, res = NULL, mse = T
   }
 
   res_mat <- mat2hmat(res, h = NCOL(res) / sum(max(kset)/kset), kset = kset, n = n)
-  res_mat <- na.omit(res_mat)
-  .sparseDiagonal(x = apply(res_mat, 2, function(x) ifelse(mse, sum(x^2)/length(x), var(x))))
+  .sparseDiagonal(x = apply(res_mat, 2, function(x)
+    ifelse(mse, sum(x^2, na.rm = TRUE)/sum(!is.na(x)), var(x, na.rm = TRUE))))
 }
 
 #' @export
@@ -454,7 +454,6 @@ ctcov.hbshr <- function(comb = "hbshr", ..., agg_mat = NULL, agg_order = NULL, r
     eigenvalues <- eigen(Omega)$values
     eps_ridge <- min(eigenvalues[eigenvalues > 1e-6])
   }
-  print(eps_ridge)
   Omega + diag(eps_ridge, dim(Omega)[1])
 }
 

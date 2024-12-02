@@ -121,11 +121,22 @@ covcor <- function(V){
 sample_estim <- function(x, mse = TRUE){
   if(mse){
     if(any(is.na(x))){
-      x <- stats::na.omit(x)
+      x <- remove_na(x)
     }
-    crossprod(x) / NROW(x)
+    if(any(is.na(x))){
+      if(is.vector(x)){
+        n <- sum(!is.na(x))
+      }else{
+        n <- colSums(!is.na(x))
+      }
+      n <- tcrossprod(n, rep(1, length(n)))
+      x[is.na(x)] <- 0
+      crossprod(x) / pmin(t(n), n)
+    }else{
+      crossprod(x) / NROW(x)
+    }
   }else{
-    stats::var(x, na.rm = TRUE)
+    stats::var(x, na.rm = TRUE, use = "na.or.complete")
   }
 }
 
@@ -135,6 +146,7 @@ find_bts <- function(strc_mat){
   strc_mat@i[strc_mat@p[-1]] + 1
 }
 
+# Sparse matrix to dense
 sparse2dense <- function(input, sparse = TRUE){
   if(!sparse){
     class_check <- "Matrix"
@@ -161,7 +173,34 @@ sparse2dense <- function(input, sparse = TRUE){
     }
 }
 
+# Re-arrange the strc_mat according to the new bts
+transform_strc_mat <- function(strc_mat, bts){
+  if (length(bts) != NCOL(strc_mat)){
+    stop(simpleError(sprintf('length of basis set should be %d', NCOL(strc_mat))))
+  }
+  S1 <- strc_mat[bts,]
+  S2 <- strc_mat[-bts,]
+  transitionMat <- solve(S1, Diagonal(NCOL(strc_mat)))
+  strc_mat[-bts,] <- S2 %*% transitionMat
+  strc_mat[bts,] <- Diagonal(NCOL(strc_mat))
+  return(strc_mat)
+}
 
+# Remove NA values (row and columns)
+remove_na <- function(x){
+  inax <- is.na(x)
+  if(any(inax)){
+    out <- stats::na.omit(x)
+    if(NROW(out) == 0){
+      x <- x[, !(colSums(!inax) == 0)]
+      inax <- is.na(x)
+      #out <- stats::na.omit(x)
+    }
+    row_na <- rowSums(inax)
+    x <- x[!(rowSums(inax) == NCOL(x)), , drop = FALSE]
+  }
+  return(x)
+}
 
 
 

@@ -15,7 +15,7 @@ navbar:
   components:
     github:
       icon: fab fa-github fa-lg
-      href: https://github.com/daniGiro/FoReco
+      href: https://github.com/danigiro/FoReco
     reference:
       text: "Reference"
       icon: fa-book
@@ -99,7 +99,9 @@ reference:
       - lcmat
       - recoinfo
       - res2matrix
+      - set_bounds
       - shrink_estim
+      - shrink_oasd
       - tecov
       - teboot
       - teprojmat

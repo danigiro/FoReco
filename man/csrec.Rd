@@ -17,7 +17,10 @@ aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
 variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-zero constraints. It spans the null space for the reconciled forecasts.}
+zero constraints: each row represents a constraint equation, and each column represents
+a variable. The matrix can be of full rank, meaning the rows are linearly independent,
+but this is not a strict requirement, as the function allows for redundancy in the
+constraints.}
 
 \item{comb}{A string specifying the reconciliation method. For a complete list, see \link{cscov}.}
 
@@ -35,19 +38,32 @@ for projection approach.
 for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative reconciled forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
+\item "\code{bpv}": block principal pivoting algorithm.
 \item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
 }}
 
-\item{settings}{An object of class \code{osqpSettings} specifying settings
+\item{settings}{A list of control parameters.
+\itemize{
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
 for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).}
+\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
+or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
+may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
+criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
+tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
+\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+}}
 
-\item{bounds}{A (\eqn{n \times 2}) numeric matrix specifying the cross-sectional bounds.
-The first column represents the lower bound, and the second column represents the upper bound.}
+\item{bounds}{A matrix (see \link{set_bounds}) with 3 columns (\eqn{i,lower,upper}), such that
+\itemize{
+\item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
+\item Columns 2 and 3 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+}}
 
 \item{immutable}{A numeric vector containing the column indices of the base forecasts
 (\code{base} parameter) that should be fixed.}
@@ -107,7 +123,7 @@ forecasts, \emph{Solar Energy}, 251, 13–29. \doi{10.1016/j.solener.2023.01.003
 
 Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
 for general linearly constrained multiple time series,
-\emph{Statistical Methods & Applications}, in press. \doi{10.1007/s10260-023-00738-6}.
+\emph{Statistical Methods & Applications}, 33, 581-607. \doi{10.1007/s10260-023-00738-6}.
 
 Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,

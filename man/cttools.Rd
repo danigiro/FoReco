@@ -12,7 +12,10 @@ aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
 variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-zero constraints. It spans the null space for the reconciled forecasts.}
+zero constraints: each row represents a constraint equation, and each column represents
+a variable. The matrix can be of full rank, meaning the rows are linearly independent,
+but this is not a strict requirement, as the function allows for redundancy in the
+constraints.}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
 of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
@@ -74,7 +77,9 @@ Utilities:
 \code{\link{lcmat}()},
 \code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
+\code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},
+\code{\link{shrink_oasd}()},
 \code{\link{teprojmat}()},
 \code{\link{tetools}()},
 \code{\link{unbalance_hierarchy}()}

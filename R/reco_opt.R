@@ -20,8 +20,11 @@
 #' @param res An (\eqn{N \times n}) optional numeric matrix containing the in-sample
 #' residuals. This matrix is used to compute some covariance matrices.
 #' @param comb A string specifying the reconciliation method. For a complete list, see [cscov].
-#' @param bounds A (\eqn{n \times 2}) numeric matrix specifying the cross-sectional bounds.
-#' The first column represents the lower bound, and the second column represents the upper bound.
+#' @param bounds A matrix (see [set_bounds]) with 3 columns (\eqn{i,lower,upper}), such that
+#' \itemize{
+#'   \item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
+#'   \item Columns 2 and 3 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+#' }
 #' @param immutable A numeric vector containing the column indices of the base forecasts
 #' (\code{base} parameter) that should be fixed.
 #' @inheritDotParams cscov mse shrink_fun
@@ -42,7 +45,7 @@
 #'
 #' Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
 #' for general linearly constrained multiple time series,
-#' \emph{Statistical Methods & Applications}, in press. \doi{10.1007/s10260-023-00738-6}.
+#' \emph{Statistical Methods & Applications}, 33, 581-607. \doi{10.1007/s10260-023-00738-6}.
 #'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
@@ -144,6 +147,25 @@ csrec <- function(base, agg_mat, cons_mat,
     }
   }
 
+  # Check bounds cs
+  if(!is.null(bounds)){
+    if(is.vector(bounds)){
+      bounds <- matrix(bounds, ncol = length(bounds))
+    }
+    if(NCOL(bounds) != 3){
+      cli_abort("{.arg bounds} is not a matrix with 3 columns.", call = NULL)
+    }
+    bounds_approach <- attr(bounds, "approach")
+
+    bounds <- bounds[bounds[,1] <= n, , drop = FALSE]
+
+    if(is.null(bounds)){
+      cli_warn("No valid bounds", call = NULL)
+    }else{
+      attr(bounds, "approach") <- bounds_approach
+    }
+  }
+
   # Compute covariance
   if(is(comb, "Matrix") | is(comb, "matrix")){
     cov_mat <- comb
@@ -166,13 +188,14 @@ csrec <- function(base, agg_mat, cons_mat,
                    bounds = bounds,
                    settings = settings)
 
-  rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
-  if(is.null(colnames(base))){
-    colnames(reco_mat) <- paste0("s-", 1:NCOL(reco_mat))
-  } else {
-    colnames(reco_mat) <- colnames(base)
+  if(missing(agg_mat)){
+    colnames(reco_mat) <- namesCS(n = NCOL(reco_mat), names_vec = colnames(base))
+  }else{
+    colnames(reco_mat) <- namesCS(n = NCOL(reco_mat), names_vec = colnames(base),
+                                  names_list = dimnames(agg_mat))
   }
 
+  rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
   attr(reco_mat, "FoReco") <- list2env(list(info = attr(reco_mat, "info"),
                                             framework = "Cross-sectional",
                                             forecast_horizon = NROW(reco_mat),
@@ -207,13 +230,16 @@ csrec <- function(base, agg_mat, cons_mat,
 #' in-sample residuals at all the temporal frequencies ordered from the lowest frequency
 #' to the highest frequency. This vector is used to compute come covariance matrices.
 #' @inheritParams ctrec
-#' @param bounds A (\eqn{(k^\ast + m) \times 2}) numeric matrix specifying the
-#' temporal bounds. The first column represents the lower bound, and the
-#' second column represents the upper bound.
-#' @param immutable A matrix with two columns (\eqn{k,j}), such that
-#' \describe{
-#'   \item{Column 1}{Denotes the temporal aggregation order (\eqn{k = m,\dots,1}).}
-#'   \item{Column 2}{Indicates the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).}
+#' @param bounds A matrix (see [set_bounds]) with 4 columns (\eqn{k,j,lower,upper}), such that
+#' \itemize{
+#'   \item Column 1 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+#'   \item Column 2 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
+#'   \item Columns 3 and 4 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+#' }
+#' @param immutable A matrix with 2 columns (\eqn{k,j}), such that
+#' \itemize{
+#'   \item Column 1 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+#'   \item Column 2 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
 #' }
 #' For example, when working with a quarterly time series:
 #' \itemize{
@@ -340,6 +366,32 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
     }
   }
 
+  # Check bounds te
+  if(!is.null(bounds)){
+    if(is.vector(bounds)){
+      bounds <- matrix(bounds, ncol = length(bounds))
+    }
+    if(NCOL(bounds) != 4){
+      cli_abort("{.arg bounds} is not a matrix with 4 columns.", call = NULL)
+    }
+    bounds_approach <- attr(bounds, "approach")
+
+    bounds <- bounds[bounds[,1] %in% kset, , drop = FALSE]
+    bounds <- bounds[bounds[,2] <= m/bounds[,1], , drop = FALSE]
+    bounds <- t(apply(bounds, 1,  function(x){
+      if(x[1] %in% kset & x[2] <= m/x[1]){
+        c(which(rep(kset, m/kset) == x[1] &
+                  do.call(c, sapply(m/kset, seq.int)) == x[2]), x[-c(1:2)])
+      }
+    }))
+
+    if(is.null(bounds)){
+      cli_warn("No valid bounds", call = NULL)
+    }else{
+      attr(bounds, "approach") <- bounds_approach
+    }
+  }
+
   # Compute covariance
   if(is(comb, "Matrix") | is(comb, "matrix")){
     cov_mat <- comb
@@ -398,7 +450,10 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 #' aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
 #' variables into the \eqn{n_a} upper (constrained) variables.
 #' @param cons_mat A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-#' zero constraints. It spans the null space for the reconciled forecasts.
+#' zero constraints: each row represents a constraint equation, and each column represents
+#' a variable. The matrix can be of full rank, meaning the rows are linearly independent,
+#' but this is not a strict requirement, as the function allows for redundancy in the
+#' constraints.
 #' @param agg_order Highest available sampling frequency per seasonal cycle (max. order
 #' of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
 #' of \eqn{m}.
@@ -421,23 +476,37 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 #'   \item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
 #'   for structural approach.
 #'   }
-#' @param nn A string specifying the algorithm to compute non-negative reconciled forecasts:
+#' @param nn A string specifying the algorithm to compute non-negative forecasts:
 #'   \itemize{
 #'   \item "\code{osqp}": quadratic programming optimization
 #'   (\href{https://osqp.org/}{\pkg{osqp}} solver).
+#'   \item "\code{bpv}": block principal pivoting algorithm.
 #'   \item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
 #'   }
-#' @param settings An object of class \code{osqpSettings} specifying settings
-#' for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-#' \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
-#' @param bounds A (\eqn{n(k^\ast + m) \times 2}) numeric matrix specifying the
-#' cross-temporal bounds. The first column represents the lower bound, and the
-#' second column represents the upper bound.
+#' @param settings A list of control parameters.
+#'   \itemize{
+#'   \item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
+#'   for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
+#'   \href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
+#'   \item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
+#'   or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
+#'   may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
+#'   criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
+#'   tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
+#'   \code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+#'   }
+#' @param bounds A matrix (see [set_bounds]) with 5 columns (\eqn{i,k,j,lower,upper}), such that
+#' \itemize{
+#'   \item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
+#'   \item Column 2 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+#'   \item Column 3 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
+#'   \item Columns 4 and 5 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+#' }
 #' @param immutable A matrix with three columns (\eqn{i,k,j}), such that
-#' \describe{
-#'   \item{Column 1}{Represents the cross-sectional series (\eqn{i = 1, \dots, n}).}
-#'   \item{Column 2}{Denotes the temporal aggregation order (\eqn{k = m,\dots,1}).}
-#'   \item{Column 3}{Indicates the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).}
+#' \itemize{
+#'   \item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
+#'   \item Column 2 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+#'   \item Column 3 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
 #' }
 #' For example, when working with a quarterly multivariate time series (\eqn{n = 3}):
 #' \itemize{
@@ -591,6 +660,40 @@ ctrec <- function(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
     }
   }
 
+  # Check bounds ct
+  if(!is.null(bounds)){
+    if(is.vector(bounds)){
+      bounds <- matrix(bounds, ncol = length(bounds))
+    }
+    if(NCOL(bounds) != 5){
+      cli_abort("{.arg bounds} is not a matrix with 5 columns.", call = NULL)
+    }
+    bounds_approach <- attr(bounds, "approach")
+
+    bounds <- bounds[bounds[,1] <= tmp$dim[["n"]], , drop = FALSE]
+    bounds <- bounds[bounds[,2] %in% tmp$set, , drop = FALSE]
+    bounds <- bounds[bounds[,3] <= tmp$dim[["m"]]/bounds[,2], , drop = FALSE]
+
+    if(NROW(bounds) == 0){
+      cli_warn("No valid bounds.", call = NULL)
+      bounds <- NULL
+    }else{
+      bounds_id <- bounds[, 1:3]
+      bounds_mat <- sparseMatrix(integer(), integer(), x = numeric(),
+                                 dims = c(tmp$dim[["n"]], tmp$dim[["kt"]]))
+      col_id <- apply(bounds, 1, function(x){
+        which(rep(tmp$set, tmp$dim[["m"]]/tmp$set) == x[2] &
+                do.call(c, sapply(tmp$dim[["m"]]/tmp$set, seq.int)) == x[3])
+      })
+      bounds_mat[bounds[,1], col_id] <- 1
+      bounds_vec <- as(t(bounds_mat), "sparseVector")
+      bounds_id <- bounds_vec@i
+
+      bounds <- cbind(bounds_id, bounds[, -c(1:3), drop = FALSE])
+      attr(bounds, "approach") <- bounds_approach
+    }
+  }
+
   # Calculate 'h' and 'base_hmat'
   h <- NCOL(base) / tmp$dim[["kt"]]
   base_hmat <- mat2hmat(base, h = h, kset = tmp$set, n = tmp$dim[["n"]])
@@ -621,7 +724,7 @@ ctrec <- function(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
   # Convert 'reco_mat' back to matrix
   out <- hmat2mat(reco_mat, h = h, kset = tmp$set, n = tmp$dim[["n"]])
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base),
-                           names_list = dimnames(cons_mat))
+                           names_list = dimnames(agg_mat))
 
   attr(out, "FoReco") <- list2env(list(info = attr(reco_mat, "info"),
                                        framework = "Cross-temporal",

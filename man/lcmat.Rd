@@ -56,7 +56,7 @@ pivot <- obj$pivot # Pivot vector
 \references{
 Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
 for general linearly constrained multiple time series,
-\emph{Statistical Methods & Applications}, in press. \doi{10.1007/s10260-023-00738-6}.
+\emph{Statistical Methods & Applications}, 33, 581-607. \doi{10.1007/s10260-023-00738-6}.
 
 Strang, G. (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
 }
@@ -73,7 +73,9 @@ Utilities:
 \code{\link{df2aggmat}()},
 \code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
+\code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},
+\code{\link{shrink_oasd}()},
 \code{\link{teprojmat}()},
 \code{\link{tetools}()},
 \code{\link{unbalance_hierarchy}()}

@@ -1,5 +1,31 @@
 /* custom changes =========================================================== */
 
+@media (min-width: 1200px) {
+  h2, .h2 {
+      font-size: 1.5rem !important;
+  }
+
+  h2, .h2 {
+    font-size: 1.25rem !important;
+  }
+
+  h2, .h2 {
+      font-size: 1.25rem !important;
+  }
+}
+
+h2, .h2 {
+    font-size: 1.5rem !important;
+}
+
+h3, .h3 {
+    font-size: 1.25rem !important;
+}
+
+h4, .h4 {
+    font-size: 1.25rem !important;
+}
+
 a {
     text-decoration: none !important;
     color: #03638e;

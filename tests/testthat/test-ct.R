@@ -27,7 +27,7 @@ if(require(testthat)){
 
   Cte <- tetools(agg_order, sparse = FALSE)$cons_mat
 
-  test_that("Optimal cross-sectional reconciliation", {
+  test_that("Optimal cross-temporal reconciliation", {
     r1 <- ctrec(base = base, agg_mat = A, agg_order = agg_order, comb = comb,
                 res = res, approach = "strc")
     r2 <- ctrec(base = base, agg_mat = A, agg_order = agg_order, comb = comb,
@@ -50,6 +50,57 @@ if(require(testthat)){
     expect_equal(max(abs(Cte%*%r1)), 0)
   })
 
+  test_that("Cross-temporal reconciliation with agg_order subset", {
+    r1 <- ctrec(base = base[, -c(2:3)], agg_mat = A, agg_order = c(4, 1), comb = "wlsv",
+                res = res[, -c(11:30)])
+    r2 <- iterec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "wls"),
+                 telist = list(agg_order = c(4, 1), comb = "wlsv"),
+                 res = res[, -c(11:30)], verbose = FALSE, tol = 1e-8)
+
+
+    r3 <- ctrec(base = base[, -c(2:3)], agg_mat = A, agg_order = c(4, 1), comb = "ols",
+                res = res[, -c(11:30)])
+    r4 <- iterec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "ols"),
+                 telist = list(agg_order = c(4, 1), comb = "ols"),
+                 res = res[, -c(11:30)], verbose = FALSE)
+
+    r5 <- ctrec(base = base[, -c(2:3)], agg_mat = A, agg_order = c(4, 1), comb = "str",
+                res = res[, -c(11:30)])
+    r6 <- iterec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "str"),
+                 telist = list(agg_order = c(4, 1), comb = "str"),
+                 res = res[, -c(11:30)], verbose = FALSE)
+    r6k <- tcsrec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "str"),
+                  telist = list(agg_order = c(4, 1), comb = "str"),
+                  res = res[, -c(11:30)])
+
+    r7 <- ctrec(base = base[, -c(2:3)], agg_mat = A, agg_order = c(4, 1), comb = "csstr",
+                res = res[, -c(11:30)])
+    r8 <- iterec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "str"),
+                 telist = list(agg_order = c(4, 1), comb = "ols"),
+                 res = res[, -c(11:30)], verbose = FALSE)
+    r8k <- tcsrec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "str"),
+                  telist = list(agg_order = c(4, 1), comb = "ols"),
+                  res = res[, -c(11:30)])
+
+    r9 <- ctrec(base = base[, -c(2:3)], agg_mat = A, agg_order = c(4, 1), comb = "testr",
+                res = res[, -c(11:30)])
+    r10 <- iterec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "ols"),
+                  telist = list(agg_order = c(4, 1), comb = "str"),
+                  res = res[, -c(11:30)], verbose = FALSE)
+    r10k <- tcsrec(base = base[, -c(2:3)], cslist = list(agg_mat = A, comb = "ols"),
+                   telist = list(agg_order = c(4, 1), comb = "str"),
+                   res = res[, -c(11:30)])
+
+    expect_true(max(abs(r1-r2)) < 1e-6)
+    expect_equal(r3, r4, ignore_attr = TRUE)
+    expect_equal(r5, r6, ignore_attr = TRUE)
+    expect_equal(r5, r6k, ignore_attr = TRUE)
+    expect_equal(r7, r8, ignore_attr = TRUE)
+    expect_equal(r7, r8k, ignore_attr = TRUE)
+    expect_equal(r9, r10, ignore_attr = TRUE)
+    expect_equal(r9, r10k, ignore_attr = TRUE)
+  })
+
   base[4:5,NCOL(base)] <- -10
   test_that("Optimal nonegative cross-sectional reconciliation", {
     r1 <- ctrec(base = base, agg_mat = A, agg_order = agg_order, comb = comb,
@@ -58,8 +109,11 @@ if(require(testthat)){
                 res = res, approach = "proj", nn = "proj_osqp")
     r3 <- ctrec(base = base, agg_mat = A, agg_order = agg_order, comb = comb,
                 res = res, approach = "proj", nn = "sntz")
+    r4 <- ctrec(base = base, agg_mat = A, agg_order = agg_order, comb = comb,
+                res = res, approach = "proj", nn = "bpv")
 
     expect_equal(r1, r2, ignore_attr = TRUE)
+    expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(max(abs(Ccs%*%t(r1))), 0)
     expect_equal(max(abs(Ccs%*%t(r3))), 0)
     expect_equal(max(abs(Cte%*%r1)), 0)
@@ -147,5 +201,14 @@ if(require(testthat)){
     S <- cttools(agg_mat = A, agg_order = agg_order)$strc_mat
 
     expect_equal(M, S%*%G, ignore_attr = TRUE)
+  })
+
+  test_that("Covariance", {
+    for(i in c("acov", "bdsam", "bdshr", "bsam", "bshr", "csstr", "hbsam", "hbshr",
+               "hsam", "hshr", "ols", "sam", "shr", "Ssam", "Sshr", "str", "testr", "wlsh",
+               "wlsv")){
+      expect_no_error(ctrec(base = base, agg_mat = A, agg_order = agg_order, comb = i,
+                            res = res))
+    }
   })
 }

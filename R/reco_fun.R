@@ -1,10 +1,9 @@
-reco <- function(approach, base, immutable = NULL, nn = NULL, ...){
+reco <- function(approach, base, immutable = NULL, nn = NULL, bounds = NULL, ...){
   # Fri Feb  9 2024
   tsp(base) <- NULL # Remove ts
 
-  if(any(approach %in% c("proj_osqp", "strc_osqp",
-                         "proj_immutable",
-                         "proj_immutable2", "strc_immutable") | is.null(immutable))){
+  if(approach %in% c("proj_osqp", "strc_osqp", "proj_immutable",
+                     "proj_immutable2", "strc_immutable") | is.null(immutable)){
     class_base <- approach
   }else{
     class_base <- paste0(approach, "_immutable")
@@ -12,7 +11,8 @@ reco <- function(approach, base, immutable = NULL, nn = NULL, ...){
 
   # Set class of 'base' to include 'approach' and reconcile
   class(approach) <- c(class(approach), class_base)
-  rmat <- .reco(approach = approach, base = base, nn = nn, immutable = immutable, ...)
+  rmat <- .reco(approach = approach, base = base, nn = nn,
+                immutable = immutable, bounds = bounds, ...)
 
   # Check if 'nn' is provided and adjust 'rmat' accordingly
   if(!is.null(nn)){
@@ -24,10 +24,41 @@ reco <- function(approach, base, immutable = NULL, nn = NULL, ...){
       class(approach)[length(class(approach))] <- nn
       rmat <- .reco(approach = approach, base = base, nn = nn, reco = rmat,
                     immutable = immutable, ...)
-    } else if(!all(rmat >= 0)){
+    }else if(!all(rmat >= 0)){
       rmat[rmat < 0] <- 0
     }
+  }else if(!is.null(bounds)){
+    nbid <- bounds[,1,drop = TRUE]
+
+    checkb <- apply(rmat, 1, function(x){
+      idl <- any(x[nbid]<bounds[,2,drop = TRUE] - sqrt(.Machine$double.eps))
+      idb <- any(x[nbid]>bounds[, 3, drop = TRUE] + sqrt(.Machine$double.eps))
+
+      idl0 <- any(x[nbid]<bounds[,2,drop = TRUE])
+      idb0 <- any(x[nbid]>bounds[, 3, drop = TRUE])
+      c(any(c(idl, idb)), any(c(idl0, idb0)))
+    })
+
+    if(any(checkb[1,])){
+      if(is.null(attr(bounds, "approach")) || attr(bounds, "approach") == "osqp"){
+        attr(bounds, "approach") <- paste(approach, "osqp", sep = "_")
+      }
+
+      class(approach)[length(class(approach))] <- attr(bounds, "approach")
+      rmat <- .reco(approach = approach, base = base, bounds = bounds, reco = rmat,
+                    immutable = immutable, ...)
+    }else if(any(checkb[2,])){
+      rmat <- t(apply(rmat, 1, function(x){
+        id <- x[nbid]<=bounds[,2,drop = TRUE]+sqrt(.Machine$double.eps)
+        x[nbid][id] <- bounds[,2,drop = TRUE][id]
+
+        id <- x[nbid]>=bounds[, 3, drop = TRUE]-sqrt(.Machine$double.eps)
+        x[nbid][id] <- bounds[, 3, drop = TRUE][id]
+        x
+      }))
+    }
   }
+
   return(rmat)
 }
 
@@ -157,10 +188,9 @@ reco.proj_osqp <- function(base, cons_mat, cov_mat,
 
   # other constraints
   if(!is.null(bounds)){
-    bounds_rows <- rowSums(abs(bounds) == Inf) < 2
-    A <- rbind(A, Diagonal(c)[bounds_rows, ])
-    l <- c(l, bounds[bounds_rows, 1, drop = TRUE])
-    u <- c(u, bounds[bounds_rows, 2, drop = TRUE])
+    A <- rbind(A, Diagonal(c)[bounds[,1,drop = TRUE], ])
+    l <- c(l, bounds[,2,drop = TRUE])
+    u <- c(u, bounds[,3,drop = TRUE])
   }
 
   if(is.null(settings)){
@@ -196,6 +226,15 @@ reco.proj_osqp <- function(base, cons_mat, cov_mat,
       cli_warn(c("x"="OSQP failed: check the results.",
                  "i"="OSQP flag = {rec$info$status_val}",
                  "i"="OSQP pri_res = {rec$info$pri_res}"), call = NULL)
+    }
+
+    if(!is.null(bounds)){
+      nbid <- bounds[,1,drop = TRUE]
+      id <- out$reco[nbid]<=bounds[,2,drop = TRUE]+sqrt(.Machine$double.eps)
+      out$reco[nbid][id] <- bounds[,2,drop = TRUE][id]
+
+      id <- out$reco[nbid]>=bounds[, 3, drop = TRUE]-sqrt(.Machine$double.eps)
+      out$reco[nbid][id] <- bounds[, 3, drop = TRUE][id]
     }
 
     out$info <- c(rec$info$obj_val, rec$info$run_time, rec$info$iter,
@@ -293,10 +332,9 @@ reco.strc_osqp <- function(base, strc_mat, cov_mat,
 
   # other constraints
   if(!is.null(bounds)){
-    bounds_rows <- rowSums(abs(bounds) == Inf) < 2
-    A <- rbind(A, strc_mat[bounds_rows, ,drop = FALSE])
-    l <- c(l, bounds[bounds_rows, 1, drop = TRUE])
-    u <- c(u, bounds[bounds_rows, 2, drop = TRUE])
+    A <- rbind(A, strc_mat[bounds[,1,drop = TRUE], ,drop = FALSE])
+    l <- c(l, bounds[,2,drop = TRUE])
+    u <- c(u, bounds[,3,drop = TRUE])
   }
 
   if(is.null(settings)){
@@ -332,6 +370,15 @@ reco.strc_osqp <- function(base, strc_mat, cov_mat,
       cli_warn(c("x"="OSQP failed: check the results.",
                  "i"="OSQP flag = {rec$info$status_val}",
                  "i"="OSQP pri_res = {rec$info$pri_res}"), call = NULL)
+    }
+
+    if(!is.null(bounds)){
+      nbid <- bounds[,1,drop = TRUE]
+      id <- out$reco[nbid]<=bounds[,2,drop = TRUE]+sqrt(.Machine$double.eps)
+      out$reco[nbid][id] <- bounds[,2,drop = TRUE][id]
+
+      id <- out$reco[nbid]>=bounds[, 3, drop = TRUE]-sqrt(.Machine$double.eps)
+      out$reco[nbid][id] <- bounds[, 3, drop = TRUE][id]
     }
 
     out$info <- c(
@@ -480,7 +527,9 @@ reco.proj_immutable <- function(base, cons_mat, cov_mat, immutable = NULL, ...){
   # check immutable feasibility
   # TODO: can proj_immutable2 be more stable than proj_immutable?
   # Answer issue: https://github.com/danigiro/FoReco/issues/6#issue-2397642027 (@AngelPone)
-  if(rankMatrix(cons_mat) + length(immutable) != rankMatrix(compl_cons_mat)){
+  rank_cm <- rankMatrix(cons_mat, method = "qr", warn.t = FALSE)
+  rank_ccm <-  rankMatrix(compl_cons_mat, method = "qr", warn.t = FALSE)
+  if(rank_cm + length(immutable) != rank_ccm){
     cli_abort("There is no solution with this {.arg immutable} set.",  call = NULL)
   }
 
@@ -574,7 +623,8 @@ reco.strc_immutable <- function(base, strc_mat, cov_mat, immutable = NULL, ...){
       free_leaves <- setdiff(corr_leaves, c(immutable, determined))
       if(length(free_leaves) == 0){
         if(all(corr_leaves %in% immutable)){
-          cli_warn("All children of {immutable[i]}th series are immutable, it is removed from the condition.", call = NULL)
+          cli_warn("All children of {immutable[i]}th series are immutable, it is removed.",
+                   call = NULL)
           immutable <- immutable[immutable != immutable[i]]
           i <- i - 1
           next
@@ -602,18 +652,6 @@ reco.strc_immutable <- function(base, strc_mat, cov_mat, immutable = NULL, ...){
   reco_bts[, !(new_basis %in% immutable)] <- tmp
   reco <- reco_bts %*% t(snew)
   return(as.matrix(reco))
-}
-
-transform_strc_mat <- function(strc_mat, bts){
-  if (length(bts) != NCOL(strc_mat)){
-    stop(simpleError(sprintf('length of basis set should be %d', NCOL(strc_mat))))
-  }
-  S1 <- strc_mat[bts,]
-  S2 <- strc_mat[-bts,]
-  transitionMat <- solve(S1, Diagonal(NCOL(strc_mat)))
-  strc_mat[-bts,] <- S2 %*% transitionMat
-  strc_mat[bts,] <- Diagonal(NCOL(strc_mat))
-  return(strc_mat)
 }
 
 reco.kann <- function(base, cons_mat, cov_mat, nn = NULL,
@@ -805,4 +843,213 @@ reco.fbpp <- function(base, cons_mat, cov_mat, id_nn = NULL, nn = NULL,
   rownames(info) <- rowid
   attr(reco, "info") <- info
   return(reco)
+}
+
+reco.bpv <- function(base, strc_mat, cov_mat, cons_mat, id_nn = NULL, nn = NULL,
+                     reco = NULL, settings = NULL, immutable = NULL, approach = "proj", ...){
+  if(!is.null(immutable)){
+    cli_warn("immutable not supported")
+  }
+
+  if(is.null(strc_mat)){
+    cli_abort("Please provide a valid {.arg agg_mat} for bpv.",
+              call = NULL)
+  }
+
+  if(is.null(reco)){
+    if(approach == "proj"){
+      reco <- reco.proj(base = base, cons_mat = cons_mat, cov_mat = cov_mat)
+    }else{
+      reco <- reco.strc(base = base, strc_mat = strc_mat, cov_mat = cov_mat)
+    }
+  }
+
+  if(is.null(nn) | all(reco>=0)){
+    return(reco)
+  }
+
+  if(is.null(id_nn)){
+    bts <- find_bts(strc_mat)
+    id_nn <- rep(0, NCOL(reco))
+    id_nn[bts] <- 1
+  }
+
+  rowid <- which(rowSums(reco<0)>0)
+  base0 <- base[rowid, , drop = FALSE]
+  reco0 <- reco[rowid, , drop = FALSE]
+
+  #controls
+  nb <- NCOL(strc_mat)
+
+  tol <- ifelse(is.null(settings$tol), sqrt(.Machine$double.eps), settings$tol)
+  pbar <- ifelse(is.null(settings$pbar), 10, settings$pbar)
+  ptype <- ifelse(is.null(settings$ptype), "fixed", settings$ptype)
+  gtol <- ifelse(is.null(settings$gtol), sqrt(.Machine$double.eps), settings$gtol)
+  itmax <- ifelse(is.null(settings$itmax), 100, settings$itmax)
+  ninf <- nb + 1
+  if(ptype == "fixed") {
+    alpha <- 1:nb
+  }else if(ptype == "random") {
+    alpha <- sample(1:nb, nb, replace = FALSE)
+  }
+  maxp <- pbar
+
+  z <- t(solve(cov_mat, strc_mat))
+  grad_all <- -t(strc_mat) %*% solve(cov_mat, t(base0))
+  grad0 <- z %*% t(reco0) + grad_all
+
+  bpv_step <- lapply(1:length(rowid), function(j){
+    start <- Sys.time()
+    baseh <- base0[j, ]
+    grad <- grad0[,j]
+
+    # Starting set
+    Fset <- 1:nb
+    Gset <- numeric(0)
+
+    rbts <- reco0[j, id_nn == 1]
+    gradg <- grad[Gset]
+
+    # To avoid nondegenerate problem (as done by Jason Cantarella)
+    rbts[abs(rbts) < tol] <- 0L
+    gradg[abs(gradg) < tol] <- 0L
+    verb <- TRUE
+    for(i in 1:itmax){
+      i1 <- Fset[which(rbts < -tol)]
+      i2 <- Gset[which(gradg < -tol)]
+      ivec <- union(i1, i2)
+
+      if(length(ivec) < ninf) {
+        ninf <- length(ivec)
+        maxp <- pbar
+      }else if(maxp >= 1) {
+        maxp <- maxp - 1
+      }else{
+        if(ptype == "fixed") {
+          if(verb){
+            cat("Slow zone: it might take some time to converge! \n")
+            verb <- FALSE
+          }
+
+          r <- max(ivec)
+        }else if(ptype == "random") {
+          if(verb){
+            cat("Slow zone: it might take some time to converge! \n")
+            verb <- FALSE
+          }
+          r <- alpha[max(which(alpha %in% ivec))]
+        }
+        if(is.element(r, i1)) {
+          i1 <- r
+          i2 <- numeric(0)
+        }else{
+          i1 <- numeric(0)
+          i2 <- r
+        }
+      }
+
+      # updating f and g
+      Fset <- union(Fset[!Fset %in% i1], i2)
+      Gset <- union(Gset[!Gset %in% i2], i1)
+
+      if(length(Gset) == 0) {
+        rfc <- reco0[j,]
+      }else{
+        strc_mat_0 <- strc_mat[, -Gset, drop = FALSE]
+        if(approach == "proj"){
+          id_c <- which(id_nn==1)[Gset]
+          idb0 <- which(id_nn==1)[-Gset]
+          ida0 <- (1:NROW(strc_mat_0))[-idb0]
+          id0 <- c(ida0, idb0)
+          agg_mat0 <- strc_mat[-idb0, -Gset, drop = FALSE]
+          cons_mat_0 <- cbind(Diagonal(NROW(agg_mat0)), -agg_mat0)
+
+          tmp <- reco.proj(base = t(baseh[id0]), cons_mat = cons_mat_0,
+                                     cov_mat = cov_mat[id0, id0])
+          tmp <- tmp[sort.int(id0, index.return = T)$ix]
+        }else{
+          tmp2 <- reco.strc(base = t(baseh), strc_mat = strc_mat_0, cov_mat = cov_mat)
+        }
+        rfc <- as.numeric(tmp)
+      }
+
+      grad <- as.matrix(z %*% rfc) + grad_all[, j]
+      rbts <-  rfc[id_nn == 1][Fset]
+      gradg <- grad[Gset]
+
+      # To avoid nondegenerate problem (as done by Jason Cantarella)
+      rbts[abs(rbts) < tol] <- 0L
+      gradg[abs(gradg) < tol] <- 0L
+      if(all(rbts > -gtol) & all(gradg > -gtol)){
+        flag <- 1
+        break
+      }else{
+        flag <- -2
+      }
+    }
+
+    if(flag == 1){
+      rfc[rfc <= sqrt(.Machine$double.eps)] <- 0
+      if(i == itmax){
+        flag <- 2
+      }
+    }
+    end <- Sys.time()
+    out <- list()
+    out$reco <- rfc
+    out$info <- c(difftime(end,start, units = "secs"), i, flag)
+    out$idx <- Gset
+    out
+  })
+
+  bpv_step <- do.call("rbind", bpv_step)
+
+  # Point reconciled forecasts
+  reco[rowid, ] <- do.call("rbind", bpv_step[, "reco"])
+
+  info <- do.call("rbind", bpv_step[, "info"])
+  colnames(info) <- c("run_time", "iter", "status")
+  rownames(info) <- rowid
+  attr(reco, "info") <- info
+  return(reco)
+}
+
+reco.sftb <- function(base, reco, strc_mat, id_nn = NULL, bounds = NULL, ...){
+  # Check input
+  if(missing(strc_mat)){
+    cli_abort("Mandatory arguments: {.arg strc_mat} and {.arg cov_mat}.",
+              call = NULL)
+  }
+
+  if(missing(reco)){
+    reco <- base
+  }
+
+  if(is.null(bounds)){
+    return(reco)
+  }
+
+  if(is.null(strc_mat)){
+    cli_abort(c("Argument {.arg agg_mat} is missing. The {.strong sntz} approach
+                is available only for hierarchical/groupped time series."), call = NULL)
+  }
+
+  if(is.null(id_nn)){
+    bts <- find_bts(strc_mat)
+    id_nn <- rep(0, NCOL(reco))
+    id_nn[bts] <- 1
+  }
+
+  nbid <- bounds[,1,drop = TRUE]
+  reco <- t(apply(reco, 1, function(x){
+    id <- x[nbid]<=bounds[,2,drop = TRUE]+sqrt(.Machine$double.eps)
+    x[nbid][id] <- bounds[,2,drop = TRUE][id]
+
+    id <- x[nbid]>=bounds[, 3, drop = TRUE]-sqrt(.Machine$double.eps)
+    x[nbid][id] <- bounds[, 3, drop = TRUE][id]
+    x
+  }))
+
+  bts <- reco[, id_nn == 1, drop = FALSE]
+  as.matrix(bts %*% t(strc_mat))
 }

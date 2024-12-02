@@ -25,9 +25,11 @@ cscov(comb = "ols", n = NULL, agg_mat = NULL, res, mse = TRUE,
 \item "\code{str}" - structural variances.
 \item "\code{wls}" - series variances (uses \code{res}).
 }
-\item Generalized least squares:
+\item Generalized least squares (uses \code{res}):
 \itemize{
-\item "\code{shr}"/"\code{sam}" - shrunk/sample covariance (uses \code{res}).
+\item "\code{shr}" - shrunk covariance (Wickramasuriya et al., 2019).
+\item "\code{oasd}" - oracle shrunk covariance (Ando and Xiao, 2023).
+\item "\code{sam}" - sample covariance.
 }
 }}
 
@@ -62,7 +64,7 @@ A <- t(c(1,1))
 res <- t(matrix(rnorm(n = 30), nrow = 3))
 
 cov1 <- cscov("ols", n = 3)          # OLS methods
-cov2 <- cscov("str", agg_mat = A)   # STR methods
+cov2 <- cscov("str", agg_mat = A)    # STR methods
 cov3 <- cscov("wls", res = res)      # WLS methods
 cov4 <- cscov("shr", res = res)      # SHR methods
 cov5 <- cscov("sam", res = res)      # SAM methods
@@ -73,6 +75,10 @@ cscov(comb = "ols2", x = 3) # == cscov("ols", n = 3)
 
 }
 \references{
+Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
+shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257), A001.
+\doi{10.5089/9798400260780.001.A001}
+
 Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, \emph{International Journal
 of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}

@@ -1,3 +1,21 @@
+# FoReco (development version)
+
+### New Features
+
+* Added new `bpv` non-negative forecast reconciliation algorithm (experimental) based on the cross-sectional framework presented in Wickramasuriya et al. (2020) and, now, extended for the temporal and cross-temporal framework.
+  * Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020), "Optimal non-negative forecast reconciliation", *Statistics and Computing*, 30(5), 1167–1182. [doi:10.1007/s11222-020-09930-0](https://doi.org/10.1007/s11222-020-09930-0).
+
+* New `oasd` cross-sectional covariance matrix (experimental), implementing an oracle shrunk covariance estimation (Ando and Xiao, 2023).
+  * Ando, S., and Xiao, M. (2023), "High-dimensional covariance matrix estimation: shrinkage toward a diagonal target", *IMF Working Papers*, 2023(257), A001. [doi:10.5089/9798400260780.001.A001](https://doi.org/10.5089/9798400260780.001.A001).
+
+* Redesigned `bounds` parameter to enable bounded forecast reconciliation for `csrec()`, `terec()`, and `ctrec()` functions.
+
+* Introduced new `set_bounds()` function to define custom bounds for reconciliation.
+
+### Bug Fixes
+
+* Fixed bug when only a subset of `agg_order` factors was selected in `iterec()`, `tcsrec()`, and `cstrec()` functions.
+
 # FoReco 1.0.0
 
 >**Note** – The latest release of FoReco introduces significant changes to its function notation and adds several new features. This major update, FoReco 1.0, is not compatible with previous versions due to the substantial changes made to the package's core structure. The previous version is available on [Github](https://github.com/danigiro/FoReco026) ([docs](https://danigiro.github.io/FoReco026/)).

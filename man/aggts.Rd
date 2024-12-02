@@ -61,7 +61,9 @@ Utilities:
 \code{\link{lcmat}()},
 \code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
+\code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},
+\code{\link{shrink_oasd}()},
 \code{\link{teprojmat}()},
 \code{\link{tetools}()},
 \code{\link{unbalance_hierarchy}()}

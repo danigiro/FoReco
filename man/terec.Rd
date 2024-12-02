@@ -41,25 +41,38 @@ for projection approach.
 for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative reconciled forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
+\item "\code{bpv}": block principal pivoting algorithm.
 \item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
 }}
 
-\item{settings}{An object of class \code{osqpSettings} specifying settings
+\item{settings}{A list of control parameters.
+\itemize{
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
 for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).}
+\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
+or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
+may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
+criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
+tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
+\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+}}
 
-\item{bounds}{A (\eqn{(k^\ast + m) \times 2}) numeric matrix specifying the
-temporal bounds. The first column represents the lower bound, and the
-second column represents the upper bound.}
+\item{bounds}{A matrix (see \link{set_bounds}) with 4 columns (\eqn{k,j,lower,upper}), such that
+\itemize{
+\item Column 1 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+\item Column 2 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
+\item Columns 3 and 4 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+}}
 
-\item{immutable}{A matrix with two columns (\eqn{k,j}), such that
-\describe{
-\item{Column 1}{Denotes the temporal aggregation order (\eqn{k = m,\dots,1}).}
-\item{Column 2}{Indicates the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).}
+\item{immutable}{A matrix with 2 columns (\eqn{k,j}), such that
+\itemize{
+\item Column 1 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
+\item Column 2 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
 }
 For example, when working with a quarterly time series:
 \itemize{

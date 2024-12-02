@@ -52,9 +52,11 @@ if(require(testthat)){
                 approach = "proj", nn = "proj_osqp")
     r3 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
                 approach = "proj", nn = "sntz")
-
+    r4 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
+                approach = "proj", nn = "bpv")
 
     expect_equal(r1, r2, ignore_attr = TRUE)
+    expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(max(abs(C%*%r1)), 0)
     expect_equal(max(abs(C%*%r3)), 0)
   })
@@ -131,5 +133,12 @@ if(require(testthat)){
     S <- tetools(agg_order = 4)$strc_mat
 
     expect_equal(M, S%*%G, ignore_attr = TRUE)
+  })
+
+  test_that("Covariance", {
+    for(i in c("acov", "har1", "ols", "sam", "sar1", "shr", "str", "strar1", "wlsh", "wlsv")){
+      expect_no_error(terec(base = base, agg_order = agg_order, comb = i,
+                            res = res))
+    }
   })
 }

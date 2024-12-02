@@ -69,15 +69,17 @@ iterec <- function(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
 
   # Check telist: agg_order
   if(any(names(telist)=="agg_order")){
-    kset <- tetools(agg_order = telist$agg_order)$set
-    h <- NCOL(base)/sum(kset)
+    tmp <- tetools(agg_order = telist$agg_order)
+    kset <- tmp$set
+    h <- NCOL(base)/tmp$dim[["kt"]]
+
 
     # Check dimension of base and res
-    if(NCOL(base) %% sum(kset) != 0){
+    if(NCOL(base) %% tmp$dim[["kt"]] != 0){
       cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
     }
 
-    if(!is.null(res) && NCOL(res) %% sum(kset) != 0){
+    if(!is.null(res) && NCOL(res) %% tmp$dim[["kt"]] != 0){
       cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
     }
 
@@ -296,15 +298,17 @@ tcsrec <- function(base, cslist, telist, res = NULL, avg = "KA"){
 
   # Check telist: agg_order
   if(any(names(telist)=="agg_order")){
-    kset <- tetools(agg_order = telist$agg_order)$set
-    h <- NCOL(base)/sum(kset)
+    tmp <- tetools(agg_order = telist$agg_order)
+    kset <- tmp$set
+    h <- NCOL(base)/tmp$dim[["kt"]]
+
 
     # Check dimension of base and res
-    if(NCOL(base) %% sum(kset) != 0){
+    if(NCOL(base) %% tmp$dim[["kt"]] != 0){
       cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
     }
 
-    if(!is.null(res) && NCOL(res) %% sum(kset) != 0){
+    if(!is.null(res) && NCOL(res) %% tmp$dim[["kt"]] != 0){
       cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
     }
 
@@ -383,15 +387,17 @@ cstrec <- function(base, cslist, telist, res = NULL){
 
   # Check telist: agg_order
   if(any(names(telist)=="agg_order")){
-    kset <- tetools(agg_order = telist$agg_order)$set
-    h <- NCOL(base)/sum(kset)
+    tmp <- tetools(agg_order = telist$agg_order)
+    kset <- tmp$set
+    h <- NCOL(base)/tmp$dim[["kt"]]
+
 
     # Check dimension of base and res
-    if(NCOL(base) %% sum(kset) != 0){
+    if(NCOL(base) %% tmp$dim[["kt"]] != 0){
       cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
     }
 
-    if(!is.null(res) && NCOL(res) %% sum(kset) != 0){
+    if(!is.null(res) && NCOL(res) %% tmp$dim[["kt"]] != 0){
       cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
     }
 
