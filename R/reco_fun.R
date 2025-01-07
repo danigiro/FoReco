@@ -27,7 +27,9 @@ reco <- function(approach, base, immutable = NULL, nn = NULL, bounds = NULL, ...
     }else if(!all(rmat >= 0)){
       rmat[rmat < 0] <- 0
     }
-  }else if(!is.null(bounds)){
+  }
+
+  if(!is.null(bounds)){
     nbid <- bounds[,1,drop = TRUE]
 
     checkb <- apply(rmat, 1, function(x){
@@ -145,7 +147,8 @@ reco.proj_osqp <- function(base, cons_mat, cov_mat,
   if(!is.null(nn) & !is.null(reco)){
     id <- which(rowSums(reco < (-sqrt(.Machine$double.eps))) != 0)
     if(!is.null(bounds)){
-      id_b <- which(apply(reco, 1, function(x) all(bounds[,1] <= x) & all(bounds[,2] >= x)))
+      id_b <- which(apply(reco[, bounds[,1], drop = FALSE], 1,
+                          function(x) any(x <= bounds[,2]) | any(x >= bounds[,3])))
       if(length(id_b) > 0){
         id <- sort(unique(c(id, id_b)))
       }
