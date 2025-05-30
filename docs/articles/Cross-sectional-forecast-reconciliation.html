@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/daniGiro/FoReco">
+  <a class="external-link nav-link" href="https://github.com/danigiro/FoReco">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -112,9 +112,9 @@
                         <h4 data-toc-skip class="author">Daniele
 Girolimetto</h4>
             
-            <h4 data-toc-skip class="date">2024-06-07</h4>
+            <h4 data-toc-skip class="date">2025-05-30</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/vignettes/articles/Cross-sectional-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Cross-sectional-forecast-reconciliation.qmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Cross-sectional-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Cross-sectional-forecast-reconciliation.qmd</code></a></small>
       <div class="d-none name"><code>Cross-sectional-forecast-reconciliation.qmd</code></div>
     </div>
 
@@ -135,7 +135,7 @@ reconciliation.</p>
 </h3>
 <p>First, we load the necessary packages.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/daniGiro/FoReco" class="external-link">FoReco</a></span><span class="op">)</span>   <span class="co"># -&gt; To perform reconciliation</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/danigiro/FoReco" class="external-link">FoReco</a></span><span class="op">)</span>   <span class="co"># -&gt; To perform reconciliation</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/" class="external-link">forecast</a></span><span class="op">)</span>  <span class="co"># -&gt; To obtain base forecasts</span></span></code></pre></div>
 </div>
 </div>
@@ -361,7 +361,7 @@ reconciliation.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Non-negative forecasts: <span style="font-weight: bold;">`TRUE`</span></span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
 <span><span class="co">#&gt;     obj_val  run_time iter      pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -3197.129 0.1950355  450 7.983912e-12      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 -3197.129 0.1923452  450 7.983912e-12      1             1</span></span></code></pre></div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero,
 <strong>sntz</strong> <span class="citation">(Di Fonzo &amp;

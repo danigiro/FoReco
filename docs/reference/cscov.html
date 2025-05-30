@@ -14,7 +14,7 @@ covariance matrix using different reconciliation methods (see Wickramasuriya et 
     
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@ covariance matrix using different reconciliation methods (see Wickramasuriya et 
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/daniGiro/FoReco">
+  <a class="external-link nav-link" href="https://github.com/danigiro/FoReco">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -81,7 +81,7 @@ covariance matrix using different reconciliation methods (see Wickramasuriya et 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Cross-sectional covariance matrix approximation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/R/cov_cs.R" class="external-link"><code>R/cov_cs.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/R/cov_cs.R" class="external-link"><code>R/cov_cs.R</code></a></small>
       <div class="d-none name"><code>cscov.Rd</code></div>
     </div>
 
@@ -105,7 +105,9 @@ covariance matrix using different reconciliation methods (see Wickramasuriya et 
 <li><p>Weighted least squares:</p><ul><li><p>"<code>str</code>" - structural variances.</p></li>
 <li><p>"<code>wls</code>" - series variances (uses <code>res</code>).</p></li>
 </ul></li>
-<li><p>Generalized least squares:</p><ul><li><p>"<code>shr</code>"/"<code>sam</code>" - shrunk/sample covariance (uses <code>res</code>).</p></li>
+<li><p>Generalized least squares (uses <code>res</code>):</p><ul><li><p>"<code>shr</code>" - shrunk covariance (Wickramasuriya et al., 2019).</p></li>
+<li><p>"<code>oasd</code>" - oracle shrunk covariance (Ando and Xiao, 2023).</p></li>
+<li><p>"<code>sam</code>" - sample covariance.</p></li>
 </ul></li>
 </ul></dd>
 
@@ -146,7 +148,10 @@ matrix are not mean-corrected.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
+    <p>Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
+shrinkage toward a diagonal target. <em>IMF Working Papers</em>, 2023(257), A001.
+<a href="https://doi.org/10.5089/9798400260780.001.A001" class="external-link">doi:10.5089/9798400260780.001.A001</a></p>
+<p>Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, <em>International Journal
 of Forecasting</em>, 39, 1, 39-57. <a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">doi:10.1016/j.ijforecast.2021.08.004</a></p>
 <p>Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal forecast
@@ -174,7 +179,7 @@ reconciliation for hierarchical and grouped time series through trace minimizati
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">cov1</span> <span class="op">&lt;-</span> <span class="fu">cscov</span><span class="op">(</span><span class="st">"ols"</span>, n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>          <span class="co"># OLS methods</span></span></span>
-<span class="r-in"><span><span class="va">cov2</span> <span class="op">&lt;-</span> <span class="fu">cscov</span><span class="op">(</span><span class="st">"str"</span>, agg_mat <span class="op">=</span> <span class="va">A</span><span class="op">)</span>   <span class="co"># STR methods</span></span></span>
+<span class="r-in"><span><span class="va">cov2</span> <span class="op">&lt;-</span> <span class="fu">cscov</span><span class="op">(</span><span class="st">"str"</span>, agg_mat <span class="op">=</span> <span class="va">A</span><span class="op">)</span>    <span class="co"># STR methods</span></span></span>
 <span class="r-in"><span><span class="va">cov3</span> <span class="op">&lt;-</span> <span class="fu">cscov</span><span class="op">(</span><span class="st">"wls"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>      <span class="co"># WLS methods</span></span></span>
 <span class="r-in"><span><span class="va">cov4</span> <span class="op">&lt;-</span> <span class="fu">cscov</span><span class="op">(</span><span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>      <span class="co"># SHR methods</span></span></span>
 <span class="r-in"><span><span class="va">cov5</span> <span class="op">&lt;-</span> <span class="fu">cscov</span><span class="op">(</span><span class="st">"sam"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>      <span class="co"># SAM methods</span></span></span>

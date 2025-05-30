@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,7 +60,7 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/daniGiro/FoReco">
+  <a class="external-link nav-link" href="https://github.com/danigiro/FoReco">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -79,7 +79,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Cross-temporal reconciliation tools</h1>
-      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/R/tools.R" class="external-link"><code>R/tools.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/R/tools.R" class="external-link"><code>R/tools.R</code></a></small>
       <div class="d-none name"><code>cttools.Rd</code></div>
     </div>
 
@@ -103,7 +103,10 @@ variables into the \(n_a\) upper (constrained) variables.</p></dd>
 
 <dt>cons_mat</dt>
 <dd><p>A (\(n_a \times n\)) numeric matrix representing the cross-sectional
-zero constraints. It spans the null space for the reconciled forecasts.</p></dd>
+zero constraints: each row represents a constraint equation, and each column represents
+a variable. The matrix can be of full rank, meaning the rows are linearly independent,
+but this is not a strict requirement, as the function allows for redundancy in the
+constraints.</p></dd>
 
 
 <dt>agg_order</dt>
@@ -176,7 +179,9 @@ complete system (<code>n</code>), for upper levels (<code>na</code>) and bottom 
 <code><a href="lcmat.html">lcmat</a>()</code>,
 <code><a href="recoinfo.html">recoinfo</a>()</code>,
 <code><a href="residuals.html">res2matrix</a>()</code>,
+<code><a href="set_bounds.html">set_bounds</a>()</code>,
 <code><a href="shrink_estim.html">shrink_estim</a>()</code>,
+<code><a href="shrink_oasd.html">shrink_oasd</a>()</code>,
 <code><a href="teprojmat.html">teprojmat</a>()</code>,
 <code><a href="tetools.html">tetools</a>()</code>,
 <code><a href="unbalance_hierarchy.html">unbalance_hierarchy</a>()</code></p></div>

@@ -1,7 +1,7 @@
 url: https://danigiro.github.io/FoReco
 
 development:
-  mode: auto
+  mode: release
   version_label: default
   version_tooltip: "Version"
 

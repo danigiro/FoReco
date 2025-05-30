@@ -22,7 +22,7 @@ immutable (including Zhang et al., 2023) reconciled forecasts can be considered.
     
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -70,7 +70,7 @@ immutable (including Zhang et al., 2023) reconciled forecasts can be considered.
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/daniGiro/FoReco">
+  <a class="external-link nav-link" href="https://github.com/danigiro/FoReco">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -89,7 +89,7 @@ immutable (including Zhang et al., 2023) reconciled forecasts can be considered.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Optimal combination cross-sectional reconciliation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/R/reco_opt.R" class="external-link"><code>R/reco_opt.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/R/reco_opt.R" class="external-link"><code>R/reco_opt.R</code></a></small>
       <div class="d-none name"><code>csrec.Rd</code></div>
     </div>
 
@@ -125,7 +125,10 @@ variables into the \(n_a\) upper (constrained) variables.</p></dd>
 
 <dt>cons_mat</dt>
 <dd><p>A (\(n_a \times n\)) numeric matrix representing the cross-sectional
-zero constraints. It spans the null space for the reconciled forecasts.</p></dd>
+zero constraints: each row represents a constraint equation, and each column represents
+a variable. The matrix can be of full rank, meaning the rows are linearly independent,
+but this is not a strict requirement, as the function allows for redundancy in the
+constraints.</p></dd>
 
 
 <dt>comb</dt>
@@ -149,21 +152,30 @@ for structural approach.</p></li>
 
 
 <dt>nn</dt>
-<dd><p>A string specifying the algorithm to compute non-negative reconciled forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
+<dd><p>A string specifying the algorithm to compute non-negative forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
+<li><p>"<code>bpv</code>": block principal pivoting algorithm.</p></li>
 <li><p>"<code>sntz</code>": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).</p></li>
 </ul></dd>
 
 
 <dt>settings</dt>
-<dd><p>An object of class <code>osqpSettings</code> specifying settings
+<dd><p>A list of control parameters.</p><ul><li><p><code>nn = "osqp"</code> An object of class <code>osqpSettings</code> specifying settings
 for the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver. For details, refer to the
-<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2020).</p></dd>
+<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2020).</p></li>
+<li><p><code>nn = "bpv"</code> It includes: <code>ptype</code> for permutation method ("<code>random</code>"
+or "<code>fixed</code>", <em>default</em>), <code>par</code> for the number of full exchange rules that
+may be attempted (<code>10</code>, <em>default</em>), <code>tol</code> for the tolerance in convergence
+criteria (<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>gtol</code> for the gradient
+tolerance in convergence criteria (<code>sqrt(.Machine$double.eps)</code>, <em>default</em>),
+<code>itmax</code> for the maximum number of algorithm iterations (<code>100</code>, <em>default</em>)</p></li>
+</ul></dd>
 
 
 <dt>bounds</dt>
-<dd><p>A (\(n \times 2\)) numeric matrix specifying the cross-sectional bounds.
-The first column represents the lower bound, and the second column represents the upper bound.</p></dd>
+<dd><p>A matrix (see <a href="set_bounds.html">set_bounds</a>) with 3 columns (\(i,lower,upper\)), such that</p><ul><li><p>Column 1 represents the cross-sectional series (\(i = 1, \dots, n\)).</p></li>
+<li><p>Columns 2 and 3 indicates the <em>lower</em> and <em>lower</em> bounds, respectively.</p></li>
+</ul></dd>
 
 
 <dt>immutable</dt>
@@ -201,7 +213,7 @@ matrix are not mean-corrected.</p></dd>
 forecasts, <em>Solar Energy</em>, 251, 13–29. <a href="https://doi.org/10.1016/j.solener.2023.01.003" class="external-link">doi:10.1016/j.solener.2023.01.003</a></p>
 <p>Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
 for general linearly constrained multiple time series,
-<em>Statistical Methods &amp; Applications</em>, in press. <a href="https://doi.org/10.1007/s10260-023-00738-6" class="external-link">doi:10.1007/s10260-023-00738-6</a>
+<em>Statistical Methods &amp; Applications</em>, 33, 581-607. <a href="https://doi.org/10.1007/s10260-023-00738-6" class="external-link">doi:10.1007/s10260-023-00738-6</a>
 .</p>
 <p>Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
@@ -259,7 +271,7 @@ immutable forecasts, <em>European Journal of Operational Research</em>, 308(2), 
 <span class="r-in"><span><span class="va">nnreco</span> <span class="op">&lt;-</span> <span class="fu">csrec</span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, comb <span class="op">=</span> <span class="st">"wls"</span>, res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">nnreco</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">info</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     obj_val   run_time iter    pri_res status status_polish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -352.4619 2.2791e-05   25 1.7763e-15      1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -352.4619 2.6707e-05   25 1.7763e-15      1             1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

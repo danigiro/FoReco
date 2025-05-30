@@ -52,4 +52,37 @@ if(require(testthat)){
                          verbose = FALSE, sparse = FALSE)
     expect_equal(agg_mat, A, ignore_attr = TRUE)
   })
+
+  test_that("shr", {
+    # Original function: https://github.com/earowang/hts/blob/master/R/MinT.R
+    shrink.estim <- function(x, tar){
+      if (is.matrix(x) == TRUE && is.numeric(x) == FALSE)
+        stop("The data matrix must be numeric!", call. = FALSE)
+      p <- ncol(x)
+      n <- nrow(x)
+      covm <- crossprod(x) / n
+      corm <- cov2cor(covm)
+      xs <- scale(x, center = FALSE, scale = sqrt(diag(covm)))
+      v <- (1/(n * (n - 1))) * (crossprod(xs^2) - 1/n * (crossprod(xs))^2)
+      diag(v) <- 0
+      corapn <- cov2cor(tar)
+      d <- (corm - corapn)^2
+      lambda <- sum(v)/sum(d)
+      lambda <- max(min(lambda, 1), 0)
+      shrink.cov <- lambda * tar + (1 - lambda) * covm
+      return(list(shrink.cov, lambda))
+    }
+
+    N <- 500
+    n <- 2
+    mean <- c(0,0)
+    sigma <- matrix(c(1,1,1,2), nrow=2)
+    chol_sigma <- chol(sigma)
+    x <- t(mean + t(matrix(stats::rnorm(n*N), nrow=N,ncol=n)%*%chol_sigma))
+
+    original_hts <- shrink.estim(x, diag(diag(crossprod(x) / NROW(x))))
+    FoReco_shr <- FoReco::shrink_estim(x, mse = TRUE)
+    expect_equal(original_hts[[1]], as.matrix(FoReco_shr))
+    expect_equal(original_hts[[2]], attr(FoReco_shr, "lambda"))
+  })
 }

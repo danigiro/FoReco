@@ -151,7 +151,13 @@
     <loc>https://danigiro.github.io/FoReco/reference/residuals.html</loc>
   </url>
   <url>
+    <loc>https://danigiro.github.io/FoReco/reference/set_bounds.html</loc>
+  </url>
+  <url>
     <loc>https://danigiro.github.io/FoReco/reference/shrink_estim.html</loc>
+  </url>
+  <url>
+    <loc>https://danigiro.github.io/FoReco/reference/shrink_oasd.html</loc>
   </url>
   <url>
     <loc>https://danigiro.github.io/FoReco/reference/teboot.html</loc>

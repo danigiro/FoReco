@@ -141,4 +141,15 @@ if(require(testthat)){
                             res = res))
     }
   })
+
+  test_that("Temporal aggregation", {
+    for(i in c("first", "last", "avg", "sum")){
+      expect_no_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = i))
+    }
+    expect_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = "none"))
+    expect_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = list(1)))
+    expect_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = list(1,2)))
+    expect_no_error(terec(base = base, agg_order = agg_order, comb = "ols",
+                          tew = list(c(1,1,1,1), c(1,1))))
+  })
 }

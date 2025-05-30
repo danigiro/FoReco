@@ -1,4 +1,4 @@
-pandoc: 3.1.11
+pandoc: '3.2'
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
@@ -8,7 +8,7 @@ articles:
   Replicate-the-hts-package: Replicate-the-hts-package.html
   Replicate-the-thief-package: Replicate-the-thief-package.html
   Temporal-forecast-reconciliation: Temporal-forecast-reconciliation.html
-last_built: 2024-08-16T14:30Z
+last_built: 2025-05-30T17:06Z
 urls:
   reference: https://danigiro.github.io/FoReco/reference
   article: https://danigiro.github.io/FoReco/articles

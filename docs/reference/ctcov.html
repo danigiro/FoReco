@@ -14,7 +14,7 @@ Girolimetto et al., 2023)."><meta property="og:image" content="https://danigiro.
     
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,7 +62,7 @@ Girolimetto et al., 2023)."><meta property="og:image" content="https://danigiro.
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/daniGiro/FoReco">
+  <a class="external-link nav-link" href="https://github.com/danigiro/FoReco">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -81,7 +81,7 @@ Girolimetto et al., 2023)."><meta property="og:image" content="https://danigiro.
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Cross-temporal covariance matrix approximation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/R/cov_ct.R" class="external-link"><code>R/cov_ct.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/R/cov_ct.R" class="external-link"><code>R/cov_ct.R</code></a></small>
       <div class="d-none name"><code>ctcov.Rd</code></div>
     </div>
 
@@ -215,7 +215,6 @@ practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-115
 <span class="r-in"><span><span class="va">cov12</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hshr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Hshr methods</span></span></span>
 <span class="r-in"><span><span class="va">cov13</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hsam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Hsam methods</span></span></span>
 <span class="r-in"><span><span class="va">cov14</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hbshr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span> <span class="co"># HBshr methods</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5736559</span>
 <span class="r-in"><span><span class="va">cov15</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hbsam"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span> <span class="co"># HBsam methods</span></span></span>
 <span class="r-in"><span><span class="va">cov16</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bshr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>  <span class="co"># Bshr methods</span></span></span>
 <span class="r-in"><span><span class="va">cov17</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bsam"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>  <span class="co"># Bsam methods</span></span></span>

@@ -18,7 +18,7 @@ and immutable reconciled forecasts can be considered."><meta property="og:image"
     
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@ and immutable reconciled forecasts can be considered."><meta property="og:image"
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
 
       <ul class="navbar-nav"><li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/daniGiro/FoReco">
+  <a class="external-link nav-link" href="https://github.com/danigiro/FoReco">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@ and immutable reconciled forecasts can be considered."><meta property="og:image"
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Optimal combination temporal reconciliation</h1>
-      <small class="dont-index">Source: <a href="https://github.com/daniGiro/FoReco/blob/HEAD/R/reco_opt.R" class="external-link"><code>R/reco_opt.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/R/reco_opt.R" class="external-link"><code>R/reco_opt.R</code></a></small>
       <div class="d-none name"><code>terec.Rd</code></div>
     </div>
 
@@ -149,33 +149,37 @@ for structural approach.</p></li>
 
 
 <dt>nn</dt>
-<dd><p>A string specifying the algorithm to compute non-negative reconciled forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
+<dd><p>A string specifying the algorithm to compute non-negative forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
+<li><p>"<code>bpv</code>": block principal pivoting algorithm.</p></li>
 <li><p>"<code>sntz</code>": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).</p></li>
 </ul></dd>
 
 
 <dt>settings</dt>
-<dd><p>An object of class <code>osqpSettings</code> specifying settings
+<dd><p>A list of control parameters.</p><ul><li><p><code>nn = "osqp"</code> An object of class <code>osqpSettings</code> specifying settings
 for the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver. For details, refer to the
-<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2020).</p></dd>
+<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a> (Stellato et al., 2020).</p></li>
+<li><p><code>nn = "bpv"</code> It includes: <code>ptype</code> for permutation method ("<code>random</code>"
+or "<code>fixed</code>", <em>default</em>), <code>par</code> for the number of full exchange rules that
+may be attempted (<code>10</code>, <em>default</em>), <code>tol</code> for the tolerance in convergence
+criteria (<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>gtol</code> for the gradient
+tolerance in convergence criteria (<code>sqrt(.Machine$double.eps)</code>, <em>default</em>),
+<code>itmax</code> for the maximum number of algorithm iterations (<code>100</code>, <em>default</em>)</p></li>
+</ul></dd>
 
 
 <dt>bounds</dt>
-<dd><p>A (\((k^\ast + m) \times 2\)) numeric matrix specifying the
-temporal bounds. The first column represents the lower bound, and the
-second column represents the upper bound.</p></dd>
+<dd><p>A matrix (see <a href="set_bounds.html">set_bounds</a>) with 4 columns (\(k,j,lower,upper\)), such that</p><ul><li><p>Column 1 represents the temporal aggregation order (\(k = m,\dots,1\)).</p></li>
+<li><p>Column 2 represents the temporal forecast horizon (\(j = 1,\dots,m/k\)).</p></li>
+<li><p>Columns 3 and 4 indicates the <em>lower</em> and <em>lower</em> bounds, respectively.</p></li>
+</ul></dd>
 
 
 <dt>immutable</dt>
-<dd><p>A matrix with two columns (\(k,j\)), such that</p><dl><dt>Column 1</dt>
-<dd><p>Denotes the temporal aggregation order (\(k = m,\dots,1\)).</p></dd>
-
-<dt>Column 2</dt>
-<dd><p>Indicates the temporal forecast horizon (\(j = 1,\dots,m/k\)).</p></dd>
-
-
-</dl><p>For example, when working with a quarterly time series:</p><ul><li><p><code>t(c(4, 1))</code> - Fix the one step ahead annual forecast.</p></li>
+<dd><p>A matrix with 2 columns (\(k,j\)), such that</p><ul><li><p>Column 1 represents the temporal aggregation order (\(k = m,\dots,1\)).</p></li>
+<li><p>Column 2 represents the temporal forecast horizon (\(j = 1,\dots,m/k\)).</p></li>
+</ul><p>For example, when working with a quarterly time series:</p><ul><li><p><code>t(c(4, 1))</code> - Fix the one step ahead annual forecast.</p></li>
 <li><p><code>t(c(1, 2))</code> - Fix the two step ahead quarterly forecast.</p></li>
 </ul></dd>
 
@@ -262,7 +266,7 @@ An Operator Splitting solver for Quadratic Programs,
 <span class="r-in"><span>                res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">nnreco</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">info</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     obj_val   run_time iter      pri_res status status_polish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -421.8914 4.2499e-05   25 8.587788e-16      1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -421.8914 4.0623e-05   25 8.587788e-16      1             1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -3,29 +3,39 @@ if(require(testthat)){
   A <- matrix(c(1,1,1,1,
                 1,1,0,0,
                 0,0,1,1), 3, byrow = TRUE)
+  colnames(A) <- LETTERS[4:7]
+  rownames(A) <- LETTERS[1:3]
   set.seed(123)
   res <- matrix(rnorm(100*sum(dim(A))), 100, sum(dim(A)))
   base <- t(rnorm(sum(dim(A)), 1))
-  C <- cbind(diag(NROW(A)), -A)
+  C <- (cbind(diag(NROW(A)), -A))
+  colnames(C) <- LETTERS[1:7]
   comb <- "shr"
 
   test_that("Cross-sectional tools", {
-    expect_equal(cstools(agg_mat = A,
-                         sparse = FALSE),
+    expect_equal(cstools(agg_mat = A, sparse = FALSE),
                  list(dim = c(n = 7, na = 3, nb = 4),
                       agg_mat = matrix(c(1,1,1,1,
                                          1,1,0,0,
-                                         0,0,1,1), 3, 4, byrow = TRUE),
+                                         0,0,1,1), 3, 4, byrow = TRUE,
+                                       dimnames = list(LETTERS[1:3], LETTERS[4:7])),
                       strc_mat = matrix(c(1,1,1,1,
                                           1,1,0,0,
                                           0,0,1,1,
                                           1,0,0,0,
                                           0,1,0,0,
                                           0,0,1,0,
-                                          0,0,0,1), 7, 4, byrow = TRUE),
+                                          0,0,0,1), 7, 4, byrow = TRUE,
+                                        dimnames = list(LETTERS[1:7], LETTERS[4:7])),
                       cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
                                           0,1,0,-1,-1,0,0,
-                                          0,0,1,0,0,-1,-1), 3, 7, byrow = TRUE)))
+                                          0,0,1,0,0,-1,-1), 3, 7, byrow = TRUE,
+                                        dimnames = list(LETTERS[1:3], LETTERS[1:7]))))
+    expect_equal(cstools(cons_mat = C[-2,], sparse = FALSE),
+                 list(dim = c(n = 7),
+                      cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
+                                          0,0,1,0,0,-1,-1), 2, 7, byrow = TRUE,
+                                        dimnames = list(LETTERS[c(1,3)], LETTERS[1:7]))))
   })
 
   test_that("Optimal cross-sectional reconciliation", {
@@ -42,11 +52,14 @@ if(require(testthat)){
     r6 <- csrec(base = base, cons_mat = C, comb = comb,
                 res = res, approach = "proj")
 
+    r7 <- csrec(base = base[1, ], agg_mat = A, comb = comb, res = res)
+
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r3, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(r1, r5, ignore_attr = TRUE)
     expect_equal(r1, r6, ignore_attr = TRUE)
+    expect_equal(r1, r7, ignore_attr = TRUE)
     expect_equal(max(abs(C%*%t(r1))), 0)
   })
 
@@ -139,7 +152,7 @@ if(require(testthat)){
     G <- csprojmat(agg_mat = A, comb = "shr", res = res, mat = "G")
     S <- cstools(agg_mat = A)$strc_mat
 
-    expect_equal(M, S%*%G, ignore_attr = TRUE)
+    expect_equal(M, unname(S%*%G), ignore_attr = TRUE)
   })
 
   test_that("Covariance", {
@@ -147,6 +160,15 @@ if(require(testthat)){
       expect_no_error(csrec(base = base, agg_mat = A, comb = i,
                             res = res))
     }
+  })
+
+  test_that("Errors", {
+    expect_error(csrec(base = base, comb = comb, res = res))
+    expect_error(csrec(agg_mat = A, comb = comb, res = res))
+    expect_error(csrec(base = base[, 1:2], agg_mat = A, comb = comb, res = res))
+    expect_error(cstools())
+    expect_error(csrec(base = base, agg_mat = A, comb = comb, res = res, immutable = cbind(1,1)))
+    expect_error(csrec(base = base, agg_mat = A, comb = comb, res = res, immutable = c(1:7)))
   })
 
 }
