@@ -55,6 +55,31 @@ forecast condition to the information up to time \eqn{t}. Given the list of erro
 \deqn{[\varepsilon_{1,1} \; \varepsilon_{2,2} \; \dots \; \varepsilon_{H,H} \; \varepsilon_{1,H+1} \; \dots \; \varepsilon_{H,T-H}]'}
 A similar organisation can be apply to a multivariate time series.
 }
+\examples{
+h <- 10
+agg_order <- 4
+tmp <- tetools(agg_order)
+kt <- tmp$dim["kt"]
+
+# Simulate vector (temporal case)
+vec <- rnorm(kt*h)
+out <- res2matrix(vec, agg_order) # matrix h x kt
+
+# Simulate (n x kt) matrix (cross-temporal case) with n = 3
+mat <- rbind(rnorm(kt*h), rnorm(kt*h), rnorm(kt*h))
+out <- res2matrix(mat, agg_order) # matrix h x (3*kt)
+
+# Input: 4 (forecast horizons) vectors with 4*10 elements
+input <-  list(rnorm(4*10), rnorm(4*10), rnorm(4*10), rnorm(4*10))
+# Output: 1 vector with 4*10 elements
+out <- arrange_hres(input)
+
+# Matrix version
+input <-  list(matrix(rnorm(4*10*3), 4*10), matrix(rnorm(4*10*3), 4*10),
+               matrix(rnorm(4*10*3), 4*10), matrix(rnorm(4*10*3), 4*10))
+out <- arrange_hres(input)
+
+}
 \references{
 Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, \emph{International Journal

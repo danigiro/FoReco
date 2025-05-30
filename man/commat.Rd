@@ -2,9 +2,14 @@
 % Please edit documentation in R/fun_export.R
 \name{commat}
 \alias{commat}
+\alias{commat_index}
 \title{Commutation matrix}
 \usage{
+# Commutation matrix
 commat(r, c)
+
+# Vector of indexes for the rows of commutation matrix
+commat_index(r, c)
 }
 \arguments{
 \item{r}{Number of rows of \eqn{\mathbf{Y}}.}
@@ -12,7 +17,9 @@ commat(r, c)
 \item{c}{Number of columns of \eqn{\mathbf{Y}}.}
 }
 \value{
-A sparse (\eqn{r c \times r c}) matrix, \eqn{\mathbf{P}}.
+A sparse (\eqn{r c \times r c}) matrix \eqn{\mathbf{P}} (\link{commat}),
+or the vector of indexes for the rows of commutation matrix \eqn{\mathbf{P}}
+(\link{commat_index})
 }
 \description{
 This function returns the (\eqn{r c \times r c})

@@ -6,14 +6,14 @@
 \alias{FoReco-package}
 \title{FoReco: Forecast Reconciliation}
 \description{
-Classical (bottom-up and top-down), optimal combination and heuristic point (Di Fonzo and Girolimetto, 2023 \doi{10.1016/j.ijforecast.2021.08.004}) and probabilistic (Girolimetto et al. 2023 \doi{10.1016/j.ijforecast.2023.10.003}) forecast reconciliation procedures for linearly constrained time series (e.g., hierarchical or grouped time series) in cross-sectional, temporal, or cross-temporal frameworks.
+Classical (bottom-up and top-down), optimal combination and heuristic point (Di Fonzo and Girolimetto, 2023 \doi{10.1016/j.ijforecast.2021.08.004}) and probabilistic (Girolimetto et al. 2024 \doi{10.1016/j.ijforecast.2023.10.003}) forecast reconciliation procedures for linearly constrained time series (e.g., hierarchical or grouped time series) in cross-sectional, temporal, or cross-temporal frameworks.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/daniGiro/FoReco}
+  \item \url{https://github.com/danigiro/FoReco}
   \item \url{https://danigiro.github.io/FoReco/}
-  \item Report bugs at \url{https://github.com/daniGiro/FoReco/issues}
+  \item Report bugs at \url{https://github.com/danigiro/FoReco/issues}
 }
 
 }
