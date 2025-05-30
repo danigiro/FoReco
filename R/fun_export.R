@@ -6,10 +6,16 @@
 #' \eqn{\mathbf{P} \mbox{vec}(\mathbf{Y}) = \mbox{vec}(\mathbf{Y}'),}
 #' where \eqn{\mathbf{Y}} is a (\eqn{r \times c}) matrix (Magnus and Neudecker, 2019).
 #'
+#' @usage
+#' # Commutation matrix
+#' commat(r, c)
+#'
 #' @param r Number of rows of \eqn{\mathbf{Y}}.
 #' @param c Number of columns of \eqn{\mathbf{Y}}.
 #'
-#' @returns A sparse (\eqn{r c \times r c}) matrix, \eqn{\mathbf{P}}.
+#' @returns A sparse (\eqn{r c \times r c}) matrix \eqn{\mathbf{P}} ([commat]),
+#' or the vector of indexes for the rows of commutation matrix \eqn{\mathbf{P}}
+#' ([commat_index])
 #'
 #' @references
 #' Magnus, J.R. and Neudecker, H. (2019), Matrix Differential Calculus with Applications
@@ -24,11 +30,24 @@
 #'
 #' @export
 commat <- function(r, c){
-  I <- Matrix(1:(r * c), c, r, byrow = T) # initialize a matrix of indices of size (c x r)
-  I <- as.vector(I) # vectorize the required indices
+  I <- seq(1:(r*c))[order(rep(1:r, c))]
+  #I <- Matrix(1:(r * c), c, r, byrow = T) # initialize a matrix of indices of size (c x r)
+  #I <- as.vector(I) # vectorize the required indices
   P <- Diagonal(r * c) # Initialize an identity matrix
   P <- P[I, ] # Re-arrange the rows of the identity matrix
   return(P)
+}
+
+
+#' @rdname commat
+#'
+#' @usage
+#' # Vector of indexes for the rows of commutation matrix
+#' commat_index(r, c)
+#'
+#' @export
+commat_index <- function(r, c){
+  return(seq(1:(r*c))[order(rep(1:r, c))])
 }
 
 #' @title Shrinkage of the covariance matrix

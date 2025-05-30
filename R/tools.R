@@ -155,7 +155,7 @@ tetools <- function(agg_order, fh = 1, tew = "sum", sparse = TRUE){
       cli_abort("{.code {tew}} tew is not implemented yet.", call = NULL)
     }
   }else if(is.list(tew)){
-    if(length(tew) != p){
+    if(length(tew) != (p-1)){
       cli_abort("{.arg weights} is not a list with {p-1} elements.", call = NULL)
     }
 
@@ -242,6 +242,7 @@ cttools <- function(agg_mat, cons_mat, agg_order, tew = "sum", fh = 1, sparse = 
 
   #Cbr <- rbind(kronecker(Ccs, .sparseDiagonal(h * kt)), kronecker(.sparseDiagonal(n), Cte))
   P <- commat(fh * kt, n)
+
   Cup <- cbind(Matrix(0, fh * NROW(Ccs) * m, n * fh * ks),
                kronecker(.sparseDiagonal(fh * m), Ccs)) %*% P
   cons_mat <- rbind(Cup, kronecker(.sparseDiagonal(n), Cte))

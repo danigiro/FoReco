@@ -28,6 +28,20 @@
 #' practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
 #' \doi{10.1016/j.ijforecast.2023.10.003}
 #'
+#' @examples
+#' h <- 10
+#' agg_order <- 4
+#' tmp <- tetools(agg_order)
+#' kt <- tmp$dim["kt"]
+#'
+#' # Simulate vector (temporal case)
+#' vec <- rnorm(kt*h)
+#' out <- res2matrix(vec, agg_order) # matrix h x kt
+#'
+#' # Simulate (n x kt) matrix (cross-temporal case) with n = 3
+#' mat <- rbind(rnorm(kt*h), rnorm(kt*h), rnorm(kt*h))
+#' out <- res2matrix(mat, agg_order) # matrix h x (3*kt)
+#'
 #' @family Utilities
 #' @rdname residuals
 #'
@@ -76,6 +90,17 @@ res2matrix <- function(res, agg_order){
 #'
 #' @return [arrange_hres] returns a (\eqn{N(k^\ast+m) \times 1}) vector (temporal framework)
 #' or a (\eqn{n \times N(k^\ast+m)}) matrix  (cross-temporal framework) of multi-step residuals.
+#'
+#' @examples
+#' # Input: 4 (forecast horizons) vectors with 4*10 elements
+#' input <-  list(rnorm(4*10), rnorm(4*10), rnorm(4*10), rnorm(4*10))
+#' # Output: 1 vector with 4*10 elements
+#' out <- arrange_hres(input)
+#'
+#' # Matrix version
+#' input <-  list(matrix(rnorm(4*10*3), 4*10), matrix(rnorm(4*10*3), 4*10),
+#'                matrix(rnorm(4*10*3), 4*10), matrix(rnorm(4*10*3), 4*10))
+#' out <- arrange_hres(input)
 #'
 #' @rdname residuals
 #'

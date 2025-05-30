@@ -16,8 +16,8 @@ reco <- function(approach, base, immutable = NULL, nn = NULL, bounds = NULL, ...
 
   # Check if 'nn' is provided and adjust 'rmat' accordingly
   if(!is.null(nn)){
-    if(nn == "osqp"){
-      nn <- paste(approach, nn, sep = "_")
+    if(nn %in% c("osqp", TRUE)){
+      nn <- paste(approach, "osqp", sep = "_")
     }
 
     if(!all(rmat >= -sqrt(.Machine$double.eps))){
@@ -533,7 +533,13 @@ reco.proj_immutable <- function(base, cons_mat, cov_mat, immutable = NULL, ...){
   rank_cm <- rankMatrix(cons_mat, method = "qr", warn.t = FALSE)
   rank_ccm <-  rankMatrix(compl_cons_mat, method = "qr", warn.t = FALSE)
   if(rank_cm + length(immutable) != rank_ccm){
-    cli_abort("There is no solution with this {.arg immutable} set.",  call = NULL)
+    cli_warn(c(
+      "There may be redundant constraints.",
+      "i" = "A solution may exist, but numerical issues could occur.",
+      "x" = "Alternatively, there is no solution with this {.arg immutable} set.",
+      "i" = "Please check the {.arg immutable} parameter and carefully inspect the resulting solution."
+    ), call = NULL)
+    #cli_abort("There is no solution with this {.arg immutable} set.",  call = NULL)
   }
 
   # Point reconciled forecasts
@@ -566,6 +572,9 @@ reco.proj_immutable2 <- function(base, cons_mat, cov_mat, immutable, ...){
   cons_mat_red <- cons_mat[ , -immutable, drop = FALSE]
   cons_vec <- apply(-cons_mat[ , immutable, drop = FALSE], 1, function(w)
     rowSums(base[, immutable, drop = FALSE]%*%w))
+  if(is.vector(cons_vec)){
+    cons_vec <- unname(rbind(cons_vec))
+  }
   cov_mat_red <- cov_mat[-immutable , -immutable, drop = FALSE]
   base_red <- base[, -immutable, drop = FALSE]
 

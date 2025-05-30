@@ -1,19 +1,13 @@
 
-# FoReco <img src="man/figures/logo.svg" alt="logo" align="right" style="border: none; float: right; width:150px;"/>
+# FoReco <img src="man/figures/logo.svg" alt="logo" align="right" width="150" style="border: none; float: right;"/>
 
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/daniGiro/FoReco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/daniGiro/FoReco/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco)
-[![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![devel
-version](https://img.shields.io/badge/devel%20version-1.0.0-blue.svg)](https://github.com/daniGiro/FoReco)
+version](https://img.shields.io/badge/devel%20version-1.0.0-blue.svg)](https://github.com/danigiro/FoReco)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
-
-<!-- badges: end -->
 
 **Fo**recast **Reco**nciliation is a a post-forecasting process aimed to
 improve the accuracy and align forecasts for a system of linearly
@@ -51,7 +45,7 @@ install.packages("FoReco")
 ```
 
 You can also install the **development** version from
-[Github](https://github.com/daniGiro/FoReco)
+[Github](https://github.com/danigiro/FoReco)
 
 ``` r
 # install.packages("devtools")
@@ -89,5 +83,5 @@ to your data.
 
 If you encounter any bugs or have suggestions for improvements, please
 feel free to report them on [GitHub Issues
-page](https://github.com/daniGiro/FoReco/issues). Contributions are also
+page](https://github.com/danigiro/FoReco/issues). Contributions are also
 welcome!
