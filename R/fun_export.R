@@ -126,7 +126,6 @@ shrink_estim <- function(x, mse = TRUE){
 #' @references
 #' Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
 #' shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257), A001.
-#' \doi{10.5089/9798400260780.001.A001}
 #'
 #' Chen, Y., Wiesel, A., and Hero, A. O. (2009), Shrinkage estimation of high dimensional
 #' covariance matrices, \emph{2009 IEEE international conference on acoustics, speech and

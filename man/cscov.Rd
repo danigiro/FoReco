@@ -77,7 +77,6 @@ cscov(comb = "ols2", x = 3) # == cscov("ols", n = 3)
 \references{
 Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
 shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257), A001.
-\doi{10.5089/9798400260780.001.A001}
 
 Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
 Optimal combination method and heuristic alternatives, \emph{International Journal
