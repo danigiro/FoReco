@@ -5,7 +5,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco)
 [![devel
-version](https://img.shields.io/badge/devel%20version-1.0.1-blue.svg)](https://github.com/danigiro/FoReco)
+version](https://img.shields.io/badge/devel%20version-1.1.0.9000-blue.svg)](https://github.com/danigiro/FoReco)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 

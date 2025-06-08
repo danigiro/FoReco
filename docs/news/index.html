@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,21 +82,22 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="foreco-development-version">FoReco (development version)<a class="anchor" aria-label="anchor" href="#foreco-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="1.1.0" id="foreco-110">FoReco 1.1.0<a class="anchor" aria-label="anchor" href="#foreco-110"></a></h2><p class="text-muted">CRAN release: 2025-06-07</p>
 <div class="section level4">
-<h4 id="new-features-development-version">New Features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h4>
-<ul><li>
-<p>Added new <code>bpv</code> non-negative forecast reconciliation algorithm (experimental) based on the cross-sectional framework presented in Wickramasuriya et al. (2020) and, now, extended for the temporal and cross-temporal framework.</p>
-<ul><li>Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020), “Optimal non-negative forecast reconciliation”, <em>Statistics and Computing</em>, 30(5), 1167–1182. <a href="https://doi.org/10.1007/s11222-020-09930-0" class="external-link">doi:10.1007/s11222-020-09930-0</a>.</li>
+<h4 id="new-features-1-1-0">New Features<a class="anchor" aria-label="anchor" href="#new-features-1-1-0"></a></h4>
+<ul><li>Added new <code>bpv</code> non-negative forecast reconciliation algorithm (experimental) based on the cross-sectional framework presented in Wickramasuriya et al. (2020) and, now, extended for the temporal and cross-temporal framework:
+<ul><li>Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020), “Optimal non-negative forecast reconciliation”, <em>Statistics and Computing</em>, 30(5), 1167–1182. <a href="https://doi.org/10.1007/s11222-020-09930-0" class="external-link">doi:10.1007/s11222-020-09930-0</a>;</li>
 </ul></li>
-<li>
-<p>New <code>oasd</code> cross-sectional covariance matrix (experimental), implementing an oracle shrunk covariance estimation (Ando and Xiao, 2023).</p>
-<ul><li>Ando, S., and Xiao, M. (2023), “High-dimensional covariance matrix estimation: shrinkage toward a diagonal target”, <em>IMF Working Papers</em>, 2023(257), A001. <a href="https://doi.org/10.5089/9798400260780.001.A001" class="external-link">doi:10.5089/9798400260780.001.A001</a>.</li>
+<li>New <code>oasd</code> cross-sectional covariance matrix (experimental), implementing an oracle shrunk covariance estimation (Ando and Xiao, 2023):
+<ul><li>Ando, S., and Xiao, M. (2023), “High-dimensional covariance matrix estimation: shrinkage toward a diagonal target”, <em>IMF Working Papers</em>, 2023(257), A001;</li>
 </ul></li>
-<li><p>Redesigned <code>bounds</code> parameter to enable bounded forecast reconciliation for <code><a href="../reference/csrec.html">csrec()</a></code>, <code><a href="../reference/terec.html">terec()</a></code>, and <code><a href="../reference/ctrec.html">ctrec()</a></code> functions.</p></li>
-<li><p>Introduced new <code><a href="../reference/set_bounds.html">set_bounds()</a></code> function to define custom bounds for reconciliation.</p></li>
+<li>Redesigned <code>bounds</code> parameter to enable bounded forecast reconciliation for <code><a href="../reference/csrec.html">csrec()</a></code>, <code><a href="../reference/terec.html">terec()</a></code>, and <code><a href="../reference/ctrec.html">ctrec()</a></code> functions;</li>
+<li>Introduced new <code><a href="../reference/set_bounds.html">set_bounds()</a></code> function to define custom bounds for reconciliation.</li>
 </ul></div>
 <div class="section level4">
-<h4 id="bug-fixes-development-version">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-development-version"></a></h4>
+<h4 id="bug-fixes-1-1-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0"></a></h4>
 <ul><li>Fixed bug when only a subset of <code>agg_order</code> factors was selected in <code><a href="../reference/iterec.html">iterec()</a></code>, <code><a href="../reference/heuristic-reco.html">tcsrec()</a></code>, and <code><a href="../reference/heuristic-reco.html">cstrec()</a></code> functions.</li>
 </ul></div>
 </div>
@@ -170,8 +171,8 @@
 <li>Improved docs and bug fixes;</li>
 <li>Fixed <code><a href="../reference/ctbu.html">ctbu()</a></code> inputs;</li>
 <li>Added <code><a href="../reference/FoReco2matrix.html">FoReco2matrix()</a></code> to transform FoReco forecasts input and output in a list of matrix/vector class;</li>
-<li>Added <code>agg_ts()</code>: non-overlapping temporal aggregation of a time series according to a specific aggregation order.</li>
-<li>Added <code><a href="../reference/residuals.html">arrange_hres()</a></code> and <code>residuals_matrix()</code> functions to arrange residuals for the covariance matrix under Gaussianity;</li>
+<li>Added <code>agg_ts()</code>: non-overlapping temporal aggregation of a time series according to a specific aggregation order;</li>
+<li>Added <code><a href="../reference/residuals.html">arrange_hres()</a></code> and <code>residuals_matrix()</code> functions to arrange residuals for the covariance matrix under Gaussianity.</li>
 </ul></div>
 </div>
     <div class="section level2">

@@ -1,5 +1,7 @@
 # FoReco (development version)
 
+# FoReco 1.1.0
+
 ### New Features
 
 * Added new `bpv` non-negative forecast reconciliation algorithm (experimental) based on the cross-sectional framework presented in Wickramasuriya et al. (2020) and, now, extended for the temporal and cross-temporal framework:
