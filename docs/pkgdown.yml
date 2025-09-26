@@ -1,15 +1,14 @@
-pandoc: '3.2'
-pkgdown: 2.0.9
+pandoc: '3.4'
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
-  Cross-sectional-forecast-reconciliation: Cross-sectional-forecast-reconciliation.html
-  Cross-temporal-forecast-reconciliation: Cross-temporal-forecast-reconciliation.html
-  Dataset-vndata-and-itagdp: Dataset-vndata-and-itagdp.html
-  Replicate-the-hts-package: Replicate-the-hts-package.html
-  Replicate-the-thief-package: Replicate-the-thief-package.html
-  Temporal-forecast-reconciliation: Temporal-forecast-reconciliation.html
-last_built: 2025-06-08T16:19Z
+  articles/Cross-sectional-forecast-reconciliation: Cross-sectional-forecast-reconciliation.html
+  articles/Cross-temporal-forecast-reconciliation: Cross-temporal-forecast-reconciliation.html
+  articles/Dataset-vndata-and-itagdp: Dataset-vndata-and-itagdp.html
+  articles/Replicate-the-hts-package: Replicate-the-hts-package.html
+  articles/Replicate-the-thief-package: Replicate-the-thief-package.html
+  articles/Temporal-forecast-reconciliation: Temporal-forecast-reconciliation.html
+last_built: 2025-09-26T08:01Z
 urls:
   reference: https://danigiro.github.io/FoReco/reference
   article: https://danigiro.github.io/FoReco/articles
-

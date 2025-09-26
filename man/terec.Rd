@@ -9,70 +9,85 @@ terec(base, agg_order, comb = "ols", res = NULL, tew = "sum",
       immutable = NULL, ...)
 }
 \arguments{
-\item{base}{A (\eqn{h(k^\ast + m) \times 1}) numeric vector containing base forecasts
-to be reconciled ordered from the lowest frequency to the highest frequency; \eqn{m}
-is the max aggregation order, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1})
-factors of \eqn{m}, excluding \eqn{m}, and \eqn{h} is the forecast horizon for the
-lowest frequency time series.}
+\item{base}{A (\eqn{N(k^\ast + m) \times 1}) numeric vector containing the
+base forecasts to be reconciled, ordered from lowest to highest frequency;
+\eqn{m} is the maximum aggregation order, \eqn{k^\ast} is the sum of a
+chosen subset of the \eqn{p - 1} factors of \eqn{m} (excluding \eqn{m}
+itself) and \eqn{h} is the forecast horizon for the lowest frequency
+time series.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{tecov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{tecov}.}
 
-\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency. This vector is used to compute come covariance matrices.}
+\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
+the residuals ordered from the lowest frequency to the highest
+frequency. This vector is used to compute come covariance matrices.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{approach}{A string specifying the approach used to compute the reconciled
-forecasts. Options include:
+\item{approach}{A string specifying the approach used to compute the
+reconciled forecasts. Options include:
 \itemize{
-\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for projection approach.
-\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for structural approach.
+\item "\code{proj}" (\emph{default}): Projection approach according
+to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman
+et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for projection approach.
+\item "\code{strc_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative
+forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
 \item "\code{bpv}": block principal pivoting algorithm.
-\item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
+\item "\code{sntz}": heuristic "set-negative-to-zero"
+(Di Fonzo and Girolimetto, 2023).
 }}
 
 \item{settings}{A list of control parameters.
 \itemize{
-\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
-for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
-\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
-or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
-may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
-criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
-tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
-\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying
+settings for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details,
+refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
+(Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
+("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
+number of full exchange rules that may be attempted (\code{10},
+\emph{default}), \code{tol} for the tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
+gradient tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
+maximum number of algorithm iterations (\code{100}, \emph{default})
 }}
 
-\item{bounds}{A matrix (see \link{set_bounds}) with 4 columns (\eqn{k,j,lower,upper}), such that
+\item{bounds}{A matrix (see \link{set_bounds}) with 4 columns
+(\eqn{k,j,lower,upper}), such that
 \itemize{
-\item Column 1 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
-\item Column 2 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
-\item Columns 3 and 4 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+\item Column 1 represents the temporal aggregation order
+(\eqn{k = m,\dots,1}).
+\item Column 2 represents the temporal forecast horizon
+(\eqn{j = 1,\dots,m/k}).
+\item Columns 3 and 4 indicates the \emph{lower} and \emph{lower} bounds,
+respectively.
 }}
 
 \item{immutable}{A matrix with 2 columns (\eqn{k,j}), such that
 \itemize{
-\item Column 1 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
-\item Column 2 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
+\item Column 1 represents the temporal aggregation order
+(\eqn{k = m,\dots,1}).
+\item Column 2 represents the temporal forecast horizon
+(\eqn{j = 1,\dots,m/k}).
 }
 For example, when working with a quarterly time series:
 \itemize{
@@ -89,14 +104,16 @@ matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal reconciled forecasts.
+A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+reconciled forecasts.
 }
 \description{
-This function performs forecast reconciliation for a single time series using temporal
-hierarchies (Athanasopoulos et al., 2017, Nystrup et al., 2020). The reconciled forecasts can be computed
-using either a projection approach (Byron, 1978, 1979) or the equivalent structural
-approach by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto, 2023)
-and immutable reconciled forecasts can be considered.
+This function performs forecast reconciliation for a single time
+series using temporal hierarchies (Athanasopoulos et al., 2017, Nystrup et
+al., 2020). The reconciled forecasts can be computed using either a
+projection approach (Byron, 1978, 1979) or the equivalent structural approach
+by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto, 2023) and
+immutable reconciled forecasts can be considered.
 }
 \examples{
 set.seed(123)
@@ -130,39 +147,41 @@ Byron, R.P. (1978), The estimation of large social account matrices,
 \emph{Journal of the Royal Statistical Society, Series A}, 141, 3, 359-367.
 \doi{10.2307/2344807}
 
-Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-\emph{Journal of the Royal Statistical Society, Series A}, 142(3), 405.
-\doi{10.2307/2982515}
+Byron, R.P. (1979), Corrigenda: The estimation of large social account
+matrices, \emph{Journal of the Royal Statistical Society, Series A}, 142(3),
+405. \doi{10.2307/2982515}
 
-Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of solar
-forecasts, \emph{Solar Energy}, 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
+Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+solar forecasts, \emph{Solar Energy}, 251, 13–29.
+\doi{10.1016/j.solener.2023.01.003}
 
 Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
 \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 \doi{10.1016/j.csda.2011.03.006}
 
-Nystrup, P.,  \enc{Lindström}{Lindstrom}, E., Pinson, P. and Madsen, H. (2020),
-Temporal hierarchies with autocorrelation for load forecasting,
+Nystrup, P.,  \enc{Lindström}{Lindstrom}, E., Pinson, P. and Madsen, H.
+(2020), Temporal hierarchies with autocorrelation for load forecasting,
 \emph{European Journal of Operational Research}, 280, 1, 876-888.
 \doi{10.1016/j.ejor.2019.07.061}
 
-Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020), OSQP:
-An Operator Splitting solver for Quadratic Programs,
-\emph{Mathematical Programming Computation}, 12, 4, 637-672.
-\doi{10.1007/s12532-020-00179-2}
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020),
+OSQP: An Operator Splitting solver for Quadratic Programs, \emph{Mathematical
+Programming Computation}, 12, 4, 637-672. \doi{10.1007/s12532-020-00179-2}
 }
 \seealso{
-Regression-based reconciliation: 
+Regression-based reconciliation:
 \code{\link{csrec}()},
 \code{\link{ctrec}()}
 
-Temporal framework: 
+Temporal framework:
 \code{\link{teboot}()},
 \code{\link{tebu}()},
 \code{\link{tecov}()},
+\code{\link{tegauss}()},
 \code{\link{telcc}()},
 \code{\link{temo}()},
+\code{\link{tesample}()},
 \code{\link{tetd}()},
 \code{\link{tetools}()}
 }

@@ -19,19 +19,19 @@ tecov(comb, agg_order = NULL, res = NULL, tew = "sum",
       mse = TRUE, shrink_fun = shrink_estim, ...)
 }
 \arguments{
-\item{comb}{A string specifying the reconciliation method.
+\item{comb}{A string specifying the covariance approximation method.
 \itemize{
-\item Ordinary least squares:
+\item For ordinary least squares reconciliation:
 \itemize{
 \item "\code{ols}" (\emph{default}) - identity error covariance.
 }
-\item Weighted least squares:
+\item For weighted least squares reconciliation:
 \itemize{
 \item "\code{str}" - structural variances.
 \item "\code{wlsh}" - hierarchy variances (uses \code{res}).
 \item "\code{wlsv}" - series variances (uses \code{res}).
 }
-\item Generalized least squares (uses \code{res}):
+\item For generalized least squares (uses \code{res}) reconciliation:
 \itemize{
 \item "\code{acov}" - series auto-covariance.
 \item "\code{strar1}" - structural Markov covariance.
@@ -39,19 +39,23 @@ tecov(comb, agg_order = NULL, res = NULL, tew = "sum",
 \item "\code{har1}" - hierarchy Markov covariance.
 \item "\code{shr}"/"\code{sam}" - shrunk/sample covariance.
 }
+\item Others (no for reconciliation):
+\itemize{
+\item "\code{bu}" - bottom-up covariance.
+}
 }}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency. This vector is used to compute come covariance matrices.}
+\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
+the residuals ordered from the lowest frequency to the highest
+frequency. This vector is used to compute come covariance matrices.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
@@ -94,12 +98,14 @@ Optimal combination method and heuristic alternatives, \emph{International Journ
 of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
 }
 \seealso{
-Temporal framework: 
+Temporal framework:
 \code{\link{teboot}()},
 \code{\link{tebu}()},
+\code{\link{tegauss}()},
 \code{\link{telcc}()},
 \code{\link{temo}()},
 \code{\link{terec}()},
+\code{\link{tesample}()},
 \code{\link{tetd}()},
 \code{\link{tetools}()}
 }

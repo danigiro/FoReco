@@ -4,39 +4,45 @@
 \alias{ctbu}
 \title{Cross-temporal bottom-up reconciliation}
 \usage{
-ctbu(base, agg_mat, agg_order, tew = "sum", sntz = FALSE)
+ctbu(base, agg_mat, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 }
 \arguments{
-\item{base}{A (\eqn{n_b \times hm}) numeric matrix containing high-frequency bottom base
-forecasts; \eqn{n_b} is the total number of high-frequency bottom variables, \eqn{m} is
-the max aggregation order, and \eqn{h} is the forecast horizon for the lowest frequency
-time series.}
+\item{base}{A (\eqn{n_b \times hm}) numeric matrix containing high-frequency
+bottom base forecasts; \eqn{n_b} is the total number of high-frequency
+bottom variables, \eqn{m} is the max aggregation order, and \eqn{h} is the
+forecast horizon for the lowest frequency time series.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{sntz}{If \code{TRUE}, the negative base forecasts are
-set to zero before applying bottom-up.}
+\item{sntz}{Logical. If \code{TRUE}, the negative base forecasts are set to
+zero (Di Fonzo and Girolimetto, 2023) before applying bottom-up.
+\emph{Default} is \code{FALSE}.}
+
+\item{round}{Logical. If \code{TRUE}, base forecasts are rounded before
+applying the bottom-up reconciliation. \emph{Default} is \code{FALSE}.}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
+A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+reconciled forecasts.
 }
 \description{
 Cross-temporal bottom-up reconciled forecasts for all series at any temporal
 aggregation level are computed by appropriate summation of the high-frequency
-bottom base forecasts \eqn{\widehat{\mathbf{B}^{[1]}}}:
-\deqn{\widetilde{\mathbf{X}} = \mathbf{S}_{cs}\widehat{\mathbf{B}^{[1]}}\mathbf{S}'_{te},}
-where \eqn{\mathbf{S}_{cs}} and \eqn{\mathbf{S}_{te}} are the cross-sectional and
+bottom base forecasts \eqn{\widehat{\mathbf{B}}^{[1]}}:
+\deqn{\widetilde{\mathbf{X}} =
+\mathbf{S}_{cs}\widehat{\mathbf{B}}^{[1]}\mathbf{S}'_{te},} where
+\eqn{\mathbf{S}_{cs}} and \eqn{\mathbf{S}_{te}} are the cross-sectional and
 temporal structural matrices, respectively.
 }
 \examples{
@@ -50,21 +56,28 @@ hfbts <- matrix(rnorm(4*2, 2.5), 2, 4)
 reco <- ctbu(base = hfbts, agg_mat = A, agg_order = 4)
 
 # Non negative reconciliation
-hfbts[1,4] <- -hfbts[1,4] # Making negative one of the quarterly base forecasts for variable X
+hfbts[1,4] <- -hfbts[1,4] # Making negative one of the quarterly values for X
 nnreco <- ctbu(base = hfbts, agg_mat = A, agg_order = 4, sntz = TRUE)
 
 }
+\references{
+Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+solar forecasts, \emph{Solar Energy}, 251, 13–29.
+\doi{10.1016/j.solener.2023.01.003}
+}
 \seealso{
-Bottom-up reconciliation: 
+Bottom-up reconciliation:
 \code{\link{csbu}()},
 \code{\link{tebu}()}
 
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},

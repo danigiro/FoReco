@@ -61,9 +61,11 @@ for general linearly constrained multiple time series,
 Strang, G. (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

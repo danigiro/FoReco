@@ -9,22 +9,25 @@ cslcc(base, agg_mat, nodes = "auto", comb = "ols", res = NULL, CCC = TRUE,
       settings = NULL, ...)
 }
 \arguments{
-\item{base}{A (\eqn{h \times n}) numeric matrix or multivariate time series (\code{mts} class)
-containing the base forecasts to be reconciled; \eqn{h} is the forecast horizon, and \eqn{n} is
-the total number of time series (\eqn{n = n_a + n_b}).}
+\item{base}{A (\eqn{h \times n}) numeric matrix or multivariate time series
+(\code{mts} class) containing the base forecasts to be reconciled; \eqn{h}
+is the forecast horizon, and \eqn{n} is the total number of time series
+(\eqn{n = n_a + n_b}).}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
 in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
 value is the string "\code{auto}" which calculates the number of variables in each level.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{cscov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{cscov}.}
 
-\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the in-sample
-residuals. This matrix is used to compute some covariance matrices.}
+\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
+in-sample residuals. This matrix is used to compute some covariance
+matrices.}
 
 \item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
 forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
@@ -40,36 +43,43 @@ containing bottom base forecasts defined by the user (e.g., seasonal averages, a
 This parameter can be omitted if only base forecasts are used
 (see Di Fonzo and Girolimetto, 2024).}
 
-\item{approach}{A string specifying the approach used to compute the reconciled
-forecasts. Options include:
+\item{approach}{A string specifying the approach used to compute the
+reconciled forecasts. Options include:
 \itemize{
-\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for projection approach.
-\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for structural approach.
+\item "\code{proj}" (\emph{default}): Projection approach according
+to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman
+et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for projection approach.
+\item "\code{strc_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative
+forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
 \item "\code{bpv}": block principal pivoting algorithm.
-\item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
+\item "\code{sntz}": heuristic "set-negative-to-zero"
+(Di Fonzo and Girolimetto, 2023).
 }}
 
 \item{settings}{A list of control parameters.
 \itemize{
-\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
-for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
-\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
-or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
-may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
-criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
-tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
-\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying
+settings for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details,
+refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
+(Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
+("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
+number of full exchange rules that may be attempted (\code{10},
+\emph{default}), \code{tol} for the tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
+gradient tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
+maximum number of algorithm iterations (\code{100}, \emph{default})
 }}
 
 \item{...}{
@@ -81,7 +91,8 @@ matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional reconciled forecasts.
+A (\eqn{h \times n}) numeric matrix of cross-sectional
+reconciled forecasts.
 }
 \description{
 This function implements the cross-sectional forecast reconciliation procedure that
@@ -169,16 +180,18 @@ An Operator Splitting solver for Quadratic Programs,
 \doi{10.1007/s12532-020-00179-2}
 }
 \seealso{
-Level conditional coherent reconciliation: 
+Level conditional coherent reconciliation:
 \code{\link{ctlcc}()},
 \code{\link{telcc}()}
 
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{csbu}()},
 \code{\link{cscov}()},
+\code{\link{csgauss}()},
 \code{\link{csmo}()},
 \code{\link{csrec}()},
+\code{\link{cssample}()},
 \code{\link{cstd}()},
 \code{\link{cstools}()}
 }

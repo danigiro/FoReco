@@ -8,65 +8,78 @@ csrec(base, agg_mat, cons_mat, comb = "ols", res = NULL, approach = "proj",
       nn = NULL, settings = NULL, bounds = NULL, immutable = NULL, ...)
 }
 \arguments{
-\item{base}{A (\eqn{h \times n}) numeric matrix or multivariate time series (\code{mts} class)
-containing the base forecasts to be reconciled; \eqn{h} is the forecast horizon, and \eqn{n} is
-the total number of time series (\eqn{n = n_a + n_b}).}
+\item{base}{A (\eqn{h \times n}) numeric matrix or multivariate time series
+(\code{mts} class) containing the base forecasts to be reconciled; \eqn{h}
+is the forecast horizon, and \eqn{n} is the total number of time series
+(\eqn{n = n_a + n_b}).}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-zero constraints: each row represents a constraint equation, and each column represents
-a variable. The matrix can be of full rank, meaning the rows are linearly independent,
-but this is not a strict requirement, as the function allows for redundancy in the
-constraints.}
+\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the
+cross-sectional zero constraints: each row represents a constraint
+equation, and each column represents a variable. The matrix can be of full
+rank, meaning the rows are linearly independent, but this is not a strict
+requirement, as the function allows for redundancy in the constraints.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{cscov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{cscov}.}
 
-\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the in-sample
-residuals. This matrix is used to compute some covariance matrices.}
+\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
+in-sample residuals. This matrix is used to compute some covariance
+matrices.}
 
-\item{approach}{A string specifying the approach used to compute the reconciled
-forecasts. Options include:
+\item{approach}{A string specifying the approach used to compute the
+reconciled forecasts. Options include:
 \itemize{
-\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for projection approach.
-\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for structural approach.
+\item "\code{proj}" (\emph{default}): Projection approach according
+to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman
+et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for projection approach.
+\item "\code{strc_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative
+forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
 \item "\code{bpv}": block principal pivoting algorithm.
-\item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
+\item "\code{sntz}": heuristic "set-negative-to-zero"
+(Di Fonzo and Girolimetto, 2023).
 }}
 
 \item{settings}{A list of control parameters.
 \itemize{
-\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
-for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
-\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
-or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
-may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
-criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
-tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
-\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying
+settings for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details,
+refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
+(Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
+("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
+number of full exchange rules that may be attempted (\code{10},
+\emph{default}), \code{tol} for the tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
+gradient tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
+maximum number of algorithm iterations (\code{100}, \emph{default})
 }}
 
-\item{bounds}{A matrix (see \link{set_bounds}) with 3 columns (\eqn{i,lower,upper}), such that
+\item{bounds}{A matrix (see \link{set_bounds}) with 3 columns
+(\eqn{i,lower,upper}), such that
 \itemize{
-\item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
-\item Columns 2 and 3 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+\item Column 1 represents the cross-sectional series
+(\eqn{i = 1, \dots, n}).
+\item Columns 2 and 3 indicates the \emph{lower} and \emph{lower} bounds,
+respectively.
 }}
 
-\item{immutable}{A numeric vector containing the column indices of the base forecasts
-(\code{base} parameter) that should be fixed.}
+\item{immutable}{A numeric vector containing the column indices of the base
+forecasts (\code{base} parameter) that should be fixed.}
 
 \item{...}{
   Arguments passed on to \code{\link[=cscov]{cscov}}
@@ -77,16 +90,18 @@ matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional reconciled forecasts.
+A (\eqn{h \times n}) numeric matrix of cross-sectional
+reconciled forecasts.
 }
 \description{
-This function performs optimal (in least squares sense) combination cross-sectional
-forecast reconciliation for a linearly constrained (e.g., hierarchical/grouped)
-multiple time series (Wickramasuriya et al., 2019, Panagiotelis et al., 2022,
-Girolimetto and Di Fonzo, 2023). The reconciled forecasts are calculated
-using either a projection approach (Byron, 1978, 1979) or the equivalent structural
-approach by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto, 2023) and
-immutable (including Zhang et al., 2023) reconciled forecasts can be considered.
+This function performs optimal (in least squares sense)
+combination cross-sectional forecast reconciliation for a linearly
+constrained (e.g., hierarchical/grouped) multiple time series (Wickramasuriya
+et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di Fonzo, 2023). The
+reconciled forecasts are calculated using either a projection approach
+(Byron, 1978, 1979) or the equivalent structural approach by Hyndman et al.
+(2011). Non-negative (Di Fonzo and Girolimetto, 2023) and immutable
+(including Zhang et al., 2023) reconciled forecasts can be considered.
 }
 \examples{
 set.seed(123)
@@ -101,11 +116,13 @@ reco <- csrec(base = base, agg_mat = A, comb = "wls", res = res)
 
 # Zero constraints matrix for Z - X - Y = 0
 C <- t(c(1, -1, -1))
-reco <- csrec(base = base, cons_mat = C, comb = "wls", res = res) # same results
+reco <- csrec(base = base, cons_mat = C, comb = "wls", res = res)
 
 # Non negative reconciliation
-base[1,3] <- -base[1,3] # Making negative one of the base forecasts for variable Y
-nnreco <- csrec(base = base, agg_mat = A, comb = "wls", res = res, nn = "osqp")
+# Making negative one of the base forecasts for variable Y
+base[1,3] <- -base[1,3]
+nnreco <- csrec(base = base, agg_mat = A, comb = "wls", res = res,
+                nn = "osqp")
 recoinfo(nnreco, verbose = FALSE)$info
 
 }
@@ -114,52 +131,55 @@ Byron, R.P. (1978), The estimation of large social account matrices,
 \emph{Journal of the Royal Statistical Society, Series A}, 141, 3, 359-367.
 \doi{10.2307/2344807}
 
-Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-\emph{Journal of the Royal Statistical Society, Series A}, 142(3), 405.
-\doi{10.2307/2982515}
+Byron, R.P. (1979), Corrigenda: The estimation of large social account
+matrices, \emph{Journal of the Royal Statistical Society, Series A}, 142(3),
+405. \doi{10.2307/2982515}
 
-Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of solar
-forecasts, \emph{Solar Energy}, 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
+Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+solar forecasts, \emph{Solar Energy}, 251, 13–29.
+\doi{10.1016/j.solener.2023.01.003}
 
-Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
-for general linearly constrained multiple time series,
-\emph{Statistical Methods & Applications}, 33, 581-607. \doi{10.1007/s10260-023-00738-6}.
+Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast
+reconciliation for general linearly constrained multiple time series,
+\emph{Statistical Methods & Applications}, 33, 581-607.
+\doi{10.1007/s10260-023-00738-6}.
 
 Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
 \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 \doi{10.1016/j.csda.2011.03.006}
 
-Panagiotelis, A., Athanasopoulos, G., Gamakumara, P. and Hyndman, R.J. (2021), Forecast
-reconciliation: A geometric view with new insights on bias correction,
-\emph{International Journal of Forecasting}, 37, 1, 343–359.
+Panagiotelis, A., Athanasopoulos, G., Gamakumara, P. and Hyndman, R.J.
+(2021), Forecast reconciliation: A geometric view with new insights on bias
+correction, \emph{International Journal of Forecasting}, 37, 1, 343–359.
 \doi{10.1016/j.ijforecast.2020.06.004}
 
-Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020), OSQP:
-An Operator Splitting solver for Quadratic Programs,
-\emph{Mathematical Programming Computation}, 12, 4, 637-672.
-\doi{10.1007/s12532-020-00179-2}
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020),
+OSQP: An Operator Splitting solver for Quadratic Programs, \emph{Mathematical
+Programming Computation}, 12, 4, 637-672. \doi{10.1007/s12532-020-00179-2}
 
-Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal forecast
-reconciliation for hierarchical and grouped time series through trace minimization,
-\emph{Journal of the American Statistical Association}, 114, 526, 804-819.
-\doi{10.1080/01621459.2018.1448825}
+Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal
+forecast reconciliation for hierarchical and grouped time series through
+trace minimization, \emph{Journal of the American Statistical Association},
+114, 526, 804-819. \doi{10.1080/01621459.2018.1448825}
 
-Zhang, B., Kang, Y., Panagiotelis, A. and Li, F. (2023), Optimal reconciliation with
-immutable forecasts, \emph{European Journal of Operational Research}, 308(2), 650–660.
-\doi{10.1016/j.ejor.2022.11.035}
+Zhang, B., Kang, Y., Panagiotelis, A. and Li, F. (2023), Optimal
+reconciliation with immutable forecasts, \emph{European Journal of
+Operational Research}, 308(2), 650–660. \doi{10.1016/j.ejor.2022.11.035}
 }
 \seealso{
-Regression-based reconciliation: 
+Regression-based reconciliation:
 \code{\link{ctrec}()},
 \code{\link{terec}()}
 
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{csbu}()},
 \code{\link{cscov}()},
+\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csmo}()},
+\code{\link{cssample}()},
 \code{\link{cstd}()},
 \code{\link{cstools}()}
 }

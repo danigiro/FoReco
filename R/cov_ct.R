@@ -12,11 +12,11 @@
 #' @inheritParams ctrec
 #' @param comb A string specifying the reconciliation method.
 #'   \itemize{
-#'      \item Ordinary least squares:
+#'      \item For ordinary least squares reconciliation:
 #'      \itemize{
 #'      \item "\code{ols}" (\emph{default}) - identity error covariance.
 #'      }
-#'     \item Weighted least squares:
+#'     \item For weighted least squares reconciliation:
 #'      \itemize{
 #'      \item "\code{str}" - structural variances.
 #'      \item "\code{csstr}" - cross-sectional structural variances.
@@ -24,7 +24,7 @@
 #'      \item "\code{wlsh}" - hierarchy variances (uses \code{res}).
 #'      \item "\code{wlsv}" - series variances (uses \code{res}).
 #'      }
-#'     \item Generalized least squares (uses \code{res}):
+#'     \item For generalized least squares (uses \code{res}) reconciliation:
 #'      \itemize{
 #'      \item "\code{acov}" - series auto-covariance.
 #'      \item "\code{bdshr}"/"\code{bdsam}" - shrunk/sample block diagonal cross-sectional covariance.
@@ -33,6 +33,10 @@
 #'      \item "\code{hbshr}"/"\code{hbsam}" - shrunk/sample high frequency bottom time series covariance.
 #'      \item "\code{bshr}"/"\code{bsam}" - shrunk/sample bottom time series covariance.
 #'      \item "\code{hshr}"/"\code{hsam}" - shrunk/sample high frequency covariance.
+#'      }
+#'     \item Others (no for reconciliation):
+#'      \itemize{
+#'      \item "\code{bu}" - bottom-up covariance.
 #'      }
 #'   }
 #' @param n Cross-sectional number of variables.
@@ -639,4 +643,22 @@ ctcov.bsam <- function(comb = "bsam", ..., agg_mat = NULL, agg_order = NULL, res
     eps_ridge <- min(eigenvalues[eigenvalues > 1e-6])
   }
   Omega + diag(eps_ridge, dim(Omega)[1])
+}
+
+#' @export
+ctcov.bu <- function(comb = "bu", ..., agg_mat = NULL, agg_order = NULL, cov_hfbts = NULL,
+                      tew = "sum", strc_mat = NULL){
+  if(is.null(strc_mat)){
+    if(is.null(agg_mat) || is.null(agg_order)){
+      cli_abort("Argument {.arg agg_mat} and/or {.arg agg_order} are NULL.", call = NULL)
+    }
+
+    strc_mat <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)$strc_mat
+  }
+
+  if(is.null(cov_hfbts)){
+    cli_abort("Argument {.arg cov_hfbts} is NULL.", call = NULL)
+  }
+
+  strc_mat %*% tcrossprod(cov_hfbts, strc_mat)
 }

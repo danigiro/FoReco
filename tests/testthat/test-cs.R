@@ -11,31 +11,34 @@ if(require(testthat)){
   C <- (cbind(diag(NROW(A)), -A))
   colnames(C) <- LETTERS[1:7]
   comb <- "shr"
-
   test_that("Cross-sectional tools", {
-    expect_equal(cstools(agg_mat = A, sparse = FALSE),
-                 list(dim = c(n = 7, na = 3, nb = 4),
-                      agg_mat = matrix(c(1,1,1,1,
-                                         1,1,0,0,
-                                         0,0,1,1), 3, 4, byrow = TRUE,
-                                       dimnames = list(LETTERS[1:3], LETTERS[4:7])),
-                      strc_mat = matrix(c(1,1,1,1,
-                                          1,1,0,0,
-                                          0,0,1,1,
-                                          1,0,0,0,
-                                          0,1,0,0,
-                                          0,0,1,0,
-                                          0,0,0,1), 7, 4, byrow = TRUE,
-                                        dimnames = list(LETTERS[1:7], LETTERS[4:7])),
-                      cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
-                                          0,1,0,-1,-1,0,0,
-                                          0,0,1,0,0,-1,-1), 3, 7, byrow = TRUE,
-                                        dimnames = list(LETTERS[1:3], LETTERS[1:7]))))
-    expect_equal(cstools(cons_mat = C[-2,], sparse = FALSE),
-                 list(dim = c(n = 7),
-                      cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
-                                          0,0,1,0,0,-1,-1), 2, 7, byrow = TRUE,
-                                        dimnames = list(LETTERS[c(1,3)], LETTERS[1:7]))))
+    expect_equal(
+      cstools(agg_mat = A, sparse = FALSE),
+      list(dim = c(n = 7, na = 3, nb = 4),
+           agg_mat = matrix(c(1,1,1,1,
+                              1,1,0,0,
+                              0,0,1,1), 3, 4, byrow = TRUE,
+                            dimnames = list(LETTERS[1:3], LETTERS[4:7])),
+           strc_mat = matrix(c(1,1,1,1,
+                               1,1,0,0,
+                               0,0,1,1,
+                               1,0,0,0,
+                               0,1,0,0,
+                               0,0,1,0,
+                               0,0,0,1), 7, 4, byrow = TRUE,
+                             dimnames = list(LETTERS[1:7], LETTERS[4:7])),
+           cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
+                               0,1,0,-1,-1,0,0,
+                               0,0,1,0,0,-1,-1), 3, 7, byrow = TRUE,
+                             dimnames = list(LETTERS[1:3], LETTERS[1:7])))
+    )
+    expect_equal(
+      cstools(cons_mat = C[-2,], sparse = FALSE),
+      list(dim = c(n = 7),
+           cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
+                               0,0,1,0,0,-1,-1), 2, 7, byrow = TRUE,
+                             dimnames = list(LETTERS[c(1,3)], LETTERS[1:7])))
+    )
   })
 
   test_that("Optimal cross-sectional reconciliation", {
@@ -60,7 +63,27 @@ if(require(testthat)){
     expect_equal(r1, r5, ignore_attr = TRUE)
     expect_equal(r1, r6, ignore_attr = TRUE)
     expect_equal(r1, r7, ignore_attr = TRUE)
+    expect_equal(FoReco2matrix(r1)$`k-1`, r1, ignore_attr = TRUE)
     expect_equal(max(abs(C%*%t(r1))), 0)
+  })
+
+  test_that("Bounds", {
+    tmp <- set_bounds(n = c(4:7), lb = 3)
+    r1 <- csrec(base = base, agg_mat = A, comb = comb,
+                res = res, approach = "strc", bounds = tmp)
+    r2 <- csrec(base = base, agg_mat = A, comb = comb,
+                res = res, approach = "proj", bounds = tmp)
+    expect_equal(r1[1, ], c(12, 6, 6, 3, 3, 3, 3), ignore_attr = TRUE)
+    expect_equal(r1, r2, ignore_attr = TRUE)
+
+    tmp <- set_bounds(n = c(4:7), lb = 3, approach = "sftb")
+    r3 <- csrec(base = base, agg_mat = A, comb = comb,
+                res = res, approach = "strc", bounds = tmp)
+    expect_equal(r3, r1, ignore_attr = TRUE)
+
+    tmp <- set_bounds(n = 8, lb = 3)
+    expect_warning(csrec(base = base, agg_mat = A, comb = comb,
+                         res = res, bounds = tmp))
   })
 
   base[1,NCOL(base)] <- -10
@@ -73,11 +96,43 @@ if(require(testthat)){
                 approach = "proj", nn = "sntz")
     r4 <- csrec(base = base, agg_mat = A, comb = comb, res = res,
                 approach = "proj", nn = "bpv")
+    r5 <- csrec(base = base, agg_mat = A, comb = comb, res = res,
+                approach = "proj", nn = "fbpp")
+    r6 <- csrec(base = base, agg_mat = A, comb = comb, res = res,
+                approach = "proj", nn = "kann")
 
+    rf <- csrec(base = base, agg_mat = A, comb = comb,
+                res = res, approach = "proj")
+    rbu <- csbu(rf[,-c(1:3)], agg_mat = unname(A), sntz = TRUE)
+
+    expect_true(all(r1>=0))
+    expect_true(all(r6>=0))
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
+    expect_equal(r1, r5, ignore_attr = TRUE)
+    expect_equal(r3, rbu, ignore_attr = TRUE)
     expect_equal(max(abs(C%*%t(r1))), 0)
     expect_equal(max(abs(C%*%t(r3))), 0)
+  })
+
+  test_that("sntz-variants", {
+    yhat <- c(40, 35, -5, 10)
+    agg_mat <- t(c(1,1,1))
+    r1 <- csrec(yhat, agg_mat = agg_mat, nn = "sntz")
+    r2 <- csrec(yhat, agg_mat = agg_mat, nn = "sntz",
+                settings = list(type = "bu"))
+    r3 <- csrec(yhat, agg_mat = agg_mat, nn = "sntz",
+                settings = list(type = "tdp"))
+    r4 <- csrec(yhat, agg_mat = agg_mat, nn = "sntz",
+                settings = list(type = "tdsp"))
+    r5 <- csrec(yhat, agg_mat = agg_mat, nn = "sntz",
+                settings = list(type = "tdvw"),
+                comb = diag(c(1, 64, 1,16)))
+    expect_equal(r1, c(45, 35, 0, 10), ignore_attr = TRUE)
+    expect_equal(r2, c(45, 35, 0, 10), ignore_attr = TRUE)
+    expect_equal(round(r3, 2), c(40, 31.11, 0, 8.89), ignore_attr = TRUE)
+    expect_equal(round(r4, 2), c(40, 30.38, 0, 9.62), ignore_attr = TRUE)
+    expect_equal(r5, c(40, 31, 0, 9), ignore_attr = TRUE)
   })
 
   test_that("Optimal immutable cross-sectional reconciliation", {
@@ -93,6 +148,7 @@ if(require(testthat)){
                 approach = "strc_osqp", immutable = 1, nn = "osqp")
     r6 <- csrec(base = base, agg_mat = A, comb = comb, res = res,
                 approach = "proj_osqp", immutable = 1, nn = "osqp")
+    expect_no_error(suppressMessages(recoinfo(r1, verbose = TRUE)))
 
     fix_r <- c(r1[1,1], r2[1,1], r3[1,1], r4[1,1], r5[1,1], r6[1,1])
 
@@ -107,17 +163,27 @@ if(require(testthat)){
 
   test_that("cslcc and BU", {
     r0 <- cslcc(base = base, agg_mat = A, comb = comb, res = res)
-    r1 <- cslcc(base = base, agg_mat = A,  nodes = c(1, 2), comb = comb, res = res)
+    r1 <- cslcc(base = base, agg_mat = A,  nodes = c(1, 2), comb = comb,
+                res = res)
     r2 <- csbu(base[,-c(1:3)], agg_mat = A)
+    r3 <- csbu(base[,-c(1:3)], agg_mat = A, round = TRUE)
+
+    expect_error(csbu(base, agg_mat = A))
+    expect_error(csbu(base))
+    expect_error(csbu(agg_mat = A))
 
     fix <- unlist(mapply(function(z, y) z[,y], y = list(1, c(2,3), c(4:7)),
                          z = recoinfo(r1, verbose = FALSE)$lcc))
 
+    expect_no_error(suppressMessages(recoinfo(r1, verbose = TRUE)))
+    expect_no_error(suppressMessages(recoinfo(r2, verbose = TRUE)))
     expect_equal(max(abs(fix - base)), 0)
     expect_equal(r1, r0, ignore_attr = TRUE)
     expect_equal(recoinfo(r1, verbose = FALSE)$lcc[[3]], r2)
     expect_equal(max(abs(C%*%t(r1))), 0)
     expect_equal(max(abs(C%*%t(r2))), 0)
+    expect_equal(max(abs(C%*%t(r3))), 0)
+    expect_equal(r3, round(r3), ignore_attr = TRUE)
   })
 
   test_that("Top-down and Middle-out", {
@@ -134,7 +200,10 @@ if(require(testthat)){
     # Middle-out
     r4 <- csmo(base = cbind(topf), agg_mat = A, weights = fix_weights)
     r5 <- csmo(base = cbind(topf), agg_mat = A, weights = h_weights)
-    r6 <- csmo(base = rbind(topf), agg_mat = A, weights = fix_weights, id_rows = 2:3)
+    r6 <- csmo(base = rbind(topf), agg_mat = A, weights = fix_weights,
+               id_rows = 2:3)
+    expect_no_error(suppressMessages(recoinfo(r1, verbose = TRUE)))
+    expect_no_error(suppressMessages(recoinfo(r4, verbose = TRUE)))
 
     expect_equal(max(abs(r1[,1] - topf)), 0)
     expect_equal(max(abs(r6[,2:3] - topf)), 0)
@@ -167,8 +236,10 @@ if(require(testthat)){
     expect_error(csrec(agg_mat = A, comb = comb, res = res))
     expect_error(csrec(base = base[, 1:2], agg_mat = A, comb = comb, res = res))
     expect_error(cstools())
-    expect_error(csrec(base = base, agg_mat = A, comb = comb, res = res, immutable = cbind(1,1)))
-    expect_error(csrec(base = base, agg_mat = A, comb = comb, res = res, immutable = c(1:7)))
+    expect_error(csrec(base = base, agg_mat = A, comb = comb, res = res,
+                       immutable = cbind(1,1)))
+    expect_error(csrec(base = base, agg_mat = A, comb = comb, res = res,
+                       immutable = c(1:7)))
   })
 
 }

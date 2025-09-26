@@ -7,22 +7,23 @@
 teprojmat(agg_order, comb = "ols", res = NULL, mat = "M", tew = "sum", ...)
 }
 \arguments{
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{tecov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{tecov}.}
 
-\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency. This vector is used to compute come covariance matrices.}
+\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
+the residuals ordered from the lowest frequency to the highest
+frequency. This vector is used to compute come covariance matrices.}
 
 \item{mat}{A string specifying which matrix to return:
 "\code{M}" (\emph{default}) for \eqn{\mathbf{M}} and "\code{G}" for \eqn{\mathbf{G}}.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{...}{
@@ -60,9 +61,11 @@ practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
 \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

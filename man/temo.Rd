@@ -13,9 +13,9 @@ aggregated base forecasts of order \eqn{k}; \eqn{k} is an aggregation
 order (a factor of \eqn{m}, and \eqn{1<k<m}), \eqn{m} is the max aggregation
 order, and \eqn{h} is the forecast horizon for the lowest frequency time series.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{order}{The intermediate fixed aggregation order \eqn{k}.}
 
@@ -23,15 +23,16 @@ of \eqn{m}.}
 high-frequency time series; \eqn{m} is the max aggregation order, and \eqn{h} is the
 forecast horizon for the lowest frequency time series.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal reconciled forecasts.
+A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+reconciled forecasts.
 }
 \description{
 The middle-out forecast reconciliation for temporal hierarchies
@@ -57,16 +58,18 @@ recoh <- temo(base = basek2, order = 2, agg_order = 4, weights = h_weights)
 
 }
 \seealso{
-Middle-out reconciliation: 
+Middle-out reconciliation:
 \code{\link{csmo}()},
 \code{\link{ctmo}()}
 
-Temporal framework: 
+Temporal framework:
 \code{\link{teboot}()},
 \code{\link{tebu}()},
 \code{\link{tecov}()},
+\code{\link{tegauss}()},
 \code{\link{telcc}()},
 \code{\link{terec}()},
+\code{\link{tesample}()},
 \code{\link{tetd}()},
 \code{\link{tetools}()}
 }

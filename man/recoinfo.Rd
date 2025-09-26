@@ -12,7 +12,7 @@ recoinfo(x, verbose = TRUE)
 \item{verbose}{If \code{TRUE} (\emph{defaults}), reconciliation information are printed.}
 }
 \value{
-A list containing the following reconciliation process informations:
+A list containing the following reconciliation process information:
 \item{rfun}{the reconciliation function.}
 \item{cs_n}{the cross-sectional number of variables.}
 \item{te_set}{the set of temporal aggregation orders.}
@@ -30,9 +30,11 @@ This function extracts reconciliation information from the output of any reconci
 function implemented by \pkg{FoReco}.
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

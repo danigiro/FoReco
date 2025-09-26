@@ -7,7 +7,7 @@
 shrink_estim(x, mse = TRUE)
 }
 \arguments{
-\item{x}{A numeric matrix containing the in-sample residuals.}
+\item{x}{A numeric matrix containing the residuals.}
 
 \item{mse}{If \code{TRUE} (\emph{default}), the residuals used to compute the covariance
 matrix are not mean-corrected.}
@@ -24,9 +24,11 @@ covariance matrix estimation and implications for functional genomics,
 \emph{Statistical Applications in Genetics and Molecular Biology}, 4, 1
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

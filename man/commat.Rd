@@ -38,9 +38,11 @@ Magnus, J.R. and Neudecker, H. (2019), Matrix Differential Calculus with Applica
 in Statistics and Econometrics, third edition, New York, Wiley, pp. 54-55.
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{csprojmat}()},
 \code{\link{cstools}()},

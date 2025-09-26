@@ -9,31 +9,34 @@ ctlcc(base, agg_mat, nodes = "auto", agg_order, comb = "ols", res = NULL,
       approach = "proj", nn = NULL, settings = NULL, ...)
 }
 \arguments{
-\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base forecasts to
-be reconciled; \eqn{n} is the total number of variables, \eqn{m} is the max. order of temporal
-aggregation, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of \eqn{m},
-excluding \eqn{m}, and \eqn{h} is the forecast horizon for the lowest frequency time series.
-The row identifies a time series, and the forecasts in each row are ordered from the
-lowest frequency (most temporally aggregated) to the highest frequency.}
+\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
+forecasts to be reconciled; \eqn{n} is the total number of variables,
+\eqn{m} is the maximum aggregation order, and \eqn{k^\ast} is the sum of a
+chosen subset of the \eqn{p - 1} factors of \eqn{m} (excluding \eqn{m}
+itself), and \eqn{h} is the forecast horizon for the lowest frequency time
+series. The row identifies a time series, and the forecasts in each row are
+ordered from the lowest frequency (most temporally aggregated) to the
+highest frequency.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
 in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
 value is the string "\code{auto}" which calculates the number of variables in each level.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{ctcov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{ctcov}.}
 
-\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency (columns) for each variable (rows). This matrix is used
-to compute some covariance matrices.}
+\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
+the in-sample residuals ordered from the lowest frequency to the highest
+frequency (columns) for each variable (rows). This matrix is used to
+compute some covariance matrices.}
 
 \item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
 forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
@@ -48,41 +51,48 @@ forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{
 forecasts defined by the user. This parameter can be omitted
 if only base forecasts are used (see Di Fonzo and Girolimetto, 2024).}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{approach}{A string specifying the approach used to compute the reconciled
-forecasts. Options include:
+\item{approach}{A string specifying the approach used to compute the
+reconciled forecasts. Options include:
 \itemize{
-\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for projection approach.
-\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for structural approach.
+\item "\code{proj}" (\emph{default}): Projection approach according
+to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman
+et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for projection approach.
+\item "\code{strc_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative
+forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
 \item "\code{bpv}": block principal pivoting algorithm.
-\item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
+\item "\code{sntz}": heuristic "set-negative-to-zero"
+(Di Fonzo and Girolimetto, 2023).
 }}
 
 \item{settings}{A list of control parameters.
 \itemize{
-\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
-for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
-\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
-or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
-may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
-criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
-tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
-\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying
+settings for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details,
+refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
+(Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
+("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
+number of full exchange rules that may be attempted (\code{10},
+\emph{default}), \code{tol} for the tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
+gradient tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
+maximum number of algorithm iterations (\code{100}, \emph{default})
 }}
 
 \item{...}{
@@ -94,7 +104,8 @@ matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
+A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+reconciled forecasts.
 }
 \description{
 This function implements a forecast reconciliation procedure inspired by the original
@@ -183,16 +194,18 @@ An Operator Splitting solver for Quadratic Programs,
 \doi{10.1007/s12532-020-00179-2}
 }
 \seealso{
-Level conditional coherent reconciliation: 
+Level conditional coherent reconciliation:
 \code{\link{cslcc}()},
 \code{\link{telcc}()}
 
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctmo}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},

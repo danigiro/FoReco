@@ -9,9 +9,9 @@ FoReco2matrix(x, agg_order, keep_names = FALSE)
 \arguments{
 \item{x}{An output from any reconciliation function implemented by \pkg{FoReco}.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{keep_names}{If \code{FALSE} (\emph{default}), the rownames names of the output matrices are removed.}
 }
@@ -33,8 +33,10 @@ reco <- ctrec(base = base, agg_mat = t(c(1,1)), agg_order = 4, comb = "ols")
 matrix_list <- FoReco2matrix(reco)
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

@@ -7,20 +7,22 @@
 csprojmat(agg_mat, cons_mat, comb = "ols", res = NULL, mat = "M", ...)
 }
 \arguments{
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-zero constraints: each row represents a constraint equation, and each column represents
-a variable. The matrix can be of full rank, meaning the rows are linearly independent,
-but this is not a strict requirement, as the function allows for redundancy in the
-constraints.}
+\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the
+cross-sectional zero constraints: each row represents a constraint
+equation, and each column represents a variable. The matrix can be of full
+rank, meaning the rows are linearly independent, but this is not a strict
+requirement, as the function allows for redundancy in the constraints.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{cscov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{cscov}.}
 
-\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the in-sample
-residuals. This matrix is used to compute some covariance matrices.}
+\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
+in-sample residuals. This matrix is used to compute some covariance
+matrices.}
 
 \item{mat}{A string specifying which matrix to return:
 "\code{M}" (\emph{default}) for \eqn{\mathbf{M}} and "\code{G}" for \eqn{\mathbf{G}}.}
@@ -61,9 +63,11 @@ practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
 \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{cstools}()},

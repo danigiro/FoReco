@@ -9,8 +9,8 @@ bibentry(
                person(given = "Tommaso",
                       family = "Di Fonzo",
                       role = c("aut", "fnd"))),
-  organization    = "R package version 1.0",
-  year    = 2024,
+  organization    = "R package",
+  year    = 2025,
   doi     = "10.32614/CRAN.package.FoReco",
   url     = "https://cran.r-project.org/package=FoReco"
 )

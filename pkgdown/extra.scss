@@ -123,6 +123,14 @@ pre {
   background-color: rgba(13,110,253,0.05);;
 }
 
+.nav-item .nav-link {
+  color: var(--bs-light-rgb);
+}
+
+.nav-item .nav-link:hover {
+  background: RGBA(var(--bs-light-rgb), 0.1);
+}
+
 p {
   margin-bottom: 0.5rem !important;
 }

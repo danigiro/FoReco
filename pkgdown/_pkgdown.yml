@@ -7,6 +7,7 @@ development:
 
 template:
   bootstrap: 5
+  math-rendering: mathjax
 
 navbar:
   structure:
@@ -16,6 +17,7 @@ navbar:
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/danigiro/FoReco
+      aria-label: View on GitHub
     reference:
       text: "Reference"
       icon: fa-book
@@ -31,6 +33,7 @@ navbar:
     rpro:
       icon: fab fa-r-project fa-lg
       href: https://cran.r-project.org/web/packages/FoReco/index.html
+      aria-label: View on CRAN
     articles:
       text: "Vignettes"
       icon: fa-question-circle
@@ -59,6 +62,8 @@ reference:
       - cstd
       - cslcc
       - csrec
+      - cssample
+      - csgauss
   - title: Temporal reconciliation
     desc:  All the reconciliation functions for the temporal framework
     contents:
@@ -67,8 +72,10 @@ reference:
       - tetd
       - telcc
       - terec
+      - tesample
+      - tegauss
   - title: Cross-temporal reconciliation
-    desc:  All the reconciliation functions for the temporal framework
+    desc:  All the reconciliation functions for the cross-temporal framework
     contents:
       - ctbu
       - ctmo
@@ -77,6 +84,8 @@ reference:
       - ctrec
       - tcsrec
       - iterec
+      - ctsample
+      - ctgauss
   - title: Datasets
     contents:
       - itagdp
@@ -84,6 +93,8 @@ reference:
   - title: Utilities
     contents:
       - aggts
+      - as_ctmatrix
+      - as_tevector
       - balance_hierarchy
       - commat
       - cscov

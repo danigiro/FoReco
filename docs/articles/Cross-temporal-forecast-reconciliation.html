@@ -5,165 +5,117 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="FoReco">
 <title>Cross-temporal forecast reconciliation • FoReco</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
+<!-- mathjax math --><script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js" integrity="sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI=" crossorigin="anonymous"></script><script>
+  window.MathJax = {
+    chtml: {
+      fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
+    }
+  };
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-temporal forecast reconciliation">
-<meta property="og:description" content="FoReco">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="Cross-temporal-forecast-reconciliation_files/libs/quarto-html/popper.min.js"></script><script src="Cross-temporal-forecast-reconciliation_files/libs/quarto-html/tippy.umd.min.js"></script><link href="Cross-temporal-forecast-reconciliation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Cross-temporal-forecast-reconciliation_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-temporal forecast reconciliation">
 <meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.0.0.9013</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../index.html">
-    <span class="fa fa-home"></span>
-     
-    Home
-  </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">
-    <span class="fa fa-book"></span>
-     
-    Reference
-  </a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span> Home</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html"><span class="fa fa-book"></span> Reference</a></li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown--vignettes">
-    <span class="fa fa-question-circle"></span>
-     
-    Vignettes
-  </a>
-  <div class="dropdown-menu" aria-labelledby="dropdown--vignettes">
-    <a class="dropdown-item" href="../articles/Dataset-vndata-and-itagdp.html">The `vndata` and `itagdp` dataset</a>
-    <a class="dropdown-item" href="../articles/Cross-sectional-forecast-reconciliation.html">Cross-sectional forecast reconciliation</a>
-    <a class="dropdown-item" href="../articles/Temporal-forecast-reconciliation.html">Temporal forecast reconciliation</a>
-    <a class="dropdown-item" href="../articles/Cross-temporal-forecast-reconciliation.html">Cross-temporal forecast reconciliation</a>
-    <a class="dropdown-item" href="../articles/Replicate-the-hts-package.html">Replicate the `hts` package</a>
-    <a class="dropdown-item" href="../articles/Replicate-the-thief-package.html">Replicate the `thief` package</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true"><span class="fa fa-question-circle"></span> Vignettes</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+<li><a class="dropdown-item" href="../articles/Dataset-vndata-and-itagdp.html">The `vndata` and `itagdp` dataset</a></li>
+    <li><a class="dropdown-item" href="../articles/Cross-sectional-forecast-reconciliation.html">Cross-sectional forecast reconciliation</a></li>
+    <li><a class="dropdown-item" href="../articles/Temporal-forecast-reconciliation.html">Temporal forecast reconciliation</a></li>
+    <li><a class="dropdown-item" href="../articles/Cross-temporal-forecast-reconciliation.html">Cross-temporal forecast reconciliation</a></li>
+    <li><a class="dropdown-item" href="../articles/Replicate-the-hts-package.html">Replicate the `hts` package</a></li>
+    <li><a class="dropdown-item" href="../articles/Replicate-the-thief-package.html">Replicate the `thief` package</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">
-    <span class="far fa far fa-newspaper"></span>
-     
-    News
-  </a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html"><span class="fa far fa-newspaper"></span> News</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/danigiro/FoReco">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://cran.r-project.org/web/packages/FoReco/index.html">
-    <span class="fab fa fab fa-r-project fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/danigiro/FoReco" aria-label="View on GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://cran.r-project.org/web/packages/FoReco/index.html" aria-label="View on CRAN"><span class="fa fab fa-r-project fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.svg" class="logo" alt=""><h1>Cross-temporal forecast reconciliation</h1>
-                        <h4 data-toc-skip class="author">Daniele
-Girolimetto</h4>
-            
-            <h4 data-toc-skip class="date">2025-05-30</h4>
-      
+
+      <p class="author">Daniele Girolimetto</p>
+      <p class="date">2025-09-26</p>
+
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Cross-temporal-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Cross-temporal-forecast-reconciliation.qmd</code></a></small>
-      <div class="d-none name"><code>Cross-temporal-forecast-reconciliation.qmd</code></div>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+
+
+
+
+
+    <section class="section level2"><h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>This vignette demonstrates the process of cross-temporal forecast
-reconciliation using the <code>FoReco</code> package. The vignette
-covers the following steps:</p>
-<ol style="list-style-type: decimal">
+<p>This vignette demonstrates the process of cross-temporal forecast reconciliation using the <code>FoReco</code> package. The vignette covers the following steps:</p>
+<ol type="1">
 <li>Preparing and loading the necessary packages and data.</li>
 <li>Generating base forecasts for grouped time series.</li>
 <li>Reconciling point forecasts.</li>
 <li>Addressing practical challenges such as non-negativity issues.</li>
 <li>Exploring probabilistic forecast reconciliation.</li>
 </ol>
-<div class="section level3">
-<h3 id="packages">Packages<a class="anchor" aria-label="anchor" href="#packages"></a>
+<section class="level2"><h3 id="packages">Packages<a class="anchor" aria-label="anchor" href="#packages"></a>
 </h3>
 <p>First, we load the necessary packages.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/danigiro/FoReco" class="external-link">FoReco</a></span><span class="op">)</span>   <span class="co"># -&gt; To perform reconciliation</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/" class="external-link">forecast</a></span><span class="op">)</span>  <span class="co"># -&gt; To obtain base forecasts</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/AEBilgrau/GMCM" class="external-link">GMCM</a></span><span class="op">)</span>      <span class="co"># -&gt; Sample from a multivariate normal distibution</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="vndata-groupped-monthly-time-series">
+</section></section><section class="section level2"><h2 id="vndata-groupped-monthly-time-series">
 <code>vndata</code>: Groupped monthly time series<a class="anchor" aria-label="anchor" href="#vndata-groupped-monthly-time-series"></a>
 </h2>
-<p>We will use the <code>vndata</code> dataset <span class="citation">(Wickramasuriya et al., 2018)</span>, which contains
-grouped monthly time series data, and <code>vnaggmat</code>, which is
-the corresponding aggregation matrix. See the <a href="Dataset-vndata-and-itagdp.html">dataset vignette</a> for more
-details.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>We will use the <code>vndata</code> dataset <span class="citation" data-cites="Wickramasuriya2019">(<a href="#ref-Wickramasuriya2019" role="doc-biblioref">Wickramasuriya et al., 2018</a>)</span>, which contains grouped monthly time series data, and <code>vnaggmat</code>, which is the corresponding aggregation matrix. See the <a href="Dataset-vndata-and-itagdp.html">dataset vignette</a> for more details.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vndata</span><span class="op">)</span>      <span class="co"># dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span>    <span class="co"># Agg mat matrix</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="base-forecast">Base forecast<a class="anchor" aria-label="anchor" href="#base-forecast"></a>
+</div>
+<section class="level2"><h3 id="base-forecast">Base forecast<a class="anchor" aria-label="anchor" href="#base-forecast"></a>
 </h3>
-<p>To obtained the base forecasts, we fit an ETS model with log
-transformation to each series. We handle zeros by replacing them with
-half the minimum non-zero value in the series <span class="citation">(Wickramasuriya et al., 2020)</span>, then fit the ETS
-model and generate forecasts. We obtain twelve-, six-, four-, three-,
-two-, and one-step-ahead base forecasts from the monthly data and the
-aggregation over 2, 3, 4, 6, and 12 months.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>To obtained the base forecasts, we fit an ETS model with log transformation to each series. We handle zeros by replacing them with half the minimum non-zero value in the series <span class="citation" data-cites="Wickramasuriya2020-zk">(<a href="#ref-Wickramasuriya2020-zk" role="doc-biblioref">Wickramasuriya et al., 2020</a>)</span>, then fit the ETS model and generate forecasts. We obtain twelve-, six-, four-, three-, two-, and one-step-ahead base forecasts from the monthly data and the aggregation over 2, 3, 4, 6, and 12 months.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">te_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tetools.html">tetools</a></span><span class="op">(</span><span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">set</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">te_set</span><span class="op">)</span></span>
 <span><span class="va">data_k</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aggts.html">aggts</a></span><span class="op">(</span><span class="va">vndata</span>, <span class="va">te_set</span><span class="op">)</span></span>
@@ -188,9 +140,10 @@ aggregation over 2, 3, 4, 6, and 12 months.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">k</span>, <span class="st">" "</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt; 12  6  4  3  2  1</span></span></code></pre></div>
-<p>We extract the point forecasts and residuals from the fitted
-models.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+</div>
+<p>We extract the point forecasts and residuals from the fitted models.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Point forecasts</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">fc_obj</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="kw">function</span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="va">y</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
@@ -213,23 +166,20 @@ models.</p>
 <span><span class="co">#&gt;  $ k-2 : num [1:114, 1:525] -329 -720 -453 538 -693 ...</span></span>
 <span><span class="co">#&gt;  $ k-1 : num [1:228, 1:525] 2143 -970 -115 133 951 ...</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="point-forecast-reconciliation">Point forecast reconciliation<a class="anchor" aria-label="anchor" href="#point-forecast-reconciliation"></a>
+</section><section class="level2"><h3 id="point-forecast-reconciliation">Point forecast reconciliation<a class="anchor" aria-label="anchor" href="#point-forecast-reconciliation"></a>
 </h3>
-<p>Within <code>FoReco</code>, a range of reconciliation strategies are
-available, including bottom-up, top-down, level conditional coherent
-forecast reconciliation, and cross-temporal heuristics.</p>
-<p>Bottom-up reconciliation <span class="citation">(Dunn et al.,
-1976)</span> aggregates the high-frequency forecasts from the lowest
-cross-sectional level to higher cross-temporal levels <span class="citation">(Girolimetto et al., 2024)</span>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p>Within <code>FoReco</code>, a range of reconciliation strategies are available, including bottom-up, top-down, level conditional coherent forecast reconciliation, and cross-temporal heuristics.</p>
+<p>Bottom-up reconciliation <span class="citation" data-cites="Dunn1976-kv">(<a href="#ref-Dunn1976-kv" role="doc-biblioref">Dunn et al., 1976</a>)</span> aggregates the high-frequency forecasts from the lowest cross-sectional level to higher cross-temporal levels <span class="citation" data-cites="Girolimetto2023-jm">(<a href="#ref-Girolimetto2023-jm" role="doc-biblioref">Girolimetto et al., 2024</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc_bts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">base</span><span class="op">$</span><span class="va">`k-1`</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">rf_bu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctbu.html">ctbu</a></span><span class="op">(</span><span class="va">fc_bts</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_bu</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:28] 280206 89744 55472 69366 16847 ...</span></span></code></pre></div>
-<p>To obtain a list of forecasts at different orders of aggregation, we
-can use the <code>FoReco2matrix</code> function.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+</div>
+<p>To obtain a list of forecasts at different orders of aggregation, we can use the <code>FoReco2matrix</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/FoReco2matrix.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">rf_bu</span><span class="op">)</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 6</span></span>
 <span><span class="co">#&gt;  $ k-12: num [1, 1:525] 280206 89744 55472 69366 16847 ...</span></span>
@@ -238,11 +188,10 @@ can use the <code>FoReco2matrix</code> function.</p>
 <span><span class="co">#&gt;  $ k-3 : num [1:4, 1:525] 82898 64126 66292 66891 27564 ...</span></span>
 <span><span class="co">#&gt;  $ k-2 : num [1:6, 1:525] 62313 46149 38562 44400 46889 ...</span></span>
 <span><span class="co">#&gt;  $ k-1 : num [1:12, 1:525] 44094 18218 20585 25563 19385 ...</span></span></code></pre></div>
-<p>In top-down reconciliation for hierarchical time series, the forecast
-for the top-level series (Total) is distributed proportionally to ensure
-the top-level value stays the same and all bottom-level forecasts are
-non-negative <span class="citation">(Gross &amp; Sohl, 1990)</span>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+</div>
+<p>In top-down reconciliation for hierarchical time series, the forecast for the top-level series (Total) is distributed proportionally to ensure the top-level value stays the same and all bottom-level forecasts are non-negative <span class="citation" data-cites="Gross1990-uf">(<a href="#ref-Gross1990-uf" role="doc-biblioref">Gross &amp; Sohl, 1990</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bts_mat</span> <span class="op">&lt;-</span> <span class="va">data_k</span><span class="op">$</span><span class="va">`k-1`</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">tot_12</span> <span class="op">&lt;-</span> <span class="va">data_k</span><span class="op">$</span><span class="va">`k-12`</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span><span class="va">fc_tot_12</span> <span class="op">&lt;-</span> <span class="va">base</span><span class="op">$</span><span class="va">`k-12`</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span></span>
@@ -262,34 +211,31 @@ non-negative <span class="citation">(Gross &amp; Sohl, 1990)</span>.</p>
 <span><span class="va">rf_td_gsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cttd.html">cttd</a></span><span class="op">(</span><span class="va">fc_tot_12</span>, agg_order <span class="op">=</span> <span class="va">m</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">p_gsf</span><span class="op">)</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_td_gsf</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:28] 327178 105656 63188 85290 22160 ...</span></span></code></pre></div>
-<p>To perform cross-temporal reconciliation with FoReco using the
-complete set of base forecasts (any cross-sectional and temporal level),
-it is necessary to arrange base forecasts (and residuals) in matrix
-form. The rows of the matrix represent the cross-sectional variables,
-while the columns the temporal dimension.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+</div>
+<p>To perform cross-temporal reconciliation with FoReco using the complete set of base forecasts (any cross-sectional and temporal level), it is necessary to arrange base forecasts (and residuals) in matrix form. The rows of the matrix represent the cross-sectional variables, while the columns the temporal dimension.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">base_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">base</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">res_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">res</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The level conditional coherent reconciliation (LCC) is a
-generalization of the original proposal by <span class="citation">Hollyman et al. (2021)</span> and <span class="citation">Di Fonzo &amp; Girolimetto (2024)</span> to include the
-cross-temporal framework</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+</div>
+<p>The level conditional coherent reconciliation (LCC) is a generalization of the original proposal by <span class="citation" data-cites="Hollyman2021-zq">Hollyman et al. (<a href="#ref-Hollyman2021-zq" role="doc-biblioref">2021</a>)</span> and <span class="citation" data-cites="DiFonzo2024-ijf">Di Fonzo &amp; Girolimetto (<a href="#ref-DiFonzo2024-ijf" role="doc-biblioref">2024</a>)</span> to include the cross-temporal framework</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_lcc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctlcc.html">ctlcc</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_lcc</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:28] 316724 98441 62491 79420 19591 ...</span></span></code></pre></div>
-<p>The iterative procedure described in <span class="citation">Di Fonzo
-&amp; Girolimetto (2023a)</span> produces cross-temporally reconciled
-forecasts by alternating forecast reconciliation along one single
-dimension (either cross-sectional or temporal) at each iteration
-step.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+</div>
+<p>The iterative procedure described in <span class="citation" data-cites="Di_Fonzo2023-dg">Di Fonzo &amp; Girolimetto (<a href="#ref-Di_Fonzo2023-dg" role="doc-biblioref">2023a</a>)</span> produces cross-temporally reconciled forecasts by alternating forecast reconciliation along one single dimension (either cross-sectional or temporal) at each iteration step.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_ite</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/iterec.html">iterec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, res <span class="op">=</span> <span class="va">res_mat</span>,</span>
 <span>                 cslist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span>, </span>
 <span>                 telist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ── <span style="font-weight: bold;">Iterative heuristic cross-temporal forecast reconciliation</span> ──────────────────</span></span>
-<span><span class="co">#&gt; <span style="font-style: italic;">Legend: i = iteration; s = step. Norm = "inf".</span></span></span>
-<span><span class="co">#&gt; <span style="font-weight: bold;">  i.s</span> | <span style="font-weight: bold;">       Temporal</span> | <span style="font-weight: bold;">Cross-sectional</span> |</span></span>
+<span><span class="co">#&gt; ── Iterative heuristic cross-temporal forecast reconciliation ──────────────────</span></span>
+<span><span class="co">#&gt; Legend: i = iteration; s = step. Norm = "inf".</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   i.s |        Temporal | Cross-sectional |</span></span>
 <span><span class="co">#&gt;     0 |         4869.77 |        23213.13 |</span></span>
 <span><span class="co">#&gt;   1.1 |            0.00 |        34262.16 |</span></span>
 <span><span class="co">#&gt;   1.2 |         6994.71 |            0.00 |</span></span>
@@ -307,20 +253,15 @@ step.</p>
 <span><span class="co">#&gt;   7.2 |        8.68e-05 |            0.00 |</span></span>
 <span><span class="co">#&gt;   8.1 |            0.00 |        1.10e-05 |</span></span>
 <span><span class="co">#&gt;   8.2 |        4.15e-06 |            0.00 |</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Convergence achieved at iteration 8.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ✔ Convergence achieved at iteration 8.</span></span>
 <span><span class="co">#&gt; ────────────────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_ite</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:28] 324066 98946 64400 80221 20703 ...</span></span></code></pre></div>
-<p>The cross-temporal method by <span class="citation">Kourentzes &amp;
-Athanasopoulos (2019)</span>, involves three steps: first, reconciling
-forecasts for each time series at different temporal aggregation levels
-using temporal hierarchies; second, performing cross-sectional
-reconciliation at each temporal aggregation order; and third, averaging
-the projection matrices from the second step and using them to
-cross-sectionally reconcile the forecasts from the first step. In
-contrast, we can reverses these steps starting with cross-sectional
-reconciliation followed by temporal reconciliation <span class="citation">(Di Fonzo &amp; Girolimetto, 2023a)</span>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+</div>
+<p>The cross-temporal method by <span class="citation" data-cites="Kourentzes2019-dj">Kourentzes &amp; Athanasopoulos (<a href="#ref-Kourentzes2019-dj" role="doc-biblioref">2019</a>)</span>, involves three steps: first, reconciling forecasts for each time series at different temporal aggregation levels using temporal hierarchies; second, performing cross-sectional reconciliation at each temporal aggregation order; and third, averaging the projection matrices from the second step and using them to cross-sectionally reconcile the forecasts from the first step. In contrast, we can reverses these steps starting with cross-sectional reconciliation followed by temporal reconciliation <span class="citation" data-cites="Di_Fonzo2023-dg">(<a href="#ref-Di_Fonzo2023-dg" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023a</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_tcs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/heuristic-reco.html">tcsrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, res <span class="op">=</span> <span class="va">res_mat</span>,</span>
 <span>                 cslist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span>, </span>
 <span>                 telist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span><span class="op">)</span></span>
@@ -331,16 +272,16 @@ reconciliation followed by temporal reconciliation <span class="citation">(Di Fo
 <span>                 telist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_cst</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:28] 324708 99123 64462 80416 20802 ...</span></span></code></pre></div>
-<p>Finally we can obtained the optimal (in least squares sense)
-combination cross-temporal reconciled forecast <span class="citation">(Di Fonzo &amp; Girolimetto, 2023a; Girolimetto et al.,
-2024)</span>.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+</div>
+<p>Finally we can obtained the optimal (in least squares sense) combination cross-temporal reconciled forecast <span class="citation" data-cites="Di_Fonzo2023-dg Girolimetto2023-jm">(<a href="#ref-Di_Fonzo2023-dg" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023a</a>; <a href="#ref-Girolimetto2023-jm" role="doc-biblioref">Girolimetto et al., 2024</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_opt</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:28] 314297 97383 62631 77793 19695 ...</span></span></code></pre></div>
-<p>The following table shows some options for the optimal combination
-cross-temporal reconciliation function <code><a href="../reference/ctrec.html">ctrec()</a></code>.</p>
+</div>
+<p>The following table shows some options for the optimal combination cross-temporal reconciliation function <code><a href="../reference/ctrec.html">ctrec()</a></code>.</p>
 <style type="text/css">
 .tg .tr-bottom{border:hidden;border-bottom:1px solid black;}
 .tg .tg-center{text-align:center;}
@@ -367,16 +308,12 @@ Standard
 <tr class="tr-bottom">
 <td class="tg-center" style="border-right-style:double;">
 <code>approach="proj"</code> <span class="math display">\[
-    \tilde{\mathbf{y}}_h = \left[\mathbf{I}_n -
-\mathbf{W}\mathbf{C}'(\mathbf{C}\mathbf{W}\mathbf{C}')^{-1}\mathbf{C}\right]
-\hat{\mathbf{y}}_h
+    \tilde{\mathbf{y}}_h = \left[\mathbf{I}_n - \mathbf{W}\mathbf{C}'(\mathbf{C}\mathbf{W}\mathbf{C}')^{-1}\mathbf{C}\right] \hat{\mathbf{y}}_h
     \]</span>
 </td>
 <td class="tg-center">
 <code>approach="strc"</code> <span class="math display">\[
-    \tilde{\mathbf{y}}_h =
-\mathbf{S}(\mathbf{S}'\mathbf{W}^{-1}\mathbf{S})^{-1}\mathbf{S}'\mathbf{W}^{-1}
-\hat{\mathbf{y}}_h
+    \tilde{\mathbf{y}}_h = \mathbf{S}(\mathbf{S}'\mathbf{W}^{-1}\mathbf{S})^{-1}\mathbf{S}'\mathbf{W}^{-1} \hat{\mathbf{y}}_h
     \]</span>
 </td>
 </tr>
@@ -387,12 +324,10 @@ Non-negative forecast reconciliation (osqp)
 </tr>
 <tr class="tr-bottom">
 <td class="tg-center" style="border-right-style:double;">
-<code>approach="proj"</code> + <code>nn="osqp"</code>  or
- <code>nn="proj_osqp"</code>
+<code>approach="proj"</code> + <code>nn="osqp"</code> <br><br> or <br><code>nn="proj_osqp"</code>
 </td>
 <td class="tg-center">
-<code>approach="strc"</code> + <code>nn="osqp"</code>  or 
-<code>nn="strc_osqp"</code>
+<code>approach="strc"</code> + <code>nn="osqp"</code> <br> or <br><code>nn="strc_osqp"</code>
 </td>
 </tr>
 <tr>
@@ -424,88 +359,75 @@ supported
 </tbody>
 <tfoot style="border:hidden;border-top:1px solid black;font-size:small;"><tr>
 <td colspan="2">
-* If the cross-sectional zero-constraints matrix is <span class="math inline">\(\mathbf{C} =
-[\mathbf{I}\quad-\mathbf{A}]\)</span>, then <code>nn="sntz"</code> is
-supported.
+* If the cross-sectional zero-constraints matrix is <span class="math inline">\(\mathbf{C} = [\mathbf{I}\quad-\mathbf{A}]\)</span>, then <code>nn="sntz"</code> is supported.
 </td>
 </tr></tfoot>
-</table>
-</div>
-<div class="section level3">
-<h3 id="practical-challenges">Practical challenges<a class="anchor" aria-label="anchor" href="#practical-challenges"></a>
+</table></section><section class="level2"><h3 id="practical-challenges">Practical challenges<a class="anchor" aria-label="anchor" href="#practical-challenges"></a>
 </h3>
-<div class="section level4">
-<h4 id="non-negativity-issues">Non negativity issues<a class="anchor" aria-label="anchor" href="#non-negativity-issues"></a>
+<section class="level3"><h4 id="non-negativity-issues">Non negativity issues<a class="anchor" aria-label="anchor" href="#non-negativity-issues"></a>
 </h4>
-<p>It is not always true that reconciled forecasts will remain
-non-negative even if the base forecasts are non-negative. For example,
-consider the case of an identity covariance matrix
-(<code>"ols"</code>).</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<p>It is not always true that reconciled forecasts will remain non-negative even if the base forecasts are non-negative. For example, consider the case of an identity covariance matrix (<code>"ols"</code>).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"ols"</span>, approach <span class="op">=</span> <span class="st">"strc"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">rf_ols</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-style: italic;">Optimal </span><span style="font-weight: bold;">Cross-temporal</span> Forecast Reconciliation</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #0000BB;">FoReco</span> function: <span style="font-weight: bold;">`ctrec`</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Covariance approximation: <span style="font-weight: bold;">`ols`</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Non-negative forecasts: <span style="font-weight: bold;">`FALSE`</span></span></span></code></pre></div>
+<span><span class="co">#&gt; ✔ Optimal Cross-temporal Forecast Reconciliation</span></span>
+<span><span class="co">#&gt; ℹ FoReco function: `ctrec`</span></span>
+<span><span class="co">#&gt; ℹ Covariance approximation: `ols`</span></span>
+<span><span class="co">#&gt; ℹ Non-negative forecasts: `FALSE`</span></span></code></pre></div>
+</div>
 <p>To address this issue, we can use two approaches:</p>
 <ul>
-<li>State-of-the-art numerical optimization procedure,
-<strong>osqp</strong> <span class="citation">(Stellato et al.,
-2020)</span>.</li>
+<li>State-of-the-art numerical optimization procedure, <strong>osqp</strong> <span class="citation" data-cites="Stellato2020-jd">(<a href="#ref-Stellato2020-jd" role="doc-biblioref">Stellato et al., 2020</a>)</span>.</li>
 </ul>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_osqp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, </span>
 <span>                 approach <span class="op">=</span> <span class="st">"strc"</span>, res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"ols"</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span>
 <span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">rf_osqp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-style: italic;">Optimal </span><span style="font-weight: bold;">Cross-temporal</span> Forecast Reconciliation</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #0000BB;">FoReco</span> function: <span style="font-weight: bold;">`ctrec`</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Covariance approximation: <span style="font-weight: bold;">`ols`</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Non-negative forecasts: <span style="font-weight: bold;">`TRUE`</span></span></span>
+<span><span class="co">#&gt; ✔ Optimal Cross-temporal Forecast Reconciliation</span></span>
+<span><span class="co">#&gt; ℹ FoReco function: `ctrec`</span></span>
+<span><span class="co">#&gt; ℹ Covariance approximation: `ols`</span></span>
+<span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
-<span><span class="co">#&gt;         obj_val run_time iter     pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -220421537281 26.07045  700 8.23701e-22      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt;         obj_val run_time iter      pri_res status status_polish</span></span>
+<span><span class="co">#&gt; 1 -220421537281 77.36823 1050 1.052998e-21      1             1</span></span></code></pre></div>
+</div>
 <ul>
-<li>Simple heuristic strategy: set-negative-to-zero,
-<strong>sntz</strong> <span class="citation">(Di Fonzo &amp;
-Girolimetto, 2023b)</span>.</li>
+<li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023b</a>)</span>.</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_sntz</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                 approach <span class="op">=</span> <span class="st">"strc"</span>, res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"ols"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">rf_sntz</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> <span style="font-style: italic;">Optimal </span><span style="font-weight: bold;">Cross-temporal</span> Forecast Reconciliation</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #0000BB;">FoReco</span> function: <span style="font-weight: bold;">`ctrec`</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Covariance approximation: <span style="font-weight: bold;">`ols`</span></span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Non-negative forecasts: <span style="font-weight: bold;">`TRUE`</span></span></span></code></pre></div>
+<span><span class="co">#&gt; ✔ Optimal Cross-temporal Forecast Reconciliation</span></span>
+<span><span class="co">#&gt; ℹ FoReco function: `ctrec`</span></span>
+<span><span class="co">#&gt; ℹ Covariance approximation: `ols`</span></span>
+<span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="a-priori-constrained-immutable-forecasts">A priori constrained (immutable) forecasts<a class="anchor" aria-label="anchor" href="#a-priori-constrained-immutable-forecasts"></a>
+</section><section class="level3"><h4 id="a-priori-constrained-immutable-forecasts">A priori constrained (immutable) forecasts<a class="anchor" aria-label="anchor" href="#a-priori-constrained-immutable-forecasts"></a>
 </h4>
-<p>Sometimes we may wish to incorporate a priori knowledge during the
-reconciliation process <span class="citation">(Zhang et al.,
-2023)</span> in order to improve the accuracy of the reconciled
-forecasts. For example, suppose we want to fix the forecasts of the
-states level for the annual series at the base forecasts values.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<p>Sometimes we may wish to incorporate a priori knowledge during the reconciliation process <span class="citation" data-cites="Zhang2023-yj">(<a href="#ref-Zhang2023-yj" role="doc-biblioref">Zhang et al., 2023</a>)</span> in order to improve the accuracy of the reconciled forecasts. For example, suppose we want to fix the forecasts of the states level for the annual series at the base forecasts values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_imm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, approach <span class="op">=</span> <span class="st">"strc"</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, immutable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">8</span>, <span class="fl">12</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_imm</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:28] 321957 99476 63854 79348 20809 ...</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">rf_imm</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">base_mat</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">8</span>,<span class="fl">1</span><span class="op">]</span>, <span class="fl">6</span><span class="op">)</span></span>
 <span><span class="co">#&gt; A B C D E F G </span></span>
 <span><span class="co">#&gt; 0 0 0 0 0 0 0</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="exploring-a-subset-of-temporal-aggregation-orders">Exploring a subset of temporal aggregation orders<a class="anchor" aria-label="anchor" href="#exploring-a-subset-of-temporal-aggregation-orders"></a>
+</section><section class="level3"><h4 id="exploring-a-subset-of-temporal-aggregation-orders">Exploring a subset of temporal aggregation orders<a class="anchor" aria-label="anchor" href="#exploring-a-subset-of-temporal-aggregation-orders"></a>
 </h4>
-<p>Our approaches so far have involved considering all factors of <span class="math inline">\(m\)</span> as potential aggregation orders.
-Nevertheless, it is worth noting that we could also focus only on a
-given subset of these factors. For example, we could be interested only
-on monthly, quarterly and annual forecasts.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<p>Our approaches so far have involved considering all factors of <span class="math inline">\(m\)</span> as potential aggregation orders. Nevertheless, it is worth noting that we could also focus only on a given subset of these factors. For example, we could be interested only on monthly, quarterly and annual forecasts.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">te_subset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">base_mat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">base</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k-"</span>, <span class="va">te_subset</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">res_mat2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k-"</span>, <span class="va">te_subset</span><span class="op">)</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
@@ -514,111 +436,96 @@ on monthly, quarterly and annual forecasts.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_sub</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:525, 1:17] 313400 97327 62517 77555 19511 ...</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level3">
-<h3 id="probabilistic-forecast-reconciliation">Probabilistic forecast reconciliation<a class="anchor" aria-label="anchor" href="#probabilistic-forecast-reconciliation"></a>
+</section></section><section class="level2"><h3 id="probabilistic-forecast-reconciliation">Probabilistic forecast reconciliation<a class="anchor" aria-label="anchor" href="#probabilistic-forecast-reconciliation"></a>
 </h3>
-<p><span class="citation">Girolimetto et al. (2024)</span> extends to
-the cross-temporal framework the probabilistic results presented by
-<span class="citation">Panagiotelis et al. (2023)</span> for the
-cross-sectional reconciliation. The reconciliation of probabilistic
-forecasts is a two-step process: first, we sample from an incoherent
-distribution, and then we reconcile each sample.</p>
-<p>We can use a non-parametric method, the joint block bootstrap to
-simulate <span class="math inline">\(B\)</span> samples and then
-reconciled them.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<p><span class="citation" data-cites="Girolimetto2023-jm">Girolimetto et al. (<a href="#ref-Girolimetto2023-jm" role="doc-biblioref">2024</a>)</span> extends to the cross-temporal framework the probabilistic results presented by <span class="citation" data-cites="Panagiotelis2023-se">Panagiotelis et al. (<a href="#ref-Panagiotelis2023-se" role="doc-biblioref">2023</a>)</span> for the cross-sectional reconciliation. The reconciliation of probabilistic forecasts is a two-step process: first, we sample from an incoherent distribution, and then we reconcile each sample.</p>
+<p>We can use a non-parametric method, the joint block bootstrap to simulate <span class="math inline">\(B\)</span> samples and then reconciled them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Base forecasts' sample</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="co"># Base forecasts' sample</span></span>
 <span><span class="va">base_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctboot.html">ctboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ : num [1:28, 1:525] 340334 176732 167759 127537 104309 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:28, 1:525] 331164 176362 156864 131731 99921 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:28, 1:525] 324965 170935 159797 128095 94189 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 322620 94800 62004 83040 21827 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 339222 104166 64981 83683 22610 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 324965 99096 65164 77443 22438 ...</span></span>
 <span></span>
-<span><span class="co"># # Reconciled forecasts' sample:</span></span>
-<span><span class="co"># reco_ctjb &lt;- lapply(base_ctjb, function(boot_base){</span></span>
-<span><span class="co">#   octrec(t(boot_base), m = 12, C = C, res = res_ct, </span></span>
-<span><span class="co">#          comb = "bdshr", keep = "recf", nn = TRUE, nn_type = "sntz")</span></span>
-<span><span class="co"># })</span></span>
+<span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsample.html">ctsample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
+<span>                      res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_ctjb</span><span class="op">)</span> <span class="co"># distribution object</span></span>
+<span><span class="co">#&gt; [1] "distribution" "vctrs_vctr"   "list"</span></span>
 <span></span>
-<span><span class="co"># Tip to speed up the time: B reconciliation to 1 reconciliation</span></span>
-<span><span class="va">ctjb_mlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">base_ctjb</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/FoReco2matrix.html">FoReco2matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">ctjb_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">ctjb_mlist</span>, recursive<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ctjb_list</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k-"</span>, <span class="va">te_set</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
-<span>               index.return <span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">ix</span></span>
-<span><span class="va">base_ctjb_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">ctjb_list</span><span class="op">[</span><span class="va">id</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb_mat</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:2800] 340334 103766 64980 80788 22279 ...</span></span>
+<span><span class="co"># Extracts mean:</span></span>
+<span><span class="va">mean_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_ctjb</span><span class="op">)</span></span>
+<span><span class="va">mean_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctmatrix_layouts.html">as_ctmatrix</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, agg_order <span class="op">=</span> <span class="va">m</span>, </span>
+<span>                         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                         row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  num [1:525, 1:28] 324441 98533 64895 80703 20289 ...</span></span></code></pre></div>
+</div>
+<p>A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts. Since we have to simulate from a multivariate normal distribution with a size of 14700, we will use a diagonal covariance matrix in this vignette. However, it’s important to note that this choice will result in a significantly narrow variance for the reconciled forecasts.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Gaussian reconciled distribution</span></span>
+<span><span class="va">reco_ctg_wlsv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctgauss.html">ctgauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, </span>
+<span>                         agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, res <span class="op">=</span> <span class="va">res_mat</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in asMethod(object): sparse-&gt;dense coercion: allocating vector of size</span></span>
+<span><span class="co">#&gt; 1.6 GiB</span></span>
+<span><span class="va">reco_ctg_wlsv</span> <span class="co"># distribution object</span></span>
+<span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
+<span><span class="co">#&gt;      tao-1 </span></span>
+<span><span class="co">#&gt; MVN[14700]</span></span>
 <span></span>
-<span><span class="co"># Reconciled forecasts' sample:</span></span>
-<span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_ctjb_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
-<span>                   res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">reco_ctjb</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:2800] 342661 102372 67805 80571 21623 ...</span></span></code></pre></div>
-<p>A parametric method assumes a normal distribution (Gaussian), to
-generate the incoherent sample set of forecasts. Since we have to
-simulate from a multivariate normal distribution with a size of 14700,
-we will use a diagonal covariance matrix in this vignette. However, it’s
-important to note that this choice will result in a significantly narrow
-variance for the reconciled forecasts.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Multi-step residuals</span></span>
+<span><span class="co"># Gaussian reconciled distribution with different base covariance matrix</span></span>
+<span><span class="co"># Multi-step residuals</span></span>
 <span><span class="va">hres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">model</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">frequency</a></span><span class="op">(</span><span class="va">fit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">h</span><span class="op">)</span> </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">residuals</span>, type<span class="op">=</span><span class="st">'response'</span>, h <span class="op">=</span> <span class="va">h</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">hres_ct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">hres</span>, <span class="va">arrange_hres</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Re-arrenge multi-step residuals in a matrix form</span></span>
-<span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/residuals.html">res2matrix</a></span><span class="op">(</span><span class="va">hres_ct</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span>
-<span></span>
+<span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctmatrix_layouts.html">as_hstack_ctlayout</a></span><span class="op">(</span><span class="va">hres_ct</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span>
 <span><span class="co"># cov_shr &lt;- shrink_estim(na.omit(mres)) # Time and computational intensive to use, but the better one</span></span>
 <span><span class="va">cov_wls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">mres</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Computational intensive:</span></span>
+<span><span class="co"># reco_ctg_wls &lt;- ctgauss(base = base_mat, agg_mat = vnaggmat, </span></span>
+<span><span class="co">#                         agg_order = m, comb = "wlsv", res = res_mat, </span></span>
+<span><span class="co">#                         comb_base = cov_wls)</span></span>
+<span><span class="co"># reco_ctg_wls # distribution object</span></span>
 <span></span>
-<span><span class="co"># Base forecasts' sample:</span></span>
-<span><span class="va">base_ctg</span> <span class="op">&lt;-</span> <span class="fu">GMCM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GMCM/man/dmvnormal.html" class="external-link">rmvnormal</a></span><span class="op">(</span><span class="va">B</span>, mu <span class="op">=</span> <span class="fu"><a href="../reference/residuals.html">res2matrix</a></span><span class="op">(</span><span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, </span>
+<span><span class="co"># Reconciled sample distribution starting from Gaussian base forecasts - faster approach</span></span>
+<span><span class="va">base_cts</span> <span class="op">&lt;-</span> <span class="fu">GMCM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GMCM/man/dmvnormal.html" class="external-link">rmvnormal</a></span><span class="op">(</span><span class="va">B</span>, mu <span class="op">=</span> <span class="fu"><a href="../reference/residuals.html">res2matrix</a></span><span class="op">(</span><span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, </span>
 <span>                            sigma <span class="op">=</span> <span class="va">cov_wls</span><span class="op">)</span></span>
-<span><span class="va">base_ctg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">base_ctg</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NCOL</a></span><span class="op">(</span><span class="va">itagdp</span><span class="op">)</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Tip to speed up the time: B reconciliation to 1 reconciliation</span></span>
-<span><span class="va">ctg_mlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">base_ctjb</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/FoReco2matrix.html">FoReco2matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">ctg_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">ctg_mlist</span>, recursive<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ctg_list</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k-"</span>, <span class="va">te_set</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
-<span>               index.return <span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">ix</span></span>
-<span><span class="va">base_ctg_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">ctg_list</span><span class="op">[</span><span class="va">id</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctg_mat</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:2800] 340334 103766 64980 80788 22279 ...</span></span>
-<span></span>
-<span><span class="co"># Reconciled forecasts' sample:</span></span>
-<span><span class="va">reco_ctg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_ctg_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
-<span>                  res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">reco_ctg</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:2800] 342661 102372 67805 80571 21623 ...</span></span></code></pre></div>
+<span><span class="co">#&gt; Warning: `res2matrix()` was deprecated in FoReco 1.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use `FoReco::as_hstack_telayout()` or `FoReco::as_hstack_ctlayout()`.</span></span>
+<span><span class="va">base_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">base_cts</span>, <span class="fl">1</span>, <span class="va">as_ctmatrix</span>, agg_order <span class="op">=</span> <span class="va">m</span>, </span>
+<span>                  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                  row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                  simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">base_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_cts</span><span class="op">)</span></span>
+<span><span class="va">reco_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsample.html">ctsample</a></span><span class="op">(</span><span class="va">base_cts</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
+<span>                     res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
+<span><span class="va">reco_cts</span> <span class="co"># distribution object</span></span>
+<span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
+<span><span class="co">#&gt;       tao-1 </span></span>
+<span><span class="co">#&gt; sample[100]</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="itagdp-general-linearly-constrained-multiple-quarterly-time-series">
-<code>itagdp</code>: general linearly constrained multiple quarterly
-time series<a class="anchor" aria-label="anchor" href="#itagdp-general-linearly-constrained-multiple-quarterly-time-series"></a>
+</section></section><section class="section level2"><h2 id="itagdp-general-linearly-constrained-multiple-quarterly-time-series">
+<code>itagdp</code>: general linearly constrained multiple quarterly time series<a class="anchor" aria-label="anchor" href="#itagdp-general-linearly-constrained-multiple-quarterly-time-series"></a>
 </h2>
-<p>In this section, we work with the <code>itagdp</code> dataset and the
-corresponding zero-constrained matrix <code>gdpconsmat</code>. This
-dataset illustrates reconciliation under more complex linear constraints
-where an unique aggregation is not available. See the <a href="Dataset-vndata-and-itagdp.html">dataset vignette</a> for more
-details.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<p>In this section, we work with the <code>itagdp</code> dataset and the corresponding zero-constrained matrix <code>gdpconsmat</code>. This dataset illustrates reconciliation under more complex linear constraints where an unique aggregation is not available. See the <a href="Dataset-vndata-and-itagdp.html">dataset vignette</a> for more details.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">itagdp</span><span class="op">)</span>      <span class="co"># dataset</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span>    <span class="co"># Agg mat matrix</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="base-forecast-1">Base forecast<a class="anchor" aria-label="anchor" href="#base-forecast-1"></a>
+</div>
+<section class="level2"><h3 id="base-forecast-1">Base forecast<a class="anchor" aria-label="anchor" href="#base-forecast-1"></a>
 </h3>
-<p>We fit ARIMA models to each series and generate base forecasts. The
-data is a quarterly multivariate time series so we obtain four-, two-,
-and one-step-ahead base forecasts from the quarterly data and the
-aggregation over 2, and 4 quarters.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<p>We fit ARIMA models to each series and generate base forecasts. The data is a quarterly multivariate time series so we obtain four-, two-, and one-step-ahead base forecasts from the quarterly data and the aggregation over 2, and 4 quarters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">te_set</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tetools.html">tetools</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">set</span></span>
 <span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">te_set</span><span class="op">)</span></span>
 <span><span class="va">data_k</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aggts.html">aggts</a></span><span class="op">(</span><span class="va">itagdp</span>, <span class="va">te_set</span><span class="op">)</span></span>
@@ -637,7 +544,9 @@ aggregation over 2, and 4 quarters.</p>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">k</span>, <span class="st">" "</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co">#&gt; 4  2  1</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Point forecasts</span></span>
 <span><span class="va">base</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">fc_obj</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">x</span>, <span class="kw">function</span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="va">y</span><span class="op">$</span><span class="va">mean</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -654,185 +563,238 @@ aggregation over 2, and 4 quarters.</p>
 <span><span class="co">#&gt;  $ k-2: num [1:40, 1:21] -14138 421 9758 -4257 2225 ...</span></span>
 <span><span class="co">#&gt;  $ k-1: num [1:80, 1:21] -2778 -1745 -448 4068 3088 ...</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="point-forecast-reconciliation-1">Point forecast reconciliation<a class="anchor" aria-label="anchor" href="#point-forecast-reconciliation-1"></a>
+</section><section class="level2"><h3 id="point-forecast-reconciliation-1">Point forecast reconciliation<a class="anchor" aria-label="anchor" href="#point-forecast-reconciliation-1"></a>
 </h3>
-<p>We apply the optimal reconciliation method to the base forecasts,
-considering the linear constraints defined by
-<code>gdpconsmat</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<p>We apply the optimal reconciliation method to the base forecasts, considering the linear constraints defined by <code>gdpconsmat</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">base_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">base</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">res_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="va">rbind</span>, <span class="va">res</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">rf_opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"bdshr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_opt</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:21, 1:7] 1807755 730746 1739243 1417381 321862 ...</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="practical-challenge-immutable-forecast">Practical challenge: immutable forecast<a class="anchor" aria-label="anchor" href="#practical-challenge-immutable-forecast"></a>
+</div>
+<section class="level3"><h4 id="practical-challenge-immutable-forecast">Practical challenge: immutable forecast<a class="anchor" aria-label="anchor" href="#practical-challenge-immutable-forecast"></a>
 </h4>
-<p>In this case, we want to fix the forecasts of the top level series
-(<span class="math inline">\(GDP\)</span>) for the annual temporally
-aggreated series (<span class="math inline">\(k = 4\)</span>) at the
-base forecasts values.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<p>In this case, we want to fix the forecasts of the top level series (<span class="math inline">\(GDP\)</span>) for the annual temporally aggreated series (<span class="math inline">\(k = 4\)</span>) at the base forecasts values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_imm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, immutable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_imm</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  num [1:21, 1:7] 1811793 731220 1743712 1418685 325027 ...</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_imm</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">base_mat</span><span class="op">[</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">]</span></span>
 <span><span class="co">#&gt; GDP </span></span>
 <span><span class="co">#&gt;   0</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level3">
-<h3 id="probabilistic-forecast-reconciliation-1">Probabilistic forecast reconciliation<a class="anchor" aria-label="anchor" href="#probabilistic-forecast-reconciliation-1"></a>
+</section></section><section class="level2"><h3 id="probabilistic-forecast-reconciliation-1">Probabilistic forecast reconciliation<a class="anchor" aria-label="anchor" href="#probabilistic-forecast-reconciliation-1"></a>
 </h3>
-<p>We can use a non-parametric method, the joint block bootstrap to
-simulate <span class="math inline">\(B\)</span> samples and then
-reconciled them.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
+<p>We can use a non-parametric method, the joint block bootstrap to simulate <span class="math inline">\(B\)</span> samples and then reconciled them.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Base forecasts' sample</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="co"># Base forecasts' sample</span></span>
 <span><span class="va">base_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctboot.html">ctboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span> </span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ : num [1:7, 1:21] 1715859 849266 892664 419181 436858 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:7, 1:21] 1840756 891454 938282 432570 458454 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:7, 1:21] 1840756 891454 938282 432570 458454 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1817775 733629 1741313 1417524 323943 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1773577 731082 1692280 1385844 307399 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1848176 737534 1777131 1435378 343570 ...</span></span>
 <span></span>
-<span><span class="co"># # Reconciled forecasts' sample:</span></span>
-<span><span class="co"># reco_ctjb &lt;- lapply(base_ctjb, function(boot_base){</span></span>
-<span><span class="co">#   octrec(t(boot_base), m = 12, C = C, res = res_ct, </span></span>
-<span><span class="co">#          comb = "bdshr", keep = "recf", nn = TRUE, nn_type = "sntz")</span></span>
-<span><span class="co"># })</span></span>
+<span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsample.html">ctsample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
+<span>                      res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
+<span><span class="va">reco_ctjb</span> <span class="co"># distribution object</span></span>
+<span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
+<span><span class="co">#&gt;       tao-1 </span></span>
+<span><span class="co">#&gt; sample[100]</span></span>
 <span></span>
-<span><span class="co"># Tip to speed up the time: B reconciliation to 1 reconciliation</span></span>
-<span><span class="va">ctjb_mlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">base_ctjb</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/FoReco2matrix.html">FoReco2matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">ctjb_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">ctjb_mlist</span>, recursive<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ctjb_list</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k-"</span>, <span class="va">te_set</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
-<span>               index.return <span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">ix</span></span>
-<span><span class="va">base_ctjb_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">ctjb_list</span><span class="op">[</span><span class="va">id</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb_mat</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:21, 1:700] 1715859 708966 1655955 1382431 281299 ...</span></span>
-<span></span>
-<span><span class="co"># Reconciled forecasts' sample:</span></span>
-<span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_ctjb_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
-<span>                   res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">reco_ctjb</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:21, 1:700] 1755274 713842 1682939 1387490 295448 ...</span></span></code></pre></div>
+<span><span class="co"># Extracts mean:</span></span>
+<span><span class="va">mean_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_ctjb</span><span class="op">)</span></span>
+<span><span class="va">mean_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctmatrix_layouts.html">as_ctmatrix</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, agg_order <span class="op">=</span> <span class="va">m</span>, </span>
+<span>                         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NCOL</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span>, </span>
+<span>                         row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  num [1:21, 1:7] 1810945 732429 1739876 1415571 324305 ...</span></span></code></pre></div>
+</div>
 <p>Alternatively, we can use a parametric method.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Multi-step residuals</span></span>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Gaussian reconciled distribution</span></span>
+<span><span class="va">reco_ctg_wlsv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctgauss.html">ctgauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
+<span>                         agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, res <span class="op">=</span> <span class="va">res_mat</span><span class="op">)</span></span>
+<span><span class="va">reco_ctg_wlsv</span> <span class="co"># distribution object</span></span>
+<span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
+<span><span class="co">#&gt;    tao-1 </span></span>
+<span><span class="co">#&gt; MVN[147]</span></span>
+<span></span>
+<span><span class="co"># Gaussian reconciled distribution with different base covariance matrix</span></span>
+<span><span class="co"># Multi-step residuals</span></span>
 <span><span class="va">hres</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">model</span>, <span class="kw">function</span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/stats/time.html" class="external-link">frequency</a></span><span class="op">(</span><span class="va">fit</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">h</span><span class="op">)</span> </span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">residuals</span>, type<span class="op">=</span><span class="st">'response'</span>, h <span class="op">=</span> <span class="va">h</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">hres_ct</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">hres</span>, <span class="va">arrange_hres</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Re-arrenge multi-step residuals in a matrix form</span></span>
-<span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/residuals.html">res2matrix</a></span><span class="op">(</span><span class="va">hres_ct</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span>
+<span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctmatrix_layouts.html">as_hstack_ctlayout</a></span><span class="op">(</span><span class="va">hres_ct</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span>
+<span><span class="co"># cov_shr &lt;- shrink_estim(na.omit(mres)) # Time and computational intensive to use, but the better one</span></span>
+<span><span class="va">cov_wls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">mres</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">cov_shr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shrink_estim.html">shrink_estim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">mres</span><span class="op">)</span><span class="op">)</span> </span>
+<span><span class="va">reco_ctg_wls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctgauss.html">ctgauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
+<span>                        agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, res <span class="op">=</span> <span class="va">res_mat</span>, </span>
+<span>                        comb_base <span class="op">=</span> <span class="va">cov_wls</span><span class="op">)</span></span>
+<span><span class="va">reco_ctg_wls</span> <span class="co"># distribution object</span></span>
+<span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
+<span><span class="co">#&gt;    tao-1 </span></span>
+<span><span class="co">#&gt; MVN[147]</span></span>
 <span></span>
-<span><span class="co"># Base forecasts' sample:</span></span>
-<span><span class="va">base_ctg</span> <span class="op">&lt;-</span> <span class="fu">GMCM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GMCM/man/dmvnormal.html" class="external-link">rmvnormal</a></span><span class="op">(</span><span class="va">B</span>, mu <span class="op">=</span> <span class="fu"><a href="../reference/residuals.html">res2matrix</a></span><span class="op">(</span><span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, </span>
-<span>                            sigma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">cov_shr</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">base_ctg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">base_ctg</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">x</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NCOL</a></span><span class="op">(</span><span class="va">itagdp</span><span class="op">)</span><span class="op">)</span>, simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Tip to speed up the time: B reconciliation to 1 reconciliation</span></span>
-<span><span class="va">ctg_mlist</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">base_ctjb</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/FoReco2matrix.html">FoReco2matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">ctg_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">ctg_mlist</span>, recursive<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="va">id</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort.int</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ctg_list</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k-"</span>, <span class="va">te_set</span><span class="op">)</span>, ordered <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, </span>
-<span>               index.return <span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">ix</span></span>
-<span><span class="va">base_ctg_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Reduce</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">ctg_list</span><span class="op">[</span><span class="va">id</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctg_mat</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:21, 1:700] 1715859 708966 1655955 1382431 281299 ...</span></span>
-<span></span>
-<span><span class="co"># Reconciled forecasts' sample:</span></span>
-<span><span class="va">reco_ctg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_ctg_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
-<span>                   res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">reco_ctg</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:21, 1:700] 1755274 713842 1682939 1387490 295448 ...</span></span></code></pre></div>
+<span><span class="co"># Reconciled sample distribution starting from Gaussian base forecasts - faster approach</span></span>
+<span><span class="va">base_cts</span> <span class="op">&lt;-</span> <span class="fu">GMCM</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/GMCM/man/dmvnormal.html" class="external-link">rmvnormal</a></span><span class="op">(</span><span class="va">B</span>, mu <span class="op">=</span> <span class="fu"><a href="../reference/residuals.html">res2matrix</a></span><span class="op">(</span><span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, </span>
+<span>                            sigma <span class="op">=</span> <span class="va">cov_wls</span><span class="op">)</span></span>
+<span><span class="va">base_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">base_cts</span>, <span class="fl">1</span>, <span class="va">as_ctmatrix</span>, agg_order <span class="op">=</span> <span class="va">m</span>, </span>
+<span>                  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NCOL</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span>, </span>
+<span>                  row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span>,</span>
+<span>                  simplify <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">base_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_cts</span><span class="op">)</span></span>
+<span><span class="va">reco_cts</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsample.html">ctsample</a></span><span class="op">(</span><span class="va">base_cts</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
+<span>                     res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
+<span><span class="va">reco_cts</span> <span class="co"># distribution object</span></span>
+<span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
+<span><span class="co">#&gt;       tao-1 </span></span>
+<span><span class="co">#&gt; sample[100]</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</section></section><section class="section level2"><h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
-<div id="ref-Di_Fonzo2023-dg" class="csl-entry">
-Di Fonzo, T., &amp; Girolimetto, D. (2023a). Cross-temporal forecast
-reconciliation: Optimal combination method and heuristic alternatives.
-<em>International Journal of Forecasting</em>, <em>39</em>(1), 39–57. <a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">https://doi.org/10.1016/j.ijforecast.2021.08.004</a>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Di_Fonzo2023-dg" class="csl-entry" role="listitem">
+Di Fonzo, T., &amp; Girolimetto, D. (2023a). Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives. <em>International Journal of Forecasting</em>, <em>39</em>(1), 39–57. <a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">https://doi.org/10.1016/j.ijforecast.2021.08.004</a>
 </div>
-<div id="ref-Di_Fonzo2023-ae" class="csl-entry">
-Di Fonzo, T., &amp; Girolimetto, D. (2023b). Spatio-temporal
-reconciliation of solar forecasts. <em>Solar Energy</em>, <em>251</em>,
-13–29. <a href="https://doi.org/10.1016/j.solener.2023.01.003" class="external-link">https://doi.org/10.1016/j.solener.2023.01.003</a>
+<div id="ref-Di_Fonzo2023-ae" class="csl-entry" role="listitem">
+Di Fonzo, T., &amp; Girolimetto, D. (2023b). Spatio-temporal reconciliation of solar forecasts. <em>Solar Energy</em>, <em>251</em>, 13–29. <a href="https://doi.org/10.1016/j.solener.2023.01.003" class="external-link">https://doi.org/10.1016/j.solener.2023.01.003</a>
 </div>
-<div id="ref-DiFonzo2024-ijf" class="csl-entry">
-Di Fonzo, T., &amp; Girolimetto, D. (2024). Forecast combination-based
-forecast reconciliation: Insights and extensions. <em>International
-Journal of Forecasting</em>, <em>40</em>(2), 490–514. <a href="https://doi.org/10.1016/j.ijforecast.2022.07.001" class="external-link">https://doi.org/10.1016/j.ijforecast.2022.07.001</a>
+<div id="ref-DiFonzo2024-ijf" class="csl-entry" role="listitem">
+Di Fonzo, T., &amp; Girolimetto, D. (2024). Forecast combination-based forecast reconciliation: Insights and extensions. <em>International Journal of Forecasting</em>, <em>40</em>(2), 490–514. <a href="https://doi.org/10.1016/j.ijforecast.2022.07.001" class="external-link">https://doi.org/10.1016/j.ijforecast.2022.07.001</a>
 </div>
-<div id="ref-Dunn1976-kv" class="csl-entry">
-Dunn, D. M., Williams, W. H., &amp; Dechaine, T. L. (1976). Aggregate
-versus subaggregate models in local area forecasting. <em>Journal of the
-American Statistical Association</em>, <em>71</em>(353), 68–71. <a href="https://doi.org/10.1080/01621459.1976.10481478" class="external-link">https://doi.org/10.1080/01621459.1976.10481478</a>
+<div id="ref-Dunn1976-kv" class="csl-entry" role="listitem">
+Dunn, D. M., Williams, W. H., &amp; Dechaine, T. L. (1976). Aggregate versus subaggregate models in local area forecasting. <em>Journal of the American Statistical Association</em>, <em>71</em>(353), 68–71. <a href="https://doi.org/10.1080/01621459.1976.10481478" class="external-link">https://doi.org/10.1080/01621459.1976.10481478</a>
 </div>
-<div id="ref-Girolimetto2023-jm" class="csl-entry">
-Girolimetto, D., Athanasopoulos, G., Di Fonzo, T., &amp; Hyndman, R. J.
-(2024). Cross-temporal probabilistic forecast reconciliation:
-Methodological and practical issues. <em>International Journal of
-Forecasting</em>, <em>40</em>(3), 1134–1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">https://doi.org/10.1016/j.ijforecast.2023.10.003</a>
+<div id="ref-Girolimetto2023-jm" class="csl-entry" role="listitem">
+Girolimetto, D., Athanasopoulos, G., Di Fonzo, T., &amp; Hyndman, R. J. (2024). Cross-temporal probabilistic forecast reconciliation: Methodological and practical issues. <em>International Journal of Forecasting</em>, <em>40</em>(3), 1134–1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">https://doi.org/10.1016/j.ijforecast.2023.10.003</a>
 </div>
-<div id="ref-Gross1990-uf" class="csl-entry">
-Gross, C. W., &amp; Sohl, J. E. (1990). Disaggregation methods to
-expedite product line forecasting. <em>Journal of Forecasting</em>,
-<em>9</em>(3), 233–254. <a href="https://doi.org/10.1002/for.3980090304" class="external-link">https://doi.org/10.1002/for.3980090304</a>
+<div id="ref-Gross1990-uf" class="csl-entry" role="listitem">
+Gross, C. W., &amp; Sohl, J. E. (1990). Disaggregation methods to expedite product line forecasting. <em>Journal of Forecasting</em>, <em>9</em>(3), 233–254. <a href="https://doi.org/10.1002/for.3980090304" class="external-link">https://doi.org/10.1002/for.3980090304</a>
 </div>
-<div id="ref-Hollyman2021-zq" class="csl-entry">
-Hollyman, R., Petropoulos, F., &amp; Tipping, M. E. (2021).
-Understanding forecast reconciliation. <em>European Journal of
-Operational Research</em>, <em>294</em>(1), 149–160. <a href="https://doi.org/10.1016/j.ejor.2021.01.017" class="external-link">https://doi.org/10.1016/j.ejor.2021.01.017</a>
+<div id="ref-Hollyman2021-zq" class="csl-entry" role="listitem">
+Hollyman, R., Petropoulos, F., &amp; Tipping, M. E. (2021). Understanding forecast reconciliation. <em>European Journal of Operational Research</em>, <em>294</em>(1), 149–160. <a href="https://doi.org/10.1016/j.ejor.2021.01.017" class="external-link">https://doi.org/10.1016/j.ejor.2021.01.017</a>
 </div>
-<div id="ref-Kourentzes2019-dj" class="csl-entry">
-Kourentzes, N., &amp; Athanasopoulos, G. (2019). Cross-temporal coherent
-forecasts for australian tourism. <em>Annals Of Tourism Research</em>,
-<em>75</em>, 393–409. <a href="https://doi.org/10.1016/j.annals.2019.02.001" class="external-link">https://doi.org/10.1016/j.annals.2019.02.001</a>
+<div id="ref-Kourentzes2019-dj" class="csl-entry" role="listitem">
+Kourentzes, N., &amp; Athanasopoulos, G. (2019). Cross-temporal coherent forecasts for australian tourism. <em>Annals Of Tourism Research</em>, <em>75</em>, 393–409. <a href="https://doi.org/10.1016/j.annals.2019.02.001" class="external-link">https://doi.org/10.1016/j.annals.2019.02.001</a>
 </div>
-<div id="ref-Panagiotelis2023-se" class="csl-entry">
-Panagiotelis, A., Gamakumara, P., Athanasopoulos, G., &amp; Hyndman, R.
-J. (2023). Probabilistic forecast reconciliation: Properties, evaluation
-and score optimisation. <em>European Journal of Operational
-Research</em>, <em>306</em>(2), 693–706. <a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">https://doi.org/10.1016/j.ejor.2022.07.040</a>
+<div id="ref-Panagiotelis2023-se" class="csl-entry" role="listitem">
+Panagiotelis, A., Gamakumara, P., Athanasopoulos, G., &amp; Hyndman, R. J. (2023). Probabilistic forecast reconciliation: Properties, evaluation and score optimisation. <em>European Journal of Operational Research</em>, <em>306</em>(2), 693–706. <a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">https://doi.org/10.1016/j.ejor.2022.07.040</a>
 </div>
-<div id="ref-Stellato2020-jd" class="csl-entry">
-Stellato, B., Banjac, G., Goulart, P., Bemporad, A., &amp; Boyd, S.
-(2020). <span>OSQP</span>: An operator splitting solver for quadratic
-programs. <em>Mathematical Programming Computation</em>, <em>12</em>(4),
-637–672. <a href="https://doi.org/10.1007/s12532-020-00179-2" class="external-link">https://doi.org/10.1007/s12532-020-00179-2</a>
+<div id="ref-Stellato2020-jd" class="csl-entry" role="listitem">
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A., &amp; Boyd, S. (2020). <span>OSQP</span>: An operator splitting solver for quadratic programs. <em>Mathematical Programming Computation</em>, <em>12</em>(4), 637–672. <a href="https://doi.org/10.1007/s12532-020-00179-2" class="external-link">https://doi.org/10.1007/s12532-020-00179-2</a>
 </div>
-<div id="ref-Wickramasuriya2019" class="csl-entry">
-Wickramasuriya, S. L., Athanasopoulos, G., &amp; Hyndman, R. J. (2018).
-Optimal Forecast Reconciliation for Hierarchical and Grouped Time Series
-Through Trace Minimization. <em>Journal of the American Statistical
-Association</em>, <em>114</em>(526), 804–819. <a href="https://doi.org/10.1080/01621459.2018.1448825" class="external-link">https://doi.org/10.1080/01621459.2018.1448825</a>
+<div id="ref-Wickramasuriya2019" class="csl-entry" role="listitem">
+Wickramasuriya, S. L., Athanasopoulos, G., &amp; Hyndman, R. J. (2018). Optimal Forecast Reconciliation for Hierarchical and Grouped Time Series Through Trace Minimization. <em>Journal of the American Statistical Association</em>, <em>114</em>(526), 804–819. <a href="https://doi.org/10.1080/01621459.2018.1448825" class="external-link">https://doi.org/10.1080/01621459.2018.1448825</a>
 </div>
-<div id="ref-Wickramasuriya2020-zk" class="csl-entry">
-Wickramasuriya, S. L., Turlach, B. A., &amp; Hyndman, R. J. (2020).
-Optimal non-negative forecast reconciliation. <em>Statistics and
-Computing</em>, <em>30</em>(5), 1167–1182. <a href="https://doi.org/10.1007/s11222-020-09930-0" class="external-link">https://doi.org/10.1007/s11222-020-09930-0</a>
+<div id="ref-Wickramasuriya2020-zk" class="csl-entry" role="listitem">
+Wickramasuriya, S. L., Turlach, B. A., &amp; Hyndman, R. J. (2020). Optimal non-negative forecast reconciliation. <em>Statistics and Computing</em>, <em>30</em>(5), 1167–1182. <a href="https://doi.org/10.1007/s11222-020-09930-0" class="external-link">https://doi.org/10.1007/s11222-020-09930-0</a>
 </div>
-<div id="ref-Zhang2023-yj" class="csl-entry">
-Zhang, B., Kang, Y., Panagiotelis, A., &amp; Li, F. (2023). Optimal
-reconciliation with immutable forecasts. <em>European Journal of
-Operational Research</em>, <em>308</em>(2), 650–660. <a href="https://doi.org/10.1016/j.ejor.2022.11.035" class="external-link">https://doi.org/10.1016/j.ejor.2022.11.035</a>
+<div id="ref-Zhang2023-yj" class="csl-entry" role="listitem">
+Zhang, B., Kang, Y., Panagiotelis, A., &amp; Li, F. (2023). Optimal reconciliation with immutable forecasts. <em>European Journal of Operational Research</em>, <em>308</em>(2), 650–660. <a href="https://doi.org/10.1016/j.ejor.2022.11.035" class="external-link">https://doi.org/10.1016/j.ejor.2022.11.035</a>
 </div>
 </div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+</section><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
-
 
 
     <footer><div class="pkgdown-footer-left">
@@ -840,15 +802,15 @@ Operational Research</em>, <em>308</em>(2), 650–660. <a href="https://doi.org/
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

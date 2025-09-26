@@ -11,9 +11,9 @@ aggts(y, agg_order, tew = "sum", align = "end", rm_na = FALSE)
 
 \item{agg_order}{A numeric vector with the aggregation orders to consider.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{align}{A string or a vector specifying the alignment of \code{y}. Options include:
@@ -49,8 +49,10 @@ x5 <- aggts(y2, c(2, 4), align = c(1, 3))
 
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

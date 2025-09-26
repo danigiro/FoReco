@@ -22,6 +22,8 @@ if(require(testthat)){
                   1,1,1,0,0,0), 4, byrow = TRUE)
     obj <- balance_hierarchy(A, nodes = "auto", sparse = FALSE)
     expect_equal(unbalance_hierarchy(obj$bam, sparse = FALSE), A)
+    expect_equal(unbalance_hierarchy(obj$bam, sparse = FALSE,
+                                     more_info = TRUE)$ubm, A)
   })
 
 

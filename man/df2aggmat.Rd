@@ -74,9 +74,11 @@ agg_mat <- df2aggmat(~ Y1 * X1, data_bts, sep = "", verbose = FALSE)
 
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

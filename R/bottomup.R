@@ -2,16 +2,22 @@
 #'
 #' This function computes the cross-sectional bottom-up reconciled forecasts
 #' (Dunn et al., 1976) for all series by appropriate summation of the bottom
-#' base forecasts \eqn{\widehat{\mathbf{b}}}:
-#' \deqn{\widetilde{\mathbf{y}} = \mathbf{S}_{cs}\widehat{\mathbf{b}},}
-#' where \eqn{\mathbf{S}_{cs}} is the cross-sectional structural matrix.
+#' base forecasts \eqn{\widehat{\mathbf{b}}}: \deqn{\widetilde{\mathbf{y}} =
+#' \mathbf{S}_{cs}\widehat{\mathbf{b}},} where \eqn{\mathbf{S}_{cs}} is the
+#' cross-sectional structural matrix.
 #'
 #' @param base A (\eqn{h \times n_b}) numeric matrix or multivariate time series
-#' (\code{mts} class) containing bottom base forecasts; \eqn{h} is the
-#' forecast horizon, and \eqn{n_b} is the total number of bottom variables.
+#'   (\code{mts} class) containing bottom base forecasts; \eqn{h} is the
+#'   forecast horizon, and \eqn{n_b} is the total number of bottom variables.
 #' @inheritParams csrec
-#' @param sntz If \code{TRUE}, the negative base forecasts are
-#' set to zero before applying bottom-up.
+#' @param sntz Logical. If \code{TRUE}, enforces non-negativity on reconciled
+#'   forecasts using the heuristic "set-negative-to-zero" (Di Fonzo and
+#'   Girolimetto, 2023). \emph{Default} is \code{FALSE}.
+#' @param sntz Logical. If \code{TRUE}, the negative base forecasts are set to
+#'   zero (Di Fonzo and Girolimetto, 2023) before applying bottom-up.
+#'   \emph{Default} is \code{FALSE}.
+#' @param round Logical. If \code{TRUE}, base forecasts are rounded before
+#'   applying the bottom-up reconciliation. \emph{Default} is \code{FALSE}.
 #'
 #' @family Reco: bottom-up
 #' @family Framework: cross-sectional
@@ -19,9 +25,14 @@
 #' @inherit csrec return
 #'
 #' @references
-#' Dunn, D. M., Williams, W. H. and Dechaine, T. L. (1976), Aggregate versus subaggregate
-#' models in local area forecasting, \emph{Journal of the American Statistical Association}
-#' 71(353), 68–71. \doi{10.1080/01621459.1976.10481478}
+#' Dunn, D. M., Williams, W. H. and Dechaine, T. L. (1976),
+#' Aggregate versus subaggregate models in local area forecasting, \emph{Journal
+#' of the American Statistical Association} 71(353), 68–71.
+#' \doi{10.1080/01621459.1976.10481478}
+#'
+#' Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+#' solar forecasts, \emph{Solar Energy}, 251, 13–29.
+#' \doi{10.1016/j.solener.2023.01.003}
 #'
 #' @examples
 #' set.seed(123)
@@ -33,12 +44,11 @@
 #' reco <- csbu(base = bts, agg_mat = A)
 #'
 #' # Non negative reconciliation
-#' bts[2,2] <- -bts[2,2] # Making negative one of the base forecasts for variable Y
+#' bts[2,2] <- -bts[2,2] # Making negative one of the base forecasts for Y
 #' nnreco <- csbu(base = bts, agg_mat = A, sntz = TRUE)
 #'
 #' @export
-#'
-csbu <- function(base, agg_mat, sntz = FALSE){
+csbu <- function(base, agg_mat, sntz = FALSE, round = FALSE){
   # base forecasts condition
   if(missing(base)){
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
@@ -49,7 +59,8 @@ csbu <- function(base, agg_mat, sntz = FALSE){
   }
 
   if(missing(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is missing, with no default.", call = NULL)
+    cli_abort("Argument {.arg agg_mat} is missing, with no default.",
+              call = NULL)
   }else{
     tmp <- cstools(agg_mat = agg_mat, sparse = TRUE)
   }
@@ -60,11 +71,16 @@ csbu <- function(base, agg_mat, sntz = FALSE){
   nn_cons_var <- c(rep(0, csdim[2]), rep(1, csdim[3]))
 
   if(NCOL(base) != csdim[["nb"]]){
-    cli_abort("Incorrect {.arg agg_mat} or {.arg base} dimensions.", call = NULL)
+    cli_abort("Incorrect {.arg agg_mat} or {.arg base} dimensions.",
+              call = NULL)
   }
 
   if(sntz){
     base[base<0] <- 0
+  }
+
+  if(round){
+    base <- round(base)
   }
 
   reco_mat <- as.matrix(base%*%t(strc_mat))
@@ -83,18 +99,25 @@ csbu <- function(base, agg_mat, sntz = FALSE){
 
 #' Temporal bottom-up reconciliation
 #'
-#' Temporal bottom-up reconciled forecasts at any temporal aggregation level are computed by
-#' appropriate aggregation of the high-frequency base forecasts, \eqn{\widehat{\mathbf{x}}^{[1]}}:
-#' \deqn{\widetilde{\mathbf{x}} = \mathbf{S}_{te}\widehat{\mathbf{x}}^{[1]},}
-#' where \eqn{\mathbf{S}_{te}} is the temporal structural matrix.
+#' Temporal bottom-up reconciled forecasts at any temporal aggregation level are
+#' computed by appropriate aggregation of the high-frequency base forecasts,
+#' \eqn{\widehat{\mathbf{x}}^{[1]}}: \deqn{\widetilde{\mathbf{x}} =
+#' \mathbf{S}_{te}\widehat{\mathbf{x}}^{[1]},} where \eqn{\mathbf{S}_{te}} is
+#' the temporal structural matrix.
 #'
-#' @param base A (\eqn{hm \times 1}) numeric vector containing the high-frequency base forecasts;
-#' \eqn{m} is the max. temporal aggregation order, and \eqn{h} is the forecast horizon for the
-#' lowest frequency time series.
+#' @param base A (\eqn{hm \times 1}) numeric vector containing the
+#'   high-frequency base forecasts; \eqn{m} is the max. temporal aggregation
+#'   order, and \eqn{h} is the forecast horizon for the lowest frequency time
+#'   series.
 #' @inheritParams terec
 #' @inheritParams csbu
 #'
 #' @inherit terec return
+#'
+#' @references
+#' Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+#' solar forecasts, \emph{Solar Energy}, 251, 13–29.
+#' \doi{10.1016/j.solener.2023.01.003}
 #'
 #' @examples
 #' set.seed(123)
@@ -111,8 +134,7 @@ csbu <- function(base, agg_mat, sntz = FALSE){
 #' @family Reco: bottom-up
 #' @family Framework: temporal
 #' @export
-#'
-tebu <- function(base, agg_order, tew = "sum", sntz = FALSE){
+tebu <- function(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE){
 
   if(missing(agg_order)){
     cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
@@ -138,6 +160,10 @@ tebu <- function(base, agg_order, tew = "sum", sntz = FALSE){
     base[base<0] <- 0
   }
 
+  if(round){
+    base <- round(base)
+  }
+
   reco_vec <- base%*%t(strc_mat)
   reco_vec <- hmat2vec(reco_vec, h = h, kset = kset)
   attr(reco_vec, "FoReco") <- list2env(list(framework = "Temporal",
@@ -151,19 +177,25 @@ tebu <- function(base, agg_order, tew = "sum", sntz = FALSE){
 #'
 #' Cross-temporal bottom-up reconciled forecasts for all series at any temporal
 #' aggregation level are computed by appropriate summation of the high-frequency
-#' bottom base forecasts \eqn{\widehat{\mathbf{B}^{[1]}}}:
-#' \deqn{\widetilde{\mathbf{X}} = \mathbf{S}_{cs}\widehat{\mathbf{B}^{[1]}}\mathbf{S}'_{te},}
-#' where \eqn{\mathbf{S}_{cs}} and \eqn{\mathbf{S}_{te}} are the cross-sectional and
+#' bottom base forecasts \eqn{\widehat{\mathbf{B}}^{[1]}}:
+#' \deqn{\widetilde{\mathbf{X}} =
+#' \mathbf{S}_{cs}\widehat{\mathbf{B}}^{[1]}\mathbf{S}'_{te},} where
+#' \eqn{\mathbf{S}_{cs}} and \eqn{\mathbf{S}_{te}} are the cross-sectional and
 #' temporal structural matrices, respectively.
 #'
-#' @param base A (\eqn{n_b \times hm}) numeric matrix containing high-frequency bottom base
-#' forecasts; \eqn{n_b} is the total number of high-frequency bottom variables, \eqn{m} is
-#' the max aggregation order, and \eqn{h} is the forecast horizon for the lowest frequency
-#' time series.
+#' @param base A (\eqn{n_b \times hm}) numeric matrix containing high-frequency
+#'   bottom base forecasts; \eqn{n_b} is the total number of high-frequency
+#'   bottom variables, \eqn{m} is the max aggregation order, and \eqn{h} is the
+#'   forecast horizon for the lowest frequency time series.
 #' @inheritParams ctrec
 #' @inheritParams csbu
 #'
 #' @inherit ctrec return
+#'
+#' @references
+#' Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+#' solar forecasts, \emph{Solar Energy}, 251, 13–29.
+#' \doi{10.1016/j.solener.2023.01.003}
 #'
 #' @examples
 #' set.seed(123)
@@ -176,20 +208,21 @@ tebu <- function(base, agg_order, tew = "sum", sntz = FALSE){
 #' reco <- ctbu(base = hfbts, agg_mat = A, agg_order = 4)
 #'
 #' # Non negative reconciliation
-#' hfbts[1,4] <- -hfbts[1,4] # Making negative one of the quarterly base forecasts for variable X
+#' hfbts[1,4] <- -hfbts[1,4] # Making negative one of the quarterly values for X
 #' nnreco <- ctbu(base = hfbts, agg_mat = A, agg_order = 4, sntz = TRUE)
 #'
 #' @family Reco: bottom-up
 #' @family Framework: cross-temporal
 #' @export
-#'
-ctbu <- function(base, agg_mat, agg_order, tew = "sum", sntz = FALSE){
+ctbu <- function(base, agg_mat, agg_order, tew = "sum",
+                 sntz = FALSE, round = FALSE){
   if(missing(base)){
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
   }
 
   if(missing(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is missing, with no default.", call = NULL)
+    cli_abort("Argument {.arg agg_mat} is missing, with no default.",
+              call = NULL)
   }else{
     cstmp <- cstools(agg_mat = agg_mat, sparse = TRUE)
     cs_strc_mat <- cstmp$strc_mat
@@ -199,7 +232,8 @@ ctbu <- function(base, agg_mat, agg_order, tew = "sum", sntz = FALSE){
   }
 
   if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
+    cli_abort("Argument {.arg agg_order} is missing, with no default.",
+              call = NULL)
   }else{
     if(NCOL(base) %% max(agg_order) != 0){
       cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
@@ -211,6 +245,10 @@ ctbu <- function(base, agg_mat, agg_order, tew = "sum", sntz = FALSE){
 
   if(sntz){
     base[base<0] <- 0
+  }
+
+  if(round){
+    base <- round(base)
   }
 
   reco_mat <- as.matrix(cs_strc_mat %*% base %*% t(te_strc_mat))

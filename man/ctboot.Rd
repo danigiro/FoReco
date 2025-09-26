@@ -17,9 +17,9 @@ with the following mandatory parameters: \emph{object}, \emph{innov},
 
 \item{boot_size}{The number of bootstrap replicates.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{block_size}{Block size of the bootstrap, which is typically equivalent
 to the forecast horizon for the most temporally aggregated series.}
@@ -27,8 +27,9 @@ to the forecast horizon for the most temporally aggregated series.}
 \item{seed}{An integer seed.}
 }
 \value{
-A list with two elements: the seed used to sample the errors and
-a (\eqn{\text{boot\_size}\times n(k^\ast+m)\text{block\_size}}) matrix.
+A list with two elements: the seed used to sample the
+errors and a list with \eqn{\text{boot\_size}} matrix of size
+(\eqn{n\times(k^\ast+m)\text{block\_size}}) matrix.
 }
 \description{
 Joint block bootstrap for generating probabilistic base forecasts that take into account
@@ -41,16 +42,18 @@ probabilistic forecast reconciliation: Methodological and practical issues.
 \emph{International Journal of Forecasting}, 40(3), 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
-Bootstrap samples: 
+Bootstrap samples:
 \code{\link{csboot}()},
 \code{\link{teboot}()}
 
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},

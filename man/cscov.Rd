@@ -14,33 +14,38 @@ cscov(comb = "ols", n = NULL, agg_mat = NULL, res, mse = TRUE,
       shrink_fun = shrink_estim, ...)
 }
 \arguments{
-\item{comb}{A string specifying the reconciliation method.
+\item{comb}{A string specifying the covariance approximation method.
 \itemize{
-\item Ordinary least squares:
+\item For ordinary least squares reconciliation:
 \itemize{
 \item "\code{ols}" (\emph{default}) - identity error covariance matrix.
 }
-\item Weighted least squares:
+\item For weighted least squares reconciliation:
 \itemize{
 \item "\code{str}" - structural variances.
 \item "\code{wls}" - series variances (uses \code{res}).
 }
-\item Generalized least squares (uses \code{res}):
+\item For generalized least squares (uses \code{res}) reconciliation:
 \itemize{
 \item "\code{shr}" - shrunk covariance (Wickramasuriya et al., 2019).
 \item "\code{oasd}" - oracle shrunk covariance (Ando and Xiao, 2023).
 \item "\code{sam}" - sample covariance.
 }
+\item Others (no for reconciliation):
+\itemize{
+\item "\code{bu}" - bottom-up covariance.
+}
 }}
 
 \item{n}{Number of variables (\eqn{n = n_a + n_b}).}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the in-sample
-residuals. This matrix is used to compute some covariance matrices.}
+\item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
+in-sample residuals. This matrix is used to compute some covariance
+matrices.}
 
 \item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
 matrix are not mean-corrected.}
@@ -88,12 +93,14 @@ reconciliation for hierarchical and grouped time series through trace minimizati
 \doi{10.1080/01621459.2018.1448825}
 }
 \seealso{
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{csbu}()},
+\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csmo}()},
 \code{\link{csrec}()},
+\code{\link{cssample}()},
 \code{\link{cstd}()},
 \code{\link{cstools}()}
 }

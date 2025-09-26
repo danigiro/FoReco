@@ -22,7 +22,8 @@ if(require(testthat)){
                                           0,0,0,1), 7, 4, byrow = TRUE),
                       cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
                                           0,1,0,-1,-1,0,0,
-                                          0,0,1,0,0,-1,-1), 3, 7, byrow = TRUE)))
+                                          0,0,1,0,0,-1,-1), 3, 7,
+                                        byrow = TRUE)))
   })
 
   C <- tetools(agg_order, sparse = FALSE)$cons_mat
@@ -41,7 +42,27 @@ if(require(testthat)){
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r3, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
+    expect_equal(unlist(FoReco2matrix(r1)), r1, ignore_attr = TRUE)
     expect_equal(max(abs(C%*%r1)), 0)
+  })
+
+  test_that("Bounds", {
+    tmp <- set_bounds(k = 1, h = 1, lb = 3)
+    r1 <- terec(base = base, agg_order = agg_order, comb = comb,
+                res = res, approach = "strc", bounds = tmp)
+    r2 <- terec(base = base, agg_order = agg_order, comb = comb,
+                res = res, approach = "proj", bounds = tmp)
+    expect_equal(r1["k-1 h-1"], 3, ignore_attr = TRUE)
+    expect_equal(r1, r2, ignore_attr = TRUE)
+
+    tmp <- set_bounds(k = 1, h = 1, lb = 3, approach = "sftb")
+    r3 <- terec(base = base, agg_order = agg_order, comb = comb,
+                res = res, approach = "strc", bounds = tmp)
+    expect_equal(r3["k-1 h-1"], r1["k-1 h-1"], ignore_attr = TRUE)
+
+    tmp <- set_bounds(k = 5, h = 1, lb = 3)
+    expect_warning(terec(base = base, agg_order = agg_order, comb = comb,
+                         res = res, bounds = tmp))
   })
 
   base[length(base)] <- -10
@@ -55,8 +76,13 @@ if(require(testthat)){
     r4 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
                 approach = "proj", nn = "bpv")
 
+    rf <- terec(base = base, agg_order = agg_order, comb = comb,
+                res = res, approach = "proj")
+    rbu <- tebu(rf[-c(1:3)], agg_order = agg_order, sntz = TRUE)
+
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
+    expect_equal(r3, rbu, ignore_attr = TRUE)
     expect_equal(max(abs(C%*%r1)), 0)
     expect_equal(max(abs(C%*%r3)), 0)
   })
@@ -71,9 +97,11 @@ if(require(testthat)){
     r4 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
                 approach = "proj_osqp", immutable = c(agg_order, 1))
     r5 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "strc_osqp", immutable = c(agg_order, 1), nn = "osqp")
+                approach = "strc_osqp", immutable = c(agg_order, 1),
+                nn = "osqp")
     r6 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj_osqp", immutable = c(agg_order, 1), nn = "osqp")
+                approach = "proj_osqp", immutable = c(agg_order, 1),
+                nn = "osqp")
 
     fix_r <- c(r1[1], r2[1], r3[1], r4[1], r5[1], r6[1])
 
@@ -89,6 +117,12 @@ if(require(testthat)){
   test_that("telcc and BU", {
     r1 <- telcc(base = base, agg_order = agg_order, comb = comb, res = res)
     r2 <- tebu(base[-c(1:3)], agg_order = agg_order)
+    r3 <- tebu(base[-c(1:3)], agg_order = agg_order, round = TRUE)
+
+    expect_error(tebu(base, agg_order = agg_order))
+    expect_error(tebu(base))
+    expect_error(tebu(agg_order = agg_order))
+    expect_error(tebu(rbind(base[-c(1:3)]), agg_order = agg_order))
 
     fix <- unlist(mapply(function(z, y) z[y], y = list(1, c(2,3), c(4:7)),
                          z = recoinfo(r1, verbose = FALSE)$lcc))
@@ -97,6 +131,8 @@ if(require(testthat)){
     expect_equal(recoinfo(r1, verbose = FALSE)$lcc[[3]], r2)
     expect_equal(max(abs(C%*%r1)), 0)
     expect_equal(max(abs(C%*%r2)), 0)
+    expect_equal(max(abs(C%*%r3)), 0)
+    expect_equal(r3, round(r3), ignore_attr = TRUE)
   })
 
   test_that("Top-down and Middle-out", {
@@ -110,7 +146,8 @@ if(require(testthat)){
     r2 <- tetd(base = topf, agg_order = 4, weights = h_weights)
 
     # Normalization check
-    r3 <- tetd(base = topf, agg_order = 4, weights = fix_weights/sum(fix_weights))
+    r3 <- tetd(base = topf, agg_order = 4,
+               weights = fix_weights/sum(fix_weights))
 
     # Middle-out
     r4 <- temo(base = topf, agg_order = 4, weights = fix_weights)
@@ -136,7 +173,8 @@ if(require(testthat)){
   })
 
   test_that("Covariance", {
-    for(i in c("acov", "har1", "ols", "sam", "sar1", "shr", "str", "strar1", "wlsh", "wlsv")){
+    for(i in c("acov", "har1", "ols", "sam", "sar1", "shr", "str", "strar1",
+               "wlsh", "wlsv")){
       expect_no_error(terec(base = base, agg_order = agg_order, comb = i,
                             res = res))
     }
@@ -144,12 +182,17 @@ if(require(testthat)){
 
   test_that("Temporal aggregation", {
     for(i in c("first", "last", "avg", "sum")){
-      expect_no_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = i))
+      expect_no_error(terec(base = base, agg_order = agg_order, comb = "ols",
+                            tew = i))
     }
-    expect_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = "none"))
-    expect_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = list(1)))
-    expect_error(terec(base = base, agg_order = agg_order, comb = "ols", tew = list(1,2)))
+    expect_error(terec(base = base, agg_order = agg_order, comb = "ols",
+                       tew = "none"))
+    expect_error(terec(base = base, agg_order = agg_order, comb = "ols",
+                       tew = list(1)))
+    expect_error(terec(base = base, agg_order = agg_order, comb = "ols",
+                       tew = list(1,2)))
     expect_no_error(terec(base = base, agg_order = agg_order, comb = "ols",
                           tew = list(c(1,1,1,1), c(1,1))))
   })
+
 }

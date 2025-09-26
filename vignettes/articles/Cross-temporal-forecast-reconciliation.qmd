@@ -8,7 +8,7 @@ bibliography: references.bib
 csl: apa.csl
 ---
 
-```{r, include = FALSE}
+```{r}
 #| label: knitr
 #| include: false
 knitr::opts_chunk$set(
@@ -255,7 +255,7 @@ To address this issue, we can use two approaches:
 
 - State-of-the-art numerical optimization procedure, **osqp** [@Stellato2020-jd].
 
-```{r oct-rec-osqp}
+```{r}
 #| label: osqp-opt-vn
 rf_osqp <- ctrec(base = base_mat, agg_order = m, agg_mat = vnaggmat, 
                  approach = "strc", res = res_mat, comb = "ols", nn = "osqp")
@@ -265,7 +265,7 @@ tmp$info # OSQP information matrix
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** [@Di_Fonzo2023-ae].
 
-```{r oct-rec-sntz}
+```{r}
 #| label: sntz-opt-vn
 rf_sntz <- ctrec(base = base_mat, agg_order = m, agg_mat = vnaggmat,
                  approach = "strc", res = res_mat, comb = "ols", nn = "sntz")
@@ -310,11 +310,13 @@ str(rf_sub, give.attr=FALSE)
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
 
 ```{r}
-#| label: ctjb-vn
+#| label: ctjb-vn-old
+#| include: false
+#| eval: false
 # Base forecasts' sample
 B <- 100
 # Base forecasts' sample
-base_ctjb <- ctboot(model, B, agg_order = m)$sample 
+base_ctjb <- ctboot(model, B, agg_order = m, block_size = 2)$sample 
 str(base_ctjb[1:3], give.attr=FALSE)
 
 # # Reconciled forecasts' sample:
@@ -337,10 +339,32 @@ reco_ctjb <- ctrec(base = base_ctjb_mat, agg_order = m, agg_mat = vnaggmat,
 str(reco_ctjb, give.attr=FALSE)
 ```
 
+```{r}
+#| label: ctjb-vn
+# Base forecasts' sample
+B <- 100
+# Base forecasts' sample
+base_ctjb <- ctboot(model, B, agg_order = m)$sample 
+str(base_ctjb[1:3], give.attr=FALSE)
+
+reco_ctjb <- ctsample(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
+                      res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
+class(reco_ctjb) # distribution object
+
+# Extracts mean:
+mean_ctjb <- mean(reco_ctjb)
+mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m, 
+                         n = sum(dim(vnaggmat)), 
+                         row_names = unlist(dimnames(vnaggmat)))
+str(mean_ctjb, give.attr = FALSE)
+```
+
 A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts. Since we have to simulate from a multivariate normal distribution with a size of 14700, we will use a diagonal covariance matrix in this vignette. However, it’s important to note that this choice will result in a significantly narrow variance for the reconciled forecasts.
 
 ```{r}
-#| label: gauss-vn
+#| label: gauss-vn-old
+#| include: false
+#| eval: false
 # Multi-step residuals
 hres <- lapply(model, function(fit)
   lapply(1:frequency(fit[[1]]$x), function(h) 
@@ -348,10 +372,10 @@ hres <- lapply(model, function(fit)
 hres_ct <- t(Reduce("rbind", lapply(hres, arrange_hres)))
 # Re-arrenge multi-step residuals in a matrix form
 mres <- res2matrix(hres_ct, agg_order = m)
+mres <- as_hstack_ctlayout(hres, agg_order = m)
 
 # cov_shr <- shrink_estim(na.omit(mres)) # Time and computational intensive to use, but the better one
 cov_wls <- diag(x = diag(cov(na.omit(mres))))
-
 
 # Base forecasts' sample:
 base_ctg <- GMCM::rmvnormal(B, mu = res2matrix(base_mat, agg_order = m), 
@@ -370,6 +394,45 @@ str(base_ctg_mat, give.attr=FALSE)
 reco_ctg <- ctrec(base = base_ctg_mat, agg_order = m, agg_mat = vnaggmat,
                   res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
 str(reco_ctg, give.attr=FALSE)
+```
+
+
+```{r}
+#| label: gauss-vn
+
+# Gaussian reconciled distribution
+reco_ctg_wlsv <- ctgauss(base = base_mat, agg_mat = vnaggmat, 
+                         agg_order = m, comb = "wlsv", res = res_mat)
+reco_ctg_wlsv # distribution object
+
+# Gaussian reconciled distribution with different base covariance matrix
+# Multi-step residuals
+hres <- lapply(model, function(fit)
+  lapply(1:frequency(fit[[1]]$x), function(h) 
+    sapply(fit, residuals, type='response', h = h)))
+hres_ct <- t(Reduce("rbind", lapply(hres, arrange_hres)))
+# Re-arrenge multi-step residuals in a matrix form
+mres <- as_hstack_ctlayout(hres_ct, agg_order = m)
+# cov_shr <- shrink_estim(na.omit(mres)) # Time and computational intensive to use, but the better one
+cov_wls <- diag(x = diag(cov(na.omit(mres))))
+
+# Computational intensive:
+# reco_ctg_wls <- ctgauss(base = base_mat, agg_mat = vnaggmat, 
+#                         agg_order = m, comb = "wlsv", res = res_mat, 
+#                         comb_base = cov_wls)
+# reco_ctg_wls # distribution object
+
+# Reconciled sample distribution starting from Gaussian base forecasts - faster approach
+base_cts <- GMCM::rmvnormal(B, mu = res2matrix(base_mat, agg_order = m), 
+                            sigma = cov_wls)
+base_cts <- apply(base_cts, 1, as_ctmatrix, agg_order = m, 
+                  n = sum(dim(vnaggmat)),
+                  row_names = unlist(dimnames(vnaggmat)),
+                  simplify = FALSE)
+base_cts <- simplify2array(base_cts)
+reco_cts <- ctsample(base_cts, agg_order = m, agg_mat = vnaggmat,
+                     res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
+reco_cts # distribution object
 ```
 
 # `itagdp`: general linearly constrained multiple quarterly time series
@@ -451,7 +514,9 @@ rf_imm[1,1] - base_mat[1,1]
 
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
 ```{r}
-#| label: ctjb-gdp
+#| label: ctjb-gdp-old
+#| include: false
+#| eval: false
 B <- 100
 # Base forecasts' sample
 base_ctjb <- ctboot(model, B, agg_order = m)$sample 
@@ -477,10 +542,32 @@ reco_ctjb <- ctrec(base = base_ctjb_mat, agg_order = m, cons_mat = gdpconsmat,
 str(reco_ctjb, give.attr = FALSE)
 ```
 
+```{r}
+#| label: ctjb-gdp
+# Base forecasts' sample
+B <- 100
+# Base forecasts' sample
+base_ctjb <- ctboot(model, B, agg_order = m)$sample 
+str(base_ctjb[1:3], give.attr=FALSE)
+
+reco_ctjb <- ctsample(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
+                      res = res_mat, comb = "wlsv")
+reco_ctjb # distribution object
+
+# Extracts mean:
+mean_ctjb <- mean(reco_ctjb)
+mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m, 
+                         n = NCOL(gdpconsmat), 
+                         row_names = colnames(gdpconsmat))
+str(mean_ctjb, give.attr = FALSE)
+```
+
 Alternatively, we can use a parametric method.
 
 ```{r}
-#| label: gauss-gdp
+#| label: gauss-gdp-old
+#| include: false
+#| eval: false
 # Multi-step residuals
 hres <- lapply(model, function(fit)
   lapply(1:frequency(fit[[1]]$x), function(h) 
@@ -508,6 +595,43 @@ str(base_ctg_mat, give.attr = FALSE)
 reco_ctg <- ctrec(base = base_ctg_mat, agg_order = m, cons_mat = gdpconsmat,
                    res = res_mat, comb = "wlsv")
 str(reco_ctg, give.attr = FALSE)
+```
+
+```{r}
+#| label: gauss-gdp
+
+# Gaussian reconciled distribution
+reco_ctg_wlsv <- ctgauss(base = base_mat, cons_mat = gdpconsmat,
+                         agg_order = m, comb = "wlsv", res = res_mat)
+reco_ctg_wlsv # distribution object
+
+# Gaussian reconciled distribution with different base covariance matrix
+# Multi-step residuals
+hres <- lapply(model, function(fit)
+  lapply(1:frequency(fit[[1]]$x), function(h) 
+    sapply(fit, residuals, type='response', h = h)))
+hres_ct <- t(Reduce("rbind", lapply(hres, arrange_hres)))
+# Re-arrenge multi-step residuals in a matrix form
+mres <- as_hstack_ctlayout(hres_ct, agg_order = m)
+# cov_shr <- shrink_estim(na.omit(mres)) # Time and computational intensive to use, but the better one
+cov_wls <- diag(x = diag(cov(na.omit(mres))))
+
+reco_ctg_wls <- ctgauss(base = base_mat, cons_mat = gdpconsmat,
+                        agg_order = m, comb = "wlsv", res = res_mat, 
+                        comb_base = cov_wls)
+reco_ctg_wls # distribution object
+
+# Reconciled sample distribution starting from Gaussian base forecasts - faster approach
+base_cts <- GMCM::rmvnormal(B, mu = res2matrix(base_mat, agg_order = m), 
+                            sigma = cov_wls)
+base_cts <- apply(base_cts, 1, as_ctmatrix, agg_order = m, 
+                  n = NCOL(gdpconsmat), 
+                  row_names = colnames(gdpconsmat),
+                  simplify = FALSE)
+base_cts <- simplify2array(base_cts)
+reco_cts <- ctsample(base_cts, agg_order = m, cons_mat = gdpconsmat,
+                     res = res_mat, comb = "wlsv")
+reco_cts # distribution object
 ```
 
 # References

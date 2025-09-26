@@ -8,7 +8,7 @@ bibliography: references.bib
 csl: apa.csl
 ---
 
-```{r, include = FALSE}
+```{r}
 #| label: knitr
 #| include: false
 knitr::opts_chunk$set(
@@ -197,7 +197,7 @@ To address this issue, we can use two approaches:
 
 - State-of-the-art numerical optimization procedure, **osqp** [@Stellato2020-jd].
 
-```{r oct-rec-osqp}
+```{r}
 #| label: osqp-opt-vn
 rf_osqp <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", nn = "osqp")
 tmp <- recoinfo(rf_osqp)
@@ -206,7 +206,7 @@ tmp$info # OSQP information matrix
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** [@Di_Fonzo2023-ae].
 
-```{r oct-rec-sntz}
+```{r}
 #| label: sntz-opt-vn
 rf_sntz <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", 
                      nn = "sntz")
@@ -235,7 +235,9 @@ round(rf_imm[, 2:8] - base[, 2:8], 6)
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
 
 ```{r}
-#| label: csjb-vn
+#| label: csjb-vn-old
+#| include: false
+#| eval: false
 # Base forecasts' sample:
 # we simulate from the base models by sampling errors 
 # while keeping the cross-sectional dimension fixed.
@@ -250,9 +252,26 @@ reco_csjb <- simplify2array(reco_csjb)
 rownames(reco_csjb) <- rownames(base_csjb)
 str(reco_csjb, give.attr = FALSE)
 ```
+
+```{r}
+#| label: csjb-vn
+# Base forecasts' sample:
+# we simulate from the base models by sampling errors 
+# while keeping the cross-sectional dimension fixed.
+B <- 100
+base_csjb <- csboot(model, B, 12)$sample
+reco_csjb <- cssample(base_csjb, agg_mat = vnaggmat, res = res, nn = "sntz",
+                   comb = "shr")
+class(reco_csjb) # distribution object
+
+# Extracts mean:
+str(mean(reco_csjb), give.attr = FALSE)
+```
 A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts.
 ```{r}
-#| label: gauss-vn
+#| label: gauss-vn-old
+#| include: false
+#| eval: false
 # Multi-step residuals
 hres <- lapply(1:12, function(h) 
   sapply(model, residuals, type='response', h = h))
@@ -274,7 +293,34 @@ rownames(reco_csg) <- rownames(base_csg)
 str(reco_csg, give.attr = FALSE)
 ```
 
+```{r}
+#| label: gauss-vn
 
+# Gaussian reconciled distribution with fixed base covariance matrix for different forecast horizon
+reco_csg_1 <- csgauss(base = base, agg_mat = vnaggmat, comb = "shr", res = res)
+
+# Gaussian reconciled distribution with different base covariance matrix for each forecast horizon
+## Multi-step residuals
+hres <- lapply(1:12, function(h) 
+  sapply(model, residuals, type='response', h = h))
+## List of H=12 covariance matrix (one for each forecast horizon)
+cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
+reco_csg_h <- sapply(1:NROW(base), function(h){
+  csgauss(base = base[h, ], agg_mat = vnaggmat, comb = "shr", res = res, comb_base = cov_shr[[h]])
+})
+class(reco_csg_h) <- class(reco_csg_1)
+names(reco_csg_h) <- paste0("h-", 1:length(reco_csg_h))
+
+# Reconciled sample distribution starting from gaussian base forecasts
+base_css <- lapply(1:NROW(base), function(h) MASS::mvrnorm(n = B, mu = base[h, ], Sigma = cov_shr[[h]]))
+base_css <- aperm(simplify2array(base_css), c(3,2,1))
+dimnames(base_css) <- dimnames(base_csjb)
+
+reco_css <- cssample(base_css, agg_mat = vnaggmat, res = res, nn = "sntz",
+                   comb = "shr")
+class(reco_css) # distribution object
+```
+    
 # `itagdp`: general linearly constrained multiple time series
 
 In this section, we work with the `itagdp` dataset and the corresponding zero-constrained matrix `gdpconsmat`. This dataset illustrates reconciliation under more complex linear constraints where an unique aggregation is not available. See the [dataset vignette](Dataset-vndata-and-itagdp.html) for more details.
@@ -338,7 +384,9 @@ rf_imm[,1]-base[,1]
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
 
 ```{r}
-#| label: csjb-gdp
+#| label: csjb-gdp-old
+#| include: false
+#| eval: false
 # Base forecasts' sample:
 # we simulate from the base models by sampling errors 
 # while keeping the cross-sectional dimension fixed.
@@ -353,10 +401,27 @@ reco_csjb <- simplify2array(reco_csjb)
 rownames(reco_csjb) <- rownames(base_csjb)
 str(reco_csjb, give.attr = FALSE)
 ```
+
+```{r}
+#| label: csjb-gdp
+# Base forecasts' sample:
+# we simulate from the base models by sampling errors 
+# while keeping the cross-sectional dimension fixed.
+B <- 100
+base_csjb <- csboot(model, B, 4)$sample
+reco_csjb <- cssample(base_csjb, cons_mat = gdpconsmat, res = res, comb = "shr")
+reco_csjb # distribution object
+
+# Extracts mean:
+str(mean(reco_csjb), give.attr = FALSE)
+```
+
 Alternatively, we can use a parametric method.
 
 ```{r}
-#| label: gauss-gdp
+#| label: gauss-gdp-old
+#| include: false
+#| eval: false
 # Multi-step residuals
 hres <- lapply(1:4, function(h) 
   sapply(model, residuals, type='response', h = h))
@@ -376,6 +441,34 @@ reco_csg <- apply(base_csg, 3, csrec, cons_mat = gdpconsmat, res = res,
 reco_csg <- simplify2array(reco_csg)
 rownames(reco_csg) <- rownames(base_csg)
 str(reco_csg, give.attr = FALSE)
+```
+
+```{r}
+#| label: gauss-gdp
+
+# Gaussian reconciled distribution with fixed base covariance matrix for different forecast horizon
+reco_csg_1 <- csgauss(base = base, cons_mat = gdpconsmat, comb = "shr", res = res)
+
+# Gaussian reconciled distribution with different base covariance matrix for each forecast horizon
+## Multi-step residuals
+hres <- lapply(1:4, function(h) 
+  sapply(model, residuals, type='response', h = h))
+## List of H=12 covariance matrix (one for each forecast horizon)
+cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
+
+reco_csg_h <- sapply(1:NROW(base), function(h){
+  csgauss(base = base[h, ], cons_mat = gdpconsmat, comb = "shr", res = res, comb_base = cov_shr[[h]])
+})
+class(reco_csg_h) <- class(reco_csg_1)
+names(reco_csg_h) <- paste0("h-", 1:length(reco_csg_h))
+
+# Reconciled sample distribution starting from gaussian base forecasts
+base_css <- lapply(1:NROW(base), function(h) MASS::mvrnorm(n = B, mu = base[h, ], Sigma = cov_shr[[h]]))
+base_css <- aperm(simplify2array(base_css), c(3,2,1))
+dimnames(base_css) <- dimnames(base_csjb)
+
+reco_css <- cssample(base_css, cons_mat = gdpconsmat, res = res, comb = "shr")
+class(reco_css) # distribution object
 ```
 
 # References

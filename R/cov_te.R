@@ -9,25 +9,29 @@
 #'       mse = TRUE, shrink_fun = shrink_estim, ...)
 #'
 #' @inheritParams terec
-#' @param comb A string specifying the reconciliation method.
+#' @param comb A string specifying the covariance approximation method.
 #'   \itemize{
-#'      \item Ordinary least squares:
+#'      \item For ordinary least squares reconciliation:
 #'      \itemize{
 #'      \item "\code{ols}" (\emph{default}) - identity error covariance.
 #'      }
-#'     \item Weighted least squares:
+#'     \item For weighted least squares reconciliation:
 #'      \itemize{
 #'      \item "\code{str}" - structural variances.
 #'      \item "\code{wlsh}" - hierarchy variances (uses \code{res}).
 #'      \item "\code{wlsv}" - series variances (uses \code{res}).
 #'      }
-#'     \item Generalized least squares (uses \code{res}):
+#'     \item For generalized least squares (uses \code{res}) reconciliation:
 #'      \itemize{
 #'      \item "\code{acov}" - series auto-covariance.
 #'      \item "\code{strar1}" - structural Markov covariance.
 #'      \item "\code{sar1}" - series Markov covariance.
 #'      \item "\code{har1}" - hierarchy Markov covariance.
 #'      \item "\code{shr}"/"\code{sam}" - shrunk/sample covariance.
+#'      }
+#'     \item Others (no for reconciliation):
+#'      \itemize{
+#'      \item "\code{bu}" - bottom-up covariance.
 #'      }
 #'   }
 #' @param mse If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
@@ -163,7 +167,7 @@ tecov.wlsh <- function(comb = "wlsh", ..., agg_order = NULL, res = NULL, mse = T
 
   N <- length(res) / sum(max(kset)/kset)
   res_mat <- vec2hmat(vec = res, h = N, kset = kset)
-  .sparseDiagonal(x = apply(res_mat, 2, function(x) ifelse(mse, sum(x^2)/length(x), var(x))))
+  .sparseDiagonal(x = apply(res_mat, 2, sample_estim, mse = mse))
 }
 
 #' @export
@@ -353,4 +357,21 @@ tecov.sam <- function(comb = "sam", ..., agg_order = NULL, res = NULL, mse = TRU
   N <- length(res) / sum(max(kset)/kset)
   res_mat <- vec2hmat(vec = res, h = N, kset = kset)
   sample_estim(res_mat, mse = mse)
+}
+
+#' @export
+tecov.bu <- function(comb = "bu", ..., agg_order = NULL, cov_hfts = NULL,
+                     tew = "sum", strc_mat = NULL){
+  if(is.null(strc_mat)){
+    if(is.null(agg_order)){
+      cli_abort("Argument {.arg agg_order} is NULL.", call = NULL)
+    }
+    strc_mat <- tetools(agg_order = agg_order, tew = tew)$strc_mat
+  }
+
+  if(is.null(cov_hfts)){
+    cli_abort("Argument {.arg cov_hfts} is NULL.", call = NULL)
+  }
+
+  strc_mat %*% tcrossprod(cov_hfts, strc_mat)
 }

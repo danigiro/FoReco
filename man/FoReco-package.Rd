@@ -13,7 +13,6 @@ Useful links:
 \itemize{
   \item \url{https://github.com/danigiro/FoReco}
   \item \url{https://danigiro.github.io/FoReco/}
-  \item \url{https://github.com/danigiro/FoReco}
   \item Report bugs at \url{https://github.com/danigiro/FoReco/issues}
 }
 

@@ -13,3 +13,5 @@
 ^Meta$
 ^CRAN-SUBMISSION$
 ^vignettes/articles$
+^vignettes/.quarto$
+^vignettes/_quarto\.yaml$

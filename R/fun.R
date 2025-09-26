@@ -188,16 +188,20 @@ transform_strc_mat <- function(strc_mat, bts){
 
 # Remove NA values (row and columns)
 remove_na <- function(x){
-  inax <- is.na(x)
-  if(any(inax)){
-    out <- stats::na.omit(x)
-    if(NROW(out) == 0){
-      x <- x[, !(colSums(!inax) == 0)]
-      inax <- is.na(x)
-      #out <- stats::na.omit(x)
+  if(is.vector(x)){
+    x <- stats::na.omit(x)
+  }else{
+    inax <- is.na(x)
+    if(any(inax)){
+      out <- stats::na.omit(x)
+      if(NROW(out) == 0){
+        x <- x[, !(colSums(!inax) == 0)]
+        inax <- is.na(x)
+        #out <- stats::na.omit(x)
+      }
+      row_na <- rowSums(inax)
+      x <- x[!(rowSums(inax) == NCOL(x)), , drop = FALSE]
     }
-    row_na <- rowSums(inax)
-    x <- x[!(rowSums(inax) == NCOL(x)), , drop = FALSE]
   }
   return(x)
 }

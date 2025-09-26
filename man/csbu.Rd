@@ -4,29 +4,34 @@
 \alias{csbu}
 \title{Cross-sectional bottom-up reconciliation}
 \usage{
-csbu(base, agg_mat, sntz = FALSE)
+csbu(base, agg_mat, sntz = FALSE, round = FALSE)
 }
 \arguments{
 \item{base}{A (\eqn{h \times n_b}) numeric matrix or multivariate time series
 (\code{mts} class) containing bottom base forecasts; \eqn{h} is the
 forecast horizon, and \eqn{n_b} is the total number of bottom variables.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{sntz}{If \code{TRUE}, the negative base forecasts are
-set to zero before applying bottom-up.}
+\item{sntz}{Logical. If \code{TRUE}, the negative base forecasts are set to
+zero (Di Fonzo and Girolimetto, 2023) before applying bottom-up.
+\emph{Default} is \code{FALSE}.}
+
+\item{round}{Logical. If \code{TRUE}, base forecasts are rounded before
+applying the bottom-up reconciliation. \emph{Default} is \code{FALSE}.}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional reconciled forecasts.
+A (\eqn{h \times n}) numeric matrix of cross-sectional
+reconciled forecasts.
 }
 \description{
 This function computes the cross-sectional bottom-up reconciled forecasts
 (Dunn et al., 1976) for all series by appropriate summation of the bottom
-base forecasts \eqn{\widehat{\mathbf{b}}}:
-\deqn{\widetilde{\mathbf{y}} = \mathbf{S}_{cs}\widehat{\mathbf{b}},}
-where \eqn{\mathbf{S}_{cs}} is the cross-sectional structural matrix.
+base forecasts \eqn{\widehat{\mathbf{b}}}: \deqn{\widetilde{\mathbf{y}} =
+\mathbf{S}_{cs}\widehat{\mathbf{b}},} where \eqn{\mathbf{S}_{cs}} is the
+cross-sectional structural matrix.
 }
 \examples{
 set.seed(123)
@@ -38,26 +43,33 @@ A <- t(c(1,1))
 reco <- csbu(base = bts, agg_mat = A)
 
 # Non negative reconciliation
-bts[2,2] <- -bts[2,2] # Making negative one of the base forecasts for variable Y
+bts[2,2] <- -bts[2,2] # Making negative one of the base forecasts for Y
 nnreco <- csbu(base = bts, agg_mat = A, sntz = TRUE)
 
 }
 \references{
-Dunn, D. M., Williams, W. H. and Dechaine, T. L. (1976), Aggregate versus subaggregate
-models in local area forecasting, \emph{Journal of the American Statistical Association}
-71(353), 68–71. \doi{10.1080/01621459.1976.10481478}
+Dunn, D. M., Williams, W. H. and Dechaine, T. L. (1976),
+Aggregate versus subaggregate models in local area forecasting, \emph{Journal
+of the American Statistical Association} 71(353), 68–71.
+\doi{10.1080/01621459.1976.10481478}
+
+Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+solar forecasts, \emph{Solar Energy}, 251, 13–29.
+\doi{10.1016/j.solener.2023.01.003}
 }
 \seealso{
-Bottom-up reconciliation: 
+Bottom-up reconciliation:
 \code{\link{ctbu}()},
 \code{\link{tebu}()}
 
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{cscov}()},
+\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csmo}()},
 \code{\link{csrec}()},
+\code{\link{cssample}()},
 \code{\link{cstd}()},
 \code{\link{cstools}()}
 }

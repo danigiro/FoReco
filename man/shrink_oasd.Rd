@@ -28,9 +28,11 @@ covariance matrices, \emph{2009 IEEE international conference on acoustics, spee
 signal processing}, 2937–2940. IEEE.
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

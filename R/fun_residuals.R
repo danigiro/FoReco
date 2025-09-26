@@ -4,10 +4,12 @@
 #' These functions can be used to arrange residuals to reconcile temporal or
 #' cross-temporal forecasts.
 #'
-#' [res2matrix] takes as input a set of temporal and cross-temporal residuals and
+#' [res2matrix] `r lifecycle::badge('deprecated')`
+#' takes as input a set of temporal and cross-temporal residuals and
 #' re-organizes them into a matrix where the rows correspond to different forecast
 #' horizons, capturing the temporal dimension. Meanwhile, the columns are ordered
 #' based on the specific arrangement as described in Di Fonzo and Girolimetto (2023).
+#' Please see [as_hstack_ctlayout] and [as_hstack_telayout].
 #'
 #' @inheritParams ctrec
 #' @param res A (\eqn{n \times N(k^\ast+m)}) numeric matrix (cross-temporal framework)
@@ -47,6 +49,8 @@
 #'
 #' @export
 res2matrix <- function(res, agg_order){
+  lifecycle::deprecate_warn("1.0", "FoReco::res2matrix()",
+                            details = "Please use `FoReco::as_hstack_telayout()` or  `FoReco::as_hstack_ctlayout()`.")
   kset <- tetools(agg_order = agg_order)$set
 
   if(is.vector(res)){

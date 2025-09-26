@@ -7,9 +7,9 @@
 balance_hierarchy(agg_mat, nodes = "auto", sparse = TRUE)
 }
 \arguments{
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
 in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
@@ -46,9 +46,11 @@ obj <- balance_hierarchy(agg_mat = A, nodes = c(1, 1))
 obj$bam
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},
 \code{\link{cstools}()},

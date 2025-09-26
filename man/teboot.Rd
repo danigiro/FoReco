@@ -16,9 +16,9 @@ with the following mandatory parameters: \emph{object}, \emph{innov},
 
 \item{boot_size}{The number of bootstrap replicates.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{block_size}{Block size of the bootstrap, which is typically equivalent
 to the forecast horizon for the most temporally aggregated series.}
@@ -39,16 +39,18 @@ probabilistic forecast reconciliation: Methodological and practical issues.
 \emph{International Journal of Forecasting}, 40(3), 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
-Bootstrap samples: 
+Bootstrap samples:
 \code{\link{csboot}()},
 \code{\link{ctboot}()}
 
-Temporal framework: 
+Temporal framework:
 \code{\link{tebu}()},
 \code{\link{tecov}()},
+\code{\link{tegauss}()},
 \code{\link{telcc}()},
 \code{\link{temo}()},
 \code{\link{terec}()},
+\code{\link{tesample}()},
 \code{\link{tetd}()},
 \code{\link{tetools}()}
 }

@@ -14,13 +14,13 @@ level \eqn{l}, \eqn{k} is an aggregation order (a factor of \eqn{m}, and \eqn{1<
 \eqn{m} is the max aggregation order, and \eqn{h} is the forecast horizon for the
 lowest frequency time series.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{id_rows}{A numeric vector indicating the \eqn{l}-level rows of \code{agg_mat}.}
 
@@ -31,15 +31,16 @@ high-frequency bottom time series; \eqn{n_b} is the total number of high-frequen
 bottom variables, \eqn{m} is the max aggregation order, and \eqn{h} is the forecast horizon
 for the lowest frequency time series.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
+A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+reconciled forecasts.
 }
 \description{
 The cross-temporal middle-out forecast reconciliation combines top-down
@@ -73,16 +74,18 @@ recoh <- ctmo(base = baseL2k2, id_rows = 2:3, agg_mat = A,
 
 }
 \seealso{
-Middle-out reconciliation: 
+Middle-out reconciliation:
 \code{\link{csmo}()},
 \code{\link{temo}()}
 
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},

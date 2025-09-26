@@ -12,23 +12,24 @@ aggregated base forecasts of order \eqn{m}; \eqn{m} is the max aggregation
 order, and \eqn{h} is the forecast horizon for the lowest frequency
 time series.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{weights}{A (\eqn{hm \times 1}) numeric vector containing the proportions for the
 high-frequency time series; \eqn{m} is the max aggregation order, and \eqn{h} is the
 forecast horizon for the lowest frequency time series.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal reconciled forecasts.
+A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+reconciled forecasts.
 }
 \description{
 Top-down forecast reconciliation for a univariate time series, where the forecast
@@ -54,17 +55,19 @@ recoh <- tetd(base = topf, agg_order = 4, weights = h_weights)
 
 }
 \seealso{
-Top-down reconciliation: 
+Top-down reconciliation:
 \code{\link{cstd}()},
 \code{\link{cttd}()}
 
-Temporal framework: 
+Temporal framework:
 \code{\link{teboot}()},
 \code{\link{tebu}()},
 \code{\link{tecov}()},
+\code{\link{tegauss}()},
 \code{\link{telcc}()},
 \code{\link{temo}()},
 \code{\link{terec}()},
+\code{\link{tesample}()},
 \code{\link{tetools}()}
 }
 \concept{Framework: temporal}

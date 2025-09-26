@@ -148,25 +148,16 @@ iterec <- function(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
   if(verbose){
     cli_rule("{.strong Iterative heuristic cross-temporal forecast reconciliation}")
     cli_text("{.emph Legend: i\u00a0=\u00a0iteration; s\u00a0=\u00a0step. Norm\u00a0=\u00a0\"{norm}\".}")
-    cat("\n")
-    #cli_rule()
-    #cat("-------------------------------------------------------------------\n",
-    # "Iterative heuristic cross-temporal forecast reconciliation\n",
-    # "Legend: i = iteration; s = step; te = temporal; \ncs = cross-sectional;
-    #  ct = cross-temporal.\n",
-    # "-------------------------------------------------------------------\n", sep = "")
+    cli_text("\n")
 
     c1r1 <- gsub(" ", "\u00a0", format("i.s", width = nchar(itmax)+2, justify = "right"))
     c2r1 <- gsub(" ", "\u00a0", format(names_label[rorder[1]], width = pwidth, justify = "right"))
     c3r1 <- gsub(" ", "\u00a0", format(names_label[rorder[2]], width = pwidth, justify = "right"))
     cli_text("{.strong {c1r1}} | {.strong {c2r1}} | {.strong {c3r1}} |\n")
 
-    #cat(rule(width = 8+(nchar(itmax)+2)+(pwidth*2)), "\n")
-    cat(#format("i.s", width = nchar(itmax)+2, justify = "right"), " | ",
-      #format(rorder[1], width = pwidth, justify = "right"), " | ",
-      #format(rorder[2], width = pwidth, justify = "right"), " |\n",
-      formatC(0, width = nchar(itmax)+2, format = "f", digits = 0), " | ",
-      paste(fnumber(dmat[rorder, norm, 1,1], pwidth), collapse = " | "), " |\n", sep = "")
+    text_num <- paste0(formatC(0, width = nchar(itmax)+2, format = "f", digits = 0), " | ",
+                       paste(fnumber(dmat[rorder, norm, 1,1], pwidth), collapse = " | "), " |\n", sep = "")
+    cli_text(gsub(" ", "\u00a0", text_num))
   }
 
   csc_list <- cscov_list(cslist = cslist, kset = kset, res = res, n = NROW(base))
@@ -177,16 +168,18 @@ iterec <- function(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
                       csc_list = csc_list, tec_list = tec_list)
     dmat[, , i+1,1] <- discrepancy(tmp, cs_const_mat = cs_const_mat, te_const_mat = te_const_mat)
     if(verbose){
-      cat(formatC(i+0.1, width = nchar(itmax)+2, format = "f", digits = 1), " | ",
+      text_num <- paste0(formatC(i+0.1, width = nchar(itmax)+2, format = "f", digits = 1), " | ",
           paste(fnumber(dmat[rorder, norm, i+1,1], pwidth), collapse = " | "), " |\n", sep = "")
+      cli_text(gsub(" ", "\u00a0", text_num))
     }
 
     tmp <- step2_func(base = tmp, telist = telist, cslist = cslist, kset = kset,
                       csc_list = csc_list, tec_list = tec_list)
     dmat[, , i+1,2] <- discrepancy(tmp, cs_const_mat = cs_const_mat, te_const_mat = te_const_mat)
     if(verbose){
-      cat(formatC(i+0.2, width = nchar(itmax)+2, format = "f", digits = 1), " | ",
+      text_num <- paste0(formatC(i+0.2, width = nchar(itmax)+2, format = "f", digits = 1), " | ",
           paste(fnumber(dmat[rorder, norm, i+1,2], pwidth), collapse = " | "), " |\n", sep = "")
+      cli_text(gsub(" ", "\u00a0", text_num))
     }
 
     if(all(dmat[, norm, i+1,2] < tol)){
@@ -501,22 +494,6 @@ temeanM <- function(telist, res = NULL, n, ...){
   }
 }
 
-# Cross-sectional covariance matrices: list
-# cscov_list <- function(cslist, res = NULL, kset, n, ...){
-#   input_list <- NULL
-#   cslist$n <- n
-#   input_list[as.character(kset)] <- list(cslist)
-#   if(!is.null(res)){
-#     res <- mat2list(res, kset)
-#   }
-#
-#   out <- lapply(as.character(kset), function(k){
-#     input_list[[k]]$res <- res[[k]]
-#     do.call("cscov", input_list[[k]])
-#   })
-#   names(out) <- as.character(kset)
-#   return(out)
-# }
 cscov_list <- function(cslist, res = NULL, kset, n, ...){
   input_list <- NULL
   cslist$n <- n
@@ -632,16 +609,15 @@ testepM <- function(base, telist, res = NULL, ...){
 check_results <- function(flag, dmat, i, itmax, norm, verbose){
   if(flag == 0){ # Convergence achieved
     if(verbose){
-      cat("\n")
+      cli_text("\n")
       cli_alert_success("Convergence achieved at iteration {i}.")
-      #cat("-------------------------------------------------------------------\n")
-      #cat("Convergence achieved at iteration", i, "\n")
     }
     check_sorted <- all(apply(dmat[,norm,,], c(1,3),
                               function(x) !is.unsorted(rev(na.omit(x[-1])))))
     if(!check_sorted){
       # incoherence has increased in the next iteration (at least one time)
       if(verbose){
+        cli_text("\n")
         cli_alert_warning("Incoherence has increased in the next iteration (at least one time)")
       }
       flag <- 1
@@ -653,11 +629,8 @@ check_results <- function(flag, dmat, i, itmax, norm, verbose){
   }else{
     # Convergence not achieved (maximum iteration limit reached)
     if(verbose){
-      cat("\n")
+      cli_text("\n")
       cli_alert_danger("Convergence NOT achieved. Maximum number of iterations reached ({itmax}).")
-      #cat("-------------------------------------------------------------------\n")
-      #cat("Convergence NOT achieved: Maximum number of iterations reached (",
-      #    itmax, ")\n", sep = "")
     }
     return(flag)
   }

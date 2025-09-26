@@ -11,28 +11,29 @@ cttd(base, agg_mat, agg_order, weights, tew = "sum", normalize = TRUE)
 aggregated level base forecasts; \eqn{m} is the max aggregation order, and \eqn{h} is
 the forecast horizon for the lowest frequency time series.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{weights}{A (\eqn{n_b \times hm}) numeric matrix containing the proportions for each
 high-frequency bottom time series; \eqn{n_b} is the total number of high-frequency
 bottom variables, \eqn{m} is the max aggregation order, and \eqn{h} is the forecast horizon
 for the lowest frequency time series.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
+A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+reconciled forecasts.
 }
 \description{
 Top-down forecast reconciliation for cross-temporal hierarchical/grouped
@@ -61,17 +62,19 @@ recoh <- cttd(base = topf, agg_mat = A, agg_order = 4, weights = h_weights)
 
 }
 \seealso{
-Top-down reconciliation: 
+Top-down reconciliation:
 \code{\link{cstd}()},
 \code{\link{tetd}()}
 
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},
 \code{\link{tcsrec}()}

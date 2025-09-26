@@ -9,89 +9,110 @@ ctrec(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
       bounds = NULL, immutable = NULL, ...)
 }
 \arguments{
-\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base forecasts to
-be reconciled; \eqn{n} is the total number of variables, \eqn{m} is the max. order of temporal
-aggregation, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of \eqn{m},
-excluding \eqn{m}, and \eqn{h} is the forecast horizon for the lowest frequency time series.
-The row identifies a time series, and the forecasts in each row are ordered from the
-lowest frequency (most temporally aggregated) to the highest frequency.}
+\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
+forecasts to be reconciled; \eqn{n} is the total number of variables,
+\eqn{m} is the maximum aggregation order, and \eqn{k^\ast} is the sum of a
+chosen subset of the \eqn{p - 1} factors of \eqn{m} (excluding \eqn{m}
+itself), and \eqn{h} is the forecast horizon for the lowest frequency time
+series. The row identifies a time series, and the forecasts in each row are
+ordered from the lowest frequency (most temporally aggregated) to the
+highest frequency.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-zero constraints: each row represents a constraint equation, and each column represents
-a variable. The matrix can be of full rank, meaning the rows are linearly independent,
-but this is not a strict requirement, as the function allows for redundancy in the
-constraints.}
+\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the
+cross-sectional zero constraints: each row represents a constraint
+equation, and each column represents a variable. The matrix can be of full
+rank, meaning the rows are linearly independent, but this is not a strict
+requirement, as the function allows for redundancy in the constraints.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{ctcov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{ctcov}.}
 
-\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency (columns) for each variable (rows). This matrix is used
-to compute some covariance matrices.}
+\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
+the in-sample residuals ordered from the lowest frequency to the highest
+frequency (columns) for each variable (rows). This matrix is used to
+compute some covariance matrices.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{approach}{A string specifying the approach used to compute the reconciled
-forecasts. Options include:
+\item{approach}{A string specifying the approach used to compute the
+reconciled forecasts. Options include:
 \itemize{
-\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for projection approach.
-\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for structural approach.
+\item "\code{proj}" (\emph{default}): Projection approach according
+to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman
+et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for projection approach.
+\item "\code{strc_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative
+forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
 \item "\code{bpv}": block principal pivoting algorithm.
-\item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
+\item "\code{sntz}": heuristic "set-negative-to-zero"
+(Di Fonzo and Girolimetto, 2023).
 }}
 
 \item{settings}{A list of control parameters.
 \itemize{
-\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
-for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
-\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
-or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
-may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
-criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
-tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
-\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying
+settings for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details,
+refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
+(Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
+("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
+number of full exchange rules that may be attempted (\code{10},
+\emph{default}), \code{tol} for the tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
+gradient tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
+maximum number of algorithm iterations (\code{100}, \emph{default})
 }}
 
-\item{bounds}{A matrix (see \link{set_bounds}) with 5 columns (\eqn{i,k,j,lower,upper}), such that
+\item{bounds}{A matrix (see \link{set_bounds}) with 5 columns
+(\eqn{i,k,j,lower,upper}), such that
 \itemize{
-\item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
-\item Column 2 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
-\item Column 3 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
-\item Columns 4 and 5 indicates the \emph{lower} and \emph{lower} bounds, respectively.
+\item Column 1 represents the cross-sectional series
+(\eqn{i = 1, \dots, n}).
+\item Column 2 represents the temporal aggregation order
+(\eqn{k = m,\dots,1}).
+\item Column 3 represents the temporal forecast horizon
+(\eqn{j = 1,\dots,m/k}).
+\item Columns 4 and 5 indicates the \emph{lower} and \emph{lower} bounds,
+respectively.
 }}
 
 \item{immutable}{A matrix with three columns (\eqn{i,k,j}), such that
 \itemize{
-\item Column 1 represents the cross-sectional series (\eqn{i = 1, \dots, n}).
-\item Column 2 represents the temporal aggregation order (\eqn{k = m,\dots,1}).
-\item Column 3 represents the temporal forecast horizon (\eqn{j = 1,\dots,m/k}).
+\item Column 1 represents the cross-sectional series
+(\eqn{i = 1, \dots, n}).
+\item Column 2 represents the temporal aggregation order
+(\eqn{k = m,\dots,1}).
+\item Column 3 represents the temporal forecast horizon
+(\eqn{j = 1,\dots,m/k}).
 }
-For example, when working with a quarterly multivariate time series (\eqn{n = 3}):
+For example, when working with a quarterly multivariate time series
+(\eqn{n = 3}):
 \itemize{
-\item \code{t(c(1, 4, 1))} - Fix the one step ahead annual forecast of the first time series.
-\item \code{t(c(2, 1, 2))} - Fix the two step ahead quarterly forecast of the second time series.
+\item \code{t(c(1, 4, 1))} - Fix the one step ahead annual forecast
+of the first time series.
+\item \code{t(c(2, 1, 2))} - Fix the two step ahead quarterly forecast
+of the second time series.
 }}
 
 \item{...}{
@@ -103,13 +124,15 @@ matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
+A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+reconciled forecasts.
 }
 \description{
-This function performs optimal (in least squares sense) combination cross-temporal forecast
-reconciliation (Di Fonzo and Girolimetto 2023a, Girolimetto et al. 2023). The reconciled
-forecasts are calculated using either a projection approach (Byron, 1978, 1979) or the
-equivalent structural approach by Hyndman et al. (2011). Non-negative (Di Fonzo and
+This function performs optimal (in least squares sense)
+combination cross-temporal forecast reconciliation (Di Fonzo and Girolimetto
+2023a, Girolimetto et al. 2023). The reconciled forecasts are calculated
+using either a projection approach (Byron, 1978, 1979) or the equivalent
+structural approach by Hyndman et al. (2011). Non-negative (Di Fonzo and
 Girolimetto, 2023) and immutable reconciled forecasts can be considered.
 }
 \examples{
@@ -123,10 +146,12 @@ res <- rbind(rnorm(70), rnorm(70), rnorm(70))
 
 A <- t(c(1,1)) # Aggregation matrix for Z = X + Y
 m <- 4 # from quarterly to annual temporal aggregation
-reco <- ctrec(base = base, agg_mat = A, agg_order = m, comb = "wlsv", res = res)
+reco <- ctrec(base = base, agg_mat = A, agg_order = m,
+              comb = "wlsv", res = res)
 
 C <- t(c(1, -1, -1)) # Zero constraints matrix for Z - X - Y = 0
-reco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv", res = res)
+reco <- ctrec(base = base, cons_mat = C, agg_order = m,
+              comb = "wlsv", res = res)
 
 # Immutable reconciled forecasts
 # Fix all the quarterly forecasts of the second variable.
@@ -135,7 +160,8 @@ immreco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv",
                  res = res, immutable = imm_mat)
 
 # Non negative reconciliation
-base[2,7] <- -2*base[2,7] # Making negative one of the quarterly base forecasts for variable X
+# Making negative one of the quarterly base forecasts for variable X
+base[2,7] <- -2*base[2,7]
 nnreco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv",
                 res = res, nn = "osqp")
 recoinfo(nnreco, verbose = FALSE)$info
@@ -143,46 +169,49 @@ recoinfo(nnreco, verbose = FALSE)$info
 }
 \references{
 Byron, R.P. (1978), The estimation of large social account matrices,
-\emph{Journal of the Royal Statistical Society, Series A}, 141, 3, 359-367.
-\doi{10.2307/2344807}
+\emph{Journal of the Royal Statistical Society, Series A}, 141, 3,
+359-367. \doi{10.2307/2344807}
 
-Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-\emph{Journal of the Royal Statistical Society, Series A}, 142(3), 405.
-\doi{10.2307/2982515}
+Byron, R.P. (1979), Corrigenda: The estimation of large social account
+matrices, \emph{Journal of the Royal Statistical Society, Series A}, 142(3),
+405. \doi{10.2307/2982515}
 
-Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
+Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+\emph{International Journal of Forecasting}, 39, 1, 39-57.
+\doi{10.1016/j.ijforecast.2021.08.004}
 
-Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of solar
-forecasts, \emph{Solar Energy}, 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
+Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+solar forecasts, \emph{Solar Energy}, 251, 13–29.
+\doi{10.1016/j.solener.2023.01.003}
 
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023.10.003}
+practical issues. \emph{International Journal of Forecasting}, 40, 3,
+1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 
 Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
 \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 \doi{10.1016/j.csda.2011.03.006}
 
-Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020), OSQP:
-An Operator Splitting solver for Quadratic Programs,
-\emph{Mathematical Programming Computation}, 12, 4, 637-672.
-\doi{10.1007/s12532-020-00179-2}
+Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020),
+OSQP: An Operator Splitting solver for Quadratic Programs, \emph{Mathematical
+Programming Computation}, 12, 4, 637-672. \doi{10.1007/s12532-020-00179-2}
 }
 \seealso{
-Regression-based reconciliation: 
+Regression-based reconciliation:
 \code{\link{csrec}()},
 \code{\link{terec}()}
 
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},

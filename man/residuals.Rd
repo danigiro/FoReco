@@ -15,9 +15,9 @@ or an (\eqn{N(k^\ast+m) \times 1}) numeric vector (temporal framework) represent
 the in-sample residuals at all the temporal frequencies ordered from the lowest
 frequency to the highest frequency (columns) for each variable (rows).}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
 \item{list_res}{A list of \eqn{H} multi-step residuals. Each element in the list
 can be either a (\eqn{T \times 1}) vector (temporal framework) or a (\eqn{T \times n})
@@ -34,10 +34,12 @@ or a (\eqn{n \times N(k^\ast+m)}) matrix  (cross-temporal framework) of multi-st
 These functions can be used to arrange residuals to reconcile temporal or
 cross-temporal forecasts.
 
-\link{res2matrix} takes as input a set of temporal and cross-temporal residuals and
+\link{res2matrix} \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+takes as input a set of temporal and cross-temporal residuals and
 re-organizes them into a matrix where the rows correspond to different forecast
 horizons, capturing the temporal dimension. Meanwhile, the columns are ordered
 based on the specific arrangement as described in Di Fonzo and Girolimetto (2023).
+Please see \link{as_hstack_ctlayout} and \link{as_hstack_telayout}.
 
 \link{arrange_hres} takes as input a list of multi-step residuals and is
 designed to organize them in accordance with their time order (Girolimetto et al.
@@ -91,9 +93,11 @@ practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
 \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

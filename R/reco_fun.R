@@ -499,7 +499,7 @@ reco.sntz <- function(base, reco, strc_mat, cov_mat, id_nn = NULL, settings = NU
 }
 
 reco.proj_immutable <- function(base, cons_mat, cov_mat, immutable = NULL, ...){
-
+  #browser()
   # Check input
   if(missing(base) | missing(cons_mat) | missing(cov_mat)){
     cli_abort("Mandatory arguments: {.arg base}, {.arg cons_mat} and {.arg cov_mat}.",
@@ -667,6 +667,7 @@ reco.strc_immutable <- function(base, strc_mat, cov_mat, immutable = NULL, ...){
 }
 
 reco.kann <- function(base, cons_mat, cov_mat, nn = NULL,
+                      strc_mat, approach = "proj",
                       reco = NULL, settings = NULL, immutable = NULL, ...){
   # Check input
   if(missing(base) | missing(cons_mat) | missing(cov_mat)){
@@ -685,11 +686,10 @@ reco.kann <- function(base, cons_mat, cov_mat, nn = NULL,
   }
 
   if(is.null(reco)){
-    if(is.null(immutable)){
-      reco <- reco.proj(base = base, cons_mat = cons_mat, cov_mat = cov_mat)
+    if(approach == "strc"){
+      reco <- reco.strc(base = base, strc_mat = strc_mat, cov_mat = cov_mat)
     }else{
-      reco <- reco.proj_immutable(base = base, cons_mat = cons_mat,
-                                  cov_mat = cov_mat, immutable = immutable)
+      reco <- reco.proj(base = base, cons_mat = cons_mat, cov_mat = cov_mat)
     }
   }
 
@@ -707,11 +707,10 @@ reco.kann <- function(base, cons_mat, cov_mat, nn = NULL,
     start <- Sys.time()
     for(i in 1:itmax){
       x[x < sqrt(.Machine$double.eps)] <- 0
-      if(is.null(immutable)){
-        x <- reco.proj(base = rbind(x), cons_mat = cons_mat, cov_mat = cov_mat)
+      if(approach == "strc"){
+        x <- reco.strc(base = rbind(x), strc_mat = strc_mat, cov_mat = cov_mat)
       }else{
-        x <- reco.proj_immutable(base = rbind(x), cons_mat = cons_mat, cov_mat = cov_mat,
-                                 immutable = immutable)
+        x <- reco.proj(base = rbind(x), cons_mat = cons_mat, cov_mat = cov_mat)
       }
       x <- as.numeric(x)
 
@@ -750,11 +749,6 @@ reco.kann <- function(base, cons_mat, cov_mat, nn = NULL,
   rownames(info) <- rowid
   attr(reco, "info") <- info
   return(reco)
-}
-
-reco.gauss <- function(...){
-  # TODO
-  return(NULL)
 }
 
 reco.fbpp <- function(base, cons_mat, cov_mat, id_nn = NULL, nn = NULL,
@@ -799,12 +793,18 @@ reco.fbpp <- function(base, cons_mat, cov_mat, id_nn = NULL, nn = NULL,
     id_nn[qrtmp$pivot[1:qrtmp$rank]] <- 0
   }
 
-  rowid <- which(rowSums(reco < (-sqrt(.Machine$double.eps))) != 0)
+  rowid <- which(rowSums(reco < (-tol)) != 0)
   fbpp_step <- apply(reco[rowid, , drop = FALSE], 1, function(x){
     start <- Sys.time()
     idx <- NULL
     for(i in 1:itmax){
-      idx <- c(idx, which(x < -tol))
+      idx_tmp <- which(x < (-tol))
+      idx_tmp <- idx_tmp[idx_tmp %in% which(id_nn == 1)]
+      if(length(idx_tmp)==0){
+        idx_tmp <- which(abs(x) < abs(tol))
+        idx_tmp <- idx_tmp[idx_tmp %in% which(id_nn == 1)]
+      }
+      idx <- unique(c(idx, idx_tmp))
       idx <- idx[idx %in% which(id_nn == 1)]
       block <- sparseMatrix(i = 1:length(idx),
                             j = idx,
@@ -828,7 +828,7 @@ reco.fbpp <- function(base, cons_mat, cov_mat, id_nn = NULL, nn = NULL,
     }
 
     if(flag == 1){
-      x[x <= sqrt(.Machine$double.eps)] <- 0
+      x[x <= tol] <- 0
       if(i == itmax){
         flag <- 2
       }
@@ -840,6 +840,135 @@ reco.fbpp <- function(base, cons_mat, cov_mat, id_nn = NULL, nn = NULL,
     out$idx <- idx
     if(flag %in% c(-2, 2)){
       cli_warn(c("x"="FBPP failed: check the results.",
+                 "i"="Flag = {flag},  tol = {tol}, itmax = {itmax}"), call = NULL)
+    }
+    out
+  })
+
+  fbpp_step <- do.call("rbind", fbpp_step)
+
+  # Point reconciled forecasts
+  reco[rowid, ] <- do.call("rbind", fbpp_step[, "reco"])
+
+  info <- do.call("rbind", fbpp_step[, "info"])
+  colnames(info) <- c("run_time", "iter", "status")
+  rownames(info) <- rowid
+  attr(reco, "info") <- info
+  return(reco)
+}
+
+reco.nnit <- function(base, strc_mat, cons_mat, cov_mat,
+                      id_nn = NULL, nn = NULL, approach = "proj",
+                      reco = NULL, settings = NULL, immutable = NULL, ...){
+  # Check input
+  if(missing(base) | missing(cons_mat) | missing(cov_mat)){
+    cli_abort("Mandatory arguments: {.arg base}, {.arg cons_mat} and {.arg cov_mat}.",
+              call = NULL)
+  }
+
+  tol <- settings$tol
+  if(is.null(tol)){
+    tol <- sqrt(.Machine$double.eps)
+  }
+
+  itmax <- settings$itmax
+  if(is.null(itmax)){
+    itmax <- 100
+  }
+
+  if(is.null(reco)){
+    if(approach == "strc"){
+      if(is.null(immutable)){
+        reco <- reco.strc(base = base, strc_mat = strc_mat, cov_mat = cov_mat)
+      }else{
+        reco <- reco.strc_immutable(base = base, strc_mat = strc_mat,
+                                    cov_mat = cov_mat, immutable = immutable)
+      }
+    }else{
+      if(is.null(immutable)){
+        reco <- reco.proj(base = base, cons_mat = cons_mat, cov_mat = cov_mat)
+      }else{
+        reco <- reco.proj_immutable(base = base, cons_mat = cons_mat,
+                                    cov_mat = cov_mat, immutable = immutable)
+      }
+    }
+  }
+
+  if(is.null(nn)){
+    return(reco)
+  }
+
+  if(all(reco>-tol)){
+    reco[reco<=sqrt(.Machine$double.eps)] <- 0
+    return(reco)
+  }
+
+  if(is.null(id_nn)){
+    qrtmp <- base::qr(cons_mat)
+    id_nn <- rep(1, NCOL(base))
+    id_nn[qrtmp$pivot[1:qrtmp$rank]] <- 0
+  }
+  rowid <- which(rowSums(reco < (-tol)) != 0)
+  fbpp_step <- apply(reco[rowid, , drop = FALSE], 1, function(x){
+    start <- Sys.time()
+    idx <- NULL
+    for(i in 1:itmax){
+      idx_tmp <- which(x < (-tol))
+      idx_tmp <- idx_tmp[idx_tmp %in% which(id_nn == 1)]
+      if(length(idx_tmp)==0){
+        idx_tmp <- which(abs(x) < abs(tol))
+        idx_tmp <- idx_tmp[idx_tmp %in% which(id_nn == 1)]
+      }
+      idx <- unique(c(idx, idx_tmp))
+      idx <- idx[idx %in% which(id_nn == 1)]
+
+      if(all(which(id_nn == 1) %in% idx)){
+        x <- rep(0, length(x))
+      }else if(approach == "strc"){
+        x0 <- x
+        x0[idx] <- 0
+        x <- reco.strc_immutable(base = rbind(x0), strc_mat = strc_mat,
+                                  cov_mat = cov_mat,
+                                 immutable = c(immutable, idx))
+      }else{
+        block <- sparseMatrix(i = 1:length(idx),
+                              j = idx,
+                              x = 1,
+                              dims = c(length(idx), NCOL(cons_mat)))
+        cons_matx <- rbind(cons_mat, block)
+
+        if(is.null(immutable)){
+          x <- reco.proj(base = rbind(x), cons_mat = cons_matx,
+                         cov_mat = cov_mat)
+        }else{
+          x <- reco.proj_immutable(base = rbind(x), cons_mat = cons_matx,
+                                   cov_mat = cov_mat, immutable = immutable)
+        }
+      }
+
+      x <- as.numeric(x)
+
+      if(all(x >= (-tol))){
+        flag <- 1
+        break
+      }else{
+        flag <- -2
+      }
+    }
+
+    if(flag == 1){
+      x[x <= tol] <- 0
+      if(i == itmax){
+        flag <- 2
+      }
+    }
+    end <- Sys.time()
+    out <- list()
+    out$reco <- x
+    out$info <- c(difftime(end,start, units = "secs"), i, flag)
+    out$idx <- idx
+    if(flag %in% c(-2, 2)){
+      cli_warn(c("x"="nnit failed: check the results.",
                  "i"="Flag = {flag},  tol = {tol}, itmax = {itmax}"), call = NULL)
     }
     out
@@ -966,6 +1095,8 @@ reco.bpv <- function(base, strc_mat, cov_mat, cons_mat, id_nn = NULL, nn = NULL,
 
       if(length(Gset) == 0) {
         rfc <- reco0[j,]
+      }else if(length(Gset) == sum(id_nn)){
+        rfc <- rep(0, length(id_nn))
       }else{
         strc_mat_0 <- strc_mat[, -Gset, drop = FALSE]
         if(approach == "proj"){
@@ -980,7 +1111,7 @@ reco.bpv <- function(base, strc_mat, cov_mat, cons_mat, id_nn = NULL, nn = NULL,
                                      cov_mat = cov_mat[id0, id0])
           tmp <- tmp[sort.int(id0, index.return = T)$ix]
         }else{
-          tmp2 <- reco.strc(base = t(baseh), strc_mat = strc_mat_0, cov_mat = cov_mat)
+          tmp <- reco.strc(base = t(baseh), strc_mat = strc_mat_0, cov_mat = cov_mat)
         }
         rfc <- as.numeric(tmp)
       }

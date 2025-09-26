@@ -8,12 +8,14 @@ iterec(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
        type = "tcs", norm = "inf", verbose = TRUE)
 }
 \arguments{
-\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base forecasts to
-be reconciled; \eqn{n} is the total number of variables, \eqn{m} is the max. order of temporal
-aggregation, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of \eqn{m},
-excluding \eqn{m}, and \eqn{h} is the forecast horizon for the lowest frequency time series.
-The row identifies a time series, and the forecasts in each row are ordered from the
-lowest frequency (most temporally aggregated) to the highest frequency.}
+\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
+forecasts to be reconciled; \eqn{n} is the total number of variables,
+\eqn{m} is the maximum aggregation order, and \eqn{k^\ast} is the sum of a
+chosen subset of the \eqn{p - 1} factors of \eqn{m} (excluding \eqn{m}
+itself), and \eqn{h} is the forecast horizon for the lowest frequency time
+series. The row identifies a time series, and the forecasts in each row are
+ordered from the lowest frequency (most temporally aggregated) to the
+highest frequency.}
 
 \item{cslist}{A list of elements for the cross-sectional reconciliation.
 See \link{csrec} for a complete list (excluded \code{base} and \code{res}).}
@@ -21,10 +23,10 @@ See \link{csrec} for a complete list (excluded \code{base} and \code{res}).}
 \item{telist}{A list of elements for the temporal reconciliation.
 See \link{terec} for a complete list (excluded \code{base} and \code{res}).}
 
-\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency (columns) for each variable (rows). This matrix is used
-to compute some covariance matrices.}
+\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
+the in-sample residuals ordered from the lowest frequency to the highest
+frequency (columns) for each variable (rows). This matrix is used to
+compute some covariance matrices.}
 
 \item{itmax}{Max number of iteration (\code{100}, \emph{default}).}
 
@@ -41,7 +43,8 @@ incoherence: infinity norm ("\code{inf}", \emph{default}), one norm ("\code{one}
 \item{verbose}{If \code{TRUE}, reconciliation information are printed.}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
+A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+reconciled forecasts.
 }
 \description{
 This function performs the iterative procedure described in Di Fonzo and Girolimetto (2023),
@@ -73,13 +76,15 @@ Optimal combination method and heuristic alternatives, \emph{International Journ
 of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
 }
 \seealso{
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{tcsrec}()}

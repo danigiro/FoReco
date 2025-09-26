@@ -7,15 +7,15 @@
 cstools(agg_mat, cons_mat, sparse = TRUE)
 }
 \arguments{
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the cross-sectional
-zero constraints: each row represents a constraint equation, and each column represents
-a variable. The matrix can be of full rank, meaning the rows are linearly independent,
-but this is not a strict requirement, as the function allows for redundancy in the
-constraints.}
+\item{cons_mat}{A (\eqn{n_a \times n}) numeric matrix representing the
+cross-sectional zero constraints: each row represents a constraint
+equation, and each column represents a variable. The matrix can be of full
+rank, meaning the rows are linearly independent, but this is not a strict
+requirement, as the function allows for redundancy in the constraints.}
 
 \item{sparse}{Option to return sparse matrices (\emph{default} is \code{TRUE}).}
 }
@@ -39,18 +39,22 @@ obj <- cstools(agg_mat = A)
 
 }
 \seealso{
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{csbu}()},
 \code{\link{cscov}()},
+\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csmo}()},
 \code{\link{csrec}()},
+\code{\link{cssample}()},
 \code{\link{cstd}()}
 
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

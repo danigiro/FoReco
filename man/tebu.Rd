@@ -4,33 +4,40 @@
 \alias{tebu}
 \title{Temporal bottom-up reconciliation}
 \usage{
-tebu(base, agg_order, tew = "sum", sntz = FALSE)
+tebu(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 }
 \arguments{
-\item{base}{A (\eqn{hm \times 1}) numeric vector containing the high-frequency base forecasts;
-\eqn{m} is the max. temporal aggregation order, and \eqn{h} is the forecast horizon for the
-lowest frequency time series.}
+\item{base}{A (\eqn{hm \times 1}) numeric vector containing the
+high-frequency base forecasts; \eqn{m} is the max. temporal aggregation
+order, and \eqn{h} is the forecast horizon for the lowest frequency time
+series.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{sntz}{If \code{TRUE}, the negative base forecasts are
-set to zero before applying bottom-up.}
+\item{sntz}{Logical. If \code{TRUE}, the negative base forecasts are set to
+zero (Di Fonzo and Girolimetto, 2023) before applying bottom-up.
+\emph{Default} is \code{FALSE}.}
+
+\item{round}{Logical. If \code{TRUE}, base forecasts are rounded before
+applying the bottom-up reconciliation. \emph{Default} is \code{FALSE}.}
 }
 \value{
-A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal reconciled forecasts.
+A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+reconciled forecasts.
 }
 \description{
-Temporal bottom-up reconciled forecasts at any temporal aggregation level are computed by
-appropriate aggregation of the high-frequency base forecasts, \eqn{\widehat{\mathbf{x}}^{[1]}}:
-\deqn{\widetilde{\mathbf{x}} = \mathbf{S}_{te}\widehat{\mathbf{x}}^{[1]},}
-where \eqn{\mathbf{S}_{te}} is the temporal structural matrix.
+Temporal bottom-up reconciled forecasts at any temporal aggregation level are
+computed by appropriate aggregation of the high-frequency base forecasts,
+\eqn{\widehat{\mathbf{x}}^{[1]}}: \deqn{\widetilde{\mathbf{x}} =
+\mathbf{S}_{te}\widehat{\mathbf{x}}^{[1]},} where \eqn{\mathbf{S}_{te}} is
+the temporal structural matrix.
 }
 \examples{
 set.seed(123)
@@ -45,17 +52,24 @@ hfts[4] <- -hfts[4] # Making negative one of the quarterly base forecasts
 nnreco <- tebu(base = hfts, agg_order = 4, sntz = TRUE)
 
 }
+\references{
+Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
+solar forecasts, \emph{Solar Energy}, 251, 13–29.
+\doi{10.1016/j.solener.2023.01.003}
+}
 \seealso{
-Bottom-up reconciliation: 
+Bottom-up reconciliation:
 \code{\link{csbu}()},
 \code{\link{ctbu}()}
 
-Temporal framework: 
+Temporal framework:
 \code{\link{teboot}()},
 \code{\link{tecov}()},
+\code{\link{tegauss}()},
 \code{\link{telcc}()},
 \code{\link{temo}()},
 \code{\link{terec}()},
+\code{\link{tesample}()},
 \code{\link{tetd}()},
 \code{\link{tetools}()}
 }

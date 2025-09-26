@@ -30,11 +30,11 @@ ctcov(comb = "ols", n = NULL, agg_mat = NULL, agg_order = NULL, res = NULL,
 \arguments{
 \item{comb}{A string specifying the reconciliation method.
 \itemize{
-\item Ordinary least squares:
+\item For ordinary least squares reconciliation:
 \itemize{
 \item "\code{ols}" (\emph{default}) - identity error covariance.
 }
-\item Weighted least squares:
+\item For weighted least squares reconciliation:
 \itemize{
 \item "\code{str}" - structural variances.
 \item "\code{csstr}" - cross-sectional structural variances.
@@ -42,7 +42,7 @@ ctcov(comb = "ols", n = NULL, agg_mat = NULL, agg_order = NULL, res = NULL,
 \item "\code{wlsh}" - hierarchy variances (uses \code{res}).
 \item "\code{wlsv}" - series variances (uses \code{res}).
 }
-\item Generalized least squares (uses \code{res}):
+\item For generalized least squares (uses \code{res}) reconciliation:
 \itemize{
 \item "\code{acov}" - series auto-covariance.
 \item "\code{bdshr}"/"\code{bdsam}" - shrunk/sample block diagonal cross-sectional covariance.
@@ -52,26 +52,30 @@ ctcov(comb = "ols", n = NULL, agg_mat = NULL, agg_order = NULL, res = NULL,
 \item "\code{bshr}"/"\code{bsam}" - shrunk/sample bottom time series covariance.
 \item "\code{hshr}"/"\code{hsam}" - shrunk/sample high frequency covariance.
 }
+\item Others (no for reconciliation):
+\itemize{
+\item "\code{bu}" - bottom-up covariance.
+}
 }}
 
 \item{n}{Cross-sectional number of variables.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency (columns) for each variable (rows). This matrix is used
-to compute some covariance matrices.}
+\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
+the in-sample residuals ordered from the lowest frequency to the highest
+frequency (columns) for each variable (rows). This matrix is used to
+compute some covariance matrices.}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
 \item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
@@ -133,12 +137,14 @@ practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
 \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctbu}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},

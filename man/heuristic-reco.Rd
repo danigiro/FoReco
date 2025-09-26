@@ -12,12 +12,14 @@ tcsrec(base, cslist, telist, res = NULL, avg = "KA")
 cstrec(base, cslist, telist, res = NULL)
 }
 \arguments{
-\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base forecasts to
-be reconciled; \eqn{n} is the total number of variables, \eqn{m} is the max. order of temporal
-aggregation, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of \eqn{m},
-excluding \eqn{m}, and \eqn{h} is the forecast horizon for the lowest frequency time series.
-The row identifies a time series, and the forecasts in each row are ordered from the
-lowest frequency (most temporally aggregated) to the highest frequency.}
+\item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
+forecasts to be reconciled; \eqn{n} is the total number of variables,
+\eqn{m} is the maximum aggregation order, and \eqn{k^\ast} is the sum of a
+chosen subset of the \eqn{p - 1} factors of \eqn{m} (excluding \eqn{m}
+itself), and \eqn{h} is the forecast horizon for the lowest frequency time
+series. The row identifies a time series, and the forecasts in each row are
+ordered from the lowest frequency (most temporally aggregated) to the
+highest frequency.}
 
 \item{cslist}{A list of elements for the cross-sectional reconciliation.
 See \link{csrec} for a complete list (excluded \code{base} and \code{res}).}
@@ -25,10 +27,10 @@ See \link{csrec} for a complete list (excluded \code{base} and \code{res}).}
 \item{telist}{A list of elements for the temporal reconciliation.
 See \link{terec} for a complete list (excluded \code{base} and \code{res}).}
 
-\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency (columns) for each variable (rows). This matrix is used
-to compute some covariance matrices.}
+\item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
+the in-sample residuals ordered from the lowest frequency to the highest
+frequency (columns) for each variable (rows). This matrix is used to
+compute some covariance matrices.}
 
 \item{avg}{If \code{avg = "KA"} (\emph{default}), the final projection
 matrix \eqn{\mathbf{M}} is the one proposed by Kourentzes and
@@ -37,7 +39,8 @@ all the involved projection matrices at step 2 of the procedure (see
 Di Fonzo and Girolimetto, 2023).}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal reconciled forecasts.
+A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+reconciled forecasts.
 }
 \description{
 \link{tcsrec} replicates the procedure by Kourentzes and Athanasopoulos (2019):
@@ -89,13 +92,15 @@ for Australian tourism, \emph{Annals of Tourism Research}, 75, 393-409.
 \doi{10.1016/j.annals.2019.02.001}
 }
 \seealso{
-Cross-temporal framework: 
+Cross-temporal framework:
 \code{\link{ctboot}()},
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
+\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
 \code{\link{ctrec}()},
+\code{\link{ctsample}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()}

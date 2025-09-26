@@ -7,9 +7,9 @@
 unbalance_hierarchy(agg_mat, more_info = FALSE, sparse = TRUE)
 }
 \arguments{
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{more_info}{If \code{TRUE}, it returns only the aggregation matrix
 of the unbalanced hierarchy. \emph{Default} is \code{FALSE}.}
@@ -47,9 +47,11 @@ obj <- unbalance_hierarchy(agg_mat = A)
 obj
 }
 \seealso{
-Utilities: 
+Utilities:
 \code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
+\code{\link{as_ctmatrix}()},
+\code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
 \code{\link{commat}()},
 \code{\link{csprojmat}()},

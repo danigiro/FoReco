@@ -55,7 +55,7 @@ commat_index <- function(r, c){
 #' @description
 #' Shrinkage of the covariance matrix according to \enc{Schäfer}{Schafer} and Strimmer (2005).
 #'
-#' @param x A numeric matrix containing the in-sample residuals.
+#' @param x A numeric matrix containing the residuals.
 #' @param mse If \code{TRUE} (\emph{default}), the residuals used to compute the covariance
 #' matrix are not mean-corrected.
 #'
@@ -294,8 +294,6 @@ find_nodes <- function(agg_mat){
               id = c(unlist(levels), (NROW(agg_mat)+1):NROW(strc_mat))))
 }
 
-
-
 #' Aggregation matrix of a balanced hierarchy in (possibly) unbalanced form
 #'
 #' A hierarchy with \eqn{L} upper levels is said to be balanced if each variable at level
@@ -373,7 +371,7 @@ unbalance_hierarchy <- function(agg_mat, more_info = FALSE, sparse = TRUE){
 #' @param x An output from any reconciliation function implemented by \pkg{FoReco}.
 #' @param verbose If \code{TRUE} (\emph{defaults}), reconciliation information are printed.
 #'
-#' @returns A list containing the following reconciliation process informations:
+#' @returns A list containing the following reconciliation process information:
 #'   \item{rfun}{the reconciliation function.}
 #'   \item{cs_n}{the cross-sectional number of variables.}
 #'   \item{te_set}{the set of temporal aggregation orders.}
@@ -395,7 +393,15 @@ recoinfo <- function(x, verbose = TRUE){
     invisible(NULL)
   }else{
     out <- as.list(attr(x,"FoReco"))
-    out$nn <- all(x>=0)
+
+    if(is.numeric(x)){
+      out$nn <- all(x>=0)
+      intro <- ""
+    }else{
+      out$nn <- out$nn
+      intro <- "Probabilistic "
+    }
+
     if(verbose){
       if(out$rfun %in% c("cslcc", "telcc", "ctlcc")){
         title <- "Level Conditional Coherent "
@@ -412,7 +418,7 @@ recoinfo <- function(x, verbose = TRUE){
       }else{
         title <- " "
       }
-      cli_alert_success("{.emph {title}}{.strong {out$framework}} Forecast Reconciliation")
+      cli_alert_success("{.emph {intro}}{.emph {title}}{.strong {out$framework}} Forecast Reconciliation")
       if(!is.null(out$rfun)) cli_alert_info("{.pkg FoReco} function: {.strong {.code {out$rfun}}}")
 
       if(!is.null(out$comb)){
@@ -867,7 +873,7 @@ set_bounds <- function(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds =
 
   }else if(!missing(n)){
 
-    max_size = max(length(lb), length(ub), length(n))
+    max_size <- max(length(lb), length(ub), length(n))
 
     if(length(n) != 1 & length(n) != max_size){
       cli_abort("{.arg n} length must be either 1 or {max_size}")
@@ -884,7 +890,7 @@ set_bounds <- function(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds =
     bounds <- cbind(n, lb, ub)
 
   }else if(!missing(k)){
-    max_size = max(length(k), length(h), length(lb), length(ub))
+    max_size <- max(length(k), length(h), length(lb), length(ub))
     if(length(k) != 1 & length(k) != max_size){
       cli_abort("{.arg k} length must be either 1 or {max_size}")
     }

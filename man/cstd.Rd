@@ -10,9 +10,9 @@ cstd(base, agg_mat, weights, normalize = TRUE)
 \item{base}{A (\eqn{h \times 1}) numeric vector containing the top-level base forecast;
 \eqn{h} is the forecast horizon.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{weights}{A (\eqn{h \times n_b}) numeric matrix containing the proportions for the
 bottom time series; \eqn{h} is the forecast horizon, and \eqn{n_b} is the total number
@@ -21,7 +21,8 @@ of bottom variables.}
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional reconciled forecasts.
+A (\eqn{h \times n}) numeric matrix of cross-sectional
+reconciled forecasts.
 }
 \description{
 Top-down forecast reconciliation for genuine hierarchical/grouped time series
@@ -54,17 +55,19 @@ Gross, C.W. and Sohl, J.E. (1990), Disaggregation methods to expedite product
 line forecasting. \emph{Journal of Forecasting} 9(3), 233–254. \doi{10.1002/for.3980090304}
 }
 \seealso{
-Top-down reconciliation: 
+Top-down reconciliation:
 \code{\link{cttd}()},
 \code{\link{tetd}()}
 
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{csbu}()},
 \code{\link{cscov}()},
+\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csmo}()},
 \code{\link{csrec}()},
+\code{\link{cssample}()},
 \code{\link{cstools}()}
 }
 \concept{Framework: cross-sectional}

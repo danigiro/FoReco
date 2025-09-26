@@ -9,21 +9,23 @@ telcc(base, agg_order, comb = "ols", res = NULL, CCC = TRUE,
       approach = "proj", nn = NULL, settings = NULL, ...)
 }
 \arguments{
-\item{base}{A (\eqn{h(k^\ast + m) \times 1}) numeric vector containing base forecasts
-to be reconciled ordered from the lowest frequency to the highest frequency; \eqn{m}
-is the max aggregation order, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1})
-factors of \eqn{m}, excluding \eqn{m}, and \eqn{h} is the forecast horizon for the
-lowest frequency time series.}
+\item{base}{A (\eqn{N(k^\ast + m) \times 1}) numeric vector containing the
+base forecasts to be reconciled, ordered from lowest to highest frequency;
+\eqn{m} is the maximum aggregation order, \eqn{k^\ast} is the sum of a
+chosen subset of the \eqn{p - 1} factors of \eqn{m} (excluding \eqn{m}
+itself) and \eqn{h} is the forecast horizon for the lowest frequency
+time series.}
 
-\item{agg_order}{Highest available sampling frequency per seasonal cycle (max. order
-of temporal aggregation, \eqn{m}), or a vector representing a subset of \eqn{p} factors
-of \eqn{m}.}
+\item{agg_order}{Highest available sampling frequency per seasonal cycle
+(max. order of temporal aggregation, \eqn{m}), or a vector representing a
+subset of \eqn{p} factors of \eqn{m}.}
 
-\item{comb}{A string specifying the reconciliation method. For a complete list, see \link{tecov}.}
+\item{comb}{A string specifying the reconciliation method. For a complete
+list, see \link{tecov}.}
 
-\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing the
-in-sample residuals at all the temporal frequencies ordered from the lowest frequency
-to the highest frequency. This vector is used to compute come covariance matrices.}
+\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
+the residuals ordered from the lowest frequency to the highest
+frequency. This vector is used to compute come covariance matrices.}
 
 \item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
 forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
@@ -38,41 +40,48 @@ forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{
 by the user. This parameter can be omitted if only base forecasts in
 \code{base} are used (see Di Fonzo and Girolimetto, 2024).}
 
-\item{tew}{A string specifying the type of temporal aggregation. Options include:
-"\code{sum}" (simple summation, \emph{default}), "\code{avg}" (average),
-"\code{first}" (first value of the period), and "\code{last}"
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{approach}{A string specifying the approach used to compute the reconciled
-forecasts. Options include:
+\item{approach}{A string specifying the approach used to compute the
+reconciled forecasts. Options include:
 \itemize{
-\item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-\item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
-\item "\code{proj_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for projection approach.
-\item "\code{strc_osqp}": Numerical solution using \href{https://osqp.org/}{\pkg{osqp}}
-for structural approach.
+\item "\code{proj}" (\emph{default}): Projection approach according
+to Byron (1978, 1979).
+\item "\code{strc}": Structural approach as proposed by Hyndman
+et al. (2011).
+\item "\code{proj_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for projection approach.
+\item "\code{strc_osqp}": Numerical solution using
+\href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{nn}{A string specifying the algorithm to compute non-negative forecasts:
+\item{nn}{A string specifying the algorithm to compute non-negative
+forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
 \item "\code{bpv}": block principal pivoting algorithm.
-\item "\code{sntz}": heuristic "set-negative-to-zero" (Di Fonzo and Girolimetto, 2023).
+\item "\code{sntz}": heuristic "set-negative-to-zero"
+(Di Fonzo and Girolimetto, 2023).
 }}
 
 \item{settings}{A list of control parameters.
 \itemize{
-\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying settings
-for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details, refer to the
-\href{https://osqp.org/}{\pkg{osqp} documentation} (Stellato et al., 2020).
-\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method ("\code{random}"
-or "\code{fixed}", \emph{default}), \code{par} for the number of full exchange rules that
-may be attempted (\code{10}, \emph{default}), \code{tol} for the tolerance in convergence
-criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the gradient
-tolerance in convergence criteria (\code{sqrt(.Machine$double.eps)}, \emph{default}),
-\code{itmax} for the maximum number of algorithm iterations (\code{100}, \emph{default})
+\item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying
+settings for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details,
+refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
+(Stellato et al., 2020).
+\item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
+("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
+number of full exchange rules that may be attempted (\code{10},
+\emph{default}), \code{tol} for the tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
+gradient tolerance in convergence criteria
+(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
+maximum number of algorithm iterations (\code{100}, \emph{default})
 }}
 
 \item{...}{
@@ -84,7 +93,8 @@ matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal reconciled forecasts.
+A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+reconciled forecasts.
 }
 \description{
 This function implements a forecast reconciliation procedure inspired by the original proposal
@@ -162,16 +172,18 @@ An Operator Splitting solver for Quadratic Programs,
 \doi{10.1007/s12532-020-00179-2}
 }
 \seealso{
-Level conditional coherent reconciliation: 
+Level conditional coherent reconciliation:
 \code{\link{cslcc}()},
 \code{\link{ctlcc}()}
 
-Temporal framework: 
+Temporal framework:
 \code{\link{teboot}()},
 \code{\link{tebu}()},
 \code{\link{tecov}()},
+\code{\link{tegauss}()},
 \code{\link{temo}()},
 \code{\link{terec}()},
+\code{\link{tesample}()},
 \code{\link{tetd}()},
 \code{\link{tetools}()}
 }

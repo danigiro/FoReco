@@ -11,22 +11,26 @@
 #'
 #' @param n Number of variables (\eqn{n = n_a + n_b}).
 #' @inheritParams csrec
-#' @param comb A string specifying the reconciliation method.
+#' @param comb A string specifying the covariance approximation method.
 #'   \itemize{
-#'      \item Ordinary least squares:
+#'      \item For ordinary least squares reconciliation:
 #'      \itemize{
 #'      \item "\code{ols}" (\emph{default}) - identity error covariance matrix.
 #'      }
-#'     \item Weighted least squares:
+#'     \item For weighted least squares reconciliation:
 #'      \itemize{
 #'      \item "\code{str}" - structural variances.
 #'      \item "\code{wls}" - series variances (uses \code{res}).
 #'      }
-#'     \item Generalized least squares (uses \code{res}):
+#'     \item For generalized least squares (uses \code{res}) reconciliation:
 #'      \itemize{
 #'      \item "\code{shr}" - shrunk covariance (Wickramasuriya et al., 2019).
 #'      \item "\code{oasd}" - oracle shrunk covariance (Ando and Xiao, 2023).
 #'      \item "\code{sam}" - sample covariance.
+#'      }
+#'     \item Others (no for reconciliation):
+#'      \itemize{
+#'      \item "\code{bu}" - bottom-up covariance.
 #'      }
 #'   }
 #' @param mse If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
@@ -144,4 +148,21 @@ cscov.sam <- function(comb = "sam", ..., res = NULL, mse = TRUE){
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
   }
   sample_estim(res, mse = mse)
+}
+
+#' @export
+cscov.bu <- function(comb = "bu", ..., agg_mat = NULL, strc_mat = NULL, cov_bts = NULL){
+  if(is.null(strc_mat)){
+    if(is.null(agg_mat)){
+      cli_abort("Argument {.arg agg_mat} is NULL.", call = NULL)
+    }
+
+    strc_mat <- cstools(agg_mat = agg_mat)$strc_mat
+  }
+
+  if(is.null(cov_bts)){
+    cli_abort("Argument {.arg cov_bts} is NULL.", call = NULL)
+  }
+
+  strc_mat %*% tcrossprod(cov_bts, strc_mat)
 }

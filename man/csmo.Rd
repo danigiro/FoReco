@@ -11,9 +11,9 @@ csmo(base, agg_mat, id_rows = 1, weights, normalize = TRUE)
 base forecast; \eqn{n_l} is the number of variables at level \eqn{l}, and
 \eqn{h} is the forecast horizon.}
 
-\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the cross-sectional
-aggregation matrix. It maps the \eqn{n_b} bottom-level (free)
-variables into the \eqn{n_a} upper (constrained) variables.}
+\item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
+cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
+(free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{id_rows}{A numeric vector indicating the \eqn{l}-level rows of \code{agg_mat}.}
 
@@ -24,7 +24,8 @@ of bottom variables.}
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional reconciled forecasts.
+A (\eqn{h \times n}) numeric matrix of cross-sectional
+reconciled forecasts.
 }
 \description{
 The middle-out forecast reconciliation (Athanasopoulos et al., 2009) combines
@@ -57,16 +58,18 @@ for Australian domestic tourism. \emph{International Journal of Forecasting} 25(
 146–166. \doi{10.1016/j.ijforecast.2008.07.004}
 }
 \seealso{
-Middle-out reconciliation: 
+Middle-out reconciliation:
 \code{\link{ctmo}()},
 \code{\link{temo}()}
 
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{csbu}()},
 \code{\link{cscov}()},
+\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csrec}()},
+\code{\link{cssample}()},
 \code{\link{cstd}()},
 \code{\link{cstools}()}
 }

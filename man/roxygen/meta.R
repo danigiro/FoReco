@@ -8,5 +8,6 @@ list(
                          "Reco: middle-out" = "Middle-out reconciliation: ",
                          "Reco: regression-based" = "Regression-based reconciliation: ",
                          "Reco: top-down" = "Top-down reconciliation: ",
+                         "Reco: probabilistic" = "Probabilistic reconciliation: ",
                          "Bootstrap samples" = "Bootstrap samples: ")
 )

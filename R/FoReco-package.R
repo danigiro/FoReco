@@ -10,4 +10,6 @@
 #' @importFrom cli cli_warn cli_alert_success cli_abort
 #' @importFrom cli cli_alert_info cli_alert_warning cli_alert_danger
 #' @importFrom cli cli_text cli_bullets cli_rule
+#' @importFrom distributional dist_multivariate_normal dist_sample
+#' @importFrom lifecycle deprecate_warn deprecated
 NULL

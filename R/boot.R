@@ -14,7 +14,7 @@
 #' @param seed An integer seed.
 #'
 #' @return A list with two elements: the seed used to sample the errors and a 3-d array
-#' (\eqn{\text{boot\_size}\times n \times \text{block\_size}}).
+#' (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
 #'
 #' @references
 #' Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
@@ -40,11 +40,11 @@ csboot <- function(model_list, boot_size, block_size, seed = NULL){
                     future = TRUE, nsim = length(res[id, x])))
   }), simplify = FALSE)
 
-  fboot <- aperm(simplify2array(fboot), c(3, 2, 1))
+  fboot <- simplify2array(fboot)
   dimnames(fboot) <- list(
-    paste0("b-", 1:dim(fboot)[1]),
+    paste0("h-", 1:dim(fboot)[1]),
     paste0("s-", 1:dim(fboot)[2]),
-    paste0("h-", 1:dim(fboot)[3])
+    paste0("b-", 1:dim(fboot)[3])
   )
   if(!is.null(names(model_list))){
     dimnames(fboot)[[2]] <- names(model_list)
@@ -129,8 +129,9 @@ teboot <- function(model_list, boot_size, agg_order, block_size = 1, seed = NULL
 #' @inheritParams ctrec
 #' @inheritParams teboot
 #'
-#' @return A list with two elements: the seed used to sample the errors and
-#' a (\eqn{\text{boot\_size}\times n(k^\ast+m)\text{block\_size}}) matrix.
+#' @return A list with two elements: the seed used to sample the
+#' errors and a list with \eqn{\text{boot\_size}} matrix of size
+#' (\eqn{n\times(k^\ast+m)\text{block\_size}}) matrix.
 #'
 #' @references
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2023), Cross-temporal
@@ -172,11 +173,11 @@ ctboot <- function(model_list, boot_size, agg_order, block_size = 1, seed = NULL
         out <- unname(rbind(out))
       }
       colnames(out) <- names(fit_i)
-      out
+      t(out)
     })
   })
 
-  fboot <- lapply(fboot, Reduce, f = "rbind")
+  fboot <- lapply(fboot, Reduce, f = "cbind")
   return(list(sample = fboot,
               seed = seed))
 }

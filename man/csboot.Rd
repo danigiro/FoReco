@@ -22,7 +22,7 @@ to the forecast horizon.}
 }
 \value{
 A list with two elements: the seed used to sample the errors and a 3-d array
-(\eqn{\text{boot\_size}\times n \times \text{block\_size}}).
+(\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
 }
 \description{
 Joint block bootstrap for generating probabilistic base forecasts that take into account
@@ -35,16 +35,18 @@ Probabilistic forecast reconciliation: Properties, evaluation and score optimisa
 \doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
 }
 \seealso{
-Bootstrap samples: 
+Bootstrap samples:
 \code{\link{ctboot}()},
 \code{\link{teboot}()}
 
-Cross-sectional framework: 
+Cross-sectional framework:
 \code{\link{csbu}()},
 \code{\link{cscov}()},
+\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csmo}()},
 \code{\link{csrec}()},
+\code{\link{cssample}()},
 \code{\link{cstd}()},
 \code{\link{cstools}()}
 }
