@@ -9,3 +9,6 @@ cran-comments.md
 
 CRAN-SUBMISSION
 inst/doc
+
+/.quarto/
+**/*.quarto_ipynb

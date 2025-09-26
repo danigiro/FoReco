@@ -5,7 +5,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco)
 [![devel
-version](https://img.shields.io/badge/devel%20version-1.1.0.9000-blue.svg)](https://github.com/danigiro/FoReco)
+version](https://img.shields.io/badge/devel%20version-1.1.0.9012-blue.svg)](https://github.com/danigiro/FoReco)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
@@ -29,6 +29,9 @@ follows:
 | *Regression‑based reconciliation* |  |  |  |
 | Least squares: `*rec()` | [`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.html) | [`terec()`](https://danigiro.github.io/FoReco/reference/terec.html) | [`ctrec()`](https://danigiro.github.io/FoReco/reference/ctrec.html) |
 | LCC: `*lcc()` | [`cslcc()`](https://danigiro.github.io/FoReco/reference/cslcc.html) | [`telcc()`](https://danigiro.github.io/FoReco/reference/telcc.html) | [`ctlcc()`](https://danigiro.github.io/FoReco/reference/ctlcc.html) |
+| *Probabilistic reconciliation* |  |  |  |
+| MVN: `*gauss()` | [`csgauss()`](https://danigiro.github.io/FoReco/reference/csgauss.html) | [`tegauss()`](https://danigiro.github.io/FoReco/reference/tegauss.html) | [`ctgauss()`](https://danigiro.github.io/FoReco/reference/ctgauss.html) |
+| Sample-based: `*sample()` | [`cssample()`](https://danigiro.github.io/FoReco/reference/cssample.html) | [`tesample()`](https://danigiro.github.io/FoReco/reference/tesample.html) | [`ctsample()`](https://danigiro.github.io/FoReco/reference/ctsample.html) |
 
 Additionally, **FoReco** provides various functions for different
 aspects of forecast reconciliation, including aggregating time series,
