@@ -7,18 +7,21 @@
 recoinfo(x, verbose = TRUE)
 }
 \arguments{
-\item{x}{An output from any reconciliation function implemented by \pkg{FoReco}.}
+\item{x}{An output from any reconciliation function implemented by
+\pkg{FoReco}.}
 
-\item{verbose}{If \code{TRUE} (\emph{defaults}), reconciliation information are printed.}
+\item{verbose}{If \code{TRUE} (\emph{defaults}), reconciliation information
+are printed.}
 }
 \value{
 A list containing the following reconciliation process information:
 \item{rfun}{the reconciliation function.}
 \item{cs_n}{the cross-sectional number of variables.}
 \item{te_set}{the set of temporal aggregation orders.}
-\item{forecast_horizon}{the forecast horizon
-(in temporal and cross-temporal frameworks, for the most temporally aggregated series).}
-\item{framework}{the reconciliation framework (cross-sectional, temporal or cross-temporal).}
+\item{forecast_horizon}{the forecast horizon (in temporal and
+cross-temporal frameworks, for the most temporally aggregated series).}
+\item{framework}{the reconciliation framework (cross-sectional, temporal
+or cross-temporal).}
 \item{info}{non-negative reconciled forecast convergence information.}
 \item{lcc}{list of level conditional reconciled forecasts (+ BU) for
 \link{cslcc}, \link{telcc} and \link{ctlcc}.}
@@ -26,8 +29,8 @@ A list containing the following reconciliation process information:
 \item{comb}{the covariance approximation.}
 }
 \description{
-This function extracts reconciliation information from the output of any reconciled
-function implemented by \pkg{FoReco}.
+This function extracts reconciliation information from the output of any
+reconciled function implemented by \pkg{FoReco}.
 }
 \seealso{
 Utilities:

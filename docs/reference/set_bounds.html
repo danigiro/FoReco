@@ -70,13 +70,14 @@ or <a href="ctrec.html">ctrec</a>, to perform bounded reconciliations.</p>
 
 
 <dl><dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
-<dd><p>A (\(b \times 1\)) vector representing the \(i\)th cross-sectional
-series (\(i = 1, \dots, n\)), where \(b\) is the number of bounds to be set.</p></dd>
+<dd><p>A (\(b \times 1\)) vector representing the \(i\)th
+cross-sectional series (\(i = 1, \dots, n\)), where \(b\) is the number
+of bounds to be set.</p></dd>
 
 
 <dt id="arg-k">k<a class="anchor" aria-label="anchor" href="#arg-k"></a></dt>
-<dd><p>A (\(b \times 1\)) vector specifying the temporal aggregation orders
-(\(k = m, \dots, 1\)).</p></dd>
+<dd><p>A (\(b \times 1\)) vector specifying the temporal aggregation
+orders (\(k = m, \dots, 1\)).</p></dd>
 
 
 <dt id="arg-h">h<a class="anchor" aria-label="anchor" href="#arg-h"></a></dt>
@@ -89,10 +90,12 @@ series (\(i = 1, \dots, n\)), where \(b\) is the number of bounds to be set.</p>
 
 
 <dt id="arg-approach">approach<a class="anchor" aria-label="anchor" href="#arg-approach"></a></dt>
-<dd><p>A string specifying the algorithm to compute bounded reconciled forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
+<dd><p>A string specifying the algorithm to compute bounded
+reconciled forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
-<li><p>"<code>sftb</code>": heuristic "set-forecasts-to-bounds", which adjusts the reconciled
-forecasts to be within specified bounds without further optimization.</p></li>
+<li><p>"<code>sftb</code>": heuristic "set-forecasts-to-bounds", which adjusts
+the reconciled forecasts to be within specified bounds without further
+optimization.</p></li>
 </ul></dd>
 
 
@@ -103,9 +106,12 @@ new bounds will be computed.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A numeric matrix representing the computed bounds, which can be:</p><ul><li><p>Cross-sectional (\(b \times 3\)) matrix for cross-sectional reconciliation (<a href="csrec.html">csrec</a>).</p></li>
-<li><p>Temporal (\(b \times 4\)) matrix for temporal reconciliation (<a href="terec.html">terec</a>).</p></li>
-<li><p>Cross-temporal (\(b \times 5\)) matrix for cross-temporal reconciliation (<a href="ctrec.html">ctrec</a>).</p></li>
+    <p>A numeric matrix representing the computed bounds, which can be:</p><ul><li><p>Cross-sectional (\(b \times 3\)) matrix for cross-sectional
+reconciliation (<a href="csrec.html">csrec</a>).</p></li>
+<li><p>Temporal (\(b \times 4\)) matrix for temporal reconciliation
+(<a href="terec.html">terec</a>).</p></li>
+<li><p>Cross-temporal (\(b \times 5\)) matrix for cross-temporal
+reconciliation (<a href="ctrec.html">ctrec</a>).</p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

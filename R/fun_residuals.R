@@ -48,25 +48,28 @@
 #' @rdname residuals
 #'
 #' @export
-res2matrix <- function(res, agg_order){
-  lifecycle::deprecate_warn("1.0", "FoReco::res2matrix()",
-                            details = "Please use `FoReco::as_hstack_telayout()` or  `FoReco::as_hstack_ctlayout()`.")
+res2matrix <- function(res, agg_order) {
+  lifecycle::deprecate_warn(
+    "1.0",
+    "FoReco::res2matrix()",
+    details = "Please use `FoReco::as_hstack_telayout()` or  `FoReco::as_hstack_ctlayout()`."
+  )
   kset <- tetools(agg_order = agg_order)$set
 
-  if(is.vector(res)){
-    if(length(res) %% sum(max(kset)/kset) != 0){
+  if (is.vector(res)) {
+    if (length(res) %% sum(max(kset) / kset) != 0) {
       cli_abort("Incorrect {.arg res} length.", call = NULL)
     }
 
-    N <- length(res) / sum(max(kset)/kset)
+    N <- length(res) / sum(max(kset) / kset)
     vec2hmat(vec = res, h = N, kset = kset)
-  }else{
+  } else {
     n <- NROW(res)
-    if(NCOL(res) %% sum(max(kset)/kset) != 0){
+    if (NCOL(res) %% sum(max(kset) / kset) != 0) {
       cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
     }
 
-    mat2hmat(res, h = NCOL(res) / sum(max(kset)/kset), kset = kset, n = n)
+    mat2hmat(res, h = NCOL(res) / sum(max(kset) / kset), kset = kset, n = n)
   }
 }
 
@@ -109,28 +112,26 @@ res2matrix <- function(res, agg_order){
 #' @rdname residuals
 #'
 #' @export
-arrange_hres <- function(list_res){
-  if(!is.list(list_res)){
+arrange_hres <- function(list_res) {
+  if (!is.list(list_res)) {
     cli_abort("{.arg list_res} is not a list.", call = NULL)
   }
 
-  if(is.list(list_res) & length(list_res)<2){
+  if (is.list(list_res) & length(list_res) < 2) {
     return(list_res[[1]])
   }
 
   out <- list_res[[1]]
   tsp(out) <- NULL
   H <- length(list_res)
-  for(h in 2:H){
+  for (h in 2:H) {
     outh <- list_res[[h]]
-    id <- seq(h, by = H, length.out = NROW(out)/H)
-    if(is.vector(out)){
+    id <- seq(h, by = H, length.out = NROW(out) / H)
+    if (is.vector(out)) {
       out[id] <- outh[id]
-    }else{
-      out[id,] <- outh[id,]
+    } else {
+      out[id, ] <- outh[id, ]
     }
   }
   return(out)
 }
-
-

@@ -48,7 +48,8 @@ forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
-\item "\code{bpv}": block principal pivoting algorithm.
+\item "\code{bpv}": block principal pivoting algorithm
+(Wickramasuriya et al., 2020).
 \item "\code{sntz}": heuristic "set-negative-to-zero"
 (Di Fonzo and Girolimetto, 2023).
 }}
@@ -62,11 +63,11 @@ refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
 \item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
 ("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
 number of full exchange rules that may be attempted (\code{10},
-\emph{default}), \code{tol} for the tolerance in convergence criteria
+\emph{default}), \code{tol} for the tolerance criteria
 (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
-gradient tolerance in convergence criteria
-(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
-maximum number of algorithm iterations (\code{100}, \emph{default})
+gradient tolerance criteria (\code{sqrt(.Machine$double.eps)},
+\emph{default}), \code{itmax} for the maximum number of algorithm
+iterations (\code{100}, \emph{default})
 }}
 
 \item{bounds}{A matrix (see \link{set_bounds}) with 3 columns
@@ -96,12 +97,13 @@ reconciled forecasts.
 \description{
 This function performs optimal (in least squares sense)
 combination cross-sectional forecast reconciliation for a linearly
-constrained (e.g., hierarchical/grouped) multiple time series (Wickramasuriya
-et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di Fonzo, 2023). The
-reconciled forecasts are calculated using either a projection approach
-(Byron, 1978, 1979) or the equivalent structural approach by Hyndman et al.
-(2011). Non-negative (Di Fonzo and Girolimetto, 2023) and immutable
-(including Zhang et al., 2023) reconciled forecasts can be considered.
+constrained (e.g., hierarchical/grouped) multiple time series
+(Wickramasuriya et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di
+Fonzo, 2023). The reconciled forecasts are calculated using either a
+projection approach (Byron, 1978, 1979) or the equivalent structural
+approach by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto,
+2023) and immutable including Zhang et al., 2023) reconciled forecasts can
+be considered.
 }
 \examples{
 set.seed(123)
@@ -162,6 +164,10 @@ Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal
 forecast reconciliation for hierarchical and grouped time series through
 trace minimization, \emph{Journal of the American Statistical Association},
 114, 526, 804-819. \doi{10.1080/01621459.2018.1448825}
+
+Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020). Optimal
+non-negative forecast reconciliation. \emph{Statistics and Computing}, 30(5),
+1167–1182. \doi{10.1007/s11222-020-09930-0}
 
 Zhang, B., Kang, Y., Panagiotelis, A. and Li, F. (2023), Optimal
 reconciliation with immutable forecasts, \emph{European Journal of

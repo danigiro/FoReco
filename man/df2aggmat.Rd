@@ -8,20 +8,25 @@ df2aggmat(formula, data, sep = "_", sparse = TRUE, top_label = "Total",
           verbose = TRUE)
 }
 \arguments{
-\item{formula}{Specification of the hierarchical structure: grouped hierarchies are specified
-using \code{~ g1 * g2} and nested hierarchies are specified using \code{~ parent / child}.
-Mixtures of the two formulations are also possible, like \code{~ g1 * (grandparent / parent / child)}.}
+\item{formula}{Specification of the hierarchical structure: grouped
+hierarchies are specified using \code{~ g1 * g2} and nested hierarchies are
+specified using \code{~ parent / child}. Mixtures of the two formulations
+are also possible, like \code{~ g1 * (grandparent / parent / child)}.}
 
-\item{data}{A dataset in which each column contains the values of the variables in the formula
-and each row identifies a bottom level time series.}
+\item{data}{A dataset in which each column contains the values of the
+variables in the formula and each row identifies a bottom level time series.}
 
-\item{sep}{Character to separate the names of the aggregated series, (\emph{default} is "\code{_}").}
+\item{sep}{Character to separate the names of the aggregated series,
+(\emph{default} is "\code{_}").}
 
-\item{sparse}{Option to return sparse matrices (\emph{default} is \code{TRUE}).}
+\item{sparse}{Option to return sparse matrices
+(\emph{default} is \code{TRUE}).}
 
-\item{top_label}{Label of the top level variable (\emph{default} is "\code{Total}").}
+\item{top_label}{Label of the top level variable
+(\emph{default} is "\code{Total}").}
 
-\item{verbose}{If \code{TRUE} (\emph{default}), hierarchy informations are printed.}
+\item{verbose}{If \code{TRUE} (\emph{default}), hierarchy informations are
+printed.}
 }
 \value{
 A (\code{na x nb}) matrix.

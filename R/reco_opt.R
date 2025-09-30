@@ -2,12 +2,13 @@
 #'
 #' @description This function performs optimal (in least squares sense)
 #' combination cross-sectional forecast reconciliation for a linearly
-#' constrained (e.g., hierarchical/grouped) multiple time series (Wickramasuriya
-#' et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di Fonzo, 2023). The
-#' reconciled forecasts are calculated using either a projection approach
-#' (Byron, 1978, 1979) or the equivalent structural approach by Hyndman et al.
-#' (2011). Non-negative (Di Fonzo and Girolimetto, 2023) and immutable
-#' (including Zhang et al., 2023) reconciled forecasts can be considered.
+#' constrained (e.g., hierarchical/grouped) multiple time series
+#' (Wickramasuriya et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di
+#' Fonzo, 2023). The reconciled forecasts are calculated using either a
+#' projection approach (Byron, 1978, 1979) or the equivalent structural
+#' approach by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto,
+#' 2023) and immutable including Zhang et al., 2023) reconciled forecasts can
+#' be considered.
 #'
 #' @usage
 #' csrec(base, agg_mat, cons_mat, comb = "ols", res = NULL, approach = "proj",
@@ -75,6 +76,10 @@
 #' trace minimization, \emph{Journal of the American Statistical Association},
 #' 114, 526, 804-819. \doi{10.1080/01621459.2018.1448825}
 #'
+#' Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020). Optimal
+#' non-negative forecast reconciliation. \emph{Statistics and Computing}, 30(5),
+#' 1167–1182. \doi{10.1007/s11222-020-09930-0}
+#'
 #' Zhang, B., Kang, Y., Panagiotelis, A. and Li, F. (2023), Optimal
 #' reconciliation with immutable forecasts, \emph{European Journal of
 #' Operational Research}, 308(2), 650–660. \doi{10.1016/j.ejor.2022.11.035}
@@ -105,15 +110,27 @@
 #' @family Framework: cross-sectional
 #' @export
 #'
-csrec <- function(base, agg_mat, cons_mat, comb = "ols", res = NULL,
-                  approach = "proj", nn = NULL, settings = NULL, bounds = NULL,
-                  immutable = NULL, ...){
-
+csrec <- function(
+  base,
+  agg_mat,
+  cons_mat,
+  comb = "ols",
+  res = NULL,
+  approach = "proj",
+  nn = NULL,
+  settings = NULL,
+  bounds = NULL,
+  immutable = NULL,
+  ...
+) {
   # Check if either 'agg_mat' or 'cons_mat' is specified
-  if(missing(agg_mat) && missing(cons_mat)){
-    cli_abort("Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
-              with no default.", call = NULL)
-  } else if(!missing(agg_mat)){
+  if (missing(agg_mat) && missing(cons_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
+              with no default.",
+      call = NULL
+    )
+  } else if (!missing(agg_mat)) {
     tmp <- cstools(agg_mat = agg_mat)
   } else {
     tmp <- cstools(cons_mat = cons_mat)
@@ -123,35 +140,37 @@ csrec <- function(base, agg_mat, cons_mat, comb = "ols", res = NULL,
   strc_mat <- tmp$strc_mat
   cons_mat <- tmp$cons_mat
 
-  if(is.null(tmp$agg_mat)){
+  if (is.null(tmp$agg_mat)) {
     id_nn <- NULL
-  }else{
+  } else {
     id_nn <- c(rep(0, tmp$dim[["na"]]), rep(1, tmp$dim[["nb"]]))
   }
 
   # Check if 'base' is provided and its dimensions match with the data
-  if(missing(base)){
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
-  } else if(NCOL(base) == 1){
+  } else if (NCOL(base) == 1) {
     base <- t(base)
   }
 
-  if(NCOL(base) != n){
+  if (NCOL(base) != n) {
     cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
   }
 
   # Check immutable
-  if(!is.null(immutable)){
-    if(NCOL(immutable) != 1){
+  if (!is.null(immutable)) {
+    if (NCOL(immutable) != 1) {
       cli_abort("{.arg immutable} is not a vector.", call = NULL)
     }
 
-    if(max(immutable) > n){
-      cli_abort("{.code max(immutable)} must be less or equal to {n}",
-                call = NULL)
+    if (max(immutable) > n) {
+      cli_abort(
+        "{.code max(immutable)} must be less or equal to {n}",
+        call = NULL
+      )
     }
 
-    if(length(immutable) >= n){
+    if (length(immutable) >= n) {
       # Answer issue (@AngelPone):
       # https://github.com/danigiro/FoReco/issues/6#issue-2397642027
       cli_abort("{.code length(immutable)} must be less than {n}", call = NULL)
@@ -159,64 +178,83 @@ csrec <- function(base, agg_mat, cons_mat, comb = "ols", res = NULL,
   }
 
   # Check bounds cs
-  if(!is.null(bounds)){
-    if(is.vector(bounds)){
+  if (!is.null(bounds)) {
+    if (is.vector(bounds)) {
       bounds <- matrix(bounds, ncol = length(bounds))
     }
-    if(NCOL(bounds) != 3){
+    if (NCOL(bounds) != 3) {
       cli_abort("{.arg bounds} is not a matrix with 3 columns.", call = NULL)
     }
     bounds_approach <- attr(bounds, "approach")
 
-    bounds <- bounds[bounds[,1] <= n, , drop = FALSE]
+    bounds <- bounds[bounds[, 1] <= n, , drop = FALSE]
 
-    if(NROW(bounds)==0){
+    if (NROW(bounds) == 0) {
       cli_warn("No valid bounds", call = NULL)
       bounds <- NULL
-    }else{
+    } else {
       attr(bounds, "approach") <- bounds_approach
     }
   }
 
   # Compute covariance
-  if(is(comb, "Matrix") | is(comb, "matrix")){
+  if (is(comb, "Matrix") | is(comb, "matrix")) {
     cov_mat <- comb
-  }else{
-    cov_mat <- cscov(comb = comb, n = n, agg_mat = agg_mat, res = res,
-                     strc_mat = strc_mat, ...)
+  } else {
+    cov_mat <- cscov(
+      comb = comb,
+      n = n,
+      agg_mat = agg_mat,
+      res = res,
+      strc_mat = strc_mat,
+      ...
+    )
   }
-  if(NROW(cov_mat) != n | NCOL(cov_mat) != n){
-    cli_abort(c("Incorrect covariance dimensions.",
-                "i"="Check {.arg res} columns dimension."), call = NULL)
+  if (NROW(cov_mat) != n | NCOL(cov_mat) != n) {
+    cli_abort(
+      c(
+        "Incorrect covariance dimensions.",
+        "i" = "Check {.arg res} columns dimension."
+      ),
+      call = NULL
+    )
   }
 
-  reco_mat <- reco(base = base,
-                   cov_mat = cov_mat,
-                   strc_mat = strc_mat,
-                   cons_mat = cons_mat,
-                   approach = approach,
-                   nn = nn,
-                   immutable = immutable,
-                   id_nn = id_nn,
-                   bounds = bounds,
-                   settings = settings)
+  reco_mat <- reco(
+    base = base,
+    cov_mat = cov_mat,
+    strc_mat = strc_mat,
+    cons_mat = cons_mat,
+    approach = approach,
+    nn = nn,
+    immutable = immutable,
+    id_nn = id_nn,
+    bounds = bounds,
+    settings = settings
+  )
 
-  if(missing(agg_mat)){
-    colnames(reco_mat) <- namesCS(n = NCOL(reco_mat),
-                                  names_vec = colnames(base))
-  }else{
-    colnames(reco_mat) <- namesCS(n = NCOL(reco_mat),
-                                  names_vec = colnames(base),
-                                  names_list = dimnames(agg_mat))
+  if (missing(agg_mat)) {
+    colnames(reco_mat) <- namesCS(
+      n = NCOL(reco_mat),
+      names_vec = colnames(base)
+    )
+  } else {
+    colnames(reco_mat) <- namesCS(
+      n = NCOL(reco_mat),
+      names_vec = colnames(base),
+      names_list = dimnames(agg_mat)
+    )
   }
 
   rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
-  attr(reco_mat, "FoReco") <- list2env(list(info = attr(reco_mat, "info"),
-                                            framework = "Cross-sectional",
-                                            forecast_horizon = NROW(reco_mat),
-                                            comb = comb,
-                                            cs_n = n,
-                                            rfun = "csrec"))
+  attr(reco_mat, "FoReco") <- list2env(list(
+    info = attr(reco_mat, "info"),
+    framework = "Cross-sectional",
+    forecast_horizon = NROW(reco_mat),
+    comb = comb,
+    cs_n = n,
+    rfun = "csrec"
+  ))
   attr(reco_mat, "info") <- NULL
   return(reco_mat)
 }
@@ -305,6 +343,10 @@ csrec <- function(base, agg_mat, cons_mat, comb = "ols", res = NULL,
 #' OSQP: An Operator Splitting solver for Quadratic Programs, \emph{Mathematical
 #' Programming Computation}, 12, 4, 637-672. \doi{10.1007/s12532-020-00179-2}
 #'
+#' Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020). Optimal
+#' non-negative forecast reconciliation. \emph{Statistics and Computing}, 30(5),
+#' 1167–1182. \doi{10.1007/s11222-020-09930-0}
+#'
 #' @examples
 #' set.seed(123)
 #' # (7 x 1) base forecasts vector (simulated), m = 4
@@ -331,14 +373,25 @@ csrec <- function(base, agg_mat, cons_mat, comb = "ols", res = NULL,
 #' @family Framework: temporal
 #' @export
 #'
-terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
-                  approach = "proj", nn = NULL, settings = NULL, bounds = NULL,
-                  immutable = NULL, ...){
-
+terec <- function(
+  base,
+  agg_order,
+  comb = "ols",
+  res = NULL,
+  tew = "sum",
+  approach = "proj",
+  nn = NULL,
+  settings = NULL,
+  bounds = NULL,
+  immutable = NULL,
+  ...
+) {
   # Check if 'agg_order' is provided
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.",
-              call = NULL)
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
   }
 
   tmp <- tetools(agg_order = agg_order, tew = tew)
@@ -350,14 +403,14 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
   cons_mat <- tmp$cons_mat
 
   # Check if 'base' is provided and its dimensions match with the data
-  if(missing(base)){
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
-  } else if(NCOL(base) != 1){
+  } else if (NCOL(base) != 1) {
     cli_abort("{.arg base} is not a vector.", call = NULL)
   }
 
   # Calculate 'h' and 'base_hmat'
-  if(length(base) %% kt != 0){
+  if (length(base) %% kt != 0) {
     cli_abort("Incorrect {.arg base} length.", call = NULL)
   } else {
     h <- length(base) / kt
@@ -365,98 +418,119 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
   }
 
   # Check immutable
-  if(!is.null(immutable)){
-    if(is.vector(immutable)){
+  if (!is.null(immutable)) {
+    if (is.vector(immutable)) {
       immutable <- matrix(immutable, ncol = length(immutable))
     }
 
-    if(NCOL(immutable) != 2){
+    if (NCOL(immutable) != 2) {
       cli_abort("{.arg immutable} is not a matrix with 2 columns.", call = NULL)
     }
 
-    immutable <- immutable[immutable[,1] %in% kset, , drop = FALSE]
-    immutable <- immutable[immutable[,2] <= m/immutable[,1], , drop = FALSE]
-    immutable <- apply(immutable, 1,  function(x){
-      if(x[1] %in% kset & x[2] <= m/x[1]){
-        which(rep(kset, m/kset) == x[1] &
-                do.call(c, sapply(m/kset, seq.int)) == x[2])
+    immutable <- immutable[immutable[, 1] %in% kset, , drop = FALSE]
+    immutable <- immutable[immutable[, 2] <= m / immutable[, 1], , drop = FALSE]
+    immutable <- apply(immutable, 1, function(x) {
+      if (x[1] %in% kset & x[2] <= m / x[1]) {
+        which(
+          rep(kset, m / kset) == x[1] &
+            do.call(c, sapply(m / kset, seq.int)) == x[2]
+        )
       }
     })
 
-    if(is.null(immutable)){
+    if (is.null(immutable)) {
       cli_warn("No immutable forecasts", call = NULL)
-    }else if(length(immutable) >= kt){
+    } else if (length(immutable) >= kt) {
       # Answer issue (@AngelPone):
       # https://github.com/danigiro/FoReco/issues/6#issue-2397642027
-      cli_abort("The number of immutable constraints must be less than {kt}",
-                call = NULL)
+      cli_abort(
+        "The number of immutable constraints must be less than {kt}",
+        call = NULL
+      )
     }
   }
 
   # Check bounds te
-  if(!is.null(bounds)){
-    if(is.vector(bounds)){
+  if (!is.null(bounds)) {
+    if (is.vector(bounds)) {
       bounds <- matrix(bounds, ncol = length(bounds))
     }
-    if(NCOL(bounds) != 4){
+    if (NCOL(bounds) != 4) {
       cli_abort("{.arg bounds} is not a matrix with 4 columns.", call = NULL)
     }
     bounds_approach <- attr(bounds, "approach")
 
-    bounds <- bounds[bounds[,1] %in% kset, , drop = FALSE]
-    if(NROW(bounds)!=0){
-      bounds <- bounds[bounds[,2] <= m/bounds[,1], , drop = FALSE]
+    bounds <- bounds[bounds[, 1] %in% kset, , drop = FALSE]
+    if (NROW(bounds) != 0) {
+      bounds <- bounds[bounds[, 2] <= m / bounds[, 1], , drop = FALSE]
     }
 
-    if(NROW(bounds)!=0){
-      bounds <- t(apply(bounds, 1,  function(x){
-        if(x[1] %in% kset & x[2] <= m/x[1]){
-          c(which(rep(kset, m/kset) == x[1] &
-                    do.call(c, sapply(m/kset, seq.int)) == x[2]), x[-c(1:2)])
+    if (NROW(bounds) != 0) {
+      bounds <- t(apply(bounds, 1, function(x) {
+        if (x[1] %in% kset & x[2] <= m / x[1]) {
+          c(
+            which(
+              rep(kset, m / kset) == x[1] &
+                do.call(c, sapply(m / kset, seq.int)) == x[2]
+            ),
+            x[-c(1:2)]
+          )
         }
       }))
     }
 
-    if(NROW(bounds)==0){
+    if (NROW(bounds) == 0) {
       cli_warn("No valid bounds", call = NULL)
       bounds <- NULL
-    }else{
+    } else {
       attr(bounds, "approach") <- bounds_approach
     }
   }
 
   # Compute covariance
-  if(is(comb, "Matrix") | is(comb, "matrix")){
+  if (is(comb, "Matrix") | is(comb, "matrix")) {
     cov_mat <- comb
-  }else{
-    cov_mat <- tecov(comb = comb, res = res, agg_order = kset, tew = tew,
-                     strc_mat = strc_mat, ...)
+  } else {
+    cov_mat <- tecov(
+      comb = comb,
+      res = res,
+      agg_order = kset,
+      tew = tew,
+      strc_mat = strc_mat,
+      ...
+    )
   }
 
-  if(NROW(cov_mat) != kt | NCOL(cov_mat) != kt){
-    cli_abort(c("Incorrect covariance dimensions.",
-                "i"="Check {.arg res} length."), call = NULL)
+  if (NROW(cov_mat) != kt | NCOL(cov_mat) != kt) {
+    cli_abort(
+      c("Incorrect covariance dimensions.", "i" = "Check {.arg res} length."),
+      call = NULL
+    )
   }
 
-  reco_mat <- reco(base = base,
-                   cov_mat = cov_mat,
-                   strc_mat = strc_mat,
-                   cons_mat = cons_mat,
-                   approach = approach,
-                   nn = nn,
-                   immutable = immutable,
-                   id_nn = id_nn,
-                   bounds = bounds,
-                   settings = settings)
+  reco_mat <- reco(
+    base = base,
+    cov_mat = cov_mat,
+    strc_mat = strc_mat,
+    cons_mat = cons_mat,
+    approach = approach,
+    nn = nn,
+    immutable = immutable,
+    id_nn = id_nn,
+    bounds = bounds,
+    settings = settings
+  )
 
   # Convert 'reco_mat' back to vector
   out <- hmat2vec(reco_mat, h = h, kset = kset)
-  attr(out, "FoReco") <- list2env(list(info = attr(reco_mat, "info"),
-                                       framework = "Temporal",
-                                       forecast_horizon = h,
-                                       comb = comb,
-                                       te_set = tmp$set,
-                                       rfun = "terec"))
+  attr(out, "FoReco") <- list2env(list(
+    info = attr(reco_mat, "info"),
+    framework = "Temporal",
+    forecast_horizon = h,
+    comb = comb,
+    te_set = tmp$set,
+    rfun = "terec"
+  ))
   return(out)
 }
 
@@ -520,7 +594,8 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 #'   \itemize{
 #'   \item "\code{osqp}": quadratic programming optimization
 #'   (\href{https://osqp.org/}{\pkg{osqp}} solver).
-#'   \item "\code{bpv}": block principal pivoting algorithm.
+#'   \item "\code{bpv}": block principal pivoting algorithm
+#'   (Wickramasuriya et al., 2020).
 #'   \item "\code{sntz}": heuristic "set-negative-to-zero"
 #'   (Di Fonzo and Girolimetto, 2023).
 #'   }
@@ -533,11 +608,11 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 #'   \item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
 #'   ("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
 #'   number of full exchange rules that may be attempted (\code{10},
-#'   \emph{default}), \code{tol} for the tolerance in convergence criteria
+#'   \emph{default}), \code{tol} for the tolerance criteria
 #'   (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
-#'   gradient tolerance in convergence criteria
-#'   (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
-#'   maximum number of algorithm iterations (\code{100}, \emph{default})
+#'   gradient tolerance criteria (\code{sqrt(.Machine$double.eps)},
+#'   \emph{default}), \code{itmax} for the maximum number of algorithm
+#'   iterations (\code{100}, \emph{default})
 #'   }
 #' @param bounds A matrix (see [set_bounds]) with 5 columns
 #' (\eqn{i,k,j,lower,upper}), such that
@@ -605,6 +680,10 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 #' OSQP: An Operator Splitting solver for Quadratic Programs, \emph{Mathematical
 #' Programming Computation}, 12, 4, 637-672. \doi{10.1007/s12532-020-00179-2}
 #'
+#' Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020). Optimal
+#' non-negative forecast reconciliation. \emph{Statistics and Computing}, 30(5),
+#' 1167–1182. \doi{10.1007/s11222-020-09930-0}
+#'
 #' @examples
 #' set.seed(123)
 #' # (3 x 7) base forecasts matrix (simulated), Z = X + Y and m = 4
@@ -640,126 +719,164 @@ terec <- function(base, agg_order, comb = "ols", res = NULL, tew = "sum",
 #' @family Framework: cross-temporal
 #' @export
 #'
-ctrec <- function(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
-                  tew = "sum", approach = "proj", nn = NULL, settings = NULL,
-                  bounds = NULL, immutable = NULL, ...){
-
+ctrec <- function(
+  base,
+  agg_mat,
+  cons_mat,
+  agg_order,
+  comb = "ols",
+  res = NULL,
+  tew = "sum",
+  approach = "proj",
+  nn = NULL,
+  settings = NULL,
+  bounds = NULL,
+  immutable = NULL,
+  ...
+) {
   # Check if 'base' is provided and its dimensions match with the data
-  if(missing(base)){
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
   }
 
   # Check if 'agg_order' is provided
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.",
-              call = NULL)
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
   }
 
   # Check if either 'agg_mat' or 'cons_mat' is specified
-  if(missing(agg_mat) && missing(cons_mat)){
-    cli_abort("Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
-              with no default.", call = NULL)
-  }else if(!missing(agg_mat)){
+  if (missing(agg_mat) && missing(cons_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
+              with no default.",
+      call = NULL
+    )
+  } else if (!missing(agg_mat)) {
     tmp <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)
     strc_mat <- tmp$strc_mat
     cons_mat <- tmp$cons_mat
-  }else{
+  } else {
     tmp <- cttools(cons_mat = cons_mat, agg_order = agg_order, tew = tew)
     strc_mat <- tmp$strc_mat
     cons_mat <- tmp$cons_mat
     agg_mat <- cstools(cons_mat = cons_mat)$agg_mat
   }
 
-  if(is.null(strc_mat)){
+  if (is.null(strc_mat)) {
     id_nn <- NULL
-  }else{
+  } else {
     cs_nn <- c(rep(0, tmp$dim[["na"]]), rep(1, tmp$dim[["nb"]]))
     te_nn <- c(rep(0, tmp$dim[["ks"]]), rep(1, tmp$dim[["m"]]))
     id_nn <- as.numeric(kronecker(cs_nn, te_nn))
   }
 
-  if(NCOL(base) %% tmp$dim[["kt"]] != 0){
+  if (NCOL(base) %% tmp$dim[["kt"]] != 0) {
     cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
   }
 
-  if(NROW(base) != tmp$dim[["n"]]){
+  if (NROW(base) != tmp$dim[["n"]]) {
     cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
   }
 
   # Check immutable
-  if(!is.null(immutable)){
-    if(is.vector(immutable)){
+  if (!is.null(immutable)) {
+    if (is.vector(immutable)) {
       immutable <- matrix(immutable, ncol = length(immutable))
     }
-    if(NCOL(immutable) != 3){
-      cli_abort("{.arg immutable} is not a matrix with 3 columns.",
-                call = NULL)
+    if (NCOL(immutable) != 3) {
+      cli_abort("{.arg immutable} is not a matrix with 3 columns.", call = NULL)
     }
 
-    immutable <- immutable[immutable[,1] <= tmp$dim[["n"]], , drop = FALSE]
-    immutable <- immutable[immutable[,2] %in% tmp$set, , drop = FALSE]
-    immutable <- immutable[immutable[,3] <= tmp$dim[["m"]]/immutable[,2], ,
-                           drop = FALSE]
+    immutable <- immutable[immutable[, 1] <= tmp$dim[["n"]], , drop = FALSE]
+    immutable <- immutable[immutable[, 2] %in% tmp$set, , drop = FALSE]
+    immutable <- immutable[
+      immutable[, 3] <= tmp$dim[["m"]] / immutable[, 2],
+      ,
+      drop = FALSE
+    ]
 
-    if(NROW(immutable) == 0){
+    if (NROW(immutable) == 0) {
       cli_warn("No immutable forecasts.", call = NULL)
       immutable <- NULL
-    }else{
+    } else {
       # imm_mat <- sparseMatrix(integer(), integer(), x = numeric(),
       #                         dims = c(tmp$dim[["n"]], tmp$dim[["kt"]]))
-      col_id <- apply(immutable, 1, function(x){
-        which(rep(tmp$set, tmp$dim[["m"]]/tmp$set) == x[2] &
-                do.call(c, sapply(tmp$dim[["m"]]/tmp$set, seq.int)) == x[3])
+      col_id <- apply(immutable, 1, function(x) {
+        which(
+          rep(tmp$set, tmp$dim[["m"]] / tmp$set) == x[2] &
+            do.call(c, sapply(tmp$dim[["m"]] / tmp$set, seq.int)) == x[3]
+        )
       })
       #browser()
       # imm_mat[immutable[,1], col_id] <- 1
-      imm_mat <- sparseMatrix(immutable[,1], col_id, x = 1,
-                              dims = c(tmp$dim[["n"]], tmp$dim[["kt"]]))
+      imm_mat <- sparseMatrix(
+        immutable[, 1],
+        col_id,
+        x = 1,
+        dims = c(tmp$dim[["n"]], tmp$dim[["kt"]])
+      )
       imm_vec <- as(t(imm_mat), "sparseVector")
       immutable <- imm_vec@i
 
-      if(length(immutable) >= tmp$dim[["n"]]*tmp$dim[["kt"]]){
+      if (length(immutable) >= tmp$dim[["n"]] * tmp$dim[["kt"]]) {
         # Answer issue (@AngelPone):
         # https://github.com/danigiro/FoReco/issues/6#issue-2397642027
-        cli_abort(paste("The number of immutable constraints must be less",
-                        "than {tmp$dim[['n']]*tmp$dim[['kt']]}"),
-                  call = NULL)
+        cli_abort(
+          paste(
+            "The number of immutable constraints must be less",
+            "than {tmp$dim[['n']]*tmp$dim[['kt']]}"
+          ),
+          call = NULL
+        )
       }
     }
   }
 
   # Check bounds ct
-  if(!is.null(bounds)){
-    if(is.vector(bounds)){
+  if (!is.null(bounds)) {
+    if (is.vector(bounds)) {
       bounds <- matrix(bounds, ncol = length(bounds))
     }
-    if(NCOL(bounds) != 5){
+    if (NCOL(bounds) != 5) {
       cli_abort("{.arg bounds} is not a matrix with 5 columns.", call = NULL)
     }
     bounds_approach <- attr(bounds, "approach")
 
-    bounds <- bounds[bounds[,1] <= tmp$dim[["n"]], , drop = FALSE]
+    bounds <- bounds[bounds[, 1] <= tmp$dim[["n"]], , drop = FALSE]
 
-    if(NROW(bounds) != 0){
-      bounds <- bounds[bounds[,2] %in% tmp$set, , drop = FALSE]
+    if (NROW(bounds) != 0) {
+      bounds <- bounds[bounds[, 2] %in% tmp$set, , drop = FALSE]
     }
 
-    if(NROW(bounds) != 0){
-      bounds <- bounds[bounds[,3] <= tmp$dim[["m"]]/bounds[,2], , drop = FALSE]
+    if (NROW(bounds) != 0) {
+      bounds <- bounds[
+        bounds[, 3] <= tmp$dim[["m"]] / bounds[, 2],
+        ,
+        drop = FALSE
+      ]
     }
 
-    if(NROW(bounds) == 0){
+    if (NROW(bounds) == 0) {
       cli_warn("No valid bounds.", call = NULL)
       bounds <- NULL
-    }else{
+    } else {
       bounds_id <- bounds[, 1:3]
-      bounds_mat <- sparseMatrix(integer(), integer(), x = numeric(),
-                                 dims = c(tmp$dim[["n"]], tmp$dim[["kt"]]))
-      col_id <- apply(bounds, 1, function(x){
-        which(rep(tmp$set, tmp$dim[["m"]]/tmp$set) == x[2] &
-                do.call(c, sapply(tmp$dim[["m"]]/tmp$set, seq.int)) == x[3])
+      bounds_mat <- sparseMatrix(
+        integer(),
+        integer(),
+        x = numeric(),
+        dims = c(tmp$dim[["n"]], tmp$dim[["kt"]])
+      )
+      col_id <- apply(bounds, 1, function(x) {
+        which(
+          rep(tmp$set, tmp$dim[["m"]] / tmp$set) == x[2] &
+            do.call(c, sapply(tmp$dim[["m"]] / tmp$set, seq.int)) == x[3]
+        )
       })
-      bounds_mat[bounds[,1], col_id] <- 1
+      bounds_mat[bounds[, 1], col_id] <- 1
       bounds_vec <- as(t(bounds_mat), "sparseVector")
       bounds_id <- bounds_vec@i
 
@@ -773,41 +890,62 @@ ctrec <- function(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
   base_hmat <- mat2hmat(base, h = h, kset = tmp$set, n = tmp$dim[["n"]])
 
   # Compute covariance
-  if(is(comb, "Matrix") | is(comb, "matrix")){
+  if (is(comb, "Matrix") | is(comb, "matrix")) {
     cov_mat <- comb
-  }else{
-    cov_mat <- ctcov(comb = comb, res = res, agg_order = tmp$set,
-                     agg_mat = agg_mat, n = tmp$dim[["n"]], tew = tew,
-                     strc_mat = strc_mat, ...)
+  } else {
+    cov_mat <- ctcov(
+      comb = comb,
+      res = res,
+      agg_order = tmp$set,
+      agg_mat = agg_mat,
+      n = tmp$dim[["n"]],
+      tew = tew,
+      strc_mat = strc_mat,
+      ...
+    )
   }
-  if(NROW(cov_mat) != prod(tmp$dim[c("kt", "n")]) |
-     NCOL(cov_mat) != prod(tmp$dim[c("kt", "n")])){
-    cli_abort(c("Incorrect covariance dimensions.",
-                "i"="Check {.arg res} dimensions."), call = NULL)
+  if (
+    NROW(cov_mat) != prod(tmp$dim[c("kt", "n")]) |
+      NCOL(cov_mat) != prod(tmp$dim[c("kt", "n")])
+  ) {
+    cli_abort(
+      c(
+        "Incorrect covariance dimensions.",
+        "i" = "Check {.arg res} dimensions."
+      ),
+      call = NULL
+    )
   }
 
-  reco_mat <- reco(base = base_hmat,
-                   cov_mat = cov_mat,
-                   strc_mat = strc_mat,
-                   cons_mat = cons_mat,
-                   approach = approach,
-                   nn = nn,
-                   immutable = immutable,
-                   id_nn = id_nn,
-                   bounds = bounds,
-                   settings = settings)
+  reco_mat <- reco(
+    base = base_hmat,
+    cov_mat = cov_mat,
+    strc_mat = strc_mat,
+    cons_mat = cons_mat,
+    approach = approach,
+    nn = nn,
+    immutable = immutable,
+    id_nn = id_nn,
+    bounds = bounds,
+    settings = settings
+  )
 
   # Convert 'reco_mat' back to matrix
   out <- hmat2mat(reco_mat, h = h, kset = tmp$set, n = tmp$dim[["n"]])
-  rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base),
-                           names_list = dimnames(agg_mat))
+  rownames(out) <- namesCS(
+    n = NROW(out),
+    names_vec = rownames(base),
+    names_list = dimnames(agg_mat)
+  )
 
-  attr(out, "FoReco") <- list2env(list(info = attr(reco_mat, "info"),
-                                       framework = "Cross-temporal",
-                                       forecast_horizon = h,
-                                       comb = comb,
-                                       te_set = tmp$set,
-                                       cs_n = tmp$dim[["n"]],
-                                       rfun = "ctrec"))
+  attr(out, "FoReco") <- list2env(list(
+    info = attr(reco_mat, "info"),
+    framework = "Cross-temporal",
+    forecast_horizon = h,
+    comb = comb,
+    te_set = tmp$set,
+    cs_n = tmp$dim[["n"]],
+    rfun = "ctrec"
+  ))
   return(out)
 }

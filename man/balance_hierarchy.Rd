@@ -15,23 +15,25 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
 value is the string "\code{auto}" which calculates the number of variables in each level.}
 
-\item{sparse}{Option to return sparse matrices (\emph{default} is \code{TRUE}).}
+\item{sparse}{Option to return sparse matrices (\emph{default} is
+\code{TRUE}).}
 }
 \value{
 A list containing four elements:
 \item{bam}{The balanced aggregation matrix.}
 \item{agg_mat}{The input matrix.}
-\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
-in each of the \eqn{L} upper levels of the balanced hierarchy.}
-\item{id}{The identification number of each variable in the balanced hierarchy.
-It may contains duplicated values.}
+\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of
+variables in each of the \eqn{L} upper levels of the balanced hierarchy.}
+\item{id}{The identification number of each variable in the balanced
+hierarchy. It may contains duplicated values.}
 }
 \description{
-A hierarchy with \eqn{L} upper levels is said to be balanced if each variable at level
-\eqn{l} has at least one child at level \eqn{l+1}. When this doesn't hold, the hierarchy
-is unbalanced. This function transforms an aggregation matrix of an unbalanced hierarchy
-into an aggregation matrix of a balanced one. This function is used to reconcile forecasts
-with \link{cslcc}, which operates exclusively with balanced hierarchies.
+A hierarchy with \eqn{L} upper levels is said to be balanced if each variable
+at level \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't
+hold, the hierarchy is unbalanced. This function transforms an aggregation
+matrix of an unbalanced hierarchy into an aggregation matrix of a balanced
+one. This function is used to reconcile forecasts with \link{cslcc}, which
+operates exclusively with balanced hierarchies.
 }
 \examples{
 #    Unbalanced     ->      Balanced

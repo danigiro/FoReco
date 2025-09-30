@@ -7,23 +7,26 @@
 set_bounds(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds = NULL)
 }
 \arguments{
-\item{n}{A (\eqn{b \times 1}) vector representing the \eqn{i}th cross-sectional
-series (\eqn{i = 1, \dots, n}), where \eqn{b} is the number of bounds to be set.}
+\item{n}{A (\eqn{b \times 1}) vector representing the \eqn{i}th
+cross-sectional series (\eqn{i = 1, \dots, n}), where \eqn{b} is the number
+of bounds to be set.}
 
-\item{k}{A (\eqn{b \times 1}) vector specifying the temporal aggregation orders
-(\eqn{k = m, \dots, 1}).}
+\item{k}{A (\eqn{b \times 1}) vector specifying the temporal aggregation
+orders (\eqn{k = m, \dots, 1}).}
 
 \item{h}{A (\eqn{b \times 1}) vector representing the forecast horizons
 (\eqn{j = 1, \dots, m/k}).}
 
 \item{lb, ub}{A (\eqn{b \times 1}) vector of lower and upper bounds.}
 
-\item{approach}{A string specifying the algorithm to compute bounded reconciled forecasts:
+\item{approach}{A string specifying the algorithm to compute bounded
+reconciled forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
-\item "\code{sftb}": heuristic "set-forecasts-to-bounds", which adjusts the reconciled
-forecasts to be within specified bounds without further optimization.
+\item "\code{sftb}": heuristic "set-forecasts-to-bounds", which adjusts
+the reconciled forecasts to be within specified bounds without further
+optimization.
 }}
 
 \item{bounds}{A matrix of previous bounds to be added. If not specified,
@@ -32,9 +35,12 @@ new bounds will be computed.}
 \value{
 A numeric matrix representing the computed bounds, which can be:
 \itemize{
-\item Cross-sectional (\eqn{b \times 3}) matrix for cross-sectional reconciliation (\link{csrec}).
-\item Temporal (\eqn{b \times 4}) matrix for temporal reconciliation (\link{terec}).
-\item Cross-temporal (\eqn{b \times 5}) matrix for cross-temporal reconciliation (\link{ctrec}).
+\item Cross-sectional (\eqn{b \times 3}) matrix for cross-sectional
+reconciliation (\link{csrec}).
+\item Temporal (\eqn{b \times 4}) matrix for temporal reconciliation
+(\link{terec}).
+\item Cross-temporal (\eqn{b \times 5}) matrix for cross-temporal
+reconciliation (\link{ctrec}).
 }
 }
 \description{

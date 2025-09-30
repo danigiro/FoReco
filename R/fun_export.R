@@ -29,8 +29,8 @@
 #' P %*% as.vector(Y) == as.vector(t(Y)) # check
 #'
 #' @export
-commat <- function(r, c){
-  I <- seq(1:(r*c))[order(rep(1:r, c))]
+commat <- function(r, c) {
+  I <- seq(1:(r * c))[order(rep(1:r, c))]
   #I <- Matrix(1:(r * c), c, r, byrow = T) # initialize a matrix of indices of size (c x r)
   #I <- as.vector(I) # vectorize the required indices
   P <- Diagonal(r * c) # Initialize an identity matrix
@@ -46,8 +46,8 @@ commat <- function(r, c){
 #' commat_index(r, c)
 #'
 #' @export
-commat_index <- function(r, c){
-  return(seq(1:(r*c))[order(rep(1:r, c))])
+commat_index <- function(r, c) {
+  return(seq(1:(r * c))[order(rep(1:r, c))])
 }
 
 #' @title Shrinkage of the covariance matrix
@@ -69,8 +69,8 @@ commat_index <- function(r, c){
 #' @family Utilities
 #'
 #' @export
-shrink_estim <- function(x, mse = TRUE){
-  if(is.matrix(x) == TRUE && is.numeric(x) == FALSE){
+shrink_estim <- function(x, mse = TRUE) {
+  if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) {
     cli_abort("{.arg x} is not a numeric matrix.", call = NULL)
   }
   x <- remove_na(x)
@@ -83,23 +83,24 @@ shrink_estim <- function(x, mse = TRUE){
   tar <- Diagonal(x = diag(covm))
 
   x <- na.omit(x)
-  if(NROW(x)>3){
+  if (NROW(x) > 3) {
     # Lambda
     xs <- scale(x, center = FALSE, scale = sqrt(diag(covm)))
     xs[is.nan(xs)] <- xs[is.na(xs)] <- 0
     #xs <- xs[stats::complete.cases(xs), ]
-    vS <- (1 / (n * (n - 1))) * (crossprod(xs^2) - ((1 / n) * (crossprod(xs))^2))
+    vS <- (1 / (n * (n - 1))) *
+      (crossprod(xs^2) - ((1 / n) * (crossprod(xs))^2))
     diag(vS) <- 0
     corm <- covcor(covm)
     corm[is.nan(corm)] <- 0
-    diag(corm) <- diag(corm)-1
+    diag(corm) <- diag(corm) - 1
     corm <- corm^2
     lambda <- sum(vS) / sum(corm)
-    if(is.nan(lambda)){
+    if (is.nan(lambda)) {
       lambda <- 1
     }
     lambda <- max(min(lambda, 1), 0)
-  }else{
+  } else {
     lambda <- 1
   }
 
@@ -114,28 +115,29 @@ shrink_estim <- function(x, mse = TRUE){
 #' @title Shrinkage of the covariance matrix using the Oracle approximation
 #'
 #' @description
-#' Shrinkage of the covariance matrix according to the Oracle Approximating Shrinkage (OAS)
-#' of Chen et al. (2009) and Ando and Xiao (2023).
+#' Shrinkage of the covariance matrix according to the Oracle Approximating
+#' Shrinkage (OAS) of Chen et al. (2009) and Ando and Xiao (2023).
 #'
 #' @param x A numeric matrix containing the in-sample residuals.
-#' @param mse If \code{TRUE} (\emph{default}), the residuals used to compute the covariance
-#' matrix are not mean-corrected.
+#' @param mse If \code{TRUE} (\emph{default}), the residuals used to compute the
+#' covariance matrix are not mean-corrected.
 #'
 #' @returns A shrunk covariance matrix.
 #'
 #' @references
 #' Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
-#' shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257), A001.
+#' shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257),
+#' A001.
 #'
-#' Chen, Y., Wiesel, A., and Hero, A. O. (2009), Shrinkage estimation of high dimensional
-#' covariance matrices, \emph{2009 IEEE international conference on acoustics, speech and
-#' signal processing}, 2937–2940. IEEE.
+#' Chen, Y., Wiesel, A., and Hero, A. O. (2009), Shrinkage estimation of high
+#' dimensional covariance matrices, \emph{2009 IEEE international conference on
+#' acoustics, speech and signal processing}, 2937–2940. IEEE.
 #'
 #' @family Utilities
 #'
 #' @export
-shrink_oasd <- function(x, mse = TRUE){
-  if(is.matrix(x) == TRUE && is.numeric(x) == FALSE){
+shrink_oasd <- function(x, mse = TRUE) {
+  if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) {
     cli_abort("{.arg x} is not a numeric matrix.", call = NULL)
   }
   x <- remove_na(x)
@@ -148,13 +150,13 @@ shrink_oasd <- function(x, mse = TRUE){
   tar <- diag(diag(covm))
 
   # lambda
-  tr_ss <- sum(diag(covm%*%covm))
+  tr_ss <- sum(diag(covm %*% covm))
   var <- diag(covm)
   tr_s <- sum(var^2)
   num <- tr_ss - tr_s
-  den <- tr_ss + sum(var)^2 - 2*tr_s
-  phi <- num/den
-  lambda <- min(1, 1/((n+1)*phi))
+  den <- tr_ss + sum(var)^2 - 2 * tr_s
+  phi <- num / den
+  lambda <- min(1, 1 / ((n + 1) * phi))
 
   # Shrinkage
   shrink_cov <- lambda * tar + (1 - lambda) * covm
@@ -166,22 +168,24 @@ shrink_oasd <- function(x, mse = TRUE){
 
 #' Aggregation matrix of a (possibly) unbalanced hierarchy in balanced form
 #'
-#' A hierarchy with \eqn{L} upper levels is said to be balanced if each variable at level
-#' \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't hold, the hierarchy
-#' is unbalanced. This function transforms an aggregation matrix of an unbalanced hierarchy
-#' into an aggregation matrix of a balanced one. This function is used to reconcile forecasts
-#' with [cslcc], which operates exclusively with balanced hierarchies.
+#' A hierarchy with \eqn{L} upper levels is said to be balanced if each variable
+#' at level \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't
+#' hold, the hierarchy is unbalanced. This function transforms an aggregation
+#' matrix of an unbalanced hierarchy into an aggregation matrix of a balanced
+#' one. This function is used to reconcile forecasts with [cslcc], which
+#' operates exclusively with balanced hierarchies.
 #'
 #' @inheritParams cslcc
-#' @param sparse Option to return sparse matrices (\emph{default} is \code{TRUE}).
+#' @param sparse Option to return sparse matrices (\emph{default} is
+#' \code{TRUE}).
 #'
 #' @return A list containing four elements:
 #' \item{bam}{The balanced aggregation matrix.}
 #' \item{agg_mat}{The input matrix.}
-#' \item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
-#' in each of the \eqn{L} upper levels of the balanced hierarchy.}
-#' \item{id}{The identification number of each variable in the balanced hierarchy.
-#' It may contains duplicated values.}
+#' \item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of
+#' variables in each of the \eqn{L} upper levels of the balanced hierarchy.}
+#' \item{id}{The identification number of each variable in the balanced
+#' hierarchy. It may contains duplicated values.}
 #'
 #' @family Utilities
 #'
@@ -198,9 +202,12 @@ shrink_oasd <- function(x, mse = TRUE){
 #'               1, 1, 0), 2, byrow = TRUE)
 #' obj <- balance_hierarchy(agg_mat = A, nodes = c(1, 1))
 #' obj$bam
-balance_hierarchy <- function(agg_mat, nodes = "auto", sparse = TRUE){
-  if(missing(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is missing, with no default.", call = NULL)
+balance_hierarchy <- function(agg_mat, nodes = "auto", sparse = TRUE) {
+  if (missing(agg_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} is missing, with no default.",
+      call = NULL
+    )
   }
 
   tmp <- cstools(agg_mat = agg_mat)
@@ -210,56 +217,69 @@ balance_hierarchy <- function(agg_mat, nodes = "auto", sparse = TRUE){
   agg_mat <- tmp$agg_mat
 
   # check hierarchy agg_mat (only 0 and 1)
-  if(!all(unique(as.vector(agg_mat)) %in% c(1,0))){
-    cli_abort("A hierarchical aggregation matrix has only 1s and 0s. Check {.arg agg_mat}.", call = NULL)
+  if (!all(unique(as.vector(agg_mat)) %in% c(1, 0))) {
+    cli_abort(
+      "A hierarchical aggregation matrix has only 1s and 0s. Check {.arg agg_mat}.",
+      call = NULL
+    )
   }
 
-  if(is.character(nodes[1])){
+  if (is.character(nodes[1])) {
     out <- find_nodes(agg_mat)
     return(sparse2dense(out, sparse = sparse))
   }
 
   # Check nodes
-  if(sum(nodes)!=na){
-    cli_abort("The sum of {.arg nodes} must be equal to {na}, number of upper level time series.", call = NULL)
+  if (sum(nodes) != na) {
+    cli_abort(
+      "The sum of {.arg nodes} must be equal to {na}, number of upper level time series.",
+      call = NULL
+    )
   }
 
   lev_na <- rep(1:length(nodes), nodes)
   Ident <- .sparseDiagonal(nb)
 
-  tmp <- lapply(1:length(nodes),
-                function(id){
-                  idna <- which(lev_na == id)
-                  lev_mat <- agg_mat[idna,,drop = FALSE]
-                  if(!all(colSums(lev_mat) %in% c(1,0))){
-                    cli_warn("In level {id} at least one bottom time
+  tmp <- lapply(1:length(nodes), function(id) {
+    idna <- which(lev_na == id)
+    lev_mat <- agg_mat[idna, , drop = FALSE]
+    if (!all(colSums(lev_mat) %in% c(1, 0))) {
+      cli_warn(
+        "In level {id} at least one bottom time
                                      series is present in two upper time series.
-                                     Check {.arg agg_mat}.", call = NULL)
-                  }
-                  id_unb <- which(colSums(lev_mat)==0)
-                  id_base <- c(idna, na+id_unb)
-                  bal_mat <- rbind(lev_mat, Ident[id_unb,,drop = FALSE])
-                  new_nodes <- NROW(bal_mat)
-                  return(list(bam = bal_mat, id_base = id_base, new_nodes = new_nodes))
-                })
+                                     Check {.arg agg_mat}.",
+        call = NULL
+      )
+    }
+    id_unb <- which(colSums(lev_mat) == 0)
+    id_base <- c(idna, na + id_unb)
+    bal_mat <- rbind(lev_mat, Ident[id_unb, , drop = FALSE])
+    new_nodes <- NROW(bal_mat)
+    return(list(bam = bal_mat, id_base = id_base, new_nodes = new_nodes))
+  })
   bam <- do.call(rbind, lapply(tmp, "[[", "bam"))
   id_base <- do.call(c, lapply(tmp, "[[", "id_base"))
   new_nodes <- do.call(c, lapply(tmp, "[[", "new_nodes"))
 
-  out <- list(bam = bam,
-              agg_mat = agg_mat,
-              nodes = new_nodes,
-              id = c(unname(id_base), (na+1):n))
+  out <- list(
+    bam = bam,
+    agg_mat = agg_mat,
+    nodes = new_nodes,
+    id = c(unname(id_base), (na + 1):n)
+  )
   return(sparse2dense(out, sparse = sparse))
 }
 
-find_nodes <- function(agg_mat){
-
+find_nodes <- function(agg_mat) {
   strc_mat <- rbind(agg_mat, .sparseDiagonal(NCOL(agg_mat)))
-  excl_list <- lapply(split(t(strc_mat), 1:NCOL(strc_mat)), function(x) which(x == 1))
+  excl_list <- lapply(split(t(strc_mat), 1:NCOL(strc_mat)), function(x) {
+    which(x == 1)
+  })
 
-  lop <- sapply(1:NROW(excl_list), function(id){
-    tmp <- sort(unique(unlist(lapply(excl_list, function(lx) if(id %in% lx) lx))))
+  lop <- sapply(1:NROW(excl_list), function(id) {
+    tmp <- sort(unique(unlist(lapply(excl_list, function(lx) {
+      if (id %in% lx) lx
+    }))))
     tmp[tmp != id]
   })
 
@@ -271,7 +291,7 @@ find_nodes <- function(agg_mat){
     tmp_i <- levid:NROW(strc_mat)
     if (sum(agg_mat[levid, ]) == NCOL(agg_mat)) {
       levels[[k]] <- levid
-    }else {
+    } else {
       while (sum(strc_mat[levid, ]) != NCOL(agg_mat)) {
         del <- sort(unique(unlist(unique(lop[levid]))))
         check <- tmp_i[!(tmp_i %in% del) & !(tmp_i %in% levid)]
@@ -282,25 +302,27 @@ find_nodes <- function(agg_mat){
     tmp_i <- sort(setdiff(tmp_i, levels[[k]]))
     if (length(tmp_i) > 0) {
       i <- tmp_i[1]
-    }else {
+    } else {
       break
     }
     k <- k + 1
   }
 
-  return(list(bam = strc_mat[unlist(levels), , drop = FALSE],
-              agg_mat = agg_mat,
-              nodes = sapply(levels, length),
-              id = c(unlist(levels), (NROW(agg_mat)+1):NROW(strc_mat))))
+  return(list(
+    bam = strc_mat[unlist(levels), , drop = FALSE],
+    agg_mat = agg_mat,
+    nodes = sapply(levels, length),
+    id = c(unlist(levels), (NROW(agg_mat) + 1):NROW(strc_mat))
+  ))
 }
 
 #' Aggregation matrix of a balanced hierarchy in (possibly) unbalanced form
 #'
-#' A hierarchy with \eqn{L} upper levels is said to be balanced if each variable at level
-#' \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't hold, the
-#' hierarchy is unbalanced.
-#' This function transforms an aggregation matrix of a balanced hierarchy
-#' into an aggregation matrix of an unbalanced one, by removing possible duplicated series.
+#' A hierarchy with \eqn{L} upper levels is said to be balanced if each variable
+#' at level \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't
+#' hold, the hierarchy is unbalanced. This function transforms an aggregation
+#' matrix of a balanced hierarchy into an aggregation matrix of an unbalanced
+#' one, by removing possible duplicated series.
 #'
 #' @inheritParams balance_hierarchy
 #' @param more_info If \code{TRUE}, it returns only the aggregation matrix
@@ -310,10 +332,10 @@ find_nodes <- function(agg_mat){
 #' elements (\code{more_info = TRUE}):
 #' \item{ubm}{The aggregation matrix of the unbalanced hierarchy.}
 #' \item{agg_mat}{The input matrix.}
-#' \item{idrm}{The identification number of the duplicated variables (row numbers of
-#' the aggregation matrix \code{agg_mat}).}
-#' \item{id}{The identification number of each variable in the balanced hierarchy.
-#' It may contains duplicated values.}
+#' \item{idrm}{The identification number of the duplicated variables (row
+#' numbers of the aggregation matrix \code{agg_mat}).}
+#' \item{id}{The identification number of each variable in the balanced
+#' hierarchy. It may contains duplicated values.}
 #'
 #' @family Utilities
 #'
@@ -331,33 +353,35 @@ find_nodes <- function(agg_mat){
 #'               0, 0, 1), 3, byrow = TRUE)
 #' obj <- unbalance_hierarchy(agg_mat = A)
 #' obj
-unbalance_hierarchy <- function(agg_mat, more_info = FALSE, sparse = TRUE){
+unbalance_hierarchy <- function(agg_mat, more_info = FALSE, sparse = TRUE) {
   agg_mat <- cstools(agg_mat = agg_mat)$agg_mat
-  if(!more_info){
+  if (!more_info) {
     ubm <- Matrix(unique(as.matrix(agg_mat)), sparse = TRUE)
     out <- ubm[-which(rowSums(abs(ubm)) == 1), , drop = FALSE]
-  }else{
+  } else {
     idnb <- which(rowSums(abs(agg_mat)) == 1)
     idna <- anyDuplicated(as.matrix(agg_mat))
-    idna <- idna[idna!=0]
-    idrm <- sort(unique(c(idna,idnb)))
-    ubm <- agg_mat[-idrm, ,drop = FALSE]
+    idna <- idna[idna != 0]
+    idrm <- sort(unique(c(idna, idnb)))
+    ubm <- agg_mat[-idrm, , drop = FALSE]
 
-    iddu <- apply(agg_mat[idrm,, drop = FALSE], 1,
-                  function(x){
-                    if(any(sum(abs(x)) == 1)){
-                      NROW(ubm) + which(x == 1)
-                    }else{
-                      which(apply(ubm, 1, function(y)
-                        all(x == y)))[1]
-                    }
-                  })
+    iddu <- apply(agg_mat[idrm, , drop = FALSE], 1, function(x) {
+      if (any(sum(abs(x)) == 1)) {
+        NROW(ubm) + which(x == 1)
+      } else {
+        which(apply(ubm, 1, function(y) {
+          all(x == y)
+        }))[1]
+      }
+    })
     id <- 1:NROW(agg_mat)
     id[id %in% idrm] <- iddu
-    out <- list(ubm = ubm,
-                agg_mat = agg_mat,
-                idrm = idrm,
-                id = c(id, (NROW(ubm)+1):sum(dim(ubm))))
+    out <- list(
+      ubm = ubm,
+      agg_mat = agg_mat,
+      idrm = idrm,
+      id = c(id, (NROW(ubm) + 1):sum(dim(ubm)))
+    )
   }
   return(sparse2dense(out, sparse = sparse))
 }
@@ -365,19 +389,22 @@ unbalance_hierarchy <- function(agg_mat, more_info = FALSE, sparse = TRUE){
 #' Informations on the reconciliation process
 #'
 #' @description
-#' This function extracts reconciliation information from the output of any reconciled
-#' function implemented by \pkg{FoReco}.
+#' This function extracts reconciliation information from the output of any
+#' reconciled function implemented by \pkg{FoReco}.
 #'
-#' @param x An output from any reconciliation function implemented by \pkg{FoReco}.
-#' @param verbose If \code{TRUE} (\emph{defaults}), reconciliation information are printed.
+#' @param x An output from any reconciliation function implemented by
+#' \pkg{FoReco}.
+#' @param verbose If \code{TRUE} (\emph{defaults}), reconciliation information
+#' are printed.
 #'
 #' @returns A list containing the following reconciliation process information:
 #'   \item{rfun}{the reconciliation function.}
 #'   \item{cs_n}{the cross-sectional number of variables.}
 #'   \item{te_set}{the set of temporal aggregation orders.}
-#'   \item{forecast_horizon}{the forecast horizon
-#'   (in temporal and cross-temporal frameworks, for the most temporally aggregated series).}
-#'   \item{framework}{the reconciliation framework (cross-sectional, temporal or cross-temporal).}
+#'   \item{forecast_horizon}{the forecast horizon (in temporal and
+#'   cross-temporal frameworks, for the most temporally aggregated series).}
+#'   \item{framework}{the reconciliation framework (cross-sectional, temporal
+#'   or cross-temporal).}
 #'   \item{info}{non-negative reconciled forecast convergence information.}
 #'   \item{lcc}{list of level conditional reconciled forecasts (+ BU) for
 #'   [cslcc], [telcc] and [ctlcc].}
@@ -387,49 +414,55 @@ unbalance_hierarchy <- function(agg_mat, more_info = FALSE, sparse = TRUE){
 #' @family Utilities
 #' @export
 #'
-recoinfo <- function(x, verbose = TRUE){
-  if(is.null(attr(x,"FoReco"))){
-    cli_warn(c("!"="No information available."), call = NULL)
+recoinfo <- function(x, verbose = TRUE) {
+  if (is.null(attr(x, "FoReco"))) {
+    cli_warn(c("!" = "No information available."), call = NULL)
     invisible(NULL)
-  }else{
-    out <- as.list(attr(x,"FoReco"))
+  } else {
+    out <- as.list(attr(x, "FoReco"))
 
-    if(is.numeric(x)){
-      out$nn <- all(x>=0)
+    if (is.numeric(x)) {
+      out$nn <- all(x >= 0)
       intro <- ""
-    }else{
+    } else {
       out$nn <- out$nn
       intro <- "Probabilistic "
     }
 
-    if(verbose){
-      if(out$rfun %in% c("cslcc", "telcc", "ctlcc")){
+    if (verbose) {
+      if (out$rfun %in% c("cslcc", "telcc", "ctlcc")) {
         title <- "Level Conditional Coherent "
-      }else if(out$rfun %in% c("csrec", "terec", "ctrec")){
+      } else if (out$rfun %in% c("csrec", "terec", "ctrec")) {
         title <- "Optimal "
-      }else if(out$rfun %in% c("iterec", "tcsrec", "cstrec")){
+      } else if (out$rfun %in% c("iterec", "tcsrec", "cstrec")) {
         title <- "Heuristic "
-      }else if(out$rfun %in% c("ctbu", "csbu", "tebu")){
+      } else if (out$rfun %in% c("ctbu", "csbu", "tebu")) {
         title <- "Bottom-up "
-      }else if(out$rfun %in% c("cttd", "cstd", "tetd")){
+      } else if (out$rfun %in% c("cttd", "cstd", "tetd")) {
         title <- "Top-down "
-      }else if(out$rfun %in% c("ctmo", "csmo", "temo")){
+      } else if (out$rfun %in% c("ctmo", "csmo", "temo")) {
         title <- "Middle-out "
-      }else{
+      } else {
         title <- " "
       }
-      cli_alert_success("{.emph {intro}}{.emph {title}}{.strong {out$framework}} Forecast Reconciliation")
-      if(!is.null(out$rfun)) cli_alert_info("{.pkg FoReco} function: {.strong {.code {out$rfun}}}")
+      cli_alert_success(
+        "{.emph {intro}}{.emph {title}}{.strong {out$framework}} Forecast Reconciliation"
+      )
+      if (!is.null(out$rfun)) {
+        cli_alert_info("{.pkg FoReco} function: {.strong {.code {out$rfun}}}")
+      }
 
-      if(!is.null(out$comb)){
-        if(length(out$comb)>1){
+      if (!is.null(out$comb)) {
+        if (length(out$comb) > 1) {
           tmp <- paste(names(out$comb), out$comb, sep = "-")
-        }else{
+        } else {
           tmp <- out$comb
         }
         cli_alert_info("Covariance approximation: {.strong {.code {tmp}}}")
       }
-      if(!is.null(out$nn)) cli_alert_info("Non-negative forecasts: {.strong {.code {out$nn}}}")
+      if (!is.null(out$nn)) {
+        cli_alert_info("Non-negative forecasts: {.strong {.code {out$nn}}}")
+      }
     }
 
     invisible(out)
@@ -439,17 +472,21 @@ recoinfo <- function(x, verbose = TRUE){
 #' Reconciled forecasts to matrix/vector
 #'
 #' @description
-#' This function splits the temporal vectors and the cross-temporal matrices in a
-#' list according to the temporal aggregation order
+#' This function splits the temporal vectors and the cross-temporal matrices
+#' in a list according to the temporal aggregation order
 #'
-#' @param x An output from any reconciliation function implemented by \pkg{FoReco}.
+#' @param x An output from any reconciliation function implemented by
+#' \pkg{FoReco}.
 #' @inheritParams ctrec
-#' @param keep_names If \code{FALSE} (\emph{default}), the rownames names of the output matrices are removed.
+#' @param keep_names If \code{FALSE} (\emph{default}), the rownames names of
+#' the output matrices are removed.
+#' @param temporal_names A character vector containing the names of the temporal
+#' aggregation levels.
 #'
-#' @returns A list of matrices or vectors distinct by temporal aggregation order.
+#' @returns A list of matrices or vectors distinct by temporal aggregation
+#' order.
 #'
 #' @family Utilities
-#' @export
 #' @examples
 #' set.seed(123)
 #' # (3 x 7) base forecasts matrix (simulated), Z = X + Y and m = 4
@@ -459,41 +496,63 @@ recoinfo <- function(x, verbose = TRUE){
 #'
 #' reco <- ctrec(base = base, agg_mat = t(c(1,1)), agg_order = 4, comb = "ols")
 #' matrix_list <- FoReco2matrix(reco)
-FoReco2matrix <- function(x, agg_order, keep_names = FALSE){
-  if(!is.null(attr(x, "FoReco"))){
+#'
+#' # With temporal names
+#' temporal_names <- c("Annual", "Semi-annual", "Quarterly")
+#' matrix_list <- FoReco2matrix(reco, temporal_names = temporal_names)
+#'
+#' @export
+FoReco2matrix <- function(
+  x,
+  agg_order,
+  keep_names = FALSE,
+  temporal_names = NULL
+) {
+  if (!is.null(attr(x, "FoReco"))) {
     fr <- recoinfo(x, verbose = FALSE)
     frame <- fr$framework
     set <- fr$te_set
     h <- fr$forecast_horizon
-  }else if(!missing(agg_order)){
-    frame <- ifelse(NCOL(x)==1, "Temporal", "Cross-temporal")
+  } else if (!missing(agg_order)) {
+    frame <- ifelse(NCOL(x) == 1, "Temporal", "Cross-temporal")
     set <- tetools(agg_order = agg_order)$set
-    h <- ifelse(NCOL(x)==1, length(x), NCOL(x))/sum(max(set)/set)
-  }else{
+    h <- ifelse(NCOL(x) == 1, length(x), NCOL(x)) / sum(max(set) / set)
+  } else {
     frame <- "Cross-sectional"
   }
 
-  if(frame == "Cross-sectional"){
+  if (frame == "Cross-sectional") {
     attr(x, "FoReco") <- NULL
-    return(list("k-1"= x))
-  }else{
-    id <- rep(set, h*max(set)/set)
+    return(list("k-1" = x))
+  } else {
+    id <- rep(set, h * max(set) / set)
 
-    if(NCOL(x)==1){
+    if (NCOL(x) == 1) {
       out <- split(x, factor(id, set))
-      if(!keep_names){
+      if (!keep_names) {
         out <- lapply(out, unname)
       }
-    }else{
-      out <- lapply(setNames(set, set), function(k){
+    } else {
+      out <- lapply(setNames(set, set), function(k) {
         mat <- t(x[, id == k, drop = FALSE])
-        if(!keep_names)
+        if (!keep_names) {
           rownames(mat) <- NULL
+        }
         mat
       })
     }
 
     names(out) <- paste0("k-", names(out))
+    if (!is.null(temporal_names)) {
+      if (length(temporal_names) == length(out)) {
+        names(out) <- paste0(temporal_names, " (", names(out), ")")
+      } else {
+        cli_warn(
+          "Length of {.arg temporal_names} is different from the number of temporal aggregation levels.",
+          call = NULL
+        )
+      }
+    }
     return(out)
   }
 }
@@ -508,15 +567,20 @@ FoReco2matrix <- function(x, agg_order, keep_names = FALSE){
 #' df2aggmat(formula, data, sep = "_", sparse = TRUE, top_label = "Total",
 #'           verbose = TRUE)
 #'
-#' @param formula  Specification of the hierarchical structure: grouped hierarchies are specified
-#' using \code{~ g1 * g2} and nested hierarchies are specified using \code{~ parent / child}.
-#' Mixtures of the two formulations are also possible, like \code{~ g1 * (grandparent / parent / child)}.
-#' @param data A dataset in which each column contains the values of the variables in the formula
-#' and each row identifies a bottom level time series.
-#' @param sep Character to separate the names of the aggregated series, (\emph{default} is "\code{_}").
-#' @param sparse Option to return sparse matrices (\emph{default} is \code{TRUE}).
-#' @param top_label Label of the top level variable (\emph{default} is "\code{Total}").
-#' @param verbose If \code{TRUE} (\emph{default}), hierarchy informations are printed.
+#' @param formula  Specification of the hierarchical structure: grouped
+#' hierarchies are specified using \code{~ g1 * g2} and nested hierarchies are
+#' specified using \code{~ parent / child}. Mixtures of the two formulations
+#' are also possible, like \code{~ g1 * (grandparent / parent / child)}.
+#' @param data A dataset in which each column contains the values of the
+#' variables in the formula and each row identifies a bottom level time series.
+#' @param sep Character to separate the names of the aggregated series,
+#' (\emph{default} is "\code{_}").
+#' @param sparse Option to return sparse matrices
+#' (\emph{default} is \code{TRUE}).
+#' @param top_label Label of the top level variable
+#' (\emph{default} is "\code{Total}").
+#' @param verbose If \code{TRUE} (\emph{default}), hierarchy informations are
+#' printed.
 #'
 #' @return A (\code{na x nb}) matrix.
 #'
@@ -565,8 +629,14 @@ FoReco2matrix <- function(x, agg_order, keep_names = FALSE){
 #' agg_mat <- df2aggmat(~ Y1 * X1, data_bts, sep = "", verbose = FALSE)
 #'
 #' @export
-df2aggmat <- function(formula, data, sep = "_", sparse = TRUE,
-                      top_label = "Total", verbose = TRUE) {
+df2aggmat <- function(
+  formula,
+  data,
+  sep = "_",
+  sparse = TRUE,
+  top_label = "Total",
+  verbose = TRUE
+) {
   if (missing(data)) {
     cli_abort("Argument {.arg data} is missing, with no default.", call = NULL)
   }
@@ -579,8 +649,14 @@ df2aggmat <- function(formula, data, sep = "_", sparse = TRUE,
   }
 
   if (missing(formula)) {
-    formula <- as.formula(paste("~", paste(colnames(data), collapse = "*"), sep = ""))
-    cli_alert_warning("Argument {.arg data} is missing, default is {.arg formula = ~ {formula[2]}}")
+    formula <- as.formula(paste(
+      "~",
+      paste(colnames(data), collapse = "*"),
+      sep = ""
+    ))
+    cli_alert_warning(
+      "Argument {.arg data} is missing, default is {.arg formula = ~ {formula[2]}}"
+    )
   }
 
   tm <- terms(formula)
@@ -588,10 +664,13 @@ df2aggmat <- function(formula, data, sep = "_", sparse = TRUE,
   lev_vars <- rownames(lev)
   lev <- Map(function(x) lev_vars[x != 0], split(lev, col(lev)))
   lev <- unname(lev)
-  lev <- lev[lapply(lev, length)<length(lev_vars)]
+  lev <- lev[lapply(lev, length) < length(lev_vars)]
 
   if (!all(lev_vars %in% colnames(data))) {
-    cli_abort("Colnames of {.arg data} don't contain all the variables in formula.", call = NULL)
+    cli_abort(
+      "Colnames of {.arg data} don't contain all the variables in formula.",
+      call = NULL
+    )
   }
   data <- data[, which(colnames(data) %in% lev_vars)]
 
@@ -601,21 +680,31 @@ df2aggmat <- function(formula, data, sep = "_", sparse = TRUE,
     datax[, id] <- NA
     datax <- unique(datax)
     data_id <- data[, -id, drop = FALSE]
-    datax <- cbind(datax, t(apply(
-      datax[, -id, drop = FALSE], 1,
-      function(x) {
-        data_s <- data.frame(matrix(x,
-                                    nrow = NROW(data_id),
-                                    ncol = length(x), byrow = TRUE
-        ))
-        as.numeric(apply(data_id == data_s, 1, all))
-      }
-    )))
+    datax <- cbind(
+      datax,
+      t(apply(
+        datax[, -id, drop = FALSE],
+        1,
+        function(x) {
+          data_s <- data.frame(matrix(
+            x,
+            nrow = NROW(data_id),
+            ncol = length(x),
+            byrow = TRUE
+          ))
+          as.numeric(apply(data_id == data_s, 1, all))
+        }
+      ))
+    )
     return(datax)
   })
   out <- do.call("rbind", out)
-  namerows <- apply(out[, 1:NCOL(data)], 1, function(x) paste(stats::na.omit(x), collapse = sep))
-  namecols <- apply(data, 1, function(x) paste(stats::na.omit(x), collapse = sep))
+  namerows <- apply(out[, 1:NCOL(data)], 1, function(x) {
+    paste(stats::na.omit(x), collapse = sep)
+  })
+  namecols <- apply(data, 1, function(x) {
+    paste(stats::na.omit(x), collapse = sep)
+  })
   out <- as.matrix(out[, -c(1:NCOL(data)), drop = FALSE])
   out <- sparse2dense(out, sparse = sparse)
   rownames(out) <- namerows
@@ -624,16 +713,17 @@ df2aggmat <- function(formula, data, sep = "_", sparse = TRUE,
   out <- out[rowSums(out) > 1 & rowSums(out) < NCOL(out), , drop = FALSE]
   out <- rbind(Total = 1, out)
   rownames(out)[1] <- top_label
-  if(verbose){
+  if (verbose) {
     cli_rule("{.strong Cross-sectional information}")
-    cli_bullets(c("# levels: {length(lev)+1}",
-                  "{.emph # total time series} ({.strong n}): {NROW(out) + NCOL(out)}",
-                  "{.emph # upper time series} ({.strong na}): {NROW(out)}",
-                  "{.emph # bottom time series} ({.strong nb}): {NCOL(out)}"))
+    cli_bullets(c(
+      "# levels: {length(lev)+1}",
+      "{.emph # total time series} ({.strong n}): {NROW(out) + NCOL(out)}",
+      "{.emph # upper time series} ({.strong na}): {NROW(out)}",
+      "{.emph # bottom time series} ({.strong nb}): {NCOL(out)}"
+    ))
   }
   return(out)
 }
-
 
 
 #' Non-overlapping temporal aggregation of a time series
@@ -643,11 +733,12 @@ df2aggmat <- function(formula, data, sep = "_", sparse = TRUE,
 #' to a specific aggregation order.
 #'
 #' @param agg_order A numeric vector with the aggregation orders to consider.
-#' @param y Univariate or multivariate time series: a vector/matrix or a \code{ts} object.
-#' @param align A string or a vector specifying the alignment of \code{y}. Options include:
-#' "\code{end}" (end of the series, \emph{default}), "\code{start}" (start of the series),
-#' an integer (or a vector of integers) indicating the starting period of the temporally
-#' aggregated series.
+#' @param y Univariate or multivariate time series: a vector/matrix or a
+#' \code{ts} object.
+#' @param align A string or a vector specifying the alignment of \code{y}.
+#' Options include: "\code{end}" (end of the series, \emph{default}),
+#' "\code{start}" (start of the series), an integer (or a vector of integers)
+#' indicating the starting period of the temporally aggregated series.
 #' @param rm_na If \code{TRUE} the missing values are removed.
 #' @inheritParams tetools
 #'
@@ -671,17 +762,17 @@ df2aggmat <- function(formula, data, sep = "_", sparse = TRUE,
 #' y2 <- ts(rnorm(11), start = c(2020, 3), frequency = 4)
 #' # Annual time series: start in 2021
 #' x4 <- aggts(y2, 4, align = 3)
-#' # Semi-annual (start in 2nd semester of 2020) and annual (start in 2021) time series
+#' # Semi-annual (start in 2nd semester of 2020) and annual (start in 2021)
+#' # time series
 #' x5 <- aggts(y2, c(2, 4), align = c(1, 3))
 #'
-aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE){
-
-  if(is.ts(y)){
+aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE) {
+  if (is.ts(y)) {
     tspy <- tsp(y)
     y <- as.matrix(y)
     kset <- rev(all_factors(tspy[3]))
-  }else{
-    if(is.vector(y)){
+  } else {
+    if (is.vector(y)) {
       y <- cbind(y)
     }
     kset <- tspy <- NULL
@@ -689,88 +780,100 @@ aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE){
 
   n <- NROW(y)
 
-  if(missing(agg_order)){
-    if(!is.null(kset)){
+  if (missing(agg_order)) {
+    if (!is.null(kset)) {
       agg_order <- kset
-    }else{
-      cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
+    } else {
+      cli_abort(
+        "Argument {.arg agg_order} is missing, with no default.",
+        call = NULL
+      )
     }
   }
 
-  if(is.character(align)){
-    align <- match.arg(align, c("end","start"))
-    if(align=='end'){
-      start <- n%%agg_order + 1L
-    }else if(align=='start'){
+  if (is.character(align)) {
+    align <- match.arg(align, c("end", "start"))
+    if (align == 'end') {
+      start <- n %% agg_order + 1L
+    } else if (align == 'start') {
       start <- rep(1L, length(agg_order))
     }
-  }else{
-    if(length(align)==1){
+  } else {
+    if (length(align) == 1) {
       start <- rep(align, length(agg_order))
-    }else if(length(align)==length(agg_order)){
+    } else if (length(align) == length(agg_order)) {
       start <- align
-    }else{
-      cli_abort("Argument {.arg align} can be a character ('end' or 'start'), a
-                number or a vector with the same lenght of {.arg agg_order}", call = NULL)
+    } else {
+      cli_abort(
+        "Argument {.arg align} can be a character ('end' or 'start'), a
+                number or a vector with the same lenght of {.arg agg_order}",
+        call = NULL
+      )
     }
   }
 
   start <- setNames(start, as.character(agg_order))
   agg_order <- sort(as.integer(agg_order))
-  nk <- setNames(trunc(n/agg_order), as.character(agg_order))
-  out <- lapply(agg_order, function(k){
-    out <- apply(y, 2, function(col){
-      tmp <- matrix(col[start[as.character(k)] - 1L + seq_len(k*nk[as.character(k)])],
-                    ncol=nk[as.character(k)])
-      if(tew == "sum"){
-        tmp <- colSums(tmp)
-      }else if(tew == "avg"){
-        tmp <- colMeans(tmp)
-      }else if(tew == "last"){
-        tmp <- tmp[NROW(tmp),]
-      }else if(tew == "first"){
-        tmp <- tmp[1,]
-      }else{
-        cli_abort("{.code {tew}} is not implemented yet.", call = NULL)
-      }
-
-      if(is.character(align)){
-        if(align=='end' & n%%k != 0){
-          tmp <- c(NA, tmp)
-        }else if(align=='start' & n%%k != 0){
-          tmp <- c(tmp, NA)
-        }
-      }else{
-        if(start[as.character(k)] != 1 ){
-          tmp <- c(NA, tmp)
+  nk <- setNames(trunc(n / agg_order), as.character(agg_order))
+  out <- lapply(agg_order, function(k) {
+    out <- apply(
+      y,
+      2,
+      function(col) {
+        tmp <- matrix(
+          col[start[as.character(k)] - 1L + seq_len(k * nk[as.character(k)])],
+          ncol = nk[as.character(k)]
+        )
+        if (tew == "sum") {
+          tmp <- colSums(tmp)
+        } else if (tew == "avg") {
+          tmp <- colMeans(tmp)
+        } else if (tew == "last") {
+          tmp <- tmp[NROW(tmp), ]
+        } else if (tew == "first") {
+          tmp <- tmp[1, ]
+        } else {
+          cli_abort("{.code {tew}} is not implemented yet.", call = NULL)
         }
 
-        if((n-start[as.character(k)]+1)%%k != 0){
-          tmp <- c(tmp, NA)
+        if (is.character(align)) {
+          if (align == 'end' & n %% k != 0) {
+            tmp <- c(NA, tmp)
+          } else if (align == 'start' & n %% k != 0) {
+            tmp <- c(tmp, NA)
+          }
+        } else {
+          if (start[as.character(k)] != 1) {
+            tmp <- c(NA, tmp)
+          }
+
+          if ((n - start[as.character(k)] + 1) %% k != 0) {
+            tmp <- c(tmp, NA)
+          }
         }
-      }
-      return(tmp)
-    }, simplify = FALSE)
+        return(tmp)
+      },
+      simplify = FALSE
+    )
     out <- do.call(cbind, out)
 
-    if(NCOL(out)==1){
+    if (NCOL(out) == 1) {
       out <- out[,]
     }
 
-    if(!is.null(tspy)){
-      out <- ts(out, frequency=tspy[3]/k,
-                start=floor(tspy[1]))
+    if (!is.null(tspy)) {
+      out <- ts(out, frequency = tspy[3] / k, start = floor(tspy[1]))
     }
 
-    if(rm_na){
+    if (rm_na) {
       out <- na.omit(out)
     }
     out
   })
 
-  if(length(out) == 1){
+  if (length(out) == 1) {
     return(out[[1]])
-  }else{
+  } else {
     names(out) <- paste0("k-", agg_order)
     return(out)
   }
@@ -785,28 +888,34 @@ aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE){
 #'
 #' @usage set_bounds(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds = NULL)
 #'
-#' @param n A (\eqn{b \times 1}) vector representing the \eqn{i}th cross-sectional
-#' series (\eqn{i = 1, \dots, n}), where \eqn{b} is the number of bounds to be set.
-#' @param k A (\eqn{b \times 1}) vector specifying the temporal aggregation orders
-#' (\eqn{k = m, \dots, 1}).
+#' @param n A (\eqn{b \times 1}) vector representing the \eqn{i}th
+#' cross-sectional series (\eqn{i = 1, \dots, n}), where \eqn{b} is the number
+#' of bounds to be set.
+#' @param k A (\eqn{b \times 1}) vector specifying the temporal aggregation
+#' orders (\eqn{k = m, \dots, 1}).
 #' @param h A (\eqn{b \times 1}) vector representing the forecast horizons
 #' (\eqn{j = 1, \dots, m/k}).
 #' @param lb,ub A (\eqn{b \times 1}) vector of lower and upper bounds.
-#' @param approach A string specifying the algorithm to compute bounded reconciled forecasts:
+#' @param approach A string specifying the algorithm to compute bounded
+#' reconciled forecasts:
 #'   \itemize{
 #'   \item "\code{osqp}": quadratic programming optimization
 #'   (\href{https://osqp.org/}{\pkg{osqp}} solver).
-#'   \item "\code{sftb}": heuristic "set-forecasts-to-bounds", which adjusts the reconciled
-#'   forecasts to be within specified bounds without further optimization.
+#'   \item "\code{sftb}": heuristic "set-forecasts-to-bounds", which adjusts
+#'   the reconciled forecasts to be within specified bounds without further
+#'   optimization.
 #'   }
 #' @param bounds A matrix of previous bounds to be added. If not specified,
 #' new bounds will be computed.
 #'
 #' @return A numeric matrix representing the computed bounds, which can be:
 #' \itemize{
-#'   \item Cross-sectional (\eqn{b \times 3}) matrix for cross-sectional reconciliation ([csrec]).
-#'   \item Temporal (\eqn{b \times 4}) matrix for temporal reconciliation ([terec]).
-#'   \item Cross-temporal (\eqn{b \times 5}) matrix for cross-temporal reconciliation ([ctrec]).
+#'   \item Cross-sectional (\eqn{b \times 3}) matrix for cross-sectional
+#'   reconciliation ([csrec]).
+#'   \item Temporal (\eqn{b \times 4}) matrix for temporal reconciliation
+#'   ([terec]).
+#'   \item Cross-temporal (\eqn{b \times 5}) matrix for cross-temporal
+#'   reconciliation ([ctrec]).
 #' }
 #'
 #' @family Utilities
@@ -839,89 +948,94 @@ aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE){
 #'                          ub = 1) # or ub = 1
 #'
 #' @export
-set_bounds <- function(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds = NULL){
+set_bounds <- function(
+  n,
+  k,
+  h,
+  lb = -Inf,
+  ub = Inf,
+  approach = "osqp",
+  bounds = NULL
+) {
   bounds_old <- bounds
 
-  if(!missing(n) & !missing(k)){
-    if(missing(h)){
+  if (!missing(n) & !missing(k)) {
+    if (missing(h)) {
       cli_abort("Argument {.arg h} is missing, with no default.", call = NULL)
     }
 
     max_size <- max(length(k), length(h), length(lb), length(ub), length(n))
 
-    if(length(n) != 1 & length(n) != max_size){
+    if (length(n) != 1 & length(n) != max_size) {
       cli_abort("{.arg n} length must be either 1 or {max_size}")
     }
 
-    if(length(k) != 1 & length(k) != max_size){
+    if (length(k) != 1 & length(k) != max_size) {
       cli_abort("{.arg k} length must be either 1 or {max_size}")
     }
 
-    if(length(h) != 1 & length(h) != max_size){
+    if (length(h) != 1 & length(h) != max_size) {
       cli_abort("{.arg h} length must be either 1 or {max_size}")
     }
 
-    if(length(lb) != 1 & length(lb) != max_size){
+    if (length(lb) != 1 & length(lb) != max_size) {
       cli_abort("{.arg lb} length must be either 1 or {max_size}")
     }
 
-    if(length(ub) != 1 & length(ub) != max_size){
+    if (length(ub) != 1 & length(ub) != max_size) {
       cli_abort("{.arg up} length must be either 1 or {max_size}")
     }
 
     bounds <- cbind(n, k, h, lb, ub)
-
-  }else if(!missing(n)){
-
+  } else if (!missing(n)) {
     max_size <- max(length(lb), length(ub), length(n))
 
-    if(length(n) != 1 & length(n) != max_size){
+    if (length(n) != 1 & length(n) != max_size) {
       cli_abort("{.arg n} length must be either 1 or {max_size}")
     }
 
-    if(length(lb) != 1 & length(lb) != max_size){
+    if (length(lb) != 1 & length(lb) != max_size) {
       cli_abort("{.arg lb} length must be either 1 or {max_size}")
     }
 
-    if(length(ub) != 1 & length(ub) != max_size){
+    if (length(ub) != 1 & length(ub) != max_size) {
       cli_abort("{.arg up} length must be either 1 or {max_size}")
     }
 
     bounds <- cbind(n, lb, ub)
-
-  }else if(!missing(k)){
+  } else if (!missing(k)) {
     max_size <- max(length(k), length(h), length(lb), length(ub))
-    if(length(k) != 1 & length(k) != max_size){
+    if (length(k) != 1 & length(k) != max_size) {
       cli_abort("{.arg k} length must be either 1 or {max_size}")
     }
 
-    if(length(h) != 1 & length(h) != max_size){
+    if (length(h) != 1 & length(h) != max_size) {
       cli_abort("{.arg h} length must be either 1 or {max_size}")
     }
 
-    if(length(lb) != 1 & length(lb) != max_size){
+    if (length(lb) != 1 & length(lb) != max_size) {
       cli_abort("{.arg lb} length must be either 1 or {max_size}")
     }
 
-    if(length(ub) != 1 & length(ub) != max_size){
+    if (length(ub) != 1 & length(ub) != max_size) {
       cli_abort("{.arg up} length must be either 1 or {max_size}")
     }
 
     bounds <- cbind(k, h, lb, ub)
-  }else{
+  } else {
     cli_abort("No arguments provide.")
   }
 
-  if(!is.null(bounds_old)){
+  if (!is.null(bounds_old)) {
     bounds <- unique(rbind(bounds, bounds_old))
     app_old <- attr(bounds_old, "approach")
 
-    if(!is.null(app_old)){
+    if (!is.null(app_old)) {
       attr(bounds, "approach") <- app_old
-    }else{
+    } else {
       attr(bounds, "approach") <- approach
     }
-  }else{
+  } else {
     attr(bounds, "approach") <- approach
   }
   return(bounds)

@@ -65,30 +65,35 @@ cross-sectional aggregation matrix starting from a data frame.</p>
 
 
 <dl><dt id="arg-formula">formula<a class="anchor" aria-label="anchor" href="#arg-formula"></a></dt>
-<dd><p>Specification of the hierarchical structure: grouped hierarchies are specified
-using <code>~ g1 * g2</code> and nested hierarchies are specified using <code>~ parent / child</code>.
-Mixtures of the two formulations are also possible, like <code>~ g1 * (grandparent / parent / child)</code>.</p></dd>
+<dd><p>Specification of the hierarchical structure: grouped
+hierarchies are specified using <code>~ g1 * g2</code> and nested hierarchies are
+specified using <code>~ parent / child</code>. Mixtures of the two formulations
+are also possible, like <code>~ g1 * (grandparent / parent / child)</code>.</p></dd>
 
 
 <dt id="arg-data">data<a class="anchor" aria-label="anchor" href="#arg-data"></a></dt>
-<dd><p>A dataset in which each column contains the values of the variables in the formula
-and each row identifies a bottom level time series.</p></dd>
+<dd><p>A dataset in which each column contains the values of the
+variables in the formula and each row identifies a bottom level time series.</p></dd>
 
 
 <dt id="arg-sep">sep<a class="anchor" aria-label="anchor" href="#arg-sep"></a></dt>
-<dd><p>Character to separate the names of the aggregated series, (<em>default</em> is "<code>_</code>").</p></dd>
+<dd><p>Character to separate the names of the aggregated series,
+(<em>default</em> is "<code>_</code>").</p></dd>
 
 
 <dt id="arg-sparse">sparse<a class="anchor" aria-label="anchor" href="#arg-sparse"></a></dt>
-<dd><p>Option to return sparse matrices (<em>default</em> is <code>TRUE</code>).</p></dd>
+<dd><p>Option to return sparse matrices
+(<em>default</em> is <code>TRUE</code>).</p></dd>
 
 
 <dt id="arg-top-label">top_label<a class="anchor" aria-label="anchor" href="#arg-top-label"></a></dt>
-<dd><p>Label of the top level variable (<em>default</em> is "<code>Total</code>").</p></dd>
+<dd><p>Label of the top level variable
+(<em>default</em> is "<code>Total</code>").</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>), hierarchy informations are printed.</p></dd>
+<dd><p>If <code>TRUE</code> (<em>default</em>), hierarchy informations are
+printed.</p></dd>
 
 </dl></div>
     <div class="section level2">

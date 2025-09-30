@@ -150,7 +150,8 @@ et al. (2011).</p></li>
 <dd><p>A string specifying the algorithm to compute non-negative
 forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
-<li><p>"<code>bpv</code>": block principal pivoting algorithm.</p></li>
+<li><p>"<code>bpv</code>": block principal pivoting algorithm
+(Wickramasuriya et al., 2020).</p></li>
 <li><p>"<code>sntz</code>": heuristic "set-negative-to-zero"
 (Di Fonzo and Girolimetto, 2023).</p></li>
 </ul></dd>
@@ -164,11 +165,11 @@ refer to the <a href="https://osqp.org/" class="external-link"><span class="pkg"
 <li><p><code>nn = "bpv"</code> It includes: <code>ptype</code> for permutation method
 ("<code>random</code>" or "<code>fixed</code>", <em>default</em>), <code>par</code> for the
 number of full exchange rules that may be attempted (<code>10</code>,
-<em>default</em>), <code>tol</code> for the tolerance in convergence criteria
+<em>default</em>), <code>tol</code> for the tolerance criteria
 (<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>gtol</code> for the
-gradient tolerance in convergence criteria
-(<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>itmax</code> for the
-maximum number of algorithm iterations (<code>100</code>, <em>default</em>)</p></li>
+gradient tolerance criteria (<code>sqrt(.Machine$double.eps)</code>,
+<em>default</em>), <code>itmax</code> for the maximum number of algorithm
+iterations (<code>100</code>, <em>default</em>)</p></li>
 </ul></dd>
 
 

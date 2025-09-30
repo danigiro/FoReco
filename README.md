@@ -5,7 +5,7 @@
 [![CRAN
 status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco)
 [![devel
-version](https://img.shields.io/badge/devel%20version-1.1.0.9012-blue.svg)](https://github.com/danigiro/FoReco)
+version](https://img.shields.io/badge/devel%20version-1.1.0.9012-blue.svg)](https://github.com/danigiro/FoRecoML)
 [![License:
 GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
@@ -33,15 +33,14 @@ follows:
 | MVN: `*gauss()` | [`csgauss()`](https://danigiro.github.io/FoReco/reference/csgauss.html) | [`tegauss()`](https://danigiro.github.io/FoReco/reference/tegauss.html) | [`ctgauss()`](https://danigiro.github.io/FoReco/reference/ctgauss.html) |
 | Sample-based: `*sample()` | [`cssample()`](https://danigiro.github.io/FoReco/reference/cssample.html) | [`tesample()`](https://danigiro.github.io/FoReco/reference/tesample.html) | [`ctsample()`](https://danigiro.github.io/FoReco/reference/ctsample.html) |
 
-Additionally, **FoReco** provides various functions for different
-aspects of forecast reconciliation, including aggregating time series,
-balancing hierarchies, computing projection and covariance matrices, and
-more.
+Additionally, `FoReco` provides various functions for different aspects
+of forecast reconciliation, including aggregating time series, balancing
+hierarchies, computing projection and covariance matrices, and more.
 
 ## Installation
 
-You can install the **stable** version on [R
-CRAN](https://cran.r-project.org/)
+You can install the **stable** version on
+[CRAN](https://CRAN.R-project.org/package=FoReco)
 
 ``` r
 install.packages("FoReco")
@@ -57,7 +56,7 @@ devtools::install_github("danigiro/FoReco")
 
 ## Getting Started
 
-To get started with using the FoReco package, refer to the
+To get started with using the `FoReco` package, refer to the
 [documentation](https://danigiro.github.io/FoReco/) for detailed
 information on how to apply different forecast reconciliation procedures
 to your data.

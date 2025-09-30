@@ -13,7 +13,10 @@ knitr::opts_chunk$set(
 
 # FoReco <img src="man/figures/logo.svg" alt="logo" align="right" width="150" style="border: none; float: right;"/>
 
-[![R-CMD-check](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml) [![CRAN status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco) [![devel version](https://img.shields.io/badge/devel%20version-1.1.0.9012-blue.svg)](https://github.com/danigiro/FoReco) [![License: GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
+[![R-CMD-check](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml) 
+[![CRAN status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco) 
+`r sprintf("[![devel version](https://img.shields.io/badge/devel version-%s-blue.svg)](https://github.com/danigiro/FoRecoML)", gsub("Version: (.*)", "\\1",  (desc <- readLines("DESCRIPTION"))[grepl("Version", desc, fixed = TRUE)]))` 
+[![License: GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
 **Fo**recast **Reco**nciliation is a a post-forecasting process aimed to improve the accuracy and align forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series. The **FoReco** package provides a comprehensive set of classical (bottom-up, top-down and middle-out), and modern (optimal and heuristic combination) forecast reconciliation procedures in different frameworks including cross-sectional, temporal, or cross-temporal settings.
 
@@ -33,12 +36,12 @@ The core functions for reconciliation categorized by framework are as follows:
 | Sample-based: `*sample()` | [`cssample()`](https://danigiro.github.io/FoReco/reference/cssample.html) | [`tesample()`](https://danigiro.github.io/FoReco/reference/tesample.html) | [`ctsample()`](https://danigiro.github.io/FoReco/reference/ctsample.html) |
 
 
-Additionally, **FoReco** provides various functions for different aspects of forecast reconciliation, including aggregating time series, balancing hierarchies, computing projection and covariance matrices, and more.
+Additionally, `FoReco` provides various functions for different aspects of forecast reconciliation, including aggregating time series, balancing hierarchies, computing projection and covariance matrices, and more.
 
 
 ## Installation
 
-You can install the **stable** version on [R CRAN](https://cran.r-project.org/)
+You can install the **stable** version on [CRAN](https://CRAN.R-project.org/package=FoReco)
 
 ``` r
 install.packages("FoReco")
@@ -53,7 +56,7 @@ devtools::install_github("danigiro/FoReco")
 
 ## Getting Started
 
-To get started with using the FoReco package, refer to the [documentation](https://danigiro.github.io/FoReco/) for detailed information on how to apply different forecast reconciliation procedures to your data.
+To get started with using the `FoReco` package, refer to the [documentation](https://danigiro.github.io/FoReco/) for detailed information on how to apply different forecast reconciliation procedures to your data.
 
 <!-- - [Introduction to `FoReco`](https://danigiro.github.io/FoReco/articles/Introduction-to-FoReco.html) -->
 - [The `vndata` and `itagdp` dataset](https://danigiro.github.io/FoReco/articles/Dataset-vndata-and-itagdp.html)

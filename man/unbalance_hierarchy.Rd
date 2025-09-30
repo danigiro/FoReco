@@ -14,24 +14,25 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 \item{more_info}{If \code{TRUE}, it returns only the aggregation matrix
 of the unbalanced hierarchy. \emph{Default} is \code{FALSE}.}
 
-\item{sparse}{Option to return sparse matrices (\emph{default} is \code{TRUE}).}
+\item{sparse}{Option to return sparse matrices (\emph{default} is
+\code{TRUE}).}
 }
 \value{
 A list containing four
 elements (\code{more_info = TRUE}):
 \item{ubm}{The aggregation matrix of the unbalanced hierarchy.}
 \item{agg_mat}{The input matrix.}
-\item{idrm}{The identification number of the duplicated variables (row numbers of
-the aggregation matrix \code{agg_mat}).}
-\item{id}{The identification number of each variable in the balanced hierarchy.
-It may contains duplicated values.}
+\item{idrm}{The identification number of the duplicated variables (row
+numbers of the aggregation matrix \code{agg_mat}).}
+\item{id}{The identification number of each variable in the balanced
+hierarchy. It may contains duplicated values.}
 }
 \description{
-A hierarchy with \eqn{L} upper levels is said to be balanced if each variable at level
-\eqn{l} has at least one child at level \eqn{l+1}. When this doesn't hold, the
-hierarchy is unbalanced.
-This function transforms an aggregation matrix of a balanced hierarchy
-into an aggregation matrix of an unbalanced one, by removing possible duplicated series.
+A hierarchy with \eqn{L} upper levels is said to be balanced if each variable
+at level \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't
+hold, the hierarchy is unbalanced. This function transforms an aggregation
+matrix of a balanced hierarchy into an aggregation matrix of an unbalanced
+one, by removing possible duplicated series.
 }
 \examples{
 #     Balanced     ->     Unbalanced

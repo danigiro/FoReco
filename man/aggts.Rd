@@ -7,7 +7,8 @@
 aggts(y, agg_order, tew = "sum", align = "end", rm_na = FALSE)
 }
 \arguments{
-\item{y}{Univariate or multivariate time series: a vector/matrix or a \code{ts} object.}
+\item{y}{Univariate or multivariate time series: a vector/matrix or a
+\code{ts} object.}
 
 \item{agg_order}{A numeric vector with the aggregation orders to consider.}
 
@@ -16,10 +17,10 @@ include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 (average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{align}{A string or a vector specifying the alignment of \code{y}. Options include:
-"\code{end}" (end of the series, \emph{default}), "\code{start}" (start of the series),
-an integer (or a vector of integers) indicating the starting period of the temporally
-aggregated series.}
+\item{align}{A string or a vector specifying the alignment of \code{y}.
+Options include: "\code{end}" (end of the series, \emph{default}),
+"\code{start}" (start of the series), an integer (or a vector of integers)
+indicating the starting period of the temporally aggregated series.}
 
 \item{rm_na}{If \code{TRUE} the missing values are removed.}
 }
@@ -44,7 +45,8 @@ x3 <- aggts(y)
 y2 <- ts(rnorm(11), start = c(2020, 3), frequency = 4)
 # Annual time series: start in 2021
 x4 <- aggts(y2, 4, align = 3)
-# Semi-annual (start in 2nd semester of 2020) and annual (start in 2021) time series
+# Semi-annual (start in 2nd semester of 2020) and annual (start in 2021)
+# time series
 x5 <- aggts(y2, c(2, 4), align = c(1, 3))
 
 }

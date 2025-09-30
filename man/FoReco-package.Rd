@@ -18,11 +18,11 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Daniele Girolimetto \email{daniele.girolimetto@unipd.it} (\href{https://orcid.org/0000-0001-9387-1232}{ORCID}) [funder]
+\strong{Maintainer}: Daniele Girolimetto \email{daniele.girolimetto@unipd.it} (\href{https://orcid.org/0000-0001-9387-1232}{ORCID})
 
 Authors:
 \itemize{
-  \item Tommaso Di Fonzo (\href{https://orcid.org/0000-0003-3388-7827}{ORCID}) [funder]
+  \item Tommaso Di Fonzo (\href{https://orcid.org/0000-0003-3388-7827}{ORCID})
 }
 
 }

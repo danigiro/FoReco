@@ -74,7 +74,8 @@ forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
 (\href{https://osqp.org/}{\pkg{osqp}} solver).
-\item "\code{bpv}": block principal pivoting algorithm.
+\item "\code{bpv}": block principal pivoting algorithm
+(Wickramasuriya et al., 2020).
 \item "\code{sntz}": heuristic "set-negative-to-zero"
 (Di Fonzo and Girolimetto, 2023).
 }}
@@ -88,11 +89,11 @@ refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
 \item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
 ("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
 number of full exchange rules that may be attempted (\code{10},
-\emph{default}), \code{tol} for the tolerance in convergence criteria
+\emph{default}), \code{tol} for the tolerance criteria
 (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
-gradient tolerance in convergence criteria
-(\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{itmax} for the
-maximum number of algorithm iterations (\code{100}, \emph{default})
+gradient tolerance criteria (\code{sqrt(.Machine$double.eps)},
+\emph{default}), \code{itmax} for the maximum number of algorithm
+iterations (\code{100}, \emph{default})
 }}
 
 \item{...}{

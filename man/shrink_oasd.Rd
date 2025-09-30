@@ -9,23 +9,24 @@ shrink_oasd(x, mse = TRUE)
 \arguments{
 \item{x}{A numeric matrix containing the in-sample residuals.}
 
-\item{mse}{If \code{TRUE} (\emph{default}), the residuals used to compute the covariance
-matrix are not mean-corrected.}
+\item{mse}{If \code{TRUE} (\emph{default}), the residuals used to compute the
+covariance matrix are not mean-corrected.}
 }
 \value{
 A shrunk covariance matrix.
 }
 \description{
-Shrinkage of the covariance matrix according to the Oracle Approximating Shrinkage (OAS)
-of Chen et al. (2009) and Ando and Xiao (2023).
+Shrinkage of the covariance matrix according to the Oracle Approximating
+Shrinkage (OAS) of Chen et al. (2009) and Ando and Xiao (2023).
 }
 \references{
 Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
-shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257), A001.
+shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257),
+A001.
 
-Chen, Y., Wiesel, A., and Hero, A. O. (2009), Shrinkage estimation of high dimensional
-covariance matrices, \emph{2009 IEEE international conference on acoustics, speech and
-signal processing}, 2937–2940. IEEE.
+Chen, Y., Wiesel, A., and Hero, A. O. (2009), Shrinkage estimation of high
+dimensional covariance matrices, \emph{2009 IEEE international conference on
+acoustics, speech and signal processing}, 2937–2940. IEEE.
 }
 \seealso{
 Utilities:

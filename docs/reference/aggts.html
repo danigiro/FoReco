@@ -64,7 +64,8 @@ to a specific aggregation order.</p>
 
 
 <dl><dt id="arg-y">y<a class="anchor" aria-label="anchor" href="#arg-y"></a></dt>
-<dd><p>Univariate or multivariate time series: a vector/matrix or a <code>ts</code> object.</p></dd>
+<dd><p>Univariate or multivariate time series: a vector/matrix or a
+<code>ts</code> object.</p></dd>
 
 
 <dt id="arg-agg-order">agg_order<a class="anchor" aria-label="anchor" href="#arg-agg-order"></a></dt>
@@ -79,10 +80,10 @@ include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</co
 
 
 <dt id="arg-align">align<a class="anchor" aria-label="anchor" href="#arg-align"></a></dt>
-<dd><p>A string or a vector specifying the alignment of <code>y</code>. Options include:
-"<code>end</code>" (end of the series, <em>default</em>), "<code>start</code>" (start of the series),
-an integer (or a vector of integers) indicating the starting period of the temporally
-aggregated series.</p></dd>
+<dd><p>A string or a vector specifying the alignment of <code>y</code>.
+Options include: "<code>end</code>" (end of the series, <em>default</em>),
+"<code>start</code>" (start of the series), an integer (or a vector of integers)
+indicating the starting period of the temporally aggregated series.</p></dd>
 
 
 <dt id="arg-rm-na">rm_na<a class="anchor" aria-label="anchor" href="#arg-rm-na"></a></dt>
@@ -132,7 +133,8 @@ aggregated series.</p></dd>
 <span class="r-in"><span><span class="va">y2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/ts.html" class="external-link">ts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2020</span>, <span class="fl">3</span><span class="op">)</span>, frequency <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Annual time series: start in 2021</span></span></span>
 <span class="r-in"><span><span class="va">x4</span> <span class="op">&lt;-</span> <span class="fu">aggts</span><span class="op">(</span><span class="va">y2</span>, <span class="fl">4</span>, align <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="co"># Semi-annual (start in 2nd semester of 2020) and annual (start in 2021) time series</span></span></span>
+<span class="r-in"><span><span class="co"># Semi-annual (start in 2nd semester of 2020) and annual (start in 2021)</span></span></span>
+<span class="r-in"><span><span class="co"># time series</span></span></span>
 <span class="r-in"><span><span class="va">x5</span> <span class="op">&lt;-</span> <span class="fu">aggts</span><span class="op">(</span><span class="va">y2</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, align <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

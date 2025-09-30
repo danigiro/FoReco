@@ -12,16 +12,19 @@
 \code{itagdp} is a \eqn{(80 \times 21)} \code{ts} object, corresponding to
 21 time series of the Italian Quarterly National Accounts (2000:Q1-2019:Q4).
 
-\code{outside}, \code{income} and \code{expenditure} are lists with two elements:
+\code{outside}, \code{income} and \code{expenditure} are lists with
+two elements:
 \itemize{
-\item{\code{agg_mat} contains the \eqn{(1 \times 2)}, \eqn{(2 \times 4)}, or \eqn{(6 \times 8)}
-aggregation matrix according to output, income or expenditure side, respectively.}
-\item{\code{cons_mat} contains the \eqn{(1 \times 3)}, \eqn{(2 \times 6)}, or \eqn{(6 \times 14)}
-zero constraints matrix according to output, income or expenditure side, respectively.}
+\item{\code{agg_mat} contains the \eqn{(1 \times 2)}, \eqn{(2 \times 4)},
+or \eqn{(6 \times 8)} aggregation matrix according to output, income or
+expenditure side, respectively.}
+\item{\code{cons_mat} contains the \eqn{(1 \times 3)}, \eqn{(2 \times 6)},
+or \eqn{(6 \times 14)} zero constraints matrix according to output, income
+or expenditure side, respectively.}
 }
 
-\code{gdpconsmat} is the complete \eqn{(9 \times 21)} zero constraints matrix
-encompassing output, expenditure and income sides.
+\code{gdpconsmat} is the complete \eqn{(9 \times 21)} zero
+constraints matrix encompassing output, expenditure and income sides.
 }
 \source{
 \url{https://ec.europa.eu/eurostat/web/national-accounts/}
@@ -43,13 +46,14 @@ incside
 gdpconsmat
 }
 \description{
-A subset of the data used by Girolimetto et al. (2023) from the Italian Quarterly
-National Accounts (output, income and expenditure sides) spanning the period
-2000:Q1-2019:Q4.
+A subset of the data used by Girolimetto et al. (2023) from the Italian
+Quarterly National Accounts (output, income and expenditure sides) spanning
+the period 2000:Q1-2019:Q4.
 }
 \references{
-Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
-for general linearly constrained multiple time series,
-\emph{Statistical Methods & Applications}, 33, 581-607. \doi{10.1007/s10260-023-00738-6}.
+Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast
+reconciliation for general linearly constrained multiple time series,
+\emph{Statistical Methods & Applications}, 33, 581-607.
+\doi{10.1007/s10260-023-00738-6}.
 }
 \keyword{datasets}

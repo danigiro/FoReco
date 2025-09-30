@@ -4,23 +4,29 @@
 \alias{FoReco2matrix}
 \title{Reconciled forecasts to matrix/vector}
 \usage{
-FoReco2matrix(x, agg_order, keep_names = FALSE)
+FoReco2matrix(x, agg_order, keep_names = FALSE, temporal_names = NULL)
 }
 \arguments{
-\item{x}{An output from any reconciliation function implemented by \pkg{FoReco}.}
+\item{x}{An output from any reconciliation function implemented by
+\pkg{FoReco}.}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
-\item{keep_names}{If \code{FALSE} (\emph{default}), the rownames names of the output matrices are removed.}
+\item{keep_names}{If \code{FALSE} (\emph{default}), the rownames names of
+the output matrices are removed.}
+
+\item{temporal_names}{A character vector containing the names of the temporal
+aggregation levels.}
 }
 \value{
-A list of matrices or vectors distinct by temporal aggregation order.
+A list of matrices or vectors distinct by temporal aggregation
+order.
 }
 \description{
-This function splits the temporal vectors and the cross-temporal matrices in a
-list according to the temporal aggregation order
+This function splits the temporal vectors and the cross-temporal matrices
+in a list according to the temporal aggregation order
 }
 \examples{
 set.seed(123)
@@ -31,6 +37,11 @@ base <- rbind(rnorm(7, rep(c(20, 10, 5), c(1, 2, 4))),
 
 reco <- ctrec(base = base, agg_mat = t(c(1,1)), agg_order = 4, comb = "ols")
 matrix_list <- FoReco2matrix(reco)
+
+# With temporal names
+temporal_names <- c("Annual", "Semi-annual", "Quarterly")
+matrix_list <- FoReco2matrix(reco, temporal_names = temporal_names)
+
 }
 \seealso{
 Utilities:

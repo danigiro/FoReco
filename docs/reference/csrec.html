@@ -7,19 +7,21 @@
   };
 </script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Optimal combination cross-sectional reconciliation — csrec"><meta name="description" content="This function performs optimal (in least squares sense)
 combination cross-sectional forecast reconciliation for a linearly
-constrained (e.g., hierarchical/grouped) multiple time series (Wickramasuriya
-et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di Fonzo, 2023). The
-reconciled forecasts are calculated using either a projection approach
-(Byron, 1978, 1979) or the equivalent structural approach by Hyndman et al.
-(2011). Non-negative (Di Fonzo and Girolimetto, 2023) and immutable
-(including Zhang et al., 2023) reconciled forecasts can be considered."><meta property="og:description" content="This function performs optimal (in least squares sense)
+constrained (e.g., hierarchical/grouped) multiple time series
+(Wickramasuriya et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di
+Fonzo, 2023). The reconciled forecasts are calculated using either a
+projection approach (Byron, 1978, 1979) or the equivalent structural
+approach by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto,
+2023) and immutable including Zhang et al., 2023) reconciled forecasts can
+be considered."><meta property="og:description" content="This function performs optimal (in least squares sense)
 combination cross-sectional forecast reconciliation for a linearly
-constrained (e.g., hierarchical/grouped) multiple time series (Wickramasuriya
-et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di Fonzo, 2023). The
-reconciled forecasts are calculated using either a projection approach
-(Byron, 1978, 1979) or the equivalent structural approach by Hyndman et al.
-(2011). Non-negative (Di Fonzo and Girolimetto, 2023) and immutable
-(including Zhang et al., 2023) reconciled forecasts can be considered."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+constrained (e.g., hierarchical/grouped) multiple time series
+(Wickramasuriya et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di
+Fonzo, 2023). The reconciled forecasts are calculated using either a
+projection approach (Byron, 1978, 1979) or the equivalent structural
+approach by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto,
+2023) and immutable including Zhang et al., 2023) reconciled forecasts can
+be considered."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -64,12 +66,13 @@ reconciled forecasts are calculated using either a projection approach
     <div class="ref-description section level2">
     <p>This function performs optimal (in least squares sense)
 combination cross-sectional forecast reconciliation for a linearly
-constrained (e.g., hierarchical/grouped) multiple time series (Wickramasuriya
-et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di Fonzo, 2023). The
-reconciled forecasts are calculated using either a projection approach
-(Byron, 1978, 1979) or the equivalent structural approach by Hyndman et al.
-(2011). Non-negative (Di Fonzo and Girolimetto, 2023) and immutable
-(including Zhang et al., 2023) reconciled forecasts can be considered.</p>
+constrained (e.g., hierarchical/grouped) multiple time series
+(Wickramasuriya et al., 2019, Panagiotelis et al., 2022, Girolimetto and Di
+Fonzo, 2023). The reconciled forecasts are calculated using either a
+projection approach (Byron, 1978, 1979) or the equivalent structural
+approach by Hyndman et al. (2011). Non-negative (Di Fonzo and Girolimetto,
+2023) and immutable including Zhang et al., 2023) reconciled forecasts can
+be considered.</p>
     </div>
 
     <div class="section level2">
@@ -131,7 +134,8 @@ et al. (2011).</p></li>
 <dd><p>A string specifying the algorithm to compute non-negative
 forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
-<li><p>"<code>bpv</code>": block principal pivoting algorithm.</p></li>
+<li><p>"<code>bpv</code>": block principal pivoting algorithm
+(Wickramasuriya et al., 2020).</p></li>
 <li><p>"<code>sntz</code>": heuristic "set-negative-to-zero"
 (Di Fonzo and Girolimetto, 2023).</p></li>
 </ul></dd>
@@ -145,11 +149,11 @@ refer to the <a href="https://osqp.org/" class="external-link"><span class="pkg"
 <li><p><code>nn = "bpv"</code> It includes: <code>ptype</code> for permutation method
 ("<code>random</code>" or "<code>fixed</code>", <em>default</em>), <code>par</code> for the
 number of full exchange rules that may be attempted (<code>10</code>,
-<em>default</em>), <code>tol</code> for the tolerance in convergence criteria
+<em>default</em>), <code>tol</code> for the tolerance criteria
 (<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>gtol</code> for the
-gradient tolerance in convergence criteria
-(<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>itmax</code> for the
-maximum number of algorithm iterations (<code>100</code>, <em>default</em>)</p></li>
+gradient tolerance criteria (<code>sqrt(.Machine$double.eps)</code>,
+<em>default</em>), <code>itmax</code> for the maximum number of algorithm
+iterations (<code>100</code>, <em>default</em>)</p></li>
 </ul></dd>
 
 
@@ -215,6 +219,9 @@ Programming Computation</em>, 12, 4, 637-672. <a href="https://doi.org/10.1007/s
 forecast reconciliation for hierarchical and grouped time series through
 trace minimization, <em>Journal of the American Statistical Association</em>,
 114, 526, 804-819. <a href="https://doi.org/10.1080/01621459.2018.1448825" class="external-link">doi:10.1080/01621459.2018.1448825</a></p>
+<p>Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020). Optimal
+non-negative forecast reconciliation. <em>Statistics and Computing</em>, 30(5),
+1167–1182. <a href="https://doi.org/10.1007/s11222-020-09930-0" class="external-link">doi:10.1007/s11222-020-09930-0</a></p>
 <p>Zhang, B., Kang, Y., Panagiotelis, A. and Li, F. (2023), Optimal
 reconciliation with immutable forecasts, <em>European Journal of
 Operational Research</em>, 308(2), 650–660. <a href="https://doi.org/10.1016/j.ejor.2022.11.035" class="external-link">doi:10.1016/j.ejor.2022.11.035</a></p>
@@ -259,7 +266,7 @@ Operational Research</em>, 308(2), 650–660. <a href="https://doi.org/10.1016/j
 <span class="r-in"><span>                nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">nnreco</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">info</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     obj_val   run_time iter      pri_res status status_polish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -352.4619 2.0458e-05   25 4.230023e-24      1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -352.4619 2.0707e-05   25 4.230023e-24      1             1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

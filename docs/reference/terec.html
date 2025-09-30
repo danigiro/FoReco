@@ -127,7 +127,8 @@ et al. (2011).</p></li>
 <dd><p>A string specifying the algorithm to compute non-negative
 forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
-<li><p>"<code>bpv</code>": block principal pivoting algorithm.</p></li>
+<li><p>"<code>bpv</code>": block principal pivoting algorithm
+(Wickramasuriya et al., 2020).</p></li>
 <li><p>"<code>sntz</code>": heuristic "set-negative-to-zero"
 (Di Fonzo and Girolimetto, 2023).</p></li>
 </ul></dd>
@@ -141,11 +142,11 @@ refer to the <a href="https://osqp.org/" class="external-link"><span class="pkg"
 <li><p><code>nn = "bpv"</code> It includes: <code>ptype</code> for permutation method
 ("<code>random</code>" or "<code>fixed</code>", <em>default</em>), <code>par</code> for the
 number of full exchange rules that may be attempted (<code>10</code>,
-<em>default</em>), <code>tol</code> for the tolerance in convergence criteria
+<em>default</em>), <code>tol</code> for the tolerance criteria
 (<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>gtol</code> for the
-gradient tolerance in convergence criteria
-(<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>itmax</code> for the
-maximum number of algorithm iterations (<code>100</code>, <em>default</em>)</p></li>
+gradient tolerance criteria (<code>sqrt(.Machine$double.eps)</code>,
+<em>default</em>), <code>itmax</code> for the maximum number of algorithm
+iterations (<code>100</code>, <em>default</em>)</p></li>
 </ul></dd>
 
 
@@ -212,6 +213,9 @@ Optimal combination forecasts for hierarchical time series,
 <p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020),
 OSQP: An Operator Splitting solver for Quadratic Programs, <em>Mathematical
 Programming Computation</em>, 12, 4, 637-672. <a href="https://doi.org/10.1007/s12532-020-00179-2" class="external-link">doi:10.1007/s12532-020-00179-2</a></p>
+<p>Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020). Optimal
+non-negative forecast reconciliation. <em>Statistics and Computing</em>, 30(5),
+1167–1182. <a href="https://doi.org/10.1007/s11222-020-09930-0" class="external-link">doi:10.1007/s11222-020-09930-0</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -253,7 +257,7 @@ Programming Computation</em>, 12, 4, 637-672. <a href="https://doi.org/10.1007/s
 <span class="r-in"><span>                res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">nnreco</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">info</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     obj_val   run_time iter      pri_res status status_polish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -421.8914 4.1999e-05   25 8.587788e-16      1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -421.8914 3.7666e-05   25 8.587788e-16      1             1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
