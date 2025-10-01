@@ -62,9 +62,10 @@ to the high-frequency time series (\code{TRUE}).}
 \item{...}{
   Arguments passed on to \code{\link[=tecov]{tecov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
-matrix are not mean-corrected.}
-    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default})}
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute
+the covariance matrix are not mean-corrected.}
+    \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
+\link{shrink_estim} (\emph{default})}
   }}
 }
 \value{

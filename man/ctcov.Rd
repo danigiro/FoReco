@@ -78,10 +78,11 @@ include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 (average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
-matrix are not mean-corrected.}
+\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+covariance matrix are not mean-corrected.}
 
-\item{shrink_fun}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
+\item{shrink_fun}{Shrinkage function of the covariance matrix,
+\link{shrink_estim} (\emph{default}).}
 
 \item{...}{Not used.}
 }
@@ -89,9 +90,9 @@ matrix are not mean-corrected.}
 A (\eqn{n(k^\ast+m) \times n(k^\ast+m)}) symmetric matrix.
 }
 \description{
-This function provides an approximation of the cross-temporal base forecasts errors
-covariance matrix using different reconciliation methods (Di Fonzo and Girolimetto, 2023,
-Girolimetto et al., 2023).
+This function provides an approximation of the cross-temporal base forecasts
+errors covariance matrix using different reconciliation methods (Di Fonzo
+and Girolimetto, 2023, and Girolimetto et al., 2023).
 }
 \examples{
 set.seed(123)
@@ -101,25 +102,25 @@ A <- t(c(1,1))
 # agg_order = 4 (annual-quarterly)
 res <- rbind(rnorm(70), rnorm(70), rnorm(70))
 
-cov1 <- ctcov("ols", n = 3, agg_order = 4)                     # OLS methods
-cov2 <- ctcov("str", agg_mat = A, agg_order = 4)               # STR methods
-cov3 <- ctcov("csstr", agg_mat = A, agg_order = 4)             # CSSTR methods
-cov4 <- ctcov("testr", n = 3, agg_order = 4)                   # TESTR methods
-cov5 <- ctcov("wlsv", agg_order = 4, res = res)                # WLSv methods
-cov6 <- ctcov("wlsh", agg_order = 4, res = res)                # WLSh methods
-cov7 <- ctcov("shr", agg_order = 4, res = res)                 # SHR methods
-cov8 <- ctcov("sam", agg_order = 4, res = res)                 # SAM methods
-cov9 <- ctcov("acov", agg_order = 4, res = res)                # ACOV methods
-cov10 <- ctcov("Sshr", agg_order = 4, res = res)               # Sshr methods
-cov11 <- ctcov("Ssam", agg_order = 4, res = res)               # Ssam methods
-cov12 <- ctcov("hshr", agg_order = 4, res = res)               # Hshr methods
-cov13 <- ctcov("hsam", agg_order = 4, res = res)               # Hsam methods
-cov14 <- ctcov("hbshr", agg_mat = A, agg_order = 4, res = res) # HBshr methods
-cov15 <- ctcov("hbsam", agg_mat = A, agg_order = 4, res = res) # HBsam methods
-cov16 <- ctcov("bshr", agg_mat = A, agg_order = 4, res = res)  # Bshr methods
-cov17 <- ctcov("bsam", agg_mat = A, agg_order = 4, res = res)  # Bsam methods
-cov18 <- ctcov("bdshr", agg_order = 4, res = res)              # BDshr methods
-cov19 <- ctcov("bdsam", agg_order = 4, res = res)              # BDsam methods
+cov1 <- ctcov("ols", n = 3, agg_order = 4)                     # OLS
+cov2 <- ctcov("str", agg_mat = A, agg_order = 4)               # STR
+cov3 <- ctcov("csstr", agg_mat = A, agg_order = 4)             # CSSTR
+cov4 <- ctcov("testr", n = 3, agg_order = 4)                   # TESTR
+cov5 <- ctcov("wlsv", agg_order = 4, res = res)                # WLSv
+cov6 <- ctcov("wlsh", agg_order = 4, res = res)                # WLSh
+cov7 <- ctcov("shr", agg_order = 4, res = res)                 # SHR
+cov8 <- ctcov("sam", agg_order = 4, res = res)                 # SAM
+cov9 <- ctcov("acov", agg_order = 4, res = res)                # ACOV
+cov10 <- ctcov("Sshr", agg_order = 4, res = res)               # Sshr
+cov11 <- ctcov("Ssam", agg_order = 4, res = res)               # Ssam
+cov12 <- ctcov("hshr", agg_order = 4, res = res)               # Hshr
+cov13 <- ctcov("hsam", agg_order = 4, res = res)               # Hsam
+cov14 <- ctcov("hbshr", agg_mat = A, agg_order = 4, res = res) # HBshr
+cov15 <- ctcov("hbsam", agg_mat = A, agg_order = 4, res = res) # HBsam
+cov16 <- ctcov("bshr", agg_mat = A, agg_order = 4, res = res)  # Bshr
+cov17 <- ctcov("bsam", agg_mat = A, agg_order = 4, res = res)  # Bsam
+cov18 <- ctcov("bdshr", agg_order = 4, res = res)              # BDshr
+cov19 <- ctcov("bdsam", agg_order = 4, res = res)              # BDsam
 
 # Custom covariance matrix
 ctcov.ols2 <- function(comb, x) diag(x)
@@ -127,14 +128,15 @@ cov20 <- ctcov(comb = "ols2", x = 21) # == ctcov("ols", n = 3, agg_order = 4)
 
 }
 \references{
-Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
+Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+\emph{International Journal of Forecasting}, 39, 1, 39-57.
+\doi{10.1016/j.ijforecast.2021.08.004}
 
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023.10.003}
+practical issues. \emph{International Journal of Forecasting}, 40, 3,
+1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
 Cross-temporal framework:

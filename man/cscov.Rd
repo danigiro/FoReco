@@ -47,10 +47,11 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 in-sample residuals. This matrix is used to compute some covariance
 matrices.}
 
-\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
-matrix are not mean-corrected.}
+\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+covariance matrix are not mean-corrected.}
 
-\item{shrink_fun}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default}).}
+\item{shrink_fun}{Shrinkage function of the covariance matrix,
+\link{shrink_estim} (\emph{default}).}
 
 \item{...}{Not used.}
 }
@@ -58,9 +59,9 @@ matrix are not mean-corrected.}
 A (\eqn{n \times n}) symmetric positive (semi-)definite matrix.
 }
 \description{
-This function provides an approximation of the cross-sectional base forecasts errors
-covariance matrix using different reconciliation methods (see Wickramasuriya et al.,
-2019 and Di Fonzo and Girolimetto, 2023).
+This function provides an approximation of the cross-sectional base
+forecasts errors covariance matrix using different reconciliation methods
+(see Wickramasuriya et al., 2019 and Di Fonzo and Girolimetto, 2023).
 }
 \examples{
 # Aggregation matrix for Z = X + Y
@@ -68,11 +69,11 @@ A <- t(c(1,1))
 # (10 x 3) in-sample residuals matrix (simulated)
 res <- t(matrix(rnorm(n = 30), nrow = 3))
 
-cov1 <- cscov("ols", n = 3)          # OLS methods
-cov2 <- cscov("str", agg_mat = A)    # STR methods
-cov3 <- cscov("wls", res = res)      # WLS methods
-cov4 <- cscov("shr", res = res)      # SHR methods
-cov5 <- cscov("sam", res = res)      # SAM methods
+cov1 <- cscov("ols", n = 3)          # OLS
+cov2 <- cscov("str", agg_mat = A)    # STR
+cov3 <- cscov("wls", res = res)      # WLS
+cov4 <- cscov("shr", res = res)      # SHR
+cov5 <- cscov("sam", res = res)      # SAM
 
 # Custom covariance matrix
 cscov.ols2 <- function(comb, x) diag(x)
@@ -80,17 +81,19 @@ cscov(comb = "ols2", x = 3) # == cscov("ols", n = 3)
 
 }
 \references{
-Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
-shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257), A001.
+Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix
+estimation: shrinkage toward a diagonal target. \emph{IMF Working Papers},
+2023(257), A001.
 
-Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
+Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+\emph{International Journal of Forecasting}, 39, 1, 39-57.
+\doi{10.1016/j.ijforecast.2021.08.004}
 
-Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal forecast
-reconciliation for hierarchical and grouped time series through trace minimization,
-\emph{Journal of the American Statistical Association}, 114, 526, 804-819.
-\doi{10.1080/01621459.2018.1448825}
+Wickramasuriya, S.L., Athanasopoulos, G. and Hyndman, R.J. (2019), Optimal
+forecast reconciliation for hierarchical and grouped time series through
+trace minimization, \emph{Journal of the American Statistical Association},
+114, 526, 804-819. \doi{10.1080/01621459.2018.1448825}
 }
 \seealso{
 Cross-sectional framework:

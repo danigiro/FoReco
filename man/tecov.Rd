@@ -58,10 +58,11 @@ include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 (average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the covariance
-matrix are not mean-corrected.}
+\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute
+the covariance matrix are not mean-corrected.}
 
-\item{shrink_fun}{Shrinkage function of the covariance matrix, \link{shrink_estim} (\emph{default})}
+\item{shrink_fun}{Shrinkage function of the covariance matrix,
+\link{shrink_estim} (\emph{default})}
 
 \item{...}{Not used.}
 }
@@ -69,23 +70,24 @@ matrix are not mean-corrected.}
 A (\eqn{(k^\ast+m) \times (k^\ast+m)}) symmetric matrix.
 }
 \description{
-This function provides an approximation of the temporal base forecasts errors
-covariance matrix using different reconciliation methods (see Di Fonzo and Girolimetto, 2023).
+This function provides an approximation of the temporal base forecasts
+errors covariance matrix using different reconciliation methods (see Di
+Fonzo and Girolimetto, 2023).
 }
 \examples{
 # (7 x 70) in-sample residuals matrix (simulated), agg_order = 4
 res <- rnorm(70)
 
-cov1 <- tecov("ols", agg_order = 4)                 # OLS methods
-cov2 <- tecov("str", agg_order = 4)                 # STRC methods
-cov3 <- tecov("wlsv", agg_order = 4, res = res)     # WLSv methods
-cov4 <- tecov("wlsh", agg_order = 4, res = res)     # WLSh methods
-cov5 <- tecov("acov", agg_order = 4, res = res)     # ACOV methods
-cov6 <- tecov("strar1", agg_order = 4, res = res)   # STRAR1 methods
-cov7 <- tecov("har1", agg_order = 4, res = res)     # HAR1 methods
-cov8 <- tecov("sar1", agg_order = 4, res = res)     # SAR1 methods
-cov9 <- tecov("shr", agg_order = 4, res = res)      # SHR methods
-cov10 <- tecov("sam", agg_order = 4, res = res)     # SAM methods
+cov1 <- tecov("ols", agg_order = 4)                 # OLS
+cov2 <- tecov("str", agg_order = 4)                 # STRC
+cov3 <- tecov("wlsv", agg_order = 4, res = res)     # WLSv
+cov4 <- tecov("wlsh", agg_order = 4, res = res)     # WLSh
+cov5 <- tecov("acov", agg_order = 4, res = res)     # ACOV
+cov6 <- tecov("strar1", agg_order = 4, res = res)   # STRAR1
+cov7 <- tecov("har1", agg_order = 4, res = res)     # HAR1
+cov8 <- tecov("sar1", agg_order = 4, res = res)     # SAR1
+cov9 <- tecov("shr", agg_order = 4, res = res)      # SHR
+cov10 <- tecov("sam", agg_order = 4, res = res)     # SAM
 
 # Custom covariance matrix
 tecov.ols2 <- function(comb, x) diag(x)
@@ -93,9 +95,10 @@ tecov(comb = "ols2", x = 7) # == tecov("ols", agg_order = 4)
 
 }
 \references{
-Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
+Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+\emph{International Journal of Forecasting}, 39, 1, 39-57.
+\doi{10.1016/j.ijforecast.2021.08.004}
 }
 \seealso{
 Temporal framework:

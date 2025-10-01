@@ -1,14 +1,16 @@
 # test temporal reconciliation
-if(require(testthat)){
+if (require(testthat)) {
   agg_order <- 4
   set <- c(4, 2, 1)
   set.seed(123)
-  res <- rnorm(100*sum(set))
+  res <- rnorm(100 * sum(set))
   base <- rnorm(sum(set), 1)
 
   test_that("Temporal tools", {
-    expect_equal(tetools(agg_order = 4, sparse = FALSE),
-                 list(dim = c(m = 4, p = 3, ks = 3, kt = 7),
+    expect_equal(
+      tetools(agg_order = 4, sparse = FALSE),
+      #fmt: skip
+      list(dim = c(m = 4, p = 3, ks = 3, kt = 7),
                       set = c(4, 2, 1),
                       agg_mat = matrix(c(1,1,1,1,
                                          1,1,0,0,
@@ -23,85 +25,194 @@ if(require(testthat)){
                       cons_mat = matrix(c(1,0,0,-1,-1,-1,-1,
                                           0,1,0,-1,-1,0,0,
                                           0,0,1,0,0,-1,-1), 3, 7,
-                                        byrow = TRUE)))
+                                        byrow = TRUE))
+    )
   })
 
   C <- tetools(agg_order, sparse = FALSE)$cons_mat
   comb <- "wlsv"
 
   test_that("Optimal temporal reconciliation", {
-    r1 <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "strc")
-    r2 <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "proj")
-    r3 <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "strc_osqp")
-    r4 <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "proj_osqp")
+    r1 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "strc"
+    )
+    r2 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj"
+    )
+    r3 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "strc_osqp"
+    )
+    r4 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj_osqp"
+    )
 
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r3, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(unlist(FoReco2matrix(r1)), r1, ignore_attr = TRUE)
-    expect_equal(max(abs(C%*%r1)), 0)
+    expect_equal(max(abs(C %*% r1)), 0)
   })
 
   test_that("Bounds", {
     tmp <- set_bounds(k = 1, h = 1, lb = 3)
-    r1 <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "strc", bounds = tmp)
-    r2 <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "proj", bounds = tmp)
+    r1 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "strc",
+      bounds = tmp
+    )
+    r2 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      bounds = tmp
+    )
     expect_equal(r1["k-1 h-1"], 3, ignore_attr = TRUE)
     expect_equal(r1, r2, ignore_attr = TRUE)
 
     tmp <- set_bounds(k = 1, h = 1, lb = 3, approach = "sftb")
-    r3 <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "strc", bounds = tmp)
+    r3 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "strc",
+      bounds = tmp
+    )
     expect_equal(r3["k-1 h-1"], r1["k-1 h-1"], ignore_attr = TRUE)
 
     tmp <- set_bounds(k = 5, h = 1, lb = 3)
-    expect_warning(terec(base = base, agg_order = agg_order, comb = comb,
-                         res = res, bounds = tmp))
+    expect_warning(terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      bounds = tmp
+    ))
   })
 
   base[length(base)] <- -10
   test_that("Optimal nonegative temporal reconciliation", {
-    r1 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj", nn = "strc_osqp")
-    r2 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj", nn = "proj_osqp")
-    r3 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj", nn = "sntz")
-    r4 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj", nn = "bpv")
+    r1 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      nn = "strc_osqp"
+    )
+    r2 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      nn = "proj_osqp"
+    )
+    r3 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      nn = "sntz"
+    )
+    r4 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      nn = "bpv"
+    )
 
-    rf <- terec(base = base, agg_order = agg_order, comb = comb,
-                res = res, approach = "proj")
+    rf <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj"
+    )
     rbu <- tebu(rf[-c(1:3)], agg_order = agg_order, sntz = TRUE)
 
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(r3, rbu, ignore_attr = TRUE)
-    expect_equal(max(abs(C%*%r1)), 0)
-    expect_equal(max(abs(C%*%r3)), 0)
+    expect_equal(max(abs(C %*% r1)), 0)
+    expect_equal(max(abs(C %*% r3)), 0)
   })
 
   test_that("Optimal immutable temporal reconciliation", {
-    r1 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "strc", immutable = c(agg_order, 1))
-    r2 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj", immutable = c(agg_order, 1))
-    r3 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "strc_osqp", immutable = c(agg_order, 1))
-    r4 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj_osqp", immutable = c(agg_order, 1))
-    r5 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "strc_osqp", immutable = c(agg_order, 1),
-                nn = "osqp")
-    r6 <- terec(base = base, agg_order = agg_order, comb = comb, res = res,
-                approach = "proj_osqp", immutable = c(agg_order, 1),
-                nn = "osqp")
+    r1 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "strc",
+      immutable = c(agg_order, 1)
+    )
+    r2 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      immutable = c(agg_order, 1)
+    )
+    r3 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "strc_osqp",
+      immutable = c(agg_order, 1)
+    )
+    r4 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj_osqp",
+      immutable = c(agg_order, 1)
+    )
+    r5 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "strc_osqp",
+      immutable = c(agg_order, 1),
+      nn = "osqp"
+    )
+    r6 <- terec(
+      base = base,
+      agg_order = agg_order,
+      comb = comb,
+      res = res,
+      approach = "proj_osqp",
+      immutable = c(agg_order, 1),
+      nn = "osqp"
+    )
 
     fix_r <- c(r1[1], r2[1], r3[1], r4[1], r5[1], r6[1])
 
@@ -110,8 +221,8 @@ if(require(testthat)){
     expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(r5, r6, ignore_attr = TRUE)
     expect_equal(max(abs(fix_r - base[1])), 0)
-    expect_equal(max(abs(C%*%r1)), 0)
-    expect_equal(max(abs(C%*%r5)), 0)
+    expect_equal(max(abs(C %*% r1)), 0)
+    expect_equal(max(abs(C %*% r5)), 0)
   })
 
   test_that("telcc and BU", {
@@ -124,14 +235,17 @@ if(require(testthat)){
     expect_error(tebu(agg_order = agg_order))
     expect_error(tebu(rbind(base[-c(1:3)]), agg_order = agg_order))
 
-    fix <- unlist(mapply(function(z, y) z[y], y = list(1, c(2,3), c(4:7)),
-                         z = recoinfo(r1, verbose = FALSE)$lcc))
+    fix <- unlist(mapply(
+      function(z, y) z[y],
+      y = list(1, c(2, 3), c(4:7)),
+      z = recoinfo(r1, verbose = FALSE)$lcc
+    ))
 
     expect_equal(max(abs(fix - base)), 0)
     expect_equal(recoinfo(r1, verbose = FALSE)$lcc[[3]], r2)
-    expect_equal(max(abs(C%*%r1)), 0)
-    expect_equal(max(abs(C%*%r2)), 0)
-    expect_equal(max(abs(C%*%r3)), 0)
+    expect_equal(max(abs(C %*% r1)), 0)
+    expect_equal(max(abs(C %*% r2)), 0)
+    expect_equal(max(abs(C %*% r3)), 0)
     expect_equal(r3, round(r3), ignore_attr = TRUE)
   })
 
@@ -146,8 +260,11 @@ if(require(testthat)){
     r2 <- tetd(base = topf, agg_order = 4, weights = h_weights)
 
     # Normalization check
-    r3 <- tetd(base = topf, agg_order = 4,
-               weights = fix_weights/sum(fix_weights))
+    r3 <- tetd(
+      base = topf,
+      agg_order = 4,
+      weights = fix_weights / sum(fix_weights)
+    )
 
     # Middle-out
     r4 <- temo(base = topf, agg_order = 4, weights = fix_weights)
@@ -161,7 +278,7 @@ if(require(testthat)){
     expect_equal(r1, r3, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(r1, r5, ignore_attr = TRUE)
-    expect_equal(max(abs(C%*%r6)), 0)
+    expect_equal(max(abs(C %*% r6)), 0)
   })
 
   test_that("Temporal tools", {
@@ -169,30 +286,69 @@ if(require(testthat)){
     G <- teprojmat(agg_order = 4, comb = "wlsv", res = res, mat = "G")
     S <- tetools(agg_order = 4)$strc_mat
 
-    expect_equal(M, S%*%G, ignore_attr = TRUE)
+    expect_equal(M, S %*% G, ignore_attr = TRUE)
   })
 
   test_that("Covariance", {
-    for(i in c("acov", "har1", "ols", "sam", "sar1", "shr", "str", "strar1",
-               "wlsh", "wlsv")){
-      expect_no_error(terec(base = base, agg_order = agg_order, comb = i,
-                            res = res))
+    for (i in c(
+      "acov",
+      "har1",
+      "sam",
+      "sar1",
+      "shr",
+      "strar1",
+      "wlsh",
+      "wlsv"
+    )) {
+      expect_no_error(terec(
+        base = base,
+        agg_order = agg_order,
+        comb = i,
+        res = res
+      ))
+    }
+
+    for (i in c("ols", "str")) {
+      expect_no_error(terec(
+        base = base,
+        agg_order = agg_order,
+        comb = i
+      ))
     }
   })
 
   test_that("Temporal aggregation", {
-    for(i in c("first", "last", "avg", "sum")){
-      expect_no_error(terec(base = base, agg_order = agg_order, comb = "ols",
-                            tew = i))
+    for (i in c("first", "last", "avg", "sum")) {
+      expect_no_error(terec(
+        base = base,
+        agg_order = agg_order,
+        comb = "ols",
+        tew = i
+      ))
     }
-    expect_error(terec(base = base, agg_order = agg_order, comb = "ols",
-                       tew = "none"))
-    expect_error(terec(base = base, agg_order = agg_order, comb = "ols",
-                       tew = list(1)))
-    expect_error(terec(base = base, agg_order = agg_order, comb = "ols",
-                       tew = list(1,2)))
-    expect_no_error(terec(base = base, agg_order = agg_order, comb = "ols",
-                          tew = list(c(1,1,1,1), c(1,1))))
+    expect_error(terec(
+      base = base,
+      agg_order = agg_order,
+      comb = "ols",
+      tew = "none"
+    ))
+    expect_error(terec(
+      base = base,
+      agg_order = agg_order,
+      comb = "ols",
+      tew = list(1)
+    ))
+    expect_error(terec(
+      base = base,
+      agg_order = agg_order,
+      comb = "ols",
+      tew = list(1, 2)
+    ))
+    expect_no_error(terec(
+      base = base,
+      agg_order = agg_order,
+      comb = "ols",
+      tew = list(c(1, 1, 1, 1), c(1, 1))
+    ))
   })
-
 }
