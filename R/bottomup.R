@@ -48,20 +48,22 @@
 #' nnreco <- csbu(base = bts, agg_mat = A, sntz = TRUE)
 #'
 #' @export
-csbu <- function(base, agg_mat, sntz = FALSE, round = FALSE){
+csbu <- function(base, agg_mat, sntz = FALSE, round = FALSE) {
   # base forecasts condition
-  if(missing(base)){
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
   }
 
-  if(NCOL(base) == 1){
+  if (NCOL(base) == 1) {
     base <- t(base)
   }
 
-  if(missing(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is missing, with no default.",
-              call = NULL)
-  }else{
+  if (missing(agg_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} is missing, with no default.",
+      call = NULL
+    )
+  } else {
     tmp <- cstools(agg_mat = agg_mat, sparse = TRUE)
   }
 
@@ -70,30 +72,34 @@ csbu <- function(base, agg_mat, sntz = FALSE, round = FALSE){
   strc_mat <- tmp$strc_mat
   nn_cons_var <- c(rep(0, csdim[2]), rep(1, csdim[3]))
 
-  if(NCOL(base) != csdim[["nb"]]){
-    cli_abort("Incorrect {.arg agg_mat} or {.arg base} dimensions.",
-              call = NULL)
+  if (NCOL(base) != csdim[["nb"]]) {
+    cli_abort(
+      "Incorrect {.arg agg_mat} or {.arg base} dimensions.",
+      call = NULL
+    )
   }
 
-  if(sntz){
-    base[base<0] <- 0
+  if (sntz) {
+    base[base < 0] <- 0
   }
 
-  if(round){
+  if (round) {
     base <- round(base)
   }
 
-  reco_mat <- as.matrix(base%*%t(strc_mat))
+  reco_mat <- as.matrix(base %*% t(strc_mat))
   rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
-  if(!is.null(colnames(agg_mat)) & !is.null(rownames(agg_mat))){
+  if (!is.null(colnames(agg_mat)) & !is.null(rownames(agg_mat))) {
     colnames(reco_mat) <- unlist(dimnames(agg_mat))
-  }else{
+  } else {
     colnames(reco_mat) <- paste0("s-", 1:NCOL(reco_mat))
   }
-  attr(reco_mat, "FoReco") <- list2env(list(framework = "Cross-sectional",
-                                            forecast_horizon = NROW(reco_mat),
-                                            cs_n = csdim[["n"]],
-                                            rfun = "csbu"))
+  attr(reco_mat, "FoReco") <- new_foreco_info(list(
+    framework = "Cross-sectional",
+    forecast_horizon = NROW(reco_mat),
+    cs_n = csdim[["n"]],
+    rfun = "csbu"
+  ))
   return(reco_mat)
 }
 
@@ -134,21 +140,23 @@ csbu <- function(base, agg_mat, sntz = FALSE, round = FALSE){
 #' @family Reco: bottom-up
 #' @family Framework: temporal
 #' @export
-tebu <- function(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE){
-
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
+tebu <- function(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE) {
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
   }
 
-  if(missing(base)){
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
-  }else if(NCOL(base) != 1){
+  } else if (NCOL(base) != 1) {
     cli_abort("{.arg base} is not a vector.", call = NULL)
-  }else if(length(base) %% max(agg_order) != 0){
+  } else if (length(base) %% max(agg_order) != 0) {
     cli_abort("Incorrect {.arg base} length.", call = NULL)
   }
 
-  h <- length(base)/max(agg_order)
+  h <- length(base) / max(agg_order)
 
   tmp <- tetools(agg_order = agg_order, tew = tew)
   kset <- tmp$set
@@ -156,20 +164,22 @@ tebu <- function(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE){
   strc_mat <- tmp$strc_mat
 
   base <- matrix(base, nrow = h, ncol = m, byrow = TRUE)
-  if(sntz){
-    base[base<0] <- 0
+  if (sntz) {
+    base[base < 0] <- 0
   }
 
-  if(round){
+  if (round) {
     base <- round(base)
   }
 
-  reco_vec <- base%*%t(strc_mat)
+  reco_vec <- base %*% t(strc_mat)
   reco_vec <- hmat2vec(reco_vec, h = h, kset = kset)
-  attr(reco_vec, "FoReco") <- list2env(list(framework = "Temporal",
-                                            forecast_horizon = h,
-                                            te_set = tmp$set,
-                                            rfun = "tebu"))
+  attr(reco_vec, "FoReco") <- new_foreco_info(list(
+    framework = "Temporal",
+    forecast_horizon = h,
+    te_set = tmp$set,
+    rfun = "tebu"
+  ))
   return(reco_vec)
 }
 
@@ -214,51 +224,66 @@ tebu <- function(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE){
 #' @family Reco: bottom-up
 #' @family Framework: cross-temporal
 #' @export
-ctbu <- function(base, agg_mat, agg_order, tew = "sum",
-                 sntz = FALSE, round = FALSE){
-  if(missing(base)){
+ctbu <- function(
+  base,
+  agg_mat,
+  agg_order,
+  tew = "sum",
+  sntz = FALSE,
+  round = FALSE
+) {
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
   }
 
-  if(missing(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is missing, with no default.",
-              call = NULL)
-  }else{
+  if (missing(agg_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} is missing, with no default.",
+      call = NULL
+    )
+  } else {
     cstmp <- cstools(agg_mat = agg_mat, sparse = TRUE)
     cs_strc_mat <- cstmp$strc_mat
-    if(NROW(base) != cstmp$dim[["nb"]]){
+    if (NROW(base) != cstmp$dim[["nb"]]) {
       cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
     }
   }
 
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.",
-              call = NULL)
-  }else{
-    if(NCOL(base) %% max(agg_order) != 0){
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
+  } else {
+    if (NCOL(base) %% max(agg_order) != 0) {
       cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
     }
-    h <- NCOL(base)/max(agg_order)
+    h <- NCOL(base) / max(agg_order)
     tetmp <- tetools(agg_order = agg_order, tew = tew, fh = h)
     te_strc_mat <- tetmp$strc_mat
   }
 
-  if(sntz){
-    base[base<0] <- 0
+  if (sntz) {
+    base[base < 0] <- 0
   }
 
-  if(round){
+  if (round) {
     base <- round(base)
   }
 
   reco_mat <- as.matrix(cs_strc_mat %*% base %*% t(te_strc_mat))
 
-  rownames(reco_mat) <- namesCS(n = NROW(reco_mat), names_list = dimnames(agg_mat))
+  rownames(reco_mat) <- namesCS(
+    n = NROW(reco_mat),
+    names_list = dimnames(agg_mat)
+  )
   colnames(reco_mat) <- namesTE(kset = tetmp$set, h = h)
-  attr(reco_mat, "FoReco") <- list2env(list(framework = "Cross-temporal",
-                                            forecast_horizon = h,
-                                            te_set = tetmp$set,
-                                            cs_n = cstmp$dim[["n"]],
-                                            rfun = "ctbu"))
+  attr(reco_mat, "FoReco") <- new_foreco_info(list(
+    framework = "Cross-temporal",
+    forecast_horizon = h,
+    te_set = tetmp$set,
+    cs_n = cstmp$dim[["n"]],
+    rfun = "ctbu"
+  ))
   return(reco_mat)
 }

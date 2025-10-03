@@ -45,21 +45,23 @@
 #' @family Framework: cross-sectional
 #'
 #' @export
-cssample <- function(sample, fun = csrec, ...){
-  if(is.list(sample)){
+cssample <- function(sample, fun = csrec, ...) {
+  if (is.list(sample)) {
     sample <- simplify2array(sample)
   }
 
-  if(length(dim(sample))==2){ # Matrix input: sample_size x variable
+  if (length(dim(sample)) == 2) {
+    # Matrix input: sample_size x variable
     tmp_dim <- c(1, rev(dim(sample))) # forecast_horizon x variable x sample_size
-  }else if(length(dim(sample))==3){ # Array input: forecast_horizon x variable x sample_size
+  } else if (length(dim(sample)) == 3) {
+    # Array input: forecast_horizon x variable x sample_size
     tmp_dim <- dim(sample) # forecast_horizon x variable x sample_size
 
     # array to matrix form
-    sample <- aperm(sample,c(2,3,1))
+    sample <- aperm(sample, c(2, 3, 1))
     dim(sample) <- c(tmp_dim[2], prod(tmp_dim[-2]))
     sample <- t(sample)
-  }else{
+  } else {
     cli_abort("Incorrect {.arg sample} dimensions", call = NULL)
   }
 
@@ -69,26 +71,31 @@ cssample <- function(sample, fun = csrec, ...){
   colnames_save <- colnames(reco_mat)
   obj <- recoinfo(reco_mat, verbose = FALSE)
   obj$sample_size <- tmp_dim[3]
-  obj$forecast_horizon <- obj$forecast_horizon/obj$sample_size
+  obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
   obj$pfun <- "cssample"
 
   # matrix to array
   tmp_dim[2] <- NCOL(reco_mat)
   reco_mat <- t(reco_mat)
-  dim(reco_mat) <- tmp_dim[c(2,3,1)]
-  reco_mat <- aperm(reco_mat, c(2,1,3))
-  dimnames(reco_mat) <- list(paste0("l-", 1:tmp_dim[3]),
-                             colnames_save,
-                             paste0("h-", 1:tmp_dim[1]))
+  dim(reco_mat) <- tmp_dim[c(2, 3, 1)]
+  reco_mat <- aperm(reco_mat, c(2, 1, 3))
+  dimnames(reco_mat) <- list(
+    paste0("l-", 1:tmp_dim[3]),
+    colnames_save,
+    paste0("h-", 1:tmp_dim[1])
+  )
 
-  reco_dist <- do.call(c, apply(reco_mat, 3, function(x){
-    dist <- distributional::dist_sample(list(x))
-    dist
-  }))
+  reco_dist <- do.call(
+    c,
+    apply(reco_mat, 3, function(x) {
+      dist <- distributional::dist_sample(list(x))
+      dist
+    })
+  )
   dimnames(reco_dist) <- colnames_save
   names(reco_dist) <- paste0("h-", 1:tmp_dim[1])
 
-  attr(reco_dist, "FoReco") <- list2env(obj)
+  attr(reco_dist, "FoReco") <- new_foreco_info(obj)
   return(reco_dist)
 }
 
@@ -137,14 +144,18 @@ cssample <- function(sample, fun = csrec, ...){
 #' @family Framework: temporal
 #'
 #' @export
-tesample <- function(sample, agg_order, fun = terec, ...){
-
-  if(length(dim(sample))==2){ # Matrix input: sample_size x (variable*h)
+tesample <- function(sample, agg_order, fun = terec, ...) {
+  if (length(dim(sample)) == 2) {
+    # Matrix input: sample_size x (variable*h)
     sample_size <- NROW(sample)
-    sample <- unname(unlist(lapply(FoReco2matrix(sample, agg_order), as.vector)))
-  }else if(is.vector(sample)){ # vector input: variable * sample_size x 1
+    sample <- unname(unlist(lapply(
+      FoReco2matrix(sample, agg_order),
+      as.vector
+    )))
+  } else if (is.vector(sample)) {
+    # vector input: variable * sample_size x 1
     sample_size <- NULL
-  }else{
+  } else {
     cli_abort("Incorrect {.arg sample} dimensions", call = NULL)
   }
 
@@ -153,26 +164,38 @@ tesample <- function(sample, agg_order, fun = terec, ...){
 
   # info
   obj <- recoinfo(reco_mat, verbose = FALSE)
-  if(is.null(sample_size)){
+  if (is.null(sample_size)) {
     obj$sample_size <- obj$forecast_horizon
-  }else{
+  } else {
     obj$sample_size <- sample_size
   }
-  obj$forecast_horizon <- obj$forecast_horizon/obj$sample_size
+  obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
   obj$pfun <- "tesample"
 
   # Names
   names_te <- namesTE(kset = obj$te_set, h = 1)
 
   # Distributional obj
-  reco_mat <- vec2hmat(reco_mat, obj$forecast_horizon*obj$sample_size, obj$te_set)
-  reco_mat <- lapply(split(reco_mat, rep(1:obj$forecast_horizon,obj$sample_size)), matrix, nrow = obj$sample_size)
-  reco_mat <- lapply(reco_mat, `dimnames<-`, list(paste0("l-", 1:obj$sample_size), names_te))
+  reco_mat <- vec2hmat(
+    reco_mat,
+    obj$forecast_horizon * obj$sample_size,
+    obj$te_set
+  )
+  reco_mat <- lapply(
+    split(reco_mat, rep(1:obj$forecast_horizon, obj$sample_size)),
+    matrix,
+    nrow = obj$sample_size
+  )
+  reco_mat <- lapply(
+    reco_mat,
+    `dimnames<-`,
+    list(paste0("l-", 1:obj$sample_size), names_te)
+  )
   reco_dist <- dist_sample(reco_mat)
   dimnames(reco_dist) <- names_te
   names(reco_dist) <- paste0("tao-", 1:length(reco_dist))
 
-  attr(reco_dist, "FoReco") <- list2env(obj)
+  attr(reco_dist, "FoReco") <- new_foreco_info(obj)
   return(reco_dist)
 }
 
@@ -228,21 +251,23 @@ tesample <- function(sample, agg_order, fun = terec, ...){
 #' @family Framework: cross-temporal
 #'
 #' @export
-ctsample <- function(sample, agg_order, fun = ctrec, ...){
-  if(length(dim(sample))==3){
+ctsample <- function(sample, agg_order, fun = ctrec, ...) {
+  if (length(dim(sample)) == 3) {
     tmp_dim <- dim(sample)
     rownames_save <- rownames(sample)
-    sample <- apply(sample, 1, function(x) (unlist(lapply(FoReco::FoReco2matrix(t(x), agg_order), as.vector))))
+    sample <- apply(sample, 1, function(x) {
+      (unlist(lapply(FoReco::FoReco2matrix(t(x), agg_order), as.vector)))
+    })
     sample <- t(unname(sample))
     rownames(sample) <- rownames_save
-  }else{
+  } else {
     cli_abort("Incorrect {.arg sample} dimensions", call = NULL)
   }
 
   # reconciliation
-  if("agg_order" %in% names(formals(fun))){
+  if ("agg_order" %in% names(formals(fun))) {
     reco_mat <- fun(base = sample, agg_order = agg_order, ...)
-  }else{
+  } else {
     reco_mat <- fun(base = sample, ...)
   }
   rownames_save <- colnames(reco_mat)
@@ -250,23 +275,38 @@ ctsample <- function(sample, agg_order, fun = ctrec, ...){
   # Reco info
   obj <- recoinfo(reco_mat, verbose = FALSE)
   obj$sample_size <- tmp_dim[3]
-  obj$forecast_horizon <- obj$forecast_horizon/obj$sample_size
+  obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
   obj$pfun <- "ctsample"
 
   # Names
   names_cs <- paste0("s-", 1:obj$cs_n)
   names_te <- namesTE(kset = obj$te_set, h = 1)
-  names_ct <- paste(rep(names_cs, each = length(names_te)),
-                    rep(names_te, length(names_cs)))
+  names_ct <- paste(
+    rep(names_cs, each = length(names_te)),
+    rep(names_te, length(names_cs))
+  )
 
   # Distribution obj
-  reco_mat <- mat2hmat(reco_mat,  obj$forecast_horizon*obj$sample_size, obj$te_set,  obj$cs_n)
-  reco_mat <- lapply(split(reco_mat, rep(1:obj$forecast_horizon,obj$sample_size)), matrix, nrow = obj$sample_size)
-  reco_mat <- lapply(reco_mat, `dimnames<-`, list(paste0("l-", 1:obj$sample_size), names_ct))
+  reco_mat <- mat2hmat(
+    reco_mat,
+    obj$forecast_horizon * obj$sample_size,
+    obj$te_set,
+    obj$cs_n
+  )
+  reco_mat <- lapply(
+    split(reco_mat, rep(1:obj$forecast_horizon, obj$sample_size)),
+    matrix,
+    nrow = obj$sample_size
+  )
+  reco_mat <- lapply(
+    reco_mat,
+    `dimnames<-`,
+    list(paste0("l-", 1:obj$sample_size), names_ct)
+  )
   reco_dist <- dist_sample(reco_mat)
   dimnames(reco_dist) <- names_ct
   names(reco_dist) <- paste0("tao-", 1:length(reco_dist))
 
-  attr(reco_dist, "FoReco") <- list2env(obj)
+  attr(reco_dist, "FoReco") <- new_foreco_info(obj)
   return(reco_dist)
 }

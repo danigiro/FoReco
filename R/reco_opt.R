@@ -247,7 +247,7 @@ csrec <- function(
   }
 
   rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
-  attr(reco_mat, "FoReco") <- list2env(list(
+  attr(reco_mat, "FoReco") <- new_foreco_info(list(
     info = attr(reco_mat, "info"),
     framework = "Cross-sectional",
     forecast_horizon = NROW(reco_mat),
@@ -523,7 +523,7 @@ terec <- function(
 
   # Convert 'reco_mat' back to vector
   out <- hmat2vec(reco_mat, h = h, kset = kset)
-  attr(out, "FoReco") <- list2env(list(
+  attr(out, "FoReco") <- new_foreco_info(list(
     info = attr(reco_mat, "info"),
     framework = "Temporal",
     forecast_horizon = h,
@@ -938,7 +938,7 @@ ctrec <- function(
     names_list = dimnames(agg_mat)
   )
 
-  attr(out, "FoReco") <- list2env(list(
+  attr(out, "FoReco") <- new_foreco_info(list(
     info = attr(reco_mat, "info"),
     framework = "Cross-temporal",
     forecast_horizon = h,

@@ -291,7 +291,7 @@ iterec <- function(
   out <- as.matrix(tmp)
   colnames(out) <- namesTE(kset = kset, h = h)
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base))
-  attr(out, "FoReco") <- list2env(list(
+  attr(out, "FoReco") <- new_foreco_info(list(
     discrepancy = dmat,
     flag = flag,
     ite = i,
@@ -447,7 +447,7 @@ tcsrec <- function(base, cslist, telist, res = NULL, avg = "KA") {
   out <- as.matrix(mM %*% step1)
   colnames(out) <- namesTE(kset = kset, h = h)
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base))
-  attr(out, "FoReco") <- list2env(list(
+  attr(out, "FoReco") <- new_foreco_info(list(
     proj_mean = mM,
     framework = "Cross-temporal",
     forecast_horizon = h,
@@ -546,7 +546,7 @@ cstrec <- function(base, cslist, telist, res = NULL) {
   }
   colnames(out) <- namesTE(kset = kset, h = h)
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base))
-  attr(out, "FoReco") <- list2env(list(
+  attr(out, "FoReco") <- new_foreco_info(list(
     proj_mean = mM,
     framework = "Cross-temporal",
     forecast_horizon = h,

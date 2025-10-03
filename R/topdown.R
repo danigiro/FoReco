@@ -42,50 +42,66 @@
 #' @family Framework: cross-sectional
 #' @export
 #'
-cstd <- function(base, agg_mat, weights, normalize = TRUE){
-  if(missing(base)){
+cstd <- function(base, agg_mat, weights, normalize = TRUE) {
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
-  }else if(NCOL(base) != 1){
+  } else if (NCOL(base) != 1) {
     cli_abort("Argument {.arg base} is not a vector.", call = NULL)
   }
 
-  if(missing(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is missing, with no default.", call = NULL)
-  }else{
+  if (missing(agg_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} is missing, with no default.",
+      call = NULL
+    )
+  } else {
     tmp <- cstools(agg_mat = agg_mat, sparse = TRUE)
   }
 
-  if(missing(weights)){
-    cli_abort("Argument {.arg weights} is missing, with no default.", call = NULL)
+  if (missing(weights)) {
+    cli_abort(
+      "Argument {.arg weights} is missing, with no default.",
+      call = NULL
+    )
   }
 
-  if(NCOL(weights) == 1){
+  if (NCOL(weights) == 1) {
     weights <- t(weights)
   }
 
-  if(NCOL(weights)!=tmp$dim[["nb"]]){
-    cli_abort("Incorrect {.arg agg_mat} or {.arg weights} dimensions.", call = NULL)
+  if (NCOL(weights) != tmp$dim[["nb"]]) {
+    cli_abort(
+      "Incorrect {.arg agg_mat} or {.arg weights} dimensions.",
+      call = NULL
+    )
   }
 
-  if(NROW(weights)!=length(base)){
-    weights <- matrix(rep(as.vector(weights), length(base)), length(base), byrow = TRUE)
+  if (NROW(weights) != length(base)) {
+    weights <- matrix(
+      rep(as.vector(weights), length(base)),
+      length(base),
+      byrow = TRUE
+    )
   }
 
   wsum <- apply(weights, 1, sum)
 
-  if(!normalize){
-    if(any(wsum != 1)){
+  if (!normalize) {
+    if (any(wsum != 1)) {
       cli_warn("The {.arg weights} do not add up to 1", call = NULL)
     }
     wsum <- rep(1, length(base))
   }
 
-  bbf <- weights*matrix(base/wsum, nrow = NROW(weights), ncol = NCOL(weights))
+  bbf <- weights *
+    matrix(base / wsum, nrow = NROW(weights), ncol = NCOL(weights))
   reco_mat <- csbu(bbf, agg_mat = tmp$agg_mat)
-  attr(reco_mat, "FoReco") <- list2env(list(framework = "Cross-sectional",
-                                            forecast_horizon = NROW(reco_mat),
-                                            cs_n = NCOL(reco_mat),
-                                            rfun = "cstd"))
+  attr(reco_mat, "FoReco") <- new_foreco_info(list(
+    framework = "Cross-sectional",
+    forecast_horizon = NROW(reco_mat),
+    cs_n = NCOL(reco_mat),
+    rfun = "cstd"
+  ))
   return(reco_mat)
 }
 
@@ -128,48 +144,60 @@ cstd <- function(base, agg_mat, weights, normalize = TRUE){
 #' @family Framework: temporal
 #' @export
 #'
-tetd <- function(base, agg_order, weights, tew = "sum", normalize = TRUE){
-  if(missing(base)){
+tetd <- function(base, agg_order, weights, tew = "sum", normalize = TRUE) {
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
-  }else if(NCOL(base) != 1){
+  } else if (NCOL(base) != 1) {
     cli_abort("Argument {.arg base} is not a vector.", call = NULL)
   }
 
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
-  }else{
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
+  } else {
     tmp <- tetools(agg_order = agg_order, sparse = TRUE)
   }
 
-  if(missing(weights)){
-    cli_abort("Argument {.arg weights} is missing, with no default.", call = NULL)
-  }else if(NCOL(weights) != 1){
+  if (missing(weights)) {
+    cli_abort(
+      "Argument {.arg weights} is missing, with no default.",
+      call = NULL
+    )
+  } else if (NCOL(weights) != 1) {
     cli_abort("Argument {.arg weights} is not a vector.", call = NULL)
   }
 
-  if(length(weights) != length(base)*tmp$dim[["m"]]){
-    if(length(weights) == tmp$dim[["m"]]){
+  if (length(weights) != length(base) * tmp$dim[["m"]]) {
+    if (length(weights) == tmp$dim[["m"]]) {
       weights <- rep(weights, length(base))
-    }else{
+    } else {
       cli_abort("Incorrect {.arg weights} length.", call = NULL)
     }
   }
 
-  wsum <- unname(tapply(weights, rep(1:length(base), each = tmp$dim[["m"]]), sum))
+  wsum <- unname(tapply(
+    weights,
+    rep(1:length(base), each = tmp$dim[["m"]]),
+    sum
+  ))
 
-  if(!normalize){
-    if(any(wsum != 1)){
+  if (!normalize) {
+    if (any(wsum != 1)) {
       cli_warn("The {.arg weights} do not add up to 1", call = NULL)
     }
     wsum <- rep(1, length(base))
   }
 
-  hfbf <- rep(base/wsum, each = tmp$dim[["m"]])*weights
+  hfbf <- rep(base / wsum, each = tmp$dim[["m"]]) * weights
   reco_vec <- tebu(hfbf, agg_order = tmp$set, tew = tew)
-  attr(reco_vec, "FoReco") <- list2env(list(framework = "Temporal",
-                                            forecast_horizon = length(base),
-                                            te_set = tmp$set,
-                                            rfun = "tetd"))
+  attr(reco_vec, "FoReco") <- new_foreco_info(list(
+    framework = "Temporal",
+    forecast_horizon = length(base),
+    te_set = tmp$set,
+    rfun = "tetd"
+  ))
   return(reco_vec)
 }
 
@@ -215,59 +243,87 @@ tetd <- function(base, agg_order, weights, tew = "sum", normalize = TRUE){
 #' @family Framework: cross-temporal
 #' @export
 #'
-cttd <- function(base, agg_mat, agg_order, weights, tew = "sum", normalize = TRUE){
-  if(missing(base)){
+cttd <- function(
+  base,
+  agg_mat,
+  agg_order,
+  weights,
+  tew = "sum",
+  normalize = TRUE
+) {
+  if (missing(base)) {
     cli_abort("Argument {.arg base} is missing, with no default.", call = NULL)
-  }else if(NCOL(base) != 1){
+  } else if (NCOL(base) != 1) {
     cli_abort("Argument {.arg base} is not a vector.", call = NULL)
   }
 
-  if(missing(agg_mat)){
-    cli_abort("Argument {.arg agg_mat} is missing, with no default.", call = NULL)
-  }else{
+  if (missing(agg_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} is missing, with no default.",
+      call = NULL
+    )
+  } else {
     cstmp <- cstools(agg_mat = agg_mat, sparse = TRUE)
   }
 
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
-  }else{
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
+  } else {
     tetmp <- tetools(agg_order = agg_order, sparse = TRUE)
   }
 
-  if(missing(weights)){
-    cli_abort("Argument {.arg weights} is missing, with no default.", call = NULL)
-  }else if(NROW(weights)!=cstmp$dim[["nb"]]){
-    cli_abort("Incorrect {.arg agg_mat} or {.arg weights} dimensions.", call = NULL)
+  if (missing(weights)) {
+    cli_abort(
+      "Argument {.arg weights} is missing, with no default.",
+      call = NULL
+    )
+  } else if (NROW(weights) != cstmp$dim[["nb"]]) {
+    cli_abort(
+      "Incorrect {.arg agg_mat} or {.arg weights} dimensions.",
+      call = NULL
+    )
   }
 
-  if(NCOL(weights) != length(base)*tetmp$dim[["m"]]){
-    if(NCOL(weights) == tetmp$dim[["m"]]){
+  if (NCOL(weights) != length(base) * tetmp$dim[["m"]]) {
+    if (NCOL(weights) == tetmp$dim[["m"]]) {
       weights <- do.call(cbind, rep(list(weights), length(base)))
-    }else{
+    } else {
       cli_abort("Incorrect {.arg weights} length.", call = NULL)
     }
   }
 
-  wsum <- sapply(1:length(base), function(h){
+  wsum <- sapply(1:length(base), function(h) {
     sum(weights[, rep(1:length(base), each = tetmp$dim[["m"]]) == h])
   })
 
-  if(!normalize){
-    if(any(wsum != 1)){
+  if (!normalize) {
+    if (any(wsum != 1)) {
       cli_warn("The {.arg weights} do not add up to 1", call = NULL)
     }
     wsum <- rep(1, length(base))
   }
 
-  hfbbf <- matrix(rep(rep(base/wsum, each = tetmp$dim[["m"]]), cstmp$dim[["nb"]]),
-                  cstmp$dim[["nb"]], byrow = TRUE)
-  hfbbf <- hfbbf*weights
-  reco_mat <- ctbu(hfbbf, agg_mat = cstmp$agg_mat, agg_order = tetmp$set, tew = tew)
-  attr(reco_mat, "FoReco") <- list2env(list(framework = "Cross-temporal",
-                                            forecast_horizon = length(base),
-                                            te_set = tetmp$set,
-                                            cs_n = cstmp$dim[["n"]],
-                                            rfun = "cttd"))
+  hfbbf <- matrix(
+    rep(rep(base / wsum, each = tetmp$dim[["m"]]), cstmp$dim[["nb"]]),
+    cstmp$dim[["nb"]],
+    byrow = TRUE
+  )
+  hfbbf <- hfbbf * weights
+  reco_mat <- ctbu(
+    hfbbf,
+    agg_mat = cstmp$agg_mat,
+    agg_order = tetmp$set,
+    tew = tew
+  )
+  attr(reco_mat, "FoReco") <- new_foreco_info(list(
+    framework = "Cross-temporal",
+    forecast_horizon = length(base),
+    te_set = tetmp$set,
+    cs_n = cstmp$dim[["n"]],
+    rfun = "cttd"
+  ))
   return(reco_mat)
 }
-
