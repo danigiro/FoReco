@@ -2,6 +2,7 @@
 % Please edit documentation in R/foreco_info.R
 \name{new_foreco_info}
 \alias{new_foreco_info}
+\alias{print.foreco_info}
 \title{Low-level construction for reconcilied forecasts attribute foreco_info class}
 \usage{
 new_foreco_info(x = list())

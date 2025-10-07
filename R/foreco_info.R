@@ -86,7 +86,7 @@ recoinfo <- function(x, verbose = TRUE) {
 #' `new_foreca_info()` is the contructor for the `foreca_info` class, which acompany
 #' the output from the reconciliation functions in the attribute `FoReco`.
 #' This is exported for extension purposes and for expert use only.
-#'
+#' @aliases print.foreco_info
 #' @param x A list of information related to the reconcilied forecasts.
 #' @examples
 #' new_foreco_info(list(
@@ -101,6 +101,8 @@ new_foreco_info <- function(x = list()) {
   structure(x, class = "foreco_info")
 }
 
-print.foreco_info <- function(x) {
+#' @export
+#' @method print foreco_info
+print.foreco_info <- function(x, ...) {
   invisible(x)
 }
