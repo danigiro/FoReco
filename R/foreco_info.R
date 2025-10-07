@@ -72,6 +72,11 @@ recoinfo <- function(x, verbose = TRUE) {
         }
         cli_alert_info("Covariance approximation: {.strong {.code {tmp}}}")
       }
+
+      if (!is.null(out$ml)) {
+        cli_alert_info("ML approach: {.strong {.code {out$ml}}}")
+      }
+
       if (!is.null(out$nn)) {
         cli_alert_info("Non-negative forecasts: {.strong {.code {out$nn}}}")
       }
