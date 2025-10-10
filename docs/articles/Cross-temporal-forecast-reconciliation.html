@@ -396,7 +396,7 @@ supported
 <span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
 <span><span class="co">#&gt;         obj_val run_time iter      pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -220421537281 26.86386  700 1.052998e-21      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 -220421537281  26.3549  700 1.052998e-21      1             1</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023b</a>)</span>.</li>
@@ -455,8 +455,8 @@ supported
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ : num [1:525, 1:28] 309468 93268 60379 74758 20430 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:525, 1:28] 331164 98131 60354 87924 20222 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:525, 1:28] 335643 97756 64587 83180 21143 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 341516 103703 66673 79246 20532 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 321845 95542 66009 80740 19633 ...</span></span>
 <span></span>
 <span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsmp.html">ctsmp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                      res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
@@ -469,7 +469,7 @@ supported
 <span>                         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>                         row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:28] 326578 99132 65181 80897 20422 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:525, 1:28] 323746 98327 64891 80437 20352 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts. Since we have to simulate from a multivariate normal distribution with a size of 14700, we will use a diagonal covariance matrix in this vignette. However, it’s important to note that this choice will result in a significantly narrow variance for the reconciled forecasts.</p>
 <div class="cell">
@@ -608,9 +608,9 @@ supported
 <span><span class="va">base_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctboot.html">ctboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1834508 743121 1781496 1439204 343284 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1822313 739358 1763155 1439877 330675 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1828669 746753 1776511 1435657 341317 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1715859 708966 1655955 1382431 281299 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1748327 714596 1681621 1381289 327488 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1715859 708966 1655955 1382431 281299 ...</span></span>
 <span></span>
 <span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsmp.html">ctsmp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
 <span>                      res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
@@ -625,7 +625,7 @@ supported
 <span>                         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NCOL</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span>, </span>
 <span>                         row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:21, 1:7] 1811691 732070 1743492 1417491 326001 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:21, 1:7] 1810438 732435 1739997 1416104 323893 ...</span></span></code></pre></div>
 </div>
 <p>Alternatively, we can use a parametric method.</p>
 <div class="cell">

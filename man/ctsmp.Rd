@@ -44,14 +44,22 @@ sample <- simplify2array(lapply(1:100, function(x){
 # (3 x 70) in-sample residuals matrix (simulated)
 res <- rbind(rnorm(70), rnorm(70), rnorm(70))
 
-# Optimal cross-sectional probabilistic reconciliation
-reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res, comb = "bdshr")
+# Top-down probabilistic reconciliation
+reco_dist_td <- ctsmp(sample[1, 1:2, , drop = FALSE], agg_order = m,
+                      agg_mat = A, fun = cttd, weights = matrix(runif(8), 2))
 
+# Middle-out probabilistic reconciliation
+reco_dist_mo <- ctsmp(sample[1, 3:6, , drop = FALSE], agg_order = m,
+                      agg_mat = A, fun = ctmo, weights = matrix(runif(8), 2),
+                      id_rows = 1, order = 2)
 # Bottom-up probabilistic reconciliation
 reco_dist_bu <- ctsmp(sample[-1,-c(1:6), ], agg_order = m, agg_mat = A, fun = ctbu)
 
 # Level conditional coherent probabilistic reconciliation
 reco_dist_lcc <- ctsmp(sample, agg_order = m, agg_mat = A, fun = ctlcc)
+
+# Optimal cross-sectional probabilistic reconciliation
+reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res, comb = "bdshr")
 
 }
 \references{

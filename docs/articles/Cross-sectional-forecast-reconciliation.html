@@ -291,7 +291,7 @@ supported
 <span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
 <span><span class="co">#&gt;     obj_val  run_time iter      pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -3197.129 0.1938887  450 4.896219e-11      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 -3197.129 0.2024402  450 4.896219e-11      1             1</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023</a>)</span>.</li>
@@ -350,7 +350,7 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:12, 1:525] 49448 21831 25050 29800 23430 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:12, 1:525] 49960 21888 25020 29410 23538 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
@@ -454,7 +454,7 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:4, 1:21] 434462 453400 451432 482270 169355 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:4, 1:21] 434549 453145 450886 481507 169148 ...</span></span></code></pre></div>
 </div>
 <p>Alternatively, we can use a parametric method.</p>
 <div class="cell">

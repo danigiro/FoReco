@@ -24,24 +24,40 @@ Cross-sectional probabilistic reconciliation (sample approach)
 }
 \examples{
 set.seed(123)
-A <- t(c(1,1)) # Aggregation matrix for Z = X + Y
+A <- matrix(c(1,1,1,1,  # Z = X + Y
+              1,1,0,0,  # X = XX + XY
+              0,0,1,1), # Y = YX + YY
+              nrow = 3, byrow = TRUE)
+rownames(A) <- c("Z", "X", "Y")
+colnames(A) <- c("XX", "XY", "YX", "YY")
 
-# (100 x 3) base forecasts sample (simulated) for h = 1
-base_h1 <- matrix(rnorm(100*3, mean = c(20, 10, 10)), 100, byrow = TRUE)
-# (100 x 3) base forecasts sample (simulated) for h = 2
-base_h2 <- matrix(rnorm(100*3, mean = c(20, 10, 10)), 100, byrow = TRUE)
-# (2 x 3 x 100) base forecasts sample array with
-# 2 forecast horizons, 3 time series and 100 sample
+# (100 x 7) base forecasts sample (simulated) for h = 1
+base_h1 <- matrix(rnorm(100*7, mean = c(20, rep(10, 2), rep(5, 4))),
+                  100, byrow = TRUE)
+# (100 x 7) base forecasts sample (simulated) for h = 2
+base_h2 <- matrix(rnorm(100*7, mean = c(20, rep(10, 2), rep(5, 4))),
+                  100, byrow = TRUE)
+# (2 x 7 x 100) base forecasts sample array with
+# 2 forecast horizons, 7 time series and 100 sample
 base_sample <- aperm(simplify2array(list(base_h1, base_h2)), c(3,2,1))
 
-# Optimal cross-sectional probabilistic reconciliation
-reco_dist_opt <- cssmp(base_sample, agg_mat = A)
+# Top-down probabilistic reconciliation
+reco_dist_td <- cssmp(base_sample[, 1, , drop = FALSE], agg_mat = A,
+                      fun = cstd, weights = c(0.3, 0.2, 0.1, 0.4))
+
+# Middle-out probabilistic reconciliation
+reco_dist_mo <- cssmp(base_sample[, c(2,3), , drop = FALSE], agg_mat = A,
+                      fun = csmo, weights = c(0.3, 0.7, 0.8, 0.2),
+                      id_rows = 2:3)
 
 # Bottom-up probabilistic reconciliation
-reco_dist_bu <- cssmp(base_sample[,-1,], agg_mat = A, fun = csbu)
+reco_dist_bu <- cssmp(base_sample[,-c(1:3),], agg_mat = A, fun = csbu)
 
 # Level conditional coherent probabilistic reconciliation
 reco_dist_lcc <- cssmp(base_sample, agg_mat = A, fun = cslcc)
+
+# Optimal cross-sectional probabilistic reconciliation
+reco_dist_opt <- cssmp(base_sample, agg_mat = A)
 
 }
 \references{

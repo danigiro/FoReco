@@ -223,9 +223,10 @@ temo <- function(
 
   hfbf <- rep(base / wsum, each = order) * weights
   reco_vec <- tebu(hfbf, agg_order = tmp$set, tew = tew)
+
   attr(reco_vec, "FoReco") <- new_foreco_info(list(
     framework = "Temporal",
-    forecast_horizon = length(base),
+    forecast_horizon = h,
     te_set = tmp$set,
     rfun = "temo"
   ))
@@ -400,7 +401,7 @@ ctmo <- function(
 
   attr(reco_mat, "FoReco") <- new_foreco_info(list(
     framework = "Cross-temporal",
-    forecast_horizon = length(base),
+    forecast_horizon = h,
     te_set = tetmp$set,
     cs_n = cstmp$dim[["n"]],
     rfun = "ctmo"

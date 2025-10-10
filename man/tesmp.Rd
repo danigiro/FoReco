@@ -36,14 +36,22 @@ sample <- t(sapply(1:100, function(x) rnorm(14, rep(c(20, 10, 5), 2*c(1, 2, 4)))
 # (70 x 1) in-sample residuals vector (simulated)
 res <- rnorm(70)
 
-# Optimal cross-sectional probabilistic reconciliation
-reco_dist_opt <- tesmp(sample, agg_order = m, res = res, comb = "shr")
+# Top-down probabilistic reconciliation
+reco_dist_td <- tesmp(sample[,c(1:2), drop = FALSE], agg_order = m,
+                      fun = tetd, weights = c(0.2, 0.5, 0.3, 0.3))
+
+# Middle-out probabilistic reconciliation
+tesmp(sample[,c(3:6), drop = FALSE], agg_order = m,
+      fun = temo, weights = c(0.2, 0.5, 0.3, 0.3), order = 2)
 
 # Bottom-up probabilistic reconciliation
 reco_dist_bu <- tesmp(sample[,-c(1:6)], agg_order = m, fun = tebu)
 
 # Level conditional coherent probabilistic reconciliation
 reco_dist_lcc <- tesmp(sample, agg_order = m, fun = telcc)
+
+# Optimal cross-sectional probabilistic reconciliation
+reco_dist_opt <- tesmp(sample, agg_order = m, res = res, comb = "wlsv")
 
 }
 \references{

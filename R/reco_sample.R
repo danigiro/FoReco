@@ -22,24 +22,40 @@
 #'
 #' @examples
 #' set.seed(123)
-#' A <- t(c(1,1)) # Aggregation matrix for Z = X + Y
+#' A <- matrix(c(1,1,1,1,  # Z = X + Y
+#'               1,1,0,0,  # X = XX + XY
+#'               0,0,1,1), # Y = YX + YY
+#'               nrow = 3, byrow = TRUE)
+#' rownames(A) <- c("Z", "X", "Y")
+#' colnames(A) <- c("XX", "XY", "YX", "YY")
 #'
-#' # (100 x 3) base forecasts sample (simulated) for h = 1
-#' base_h1 <- matrix(rnorm(100*3, mean = c(20, 10, 10)), 100, byrow = TRUE)
-#' # (100 x 3) base forecasts sample (simulated) for h = 2
-#' base_h2 <- matrix(rnorm(100*3, mean = c(20, 10, 10)), 100, byrow = TRUE)
-#' # (2 x 3 x 100) base forecasts sample array with
-#' # 2 forecast horizons, 3 time series and 100 sample
+#' # (100 x 7) base forecasts sample (simulated) for h = 1
+#' base_h1 <- matrix(rnorm(100*7, mean = c(20, rep(10, 2), rep(5, 4))),
+#'                   100, byrow = TRUE)
+#' # (100 x 7) base forecasts sample (simulated) for h = 2
+#' base_h2 <- matrix(rnorm(100*7, mean = c(20, rep(10, 2), rep(5, 4))),
+#'                   100, byrow = TRUE)
+#' # (2 x 7 x 100) base forecasts sample array with
+#' # 2 forecast horizons, 7 time series and 100 sample
 #' base_sample <- aperm(simplify2array(list(base_h1, base_h2)), c(3,2,1))
 #'
-#' # Optimal cross-sectional probabilistic reconciliation
-#' reco_dist_opt <- cssmp(base_sample, agg_mat = A)
+#' # Top-down probabilistic reconciliation
+#' reco_dist_td <- cssmp(base_sample[, 1, , drop = FALSE], agg_mat = A,
+#'                       fun = cstd, weights = c(0.3, 0.2, 0.1, 0.4))
+#'
+#' # Middle-out probabilistic reconciliation
+#' reco_dist_mo <- cssmp(base_sample[, c(2,3), , drop = FALSE], agg_mat = A,
+#'                       fun = csmo, weights = c(0.3, 0.7, 0.8, 0.2),
+#'                       id_rows = 2:3)
 #'
 #' # Bottom-up probabilistic reconciliation
-#' reco_dist_bu <- cssmp(base_sample[,-1,], agg_mat = A, fun = csbu)
+#' reco_dist_bu <- cssmp(base_sample[,-c(1:3),], agg_mat = A, fun = csbu)
 #'
 #' # Level conditional coherent probabilistic reconciliation
 #' reco_dist_lcc <- cssmp(base_sample, agg_mat = A, fun = cslcc)
+#'
+#' # Optimal cross-sectional probabilistic reconciliation
+#' reco_dist_opt <- cssmp(base_sample, agg_mat = A)
 #'
 #' @family Reco: probabilistic
 #' @family Framework: cross-sectional
@@ -131,14 +147,22 @@ cssmp <- function(sample, fun = csrec, ...) {
 #' # (70 x 1) in-sample residuals vector (simulated)
 #' res <- rnorm(70)
 #'
-#' # Optimal cross-sectional probabilistic reconciliation
-#' reco_dist_opt <- tesmp(sample, agg_order = m, res = res, comb = "shr")
+#' # Top-down probabilistic reconciliation
+#' reco_dist_td <- tesmp(sample[,c(1:2), drop = FALSE], agg_order = m,
+#'                       fun = tetd, weights = c(0.2, 0.5, 0.3, 0.3))
+#'
+#' # Middle-out probabilistic reconciliation
+#' tesmp(sample[,c(3:6), drop = FALSE], agg_order = m,
+#'       fun = temo, weights = c(0.2, 0.5, 0.3, 0.3), order = 2)
 #'
 #' # Bottom-up probabilistic reconciliation
 #' reco_dist_bu <- tesmp(sample[,-c(1:6)], agg_order = m, fun = tebu)
 #'
 #' # Level conditional coherent probabilistic reconciliation
 #' reco_dist_lcc <- tesmp(sample, agg_order = m, fun = telcc)
+#'
+#' # Optimal cross-sectional probabilistic reconciliation
+#' reco_dist_opt <- tesmp(sample, agg_order = m, res = res, comb = "wlsv")
 #'
 #' @family Reco: probabilistic
 #' @family Framework: temporal
@@ -148,10 +172,14 @@ tesmp <- function(sample, agg_order, fun = terec, ...) {
   if (length(dim(sample)) == 2) {
     # Matrix input: sample_size x (variable*h)
     sample_size <- NROW(sample)
-    sample <- unname(unlist(lapply(
-      FoReco2matrix(sample, agg_order),
-      as.vector
-    )))
+    if (as.character(substitute(fun)) %in% c("temo", "tetd")) {
+      sample <- as.vector(t(sample))
+    } else {
+      sample <- unname(unlist(lapply(
+        FoReco2matrix(sample, agg_order),
+        as.vector
+      )))
+    }
   } else if (is.vector(sample)) {
     # vector input: variable * sample_size x 1
     sample_size <- NULL
@@ -238,14 +266,23 @@ tesmp <- function(sample, agg_order, fun = terec, ...) {
 #' # (3 x 70) in-sample residuals matrix (simulated)
 #' res <- rbind(rnorm(70), rnorm(70), rnorm(70))
 #'
-#' # Optimal cross-sectional probabilistic reconciliation
-#' reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res, comb = "bdshr")
+
+#' # Top-down probabilistic reconciliation
+#' reco_dist_td <- ctsmp(sample[1, 1:2, , drop = FALSE], agg_order = m,
+#'                       agg_mat = A, fun = cttd, weights = matrix(runif(8), 2))
 #'
+#' # Middle-out probabilistic reconciliation
+#' reco_dist_mo <- ctsmp(sample[1, 3:6, , drop = FALSE], agg_order = m,
+#'                       agg_mat = A, fun = ctmo, weights = matrix(runif(8), 2),
+#'                       id_rows = 1, order = 2)
 #' # Bottom-up probabilistic reconciliation
 #' reco_dist_bu <- ctsmp(sample[-1,-c(1:6), ], agg_order = m, agg_mat = A, fun = ctbu)
 #'
 #' # Level conditional coherent probabilistic reconciliation
 #' reco_dist_lcc <- ctsmp(sample, agg_order = m, agg_mat = A, fun = ctlcc)
+#'
+#' # Optimal cross-sectional probabilistic reconciliation
+#' reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res, comb = "bdshr")
 #'
 #' @family Reco: probabilistic
 #' @family Framework: cross-temporal
@@ -254,12 +291,19 @@ tesmp <- function(sample, agg_order, fun = terec, ...) {
 ctsmp <- function(sample, agg_order, fun = ctrec, ...) {
   if (length(dim(sample)) == 3) {
     tmp_dim <- dim(sample)
-    rownames_save <- rownames(sample)
-    sample <- apply(sample, 1, function(x) {
-      (unlist(lapply(FoReco::FoReco2matrix(t(x), agg_order), as.vector)))
-    })
-    sample <- t(unname(sample))
-    rownames(sample) <- rownames_save
+    if (as.character(substitute(fun)) %in% c("ctmo", "cttd")) {
+      dim(sample) <- c(tmp_dim[1], tmp_dim[2] * tmp_dim[3])
+      if (tmp_dim[1] == 1) {
+        sample <- as.vector(sample)
+      }
+    } else {
+      rownames_save <- rownames(sample)
+      sample <- apply(sample, 1, function(x) {
+        (unlist(lapply(FoReco::FoReco2matrix(t(x), agg_order), as.vector)))
+      })
+      sample <- t(unname(sample))
+      rownames(sample) <- rownames_save
+    }
   } else {
     cli_abort("Incorrect {.arg sample} dimensions", call = NULL)
   }
