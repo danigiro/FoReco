@@ -99,11 +99,11 @@ trace minimization, \emph{Journal of the American Statistical Association},
 Cross-sectional framework:
 \code{\link{csboot}()},
 \code{\link{csbu}()},
-\code{\link{csgauss}()},
 \code{\link{cslcc}()},
 \code{\link{csmo}()},
+\code{\link{csmvn}()},
 \code{\link{csrec}()},
-\code{\link{cssample}()},
+\code{\link{cssmp}()},
 \code{\link{cstd}()},
 \code{\link{cstools}()}
 }

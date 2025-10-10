@@ -48,13 +48,13 @@
 #'
 #' # Aggregation matrix for Z = X + Y
 #' A <- t(c(1,1))
-#' reco_dist <- csgauss(base = base, agg_mat = A, comb = "shr", res = res)
+#' reco_dist <- csmvn(base = base, agg_mat = A, comb = "shr", res = res)
 #'
 #' @family Reco: probabilistic
 #' @family Framework: cross-sectional
 #'
 #' @export
-csgauss <- function(
+csmvn <- function(
   base,
   agg_mat,
   cons_mat,
@@ -193,7 +193,7 @@ csgauss <- function(
     comb_base = comb_base,
     cs_n = n,
     rfun = "csrec",
-    pfun = "csgauss"
+    pfun = "csmvn"
   ))
   return(reco_dist)
 }
@@ -205,7 +205,7 @@ csgauss <- function(
 #' full distribution (\code{FALSE}, \emph{default}) or only the distribution corresponding
 #' to the high-frequency time series (\code{TRUE}).
 #' @inheritParams terec
-#' @inheritParams csgauss
+#' @inheritParams csmvn
 #' @inheritDotParams tecov mse shrink_fun
 #'
 #' @returns A [distributional::dist_multivariate_normal] object.
@@ -248,7 +248,7 @@ csgauss <- function(
 #' @family Framework: temporal
 #'
 #' @export
-tegauss <- function(
+temvn <- function(
   base,
   agg_order,
   comb = "ols",
@@ -376,7 +376,7 @@ tegauss <- function(
     comb_base = comb_base,
     te_set = tmp$set,
     rfun = "terec",
-    pfun = "tegauss"
+    pfun = "temvn"
   ))
   return(reco_dist)
 }
@@ -388,7 +388,7 @@ tegauss <- function(
 #' full distribution (\code{FALSE}, \emph{default}) or only the distribution corresponding
 #' to the high-frequency bottom time series (\code{TRUE}).
 #' @inheritParams ctrec
-#' @inheritParams csgauss
+#' @inheritParams csmvn
 #' @inheritDotParams ctcov mse shrink_fun
 #'
 #' @returns A [distributional::dist_multivariate_normal] object.
@@ -426,13 +426,13 @@ tegauss <- function(
 #' # (3 x 70) in-sample residuals matrix (simulated)
 #' res <- rbind(rnorm(70), rnorm(70), rnorm(70))
 #' A <- t(c(1,1))
-#' reco_dist <- ctgauss(base = base, res = res, agg_mat = A, agg_order = 4)
+#' reco_dist <- ctmvn(base = base, res = res, agg_mat = A, agg_order = 4)
 #'
 #' @family Reco: probabilistic
 #' @family Framework: cross-temporal
 #'
 #' @export
-ctgauss <- function(
+ctmvn <- function(
   base,
   agg_mat,
   cons_mat,
@@ -591,7 +591,7 @@ ctgauss <- function(
     te_set = tmp$set,
     cs_n = tmp$dim[["n"]],
     rfun = "ctrec",
-    pfun = "ctgauss"
+    pfun = "ctmvn"
   ))
   return(reco_dist)
 }

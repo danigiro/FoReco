@@ -1,15 +1,13 @@
 # FoReco (development version)
 
-* Added `csgauss()`, `tegauss()`, and `ctgauss()` for Gaussian probabilistic forecast 
-  reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using 
-  the [`distributional`](https://CRAN.R-project.org/package=distributional) package;
-* Added `cssample()`, `tesample()`, and `ctsample()` for sample-based probabilistic 
-  forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks 
-  using the [`distributional`](https://CRAN.R-project.org/package=distributional) package;
-* Added `as_ctmatrix()` and `as_horizon_stacked_ctmatrix()` functions to convert
-  between horizon-stacked (cross-temporal version) and cross-temporal layouts;
-* Added `as_tevector()` and `as_horizon_stacked_tematrix()` functions to convert
-  between horizon-stacked (temporal version) and temporal layouts;
+* Added `csmvn()`, `temvn()`, and `ctmvn()` for Gaussian probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the [`distributional`](https://CRAN.R-project.org/package=distributional) package;
+* Added `cssmp()`, `tesmp()`, and `ctsmp()` for sample-based probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the [`distributional`](https://CRAN.R-project.org/package=distributional) package;
+* Added `as_ctmatrix()` and `as_horizon_stacked_ctmatrix()` functions to convert between horizon-stacked (cross-temporal version) and cross-temporal layouts;
+* Added `as_tevector()` and `as_horizon_stacked_tematrix()` functions to convert between horizon-stacked (temporal version) and temporal layouts;
+* Added non-negative forecast reconciliation algorithms *bpv* (block principal pivoting algorithm), *nfca* (negative forecasts correction algorithm), *nnic* (iterative non-negative reconciliation with immutable constraints), and *sntz* (set-negative-to-zero with bottom-up and top-down alternatives) based on:
+  * Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal methods and operational solutions. *arXiv*;
+  * Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in intermittent demand series. *European Journal of Operational Research*, 288, 141-152. [doi:10.1016/j.ejor.2020.05.046](https://doi.org/10.1016/j.ejor.2020.05.046);
+  * Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020), "Optimal non-negative forecast reconciliation", *Statistics and Computing*, 30(5), 1167–1182. [doi:10.1007/s11222-020-09930-0](https://doi.org/10.1007/s11222-020-09930-0);
 * Fixed bugs and improved stability.
 
 # FoReco 1.1.0

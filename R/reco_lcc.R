@@ -50,10 +50,17 @@
 #' Di Fonzo, T. and Girolimetto, D. (2023b) Spatio-temporal reconciliation of solar forecasts.
 #' \emph{Solar Energy} 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
 #'
+#' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+#' methods and operational solutions. \emph{mimeo}
+#'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
+#'
+#' Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+#' intermittent demand series. \emph{European Journal of Operational Research},
+#' 288, 141-152. \doi{10.1016/j.ejor.2020.05.046}
 #'
 #' Hollyman, R., Petropoulos, F. and Tipping, M.E. (2021), Understanding forecast reconciliation.
 #' \emph{European Journal of Operational Research}, 294, 149–160. \doi{10.1016/j.ejor.2021.01.017}
@@ -318,10 +325,17 @@ cslcc <- function(
 #' Di Fonzo, T. and Girolimetto, D. (2023b) Spatio-temporal reconciliation of solar forecasts.
 #' \emph{Solar Energy} 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
 #'
+#' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+#' methods and operational solutions. \emph{mimeo}
+#'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
+#'
+#' Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+#' intermittent demand series. \emph{European Journal of Operational Research},
+#' 288, 141-152. \doi{10.1016/j.ejor.2020.05.046}
 #'
 #' Hollyman, R., Petropoulos, F. and Tipping, M.E. (2021), Understanding forecast reconciliation.
 #' \emph{European Journal of Operational Research}, 294, 149–160. \doi{10.1016/j.ejor.2021.01.017}
@@ -551,10 +565,17 @@ telcc <- function(
 #' Di Fonzo, T. and Girolimetto, D. (2023b) Spatio-temporal reconciliation of solar forecasts.
 #' \emph{Solar Energy} 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
 #'
+#' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+#' methods and operational solutions. \emph{mimeo}
+#'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
+#'
+#' Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+#' intermittent demand series. \emph{European Journal of Operational Research},
+#' 288, 141-152. \doi{10.1016/j.ejor.2020.05.046}
 #'
 #' Hollyman, R., Petropoulos, F. and Tipping, M.E. (2021), Understanding forecast reconciliation.
 #' \emph{European Journal of Operational Research}, 294, 149–160. \doi{10.1016/j.ejor.2021.01.017}

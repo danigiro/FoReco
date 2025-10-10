@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Cross-sectional forecast reconciliation</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2025-09-30</p>
+      <p class="date">2025-10-10</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Cross-sectional-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Cross-sectional-forecast-reconciliation.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -290,8 +290,8 @@ supported
 <span><span class="co">#&gt; ℹ Covariance approximation: `shr`</span></span>
 <span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
-<span><span class="co">#&gt;     obj_val run_time iter      pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -3197.129 0.198791  450 4.896219e-11      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt;     obj_val  run_time iter      pri_res status status_polish</span></span>
+<span><span class="co">#&gt; 1 -3197.129 0.1938887  450 4.896219e-11      1             1</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023</a>)</span>.</li>
@@ -343,20 +343,20 @@ supported
 <span><span class="co"># while keeping the cross-sectional dimension fixed.</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">base_csjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csboot.html">csboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, <span class="fl">12</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span></span>
-<span><span class="va">reco_csjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssample.html">cssample</a></span><span class="op">(</span><span class="va">base_csjb</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>,</span>
+<span><span class="va">reco_csjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssmp.html">cssmp</a></span><span class="op">(</span><span class="va">base_csjb</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>,</span>
 <span>                   comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; [1] "distribution" "vctrs_vctr"   "list"</span></span>
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:12, 1:525] 49543 21648 25100 29813 23401 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:12, 1:525] 49448 21831 25050 29800 23430 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Gaussian reconciled distribution with fixed base covariance matrix for different forecast horizon</span></span>
-<span><span class="va">reco_csg_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csgauss.html">csgauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
+<span><span class="va">reco_csg_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csmvn.html">csmvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Gaussian reconciled distribution with different base covariance matrix for each forecast horizon</span></span>
 <span><span class="co">## Multi-step residuals</span></span>
@@ -365,7 +365,7 @@ supported
 <span><span class="co">## List of H=12 covariance matrix (one for each forecast horizon)</span></span>
 <span><span class="va">cov_shr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">hres</span>, <span class="kw">function</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="fu"><a href="../reference/cscov.html">cscov</a></span><span class="op">(</span>comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">r</span><span class="op">)</span><span class="op">)</span> </span>
 <span><span class="va">reco_csg_h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">base</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">h</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="../reference/csgauss.html">csgauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span><span class="op">[</span><span class="va">h</span>, <span class="op">]</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span>, comb_base <span class="op">=</span> <span class="va">cov_shr</span><span class="op">[[</span><span class="va">h</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/csmvn.html">csmvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span><span class="op">[</span><span class="va">h</span>, <span class="op">]</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span>, comb_base <span class="op">=</span> <span class="va">cov_shr</span><span class="op">[[</span><span class="va">h</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_csg_h</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_csg_1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">reco_csg_h</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"h-"</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">reco_csg_h</span><span class="op">)</span><span class="op">)</span></span>
@@ -375,7 +375,7 @@ supported
 <span><span class="va">base_css</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_css</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">base_css</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">base_csjb</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">reco_css</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssample.html">cssample</a></span><span class="op">(</span><span class="va">base_css</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>,</span>
+<span><span class="va">reco_css</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssmp.html">cssmp</a></span><span class="op">(</span><span class="va">base_css</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>,</span>
 <span>                   comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_css</span><span class="op">)</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; [1] "distribution" "vctrs_vctr"   "list"</span></span></code></pre></div>
@@ -446,7 +446,7 @@ supported
 <span><span class="co"># while keeping the cross-sectional dimension fixed.</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span><span class="va">base_csjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csboot.html">csboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, <span class="fl">4</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span></span>
-<span><span class="va">reco_csjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssample.html">cssample</a></span><span class="op">(</span><span class="va">base_csjb</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, res <span class="op">=</span> <span class="va">res</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span></span>
+<span><span class="va">reco_csjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssmp.html">cssmp</a></span><span class="op">(</span><span class="va">base_csjb</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, res <span class="op">=</span> <span class="va">res</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span></span>
 <span><span class="va">reco_csjb</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; &lt;distribution[4]&gt;</span></span>
 <span><span class="co">#&gt;         h-1         h-2         h-3         h-4 </span></span>
@@ -454,13 +454,13 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:4, 1:21] 434079 452742 451001 483015 169265 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:4, 1:21] 434462 453400 451432 482270 169355 ...</span></span></code></pre></div>
 </div>
 <p>Alternatively, we can use a parametric method.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Gaussian reconciled distribution with fixed base covariance matrix for different forecast horizon</span></span>
-<span><span class="va">reco_csg_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csgauss.html">csgauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
+<span><span class="va">reco_csg_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csmvn.html">csmvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Gaussian reconciled distribution with different base covariance matrix for each forecast horizon</span></span>
 <span><span class="co">## Multi-step residuals</span></span>
@@ -470,7 +470,7 @@ supported
 <span><span class="va">cov_shr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">hres</span>, <span class="kw">function</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="fu"><a href="../reference/cscov.html">cscov</a></span><span class="op">(</span>comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">r</span><span class="op">)</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="va">reco_csg_h</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NROW</a></span><span class="op">(</span><span class="va">base</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">h</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="../reference/csgauss.html">csgauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span><span class="op">[</span><span class="va">h</span>, <span class="op">]</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span>, comb_base <span class="op">=</span> <span class="va">cov_shr</span><span class="op">[[</span><span class="va">h</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="../reference/csmvn.html">csmvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base</span><span class="op">[</span><span class="va">h</span>, <span class="op">]</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, res <span class="op">=</span> <span class="va">res</span>, comb_base <span class="op">=</span> <span class="va">cov_shr</span><span class="op">[[</span><span class="va">h</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_csg_h</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_csg_1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">reco_csg_h</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"h-"</span>, <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">reco_csg_h</span><span class="op">)</span><span class="op">)</span></span>
@@ -480,7 +480,7 @@ supported
 <span><span class="va">base_css</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/aperm.html" class="external-link">aperm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_css</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">base_css</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">base_csjb</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">reco_css</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssample.html">cssample</a></span><span class="op">(</span><span class="va">base_css</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, res <span class="op">=</span> <span class="va">res</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span></span>
+<span><span class="va">reco_css</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cssmp.html">cssmp</a></span><span class="op">(</span><span class="va">base_css</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>, res <span class="op">=</span> <span class="va">res</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">reco_css</span><span class="op">)</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; [1] "distribution" "vctrs_vctr"   "list"</span></span></code></pre></div>
 </div>

@@ -63,11 +63,11 @@ Temporal framework:
 \code{\link{teboot}()},
 \code{\link{tebu}()},
 \code{\link{tecov}()},
-\code{\link{tegauss}()},
 \code{\link{telcc}()},
 \code{\link{temo}()},
+\code{\link{temvn}()},
 \code{\link{terec}()},
-\code{\link{tesample}()},
+\code{\link{tesmp}()},
 \code{\link{tetools}()}
 }
 \concept{Framework: temporal}

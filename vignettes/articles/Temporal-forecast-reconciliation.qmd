@@ -292,7 +292,7 @@ str(reco_tejb, give.attr = FALSE)
 B <- 100
 base_tejb <- teboot(model, B, m)$sample
 dim(base_tejb)
-reco_tejb <- tesample(base_tejb, agg_order = m, res = res_vec, nn = "sntz", comb = "sar1")
+reco_tejb <- tesmp(base_tejb, agg_order = m, res = res_vec, nn = "sntz", comb = "sar1")
 reco_tejb # distribution object
 
 # Extracts mean:
@@ -323,7 +323,7 @@ str(reco_teg, give.attr = FALSE)
 #| label: gauss-vn
 
 # Gaussian reconciled distribution
-reco_teg_sar1 <- tegauss(base = base_vec, agg_order = m, comb = "sar1", res = res_vec)
+reco_teg_sar1 <- temvn(base = base_vec, agg_order = m, comb = "sar1", res = res_vec)
 reco_teg_sar1 # distribution object
 
 # Gaussian reconciled distribution with different base covariance matrix
@@ -335,13 +335,13 @@ hres <- Reduce("c", lapply(hres, arrange_hres))
 mres <- as_hstack_telayout(hres, agg_order = m)
 cov_base <- shrink_estim(mres)
 
-reco_teg <- tegauss(base = base_vec, agg_order = m, comb = "sar1", 
+reco_teg <- temvn(base = base_vec, agg_order = m, comb = "sar1", 
                     res = res_vec, comb_base = cov_base)
 reco_teg # distribution object
 
 # Reconciled sample distribution starting from gaussian base forecasts
 base_tes <- MASS::mvrnorm(n = B, mu = base_vec, Sigma = shrink_estim(mres))
-reco_tes <- tesample(base_tes, agg_order = m, res = res_vec, nn = "sntz", comb = "sar1")
+reco_tes <- tesmp(base_tes, agg_order = m, res = res_vec, nn = "sntz", comb = "sar1")
 reco_tes # distribution object
 ```
 

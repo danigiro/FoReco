@@ -5,11 +5,11 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-temporal covariance matrix approximation — ctcov"><meta name="description" content="This function provides an approximation of the cross-temporal base forecasts errors
-covariance matrix using different reconciliation methods (Di Fonzo and Girolimetto, 2023,
-Girolimetto et al., 2023)."><meta property="og:description" content="This function provides an approximation of the cross-temporal base forecasts errors
-covariance matrix using different reconciliation methods (Di Fonzo and Girolimetto, 2023,
-Girolimetto et al., 2023)."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-temporal covariance matrix approximation — ctcov"><meta name="description" content="This function provides an approximation of the cross-temporal base forecasts
+errors covariance matrix using different reconciliation methods (Di Fonzo
+and Girolimetto, 2023, and Girolimetto et al., 2023)."><meta property="og:description" content="This function provides an approximation of the cross-temporal base forecasts
+errors covariance matrix using different reconciliation methods (Di Fonzo
+and Girolimetto, 2023, and Girolimetto et al., 2023)."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -17,7 +17,7 @@ Girolimetto et al., 2023)."><meta property="og:image" content="https://danigiro.
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,9 +52,9 @@ Girolimetto et al., 2023)."><meta property="og:image" content="https://danigiro.
     </div>
 
     <div class="ref-description section level2">
-    <p>This function provides an approximation of the cross-temporal base forecasts errors
-covariance matrix using different reconciliation methods (Di Fonzo and Girolimetto, 2023,
-Girolimetto et al., 2023).</p>
+    <p>This function provides an approximation of the cross-temporal base forecasts
+errors covariance matrix using different reconciliation methods (Di Fonzo
+and Girolimetto, 2023, and Girolimetto et al., 2023).</p>
     </div>
 
     <div class="section level2">
@@ -120,12 +120,13 @@ include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</co
 
 
 <dt id="arg-mse">mse<a class="anchor" aria-label="anchor" href="#arg-mse"></a></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the covariance
-matrix are not mean-corrected.</p></dd>
+<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the
+covariance matrix are not mean-corrected.</p></dd>
 
 
 <dt id="arg-shrink-fun">shrink_fun<a class="anchor" aria-label="anchor" href="#arg-shrink-fun"></a></dt>
-<dd><p>Shrinkage function of the covariance matrix, <a href="shrink_estim.html">shrink_estim</a> (<em>default</em>).</p></dd>
+<dd><p>Shrinkage function of the covariance matrix,
+<a href="shrink_estim.html">shrink_estim</a> (<em>default</em>).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -138,24 +139,25 @@ matrix are not mean-corrected.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, <em>International Journal
-of Forecasting</em>, 39, 1, 39-57. <a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">doi:10.1016/j.ijforecast.2021.08.004</a></p>
+    <p>Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+<em>International Journal of Forecasting</em>, 39, 1, 39-57.
+<a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">doi:10.1016/j.ijforecast.2021.08.004</a></p>
 <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-1151.
-<a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
+practical issues. <em>International Journal of Forecasting</em>, 40, 3,
+1134-1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Cross-temporal framework:
 <code><a href="ctboot.html">ctboot</a>()</code>,
 <code><a href="ctbu.html">ctbu</a>()</code>,
-<code><a href="ctgauss.html">ctgauss</a>()</code>,
 <code><a href="ctlcc.html">ctlcc</a>()</code>,
 <code><a href="ctmo.html">ctmo</a>()</code>,
+<code><a href="ctmvn.html">ctmvn</a>()</code>,
 <code><a href="ctrec.html">ctrec</a>()</code>,
-<code><a href="ctsample.html">ctsample</a>()</code>,
+<code><a href="ctsmp.html">ctsmp</a>()</code>,
 <code><a href="cttd.html">cttd</a>()</code>,
 <code><a href="cttools.html">cttools</a>()</code>,
 <code><a href="iterec.html">iterec</a>()</code>,
@@ -171,25 +173,25 @@ practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-115
 <span class="r-in"><span><span class="co"># agg_order = 4 (annual-quarterly)</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">70</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">70</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">70</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">cov1</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"ols"</span>, n <span class="op">=</span> <span class="fl">3</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                     <span class="co"># OLS methods</span></span></span>
-<span class="r-in"><span><span class="va">cov2</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"str"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>               <span class="co"># STR methods</span></span></span>
-<span class="r-in"><span><span class="va">cov3</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"csstr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>             <span class="co"># CSSTR methods</span></span></span>
-<span class="r-in"><span><span class="va">cov4</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"testr"</span>, n <span class="op">=</span> <span class="fl">3</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                   <span class="co"># TESTR methods</span></span></span>
-<span class="r-in"><span><span class="va">cov5</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"wlsv"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                <span class="co"># WLSv methods</span></span></span>
-<span class="r-in"><span><span class="va">cov6</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"wlsh"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                <span class="co"># WLSh methods</span></span></span>
-<span class="r-in"><span><span class="va">cov7</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"shr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                 <span class="co"># SHR methods</span></span></span>
-<span class="r-in"><span><span class="va">cov8</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"sam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                 <span class="co"># SAM methods</span></span></span>
-<span class="r-in"><span><span class="va">cov9</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"acov"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                <span class="co"># ACOV methods</span></span></span>
-<span class="r-in"><span><span class="va">cov10</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"Sshr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Sshr methods</span></span></span>
-<span class="r-in"><span><span class="va">cov11</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"Ssam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Ssam methods</span></span></span>
-<span class="r-in"><span><span class="va">cov12</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hshr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Hshr methods</span></span></span>
-<span class="r-in"><span><span class="va">cov13</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hsam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Hsam methods</span></span></span>
-<span class="r-in"><span><span class="va">cov14</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hbshr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span> <span class="co"># HBshr methods</span></span></span>
-<span class="r-in"><span><span class="va">cov15</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hbsam"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span> <span class="co"># HBsam methods</span></span></span>
-<span class="r-in"><span><span class="va">cov16</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bshr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>  <span class="co"># Bshr methods</span></span></span>
-<span class="r-in"><span><span class="va">cov17</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bsam"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>  <span class="co"># Bsam methods</span></span></span>
-<span class="r-in"><span><span class="va">cov18</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bdshr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>              <span class="co"># BDshr methods</span></span></span>
-<span class="r-in"><span><span class="va">cov19</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bdsam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>              <span class="co"># BDsam methods</span></span></span>
+<span class="r-in"><span><span class="va">cov1</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"ols"</span>, n <span class="op">=</span> <span class="fl">3</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                     <span class="co"># OLS</span></span></span>
+<span class="r-in"><span><span class="va">cov2</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"str"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>               <span class="co"># STR</span></span></span>
+<span class="r-in"><span><span class="va">cov3</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"csstr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>             <span class="co"># CSSTR</span></span></span>
+<span class="r-in"><span><span class="va">cov4</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"testr"</span>, n <span class="op">=</span> <span class="fl">3</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                   <span class="co"># TESTR</span></span></span>
+<span class="r-in"><span><span class="va">cov5</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"wlsv"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                <span class="co"># WLSv</span></span></span>
+<span class="r-in"><span><span class="va">cov6</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"wlsh"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                <span class="co"># WLSh</span></span></span>
+<span class="r-in"><span><span class="va">cov7</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"shr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                 <span class="co"># SHR</span></span></span>
+<span class="r-in"><span><span class="va">cov8</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"sam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                 <span class="co"># SAM</span></span></span>
+<span class="r-in"><span><span class="va">cov9</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"acov"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>                <span class="co"># ACOV</span></span></span>
+<span class="r-in"><span><span class="va">cov10</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"Sshr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Sshr</span></span></span>
+<span class="r-in"><span><span class="va">cov11</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"Ssam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Ssam</span></span></span>
+<span class="r-in"><span><span class="va">cov12</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hshr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Hshr</span></span></span>
+<span class="r-in"><span><span class="va">cov13</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hsam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>               <span class="co"># Hsam</span></span></span>
+<span class="r-in"><span><span class="va">cov14</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hbshr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span> <span class="co"># HBshr</span></span></span>
+<span class="r-in"><span><span class="va">cov15</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"hbsam"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span> <span class="co"># HBsam</span></span></span>
+<span class="r-in"><span><span class="va">cov16</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bshr"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>  <span class="co"># Bshr</span></span></span>
+<span class="r-in"><span><span class="va">cov17</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bsam"</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>  <span class="co"># Bsam</span></span></span>
+<span class="r-in"><span><span class="va">cov18</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bdshr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>              <span class="co"># BDshr</span></span></span>
+<span class="r-in"><span><span class="va">cov19</span> <span class="op">&lt;-</span> <span class="fu">ctcov</span><span class="op">(</span><span class="st">"bdsam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>              <span class="co"># BDsam</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Custom covariance matrix</span></span></span>
 <span class="r-in"><span><span class="va">ctcov.ols2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">comb</span>, <span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>

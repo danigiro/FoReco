@@ -23,7 +23,7 @@ Girolimetto, 2023) and immutable reconciled forecasts can be considered."><meta 
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -146,8 +146,12 @@ forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
 <li><p>"<code>bpv</code>": block principal pivoting algorithm
 (Wickramasuriya et al., 2020).</p></li>
+<li><p>"<code>nfca</code>": negative forecasts correction algorithm
+(Kourentzes and Athanasopoulos, 2021; Girolimetto 2025).</p></li>
+<li><p>"<code>nnic</code>": iterative non-negative reconciliation with immutable
+constraints (Girolimetto 2025).</p></li>
 <li><p>"<code>sntz</code>": heuristic "set-negative-to-zero"
-(Di Fonzo and Girolimetto, 2023).</p></li>
+(Di Fonzo and Girolimetto, 2023; Girolimetto 2025).</p></li>
 </ul></dd>
 
 
@@ -155,15 +159,27 @@ forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 <dd><p>A list of control parameters.</p><ul><li><p><code>nn = "osqp"</code> An object of class <code>osqpSettings</code> specifying
 settings for the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver. For details,
 refer to the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a>
-(Stellato et al., 2020).</p></li>
-<li><p><code>nn = "bpv"</code> It includes: <code>ptype</code> for permutation method
-("<code>random</code>" or "<code>fixed</code>", <em>default</em>), <code>par</code> for the
-number of full exchange rules that may be attempted (<code>10</code>,
-<em>default</em>), <code>tol</code> for the tolerance criteria
-(<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>gtol</code> for the
-gradient tolerance criteria (<code>sqrt(.Machine$double.eps)</code>,
-<em>default</em>), <code>itmax</code> for the maximum number of algorithm
-iterations (<code>100</code>, <em>default</em>)</p></li>
+(Stellato et al., 2020)</p></li>
+<li><p><code>nn = "bpv"</code></p><ul><li><p><code>ptype = "fixed"</code>: permutation method: "<code>random</code>" or
+"<code>fixed</code>"</p></li>
+<li><p><code>par = 10</code>: the number of full exchange rules that may be
+attempted</p></li>
+<li><p><code>tol = sqrt(.Machine$double.eps)</code>: the tolerance criteria</p></li>
+<li><p><code>gtol = sqrt(.Machine$double.eps)</code>: the gradient tolerance
+criteria</p></li>
+<li><p><code>itmax = 100</code>: the maximum number of algorithm iterations</p></li>
+</ul></li>
+<li><p><code>nn = "nfca"</code> and <code>nn = "nnic"</code></p><ul><li><p><code>tol = sqrt(.Machine$double.eps)</code>: the tolerance criteria</p></li>
+<li><p><code>itmax = 100</code>: the maximum number of algorithm iterations</p></li>
+</ul></li>
+<li><p><code>nn = "sntz"</code></p><ul><li><p><code>type = "bu"</code>: the type of set-negative-to-zero heuristic:
+"<code>bu</code>" for bottom-up, "<code>tdp</code>" for top-down
+proportional, "<code>tdsp</code>" for top-down square proportional,
+"<code>tdvw</code>" for top-down variance weighted (the <code>res</code> param is
+used). See Girolimetto (2025) for details.</p></li>
+<li><p><code>tol = sqrt(.Machine$double.eps)</code>: the tolerance
+identification of negative values</p></li>
+</ul></li>
 </ul></dd>
 
 
@@ -175,7 +191,7 @@ iterations (<code>100</code>, <em>default</em>)</p></li>
 (\(k = m,\dots,1\)).</p></li>
 <li><p>Column 3 represents the temporal forecast horizon
 (\(j = 1,\dots,m/k\)).</p></li>
-<li><p>Columns 4 and 5 indicates the <em>lower</em> and <em>lower</em> bounds,
+<li><p>Columns 4 and 5 indicates the <em>lower</em> and <em>upper</em> bounds,
 respectively.</p></li>
 </ul></dd>
 
@@ -197,11 +213,12 @@ of the second time series.</p></li>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="ctcov.html">ctcov</a></code></p><dl><dt><code>mse</code></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the covariance
-matrix are not mean-corrected.</p></dd>
+<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the
+covariance matrix are not mean-corrected.</p></dd>
 
     <dt><code>shrink_fun</code></dt>
-<dd><p>Shrinkage function of the covariance matrix, <a href="shrink_estim.html">shrink_estim</a> (<em>default</em>).</p></dd>
+<dd><p>Shrinkage function of the covariance matrix,
+<a href="shrink_estim.html">shrink_estim</a> (<em>default</em>).</p></dd>
 
 
 </dl></dd>
@@ -227,6 +244,8 @@ reconciliation: Optimal combination method and heuristic alternatives,
 <p>Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
 solar forecasts, <em>Solar Energy</em>, 251, 13–29.
 <a href="https://doi.org/10.1016/j.solener.2023.01.003" class="external-link">doi:10.1016/j.solener.2023.01.003</a></p>
+<p>Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+methods and operational solutions. <em>mimeo</em></p>
 <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
 practical issues. <em>International Journal of Forecasting</em>, 40, 3,
@@ -235,6 +254,9 @@ practical issues. <em>International Journal of Forecasting</em>, 40, 3,
 Optimal combination forecasts for hierarchical time series,
 <em>Computational Statistics &amp; Data Analysis</em>, 55, 9, 2579-2589.
 <a href="https://doi.org/10.1016/j.csda.2011.03.006" class="external-link">doi:10.1016/j.csda.2011.03.006</a></p>
+<p>Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+intermittent demand series. <em>European Journal of Operational Research</em>,
+288, 141-152. <a href="https://doi.org/10.1016/j.ejor.2020.05.046" class="external-link">doi:10.1016/j.ejor.2020.05.046</a></p>
 <p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020),
 OSQP: An Operator Splitting solver for Quadratic Programs, <em>Mathematical
 Programming Computation</em>, 12, 4, 637-672. <a href="https://doi.org/10.1007/s12532-020-00179-2" class="external-link">doi:10.1007/s12532-020-00179-2</a></p>
@@ -251,10 +273,10 @@ non-negative forecast reconciliation. <em>Statistics and Computing</em>, 30(5),
 <code><a href="ctboot.html">ctboot</a>()</code>,
 <code><a href="ctbu.html">ctbu</a>()</code>,
 <code><a href="ctcov.html">ctcov</a>()</code>,
-<code><a href="ctgauss.html">ctgauss</a>()</code>,
 <code><a href="ctlcc.html">ctlcc</a>()</code>,
 <code><a href="ctmo.html">ctmo</a>()</code>,
-<code><a href="ctsample.html">ctsample</a>()</code>,
+<code><a href="ctmvn.html">ctmvn</a>()</code>,
+<code><a href="ctsmp.html">ctsmp</a>()</code>,
 <code><a href="cttd.html">cttd</a>()</code>,
 <code><a href="cttools.html">cttools</a>()</code>,
 <code><a href="iterec.html">iterec</a>()</code>,
@@ -293,7 +315,7 @@ non-negative forecast reconciliation. <em>Statistics and Computing</em>, 30(5),
 <span class="r-in"><span>                res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">nnreco</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">info</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     obj_val   run_time iter      pri_res status status_polish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -635.7645 8.6457e-05   25 8.881784e-16      1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -635.7645 8.5541e-05   25 8.881784e-16      1             1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

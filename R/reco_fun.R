@@ -111,8 +111,8 @@ reco.default <- function(approach, ...) {
       "{.code strc_osqp}"
     ),
     "i" = paste0(
-      "{.strong Non-negative}: {.code sntz}, {.code proj_osqp}, ",
-      "{.code strc_osqp}"
+      "{.strong Non-negative}: {.code sntz}, {.code bpv}, ",
+      "{.code osqp}, {.code nfca}, {.code nnic}"
     ),
     "i" = paste0(
       "{.strong Immutable}: {.code proj}, {.code strc}, ",
@@ -531,7 +531,6 @@ reco.strc_osqp <- function(
   return(reco)
 }
 
-
 reco.sntz <- function(
   base,
   reco,
@@ -575,7 +574,12 @@ reco.sntz <- function(
   } else {
     sntz_type <- settings$type
   }
-  tol <- sqrt(.Machine$double.eps)
+
+  if (is.null(settings$tol)) {
+    tol <- sqrt(.Machine$double.eps)
+  } else {
+    tol <- settings$tol
+  }
   switch(
     sntz_type,
     bu = {
@@ -644,6 +648,18 @@ reco.sntz <- function(
         },
         simplify = TRUE
       ))
+    },
+    {
+      cli_abort(
+        c(
+          "Please provide a valid {.arg settings$type}.",
+          "i" = paste0(
+            "Available types: {.code bu}, {.code tdp}, {.code tdsp}, ",
+            "{.code tdvw}."
+          )
+        ),
+        call = NULL
+      )
     }
   )
 
@@ -882,7 +898,7 @@ reco.strc_immutable <- function(
   return(as.matrix(reco))
 }
 
-reco.kann <- function(
+reco.nfca <- function(
   base,
   cons_mat,
   cov_mat,
@@ -930,7 +946,7 @@ reco.kann <- function(
   }
 
   rowid <- which(rowSums(reco < (-sqrt(.Machine$double.eps))) != 0)
-  kann_step <- apply(reco[rowid, , drop = FALSE], 1, function(x) {
+  nfca_step <- apply(reco[rowid, , drop = FALSE], 1, function(x) {
     start <- Sys.time()
     for (i in 1:itmax) {
       x[x < sqrt(.Machine$double.eps)] <- 0
@@ -962,7 +978,7 @@ reco.kann <- function(
     if (flag %in% c(-2, 2)) {
       cli_warn(
         c(
-          "x" = "KANN failed: check the results.",
+          "x" = "NFCA failed: check the results.",
           "i" = "Flag = {flag},  tol = {tol}, itmax = {itmax}"
         ),
         call = NULL
@@ -971,151 +987,19 @@ reco.kann <- function(
     out
   })
 
-  kann_step <- do.call("rbind", kann_step)
+  nfca_step <- do.call("rbind", nfca_step)
 
   # Point reconciled forecasts
-  reco[rowid, ] <- do.call("rbind", kann_step[, "reco"])
+  reco[rowid, ] <- do.call("rbind", nfca_step[, "reco"])
 
-  info <- do.call("rbind", kann_step[, "info"])
+  info <- do.call("rbind", nfca_step[, "info"])
   colnames(info) <- c("run_time", "iter", "status")
   rownames(info) <- rowid
   attr(reco, "info") <- info
   return(reco)
 }
 
-reco.fbpp <- function(
-  base,
-  cons_mat,
-  cov_mat,
-  id_nn = NULL,
-  nn = NULL,
-  reco = NULL,
-  settings = NULL,
-  immutable = NULL,
-  ...
-) {
-  # Check input
-  if (missing(base) | missing(cons_mat) | missing(cov_mat)) {
-    cli_abort(
-      "Mandatory arguments: {.arg base}, {.arg cons_mat} and {.arg cov_mat}.",
-      call = NULL
-    )
-  }
-
-  tol <- settings$tol
-  if (is.null(tol)) {
-    tol <- sqrt(.Machine$double.eps)
-  }
-
-  itmax <- settings$itmax
-  if (is.null(itmax)) {
-    itmax <- 100
-  }
-
-  if (is.null(reco)) {
-    if (is.null(immutable)) {
-      reco <- reco.proj(base = base, cons_mat = cons_mat, cov_mat = cov_mat)
-    } else {
-      reco <- reco.proj_immutable(
-        base = base,
-        cons_mat = cons_mat,
-        cov_mat = cov_mat,
-        immutable = immutable
-      )
-    }
-  }
-
-  if (is.null(nn)) {
-    return(reco)
-  }
-
-  if (all(reco > -tol)) {
-    reco[reco <= sqrt(.Machine$double.eps)] <- 0
-    return(reco)
-  }
-
-  if (is.null(id_nn)) {
-    qrtmp <- base::qr(cons_mat)
-    id_nn <- rep(1, NCOL(base))
-    id_nn[qrtmp$pivot[1:qrtmp$rank]] <- 0
-  }
-
-  rowid <- which(rowSums(reco < (-tol)) != 0)
-  fbpp_step <- apply(reco[rowid, , drop = FALSE], 1, function(x) {
-    start <- Sys.time()
-    idx <- NULL
-    for (i in 1:itmax) {
-      idx_tmp <- which(x < (-tol))
-      idx_tmp <- idx_tmp[idx_tmp %in% which(id_nn == 1)]
-      if (length(idx_tmp) == 0) {
-        idx_tmp <- which(abs(x) < abs(tol))
-        idx_tmp <- idx_tmp[idx_tmp %in% which(id_nn == 1)]
-      }
-      idx <- unique(c(idx, idx_tmp))
-      idx <- idx[idx %in% which(id_nn == 1)]
-      block <- sparseMatrix(
-        i = 1:length(idx),
-        j = idx,
-        x = 1,
-        dims = c(length(idx), NCOL(cons_mat))
-      )
-      cons_matx <- rbind(cons_mat, block)
-      if (is.null(immutable)) {
-        x <- reco.proj(base = rbind(x), cons_mat = cons_matx, cov_mat = cov_mat)
-      } else {
-        x <- reco.proj_immutable(
-          base = rbind(x),
-          cons_mat = cons_matx,
-          cov_mat = cov_mat,
-          immutable = immutable
-        )
-      }
-      x <- as.numeric(x)
-
-      if (all(x >= (-tol))) {
-        flag <- 1
-        break
-      } else {
-        flag <- -2
-      }
-    }
-
-    if (flag == 1) {
-      x[x <= tol] <- 0
-      if (i == itmax) {
-        flag <- 2
-      }
-    }
-    end <- Sys.time()
-    out <- list()
-    out$reco <- x
-    out$info <- c(difftime(end, start, units = "secs"), i, flag)
-    out$idx <- idx
-    if (flag %in% c(-2, 2)) {
-      cli_warn(
-        c(
-          "x" = "FBPP failed: check the results.",
-          "i" = "Flag = {flag},  tol = {tol}, itmax = {itmax}"
-        ),
-        call = NULL
-      )
-    }
-    out
-  })
-
-  fbpp_step <- do.call("rbind", fbpp_step)
-
-  # Point reconciled forecasts
-  reco[rowid, ] <- do.call("rbind", fbpp_step[, "reco"])
-
-  info <- do.call("rbind", fbpp_step[, "info"])
-  colnames(info) <- c("run_time", "iter", "status")
-  rownames(info) <- rowid
-  attr(reco, "info") <- info
-  return(reco)
-}
-
-reco.nnit <- function(
+reco.nnic <- function(
   base,
   strc_mat,
   cons_mat,
@@ -1187,7 +1071,7 @@ reco.nnit <- function(
     id_nn[qrtmp$pivot[1:qrtmp$rank]] <- 0
   }
   rowid <- which(rowSums(reco < (-tol)) != 0)
-  fbpp_step <- apply(reco[rowid, , drop = FALSE], 1, function(x) {
+  nnic_step <- apply(reco[rowid, , drop = FALSE], 1, function(x) {
     start <- Sys.time()
     idx <- NULL
     for (i in 1:itmax) {
@@ -1260,7 +1144,7 @@ reco.nnit <- function(
     if (flag %in% c(-2, 2)) {
       cli_warn(
         c(
-          "x" = "nnit failed: check the results.",
+          "x" = "NNIC failed: check the results.",
           "i" = "Flag = {flag},  tol = {tol}, itmax = {itmax}"
         ),
         call = NULL
@@ -1269,12 +1153,12 @@ reco.nnit <- function(
     out
   })
 
-  fbpp_step <- do.call("rbind", fbpp_step)
+  nnic_step <- do.call("rbind", nnic_step)
 
   # Point reconciled forecasts
-  reco[rowid, ] <- do.call("rbind", fbpp_step[, "reco"])
+  reco[rowid, ] <- do.call("rbind", nnic_step[, "reco"])
 
-  info <- do.call("rbind", fbpp_step[, "info"])
+  info <- do.call("rbind", nnic_step[, "info"])
   colnames(info) <- c("run_time", "iter", "status")
   rownames(info) <- rowid
   attr(reco, "info") <- info

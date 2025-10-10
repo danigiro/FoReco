@@ -5,7 +5,7 @@ if (require(testthat)) {
   rownames(A) <- LETTERS[1:3]
   set.seed(123)
   res <- matrix(rnorm(100 * sum(dim(A))), 100, sum(dim(A)))
-  base <- t(rnorm(sum(dim(A)), 1))
+  base <- t(rnorm(sum(dim(A)), rep(c(40, 20, 10), c(1, 2, 4))))
   C <- (cbind(diag(NROW(A)), -A))
   colnames(C) <- LETTERS[1:7]
   comb <- "shr"
@@ -103,7 +103,7 @@ if (require(testthat)) {
   })
 
   test_that("Bounds", {
-    tmp <- set_bounds(n = c(4:7), lb = 3)
+    tmp <- set_bounds(n = c(4:7), lb = 10)
     r1 <- csrec(
       base = base,
       agg_mat = A,
@@ -120,10 +120,10 @@ if (require(testthat)) {
       approach = "proj",
       bounds = tmp
     )
-    expect_equal(r1[1, ], c(12, 6, 6, 3, 3, 3, 3), ignore_attr = TRUE)
+    expect_equal(r1[1, ], c(40, 20, 20, 10, 10, 10, 10), ignore_attr = TRUE)
     expect_equal(r1, r2, ignore_attr = TRUE)
 
-    tmp <- set_bounds(n = c(4:7), lb = 3, approach = "sftb")
+    tmp <- set_bounds(n = c(4:7), lb = 10, approach = "sftb")
     r3 <- csrec(
       base = base,
       agg_mat = A,
@@ -132,7 +132,7 @@ if (require(testthat)) {
       approach = "strc",
       bounds = tmp
     )
-    expect_equal(r3, r1, ignore_attr = TRUE)
+    expect_true(all(r3 >= 10))
 
     tmp <- set_bounds(n = 8, lb = 3)
     expect_warning(csrec(
@@ -184,7 +184,7 @@ if (require(testthat)) {
       comb = comb,
       res = res,
       approach = "proj",
-      nn = "fbpp"
+      nn = "nnic"
     )
     r6 <- csrec(
       base = base,
@@ -192,7 +192,34 @@ if (require(testthat)) {
       comb = comb,
       res = res,
       approach = "proj",
-      nn = "kann"
+      nn = "nfca"
+    )
+    r7 <- csrec(
+      base = base,
+      agg_mat = A,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      nn = "sntz",
+      settings = list(type = "tdp")
+    )
+    r8 <- csrec(
+      base = base,
+      agg_mat = A,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      nn = "sntz",
+      settings = list(type = "tdsp")
+    )
+    r9 <- csrec(
+      base = base,
+      agg_mat = A,
+      comb = comb,
+      res = res,
+      approach = "proj",
+      nn = "sntz",
+      settings = list(type = "tdvw")
     )
 
     rf <- csrec(
@@ -205,13 +232,24 @@ if (require(testthat)) {
     rbu <- csbu(rf[, -c(1:3)], agg_mat = unname(A), sntz = TRUE)
 
     expect_true(all(r1 >= 0))
+    expect_true(all(r3 >= 0))
     expect_true(all(r6 >= 0))
+    expect_true(all(r7 >= 0))
+    expect_true(all(r8 >= 0))
+    expect_true(all(r9 >= 0))
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(r1, r5, ignore_attr = TRUE)
     expect_equal(r3, rbu, ignore_attr = TRUE)
+    expect_equal(r7[1], rf[1])
+    expect_equal(r8[1], rf[1])
+    expect_equal(r9[1], rf[1])
     expect_equal(max(abs(C %*% t(r1))), 0)
     expect_equal(max(abs(C %*% t(r3))), 0)
+    expect_equal(max(abs(C %*% t(r6))), 0)
+    expect_equal(max(abs(C %*% t(r7))), 0)
+    expect_equal(max(abs(C %*% t(r8))), 0)
+    expect_equal(max(abs(C %*% t(r9))), 0)
   })
 
   test_that("sntz-variants", {

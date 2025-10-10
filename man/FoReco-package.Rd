@@ -25,5 +25,10 @@ Authors:
   \item Tommaso Di Fonzo (\href{https://orcid.org/0000-0003-3388-7827}{ORCID})
 }
 
+Other contributors:
+\itemize{
+  \item Yangzhuoran Fin Fin Yang [contributor]
+}
+
 }
 \keyword{package}

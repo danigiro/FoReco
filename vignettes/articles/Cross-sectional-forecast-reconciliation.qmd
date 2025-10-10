@@ -260,7 +260,7 @@ str(reco_csjb, give.attr = FALSE)
 # while keeping the cross-sectional dimension fixed.
 B <- 100
 base_csjb <- csboot(model, B, 12)$sample
-reco_csjb <- cssample(base_csjb, agg_mat = vnaggmat, res = res, nn = "sntz",
+reco_csjb <- cssmp(base_csjb, agg_mat = vnaggmat, res = res, nn = "sntz",
                    comb = "shr")
 class(reco_csjb) # distribution object
 
@@ -297,7 +297,7 @@ str(reco_csg, give.attr = FALSE)
 #| label: gauss-vn
 
 # Gaussian reconciled distribution with fixed base covariance matrix for different forecast horizon
-reco_csg_1 <- csgauss(base = base, agg_mat = vnaggmat, comb = "shr", res = res)
+reco_csg_1 <- csmvn(base = base, agg_mat = vnaggmat, comb = "shr", res = res)
 
 # Gaussian reconciled distribution with different base covariance matrix for each forecast horizon
 ## Multi-step residuals
@@ -306,7 +306,7 @@ hres <- lapply(1:12, function(h)
 ## List of H=12 covariance matrix (one for each forecast horizon)
 cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
 reco_csg_h <- sapply(1:NROW(base), function(h){
-  csgauss(base = base[h, ], agg_mat = vnaggmat, comb = "shr", res = res, comb_base = cov_shr[[h]])
+  csmvn(base = base[h, ], agg_mat = vnaggmat, comb = "shr", res = res, comb_base = cov_shr[[h]])
 })
 class(reco_csg_h) <- class(reco_csg_1)
 names(reco_csg_h) <- paste0("h-", 1:length(reco_csg_h))
@@ -316,7 +316,7 @@ base_css <- lapply(1:NROW(base), function(h) MASS::mvrnorm(n = B, mu = base[h, ]
 base_css <- aperm(simplify2array(base_css), c(3,2,1))
 dimnames(base_css) <- dimnames(base_csjb)
 
-reco_css <- cssample(base_css, agg_mat = vnaggmat, res = res, nn = "sntz",
+reco_css <- cssmp(base_css, agg_mat = vnaggmat, res = res, nn = "sntz",
                    comb = "shr")
 class(reco_css) # distribution object
 ```
@@ -409,7 +409,7 @@ str(reco_csjb, give.attr = FALSE)
 # while keeping the cross-sectional dimension fixed.
 B <- 100
 base_csjb <- csboot(model, B, 4)$sample
-reco_csjb <- cssample(base_csjb, cons_mat = gdpconsmat, res = res, comb = "shr")
+reco_csjb <- cssmp(base_csjb, cons_mat = gdpconsmat, res = res, comb = "shr")
 reco_csjb # distribution object
 
 # Extracts mean:
@@ -447,7 +447,7 @@ str(reco_csg, give.attr = FALSE)
 #| label: gauss-gdp
 
 # Gaussian reconciled distribution with fixed base covariance matrix for different forecast horizon
-reco_csg_1 <- csgauss(base = base, cons_mat = gdpconsmat, comb = "shr", res = res)
+reco_csg_1 <- csmvn(base = base, cons_mat = gdpconsmat, comb = "shr", res = res)
 
 # Gaussian reconciled distribution with different base covariance matrix for each forecast horizon
 ## Multi-step residuals
@@ -457,7 +457,7 @@ hres <- lapply(1:4, function(h)
 cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
 
 reco_csg_h <- sapply(1:NROW(base), function(h){
-  csgauss(base = base[h, ], cons_mat = gdpconsmat, comb = "shr", res = res, comb_base = cov_shr[[h]])
+  csmvn(base = base[h, ], cons_mat = gdpconsmat, comb = "shr", res = res, comb_base = cov_shr[[h]])
 })
 class(reco_csg_h) <- class(reco_csg_1)
 names(reco_csg_h) <- paste0("h-", 1:length(reco_csg_h))
@@ -467,7 +467,7 @@ base_css <- lapply(1:NROW(base), function(h) MASS::mvrnorm(n = B, mu = base[h, ]
 base_css <- aperm(simplify2array(base_css), c(3,2,1))
 dimnames(base_css) <- dimnames(base_csjb)
 
-reco_css <- cssample(base_css, cons_mat = gdpconsmat, res = res, comb = "shr")
+reco_css <- cssmp(base_css, cons_mat = gdpconsmat, res = res, comb = "shr")
 class(reco_css) # distribution object
 ```
 

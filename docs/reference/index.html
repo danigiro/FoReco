@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,13 +88,13 @@
         <dd>Optimal combination cross-sectional reconciliation</dd>
       </dl><dl><dt>
 
-          <code><a href="cssample.html">cssample()</a></code>
+          <code><a href="cssmp.html">cssmp()</a></code>
 
         </dt>
         <dd>Cross-sectional probabilistic reconciliation (sample approach)</dd>
       </dl><dl><dt>
 
-          <code><a href="csgauss.html">csgauss()</a></code>
+          <code><a href="csmvn.html">csmvn()</a></code>
 
         </dt>
         <dd>Cross-sectional Gaussian probabilistic reconciliation</dd>
@@ -141,13 +141,13 @@
         <dd>Optimal combination temporal reconciliation</dd>
       </dl><dl><dt>
 
-          <code><a href="tesample.html">tesample()</a></code>
+          <code><a href="tesmp.html">tesmp()</a></code>
 
         </dt>
         <dd>Temporal probabilistic reconciliation (sample approach)</dd>
       </dl><dl><dt>
 
-          <code><a href="tegauss.html">tegauss()</a></code>
+          <code><a href="temvn.html">temvn()</a></code>
 
         </dt>
         <dd>Temporal Gaussian probabilistic reconciliation</dd>
@@ -206,13 +206,13 @@
         <dd>Iterative cross-temporal reconciliation</dd>
       </dl><dl><dt>
 
-          <code><a href="ctsample.html">ctsample()</a></code>
+          <code><a href="ctsmp.html">ctsmp()</a></code>
 
         </dt>
         <dd>Cross-temporal probabilistic reconciliation (sample approach)</dd>
       </dl><dl><dt>
 
-          <code><a href="ctgauss.html">ctgauss()</a></code>
+          <code><a href="ctmvn.html">ctmvn()</a></code>
 
         </dt>
         <dd>Temporal Gaussian probabilistic reconciliation</dd>
@@ -240,9 +240,97 @@
         </dt>
         <dd>Australian Tourism Demand dataset</dd>
       </dl></div><div class="section level2">
+      <h2 id="reconciliation-tools">Reconciliation tools<a class="anchor" aria-label="anchor" href="#reconciliation-tools"></a></h2>
+
+      <div class="section-desc"><p>Functions to compute the reconciliation matrices</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cstools.html">cstools()</a></code>
+
+        </dt>
+        <dd>Cross-sectional reconciliation tools</dd>
+      </dl><dl><dt>
+
+          <code><a href="csprojmat.html">csprojmat()</a></code>
+
+        </dt>
+        <dd>Projection matrix for optimal combination cross-sectional reconciliation</dd>
+      </dl><dl><dt>
+
+          <code><a href="tetools.html">tetools()</a></code>
+
+        </dt>
+        <dd>Temporal reconciliation tools</dd>
+      </dl><dl><dt>
+
+          <code><a href="teprojmat.html">teprojmat()</a></code>
+
+        </dt>
+        <dd>Projection matrix for optimal combination temporal reconciliation</dd>
+      </dl><dl><dt>
+
+          <code><a href="cttools.html">cttools()</a></code>
+
+        </dt>
+        <dd>Cross-temporal reconciliation tools</dd>
+      </dl><dl><dt>
+
+          <code><a href="ctprojmat.html">ctprojmat()</a></code>
+
+        </dt>
+        <dd>Projection matrix for optimal combination cross-temporal reconciliation</dd>
+      </dl></div><div class="section level2">
+      <h2 id="covariance-estimation">Covariance estimation<a class="anchor" aria-label="anchor" href="#covariance-estimation"></a></h2>
+
+      <div class="section-desc"><p>Functions to compute the covariance matrix estimators</p></div>
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="cscov.html">cscov()</a></code>
+
+        </dt>
+        <dd>Cross-sectional covariance matrix approximation</dd>
+      </dl><dl><dt>
+
+          <code><a href="tecov.html">tecov()</a></code>
+
+        </dt>
+        <dd>Temporal covariance matrix approximation</dd>
+      </dl><dl><dt>
+
+          <code><a href="ctcov.html">ctcov()</a></code>
+
+        </dt>
+        <dd>Cross-temporal covariance matrix approximation</dd>
+      </dl><dl><dt>
+
+          <code><a href="shrink_estim.html">shrink_estim()</a></code>
+
+        </dt>
+        <dd>Shrinkage of the covariance matrix</dd>
+      </dl><dl><dt>
+
+          <code><a href="shrink_oasd.html">shrink_oasd()</a></code>
+
+        </dt>
+        <dd>Shrinkage of the covariance matrix using the Oracle approximation</dd>
+      </dl></div><div class="section level2">
       <h2 id="utilities">Utilities<a class="anchor" aria-label="anchor" href="#utilities"></a></h2>
 
-
+      <div class="section-desc"><p>Functions to manipulate the data and the forecasts</p></div>
 
 
     </div><div class="section level2">
@@ -282,12 +370,6 @@
         <dd>Commutation matrix</dd>
       </dl><dl><dt>
 
-          <code><a href="cscov.html">cscov()</a></code>
-
-        </dt>
-        <dd>Cross-sectional covariance matrix approximation</dd>
-      </dl><dl><dt>
-
           <code><a href="csboot.html">csboot()</a></code>
 
         </dt>
@@ -300,34 +382,10 @@
         <dd>Projection matrix for optimal combination cross-sectional reconciliation</dd>
       </dl><dl><dt>
 
-          <code><a href="cstools.html">cstools()</a></code>
-
-        </dt>
-        <dd>Cross-sectional reconciliation tools</dd>
-      </dl><dl><dt>
-
-          <code><a href="ctcov.html">ctcov()</a></code>
-
-        </dt>
-        <dd>Cross-temporal covariance matrix approximation</dd>
-      </dl><dl><dt>
-
           <code><a href="ctboot.html">ctboot()</a></code>
 
         </dt>
         <dd>Cross-temporal joint block bootstrap</dd>
-      </dl><dl><dt>
-
-          <code><a href="ctprojmat.html">ctprojmat()</a></code>
-
-        </dt>
-        <dd>Projection matrix for optimal combination cross-temporal reconciliation</dd>
-      </dl><dl><dt>
-
-          <code><a href="cttools.html">cttools()</a></code>
-
-        </dt>
-        <dd>Cross-temporal reconciliation tools</dd>
       </dl><dl><dt>
 
           <code><a href="df2aggmat.html">df2aggmat()</a></code>
@@ -366,40 +424,16 @@
         <dd>Set bounds for bounded forecast reconciliation</dd>
       </dl><dl><dt>
 
-          <code><a href="shrink_estim.html">shrink_estim()</a></code>
-
-        </dt>
-        <dd>Shrinkage of the covariance matrix</dd>
-      </dl><dl><dt>
-
-          <code><a href="shrink_oasd.html">shrink_oasd()</a></code>
-
-        </dt>
-        <dd>Shrinkage of the covariance matrix using the Oracle approximation</dd>
-      </dl><dl><dt>
-
-          <code><a href="tecov.html">tecov()</a></code>
-
-        </dt>
-        <dd>Temporal covariance matrix approximation</dd>
-      </dl><dl><dt>
-
           <code><a href="teboot.html">teboot()</a></code>
 
         </dt>
         <dd>Temporal joint block bootstrap</dd>
       </dl><dl><dt>
 
-          <code><a href="teprojmat.html">teprojmat()</a></code>
+          <code><a href="new_foreco_info.html">new_foreco_info()</a></code>
 
         </dt>
-        <dd>Projection matrix for optimal combination temporal reconciliation</dd>
-      </dl><dl><dt>
-
-          <code><a href="tetools.html">tetools()</a></code>
-
-        </dt>
-        <dd>Temporal reconciliation tools</dd>
+        <dd>Low-level construction for reconcilied forecasts attribute foreco_info class</dd>
       </dl><dl><dt>
 
           <code><a href="unbalance_hierarchy.html">unbalance_hierarchy()</a></code>

@@ -147,7 +147,7 @@ shrink_oasd <- function(x, mse = TRUE) {
   covm <- sample_estim(x = x, mse = mse)
 
   # Target
-  tar <- diag(diag(covm))
+  tar <- Diagonal(x = diag(covm))
 
   # lambda
   tr_ss <- sum(diag(covm %*% covm))
@@ -156,7 +156,7 @@ shrink_oasd <- function(x, mse = TRUE) {
   num <- tr_ss - tr_s
   den <- tr_ss + sum(var)^2 - 2 * tr_s
   phi <- num / den
-  lambda <- min(1, 1 / ((n + 1) * phi))
+  lambda <- min(1, 1 / (n * phi))
 
   # Shrinkage
   shrink_cov <- lambda * tar + (1 - lambda) * covm

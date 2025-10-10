@@ -29,7 +29,7 @@
 #' \itemize{
 #'   \item Column 1 represents the cross-sectional series
 #'   (\eqn{i = 1, \dots, n}).
-#'   \item Columns 2 and 3 indicates the \emph{lower} and \emph{lower} bounds,
+#'   \item Columns 2 and 3 indicates the \emph{lower} and \emph{upper} bounds,
 #'   respectively.
 #' }
 #' @param immutable A numeric vector containing the column indices of the base
@@ -52,6 +52,9 @@
 #' solar forecasts, \emph{Solar Energy}, 251, 13–29.
 #' \doi{10.1016/j.solener.2023.01.003}
 #'
+#' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+#' methods and operational solutions. \emph{mimeo}
+#'
 #' Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast
 #' reconciliation for general linearly constrained multiple time series,
 #' \emph{Statistical Methods & Applications}, 33, 581-607.
@@ -61,6 +64,10 @@
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
+#'
+#' Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+#' intermittent demand series. \emph{European Journal of Operational Research},
+#' 288, 141-152. \doi{10.1016/j.ejor.2020.05.046}
 #'
 #' Panagiotelis, A., Athanasopoulos, G., Gamakumara, P. and Hyndman, R.J.
 #' (2021), Forecast reconciliation: A geometric view with new insights on bias
@@ -292,7 +299,7 @@ csrec <- function(
 #'   (\eqn{k = m,\dots,1}).
 #'   \item Column 2 represents the temporal forecast horizon
 #'   (\eqn{j = 1,\dots,m/k}).
-#'   \item Columns 3 and 4 indicates the \emph{lower} and \emph{lower} bounds,
+#'   \item Columns 3 and 4 indicates the \emph{lower} and \emph{upper} bounds,
 #'   respectively.
 #' }
 #' @param immutable A matrix with 2 columns (\eqn{k,j}), such that
@@ -329,10 +336,17 @@ csrec <- function(
 #' solar forecasts, \emph{Solar Energy}, 251, 13–29.
 #' \doi{10.1016/j.solener.2023.01.003}
 #'
+#' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+#' methods and operational solutions. \emph{mimeo}
+#'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
+#'
+#' Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+#' intermittent demand series. \emph{European Journal of Operational Research},
+#' 288, 141-152. \doi{10.1016/j.ejor.2020.05.046}
 #'
 #' Nystrup, P.,  \enc{Lindström}{Lindstrom}, E., Pinson, P. and Madsen, H.
 #' (2020), Temporal hierarchies with autocorrelation for load forecasting,
@@ -596,23 +610,45 @@ terec <- function(
 #'   (\href{https://osqp.org/}{\pkg{osqp}} solver).
 #'   \item "\code{bpv}": block principal pivoting algorithm
 #'   (Wickramasuriya et al., 2020).
+#'   \item "\code{nfca}": negative forecasts correction algorithm
+#'   (Kourentzes and Athanasopoulos, 2021; Girolimetto 2025).
+#'   \item "\code{nnic}": iterative non-negative reconciliation with immutable
+#'   constraints (Girolimetto 2025).
 #'   \item "\code{sntz}": heuristic "set-negative-to-zero"
-#'   (Di Fonzo and Girolimetto, 2023).
+#'   (Di Fonzo and Girolimetto, 2023; Girolimetto 2025).
 #'   }
 #' @param settings A list of control parameters.
 #'   \itemize{
 #'   \item \code{nn = "osqp"} An object of class \code{osqpSettings} specifying
 #'   settings for the \href{https://osqp.org/}{\pkg{osqp}} solver. For details,
 #'   refer to the \href{https://osqp.org/}{\pkg{osqp} documentation}
-#'   (Stellato et al., 2020).
-#'   \item \code{nn = "bpv"} It includes: \code{ptype} for permutation method
-#'   ("\code{random}" or "\code{fixed}", \emph{default}), \code{par} for the
-#'   number of full exchange rules that may be attempted (\code{10},
-#'   \emph{default}), \code{tol} for the tolerance criteria
-#'   (\code{sqrt(.Machine$double.eps)}, \emph{default}), \code{gtol} for the
-#'   gradient tolerance criteria (\code{sqrt(.Machine$double.eps)},
-#'   \emph{default}), \code{itmax} for the maximum number of algorithm
-#'   iterations (\code{100}, \emph{default})
+#'   (Stellato et al., 2020)
+#'   \item \code{nn = "bpv"}
+#'     \itemize{
+#'     \item \code{ptype = "fixed"}: permutation method: "\code{random}" or
+#'     "\code{fixed}"
+#'     \item \code{par = 10}: the number of full exchange rules that may be
+#'     attempted
+#'     \item \code{tol = sqrt(.Machine$double.eps)}: the tolerance criteria
+#'     \item \code{gtol = sqrt(.Machine$double.eps)}: the gradient tolerance
+#'     criteria
+#'     \item \code{itmax = 100}: the maximum number of algorithm iterations
+#'     }
+#'   \item \code{nn = "nfca"} and \code{nn = "nnic"}
+#'     \itemize{
+#'     \item \code{tol = sqrt(.Machine$double.eps)}: the tolerance criteria
+#'     \item \code{itmax = 100}: the maximum number of algorithm iterations
+#'     }
+#'   \item \code{nn = "sntz"}
+#'     \itemize{
+#'     \item \code{type = "bu"}: the type of set-negative-to-zero heuristic:
+#'     "\code{bu}" for bottom-up, "\code{tdp}" for top-down
+#'     proportional, "\code{tdsp}" for top-down square proportional,
+#'     "\code{tdvw}" for top-down variance weighted (the \code{res} param is
+#'     used). See Girolimetto (2025) for details.
+#'     \item \code{tol = sqrt(.Machine$double.eps)}: the tolerance
+#'     identification of negative values
+#'     }
 #'   }
 #' @param bounds A matrix (see [set_bounds]) with 5 columns
 #' (\eqn{i,k,j,lower,upper}), such that
@@ -623,7 +659,7 @@ terec <- function(
 #'   (\eqn{k = m,\dots,1}).
 #'   \item Column 3 represents the temporal forecast horizon
 #'   (\eqn{j = 1,\dots,m/k}).
-#'   \item Columns 4 and 5 indicates the \emph{lower} and \emph{lower} bounds,
+#'   \item Columns 4 and 5 indicates the \emph{lower} and \emph{upper} bounds,
 #'   respectively.
 #' }
 #' @param immutable A matrix with three columns (\eqn{i,k,j}), such that
@@ -666,6 +702,9 @@ terec <- function(
 #' solar forecasts, \emph{Solar Energy}, 251, 13–29.
 #' \doi{10.1016/j.solener.2023.01.003}
 #'
+#' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+#' methods and operational solutions. \emph{mimeo}
+#'
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
 #' practical issues. \emph{International Journal of Forecasting}, 40, 3,
@@ -675,6 +714,10 @@ terec <- function(
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
+#'
+#' Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+#' intermittent demand series. \emph{European Journal of Operational Research},
+#' 288, 141-152. \doi{10.1016/j.ejor.2020.05.046}
 #'
 #' Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020),
 #' OSQP: An Operator Splitting solver for Quadratic Programs, \emph{Mathematical

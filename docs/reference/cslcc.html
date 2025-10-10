@@ -27,7 +27,7 @@ reconciled forecasts, with either endogenous or exogenous constraints."><meta pr
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,8 +150,12 @@ forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 (<a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver).</p></li>
 <li><p>"<code>bpv</code>": block principal pivoting algorithm
 (Wickramasuriya et al., 2020).</p></li>
+<li><p>"<code>nfca</code>": negative forecasts correction algorithm
+(Kourentzes and Athanasopoulos, 2021; Girolimetto 2025).</p></li>
+<li><p>"<code>nnic</code>": iterative non-negative reconciliation with immutable
+constraints (Girolimetto 2025).</p></li>
 <li><p>"<code>sntz</code>": heuristic "set-negative-to-zero"
-(Di Fonzo and Girolimetto, 2023).</p></li>
+(Di Fonzo and Girolimetto, 2023; Girolimetto 2025).</p></li>
 </ul></dd>
 
 
@@ -159,25 +163,38 @@ forecasts:</p><ul><li><p>"<code>osqp</code>": quadratic programming optimization
 <dd><p>A list of control parameters.</p><ul><li><p><code>nn = "osqp"</code> An object of class <code>osqpSettings</code> specifying
 settings for the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span></a> solver. For details,
 refer to the <a href="https://osqp.org/" class="external-link"><span class="pkg">osqp</span> documentation</a>
-(Stellato et al., 2020).</p></li>
-<li><p><code>nn = "bpv"</code> It includes: <code>ptype</code> for permutation method
-("<code>random</code>" or "<code>fixed</code>", <em>default</em>), <code>par</code> for the
-number of full exchange rules that may be attempted (<code>10</code>,
-<em>default</em>), <code>tol</code> for the tolerance criteria
-(<code>sqrt(.Machine$double.eps)</code>, <em>default</em>), <code>gtol</code> for the
-gradient tolerance criteria (<code>sqrt(.Machine$double.eps)</code>,
-<em>default</em>), <code>itmax</code> for the maximum number of algorithm
-iterations (<code>100</code>, <em>default</em>)</p></li>
+(Stellato et al., 2020)</p></li>
+<li><p><code>nn = "bpv"</code></p><ul><li><p><code>ptype = "fixed"</code>: permutation method: "<code>random</code>" or
+"<code>fixed</code>"</p></li>
+<li><p><code>par = 10</code>: the number of full exchange rules that may be
+attempted</p></li>
+<li><p><code>tol = sqrt(.Machine$double.eps)</code>: the tolerance criteria</p></li>
+<li><p><code>gtol = sqrt(.Machine$double.eps)</code>: the gradient tolerance
+criteria</p></li>
+<li><p><code>itmax = 100</code>: the maximum number of algorithm iterations</p></li>
+</ul></li>
+<li><p><code>nn = "nfca"</code> and <code>nn = "nnic"</code></p><ul><li><p><code>tol = sqrt(.Machine$double.eps)</code>: the tolerance criteria</p></li>
+<li><p><code>itmax = 100</code>: the maximum number of algorithm iterations</p></li>
+</ul></li>
+<li><p><code>nn = "sntz"</code></p><ul><li><p><code>type = "bu"</code>: the type of set-negative-to-zero heuristic:
+"<code>bu</code>" for bottom-up, "<code>tdp</code>" for top-down
+proportional, "<code>tdsp</code>" for top-down square proportional,
+"<code>tdvw</code>" for top-down variance weighted (the <code>res</code> param is
+used). See Girolimetto (2025) for details.</p></li>
+<li><p><code>tol = sqrt(.Machine$double.eps)</code>: the tolerance
+identification of negative values</p></li>
+</ul></li>
 </ul></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="cscov.html">cscov</a></code></p><dl><dt><code>mse</code></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the covariance
-matrix are not mean-corrected.</p></dd>
+<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the
+covariance matrix are not mean-corrected.</p></dd>
 
     <dt><code>shrink_fun</code></dt>
-<dd><p>Shrinkage function of the covariance matrix, <a href="shrink_estim.html">shrink_estim</a> (<em>default</em>).</p></dd>
+<dd><p>Shrinkage function of the covariance matrix,
+<a href="shrink_estim.html">shrink_estim</a> (<em>default</em>).</p></dd>
 
 
 </dl></dd>
@@ -201,10 +218,15 @@ Insights and extensions, <em>International Journal of Forecasting</em>, 40(2), 4
 <a href="https://doi.org/10.1016/j.ijforecast.2022.07.001" class="external-link">doi:10.1016/j.ijforecast.2022.07.001</a></p>
 <p>Di Fonzo, T. and Girolimetto, D. (2023b) Spatio-temporal reconciliation of solar forecasts.
 <em>Solar Energy</em> 251, 13–29. <a href="https://doi.org/10.1016/j.solener.2023.01.003" class="external-link">doi:10.1016/j.solener.2023.01.003</a></p>
+<p>Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+methods and operational solutions. <em>mimeo</em></p>
 <p>Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
 <em>Computational Statistics &amp; Data Analysis</em>, 55, 9, 2579-2589.
 <a href="https://doi.org/10.1016/j.csda.2011.03.006" class="external-link">doi:10.1016/j.csda.2011.03.006</a></p>
+<p>Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in
+intermittent demand series. <em>European Journal of Operational Research</em>,
+288, 141-152. <a href="https://doi.org/10.1016/j.ejor.2020.05.046" class="external-link">doi:10.1016/j.ejor.2020.05.046</a></p>
 <p>Hollyman, R., Petropoulos, F. and Tipping, M.E. (2021), Understanding forecast reconciliation.
 <em>European Journal of Operational Research</em>, 294, 149–160. <a href="https://doi.org/10.1016/j.ejor.2021.01.017" class="external-link">doi:10.1016/j.ejor.2021.01.017</a></p>
 <p>Stellato, B., Banjac, G., Goulart, P., Bemporad, A. and Boyd, S. (2020), OSQP:
@@ -221,10 +243,10 @@ An Operator Splitting solver for Quadratic Programs,
 <code><a href="csboot.html">csboot</a>()</code>,
 <code><a href="csbu.html">csbu</a>()</code>,
 <code><a href="cscov.html">cscov</a>()</code>,
-<code><a href="csgauss.html">csgauss</a>()</code>,
 <code><a href="csmo.html">csmo</a>()</code>,
+<code><a href="csmvn.html">csmvn</a>()</code>,
 <code><a href="csrec.html">csrec</a>()</code>,
-<code><a href="cssample.html">cssample</a>()</code>,
+<code><a href="cssmp.html">cssmp</a>()</code>,
 <code><a href="cstd.html">cstd</a>()</code>,
 <code><a href="cstools.html">cstools</a>()</code></p></div>
     </div>
@@ -261,21 +283,18 @@ An Operator Splitting solver for Quadratic Programs,
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 39.43952 19.76757 19.67196 9.893588 9.873979 9.744387 9.927570</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 38.73494 19.47537 19.25957 9.759815 9.715556 9.423051 9.836517</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"FoReco")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x12c559108&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`L-2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          s-1      s-2      s-3      s-4      s-5       s-6       s-7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 41.32853 19.76982 21.55871 9.894620 9.875202 11.214555 10.344153</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 38.86749 19.31315 19.55434 9.685546 9.627601  9.652737  9.901601</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"FoReco")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x12c7852a0&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`L-3`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          s-1     s-2      s-3      s-4      s-5      s-6      s-7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 42.37578 20.1998 22.17598 10.07051 10.12929 11.71506 10.46092</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 42.09535 21.5839 20.51145 11.22408 10.35981 10.40077 10.11068</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"FoReco")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x12c80cb00&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)</span></span></span>
@@ -300,21 +319,18 @@ An Operator Splitting solver for Quadratic Programs,
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 40.23685 19.31277 20.92408  9.664411 9.648359 10.739579 10.184505</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 39.64745 20.56873 19.07871 10.759321 9.809413  9.284371  9.794343</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"FoReco")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x10f7c5e78&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`L-2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          s-1      s-2      s-3       s-4      s-5       s-6       s-7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 41.70862 19.94714 21.76149  9.954836 9.992300 11.392087 10.369398</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 40.11832 20.24956 19.86876 10.613199 9.636364  9.899977  9.968779</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"FoReco")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x10f55b660&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`L-3`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          s-1     s-2      s-3      s-4      s-5      s-6      s-7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 42.37578 20.1998 22.17598 10.07051 10.12929 11.71506 10.46092</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 42.09535 21.5839 20.51145 11.22408 10.35981 10.40077 10.11068</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"FoReco")</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;environment: 0x10f470630&gt;</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

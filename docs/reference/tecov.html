@@ -5,9 +5,11 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Temporal covariance matrix approximation — tecov"><meta name="description" content="This function provides an approximation of the temporal base forecasts errors
-covariance matrix using different reconciliation methods (see Di Fonzo and Girolimetto, 2023)."><meta property="og:description" content="This function provides an approximation of the temporal base forecasts errors
-covariance matrix using different reconciliation methods (see Di Fonzo and Girolimetto, 2023)."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Temporal covariance matrix approximation — tecov"><meta name="description" content="This function provides an approximation of the temporal base forecasts
+errors covariance matrix using different reconciliation methods (see Di
+Fonzo and Girolimetto, 2023)."><meta property="og:description" content="This function provides an approximation of the temporal base forecasts
+errors covariance matrix using different reconciliation methods (see Di
+Fonzo and Girolimetto, 2023)."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +17,7 @@ covariance matrix using different reconciliation methods (see Di Fonzo and Girol
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,8 +52,9 @@ covariance matrix using different reconciliation methods (see Di Fonzo and Girol
     </div>
 
     <div class="ref-description section level2">
-    <p>This function provides an approximation of the temporal base forecasts errors
-covariance matrix using different reconciliation methods (see Di Fonzo and Girolimetto, 2023).</p>
+    <p>This function provides an approximation of the temporal base forecasts
+errors covariance matrix using different reconciliation methods (see Di
+Fonzo and Girolimetto, 2023).</p>
     </div>
 
     <div class="section level2">
@@ -102,12 +105,13 @@ include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</co
 
 
 <dt id="arg-mse">mse<a class="anchor" aria-label="anchor" href="#arg-mse"></a></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the covariance
-matrix are not mean-corrected.</p></dd>
+<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute
+the covariance matrix are not mean-corrected.</p></dd>
 
 
 <dt id="arg-shrink-fun">shrink_fun<a class="anchor" aria-label="anchor" href="#arg-shrink-fun"></a></dt>
-<dd><p>Shrinkage function of the covariance matrix, <a href="shrink_estim.html">shrink_estim</a> (<em>default</em>)</p></dd>
+<dd><p>Shrinkage function of the covariance matrix,
+<a href="shrink_estim.html">shrink_estim</a> (<em>default</em>)</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -120,20 +124,21 @@ matrix are not mean-corrected.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, <em>International Journal
-of Forecasting</em>, 39, 1, 39-57. <a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">doi:10.1016/j.ijforecast.2021.08.004</a></p>
+    <p>Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+<em>International Journal of Forecasting</em>, 39, 1, 39-57.
+<a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">doi:10.1016/j.ijforecast.2021.08.004</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p>Temporal framework:
 <code><a href="teboot.html">teboot</a>()</code>,
 <code><a href="tebu.html">tebu</a>()</code>,
-<code><a href="tegauss.html">tegauss</a>()</code>,
 <code><a href="telcc.html">telcc</a>()</code>,
 <code><a href="temo.html">temo</a>()</code>,
+<code><a href="temvn.html">temvn</a>()</code>,
 <code><a href="terec.html">terec</a>()</code>,
-<code><a href="tesample.html">tesample</a>()</code>,
+<code><a href="tesmp.html">tesmp</a>()</code>,
 <code><a href="tetd.html">tetd</a>()</code>,
 <code><a href="tetools.html">tetools</a>()</code></p></div>
     </div>
@@ -143,16 +148,16 @@ of Forecasting</em>, 39, 1, 39-57. <a href="https://doi.org/10.1016/j.ijforecast
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># (7 x 70) in-sample residuals matrix (simulated), agg_order = 4</span></span></span>
 <span class="r-in"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">70</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">cov1</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"ols"</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                 <span class="co"># OLS methods</span></span></span>
-<span class="r-in"><span><span class="va">cov2</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"str"</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                 <span class="co"># STRC methods</span></span></span>
-<span class="r-in"><span><span class="va">cov3</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"wlsv"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># WLSv methods</span></span></span>
-<span class="r-in"><span><span class="va">cov4</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"wlsh"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># WLSh methods</span></span></span>
-<span class="r-in"><span><span class="va">cov5</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"acov"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># ACOV methods</span></span></span>
-<span class="r-in"><span><span class="va">cov6</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"strar1"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>   <span class="co"># STRAR1 methods</span></span></span>
-<span class="r-in"><span><span class="va">cov7</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"har1"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># HAR1 methods</span></span></span>
-<span class="r-in"><span><span class="va">cov8</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"sar1"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># SAR1 methods</span></span></span>
-<span class="r-in"><span><span class="va">cov9</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"shr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>      <span class="co"># SHR methods</span></span></span>
-<span class="r-in"><span><span class="va">cov10</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"sam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># SAM methods</span></span></span>
+<span class="r-in"><span><span class="va">cov1</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"ols"</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                 <span class="co"># OLS</span></span></span>
+<span class="r-in"><span><span class="va">cov2</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"str"</span>, agg_order <span class="op">=</span> <span class="fl">4</span><span class="op">)</span>                 <span class="co"># STRC</span></span></span>
+<span class="r-in"><span><span class="va">cov3</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"wlsv"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># WLSv</span></span></span>
+<span class="r-in"><span><span class="va">cov4</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"wlsh"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># WLSh</span></span></span>
+<span class="r-in"><span><span class="va">cov5</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"acov"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># ACOV</span></span></span>
+<span class="r-in"><span><span class="va">cov6</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"strar1"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>   <span class="co"># STRAR1</span></span></span>
+<span class="r-in"><span><span class="va">cov7</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"har1"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># HAR1</span></span></span>
+<span class="r-in"><span><span class="va">cov8</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"sar1"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># SAR1</span></span></span>
+<span class="r-in"><span><span class="va">cov9</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"shr"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>      <span class="co"># SHR</span></span></span>
+<span class="r-in"><span><span class="va">cov10</span> <span class="op">&lt;-</span> <span class="fu">tecov</span><span class="op">(</span><span class="st">"sam"</span>, agg_order <span class="op">=</span> <span class="fl">4</span>, res <span class="op">=</span> <span class="va">res</span><span class="op">)</span>     <span class="co"># SAM</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Custom covariance matrix</span></span></span>
 <span class="r-in"><span><span class="va">tecov.ols2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">comb</span>, <span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>

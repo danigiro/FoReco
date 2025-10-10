@@ -13,7 +13,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,10 +48,15 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="foreco-development-version">FoReco (development version)<a class="anchor" aria-label="anchor" href="#foreco-development-version"></a></h2>
-<ul><li>Added <code><a href="../reference/csgauss.html">csgauss()</a></code>, <code><a href="../reference/tegauss.html">tegauss()</a></code>, and <code><a href="../reference/ctgauss.html">ctgauss()</a></code> for Gaussian probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the <a href="https://CRAN.R-project.org/package=distributional" class="external-link"><code>distributional</code></a> package;</li>
-<li>Added <code><a href="../reference/cssample.html">cssample()</a></code>, <code><a href="../reference/tesample.html">tesample()</a></code>, and <code><a href="../reference/ctsample.html">ctsample()</a></code> for sample-based probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the <a href="https://CRAN.R-project.org/package=distributional" class="external-link"><code>distributional</code></a> package;</li>
+<ul><li>Added <code><a href="../reference/csmvn.html">csmvn()</a></code>, <code><a href="../reference/temvn.html">temvn()</a></code>, and <code><a href="../reference/ctmvn.html">ctmvn()</a></code> for Gaussian probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the <a href="https://CRAN.R-project.org/package=distributional" class="external-link"><code>distributional</code></a> package;</li>
+<li>Added <code><a href="../reference/cssmp.html">cssmp()</a></code>, <code><a href="../reference/tesmp.html">tesmp()</a></code>, and <code><a href="../reference/ctsmp.html">ctsmp()</a></code> for sample-based probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the <a href="https://CRAN.R-project.org/package=distributional" class="external-link"><code>distributional</code></a> package;</li>
 <li>Added <code><a href="../reference/ctmatrix_layouts.html">as_ctmatrix()</a></code> and <code>as_horizon_stacked_ctmatrix()</code> functions to convert between horizon-stacked (cross-temporal version) and cross-temporal layouts;</li>
 <li>Added <code><a href="../reference/tematrix_layouts.html">as_tevector()</a></code> and <code>as_horizon_stacked_tematrix()</code> functions to convert between horizon-stacked (temporal version) and temporal layouts;</li>
+<li>Added non-negative forecast reconciliation algorithms <em>bpv</em> (block principal pivoting algorithm), <em>nfca</em> (negative forecasts correction algorithm), <em>nnic</em> (iterative non-negative reconciliation with immutable constraints), and <em>sntz</em> (set-negative-to-zero with bottom-up and top-down alternatives) based on:
+<ul><li>Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal methods and operational solutions. <em>arXiv</em>;</li>
+<li>Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in intermittent demand series. <em>European Journal of Operational Research</em>, 288, 141-152. <a href="https://doi.org/10.1016/j.ejor.2020.05.046" class="external-link">doi:10.1016/j.ejor.2020.05.046</a>;</li>
+<li>Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020), “Optimal non-negative forecast reconciliation”, <em>Statistics and Computing</em>, 30(5), 1167–1182. <a href="https://doi.org/10.1007/s11222-020-09930-0" class="external-link">doi:10.1007/s11222-020-09930-0</a>;</li>
+</ul></li>
 <li>Fixed bugs and improved stability.</li>
 </ul></div>
     <div class="section level2">

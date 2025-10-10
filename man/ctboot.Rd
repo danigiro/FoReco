@@ -49,11 +49,11 @@ Bootstrap samples:
 Cross-temporal framework:
 \code{\link{ctbu}()},
 \code{\link{ctcov}()},
-\code{\link{ctgauss}()},
 \code{\link{ctlcc}()},
 \code{\link{ctmo}()},
+\code{\link{ctmvn}()},
 \code{\link{ctrec}()},
-\code{\link{ctsample}()},
+\code{\link{ctsmp}()},
 \code{\link{cttd}()},
 \code{\link{cttools}()},
 \code{\link{iterec}()},

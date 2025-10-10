@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9012</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.1.0.9013</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Temporal forecast reconciliation</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2025-09-30</p>
+      <p class="date">2025-10-10</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Temporal-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Temporal-forecast-reconciliation.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -321,8 +321,8 @@ supported
 <span><span class="co">#&gt; ℹ Covariance approximation: `shr`</span></span>
 <span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
-<span><span class="co">#&gt;     obj_val   run_time iter      pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -16.58821 0.00028204   50 5.551115e-17      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt;     obj_val    run_time iter      pri_res status status_polish</span></span>
+<span><span class="co">#&gt; 1 -16.58821 0.000279499   50 5.551115e-17      1             1</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023</a>)</span>.</li>
@@ -379,7 +379,7 @@ supported
 <span><span class="va">base_tejb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teboot.html">teboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, <span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">base_tejb</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 100  28</span></span>
-<span><span class="va">reco_tejb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tesample.html">tesample</a></span><span class="op">(</span><span class="va">base_tejb</span>, agg_order <span class="op">=</span> <span class="va">m</span>, res <span class="op">=</span> <span class="va">res_vec</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
+<span><span class="va">reco_tejb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tesmp.html">tesmp</a></span><span class="op">(</span><span class="va">base_tejb</span>, agg_order <span class="op">=</span> <span class="va">m</span>, res <span class="op">=</span> <span class="va">res_vec</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
 <span><span class="va">reco_tejb</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
 <span><span class="co">#&gt;       tao-1 </span></span>
@@ -387,13 +387,13 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/tematrix_layouts.html">as_tevector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_tejb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 7.098 3.271 3.827 0.458 5.091 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  Named num [1:28] 6.862 1.814 5.048 0.604 5.031 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian) to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Gaussian reconciled distribution</span></span>
-<span><span class="va">reco_teg_sar1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tegauss.html">tegauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"sar1"</span>, res <span class="op">=</span> <span class="va">res_vec</span><span class="op">)</span></span>
+<span><span class="va">reco_teg_sar1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temvn.html">temvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"sar1"</span>, res <span class="op">=</span> <span class="va">res_vec</span><span class="op">)</span></span>
 <span><span class="va">reco_teg_sar1</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
 <span><span class="co">#&gt;   tao-1 </span></span>
@@ -408,7 +408,7 @@ supported
 <span><span class="va">mres</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tematrix_layouts.html">as_hstack_telayout</a></span><span class="op">(</span><span class="va">hres</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span>
 <span><span class="va">cov_base</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/shrink_estim.html">shrink_estim</a></span><span class="op">(</span><span class="va">mres</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">reco_teg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tegauss.html">tegauss</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"sar1"</span>, </span>
+<span><span class="va">reco_teg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temvn.html">temvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"sar1"</span>, </span>
 <span>                    res <span class="op">=</span> <span class="va">res_vec</span>, comb_base <span class="op">=</span> <span class="va">cov_base</span><span class="op">)</span></span>
 <span><span class="va">reco_teg</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
@@ -417,7 +417,7 @@ supported
 <span></span>
 <span><span class="co"># Reconciled sample distribution starting from gaussian base forecasts</span></span>
 <span><span class="va">base_tes</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html" class="external-link">mvrnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">B</span>, mu <span class="op">=</span> <span class="va">base_vec</span>, Sigma <span class="op">=</span> <span class="fu"><a href="../reference/shrink_estim.html">shrink_estim</a></span><span class="op">(</span><span class="va">mres</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">reco_tes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tesample.html">tesample</a></span><span class="op">(</span><span class="va">base_tes</span>, agg_order <span class="op">=</span> <span class="va">m</span>, res <span class="op">=</span> <span class="va">res_vec</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
+<span><span class="va">reco_tes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tesmp.html">tesmp</a></span><span class="op">(</span><span class="va">base_tes</span>, agg_order <span class="op">=</span> <span class="va">m</span>, res <span class="op">=</span> <span class="va">res_vec</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
 <span><span class="va">reco_tes</span> <span class="co"># distribution object</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
 <span><span class="co">#&gt;       tao-1 </span></span>

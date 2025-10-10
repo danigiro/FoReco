@@ -33,19 +33,19 @@
 #' base_sample <- aperm(simplify2array(list(base_h1, base_h2)), c(3,2,1))
 #'
 #' # Optimal cross-sectional probabilistic reconciliation
-#' reco_dist_opt <- cssample(base_sample, agg_mat = A)
+#' reco_dist_opt <- cssmp(base_sample, agg_mat = A)
 #'
 #' # Bottom-up probabilistic reconciliation
-#' reco_dist_bu <- cssample(base_sample[,-1,], agg_mat = A, fun = csbu)
+#' reco_dist_bu <- cssmp(base_sample[,-1,], agg_mat = A, fun = csbu)
 #'
 #' # Level conditional coherent probabilistic reconciliation
-#' reco_dist_lcc <- cssample(base_sample, agg_mat = A, fun = cslcc)
+#' reco_dist_lcc <- cssmp(base_sample, agg_mat = A, fun = cslcc)
 #'
 #' @family Reco: probabilistic
 #' @family Framework: cross-sectional
 #'
 #' @export
-cssample <- function(sample, fun = csrec, ...) {
+cssmp <- function(sample, fun = csrec, ...) {
   if (is.list(sample)) {
     sample <- simplify2array(sample)
   }
@@ -72,7 +72,7 @@ cssample <- function(sample, fun = csrec, ...) {
   obj <- recoinfo(reco_mat, verbose = FALSE)
   obj$sample_size <- tmp_dim[3]
   obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
-  obj$pfun <- "cssample"
+  obj$pfun <- "cssmp"
 
   # matrix to array
   tmp_dim[2] <- NCOL(reco_mat)
@@ -106,7 +106,7 @@ cssample <- function(sample, fun = csrec, ...) {
 #' samples to be reconciled; \eqn{m} is the max aggregation order, \eqn{k^\ast} is the sum of
 #' (a subset of) (\eqn{p-1}) factors of \eqn{m}, excluding \eqn{m}, \eqn{h} is the forecast
 #' horizon for the lowest frequency time series, and \eqn{L} is the sample size.
-#' @inheritParams cssample
+#' @inheritParams cssmp
 #' @inheritParams terec
 #'
 #' @returns A [distributional::dist_sample] object.
@@ -132,19 +132,19 @@ cssample <- function(sample, fun = csrec, ...) {
 #' res <- rnorm(70)
 #'
 #' # Optimal cross-sectional probabilistic reconciliation
-#' reco_dist_opt <- tesample(sample, agg_order = m, res = res, comb = "shr")
+#' reco_dist_opt <- tesmp(sample, agg_order = m, res = res, comb = "shr")
 #'
 #' # Bottom-up probabilistic reconciliation
-#' reco_dist_bu <- tesample(sample[,-c(1:6)], agg_order = m, fun = tebu)
+#' reco_dist_bu <- tesmp(sample[,-c(1:6)], agg_order = m, fun = tebu)
 #'
 #' # Level conditional coherent probabilistic reconciliation
-#' reco_dist_lcc <- tesample(sample, agg_order = m, fun = telcc)
+#' reco_dist_lcc <- tesmp(sample, agg_order = m, fun = telcc)
 #'
 #' @family Reco: probabilistic
 #' @family Framework: temporal
 #'
 #' @export
-tesample <- function(sample, agg_order, fun = terec, ...) {
+tesmp <- function(sample, agg_order, fun = terec, ...) {
   if (length(dim(sample)) == 2) {
     # Matrix input: sample_size x (variable*h)
     sample_size <- NROW(sample)
@@ -170,7 +170,7 @@ tesample <- function(sample, agg_order, fun = terec, ...) {
     obj$sample_size <- sample_size
   }
   obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
-  obj$pfun <- "tesample"
+  obj$pfun <- "tesmp"
 
   # Names
   names_te <- namesTE(kset = obj$te_set, h = 1)
@@ -208,7 +208,7 @@ tesample <- function(sample, agg_order, fun = terec, ...) {
 #' for the lowest frequency time series, and \eqn{L} is the sample size.
 #' The row identifies a time series, and the forecasts in each row are ordered from the
 #' lowest frequency (most temporally aggregated) to the highest frequency.
-#' @inheritParams cssample
+#' @inheritParams cssmp
 #' @inheritParams ctrec
 #'
 #' @returns A [distributional::dist_sample] object.
@@ -239,19 +239,19 @@ tesample <- function(sample, agg_order, fun = terec, ...) {
 #' res <- rbind(rnorm(70), rnorm(70), rnorm(70))
 #'
 #' # Optimal cross-sectional probabilistic reconciliation
-#' reco_dist_opt <- ctsample(sample, agg_order = m, agg_mat = A, res = res, comb = "bdshr")
+#' reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res, comb = "bdshr")
 #'
 #' # Bottom-up probabilistic reconciliation
-#' reco_dist_bu <- ctsample(sample[-1,-c(1:6), ], agg_order = m, agg_mat = A, fun = ctbu)
+#' reco_dist_bu <- ctsmp(sample[-1,-c(1:6), ], agg_order = m, agg_mat = A, fun = ctbu)
 #'
 #' # Level conditional coherent probabilistic reconciliation
-#' reco_dist_lcc <- ctsample(sample, agg_order = m, agg_mat = A, fun = ctlcc)
+#' reco_dist_lcc <- ctsmp(sample, agg_order = m, agg_mat = A, fun = ctlcc)
 #'
 #' @family Reco: probabilistic
 #' @family Framework: cross-temporal
 #'
 #' @export
-ctsample <- function(sample, agg_order, fun = ctrec, ...) {
+ctsmp <- function(sample, agg_order, fun = ctrec, ...) {
   if (length(dim(sample)) == 3) {
     tmp_dim <- dim(sample)
     rownames_save <- rownames(sample)
@@ -276,7 +276,7 @@ ctsample <- function(sample, agg_order, fun = ctrec, ...) {
   obj <- recoinfo(reco_mat, verbose = FALSE)
   obj$sample_size <- tmp_dim[3]
   obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
-  obj$pfun <- "ctsample"
+  obj$pfun <- "ctsmp"
 
   # Names
   names_cs <- paste0("s-", 1:obj$cs_n)

@@ -23,9 +23,11 @@
 <url><loc>https://danigiro.github.io/FoReco/reference/csgauss.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/cslcc.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/csmo.html</loc></url>
+<url><loc>https://danigiro.github.io/FoReco/reference/csmvn.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/csprojmat.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/csrec.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/cssample.html</loc></url>
+<url><loc>https://danigiro.github.io/FoReco/reference/cssmp.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/cstd.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/cstools.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/ctboot.html</loc></url>
@@ -35,9 +37,11 @@
 <url><loc>https://danigiro.github.io/FoReco/reference/ctlcc.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/ctmo.html</loc></url>
+<url><loc>https://danigiro.github.io/FoReco/reference/ctmvn.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/ctprojmat.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/ctrec.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/ctsample.html</loc></url>
+<url><loc>https://danigiro.github.io/FoReco/reference/ctsmp.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/cttd.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/cttools.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/df2aggmat.html</loc></url>
@@ -46,6 +50,7 @@
 <url><loc>https://danigiro.github.io/FoReco/reference/itagdp.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/iterec.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/lcmat.html</loc></url>
+<url><loc>https://danigiro.github.io/FoReco/reference/new_foreco_info.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/recoinfo.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/reshape2matrix.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/reshape2vector.html</loc></url>
@@ -60,9 +65,11 @@
 <url><loc>https://danigiro.github.io/FoReco/reference/telcc.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/tematrix_layouts.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/temo.html</loc></url>
+<url><loc>https://danigiro.github.io/FoReco/reference/temvn.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/teprojmat.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/terec.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/tesample.html</loc></url>
+<url><loc>https://danigiro.github.io/FoReco/reference/tesmp.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/tetd.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/tetools.html</loc></url>
 <url><loc>https://danigiro.github.io/FoReco/reference/unbalance_hierarchy.html</loc></url>

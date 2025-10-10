@@ -11,15 +11,15 @@ if (require(testthat)) {
   comb <- "sam"
   test_that("Cross-sectional gaussian, full cov", {
     rp <- csrec(base = base, agg_mat = A, comb = comb, res = res)
-    rd1 <- csgauss(base = base, agg_mat = A, comb = comb, res = res)
-    rd2 <- csgauss(
+    rd1 <- csmvn(base = base, agg_mat = A, comb = comb, res = res)
+    rd2 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
       comb_base = comb,
       res = res
     )
-    rd4 <- csgauss(
+    rd4 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
@@ -27,14 +27,14 @@ if (require(testthat)) {
       reduce_form = TRUE
     )
 
-    rd5 <- csgauss(
+    rd5 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
       res = res,
       approach = "strc"
     )
-    rd6 <- csgauss(
+    rd6 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
@@ -54,15 +54,15 @@ if (require(testthat)) {
   comb <- "wls"
   test_that("Cross-sectional gaussian, diag cov", {
     rp <- csrec(base = base, agg_mat = A, comb = comb, res = res)
-    rd1 <- csgauss(base = base, agg_mat = A, comb = comb, res = res)
-    rd2 <- csgauss(
+    rd1 <- csmvn(base = base, agg_mat = A, comb = comb, res = res)
+    rd2 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
       comb_base = comb,
       res = res
     )
-    rd4 <- csgauss(
+    rd4 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
@@ -70,14 +70,14 @@ if (require(testthat)) {
       reduce_form = TRUE
     )
 
-    rd5 <- csgauss(
+    rd5 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
       res = res,
       approach = "strc"
     )
-    rd6 <- csgauss(
+    rd6 <- csmvn(
       base = base,
       agg_mat = A,
       comb = comb,
@@ -108,17 +108,17 @@ if (require(testthat)) {
   comb <- "shr"
   test_that("Cross-sectional sample", {
     # Optimal cross-sectional probabilistic reconciliation
-    r1 <- cssample(base_sample, agg_mat = A, comb = comb, res = res)
+    r1 <- cssmp(base_sample, agg_mat = A, comb = comb, res = res)
     r11 <- apply(base_sample, 3, csrec, agg_mat = A, comb = comb, res = res)
     expect_equal(rowMeans(r11), as.vector(mean(r1)))
 
     # Bottom-up probabilistic reconciliation
-    r2 <- cssample(base_sample[, -1, ], agg_mat = A, fun = csbu)
+    r2 <- cssmp(base_sample[, -1, ], agg_mat = A, fun = csbu)
     r21 <- apply(base_sample[, -1, ], 3, csbu, agg_mat = A)
     expect_equal(rowMeans(r21), as.vector(mean(r2)))
 
     # Level conditional coherent probabilistic reconciliation
-    r3 <- cssample(
+    r3 <- cssmp(
       base_sample,
       agg_mat = A,
       fun = cslcc,

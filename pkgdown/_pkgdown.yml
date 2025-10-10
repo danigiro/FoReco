@@ -62,8 +62,8 @@ reference:
       - cstd
       - cslcc
       - csrec
-      - cssample
-      - csgauss
+      - cssmp
+      - csmvn
   - title: Temporal reconciliation
     desc:  All the reconciliation functions for the temporal framework
     contents:
@@ -72,8 +72,8 @@ reference:
       - tetd
       - telcc
       - terec
-      - tesample
-      - tegauss
+      - tesmp
+      - temvn
   - title: Cross-temporal reconciliation
     desc:  All the reconciliation functions for the cross-temporal framework
     contents:
@@ -84,39 +84,48 @@ reference:
       - ctrec
       - tcsrec
       - iterec
-      - ctsample
-      - ctgauss
+      - ctsmp
+      - ctmvn
   - title: Datasets
     contents:
       - itagdp
       - vndata
+  - title: Reconciliation tools
+    desc:  Functions to compute the reconciliation matrices
+    contents:
+      - cstools
+      - csprojmat
+      - tetools
+      - teprojmat
+      - cttools
+      - ctprojmat
+  - title: Covariance estimation
+    desc:  Functions to compute the covariance matrix estimators
+    contents:
+      - cscov
+      - tecov
+      - ctcov
+      - shrink_estim
+      - shrink_oasd
   - title: Utilities
+    desc:  Functions to manipulate the data and the forecasts
     contents:
       - aggts
       - as_ctmatrix
       - as_tevector
       - balance_hierarchy
       - commat
-      - cscov
       - csboot
       - csprojmat
-      - cstools
-      - ctcov
       - ctboot
-      - ctprojmat
-      - cttools
       - df2aggmat
       - FoReco2matrix
       - lcmat
       - recoinfo
       - res2matrix
       - set_bounds
-      - shrink_estim
-      - shrink_oasd
-      - tecov
       - teboot
-      - teprojmat
-      - tetools
+      - new_foreco_info
       - unbalance_hierarchy
   - title: Package
     contents:

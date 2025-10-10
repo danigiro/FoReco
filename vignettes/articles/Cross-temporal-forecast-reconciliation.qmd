@@ -347,7 +347,7 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m)$sample 
 str(base_ctjb[1:3], give.attr=FALSE)
 
-reco_ctjb <- ctsample(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
+reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
                       res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
 class(reco_ctjb) # distribution object
 
@@ -401,7 +401,7 @@ str(reco_ctg, give.attr=FALSE)
 #| label: gauss-vn
 
 # Gaussian reconciled distribution
-reco_ctg_wlsv <- ctgauss(base = base_mat, agg_mat = vnaggmat, 
+reco_ctg_wlsv <- ctmvn(base = base_mat, agg_mat = vnaggmat, 
                          agg_order = m, comb = "wlsv", res = res_mat)
 reco_ctg_wlsv # distribution object
 
@@ -417,7 +417,7 @@ mres <- as_hstack_ctlayout(hres_ct, agg_order = m)
 cov_wls <- diag(x = diag(cov(na.omit(mres))))
 
 # Computational intensive:
-# reco_ctg_wls <- ctgauss(base = base_mat, agg_mat = vnaggmat, 
+# reco_ctg_wls <- ctmvn(base = base_mat, agg_mat = vnaggmat, 
 #                         agg_order = m, comb = "wlsv", res = res_mat, 
 #                         comb_base = cov_wls)
 # reco_ctg_wls # distribution object
@@ -430,7 +430,7 @@ base_cts <- apply(base_cts, 1, as_ctmatrix, agg_order = m,
                   row_names = unlist(dimnames(vnaggmat)),
                   simplify = FALSE)
 base_cts <- simplify2array(base_cts)
-reco_cts <- ctsample(base_cts, agg_order = m, agg_mat = vnaggmat,
+reco_cts <- ctsmp(base_cts, agg_order = m, agg_mat = vnaggmat,
                      res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
 reco_cts # distribution object
 ```
@@ -550,7 +550,7 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m)$sample 
 str(base_ctjb[1:3], give.attr=FALSE)
 
-reco_ctjb <- ctsample(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
+reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
                       res = res_mat, comb = "wlsv")
 reco_ctjb # distribution object
 
@@ -601,7 +601,7 @@ str(reco_ctg, give.attr = FALSE)
 #| label: gauss-gdp
 
 # Gaussian reconciled distribution
-reco_ctg_wlsv <- ctgauss(base = base_mat, cons_mat = gdpconsmat,
+reco_ctg_wlsv <- ctmvn(base = base_mat, cons_mat = gdpconsmat,
                          agg_order = m, comb = "wlsv", res = res_mat)
 reco_ctg_wlsv # distribution object
 
@@ -616,7 +616,7 @@ mres <- as_hstack_ctlayout(hres_ct, agg_order = m)
 # cov_shr <- shrink_estim(na.omit(mres)) # Time and computational intensive to use, but the better one
 cov_wls <- diag(x = diag(cov(na.omit(mres))))
 
-reco_ctg_wls <- ctgauss(base = base_mat, cons_mat = gdpconsmat,
+reco_ctg_wls <- ctmvn(base = base_mat, cons_mat = gdpconsmat,
                         agg_order = m, comb = "wlsv", res = res_mat, 
                         comb_base = cov_wls)
 reco_ctg_wls # distribution object
@@ -629,7 +629,7 @@ base_cts <- apply(base_cts, 1, as_ctmatrix, agg_order = m,
                   row_names = colnames(gdpconsmat),
                   simplify = FALSE)
 base_cts <- simplify2array(base_cts)
-reco_cts <- ctsample(base_cts, agg_order = m, cons_mat = gdpconsmat,
+reco_cts <- ctsmp(base_cts, agg_order = m, cons_mat = gdpconsmat,
                      res = res_mat, comb = "wlsv")
 reco_cts # distribution object
 ```
