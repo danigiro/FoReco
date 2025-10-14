@@ -7,13 +7,14 @@
 ctsmp(sample, agg_order, fun = ctrec, ...)
 }
 \arguments{
-\item{sample}{A (\eqn{n \times h(k^\ast + m) \times L}) numeric array containing the
-base forecasts samples to be reconciled; \eqn{n} is the total number of variables,
-\eqn{m} is the max. order of temporal aggregation, \eqn{k^\ast} is the sum of (a subset
-of) (\eqn{p-1}) factors of \eqn{m},  excluding \eqn{m}, \eqn{h} is the forecast horizon
-for the lowest frequency time series, and \eqn{L} is the sample size.
-The row identifies a time series, and the forecasts in each row are ordered from the
-lowest frequency (most temporally aggregated) to the highest frequency.}
+\item{sample}{A (\eqn{n \times h(k^\ast + m) \times L}) numeric array
+containing the base forecasts samples to be reconciled; \eqn{n} is the total
+number of variables, \eqn{m} is the max. order of temporal aggregation,
+\eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of \eqn{m},
+excluding \eqn{m}, \eqn{h} is the forecast horizon for the lowest frequency
+time series, and \eqn{L} is the sample size. The row identifies a time
+series, and the forecasts in each row are ordered from the lowest frequency
+(most temporally aggregated) to the highest frequency.}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
@@ -28,7 +29,17 @@ as implemented in \pkg{FoReco}.}
 A \link[distributional:dist_sample]{distributional::dist_sample} object.
 }
 \description{
-Cross-temporal probabilistic reconciliation (sample approach)
+This function performs cross-temporal probabilistic forecast
+reconciliation using a sample-based approach (Girolimetto et al., 2024) for
+linearly constrained multiple time series observed across both
+cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).
+Given a \eqn{(n \times h(k^\ast + m) \times L)} array of simulated base
+forecast draws, \code{\link[=ctsmp]{ctsmp()}} applies a chosen \pkg{FoReco} cross-temporal
+reconciliation independently to each draw, enforcing coherence
+simultaneously over aggregation levels and across series. Typical choices
+for the reconciliation include optimal combination (\link{ctrec}) as well as
+top-down (\link{cttd}), middle-out (\link{ctmo}), bottom-up (\link{ctbu}), and
+level-conditional (\link{ctlcc}) approaches.
 }
 \examples{
 set.seed(123)
@@ -53,25 +64,27 @@ reco_dist_mo <- ctsmp(sample[1, 3:6, , drop = FALSE], agg_order = m,
                       agg_mat = A, fun = ctmo, weights = matrix(runif(8), 2),
                       id_rows = 1, order = 2)
 # Bottom-up probabilistic reconciliation
-reco_dist_bu <- ctsmp(sample[-1,-c(1:6), ], agg_order = m, agg_mat = A, fun = ctbu)
+reco_dist_bu <- ctsmp(sample[-1,-c(1:6), ], agg_order = m, agg_mat = A,
+                      fun = ctbu)
 
 # Level conditional coherent probabilistic reconciliation
 reco_dist_lcc <- ctsmp(sample, agg_order = m, agg_mat = A, fun = ctlcc)
 
 # Optimal cross-sectional probabilistic reconciliation
-reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res, comb = "bdshr")
+reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res,
+                       comb = "bdshr")
 
 }
 \references{
+Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+\emph{International Journal of Forecasting}, 39, 1, 39-57.
+\doi{10.1016/j.ijforecast.2021.08.004}
+
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023.10.003}
-
-Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-\emph{European Journal of Operational Research} 306(2), 693–706.
-\doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+practical issues. \emph{International Journal of Forecasting}, 40, 3,
+1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
 Probabilistic reconciliation:

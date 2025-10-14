@@ -5,7 +5,23 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-sectional probabilistic reconciliation (sample approach) — cssmp"><meta name="description" content="Cross-sectional probabilistic reconciliation (sample approach)"><meta property="og:description" content="Cross-sectional probabilistic reconciliation (sample approach)"><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-sectional probabilistic reconciliation (sample approach) — cssmp"><meta name="description" content="This function performs cross-sectional probabilistic forecast
+reconciliation using a sample-based approach (Panagiotelis et al., 2023,
+Girolimetto et al., 2024) for linearly constrained (e.g., hierarchical or
+grouped) multiple time series. Given an array of \(L\) simulated base
+forecast draws, cssmp() applies a chosen FoReco reconciliation
+independently to each draw, producing a coherent sample distribution of
+reconciled forecasts. Typical choices for the reconciliation include optimal
+combination (csrec) as well as top-down (cstd), middle-out (csmo),
+bottom-up (csbu), and level-conditional (cslcc) approaches."><meta property="og:description" content="This function performs cross-sectional probabilistic forecast
+reconciliation using a sample-based approach (Panagiotelis et al., 2023,
+Girolimetto et al., 2024) for linearly constrained (e.g., hierarchical or
+grouped) multiple time series. Given an array of \(L\) simulated base
+forecast draws, cssmp() applies a chosen FoReco reconciliation
+independently to each draw, producing a coherent sample distribution of
+reconciled forecasts. Typical choices for the reconciliation include optimal
+combination (csrec) as well as top-down (cstd), middle-out (csmo),
+bottom-up (csbu), and level-conditional (cslcc) approaches."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -48,7 +64,15 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Cross-sectional probabilistic reconciliation (sample approach)</p>
+    <p>This function performs cross-sectional probabilistic forecast
+reconciliation using a sample-based approach (Panagiotelis et al., 2023,
+Girolimetto et al., 2024) for linearly constrained (e.g., hierarchical or
+grouped) multiple time series. Given an array of \(L\) simulated base
+forecast draws, <code>cssmp()</code> applies a chosen <span class="pkg">FoReco</span> reconciliation
+independently to each draw, producing a coherent sample distribution of
+reconciled forecasts. Typical choices for the reconciliation include optimal
+combination (<a href="csrec.html">csrec</a>) as well as top-down (<a href="cstd.html">cstd</a>), middle-out (<a href="csmo.html">csmo</a>),
+bottom-up (<a href="csbu.html">csbu</a>), and level-conditional (<a href="cslcc.html">cslcc</a>) approaches.</p>
     </div>
 
     <div class="section level2">
@@ -61,9 +85,10 @@
 
 
 <dl><dt id="arg-sample">sample<a class="anchor" aria-label="anchor" href="#arg-sample"></a></dt>
-<dd><p>A (\(h \times n \times L\)) numeric array containing the base forecasts
-samples to be reconciled; \(h\) is the forecast horizon, \(n\) is the total number
-of time series (\(n = n_a + n_b\)), and \(L\) is the sample size.</p></dd>
+<dd><p>A (\(h \times n \times L\)) numeric array containing the
+base forecasts samples to be reconciled; \(h\) is the forecast horizon,
+\(n\) is the total number of time series (\(n = n_a + n_b\)), and
+\(L\) is the sample size.</p></dd>
 
 
 <dt id="arg-fun">fun<a class="anchor" aria-label="anchor" href="#arg-fun"></a></dt>
@@ -83,12 +108,12 @@ as implemented in <span class="pkg">FoReco</span>.</p></dd>
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-1151.
-<a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
-<p>Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-<em>European Journal of Operational Research</em> 306(2), 693–706.
-<a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">doi:10.1016/j.ejor.2022.07.040</a></p>
+practical issues. <em>International Journal of Forecasting</em>, 40, 3,
+1134-1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
+<p>Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+(2023), Probabilistic forecast reconciliation: Properties, evaluation and
+score optimisation, <em>European Journal of Operational Research</em> 306(2),
+693–706. <a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">doi:10.1016/j.ejor.2022.07.040</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

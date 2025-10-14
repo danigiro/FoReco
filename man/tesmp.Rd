@@ -7,10 +7,11 @@
 tesmp(sample, agg_order, fun = terec, ...)
 }
 \arguments{
-\item{sample}{A (\eqn{L \times h(k^\ast + m)}) numeric matrix containing the base forecasts
-samples to be reconciled; \eqn{m} is the max aggregation order, \eqn{k^\ast} is the sum of
-(a subset of) (\eqn{p-1}) factors of \eqn{m}, excluding \eqn{m}, \eqn{h} is the forecast
-horizon for the lowest frequency time series, and \eqn{L} is the sample size.}
+\item{sample}{A (\eqn{L \times h(k^\ast + m)}) numeric matrix containing the
+base forecasts samples to be reconciled; \eqn{m} is the max aggregation
+order, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of
+\eqn{m}, excluding \eqn{m}, \eqn{h} is the forecast horizon for the lowest
+frequency time series, and \eqn{L} is the sample size.}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
@@ -25,14 +26,25 @@ as implemented in \pkg{FoReco}.}
 A \link[distributional:dist_sample]{distributional::dist_sample} object.
 }
 \description{
-Temporal probabilistic reconciliation (sample approach)
+This function performs temporal probabilistic forecast
+reconciliation using a sample-based approach (Girolimetto et al., 2024) for
+a single time series using temporal hierarchies (Athanasopoulos et al.,
+2017). Given a \eqn{(L \times h(k^\ast + m))} matrix of simulated base
+forecast draws, \code{\link[=tesmp]{tesmp()}} applies a chosen \pkg{FoReco} temporal
+reconciliation independently to each draw, producing a coherent sample
+distribution of reconciled forecasts across the temporal hierarchy. Typical
+choices for the reconciliation include optimal combination (\link{terec}) as well
+as top-down (\link{tetd}), middle-out (\link{temo}), bottom-up (\link{tebu}), and
+level-conditional (\link{telcc}) approaches.
 }
 \examples{
 set.seed(123)
 m <- 4 # from quarterly to annual temporal aggregation
 
 # (100 x 14) base forecasts sample matrix (simulated), m = 4, h = 2
-sample <- t(sapply(1:100, function(x) rnorm(14, rep(c(20, 10, 5), 2*c(1, 2, 4)))))
+sample <- t(sapply(1:100, function(x) {
+  rnorm(14, rep(c(20, 10, 5), 2 * c(1, 2, 4)))
+}))
 # (70 x 1) in-sample residuals vector (simulated)
 res <- rnorm(70)
 
@@ -55,15 +67,14 @@ reco_dist_opt <- tesmp(sample, agg_order = m, res = res, comb = "wlsv")
 
 }
 \references{
+Athanasopoulos, G., Hyndman, R.J., Kourentzes, N. and Petropoulos, F. (2017),
+Forecasting with Temporal Hierarchies, \emph{European Journal of Operational
+Research}, 262, 1, 60-74. \doi{10.1016/j.ejor.2017.02.046}
+
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023.10.003}
-
-Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-\emph{European Journal of Operational Research} 306(2), 693–706.
-\doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+practical issues. \emph{International Journal of Forecasting}, 40, 3,
+1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
 Probabilistic reconciliation:

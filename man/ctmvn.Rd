@@ -2,21 +2,10 @@
 % Please edit documentation in R/reco_gauss.R
 \name{ctmvn}
 \alias{ctmvn}
-\title{Temporal Gaussian probabilistic reconciliation}
+\title{Cross-temporal Gaussian probabilistic reconciliation}
 \usage{
-ctmvn(
-  base,
-  agg_mat,
-  cons_mat,
-  agg_order,
-  comb = "ols",
-  comb_base = comb,
-  res = NULL,
-  tew = "sum",
-  approach = "proj",
-  reduce_form = FALSE,
-  ...
-)
+ctmvn(base, agg_order, agg_mat, cons_mat, comb = "ols", comb_base = comb,
+      res = NULL, tew = "sum", approach = "proj", reduce_form = FALSE, ...)
 }
 \arguments{
 \item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
@@ -87,7 +76,10 @@ covariance matrix are not mean-corrected.}
 A \link[distributional:dist_multivariate_normal]{distributional::dist_multivariate_normal} object.
 }
 \description{
-Temporal Gaussian probabilistic reconciliation
+This function performs cross-temporal probabilistic forecast reconciliation
+assuming a multivariate normal base forecast distribution (Girolimetto et
+al., 2024) for linearly constrained multiple time series observed across both
+cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).
 }
 \examples{
 set.seed(123)

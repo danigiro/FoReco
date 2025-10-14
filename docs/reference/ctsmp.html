@@ -5,7 +5,27 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-temporal probabilistic reconciliation (sample approach) — ctsmp"><meta name="description" content="Cross-temporal probabilistic reconciliation (sample approach)"><meta property="og:description" content="Cross-temporal probabilistic reconciliation (sample approach)"><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-temporal probabilistic reconciliation (sample approach) — ctsmp"><meta name="description" content="This function performs cross-temporal probabilistic forecast
+reconciliation using a sample-based approach (Girolimetto et al., 2024) for
+linearly constrained multiple time series observed across both
+cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).
+Given a \((n \times h(k^\ast + m) \times L)\) array of simulated base
+forecast draws, ctsmp() applies a chosen FoReco cross-temporal
+reconciliation independently to each draw, enforcing coherence
+simultaneously over aggregation levels and across series. Typical choices
+for the reconciliation include optimal combination (ctrec) as well as
+top-down (cttd), middle-out (ctmo), bottom-up (ctbu), and
+level-conditional (ctlcc) approaches."><meta property="og:description" content="This function performs cross-temporal probabilistic forecast
+reconciliation using a sample-based approach (Girolimetto et al., 2024) for
+linearly constrained multiple time series observed across both
+cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).
+Given a \((n \times h(k^\ast + m) \times L)\) array of simulated base
+forecast draws, ctsmp() applies a chosen FoReco cross-temporal
+reconciliation independently to each draw, enforcing coherence
+simultaneously over aggregation levels and across series. Typical choices
+for the reconciliation include optimal combination (ctrec) as well as
+top-down (cttd), middle-out (ctmo), bottom-up (ctbu), and
+level-conditional (ctlcc) approaches."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -48,7 +68,17 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Cross-temporal probabilistic reconciliation (sample approach)</p>
+    <p>This function performs cross-temporal probabilistic forecast
+reconciliation using a sample-based approach (Girolimetto et al., 2024) for
+linearly constrained multiple time series observed across both
+cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).
+Given a \((n \times h(k^\ast + m) \times L)\) array of simulated base
+forecast draws, <code>ctsmp()</code> applies a chosen <span class="pkg">FoReco</span> cross-temporal
+reconciliation independently to each draw, enforcing coherence
+simultaneously over aggregation levels and across series. Typical choices
+for the reconciliation include optimal combination (<a href="ctrec.html">ctrec</a>) as well as
+top-down (<a href="cttd.html">cttd</a>), middle-out (<a href="ctmo.html">ctmo</a>), bottom-up (<a href="ctbu.html">ctbu</a>), and
+level-conditional (<a href="ctlcc.html">ctlcc</a>) approaches.</p>
     </div>
 
     <div class="section level2">
@@ -61,13 +91,14 @@
 
 
 <dl><dt id="arg-sample">sample<a class="anchor" aria-label="anchor" href="#arg-sample"></a></dt>
-<dd><p>A (\(n \times h(k^\ast + m) \times L\)) numeric array containing the
-base forecasts samples to be reconciled; \(n\) is the total number of variables,
-\(m\) is the max. order of temporal aggregation, \(k^\ast\) is the sum of (a subset
-of) (\(p-1\)) factors of \(m\),  excluding \(m\), \(h\) is the forecast horizon
-for the lowest frequency time series, and \(L\) is the sample size.
-The row identifies a time series, and the forecasts in each row are ordered from the
-lowest frequency (most temporally aggregated) to the highest frequency.</p></dd>
+<dd><p>A (\(n \times h(k^\ast + m) \times L\)) numeric array
+containing the base forecasts samples to be reconciled; \(n\) is the total
+number of variables, \(m\) is the max. order of temporal aggregation,
+\(k^\ast\) is the sum of (a subset of) (\(p-1\)) factors of \(m\),
+excluding \(m\), \(h\) is the forecast horizon for the lowest frequency
+time series, and \(L\) is the sample size. The row identifies a time
+series, and the forecasts in each row are ordered from the lowest frequency
+(most temporally aggregated) to the highest frequency.</p></dd>
 
 
 <dt id="arg-agg-order">agg_order<a class="anchor" aria-label="anchor" href="#arg-agg-order"></a></dt>
@@ -91,14 +122,14 @@ as implemented in <span class="pkg">FoReco</span>.</p></dd>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
+    <p>Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+<em>International Journal of Forecasting</em>, 39, 1, 39-57.
+<a href="https://doi.org/10.1016/j.ijforecast.2021.08.004" class="external-link">doi:10.1016/j.ijforecast.2021.08.004</a></p>
+<p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-1151.
-<a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
-<p>Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-<em>European Journal of Operational Research</em> 306(2), 693–706.
-<a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">doi:10.1016/j.ejor.2022.07.040</a></p>
+practical issues. <em>International Journal of Forecasting</em>, 40, 3,
+1134-1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -146,13 +177,15 @@ Probabilistic forecast reconciliation: Properties, evaluation and score optimisa
 <span class="r-in"><span>                      agg_mat <span class="op">=</span> <span class="va">A</span>, fun <span class="op">=</span> <span class="va">ctmo</span>, weights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="fl">8</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                      id_rows <span class="op">=</span> <span class="fl">1</span>, order <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Bottom-up probabilistic reconciliation</span></span></span>
-<span class="r-in"><span><span class="va">reco_dist_bu</span> <span class="op">&lt;-</span> <span class="fu">ctsmp</span><span class="op">(</span><span class="va">sample</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="op">]</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, fun <span class="op">=</span> <span class="va">ctbu</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">reco_dist_bu</span> <span class="op">&lt;-</span> <span class="fu">ctsmp</span><span class="op">(</span><span class="va">sample</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, <span class="op">]</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">A</span>,</span></span>
+<span class="r-in"><span>                      fun <span class="op">=</span> <span class="va">ctbu</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Level conditional coherent probabilistic reconciliation</span></span></span>
 <span class="r-in"><span><span class="va">reco_dist_lcc</span> <span class="op">&lt;-</span> <span class="fu">ctsmp</span><span class="op">(</span><span class="va">sample</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, fun <span class="op">=</span> <span class="va">ctlcc</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Optimal cross-sectional probabilistic reconciliation</span></span></span>
-<span class="r-in"><span><span class="va">reco_dist_opt</span> <span class="op">&lt;-</span> <span class="fu">ctsmp</span><span class="op">(</span><span class="va">sample</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, res <span class="op">=</span> <span class="va">res</span>, comb <span class="op">=</span> <span class="st">"bdshr"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">reco_dist_opt</span> <span class="op">&lt;-</span> <span class="fu">ctsmp</span><span class="op">(</span><span class="va">sample</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, res <span class="op">=</span> <span class="va">res</span>,</span></span>
+<span class="r-in"><span>                       comb <span class="op">=</span> <span class="st">"bdshr"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

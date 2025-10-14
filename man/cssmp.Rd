@@ -7,9 +7,10 @@
 cssmp(sample, fun = csrec, ...)
 }
 \arguments{
-\item{sample}{A (\eqn{h \times n \times L}) numeric array containing the base forecasts
-samples to be reconciled; \eqn{h} is the forecast horizon, \eqn{n} is the total number
-of time series (\eqn{n = n_a + n_b}), and \eqn{L} is the sample size.}
+\item{sample}{A (\eqn{h \times n \times L}) numeric array containing the
+base forecasts samples to be reconciled; \eqn{h} is the forecast horizon,
+\eqn{n} is the total number of time series (\eqn{n = n_a + n_b}), and
+\eqn{L} is the sample size.}
 
 \item{fun}{A string specifying the reconciliation function to be used,
 as implemented in \pkg{FoReco}.}
@@ -20,7 +21,15 @@ as implemented in \pkg{FoReco}.}
 A \link[distributional:dist_sample]{distributional::dist_sample} object.
 }
 \description{
-Cross-sectional probabilistic reconciliation (sample approach)
+This function performs cross-sectional probabilistic forecast
+reconciliation using a sample-based approach (Panagiotelis et al., 2023,
+Girolimetto et al., 2024) for linearly constrained (e.g., hierarchical or
+grouped) multiple time series. Given an array of \eqn{L} simulated base
+forecast draws, \code{\link[=cssmp]{cssmp()}} applies a chosen \pkg{FoReco} reconciliation
+independently to each draw, producing a coherent sample distribution of
+reconciled forecasts. Typical choices for the reconciliation include optimal
+combination (\link{csrec}) as well as top-down (\link{cstd}), middle-out (\link{csmo}),
+bottom-up (\link{csbu}), and level-conditional (\link{cslcc}) approaches.
 }
 \examples{
 set.seed(123)
@@ -63,13 +72,13 @@ reco_dist_opt <- cssmp(base_sample, agg_mat = A)
 \references{
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023.10.003}
+practical issues. \emph{International Journal of Forecasting}, 40, 3,
+1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 
-Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-\emph{European Journal of Operational Research} 306(2), 693–706.
-\doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+(2023), Probabilistic forecast reconciliation: Properties, evaluation and
+score optimisation, \emph{European Journal of Operational Research} 306(2),
+693–706. \doi{10.1016/j.ejor.2022.07.040}
 }
 \seealso{
 Probabilistic reconciliation:

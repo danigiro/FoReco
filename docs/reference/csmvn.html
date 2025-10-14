@@ -5,7 +5,13 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-sectional Gaussian probabilistic reconciliation — csmvn"><meta name="description" content="Cross-sectional Gaussian probabilistic reconciliation"><meta property="og:description" content="Cross-sectional Gaussian probabilistic reconciliation"><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Cross-sectional Gaussian probabilistic reconciliation — csmvn"><meta name="description" content="This function performs cross-sectional probabilistic forecast reconciliation
+assuming a multivariate normal base forecast distribution (Panagiotelis et
+al., 2023; Girolimetto et al., 2024; Wickramasuriya, 2024) for linearly
+constrained (e.g. hierarchical or grouped) multiple time series."><meta property="og:description" content="This function performs cross-sectional probabilistic forecast reconciliation
+assuming a multivariate normal base forecast distribution (Panagiotelis et
+al., 2023; Girolimetto et al., 2024; Wickramasuriya, 2024) for linearly
+constrained (e.g. hierarchical or grouped) multiple time series."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -48,22 +54,16 @@
     </div>
 
     <div class="ref-description section level2">
-    <p>Cross-sectional Gaussian probabilistic reconciliation</p>
+    <p>This function performs cross-sectional probabilistic forecast reconciliation
+assuming a multivariate normal base forecast distribution (Panagiotelis et
+al., 2023; Girolimetto et al., 2024; Wickramasuriya, 2024) for linearly
+constrained (e.g. hierarchical or grouped) multiple time series.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">csmvn</span><span class="op">(</span></span>
-<span>  <span class="va">base</span>,</span>
-<span>  <span class="va">agg_mat</span>,</span>
-<span>  <span class="va">cons_mat</span>,</span>
-<span>  comb <span class="op">=</span> <span class="st">"ols"</span>,</span>
-<span>  comb_base <span class="op">=</span> <span class="va">comb</span>,</span>
-<span>  res <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  approach <span class="op">=</span> <span class="st">"proj"</span>,</span>
-<span>  reduce_form <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">csmvn</span><span class="op">(</span><span class="va">base</span>, <span class="va">agg_mat</span>, <span class="va">cons_mat</span>, comb <span class="op">=</span> <span class="st">"ols"</span>, comb_base <span class="op">=</span> <span class="va">comb</span>,</span>
+<span>      res <span class="op">=</span> <span class="cn">NULL</span>, approach <span class="op">=</span> <span class="st">"proj"</span>, reduce_form <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -97,7 +97,8 @@ list, see <a href="cscov.html">cscov</a>.</p></dd>
 
 
 <dt id="arg-comb-base">comb_base<a class="anchor" aria-label="anchor" href="#arg-comb-base"></a></dt>
-<dd><p>A string specifying the reconciliation method. For a complete list, see <a href="cscov.html">cscov</a>.</p></dd>
+<dd><p>A string specifying the reconciliation method. For a
+complete list, see <a href="cscov.html">cscov</a>.</p></dd>
 
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
@@ -107,16 +108,18 @@ matrices.</p></dd>
 
 
 <dt id="arg-approach">approach<a class="anchor" aria-label="anchor" href="#arg-approach"></a></dt>
-<dd><p>A string specifying the approach used to compute the reconciled
-mean and covariance matrix. Options include:</p><ul><li><p>"<code>proj</code>" (<em>default</em>): Projection approach according to Byron (1978, 1979).</p></li>
-<li><p>"<code>strc</code>": Structural approach as proposed by Hyndman et al. (2011).</p></li>
+<dd><p>A string specifying the approach used to compute the
+reconciled mean and covariance matrix. Options include:</p><ul><li><p>"<code>proj</code>" (<em>default</em>): Projection approach according to
+Byron (1978, 1979).</p></li>
+<li><p>"<code>strc</code>": Structural approach as proposed by Hyndman et
+al. (2011).</p></li>
 </ul></dd>
 
 
 <dt id="arg-reduce-form">reduce_form<a class="anchor" aria-label="anchor" href="#arg-reduce-form"></a></dt>
-<dd><p>A logical parameter indicating whether the function should return the
-full distribution (<code>FALSE</code>, <em>default</em>) or only the distribution corresponding
-to the bottom-level time series (<code>TRUE</code>).</p></dd>
+<dd><p>A logical parameter indicating whether the function
+should return the full distribution (<code>FALSE</code>, <em>default</em>) or only
+the distribution corresponding to the bottom-level time series (<code>TRUE</code>).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -141,21 +144,24 @@ covariance matrix are not mean-corrected.</p></dd>
     <p>Byron, R.P. (1978), The estimation of large social account matrices,
 <em>Journal of the Royal Statistical Society, Series A</em>, 141, 3, 359-367.
 <a href="https://doi.org/10.2307/2344807" class="external-link">doi:10.2307/2344807</a></p>
-<p>Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-<em>Journal of the Royal Statistical Society, Series A</em>, 142(3), 405.
-<a href="https://doi.org/10.2307/2982515" class="external-link">doi:10.2307/2982515</a></p>
+<p>Byron, R.P. (1979), Corrigenda: The estimation of large social account
+matrices, <em>Journal of the Royal Statistical Society, Series A</em>, 142(3),
+405. <a href="https://doi.org/10.2307/2982515" class="external-link">doi:10.2307/2982515</a></p>
 <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-1151.
-<a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
+practical issues. <em>International Journal of Forecasting</em>, 40, 3,
+1134-1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
 <p>Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
 <em>Computational Statistics &amp; Data Analysis</em>, 55, 9, 2579-2589.
 <a href="https://doi.org/10.1016/j.csda.2011.03.006" class="external-link">doi:10.1016/j.csda.2011.03.006</a></p>
-<p>Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-<em>European Journal of Operational Research</em> 306(2), 693–706.
-<a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">doi:10.1016/j.ejor.2022.07.040</a></p>
+<p>Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+(2023), Probabilistic forecast reconciliation: Properties, evaluation and
+score optimisation, <em>European Journal of Operational Research</em> 306(2),
+693–706. <a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">doi:10.1016/j.ejor.2022.07.040</a></p>
+<p>Wickramasuriya, S. L. (2024). Probabilistic Forecast Reconciliation under
+the Gaussian Framework. <em>Journal of Business &amp; Economic Statistics</em>,
+42(1), 272–285. <a href="https://doi.org/10.1080/07350015.2023.2181176" class="external-link">doi:10.1080/07350015.2023.2181176</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

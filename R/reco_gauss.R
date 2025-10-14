@@ -1,16 +1,28 @@
 #' Cross-sectional Gaussian probabilistic reconciliation
 #'
+#' This function performs cross-sectional probabilistic forecast reconciliation
+#' assuming a multivariate normal base forecast distribution (Panagiotelis et
+#' al., 2023; Girolimetto et al., 2024; Wickramasuriya, 2024) for linearly
+#' constrained (e.g. hierarchical or grouped) multiple time series.
+#'
+#' @usage
+#' csmvn(base, agg_mat, cons_mat, comb = "ols", comb_base = comb,
+#'       res = NULL, approach = "proj", reduce_form = FALSE, ...)
+#'
 #' @inheritParams csrec
-#' @param comb_base A string specifying the reconciliation method. For a complete list, see [cscov].
-#' @param approach A string specifying the approach used to compute the reconciled
-#' mean and covariance matrix. Options include:
+#' @param comb_base A string specifying the reconciliation method. For a
+#' complete list, see [cscov].
+#' @param approach A string specifying the approach used to compute the
+#' reconciled mean and covariance matrix. Options include:
 #'   \itemize{
-#'   \item "\code{proj}" (\emph{default}): Projection approach according to Byron (1978, 1979).
-#'   \item "\code{strc}": Structural approach as proposed by Hyndman et al. (2011).
+#'   \item "\code{proj}" (\emph{default}): Projection approach according to
+#'   Byron (1978, 1979).
+#'   \item "\code{strc}": Structural approach as proposed by Hyndman et
+#'   al. (2011).
 #'   }
-#' @param reduce_form A logical parameter indicating whether the function should return the
-#' full distribution (\code{FALSE}, \emph{default}) or only the distribution corresponding
-#' to the bottom-level time series (\code{TRUE}).
+#' @param reduce_form A logical parameter indicating whether the function
+#' should return the full distribution (\code{FALSE}, \emph{default}) or only
+#' the distribution corresponding to the bottom-level time series (\code{TRUE}).
 #' @inheritDotParams cscov mse shrink_fun
 #'
 #' @returns A [distributional::dist_multivariate_normal] object.
@@ -20,24 +32,28 @@
 #' \emph{Journal of the Royal Statistical Society, Series A}, 141, 3, 359-367.
 #' \doi{10.2307/2344807}
 #'
-#' Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-#' \emph{Journal of the Royal Statistical Society, Series A}, 142(3), 405.
-#' \doi{10.2307/2982515}
+#' Byron, R.P. (1979), Corrigenda: The estimation of large social account
+#' matrices, \emph{Journal of the Royal Statistical Society, Series A}, 142(3),
+#' 405. \doi{10.2307/2982515}
 #'
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
-#' practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-#' \doi{10.1016/j.ijforecast.2023.10.003}
+#' practical issues. \emph{International Journal of Forecasting}, 40, 3,
+#' 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 #'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
 #'
-#' Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-#' Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-#' \emph{European Journal of Operational Research} 306(2), 693–706.
-#' \doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+#' Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+#' (2023), Probabilistic forecast reconciliation: Properties, evaluation and
+#' score optimisation, \emph{European Journal of Operational Research} 306(2),
+#' 693–706. \doi{10.1016/j.ejor.2022.07.040}
+#'
+#' Wickramasuriya, S. L. (2024). Probabilistic Forecast Reconciliation under
+#' the Gaussian Framework. \emph{Journal of Business & Economic Statistics},
+#' 42(1), 272–285. \doi{10.1080/07350015.2023.2181176}
 #'
 #' @examples
 #' set.seed(123)
@@ -200,10 +216,21 @@ csmvn <- function(
 
 #' Temporal Gaussian probabilistic reconciliation
 #'
-#' @param comb_base A string specifying the reconciliation method. For a complete list, see [tecov].
-#' @param reduce_form A logical parameter indicating whether the function should return the
-#' full distribution (\code{FALSE}, \emph{default}) or only the distribution corresponding
-#' to the high-frequency time series (\code{TRUE}).
+#' This function performs temporal probabilistic forecast reconciliation
+#' assuming a multivariate normal base forecast distribution (Girolimetto et
+#' al., 2024) for a single time series using temporal hierarchies
+#' (Athanasopoulos et al., 2017).
+#'
+#' @usage
+#' temvn(base, agg_order, comb = "ols", comb_base = comb, res = NULL,
+#'       tew = "sum", approach = "proj", reduce_form = FALSE, ...)
+#'
+#' @param comb_base A string specifying the reconciliation method. For a
+#' complete list, see [tecov].
+#' @param reduce_form A logical parameter indicating whether the function
+#' should return the full distribution (\code{FALSE}, \emph{default}) or only
+#' the distribution corresponding to the high-frequency time series
+#' (\code{TRUE}).
 #' @inheritParams terec
 #' @inheritParams csmvn
 #' @inheritDotParams tecov mse shrink_fun
@@ -211,28 +238,27 @@ csmvn <- function(
 #' @returns A [distributional::dist_multivariate_normal] object.
 #'
 #' @references
+#' Athanasopoulos, G., Hyndman, R.J., Kourentzes, N. and Petropoulos, F. (2017),
+#' Forecasting with Temporal Hierarchies, \emph{European Journal of Operational
+#' Research}, 262, 1, 60-74. \doi{10.1016/j.ejor.2017.02.046}
+#'
 #' Byron, R.P. (1978), The estimation of large social account matrices,
 #' \emph{Journal of the Royal Statistical Society, Series A}, 141, 3, 359-367.
 #' \doi{10.2307/2344807}
 #'
-#' Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-#' \emph{Journal of the Royal Statistical Society, Series A}, 142(3), 405.
-#' \doi{10.2307/2982515}
+#' Byron, R.P. (1979), Corrigenda: The estimation of large social account
+#' matrices, \emph{Journal of the Royal Statistical Society, Series A}, 142(3),
+#' 405. \doi{10.2307/2982515}
 #'
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
-#' practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-#' \doi{10.1016/j.ijforecast.2023.10.003}
+#' practical issues. \emph{International Journal of Forecasting}, 40, 3,
+#' 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 #'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
 #' \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 #' \doi{10.1016/j.csda.2011.03.006}
-#'
-#' Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-#' Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-#' \emph{European Journal of Operational Research} 306(2), 693–706.
-#' \doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
 #'
 #' @examples
 #' set.seed(123)
@@ -381,7 +407,16 @@ temvn <- function(
   return(reco_dist)
 }
 
-#' Temporal Gaussian probabilistic reconciliation
+#' Cross-temporal Gaussian probabilistic reconciliation
+#'
+#' This function performs cross-temporal probabilistic forecast reconciliation
+#' assuming a multivariate normal base forecast distribution (Girolimetto et
+#' al., 2024) for linearly constrained multiple time series observed across both
+#' cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).
+#'
+#' @usage
+#' ctmvn(base, agg_order, agg_mat, cons_mat, comb = "ols", comb_base = comb,
+#'       res = NULL, tew = "sum", approach = "proj", reduce_form = FALSE, ...)
 #'
 #' @param comb_base A string specifying the reconciliation method. For a complete list, see [ctcov].
 #' @param reduce_form A logical parameter indicating whether the function should return the
