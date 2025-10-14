@@ -415,7 +415,7 @@ temvn <- function(
 #' cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).
 #'
 #' @usage
-#' ctmvn(base, agg_order, agg_mat, cons_mat, comb = "ols", comb_base = comb,
+#' ctmvn(base, agg_mat, cons_mat, agg_order, comb = "ols", comb_base = comb,
 #'       res = NULL, tew = "sum", approach = "proj", reduce_form = FALSE, ...)
 #'
 #' @param comb_base A string specifying the reconciliation method. For a complete list, see [ctcov].
