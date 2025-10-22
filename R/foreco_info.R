@@ -65,7 +65,9 @@ recoinfo <- function(x, verbose = TRUE) {
       }
 
       if (!is.null(out$comb)) {
-        if (length(out$comb) > 1) {
+        if (!all(is.character(out$comb))) {
+          tmp <- "custom"
+        } else if (length(out$comb) > 1) {
           tmp <- paste(names(out$comb), out$comb, sep = "-")
         } else {
           tmp <- out$comb

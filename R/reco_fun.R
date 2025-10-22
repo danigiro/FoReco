@@ -580,13 +580,15 @@ reco.sntz <- function(
   } else {
     tol <- settings$tol
   }
+  start_time <- Sys.time()
   switch(
     sntz_type,
     bu = {
       bts[bts < tol] <- 0
+      iter <- rep(0, NROW(bts))
     },
     tdp = {
-      bts <- t(apply(
+      tmp <- apply(
         bts,
         1,
         function(x) {
@@ -594,20 +596,28 @@ reco.sntz <- function(
           Ip <- (x > tol)
           w <- rep(0, length(x))
           w[Ip] <- x[Ip] / sum(x[Ip])
+          i <- 1
           while (any(w[Ip] > x[Ip] / abs(d))) {
             Ip[Ip][w[Ip] > x[Ip] / abs(d)] <- FALSE
             d <- sum(x[!Ip])
             w <- rep(0, length(x))
             w[Ip] <- x[Ip] / sum(x[Ip])
+            i <- i + 1
           }
           x[!Ip] <- 0
-          x + w * d
+          return(list(x + w * d, i))
         },
-        simplify = TRUE
-      ))
+        simplify = FALSE
+      )
+      iter <- sapply(tmp, function(x) {
+        x[[2]]
+      })
+      bts <- t(sapply(tmp, function(x) {
+        x[[1]]
+      }))
     },
     tdsp = {
-      bts <- t(apply(
+      tmp <- apply(
         bts,
         1,
         function(x) {
@@ -615,21 +625,29 @@ reco.sntz <- function(
           Ip <- (x > tol)
           w <- rep(0, length(x))
           w[Ip] <- (x[Ip]^2) / sum(x[Ip]^2)
+          i <- 1
           while (any(w[Ip] > x[Ip] / abs(d))) {
             Ip[Ip][w[Ip] > x[Ip] / abs(d)] <- FALSE
             d <- sum(x[!Ip])
             w <- rep(0, length(x))
             w[Ip] <- (x[Ip]^2) / sum(x[Ip]^2)
+            i <- i + 1
           }
           x[!Ip] <- 0
-          x + w * d
+          return(list(x + w * d, i))
         },
-        simplify = TRUE
-      ))
+        simplify = FALSE
+      )
+      iter <- sapply(tmp, function(x) {
+        x[[2]]
+      })
+      bts <- t(sapply(tmp, function(x) {
+        x[[1]]
+      }))
     },
     tdvw = {
       sigma2 <- diag(cov_mat)[id_nn == 1]
-      bts <- t(apply(
+      tmp <- apply(
         bts,
         1,
         function(x) {
@@ -637,17 +655,25 @@ reco.sntz <- function(
           d <- sum(x[!Ip])
           w <- rep(0, length(x))
           w[Ip] <- sigma2[Ip] / sum(sigma2[Ip])
+          i <- 1
           while (any(w[Ip] > x[Ip] / abs(d))) {
             Ip[Ip][w[Ip] > x[Ip] / abs(d)] <- FALSE
             d <- sum(x[!Ip])
             w <- rep(0, length(x))
             w[Ip] <- sigma2[Ip] / sum(sigma2[Ip])
+            i <- i + 1
           }
           x[!Ip] <- 0
-          x + w * d
+          return(list(x + w * d, i))
         },
-        simplify = TRUE
-      ))
+        simplify = FALSE
+      )
+      iter <- sapply(tmp, function(x) {
+        x[[2]]
+      })
+      bts <- t(sapply(tmp, function(x) {
+        x[[1]]
+      }))
     },
     {
       cli_abort(
@@ -662,8 +688,18 @@ reco.sntz <- function(
       )
     }
   )
+  end_time <- Sys.time()
 
-  as.matrix(bts %*% t(strc_mat))
+  reco <- as.matrix(bts %*% t(strc_mat))
+
+  info <- cbind(
+    run_time = as.numeric(end_time - start_time),
+    tol = tol,
+    iter = as.vector(iter)
+  )
+  rownames(info) <- 1:NROW(reco)
+  attr(reco, "info") <- info
+  return(reco)
 }
 
 reco.proj_immutable <- function(
