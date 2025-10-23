@@ -119,9 +119,9 @@ list, see <a href="ctcov.html">ctcov</a>.</p></dd>
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
 <dd><p>A (\(n \times N(k^\ast+m)\)) optional numeric matrix containing
-the in-sample residuals ordered from the lowest frequency to the highest
-frequency (columns) for each variable (rows). This matrix is used to
-compute some covariance matrices.</p></dd>
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency (columns) for each variable (rows).
+This matrix is used to compute some covariance matrices.</p></dd>
 
 
 <dt id="arg-ccc">CCC<a class="anchor" aria-label="anchor" href="#arg-ccc"></a></dt>
@@ -206,7 +206,7 @@ identification of negative values</p></li>
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="ctcov.html">ctcov</a></code></p><dl><dt><code>mse</code></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute the
+<dd><p>If <code>TRUE</code> (<em>default</em>) the errors used to compute the
 covariance matrix are not mean-corrected.</p></dd>
 
     <dt><code>shrink_fun</code></dt>

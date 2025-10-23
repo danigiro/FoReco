@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Replicate the thief package</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2025-10-10</p>
+      <p class="date">2025-10-23</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Replicate-the-thief-package.qmd" class="external-link"><code>vignettes/articles/Replicate-the-thief-package.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -138,12 +138,16 @@
 <span><span class="co">## Ordinary least squares (identity error covariance matrix)</span></span>
 <span><span class="va">thief_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://robjhyndman.github.io/thief/reference/reconcilethief.html" class="external-link">reconcilethief</a></span><span class="op">(</span><span class="va">fc_obj</span>, comb<span class="op">=</span><span class="st">"ols"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span><span class="va">base</span>, <span class="fl">52</span>, comb <span class="op">=</span> <span class="st">"ols"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Argument `res` is ignored.</span></span>
+<span><span class="co">#&gt; ℹ When `res` is provided, `comb = 'wlsv'` is suggested.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_ols</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_ols</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
 <span><span class="co">## Weighted least squares (structural variances)</span></span>
 <span><span class="va">thief_str</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://robjhyndman.github.io/thief/reference/reconcilethief.html" class="external-link">reconcilethief</a></span><span class="op">(</span><span class="va">fc_obj</span>, comb<span class="op">=</span><span class="st">"struc"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_str</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span><span class="va">base</span>, <span class="fl">52</span>, comb <span class="op">=</span> <span class="st">"str"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Argument `res` is ignored.</span></span>
+<span><span class="co">#&gt; ℹ When `res` is provided, `comb = 'wlsv'` is suggested.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">FoReco_str</span> <span class="op">-</span> <span class="fu">extract_thief</span><span class="op">(</span><span class="va">thief_str</span><span class="op">)</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>

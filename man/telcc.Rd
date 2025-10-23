@@ -24,8 +24,9 @@ subset of \eqn{p} factors of \eqn{m}.}
 list, see \link{tecov}.}
 
 \item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
-the residuals ordered from the lowest frequency to the highest
-frequency. This vector is used to compute come covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.}
 
 \item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
 forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
@@ -110,7 +111,7 @@ identification of negative values
 \item{...}{
   Arguments passed on to \code{\link[=tecov]{tecov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the errors used to compute
 the covariance matrix are not mean-corrected.}
     \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
 \link{shrink_estim} (\emph{default})}

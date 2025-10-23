@@ -69,16 +69,16 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 subset of \eqn{p} factors of \eqn{m}.}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
-the in-sample residuals ordered from the lowest frequency to the highest
-frequency (columns) for each variable (rows). This matrix is used to
-compute some covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency (columns) for each variable (rows).
+This matrix is used to compute some covariance matrices.}
 
 \item{tew}{A string specifying the type of temporal aggregation. Options
 include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 (average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+\item{mse}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}
 
 \item{shrink_fun}{Shrinkage function of the covariance matrix,

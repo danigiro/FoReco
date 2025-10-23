@@ -7,7 +7,8 @@
 shrink_oasd(x, mse = TRUE)
 }
 \arguments{
-\item{x}{A numeric matrix containing the in-sample residuals.}
+\item{x}{A numeric matrix containing the in-sample residuals or validation
+errors.}
 
 \item{mse}{If \code{TRUE} (\emph{default}), the residuals used to compute the
 covariance matrix are not mean-corrected.}

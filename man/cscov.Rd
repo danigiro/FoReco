@@ -44,10 +44,10 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
-in-sample residuals. This matrix is used to compute some covariance
-matrices.}
+in-sample residuals or validation errors. This matrix is used to compute
+some covariance matrices.}
 
-\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+\item{mse}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}
 
 \item{shrink_fun}{Shrinkage function of the covariance matrix,

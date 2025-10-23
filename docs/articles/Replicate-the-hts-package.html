@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Replicate the hts package</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2025-10-10</p>
+      <p class="date">2025-10-23</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Replicate-the-hts-package.qmd" class="external-link"><code>vignettes/articles/Replicate-the-hts-package.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -187,6 +187,8 @@
 <code class="sourceCode R"><span><span class="co">## Ordinary least squares (identity error covariance matrix)</span></span>
 <span><span class="va">hts_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://pkg.earo.me/hts/reference/combinef.html" class="external-link">combinef</a></span><span class="op">(</span><span class="va">base</span>, nodes <span class="op">=</span> <span class="fu"><a href="https://pkg.earo.me/hts/reference/helper-functions.html" class="external-link">get_nodes</a></span><span class="op">(</span><span class="va">htseg2</span><span class="op">)</span>, keep <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csrec.html">csrec</a></span><span class="op">(</span><span class="va">base</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, comb <span class="op">=</span> <span class="st">"ols"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Argument `res` is ignored.</span></span>
+<span><span class="co">#&gt; ℹ When `res` is provided, `comb = 'shr'` is suggested.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">hts_ols</span> <span class="op">-</span> <span class="va">FoReco_ols</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
@@ -195,6 +197,8 @@
 <span>                    weights <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="fu"><a href="https://pkg.earo.me/hts/reference/smatrix.html" class="external-link">smatrix</a></span><span class="op">(</span><span class="va">htseg2</span><span class="op">)</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span>, </span>
 <span>                    keep <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_str</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csrec.html">csrec</a></span><span class="op">(</span><span class="va">base</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, comb <span class="op">=</span> <span class="st">"str"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Argument `res` is ignored.</span></span>
+<span><span class="co">#&gt; ℹ When `res` is provided, `comb = 'shr'` is suggested.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">hts_str</span> <span class="op">-</span> <span class="va">FoReco_str</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>

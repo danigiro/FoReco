@@ -10,10 +10,11 @@ res2matrix(res, agg_order)
 arrange_hres(list_res)
 }
 \arguments{
-\item{res}{A (\eqn{n \times N(k^\ast+m)}) numeric matrix (cross-temporal framework)
-or an (\eqn{N(k^\ast+m) \times 1}) numeric vector (temporal framework) representing
-the in-sample residuals at all the temporal frequencies ordered from the lowest
-frequency to the highest frequency (columns) for each variable (rows).}
+\item{res}{A (\eqn{n \times N(k^\ast+m)}) numeric matrix (cross-temporal
+framework) or an (\eqn{N(k^\ast+m) \times 1}) numeric vector (temporal
+framework) representing the in-sample residuals or validation errors at
+all the temporal frequencies ordered from the lowest frequency to the
+highest frequency (columns) for each variable (rows).}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
@@ -24,8 +25,8 @@ can be either a (\eqn{T \times 1}) vector (temporal framework) or a (\eqn{T \tim
 matrix (cross-temporal framework).}
 }
 \value{
-\link{res2matrix} returns a (\eqn{N \times n(k^\ast + m)}) matrix, where \eqn{n = 1}
-for the temporal framework.
+\link{res2matrix} returns a (\eqn{N \times n(k^\ast + m)}) matrix, where
+\eqn{n = 1} for the temporal framework.
 
 \link{arrange_hres} returns a (\eqn{N(k^\ast+m) \times 1}) vector (temporal framework)
 or a (\eqn{n \times N(k^\ast+m)}) matrix  (cross-temporal framework) of multi-step residuals.
@@ -36,10 +37,10 @@ cross-temporal forecasts.
 
 \link{res2matrix} \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 takes as input a set of temporal and cross-temporal residuals and
-re-organizes them into a matrix where the rows correspond to different forecast
-horizons, capturing the temporal dimension. Meanwhile, the columns are ordered
-based on the specific arrangement as described in Di Fonzo and Girolimetto (2023).
-Please see \link{as_hstack_ctlayout} and \link{as_hstack_telayout}.
+re-organizes them into a matrix where the rows correspond to different
+forecast horizons, capturing the temporal dimension. Meanwhile, the columns
+are ordered based on the specific arrangement as described in Di Fonzo and
+Girolimetto (2023). Please see \link{as_hstack_ctlayout} and \link{as_hstack_telayout}.
 
 \link{arrange_hres} takes as input a list of multi-step residuals and is
 designed to organize them in accordance with their time order (Girolimetto et al.
@@ -83,14 +84,15 @@ out <- arrange_hres(input)
 
 }
 \references{
-Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-Optimal combination method and heuristic alternatives, \emph{International Journal
-of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
+Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+\emph{International Journal of Forecasting}, 39, 1, 39-57.
+\doi{10.1016/j.ijforecast.2021.08.004}
 
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023.10.003}
+practical issues. \emph{International Journal of Forecasting}, 40, 3,
+1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 }
 \seealso{
 Utilities:

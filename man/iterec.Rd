@@ -24,9 +24,9 @@ See \link{csrec} for a complete list (excluded \code{base} and \code{res}).}
 See \link{terec} for a complete list (excluded \code{base} and \code{res}).}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
-the in-sample residuals ordered from the lowest frequency to the highest
-frequency (columns) for each variable (rows). This matrix is used to
-compute some covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency (columns) for each variable (rows).
+This matrix is used to compute some covariance matrices.}
 
 \item{itmax}{Max number of iteration (\code{100}, \emph{default}).}
 

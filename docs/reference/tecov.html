@@ -93,8 +93,9 @@ subset of \(p\) factors of \(m\).</p></dd>
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
 <dd><p>A (\(N(k^\ast+m) \times 1\)) optional numeric vector containing
-the residuals ordered from the lowest frequency to the highest
-frequency. This vector is used to compute come covariance matrices.</p></dd>
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.</p></dd>
 
 
 <dt id="arg-tew">tew<a class="anchor" aria-label="anchor" href="#arg-tew"></a></dt>
@@ -105,7 +106,7 @@ include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</co
 
 
 <dt id="arg-mse">mse<a class="anchor" aria-label="anchor" href="#arg-mse"></a></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute
+<dd><p>If <code>TRUE</code> (<em>default</em>) the errors used to compute
 the covariance matrix are not mean-corrected.</p></dd>
 
 

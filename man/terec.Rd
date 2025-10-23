@@ -24,8 +24,9 @@ subset of \eqn{p} factors of \eqn{m}.}
 list, see \link{tecov}.}
 
 \item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
-the residuals ordered from the lowest frequency to the highest
-frequency. This vector is used to compute come covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.}
 
 \item{tew}{A string specifying the type of temporal aggregation. Options
 include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
@@ -121,7 +122,7 @@ For example, when working with a quarterly time series:
 \item{...}{
   Arguments passed on to \code{\link[=tecov]{tecov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the errors used to compute
 the covariance matrix are not mean-corrected.}
     \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
 \link{shrink_estim} (\emph{default})}

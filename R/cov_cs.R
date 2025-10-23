@@ -33,7 +33,7 @@
 #'      \item "\code{bu}" - bottom-up covariance.
 #'      }
 #'   }
-#' @param mse If \code{TRUE} (\emph{default}) the residuals used to compute the
+#' @param mse If \code{TRUE} (\emph{default}) the errors used to compute the
 #' covariance matrix are not mean-corrected.
 #' @param shrink_fun Shrinkage function of the covariance matrix,
 #' [shrink_estim] (\emph{default}).

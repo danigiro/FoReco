@@ -26,8 +26,8 @@ value is the string "\code{auto}" which calculates the number of variables in ea
 list, see \link{cscov}.}
 
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
-in-sample residuals. This matrix is used to compute some covariance
-matrices.}
+in-sample residuals or validation errors. This matrix is used to compute
+some covariance matrices.}
 
 \item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
 forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
@@ -108,7 +108,7 @@ identification of negative values
 \item{...}{
   Arguments passed on to \code{\link[=cscov]{cscov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}
     \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
 \link{shrink_estim} (\emph{default}).}

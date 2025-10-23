@@ -97,8 +97,9 @@ complete list, see <a href="tecov.html">tecov</a>.</p></dd>
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
 <dd><p>A (\(N(k^\ast+m) \times 1\)) optional numeric vector containing
-the residuals ordered from the lowest frequency to the highest
-frequency. This vector is used to compute come covariance matrices.</p></dd>
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.</p></dd>
 
 
 <dt id="arg-tew">tew<a class="anchor" aria-label="anchor" href="#arg-tew"></a></dt>
@@ -130,7 +131,7 @@ the distribution corresponding to the high-frequency time series
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="tecov.html">tecov</a></code></p><dl><dt><code>mse</code></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute
+<dd><p>If <code>TRUE</code> (<em>default</em>) the errors used to compute
 the covariance matrix are not mean-corrected.</p></dd>
 
     <dt><code>shrink_fun</code></dt>

@@ -7,10 +7,11 @@
 shrink_estim(x, mse = TRUE)
 }
 \arguments{
-\item{x}{A numeric matrix containing the residuals.}
+\item{x}{A numeric matrix containing the in-sample residuals or validation
+errors.}
 
-\item{mse}{If \code{TRUE} (\emph{default}), the residuals used to compute the covariance
-matrix are not mean-corrected.}
+\item{mse}{If \code{TRUE} (\emph{default}), the residuals used to compute
+the covariance matrix are not mean-corrected.}
 }
 \value{
 A shrunk covariance matrix.
@@ -19,9 +20,10 @@ A shrunk covariance matrix.
 Shrinkage of the covariance matrix according to \enc{Schäfer}{Schafer} and Strimmer (2005).
 }
 \references{
-\enc{Schäfer}{Schafer}, J.L. and Strimmer, K. (2005), A shrinkage approach to large-scale
-covariance matrix estimation and implications for functional genomics,
-\emph{Statistical Applications in Genetics and Molecular Biology}, 4, 1
+\enc{Schäfer}{Schafer}, J.L. and Strimmer, K. (2005), A shrinkage approach
+to large-scale covariance matrix estimation and implications for functional
+genomics, \emph{Statistical Applications in Genetics and Molecular Biology},
+4, 1. \doi{10.2202/1544-6115.1175}
 }
 \seealso{
 Utilities:

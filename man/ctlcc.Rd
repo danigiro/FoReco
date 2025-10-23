@@ -34,9 +34,9 @@ subset of \eqn{p} factors of \eqn{m}.}
 list, see \link{ctcov}.}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
-the in-sample residuals ordered from the lowest frequency to the highest
-frequency (columns) for each variable (rows). This matrix is used to
-compute some covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency (columns) for each variable (rows).
+This matrix is used to compute some covariance matrices.}
 
 \item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
 forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
@@ -121,7 +121,7 @@ identification of negative values
 \item{...}{
   Arguments passed on to \code{\link[=ctcov]{ctcov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}
     \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
 \link{shrink_estim} (\emph{default}).}

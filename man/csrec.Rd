@@ -27,8 +27,8 @@ requirement, as the function allows for redundancy in the constraints.}
 list, see \link{cscov}.}
 
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
-in-sample residuals. This matrix is used to compute some covariance
-matrices.}
+in-sample residuals or validation errors. This matrix is used to compute
+some covariance matrices.}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:
@@ -107,7 +107,7 @@ forecasts (\code{base} parameter) that should be fixed.}
 \item{...}{
   Arguments passed on to \code{\link[=cscov]{cscov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}
     \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
 \link{shrink_estim} (\emph{default}).}

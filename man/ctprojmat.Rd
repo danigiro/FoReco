@@ -26,9 +26,9 @@ subset of \eqn{p} factors of \eqn{m}.}
 list, see \link{ctcov}.}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
-the in-sample residuals ordered from the lowest frequency to the highest
-frequency (columns) for each variable (rows). This matrix is used to
-compute some covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency (columns) for each variable (rows).
+This matrix is used to compute some covariance matrices.}
 
 \item{mat}{A string specifying which matrix to return:
 "\code{M}" (\emph{default}) for \eqn{\mathbf{M}} and "\code{G}" for \eqn{\mathbf{G}}.}
@@ -41,7 +41,7 @@ include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 \item{...}{
   Arguments passed on to \code{\link[=ctcov]{ctcov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}
     \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
 \link{shrink_estim} (\emph{default}).}

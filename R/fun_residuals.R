@@ -6,29 +6,31 @@
 #'
 #' [res2matrix] `r lifecycle::badge('deprecated')`
 #' takes as input a set of temporal and cross-temporal residuals and
-#' re-organizes them into a matrix where the rows correspond to different forecast
-#' horizons, capturing the temporal dimension. Meanwhile, the columns are ordered
-#' based on the specific arrangement as described in Di Fonzo and Girolimetto (2023).
-#' Please see [as_hstack_ctlayout] and [as_hstack_telayout].
+#' re-organizes them into a matrix where the rows correspond to different
+#' forecast horizons, capturing the temporal dimension. Meanwhile, the columns
+#' are ordered based on the specific arrangement as described in Di Fonzo and
+#' Girolimetto (2023). Please see [as_hstack_ctlayout] and [as_hstack_telayout].
 #'
 #' @inheritParams ctrec
-#' @param res A (\eqn{n \times N(k^\ast+m)}) numeric matrix (cross-temporal framework)
-#' or an (\eqn{N(k^\ast+m) \times 1}) numeric vector (temporal framework) representing
-#' the in-sample residuals at all the temporal frequencies ordered from the lowest
-#' frequency to the highest frequency (columns) for each variable (rows).
+#' @param res A (\eqn{n \times N(k^\ast+m)}) numeric matrix (cross-temporal
+#' framework) or an (\eqn{N(k^\ast+m) \times 1}) numeric vector (temporal
+#' framework) representing the in-sample residuals or validation errors at
+#' all the temporal frequencies ordered from the lowest frequency to the
+#' highest frequency (columns) for each variable (rows).
 #'
-#' @return [res2matrix] returns a (\eqn{N \times n(k^\ast + m)}) matrix, where \eqn{n = 1}
-#' for the temporal framework.
+#' @return [res2matrix] returns a (\eqn{N \times n(k^\ast + m)}) matrix, where
+#' \eqn{n = 1} for the temporal framework.
 #'
 #' @references
-#' Di Fonzo, T. and Girolimetto, D. (2023), Cross-temporal forecast reconciliation:
-#' Optimal combination method and heuristic alternatives, \emph{International Journal
-#' of Forecasting}, 39, 1, 39-57. \doi{10.1016/j.ijforecast.2021.08.004}
+#' Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+#' reconciliation: Optimal combination method and heuristic alternatives,
+#' \emph{International Journal of Forecasting}, 39, 1, 39-57.
+#' \doi{10.1016/j.ijforecast.2021.08.004}
 #'
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
-#' practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-#' \doi{10.1016/j.ijforecast.2023.10.003}
+#' practical issues. \emph{International Journal of Forecasting}, 40, 3,
+#' 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 #'
 #' @examples
 #' h <- 10

@@ -37,9 +37,9 @@ list, see \link{ctcov}.}
 \item{comb_base}{A string specifying the reconciliation method. For a complete list, see \link{ctcov}.}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
-the in-sample residuals ordered from the lowest frequency to the highest
-frequency (columns) for each variable (rows). This matrix is used to
-compute some covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency (columns) for each variable (rows).
+This matrix is used to compute some covariance matrices.}
 
 \item{tew}{A string specifying the type of temporal aggregation. Options
 include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
@@ -66,7 +66,7 @@ to the high-frequency bottom time series (\code{TRUE}).}
 \item{...}{
   Arguments passed on to \code{\link[=ctcov]{ctcov}}
   \describe{
-    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the residuals used to compute the
+    \item{\code{mse}}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}
     \item{\code{shrink_fun}}{Shrinkage function of the covariance matrix,
 \link{shrink_estim} (\emph{default}).}

@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 
 [![R-CMD-check](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml) 
 [![CRAN status](https://www.r-pkg.org/badges/version/FoReco)](https://CRAN.R-project.org/package=FoReco) 
-`r sprintf("[![devel version](https://img.shields.io/badge/devel version-%s-blue.svg)](https://github.com/danigiro/FoRecoML)", gsub("Version: (.*)", "\\1",  (desc <- readLines("DESCRIPTION"))[grepl("Version", desc, fixed = TRUE)]))` 
+`r sprintf("[![devel version](https://img.shields.io/badge/devel version-%s-blue.svg)](https://github.com/danigiro/FoReco)", gsub("Version: (.*)", "\\1",  (desc <- readLines("DESCRIPTION"))[grepl("Version", desc, fixed = TRUE)]))` 
 [![License: GPL-3](https://img.shields.io/badge/license-GPL--3-forestgreen.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 
 **Fo**recast **Reco**nciliation is a a post-forecasting process aimed to improve the accuracy and align forecasts for a system of linearly constrained (e.g. hierarchical/grouped) time series. The **FoReco** package provides a comprehensive set of classical (bottom-up, top-down and middle-out), and modern (optimal and heuristic combination) forecast reconciliation procedures in different frameworks including cross-sectional, temporal, or cross-temporal settings.

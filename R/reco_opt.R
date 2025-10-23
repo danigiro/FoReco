@@ -20,8 +20,8 @@
 #'   (\eqn{n = n_a + n_b}).
 #' @inheritParams ctrec
 #' @param res An (\eqn{N \times n}) optional numeric matrix containing the
-#'   in-sample residuals. This matrix is used to compute some covariance
-#'   matrices.
+#'   in-sample residuals or validation errors. This matrix is used to compute
+#'   some covariance matrices.
 #' @param comb A string specifying the reconciliation method. For a complete
 #'   list, see [cscov].
 #' @param bounds A matrix (see [set_bounds]) with 3 columns
@@ -289,8 +289,9 @@ csrec <- function(
 #' @param comb A string specifying the reconciliation method. For a complete
 #'   list, see [tecov].
 #' @param res A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
-#'   the residuals ordered from the lowest frequency to the highest
-#'   frequency. This vector is used to compute come covariance matrices.
+#'   the in-sample residuals or validation errors ordered from the lowest
+#'   frequency to the highest frequency. This vector is used to compute come
+#'   covariance matrices.
 #' @inheritParams ctrec
 #' @param bounds A matrix (see [set_bounds]) with 4 columns
 #' (\eqn{k,j,lower,upper}), such that
@@ -584,9 +585,9 @@ terec <- function(
 #' @param comb A string specifying the reconciliation method. For a complete
 #'   list, see [ctcov].
 #' @param res A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
-#'   the in-sample residuals ordered from the lowest frequency to the highest
-#'   frequency (columns) for each variable (rows). This matrix is used to
-#'   compute some covariance matrices.
+#'   the in-sample residuals or validation errors ordered from the lowest
+#'   frequency to the highest frequency (columns) for each variable (rows).
+#'   This matrix is used to compute some covariance matrices.
 #' @param tew A string specifying the type of temporal aggregation. Options
 #'   include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 #'   (average), "\code{first}" (first value of the period), and "\code{last}"

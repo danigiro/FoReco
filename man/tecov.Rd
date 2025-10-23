@@ -50,15 +50,16 @@ tecov(comb, agg_order = NULL, res = NULL, tew = "sum",
 subset of \eqn{p} factors of \eqn{m}.}
 
 \item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
-the residuals ordered from the lowest frequency to the highest
-frequency. This vector is used to compute come covariance matrices.}
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.}
 
 \item{tew}{A string specifying the type of temporal aggregation. Options
 include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 (average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
 
-\item{mse}{If \code{TRUE} (\emph{default}) the residuals used to compute
+\item{mse}{If \code{TRUE} (\emph{default}) the errors used to compute
 the covariance matrix are not mean-corrected.}
 
 \item{shrink_fun}{Shrinkage function of the covariance matrix,

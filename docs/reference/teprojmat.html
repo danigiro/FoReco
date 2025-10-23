@@ -94,8 +94,9 @@ list, see <a href="tecov.html">tecov</a>.</p></dd>
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
 <dd><p>A (\(N(k^\ast+m) \times 1\)) optional numeric vector containing
-the residuals ordered from the lowest frequency to the highest
-frequency. This vector is used to compute come covariance matrices.</p></dd>
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.</p></dd>
 
 
 <dt id="arg-mat">mat<a class="anchor" aria-label="anchor" href="#arg-mat"></a></dt>
@@ -112,7 +113,7 @@ include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</co
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Arguments passed on to <code><a href="tecov.html">tecov</a></code></p><dl><dt><code>mse</code></dt>
-<dd><p>If <code>TRUE</code> (<em>default</em>) the residuals used to compute
+<dd><p>If <code>TRUE</code> (<em>default</em>) the errors used to compute
 the covariance matrix are not mean-corrected.</p></dd>
 
     <dt><code>shrink_fun</code></dt>
@@ -163,7 +164,11 @@ practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-115
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Temporal framework (annual-quarterly)</span></span></span>
 <span class="r-in"><span><span class="va">Mte</span> <span class="op">&lt;-</span> <span class="fu">teprojmat</span><span class="op">(</span>agg_order <span class="op">=</span> <span class="fl">4</span>, comb <span class="op">=</span> <span class="st">"ols"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `res` is ignored.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> When `res` is provided, `comb = 'wlsv'` is suggested.</span>
 <span class="r-in"><span><span class="va">Gte</span> <span class="op">&lt;-</span> <span class="fu">teprojmat</span><span class="op">(</span>agg_order <span class="op">=</span> <span class="fl">4</span>, comb <span class="op">=</span> <span class="st">"ols"</span>, mat <span class="op">=</span> <span class="st">"G"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Argument `res` is ignored.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> When `res` is provided, `comb = 'wlsv'` is suggested.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
