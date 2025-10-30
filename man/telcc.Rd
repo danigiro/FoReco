@@ -63,7 +63,7 @@ et al. (2011).
 forecasts:
 \itemize{
 \item "\code{osqp}": quadratic programming optimization
-(\href{https://osqp.org/}{\pkg{osqp}} solver).
+(\href{https://osqp.org/}{\pkg{osqp}} solver, Girolimetto 2025).
 \item "\code{bpv}": block principal pivoting algorithm
 (Wickramasuriya et al., 2020).
 \item "\code{nfca}": negative forecasts correction algorithm
@@ -184,7 +184,8 @@ Di Fonzo, T. and Girolimetto, D. (2023b) Spatio-temporal reconciliation of solar
 \emph{Solar Energy} 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
 
 Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
-methods and operational solutions. \emph{mimeo}
+methods and operational solutions. \emph{Forecasting}, 7(4), 64;
+\doi{10.3390/forecast7040064}
 
 Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,

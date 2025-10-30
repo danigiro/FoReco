@@ -5,11 +5,14 @@ date: "`r Sys.Date()`"
 package: FoReco
 bibliography: references.bib
 csl: apa.csl
-output: rmarkdown::html_vignette
+format: 
+  html:
+    toc: true
+    html-math-method: mathjax
 vignette: >
   %\VignetteIndexEntry{The vndata and itagdp dataset}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r}

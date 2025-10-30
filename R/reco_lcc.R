@@ -51,7 +51,8 @@
 #' \emph{Solar Energy} 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
 #'
 #' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
-#' methods and operational solutions. \emph{mimeo}
+#' methods and operational solutions. \emph{Forecasting}, 7(4), 64;
+#' \doi{10.3390/forecast7040064}
 #'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
@@ -326,7 +327,8 @@ cslcc <- function(
 #' \emph{Solar Energy} 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
 #'
 #' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
-#' methods and operational solutions. \emph{mimeo}
+#' methods and operational solutions. \emph{Forecasting}, 7(4), 64;
+#' \doi{10.3390/forecast7040064}
 #'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,
@@ -566,7 +568,8 @@ telcc <- function(
 #' \emph{Solar Energy} 251, 13–29. \doi{10.1016/j.solener.2023.01.003}
 #'
 #' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
-#' methods and operational solutions. \emph{mimeo}
+#' methods and operational solutions. \emph{Forecasting}, 7(4), 64;
+#' \doi{10.3390/forecast7040064}
 #'
 #' Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 #' Optimal combination forecasts for hierarchical time series,

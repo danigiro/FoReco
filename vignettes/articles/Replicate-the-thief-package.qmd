@@ -3,11 +3,14 @@ title: "Replicate the thief package"
 author: "Daniele Girolimetto"
 date: "`r Sys.Date()`"
 package: FoReco
-output: html_vignette
+format: 
+  html:
+    toc: true
+    html-math-method: mathjax
 vignette: >
   %\VignetteIndexEntry{Replicate the thief package}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
-  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 ```{r}
