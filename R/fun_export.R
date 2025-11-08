@@ -80,7 +80,6 @@ shrink_estim <- function(x, mse = TRUE) {
 
   # Full
   covm <- sample_estim(x = x, mse = mse)
-
   # Target
   tar <- Diagonal(x = diag(covm))
 
@@ -106,11 +105,21 @@ shrink_estim <- function(x, mse = TRUE) {
     lambda <- 1
   }
 
-  # Shrinkage
-  shrink_cov <- lambda * tar + (1 - lambda) * covm
-  shrink_cov <- drop0(shrink_cov)
+  if (lambda == 1) {
+    shrink_cov <- Diagonal(x = diag(covm))
+  } else if (lambda == 0) {
+    shrink_cov <- forceSymmetric(covm)
+  } else {
+    # shrink_cov <- lambda * tar + (1 - lambda) * Matrix(covm)
+    # with big matrix: sparse->dense coercion
+    # Solution:
+    shrink_cov <- (1 - lambda) * covm
+    diag(shrink_cov) <- diag(covm)
+    # dsyMatrix should be slighted faster then dsCMatrix
+    # shrink_cov <- drop0(shrink_cov)
+    shrink_cov <- forceSymmetric(shrink_cov)
+  }
   attr(shrink_cov, "lambda") <- lambda
-
   return(shrink_cov)
 }
 
