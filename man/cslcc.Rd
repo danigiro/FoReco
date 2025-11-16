@@ -4,9 +4,9 @@
 \alias{cslcc}
 \title{Level conditional coherent reconciliation for genuine hierarchical/grouped time series}
 \usage{
-cslcc(base, agg_mat, nodes = "auto", comb = "ols", res = NULL, CCC = TRUE,
-      const = "exogenous", bts = NULL, approach = "proj", nn = NULL,
-      settings = NULL, ...)
+cslcc(base, agg_mat, comb = "ols", res = NULL, approach = "proj", nn = NULL,
+      settings = NULL, nodes = "auto", CCC = TRUE, const = "exogenous",
+      bts = NULL, ...)
 }
 \arguments{
 \item{base}{A (\eqn{h \times n}) numeric matrix or multivariate time series
@@ -18,30 +18,12 @@ is the forecast horizon, and \eqn{n} is the total number of time series
 cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
-in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
-value is the string "\code{auto}" which calculates the number of variables in each level.}
-
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{cscov}.}
 
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
 in-sample residuals or validation errors. This matrix is used to compute
 some covariance matrices.}
-
-\item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
-forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
-
-\item{const}{A string specifying the reconciliation constraints:
-\itemize{
-\item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
-\item "\code{endogenous}": Coherently revises both the top and bottom levels.
-}}
-
-\item{bts}{A (\eqn{h \times n_b}) numeric matrix or multivariate time series (\code{mts} class)
-containing bottom base forecasts defined by the user (e.g., seasonal averages, as in Hollyman et al., 2021).
-This parameter can be omitted if only base forecasts are used
-(see Di Fonzo and Girolimetto, 2024).}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:
@@ -104,6 +86,24 @@ used). See Girolimetto (2025) for details.
 identification of negative values
 }
 }}
+
+\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
+in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
+value is the string "\code{auto}" which calculates the number of variables in each level.}
+
+\item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
+forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
+
+\item{const}{A string specifying the reconciliation constraints:
+\itemize{
+\item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
+\item "\code{endogenous}": Coherently revises both the top and bottom levels.
+}}
+
+\item{bts}{A (\eqn{h \times n_b}) numeric matrix or multivariate time series (\code{mts} class)
+containing bottom base forecasts defined by the user (e.g., seasonal averages, as in Hollyman et al., 2021).
+This parameter can be omitted if only base forecasts are used
+(see Di Fonzo and Girolimetto, 2024).}
 
 \item{...}{
   Arguments passed on to \code{\link[=cscov]{cscov}}

@@ -6,7 +6,7 @@
 #' (see Wickramasuriya et al., 2019 and Di Fonzo and Girolimetto, 2023).
 #'
 #' @usage
-#' cscov(comb = "ols", n = NULL, agg_mat = NULL, res, mse = TRUE,
+#' cscov(comb = "ols", agg_mat = NULL, res = NULL, n = NULL, mse = TRUE,
 #'       shrink_fun = shrink_estim, ...)
 #'
 #' @param n Number of variables (\eqn{n = n_a + n_b}).
@@ -77,9 +77,9 @@
 #' @export
 cscov <- function(
   comb = "ols",
-  n = NULL,
   agg_mat = NULL,
   res = NULL,
+  n = NULL,
   mse = TRUE,
   shrink_fun = shrink_estim,
   ...
@@ -102,9 +102,9 @@ cscov <- function(
 #' @export
 cscov.default <- function(
   comb,
-  n = NULL,
   agg_mat = NULL,
   res = NULL,
+  n = NULL,
   mse = TRUE,
   shrink_fun = shrink_estim,
   ...

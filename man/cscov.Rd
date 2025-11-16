@@ -10,7 +10,7 @@
 \alias{cscov.sam}
 \title{Cross-sectional covariance matrix approximation}
 \usage{
-cscov(comb = "ols", n = NULL, agg_mat = NULL, res, mse = TRUE,
+cscov(comb = "ols", agg_mat = NULL, res = NULL, n = NULL, mse = TRUE,
       shrink_fun = shrink_estim, ...)
 }
 \arguments{
@@ -37,8 +37,6 @@ cscov(comb = "ols", n = NULL, agg_mat = NULL, res, mse = TRUE,
 }
 }}
 
-\item{n}{Number of variables (\eqn{n = n_a + n_b}).}
-
 \item{agg_mat}{A (\eqn{n_a \times n_b}) numeric matrix representing the
 cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (free) variables into the \eqn{n_a} upper (constrained) variables.}
@@ -46,6 +44,8 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
 in-sample residuals or validation errors. This matrix is used to compute
 some covariance matrices.}
+
+\item{n}{Number of variables (\eqn{n = n_a + n_b}).}
 
 \item{mse}{If \code{TRUE} (\emph{default}) the errors used to compute the
 covariance matrix are not mean-corrected.}

@@ -4,8 +4,8 @@
 \alias{ctrec}
 \title{Optimal combination cross-temporal reconciliation}
 \usage{
-ctrec(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
-      tew = "sum", approach = "proj", nn = NULL, settings = NULL,
+ctrec(base, agg_mat, cons_mat, agg_order, tew = "sum", comb = "ols",
+      res = NULL, approach = "proj", nn = NULL, settings = NULL,
       bounds = NULL, immutable = NULL, ...)
 }
 \arguments{
@@ -32,6 +32,11 @@ requirement, as the function allows for redundancy in the constraints.}
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
+(last value of the period).}
+
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{ctcov}.}
 
@@ -39,11 +44,6 @@ list, see \link{ctcov}.}
 the in-sample residuals or validation errors ordered from the lowest
 frequency to the highest frequency (columns) for each variable (rows).
 This matrix is used to compute some covariance matrices.}
-
-\item{tew}{A string specifying the type of temporal aggregation. Options
-include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
-(average), "\code{first}" (first value of the period), and "\code{last}"
-(last value of the period).}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:

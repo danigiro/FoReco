@@ -59,7 +59,7 @@ forecasts errors covariance matrix using different reconciliation methods
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cscov</span><span class="op">(</span>comb <span class="op">=</span> <span class="st">"ols"</span>, n <span class="op">=</span> <span class="cn">NULL</span>, agg_mat <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">res</span>, mse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cscov</span><span class="op">(</span>comb <span class="op">=</span> <span class="st">"ols"</span>, agg_mat <span class="op">=</span> <span class="cn">NULL</span>, res <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">NULL</span>, mse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>      shrink_fun <span class="op">=</span> <span class="va">shrink_estim</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -82,10 +82,6 @@ forecasts errors covariance matrix using different reconciliation methods
 </ul></dd>
 
 
-<dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
-<dd><p>Number of variables (\(n = n_a + n_b\)).</p></dd>
-
-
 <dt id="arg-agg-mat">agg_mat<a class="anchor" aria-label="anchor" href="#arg-agg-mat"></a></dt>
 <dd><p>A (\(n_a \times n_b\)) numeric matrix representing the
 cross-sectional aggregation matrix. It maps the \(n_b\) bottom-level
@@ -96,6 +92,10 @@ cross-sectional aggregation matrix. It maps the \(n_b\) bottom-level
 <dd><p>An (\(N \times n\)) optional numeric matrix containing the
 in-sample residuals or validation errors. This matrix is used to compute
 some covariance matrices.</p></dd>
+
+
+<dt id="arg-n">n<a class="anchor" aria-label="anchor" href="#arg-n"></a></dt>
+<dd><p>Number of variables (\(n = n_a + n_b\)).</p></dd>
 
 
 <dt id="arg-mse">mse<a class="anchor" aria-label="anchor" href="#arg-mse"></a></dt>

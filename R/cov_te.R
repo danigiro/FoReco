@@ -6,8 +6,8 @@
 #' Fonzo and Girolimetto, 2023).
 #'
 #' @usage
-#' tecov(comb, agg_order = NULL, res = NULL, tew = "sum",
-#'       mse = TRUE, shrink_fun = shrink_estim, ...)
+#' tecov(comb, agg_order = NULL, tew = "sum", res = NULL, mse = TRUE,
+#'       shrink_fun = shrink_estim, ...)
 #'
 #' @inheritParams terec
 #' @param comb A string specifying the covariance approximation method.
@@ -76,8 +76,8 @@
 tecov <- function(
   comb = "ols",
   agg_order = NULL,
-  res = NULL,
   tew = "sum",
+  res = NULL,
   mse = TRUE,
   shrink_fun = shrink_estim,
   ...
@@ -96,8 +96,8 @@ tecov <- function(
 tecov.default <- function(
   comb,
   agg_order = NULL,
-  res = NULL,
   tew = "sum",
+  res = NULL,
   mse = TRUE,
   shrink_fun = shrink_estim,
   ...

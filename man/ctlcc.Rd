@@ -4,9 +4,9 @@
 \alias{ctlcc}
 \title{Level conditional coherent reconciliation for cross-temporal hierarchies}
 \usage{
-ctlcc(base, agg_mat, nodes = "auto", agg_order, comb = "ols", res = NULL,
-      CCC = TRUE, const = "exogenous", hfbts = NULL, tew = "sum",
-      approach = "proj", nn = NULL, settings = NULL, ...)
+ctlcc(base, agg_mat, agg_order, tew = "sum", comb = "ols", res = NULL,
+      approach = "proj", nn = NULL, settings = NULL, nodes = "auto",
+      CCC = TRUE, const = "exogenous", hfbts = NULL, ...)
 }
 \arguments{
 \item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
@@ -22,13 +22,14 @@ highest frequency.}
 cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
-in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
-value is the string "\code{auto}" which calculates the number of variables in each level.}
-
 \item{agg_order}{Highest available sampling frequency per seasonal cycle
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
+
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
+(last value of the period).}
 
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{ctcov}.}
@@ -37,24 +38,6 @@ list, see \link{ctcov}.}
 the in-sample residuals or validation errors ordered from the lowest
 frequency to the highest frequency (columns) for each variable (rows).
 This matrix is used to compute some covariance matrices.}
-
-\item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
-forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
-
-\item{const}{A string specifying the reconciliation constraints:
-\itemize{
-\item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
-\item "\code{endogenous}": Coherently revises both the top and bottom levels.
-}}
-
-\item{hfbts}{A (\eqn{n \times mh}) numeric matrix containing high frequency bottom base
-forecasts defined by the user. This parameter can be omitted
-if only base forecasts are used (see Di Fonzo and Girolimetto, 2024).}
-
-\item{tew}{A string specifying the type of temporal aggregation. Options
-include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
-(average), "\code{first}" (first value of the period), and "\code{last}"
-(last value of the period).}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:
@@ -117,6 +100,23 @@ used). See Girolimetto (2025) for details.
 identification of negative values
 }
 }}
+
+\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
+in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
+value is the string "\code{auto}" which calculates the number of variables in each level.}
+
+\item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
+forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
+
+\item{const}{A string specifying the reconciliation constraints:
+\itemize{
+\item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
+\item "\code{endogenous}": Coherently revises both the top and bottom levels.
+}}
+
+\item{hfbts}{A (\eqn{n \times mh}) numeric matrix containing high frequency bottom base
+forecasts defined by the user. This parameter can be omitted
+if only base forecasts are used (see Di Fonzo and Girolimetto, 2024).}
 
 \item{...}{
   Arguments passed on to \code{\link[=ctcov]{ctcov}}

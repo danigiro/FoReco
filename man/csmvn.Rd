@@ -4,8 +4,8 @@
 \alias{csmvn}
 \title{Cross-sectional Gaussian probabilistic reconciliation}
 \usage{
-csmvn(base, agg_mat, cons_mat, comb = "ols", comb_base = comb,
-      res = NULL, approach = "proj", reduce_form = FALSE, ...)
+csmvn(base, agg_mat, cons_mat, comb = "ols", res = NULL,
+      approach = "proj", comb_base = comb, reduce_form = FALSE, ...)
 }
 \arguments{
 \item{base}{A (\eqn{h \times n}) numeric matrix or multivariate time series
@@ -26,9 +26,6 @@ requirement, as the function allows for redundancy in the constraints.}
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{cscov}.}
 
-\item{comb_base}{A string specifying the reconciliation method. For a
-complete list, see \link{cscov}.}
-
 \item{res}{An (\eqn{N \times n}) optional numeric matrix containing the
 in-sample residuals or validation errors. This matrix is used to compute
 some covariance matrices.}
@@ -42,9 +39,13 @@ Byron (1978, 1979).
 al. (2011).
 }}
 
+\item{comb_base}{A string specifying the reconciliation method. For a
+complete list, see \link{cscov}.}
+
 \item{reduce_form}{A logical parameter indicating whether the function
-should return the full distribution (\code{FALSE}, \emph{default}) or only
-the distribution corresponding to the bottom-level time series (\code{TRUE}).}
+should return the full distribution (\code{FALSE}, \emph{default}) or
+only the distribution corresponding to the bottom-level time series
+(\code{TRUE}).}
 
 \item{...}{
   Arguments passed on to \code{\link[=cscov]{cscov}}

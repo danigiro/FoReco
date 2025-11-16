@@ -6,8 +6,8 @@
 #' and Girolimetto, 2023, and Girolimetto et al., 2023).
 #'
 #' @usage
-#' ctcov(comb = "ols", n = NULL, agg_mat = NULL, agg_order = NULL, res = NULL,
-#'       tew = "sum", mse = TRUE, shrink_fun = shrink_estim, ...)
+#' ctcov(comb = "ols", agg_mat = NULL, agg_order = NULL, tew = "sum",
+#'       res = NULL, n = NULL, mse = TRUE, shrink_fun = shrink_estim, ...)
 #'
 #' @inheritParams ctrec
 #' @param comb A string specifying the reconciliation method.
@@ -100,11 +100,11 @@
 #' @export
 ctcov <- function(
   comb = "ols",
-  n = NULL,
   agg_mat = NULL,
   agg_order = NULL,
-  res = NULL,
   tew = "sum",
+  res = NULL,
+  n = NULL,
   mse = TRUE,
   shrink_fun = shrink_estim,
   ...
@@ -122,11 +122,11 @@ ctcov <- function(
 #' @export
 ctcov.default <- function(
   comb,
-  n = NULL,
   agg_mat = NULL,
   agg_order = NULL,
-  res = NULL,
   tew = "sum",
+  res = NULL,
+  n = NULL,
   mse = TRUE,
   shrink_fun = shrink_estim,
   ...

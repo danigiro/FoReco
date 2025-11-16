@@ -4,9 +4,9 @@
 \alias{telcc}
 \title{Level conditional coherent reconciliation for temporal hierarchies}
 \usage{
-telcc(base, agg_order, comb = "ols", res = NULL, CCC = TRUE,
-      const = "exogenous", hfts = NULL, tew = "sum",
-      approach = "proj", nn = NULL, settings = NULL, ...)
+telcc(base, agg_order, tew = "sum", comb = "ols", res = NULL,
+      approach = "proj", nn = NULL, settings = NULL, CCC = TRUE,
+      const = "exogenous", hfts = NULL, ...)
 }
 \arguments{
 \item{base}{A (\eqn{N(k^\ast + m) \times 1}) numeric vector containing the
@@ -20,6 +20,11 @@ time series.}
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
+(last value of the period).}
+
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{tecov}.}
 
@@ -27,24 +32,6 @@ list, see \link{tecov}.}
 the in-sample residuals or validation errors ordered from the lowest
 frequency to the highest frequency. This vector is used to compute come
 covariance matrices.}
-
-\item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
-forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
-
-\item{const}{A string specifying the reconciliation constraints:
-\itemize{
-\item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
-\item "\code{endogenous}": Coherently revises both the top and bottom levels.
-}}
-
-\item{hfts}{A (\eqn{mh \times 1}) numeric vector containing high frequency base forecasts defined
-by the user. This parameter can be omitted if only base forecasts in
-\code{base} are used (see Di Fonzo and Girolimetto, 2024).}
-
-\item{tew}{A string specifying the type of temporal aggregation. Options
-include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
-(average), "\code{first}" (first value of the period), and "\code{last}"
-(last value of the period).}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:
@@ -107,6 +94,19 @@ used). See Girolimetto (2025) for details.
 identification of negative values
 }
 }}
+
+\item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
+forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
+
+\item{const}{A string specifying the reconciliation constraints:
+\itemize{
+\item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
+\item "\code{endogenous}": Coherently revises both the top and bottom levels.
+}}
+
+\item{hfts}{A (\eqn{mh \times 1}) numeric vector containing high frequency base forecasts defined
+by the user. This parameter can be omitted if only base forecasts in
+\code{base} are used (see Di Fonzo and Girolimetto, 2024).}
 
 \item{...}{
   Arguments passed on to \code{\link[=tecov]{tecov}}

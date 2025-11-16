@@ -4,8 +4,9 @@
 \alias{ctmvn}
 \title{Cross-temporal Gaussian probabilistic reconciliation}
 \usage{
-ctmvn(base, agg_mat, cons_mat, agg_order, comb = "ols", comb_base = comb,
-      res = NULL, tew = "sum", approach = "proj", reduce_form = FALSE, ...)
+ctmvn(base, agg_mat, cons_mat, agg_order, tew = "sum", comb = "ols",
+      res = NULL, approach = "proj", comb_base = comb,
+      reduce_form = FALSE, ...)
 }
 \arguments{
 \item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
@@ -31,20 +32,18 @@ requirement, as the function allows for redundancy in the constraints.}
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
+(last value of the period).}
+
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{ctcov}.}
-
-\item{comb_base}{A string specifying the reconciliation method. For a complete list, see \link{ctcov}.}
 
 \item{res}{A (\eqn{n \times N(k^\ast+m)}) optional numeric matrix containing
 the in-sample residuals or validation errors ordered from the lowest
 frequency to the highest frequency (columns) for each variable (rows).
 This matrix is used to compute some covariance matrices.}
-
-\item{tew}{A string specifying the type of temporal aggregation. Options
-include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
-(average), "\code{first}" (first value of the period), and "\code{last}"
-(last value of the period).}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:
@@ -59,9 +58,13 @@ et al. (2011).
 \href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{reduce_form}{A logical parameter indicating whether the function should return the
-full distribution (\code{FALSE}, \emph{default}) or only the distribution corresponding
-to the high-frequency bottom time series (\code{TRUE}).}
+\item{comb_base}{A string specifying the reconciliation method. For a
+complete list, see \link{ctcov}.}
+
+\item{reduce_form}{A logical parameter indicating whether the function
+should return the full distribution (\code{FALSE}, \emph{default}) or
+only the distribution corresponding to the high-frequency bottom time
+series (\code{TRUE}).}
 
 \item{...}{
   Arguments passed on to \code{\link[=ctcov]{ctcov}}
@@ -98,24 +101,24 @@ Byron, R.P. (1978), The estimation of large social account matrices,
 \emph{Journal of the Royal Statistical Society, Series A}, 141, 3, 359-367.
 \doi{10.2307/2344807}
 
-Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-\emph{Journal of the Royal Statistical Society, Series A}, 142(3), 405.
-\doi{10.2307/2982515}
+Byron, R.P. (1979), Corrigenda: The estimation of large social account
+matrices, \emph{Journal of the Royal Statistical Society, Series A}, 142(3),
+405. \doi{10.2307/2982515}
 
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
-\doi{10.1016/j.ijforecast.2023.10.003}
+practical issues. \emph{International Journal of Forecasting}, 40, 3,
+1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 
 Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
 \emph{Computational Statistics & Data Analysis}, 55, 9, 2579-2589.
 \doi{10.1016/j.csda.2011.03.006}
 
-Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-\emph{European Journal of Operational Research} 306(2), 693–706.
-\doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+(2023), Probabilistic forecast reconciliation: Properties, evaluation and
+score optimisation, \emph{European Journal of Operational Research} 306(2),
+693–706. \doi{10.1016/j.ejor.2022.07.040}
 }
 \seealso{
 Probabilistic reconciliation:

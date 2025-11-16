@@ -11,9 +11,9 @@
 #' reconciled forecasts, with either endogenous or exogenous constraints.
 #'
 #' @usage
-#' cslcc(base, agg_mat, nodes = "auto", comb = "ols", res = NULL, CCC = TRUE,
-#'       const = "exogenous", bts = NULL, approach = "proj", nn = NULL,
-#'       settings = NULL, ...)
+#' cslcc(base, agg_mat, comb = "ols", res = NULL, approach = "proj", nn = NULL,
+#'       settings = NULL, nodes = "auto", CCC = TRUE, const = "exogenous",
+#'       bts = NULL, ...)
 #'
 #' @inheritParams csrec
 #' @param nodes A (\eqn{L \times 1}) numeric vector indicating the number of variables
@@ -122,15 +122,15 @@
 cslcc <- function(
   base,
   agg_mat,
-  nodes = "auto",
   comb = "ols",
   res = NULL,
-  CCC = TRUE,
-  const = "exogenous",
-  bts = NULL,
   approach = "proj",
   nn = NULL,
   settings = NULL,
+  nodes = "auto",
+  CCC = TRUE,
+  const = "exogenous",
+  bts = NULL,
   ...
 ) {
   const <- match.arg(const, c("exogenous", "endogenous"))
@@ -297,9 +297,9 @@ cslcc <- function(
 #' reconciled forecasts, with either endogenous or exogenous constraints.
 #'
 #' @usage
-#' telcc(base, agg_order, comb = "ols", res = NULL, CCC = TRUE,
-#'       const = "exogenous", hfts = NULL, tew = "sum",
-#'       approach = "proj", nn = NULL, settings = NULL, ...)
+#' telcc(base, agg_order, tew = "sum", comb = "ols", res = NULL,
+#'       approach = "proj", nn = NULL, settings = NULL, CCC = TRUE,
+#'       const = "exogenous", hfts = NULL, ...)
 #'
 #' @inheritParams terec
 #' @inheritParams cslcc
@@ -388,15 +388,15 @@ cslcc <- function(
 telcc <- function(
   base,
   agg_order,
+  tew = "sum",
   comb = "ols",
   res = NULL,
-  CCC = TRUE,
-  const = "exogenous",
-  hfts = NULL,
-  tew = "sum",
   approach = "proj",
   nn = NULL,
   settings = NULL,
+  CCC = TRUE,
+  const = "exogenous",
+  hfts = NULL,
   ...
 ) {
   # Check if 'agg_order' is provided
@@ -538,9 +538,9 @@ telcc <- function(
 #' reconciled forecasts, with either endogenous or exogenous constraints.
 #'
 #' @usage
-#' ctlcc(base, agg_mat, nodes = "auto", agg_order, comb = "ols", res = NULL,
-#'       CCC = TRUE, const = "exogenous", hfbts = NULL, tew = "sum",
-#'       approach = "proj", nn = NULL, settings = NULL, ...)
+#' ctlcc(base, agg_mat, agg_order, tew = "sum", comb = "ols", res = NULL,
+#'       approach = "proj", nn = NULL, settings = NULL, nodes = "auto",
+#'       CCC = TRUE, const = "exogenous", hfbts = NULL, ...)
 #'
 #' @inheritParams ctrec
 #' @inheritParams cslcc
@@ -640,17 +640,17 @@ telcc <- function(
 ctlcc <- function(
   base,
   agg_mat,
-  nodes = "auto",
   agg_order,
+  tew = "sum",
   comb = "ols",
   res = NULL,
-  CCC = TRUE,
-  const = "exogenous",
-  hfbts = NULL,
-  tew = "sum",
   approach = "proj",
   nn = NULL,
   settings = NULL,
+  nodes = "auto",
+  CCC = TRUE,
+  const = "exogenous",
+  hfbts = NULL,
   ...
 ) {
   # Check if 'agg_order' is provided

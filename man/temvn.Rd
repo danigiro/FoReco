@@ -4,8 +4,8 @@
 \alias{temvn}
 \title{Temporal Gaussian probabilistic reconciliation}
 \usage{
-temvn(base, agg_order, comb = "ols", comb_base = comb, res = NULL,
-      tew = "sum", approach = "proj", reduce_form = FALSE, ...)
+temvn(base, agg_order, tew = "sum", comb = "ols", res = NULL,
+      approach = "proj", comb_base = comb, reduce_form = FALSE, ...)
 }
 \arguments{
 \item{base}{A (\eqn{N(k^\ast + m) \times 1}) numeric vector containing the
@@ -19,21 +19,18 @@ time series.}
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
+(last value of the period).}
+
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{tecov}.}
-
-\item{comb_base}{A string specifying the reconciliation method. For a
-complete list, see \link{tecov}.}
 
 \item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
 the in-sample residuals or validation errors ordered from the lowest
 frequency to the highest frequency. This vector is used to compute come
 covariance matrices.}
-
-\item{tew}{A string specifying the type of temporal aggregation. Options
-include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
-(average), "\code{first}" (first value of the period), and "\code{last}"
-(last value of the period).}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:
@@ -48,9 +45,12 @@ et al. (2011).
 \href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
+\item{comb_base}{A string specifying the reconciliation method. For a
+complete list, see \link{tecov}.}
+
 \item{reduce_form}{A logical parameter indicating whether the function
-should return the full distribution (\code{FALSE}, \emph{default}) or only
-the distribution corresponding to the high-frequency time series
+should return the full distribution (\code{FALSE}, \emph{default}) or
+only the distribution corresponding to the high-frequency time series
 (\code{TRUE}).}
 
 \item{...}{

@@ -4,7 +4,7 @@
 \alias{terec}
 \title{Optimal combination temporal reconciliation}
 \usage{
-terec(base, agg_order, comb = "ols", res = NULL, tew = "sum",
+terec(base, agg_order, tew = "sum", comb = "ols", res = NULL,
       approach = "proj", nn = NULL, settings = NULL, bounds = NULL,
       immutable = NULL, ...)
 }
@@ -20,6 +20,11 @@ time series.}
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
+\item{tew}{A string specifying the type of temporal aggregation. Options
+include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
+(average), "\code{first}" (first value of the period), and "\code{last}"
+(last value of the period).}
+
 \item{comb}{A string specifying the reconciliation method. For a complete
 list, see \link{tecov}.}
 
@@ -27,11 +32,6 @@ list, see \link{tecov}.}
 the in-sample residuals or validation errors ordered from the lowest
 frequency to the highest frequency. This vector is used to compute come
 covariance matrices.}
-
-\item{tew}{A string specifying the type of temporal aggregation. Options
-include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
-(average), "\code{first}" (first value of the period), and "\code{last}"
-(last value of the period).}
 
 \item{approach}{A string specifying the approach used to compute the
 reconciled forecasts. Options include:

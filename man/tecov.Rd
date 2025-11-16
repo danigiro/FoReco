@@ -15,8 +15,8 @@
 \alias{tecov.sam}
 \title{Temporal covariance matrix approximation}
 \usage{
-tecov(comb, agg_order = NULL, res = NULL, tew = "sum",
-      mse = TRUE, shrink_fun = shrink_estim, ...)
+tecov(comb, agg_order = NULL, tew = "sum", res = NULL, mse = TRUE,
+      shrink_fun = shrink_estim, ...)
 }
 \arguments{
 \item{comb}{A string specifying the covariance approximation method.
@@ -49,15 +49,15 @@ tecov(comb, agg_order = NULL, res = NULL, tew = "sum",
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
-\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
-the in-sample residuals or validation errors ordered from the lowest
-frequency to the highest frequency. This vector is used to compute come
-covariance matrices.}
-
 \item{tew}{A string specifying the type of temporal aggregation. Options
 include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 (average), "\code{first}" (first value of the period), and "\code{last}"
 (last value of the period).}
+
+\item{res}{A (\eqn{N(k^\ast+m) \times 1}) optional numeric vector containing
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.}
 
 \item{mse}{If \code{TRUE} (\emph{default}) the errors used to compute
 the covariance matrix are not mean-corrected.}

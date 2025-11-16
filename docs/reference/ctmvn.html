@@ -62,8 +62,9 @@ cross-sectional and temporal dimensions (Di Fonzo and Girolimetto, 2023).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ctmvn</span><span class="op">(</span><span class="va">base</span>, <span class="va">agg_mat</span>, <span class="va">cons_mat</span>, <span class="va">agg_order</span>, comb <span class="op">=</span> <span class="st">"ols"</span>, comb_base <span class="op">=</span> <span class="va">comb</span>,</span>
-<span>      res <span class="op">=</span> <span class="cn">NULL</span>, tew <span class="op">=</span> <span class="st">"sum"</span>, approach <span class="op">=</span> <span class="st">"proj"</span>, reduce_form <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ctmvn</span><span class="op">(</span><span class="va">base</span>, <span class="va">agg_mat</span>, <span class="va">cons_mat</span>, <span class="va">agg_order</span>, tew <span class="op">=</span> <span class="st">"sum"</span>, comb <span class="op">=</span> <span class="st">"ols"</span>,</span>
+<span>      res <span class="op">=</span> <span class="cn">NULL</span>, approach <span class="op">=</span> <span class="st">"proj"</span>, comb_base <span class="op">=</span> <span class="va">comb</span>,</span>
+<span>      reduce_form <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -101,13 +102,16 @@ requirement, as the function allows for redundancy in the constraints.</p></dd>
 subset of \(p\) factors of \(m\).</p></dd>
 
 
+<dt id="arg-tew">tew<a class="anchor" aria-label="anchor" href="#arg-tew"></a></dt>
+<dd><p>A string specifying the type of temporal aggregation. Options
+include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</code>"
+(average), "<code>first</code>" (first value of the period), and "<code>last</code>"
+(last value of the period).</p></dd>
+
+
 <dt id="arg-comb">comb<a class="anchor" aria-label="anchor" href="#arg-comb"></a></dt>
 <dd><p>A string specifying the reconciliation method. For a complete
 list, see <a href="ctcov.html">ctcov</a>.</p></dd>
-
-
-<dt id="arg-comb-base">comb_base<a class="anchor" aria-label="anchor" href="#arg-comb-base"></a></dt>
-<dd><p>A string specifying the reconciliation method. For a complete list, see <a href="ctcov.html">ctcov</a>.</p></dd>
 
 
 <dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
@@ -115,13 +119,6 @@ list, see <a href="ctcov.html">ctcov</a>.</p></dd>
 the in-sample residuals or validation errors ordered from the lowest
 frequency to the highest frequency (columns) for each variable (rows).
 This matrix is used to compute some covariance matrices.</p></dd>
-
-
-<dt id="arg-tew">tew<a class="anchor" aria-label="anchor" href="#arg-tew"></a></dt>
-<dd><p>A string specifying the type of temporal aggregation. Options
-include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</code>"
-(average), "<code>first</code>" (first value of the period), and "<code>last</code>"
-(last value of the period).</p></dd>
 
 
 <dt id="arg-approach">approach<a class="anchor" aria-label="anchor" href="#arg-approach"></a></dt>
@@ -137,10 +134,16 @@ et al. (2011).</p></li>
 </ul></dd>
 
 
+<dt id="arg-comb-base">comb_base<a class="anchor" aria-label="anchor" href="#arg-comb-base"></a></dt>
+<dd><p>A string specifying the reconciliation method. For a
+complete list, see <a href="ctcov.html">ctcov</a>.</p></dd>
+
+
 <dt id="arg-reduce-form">reduce_form<a class="anchor" aria-label="anchor" href="#arg-reduce-form"></a></dt>
-<dd><p>A logical parameter indicating whether the function should return the
-full distribution (<code>FALSE</code>, <em>default</em>) or only the distribution corresponding
-to the high-frequency bottom time series (<code>TRUE</code>).</p></dd>
+<dd><p>A logical parameter indicating whether the function
+should return the full distribution (<code>FALSE</code>, <em>default</em>) or
+only the distribution corresponding to the high-frequency bottom time
+series (<code>TRUE</code>).</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -165,21 +168,21 @@ covariance matrix are not mean-corrected.</p></dd>
     <p>Byron, R.P. (1978), The estimation of large social account matrices,
 <em>Journal of the Royal Statistical Society, Series A</em>, 141, 3, 359-367.
 <a href="https://doi.org/10.2307/2344807" class="external-link">doi:10.2307/2344807</a></p>
-<p>Byron, R.P. (1979), Corrigenda: The estimation of large social account matrices,
-<em>Journal of the Royal Statistical Society, Series A</em>, 142(3), 405.
-<a href="https://doi.org/10.2307/2982515" class="external-link">doi:10.2307/2982515</a></p>
+<p>Byron, R.P. (1979), Corrigenda: The estimation of large social account
+matrices, <em>Journal of the Royal Statistical Society, Series A</em>, 142(3),
+405. <a href="https://doi.org/10.2307/2982515" class="external-link">doi:10.2307/2982515</a></p>
 <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
 Cross-temporal probabilistic forecast reconciliation: Methodological and
-practical issues. <em>International Journal of Forecasting</em>, 40, 3, 1134-1151.
-<a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
+practical issues. <em>International Journal of Forecasting</em>, 40, 3,
+1134-1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
 <p>Hyndman, R.J., Ahmed, R.A., Athanasopoulos, G. and Shang, H.L. (2011),
 Optimal combination forecasts for hierarchical time series,
 <em>Computational Statistics &amp; Data Analysis</em>, 55, 9, 2579-2589.
 <a href="https://doi.org/10.1016/j.csda.2011.03.006" class="external-link">doi:10.1016/j.csda.2011.03.006</a></p>
-<p>Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-<em>European Journal of Operational Research</em> 306(2), 693–706.
-<a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">doi:10.1016/j.ejor.2022.07.040</a></p>
+<p>Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+(2023), Probabilistic forecast reconciliation: Properties, evaluation and
+score optimisation, <em>European Journal of Operational Research</em> 306(2),
+693–706. <a href="https://doi.org/10.1016/j.ejor.2022.07.040" class="external-link">doi:10.1016/j.ejor.2022.07.040</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

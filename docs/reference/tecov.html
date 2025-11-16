@@ -59,8 +59,8 @@ Fonzo and Girolimetto, 2023).</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tecov</span><span class="op">(</span><span class="va">comb</span>, agg_order <span class="op">=</span> <span class="cn">NULL</span>, res <span class="op">=</span> <span class="cn">NULL</span>, tew <span class="op">=</span> <span class="st">"sum"</span>,</span>
-<span>      mse <span class="op">=</span> <span class="cn">TRUE</span>, shrink_fun <span class="op">=</span> <span class="va">shrink_estim</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tecov</span><span class="op">(</span><span class="va">comb</span>, agg_order <span class="op">=</span> <span class="cn">NULL</span>, tew <span class="op">=</span> <span class="st">"sum"</span>, res <span class="op">=</span> <span class="cn">NULL</span>, mse <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>      shrink_fun <span class="op">=</span> <span class="va">shrink_estim</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -91,18 +91,18 @@ Fonzo and Girolimetto, 2023).</p>
 subset of \(p\) factors of \(m\).</p></dd>
 
 
-<dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
-<dd><p>A (\(N(k^\ast+m) \times 1\)) optional numeric vector containing
-the in-sample residuals or validation errors ordered from the lowest
-frequency to the highest frequency. This vector is used to compute come
-covariance matrices.</p></dd>
-
-
 <dt id="arg-tew">tew<a class="anchor" aria-label="anchor" href="#arg-tew"></a></dt>
 <dd><p>A string specifying the type of temporal aggregation. Options
 include: "<code>sum</code>" (simple summation, <em>default</em>), "<code>avg</code>"
 (average), "<code>first</code>" (first value of the period), and "<code>last</code>"
 (last value of the period).</p></dd>
+
+
+<dt id="arg-res">res<a class="anchor" aria-label="anchor" href="#arg-res"></a></dt>
+<dd><p>A (\(N(k^\ast+m) \times 1\)) optional numeric vector containing
+the in-sample residuals or validation errors ordered from the lowest
+frequency to the highest frequency. This vector is used to compute come
+covariance matrices.</p></dd>
 
 
 <dt id="arg-mse">mse<a class="anchor" aria-label="anchor" href="#arg-mse"></a></dt>

@@ -4,8 +4,8 @@
 \alias{ctmo}
 \title{Cross-temporal middle-out reconciliation}
 \usage{
-ctmo(base, agg_mat, agg_order, id_rows = 1, order = max(agg_order),
-     weights, tew = "sum", normalize = TRUE)
+ctmo(base, agg_mat, agg_order, weights, id_rows = 1, order = max(agg_order),
+     tew = "sum", normalize = TRUE)
 }
 \arguments{
 \item{base}{A (\eqn{n_l \times hk}) numeric matrix containing the \eqn{l}-level
@@ -22,14 +22,14 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
-\item{id_rows}{A numeric vector indicating the \eqn{l}-level rows of \code{agg_mat}.}
-
-\item{order}{The intermediate fixed aggregation order \eqn{k}.}
-
 \item{weights}{A (\eqn{n_b \times hm}) numeric matrix containing the proportions for each
 high-frequency bottom time series; \eqn{n_b} is the total number of high-frequency
 bottom variables, \eqn{m} is the max aggregation order, and \eqn{h} is the forecast horizon
 for the lowest frequency time series.}
+
+\item{id_rows}{A numeric vector indicating the \eqn{l}-level rows of \code{agg_mat}.}
+
+\item{order}{The intermediate fixed aggregation order \eqn{k}.}
 
 \item{tew}{A string specifying the type of temporal aggregation. Options
 include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"

@@ -4,7 +4,7 @@
 \alias{temo}
 \title{Temporal middle-out reconciliation}
 \usage{
-temo(base, agg_order, order = max(agg_order), weights, tew = "sum",
+temo(base, agg_order, weights, order = max(agg_order), tew = "sum",
      normalize = TRUE)
 }
 \arguments{
@@ -17,11 +17,11 @@ order, and \eqn{h} is the forecast horizon for the lowest frequency time series.
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
-\item{order}{The intermediate fixed aggregation order \eqn{k}.}
-
 \item{weights}{A (\eqn{hm \times 1}) numeric vector containing the proportions for the
 high-frequency time series; \eqn{m} is the max aggregation order, and \eqn{h} is the
 forecast horizon for the lowest frequency time series.}
+
+\item{order}{The intermediate fixed aggregation order \eqn{k}.}
 
 \item{tew}{A string specifying the type of temporal aggregation. Options
 include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"

@@ -4,7 +4,7 @@
 \alias{csmo}
 \title{Cross-sectional middle-out reconciliation}
 \usage{
-csmo(base, agg_mat, id_rows = 1, weights, normalize = TRUE)
+csmo(base, agg_mat, weights, id_rows = 1, normalize = TRUE)
 }
 \arguments{
 \item{base}{A (\eqn{h \times n_l}) numeric matrix containing the \eqn{l}-level
@@ -15,11 +15,11 @@ base forecast; \eqn{n_l} is the number of variables at level \eqn{l}, and
 cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{id_rows}{A numeric vector indicating the \eqn{l}-level rows of \code{agg_mat}.}
-
 \item{weights}{A (\eqn{h \times n_b}) numeric matrix containing the proportions for the
 bottom time series; \eqn{h} is the forecast horizon, and \eqn{n_b} is the total number
 of bottom variables.}
+
+\item{id_rows}{A numeric vector indicating the \eqn{l}-level rows of \code{agg_mat}.}
 
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }

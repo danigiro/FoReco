@@ -277,7 +277,7 @@ csrec <- function(
 #' immutable reconciled forecasts can be considered.
 #'
 #' @usage
-#' terec(base, agg_order, comb = "ols", res = NULL, tew = "sum",
+#' terec(base, agg_order, tew = "sum", comb = "ols", res = NULL,
 #'       approach = "proj", nn = NULL, settings = NULL, bounds = NULL,
 #'       immutable = NULL, ...)
 #'
@@ -393,9 +393,9 @@ csrec <- function(
 terec <- function(
   base,
   agg_order,
+  tew = "sum",
   comb = "ols",
   res = NULL,
-  tew = "sum",
   approach = "proj",
   nn = NULL,
   settings = NULL,
@@ -561,8 +561,8 @@ terec <- function(
 #' Girolimetto, 2023) and immutable reconciled forecasts can be considered.
 #'
 #' @usage
-#' ctrec(base, agg_mat, cons_mat, agg_order, comb = "ols", res = NULL,
-#'       tew = "sum", approach = "proj", nn = NULL, settings = NULL,
+#' ctrec(base, agg_mat, cons_mat, agg_order, tew = "sum", comb = "ols",
+#'       res = NULL, approach = "proj", nn = NULL, settings = NULL,
 #'       bounds = NULL, immutable = NULL, ...)
 #'
 #' @param base A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
@@ -771,9 +771,9 @@ ctrec <- function(
   agg_mat,
   cons_mat,
   agg_order,
+  tew = "sum",
   comb = "ols",
   res = NULL,
-  tew = "sum",
   approach = "proj",
   nn = NULL,
   settings = NULL,

@@ -40,7 +40,7 @@
 #' @family Framework: cross-sectional
 #' @export
 #'
-csmo <- function(base, agg_mat, id_rows = 1, weights, normalize = TRUE) {
+csmo <- function(base, agg_mat, weights, id_rows = 1, normalize = TRUE) {
   if (missing(agg_mat)) {
     cli_abort(
       "Argument {.arg agg_mat} is missing, with no default.",
@@ -132,7 +132,7 @@ csmo <- function(base, agg_mat, id_rows = 1, weights, normalize = TRUE) {
 #' }
 #'
 #' @usage
-#' temo(base, agg_order, order = max(agg_order), weights, tew = "sum",
+#' temo(base, agg_order, weights, order = max(agg_order), tew = "sum",
 #'      normalize = TRUE)
 #'
 #' @param base A (\eqn{hk \times 1}) numeric vector containing the temporal
@@ -164,8 +164,8 @@ csmo <- function(base, agg_mat, id_rows = 1, weights, normalize = TRUE) {
 temo <- function(
   base,
   agg_order,
-  order = max(agg_order),
   weights,
+  order = max(agg_order),
   tew = "sum",
   normalize = TRUE
 ) {
@@ -247,8 +247,8 @@ temo <- function(
 #' }
 #'
 #' @usage
-#' ctmo(base, agg_mat, agg_order, id_rows = 1, order = max(agg_order),
-#'      weights, tew = "sum", normalize = TRUE)
+#' ctmo(base, agg_mat, agg_order, weights, id_rows = 1, order = max(agg_order),
+#'      tew = "sum", normalize = TRUE)
 #'
 #' @param base A (\eqn{n_l \times hk}) numeric matrix containing the \eqn{l}-level
 #' base forecasts of temporal aggregation order \eqn{k}; \eqn{n_l} is the number of variables at
@@ -287,9 +287,9 @@ ctmo <- function(
   base,
   agg_mat,
   agg_order,
+  weights,
   id_rows = 1,
   order = max(agg_order),
-  weights,
   tew = "sum",
   normalize = TRUE
 ) {
