@@ -143,11 +143,11 @@ naive <- rep(2.5, 4)
 ## EXOGENOUS CONSTRAINTS
 # Level Conditional Coherent (LCC) reconciled forecasts
 exo_LC <- telcc(base = base, agg_order = 4, comb = "wlsh", hfts = naive,
-                res = res, nodes = "auto", CCC = FALSE)
+                res = res, CCC = FALSE)
 
 # Combined Conditional Coherent (CCC) reconciled forecasts
 exo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", hfts = naive,
-                 res = res, nodes = "auto", CCC = TRUE)
+                 res = res, CCC = TRUE)
 
 # Results detailed by level:
 info_exo <- recoinfo(exo_CCC, verbose = FALSE)
@@ -156,11 +156,11 @@ info_exo <- recoinfo(exo_CCC, verbose = FALSE)
 ## ENDOGENOUS CONSTRAINTS
 # Level Conditional Coherent (LCC) reconciled forecasts
 endo_LC <- telcc(base = base, agg_order = 4, comb = "wlsh", res = res,
-                 nodes = "auto", CCC = FALSE, const = "endogenous")
+                 CCC = FALSE, const = "endogenous")
 
 # Combined Conditional Coherent (CCC) reconciled forecasts
 endo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", res = res,
-                  nodes = "auto", CCC = TRUE, const = "endogenous")
+                  CCC = TRUE, const = "endogenous")
 
 # Results detailed by level:
 info_endo <- recoinfo(endo_CCC, verbose = FALSE)

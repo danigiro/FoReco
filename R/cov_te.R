@@ -120,7 +120,7 @@ tecov.ols <- function(comb = "ols", ..., agg_order = NULL) {
   }
 
   # Check for ignored res argument
-  tmp <- match.call(expand.dots = FALSE)$...
+  tmp <- list(...)
   if (length(tmp) > 0) {
     if (!is.null(tmp$res)) {
       cli_warn(
@@ -152,7 +152,7 @@ tecov.str <- function(
   }
 
   # Check for ignored res argument
-  tmp <- match.call(expand.dots = FALSE)$...
+  tmp <- list(...)
   if (length(tmp) > 0) {
     if (!is.null(tmp$res)) {
       cli_warn(

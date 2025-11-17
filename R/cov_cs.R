@@ -125,7 +125,7 @@ cscov.ols <- function(comb = "ols", ..., n = NULL) {
     cli_abort("Argument {.arg n} must be a positive integer.", call = NULL)
   }
   # Check for ignored res argument
-  tmp <- match.call(expand.dots = FALSE)$...
+  tmp <- list(...)
   if (length(tmp) > 0) {
     if (!is.null(tmp$res)) {
       cli_warn(
@@ -152,7 +152,7 @@ cscov.str <- function(comb = "str", ..., agg_mat = NULL, strc_mat = NULL) {
   }
 
   # Check for ignored res argument
-  tmp <- match.call(expand.dots = FALSE)$...
+  tmp <- list(...)
   if (length(tmp) > 0) {
     if (!is.null(tmp$res)) {
       cli_warn(

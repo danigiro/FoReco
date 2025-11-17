@@ -188,6 +188,10 @@ shrink_oasd <- function(x, mse = TRUE) {
 #' operates exclusively with balanced hierarchies.
 #'
 #' @inheritParams cslcc
+#' @param nodes A (\eqn{L \times 1}) numeric vector indicating the number of
+#' variables in each of the upper \eqn{L} levels of the hierarchy. The
+#' \emph{default} value is the string "\code{auto}" which calculates the
+#' number of variables in each level.
 #' @param sparse Option to return sparse matrices (\emph{default} is
 #' \code{TRUE}).
 #'

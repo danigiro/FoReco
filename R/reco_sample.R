@@ -181,8 +181,8 @@ cssmp <- function(sample, fun = csrec, ...) {
 #'                       fun = tetd, weights = c(0.2, 0.5, 0.3, 0.3))
 #'
 #' # Middle-out probabilistic reconciliation
-#' tesmp(sample[,c(3:6), drop = FALSE], agg_order = m,
-#'       fun = temo, weights = c(0.2, 0.5, 0.3, 0.3), order = 2)
+#' reco_dist_mo <- tesmp(sample[,c(3:6), drop = FALSE], agg_order = m,
+#'                       fun = temo, weights = c(0.2, 0.5, 0.3, 0.3), order = 2)
 #'
 #' # Bottom-up probabilistic reconciliation
 #' reco_dist_bu <- tesmp(sample[,-c(1:6)], agg_order = m, fun = tebu)

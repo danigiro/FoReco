@@ -12,13 +12,9 @@
 #'
 #' @usage
 #' cslcc(base, agg_mat, comb = "ols", res = NULL, approach = "proj", nn = NULL,
-#'       settings = NULL, nodes = "auto", CCC = TRUE, const = "exogenous",
-#'       bts = NULL, ...)
+#'       settings = NULL, CCC = TRUE, const = "exogenous", bts = NULL, ...)
 #'
 #' @inheritParams csrec
-#' @param nodes A (\eqn{L \times 1}) numeric vector indicating the number of variables
-#' in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
-#' value is the string "\code{auto}" which calculates the number of variables in each level.
 #' @param const A string specifying the reconciliation constraints:
 #' \itemize{
 #'   \item "\code{exogenous}" (\emph{default}): Fixes the top level of each sub-hierarchy.
@@ -85,11 +81,11 @@
 #' ## EXOGENOUS CONSTRAINTS (Hollyman et al., 2021)
 #' # Level Conditional Coherent (LCC) reconciled forecasts
 #' exo_LC <- cslcc(base = base, agg_mat = A, comb = "wls", bts = naive,
-#'                 res = res, nodes = "auto", CCC = FALSE)
+#'                 res = res, CCC = FALSE)
 #'
 #' # Combined Conditional Coherent (CCC) reconciled forecasts
 #' exo_CCC <- cslcc(base = base, agg_mat = A, comb = "wls", bts = naive,
-#'                  res = res, nodes = "auto", CCC = TRUE)
+#'                  res = res, CCC = TRUE)
 #'
 #' # Results detailed by level:
 #' # L-1: Level 1 immutable reconciled forecasts for the whole hierarchy
@@ -101,12 +97,12 @@
 #' ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
 #' # Level Conditional Coherent (LCC) reconciled forecasts
 #' endo_LC <- cslcc(base = base, agg_mat = A, comb = "wls",
-#'                  res = res, nodes = "auto", CCC = FALSE,
+#'                  res = res, CCC = FALSE,
 #'                  const = "endogenous")
 #'
 #' # Combined Conditional Coherent (CCC) reconciled forecasts
 #' endo_CCC <- cslcc(base = base, agg_mat = A, comb = "wls",
-#'                   res = res, nodes = "auto", CCC = TRUE,
+#'                   res = res, CCC = TRUE,
 #'                   const = "endogenous")
 #'
 #' # Results detailed by level:
@@ -127,7 +123,6 @@ cslcc <- function(
   approach = "proj",
   nn = NULL,
   settings = NULL,
-  nodes = "auto",
   CCC = TRUE,
   const = "exogenous",
   bts = NULL,
@@ -142,6 +137,12 @@ cslcc <- function(
     nodes <- 1
   } else {
     utd <- FALSE
+    dots <- list(...)
+    if (!is.null(dots$nodes)) {
+      nodes <- dots$nodes
+    } else {
+      nodes <- "auto"
+    }
   }
 
   # Check if 'base' is provided and its dimensions match with the data
@@ -359,11 +360,11 @@ cslcc <- function(
 #' ## EXOGENOUS CONSTRAINTS
 #' # Level Conditional Coherent (LCC) reconciled forecasts
 #' exo_LC <- telcc(base = base, agg_order = 4, comb = "wlsh", hfts = naive,
-#'                 res = res, nodes = "auto", CCC = FALSE)
+#'                 res = res, CCC = FALSE)
 #'
 #' # Combined Conditional Coherent (CCC) reconciled forecasts
 #' exo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", hfts = naive,
-#'                  res = res, nodes = "auto", CCC = TRUE)
+#'                  res = res, CCC = TRUE)
 #'
 #' # Results detailed by level:
 #' info_exo <- recoinfo(exo_CCC, verbose = FALSE)
@@ -372,11 +373,11 @@ cslcc <- function(
 #' ## ENDOGENOUS CONSTRAINTS
 #' # Level Conditional Coherent (LCC) reconciled forecasts
 #' endo_LC <- telcc(base = base, agg_order = 4, comb = "wlsh", res = res,
-#'                  nodes = "auto", CCC = FALSE, const = "endogenous")
+#'                  CCC = FALSE, const = "endogenous")
 #'
 #' # Combined Conditional Coherent (CCC) reconciled forecasts
 #' endo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", res = res,
-#'                   nodes = "auto", CCC = TRUE, const = "endogenous")
+#'                   CCC = TRUE, const = "endogenous")
 #'
 #' # Results detailed by level:
 #' info_endo <- recoinfo(endo_CCC, verbose = FALSE)
@@ -539,8 +540,8 @@ telcc <- function(
 #'
 #' @usage
 #' ctlcc(base, agg_mat, agg_order, tew = "sum", comb = "ols", res = NULL,
-#'       approach = "proj", nn = NULL, settings = NULL, nodes = "auto",
-#'       CCC = TRUE, const = "exogenous", hfbts = NULL, ...)
+#'       approach = "proj", nn = NULL, settings = NULL, CCC = TRUE,
+#'       const = "exogenous", hfbts = NULL, ...)
 #'
 #' @inheritParams ctrec
 #' @inheritParams cslcc
@@ -609,11 +610,11 @@ telcc <- function(
 #' ## EXOGENOUS CONSTRAINTS (Hollyman et al., 2021)
 #' # Level Conditional Coherent (LCC) reconciled forecasts
 #' exo_LC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh", nn = "osqp",
-#'                 hfbts = naive, res = res, nodes = "auto", CCC = FALSE)
+#'                 hfbts = naive, res = res, CCC = FALSE)
 #'
 #' # Combined Conditional Coherent (CCC) reconciled forecasts
 #' exo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
-#'                 hfbts = naive, res = res, nodes = "auto", CCC = TRUE)
+#'                 hfbts = naive, res = res, CCC = TRUE)
 #'
 #' # Results detailed by level:
 #' info_exo <- recoinfo(exo_CCC, verbose = FALSE)
@@ -622,13 +623,11 @@ telcc <- function(
 #' ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
 #' # Level Conditional Coherent (LCC) reconciled forecasts
 #' endo_LC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
-#'                  res = res, nodes = "auto", CCC = FALSE,
-#'                  const = "endogenous")
+#'                  res = res, CCC = FALSE, const = "endogenous")
 #'
 #' # Combined Conditional Coherent (CCC) reconciled forecasts
 #' endo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
-#'                   res = res, nodes = "auto", CCC = TRUE,
-#'                   const = "endogenous")
+#'                   res = res, CCC = TRUE, const = "endogenous")
 #'
 #' # Results detailed by level:
 #' info_endo <- recoinfo(endo_CCC, verbose = FALSE)
@@ -647,7 +646,6 @@ ctlcc <- function(
   approach = "proj",
   nn = NULL,
   settings = NULL,
-  nodes = "auto",
   CCC = TRUE,
   const = "exogenous",
   hfbts = NULL,
@@ -677,6 +675,13 @@ ctlcc <- function(
       call = NULL
     )
   } else {
+    dots <- list(...)
+    if (!is.null(dots$nodes)) {
+      nodes <- dots$nodes
+    } else {
+      nodes <- "auto"
+    }
+
     balh <- balance_hierarchy(agg_mat = agg_mat, nodes = nodes)
     names_base <- rownames(base)
     base <- base[balh$id, ]

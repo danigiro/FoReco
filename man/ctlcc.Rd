@@ -5,8 +5,8 @@
 \title{Level conditional coherent reconciliation for cross-temporal hierarchies}
 \usage{
 ctlcc(base, agg_mat, agg_order, tew = "sum", comb = "ols", res = NULL,
-      approach = "proj", nn = NULL, settings = NULL, nodes = "auto",
-      CCC = TRUE, const = "exogenous", hfbts = NULL, ...)
+      approach = "proj", nn = NULL, settings = NULL, CCC = TRUE,
+      const = "exogenous", hfbts = NULL, ...)
 }
 \arguments{
 \item{base}{A (\eqn{n \times h(k^\ast+m)}) numeric matrix containing the base
@@ -101,10 +101,6 @@ identification of negative values
 }
 }}
 
-\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
-in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
-value is the string "\code{auto}" which calculates the number of variables in each level.}
-
 \item{CCC}{A logical value indicating whether the Combined Conditional Coherent reconciled
 forecasts reconciliation should include bottom-up forecasts (\code{TRUE}, \emph{default}), or not.}
 
@@ -162,11 +158,11 @@ naive <- matrix(2.5, 4, 4)
 ## EXOGENOUS CONSTRAINTS (Hollyman et al., 2021)
 # Level Conditional Coherent (LCC) reconciled forecasts
 exo_LC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh", nn = "osqp",
-                hfbts = naive, res = res, nodes = "auto", CCC = FALSE)
+                hfbts = naive, res = res, CCC = FALSE)
 
 # Combined Conditional Coherent (CCC) reconciled forecasts
 exo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
-                hfbts = naive, res = res, nodes = "auto", CCC = TRUE)
+                hfbts = naive, res = res, CCC = TRUE)
 
 # Results detailed by level:
 info_exo <- recoinfo(exo_CCC, verbose = FALSE)
@@ -175,13 +171,11 @@ info_exo <- recoinfo(exo_CCC, verbose = FALSE)
 ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
 # Level Conditional Coherent (LCC) reconciled forecasts
 endo_LC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
-                 res = res, nodes = "auto", CCC = FALSE,
-                 const = "endogenous")
+                 res = res, CCC = FALSE, const = "endogenous")
 
 # Combined Conditional Coherent (CCC) reconciled forecasts
 endo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
-                  res = res, nodes = "auto", CCC = TRUE,
-                  const = "endogenous")
+                  res = res, CCC = TRUE, const = "endogenous")
 
 # Results detailed by level:
 info_endo <- recoinfo(endo_CCC, verbose = FALSE)

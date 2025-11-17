@@ -11,9 +11,10 @@ balance_hierarchy(agg_mat, nodes = "auto", sparse = TRUE)
 cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (free) variables into the \eqn{n_a} upper (constrained) variables.}
 
-\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of variables
-in each of the upper \eqn{L} levels of the hierarchy. The \emph{default}
-value is the string "\code{auto}" which calculates the number of variables in each level.}
+\item{nodes}{A (\eqn{L \times 1}) numeric vector indicating the number of
+variables in each of the upper \eqn{L} levels of the hierarchy. The
+\emph{default} value is the string "\code{auto}" which calculates the
+number of variables in each level.}
 
 \item{sparse}{Option to return sparse matrices (\emph{default} is
 \code{TRUE}).}
