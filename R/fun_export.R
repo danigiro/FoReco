@@ -168,13 +168,24 @@ shrink_oasd <- function(x, mse = TRUE) {
   num <- tr_ss - tr_s
   den <- tr_ss + sum(var)^2 - 2 * tr_s
   phi <- num / den
-  lambda <- min(1, 1 / (n * phi))
+  lambda <- max(min(1, 1 / (n * phi)), 0)
 
-  # Shrinkage
-  shrink_cov <- lambda * tar + (1 - lambda) * covm
-  shrink_cov <- drop0(shrink_cov)
+  if (lambda == 1) {
+    shrink_cov <- Diagonal(x = diag(covm))
+  } else if (lambda == 0) {
+    shrink_cov <- forceSymmetric(covm)
+  } else {
+    # shrink_cov <- lambda * tar + (1 - lambda) * Matrix(covm)
+    # with big matrix: sparse->dense coercion
+    # Solution:
+    shrink_cov <- (1 - lambda) * covm
+    diag(shrink_cov) <- diag(covm)
+    # dsyMatrix should be slighted faster then dsCMatrix
+    # shrink_cov <- drop0(shrink_cov)
+    shrink_cov <- forceSymmetric(shrink_cov)
+  }
+
   attr(shrink_cov, "lambda") <- lambda
-
   return(shrink_cov)
 }
 
