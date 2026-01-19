@@ -281,7 +281,7 @@ csrec <- function(
 #'       approach = "proj", nn = NULL, settings = NULL, bounds = NULL,
 #'       immutable = NULL, ...)
 #'
-#' @param base A (\eqn{N(k^\ast + m) \times 1}) numeric vector containing the
+#' @param base A (\eqn{h(k^\ast + m) \times 1}) numeric vector containing the
 #'   base forecasts to be reconciled, ordered from lowest to highest frequency;
 #'   \eqn{m} is the maximum aggregation order, \eqn{k^\ast} is the sum of a
 #'   chosen subset of the \eqn{p - 1} factors of \eqn{m} (excluding \eqn{m}

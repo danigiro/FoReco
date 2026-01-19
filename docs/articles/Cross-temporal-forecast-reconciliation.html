@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Cross-temporal forecast reconciliation</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2025-10-28</p>
+      <p class="date">2026-01-19</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Cross-temporal-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Cross-temporal-forecast-reconciliation.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -224,7 +224,7 @@
 <code class="sourceCode R"><span><span class="va">rf_lcc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctlcc.html">ctlcc</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_lcc</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:28] 316724 98441 62491 79420 19591 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:525, 1:28] 316724 98441 62491 79421 19591 ...</span></span></code></pre></div>
 </div>
 <p>The iterative procedure described in <span class="citation" data-cites="Di_Fonzo2023-dg">Di Fonzo &amp; Girolimetto (<a href="#ref-Di_Fonzo2023-dg" role="doc-biblioref">2023a</a>)</span> produces cross-temporally reconciled forecasts by alternating forecast reconciliation along one single dimension (either cross-sectional or temporal) at each iteration step.</p>
 <div class="cell">
@@ -237,14 +237,14 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   i.s |        Temporal | Cross-sectional |</span></span>
 <span><span class="co">#&gt;     0 |         4869.77 |        23213.13 |</span></span>
-<span><span class="co">#&gt;   1.1 |            0.00 |        34262.16 |</span></span>
-<span><span class="co">#&gt;   1.2 |         6994.71 |            0.00 |</span></span>
-<span><span class="co">#&gt;   2.1 |            0.00 |         1112.59 |</span></span>
-<span><span class="co">#&gt;   2.2 |          342.66 |            0.00 |</span></span>
-<span><span class="co">#&gt;   3.1 |            0.00 |           47.08 |</span></span>
+<span><span class="co">#&gt;   1.1 |            0.00 |        34261.97 |</span></span>
+<span><span class="co">#&gt;   1.2 |         6994.04 |            0.00 |</span></span>
+<span><span class="co">#&gt;   2.1 |            0.00 |         1112.09 |</span></span>
+<span><span class="co">#&gt;   2.2 |          342.64 |            0.00 |</span></span>
+<span><span class="co">#&gt;   3.1 |            0.00 |           47.06 |</span></span>
 <span><span class="co">#&gt;   3.2 |           16.48 |            0.00 |</span></span>
 <span><span class="co">#&gt;   4.1 |            0.00 |            2.15 |</span></span>
-<span><span class="co">#&gt;   4.2 |        7.91e-01 |            0.00 |</span></span>
+<span><span class="co">#&gt;   4.2 |        7.90e-01 |            0.00 |</span></span>
 <span><span class="co">#&gt;   5.1 |            0.00 |        1.01e-01 |</span></span>
 <span><span class="co">#&gt;   5.2 |        3.79e-02 |            0.00 |</span></span>
 <span><span class="co">#&gt;   6.1 |            0.00 |        4.81e-03 |</span></span>
@@ -257,7 +257,7 @@
 <span><span class="co">#&gt; ✔ Convergence achieved at iteration 8.</span></span>
 <span><span class="co">#&gt; ────────────────────────────────────────────────────────────────────────────────</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_ite</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:28] 324066 98946 64400 80221 20703 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:525, 1:28] 324066 98945 64400 80221 20703 ...</span></span></code></pre></div>
 </div>
 <p>The cross-temporal method by <span class="citation" data-cites="Kourentzes2019-dj">Kourentzes &amp; Athanasopoulos (<a href="#ref-Kourentzes2019-dj" role="doc-biblioref">2019</a>)</span>, involves three steps: first, reconciling forecasts for each time series at different temporal aggregation levels using temporal hierarchies; second, performing cross-sectional reconciliation at each temporal aggregation order; and third, averaging the projection matrices from the second step and using them to cross-sectionally reconcile the forecasts from the first step. In contrast, we can reverses these steps starting with cross-sectional reconciliation followed by temporal reconciliation <span class="citation" data-cites="Di_Fonzo2023-dg">(<a href="#ref-Di_Fonzo2023-dg" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023a</a>)</span>.</p>
 <div class="cell">
@@ -266,7 +266,7 @@
 <span>                 cslist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span>, </span>
 <span>                 telist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_tcs</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:28] 323553 98861 64315 80090 20660 ...</span></span>
+<span><span class="co">#&gt;  num [1:525, 1:28] 323554 98860 64315 80091 20660 ...</span></span>
 <span><span class="va">rf_cst</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/heuristic-reco.html">cstrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, res <span class="op">=</span> <span class="va">res_mat</span>,</span>
 <span>                 cslist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span>, </span>
 <span>                 telist <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span><span class="op">)</span></span>
@@ -279,7 +279,7 @@
 <code class="sourceCode R"><span><span class="va">rf_opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_opt</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:28] 314297 97383 62631 77793 19695 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:525, 1:28] 314298 97383 62630 77794 19695 ...</span></span></code></pre></div>
 </div>
 <p>The following table shows some options for the optimal combination cross-temporal reconciliation function <code><a href="../reference/ctrec.html">ctrec()</a></code>.</p>
 <style type="text/css">
@@ -396,7 +396,7 @@ supported
 <span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
 <span><span class="co">#&gt;         obj_val run_time iter      pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -220421537281 26.04065  700 1.052998e-21      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 -220421547963 34.37354  750 0.0004125102      1            -1</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023b</a>)</span>.</li>
@@ -440,7 +440,7 @@ supported
 <span><span class="va">rf_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctrec.html">ctrec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_mat2</span>, agg_order <span class="op">=</span> <span class="va">te_subset</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_mat2</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_sub</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:17] 313400 97327 62517 77555 19511 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:525, 1:17] 313401 97327 62517 77557 19511 ...</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h3 id="probabilistic-forecast-reconciliation">Probabilistic forecast reconciliation<a class="anchor" aria-label="anchor" href="#probabilistic-forecast-reconciliation"></a>
 </h3>
@@ -454,9 +454,9 @@ supported
 <span><span class="va">base_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctboot.html">ctboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
-<span><span class="co">#&gt;  $ : num [1:525, 1:28] 321845 95542 66009 80740 19633 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:525, 1:28] 331564 99976 64008 79848 21893 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:525, 1:28] 341516 103703 66673 79246 20532 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 330973 99636 64103 76370 20833 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 331408 102430 66257 76281 21865 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:525, 1:28] 330973 99636 64103 76370 20833 ...</span></span>
 <span></span>
 <span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsmp.html">ctsmp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span>, agg_mat <span class="op">=</span> <span class="va">vnaggmat</span>,</span>
 <span>                      res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span>, approach <span class="op">=</span> <span class="st">"strc"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
@@ -469,7 +469,7 @@ supported
 <span>                         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>                         row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">vnaggmat</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:525, 1:28] 324637 98827 64892 80525 20371 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:525, 1:28] 325373 98643 64976 80856 20487 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts. Since we have to simulate from a multivariate normal distribution with a size of 14700, we will use a diagonal covariance matrix in this vignette. However, it’s important to note that this choice will result in a significantly narrow variance for the reconciled forecasts.</p>
 <div class="cell">
@@ -609,8 +609,8 @@ supported
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 3</span></span>
 <span><span class="co">#&gt;  $ : num [1:21, 1:7] 1825237 738841 1757021 1426951 331837 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1844199 743730 1794040 1444927 351574 ...</span></span>
-<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1840756 736737 1774115 1438427 340865 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1805001 737769 1751547 1431916 323729 ...</span></span>
+<span><span class="co">#&gt;  $ : num [1:21, 1:7] 1803527 742817 1734769 1406326 330324 ...</span></span>
 <span></span>
 <span><span class="va">reco_ctjb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ctsmp.html">ctsmp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">simplify2array</a></span><span class="op">(</span><span class="va">base_ctjb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span>, cons_mat <span class="op">=</span> <span class="va">gdpconsmat</span>,</span>
 <span>                      res <span class="op">=</span> <span class="va">res_mat</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
@@ -625,7 +625,7 @@ supported
 <span>                         n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">NCOL</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span>, </span>
 <span>                         row_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">gdpconsmat</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mean_ctjb</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:21, 1:7] 1813992 732313 1743296 1418236 325060 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:21, 1:7] 1813092 732263 1742744 1417217 325527 ...</span></span></code></pre></div>
 </div>
 <p>Alternatively, we can use a parametric method.</p>
 <div class="cell">

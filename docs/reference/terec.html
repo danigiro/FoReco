@@ -78,7 +78,7 @@ immutable reconciled forecasts can be considered.</p>
 
 
 <dl><dt id="arg-base">base<a class="anchor" aria-label="anchor" href="#arg-base"></a></dt>
-<dd><p>A (\(N(k^\ast + m) \times 1\)) numeric vector containing the
+<dd><p>A (\(h(k^\ast + m) \times 1\)) numeric vector containing the
 base forecasts to be reconciled, ordered from lowest to highest frequency;
 \(m\) is the maximum aggregation order, \(k^\ast\) is the sum of a
 chosen subset of the \(p - 1\) factors of \(m\) (excluding \(m\)
@@ -281,7 +281,7 @@ non-negative forecast reconciliation. <em>Statistics and Computing</em>, 30(5),
 <span class="r-in"><span>                res <span class="op">=</span> <span class="va">res</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">nnreco</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">$</span><span class="va">info</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     obj_val   run_time iter      pri_res status status_polish</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -421.8914 4.3541e-05   25 8.587788e-16      1             1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 -421.8914 4.0291e-05   25 8.587788e-16      1             1</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

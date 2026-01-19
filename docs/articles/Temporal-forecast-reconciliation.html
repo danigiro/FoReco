@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Temporal forecast reconciliation</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2025-10-28</p>
+      <p class="date">2026-01-19</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Temporal-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Temporal-forecast-reconciliation.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -322,7 +322,7 @@ supported
 <span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
 <span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
 <span><span class="co">#&gt;     obj_val    run_time iter      pri_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -16.58821 0.000275041   50 5.551115e-17      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 -16.58821 0.000295624   50 1.387779e-16      1             1</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023</a>)</span>.</li>
@@ -387,7 +387,7 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/tematrix_layouts.html">as_tevector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_tejb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 7.209 3.142 4.067 0.697 5.198 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  Named num [1:28] 6.199 2.792 3.407 0.509 4.306 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian) to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
