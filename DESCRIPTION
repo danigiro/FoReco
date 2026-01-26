@@ -12,9 +12,10 @@ Authors@R:
              family = "Di Fonzo",
              role = c("aut"),
              comment = c(ORCID = "0000-0003-3388-7827")),
-      person(given = "Yangzhuoran Fin Fin",
+      person(given = "Yangzhuoran Fin",
              family = "Yang",
-             role = c("ctb")))
+             role = c("ctb"), 
+             comment = c(ORCID = "0000-0002-1232-8017")))
 Description: Classical (bottom-up and top-down), optimal combination and heuristic  
     point (Di Fonzo and Girolimetto, 2023 <doi:10.1016/j.ijforecast.2021.08.004>) and 
     probabilistic (Girolimetto et al. 2024 <doi:10.1016/j.ijforecast.2023.10.003>) 
