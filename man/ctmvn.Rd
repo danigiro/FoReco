@@ -58,8 +58,8 @@ et al. (2011).
 \href{https://osqp.org/}{\pkg{osqp}} for structural approach.
 }}
 
-\item{comb_base}{A string specifying the reconciliation method. For a
-complete list, see \link{ctcov}.}
+\item{comb_base}{A string specifying the base covariance matrix approach.
+For a complete list, see \link{ctcov}. Default is the equal to \code{comb}.}
 
 \item{reduce_form}{A logical parameter indicating whether the function
 should return the full distribution (\code{FALSE}, \emph{default}) or

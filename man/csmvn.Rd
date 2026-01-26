@@ -39,8 +39,8 @@ Byron (1978, 1979).
 al. (2011).
 }}
 
-\item{comb_base}{A string specifying the reconciliation method. For a
-complete list, see \link{cscov}.}
+\item{comb_base}{A string specifying the base covariance matrix approach.
+For a complete list, see \link{cscov}. Default is the equal to \code{comb}.}
 
 \item{reduce_form}{A logical parameter indicating whether the function
 should return the full distribution (\code{FALSE}, \emph{default}) or

@@ -10,8 +10,8 @@
 #'       approach = "proj", comb_base = comb, reduce_form = FALSE, ...)
 #'
 #' @inheritParams csrec
-#' @param comb_base A string specifying the reconciliation method. For a
-#'   complete list, see [cscov].
+#' @param comb_base A string specifying the base covariance matrix approach.
+#'   For a complete list, see [cscov]. Default is the equal to \code{comb}.
 #' @param approach A string specifying the approach used to compute the
 #'    reconciled mean and covariance matrix. Options include:
 #'   \itemize{
@@ -226,8 +226,8 @@ csmvn <- function(
 #' temvn(base, agg_order, tew = "sum", comb = "ols", res = NULL,
 #'       approach = "proj", comb_base = comb, reduce_form = FALSE, ...)
 #'
-#' @param comb_base A string specifying the reconciliation method. For a
-#'   complete list, see [tecov].
+#' @param comb_base A string specifying the base covariance matrix approach.
+#'   For a complete list, see [tecov]. Default is the equal to \code{comb}.
 #' @param reduce_form A logical parameter indicating whether the function
 #'   should return the full distribution (\code{FALSE}, \emph{default}) or
 #'   only the distribution corresponding to the high-frequency time series
@@ -420,8 +420,8 @@ temvn <- function(
 #'       res = NULL, approach = "proj", comb_base = comb,
 #'       reduce_form = FALSE, ...)
 #'
-#' @param comb_base A string specifying the reconciliation method. For a
-#'   complete list, see [ctcov].
+#' @param comb_base A string specifying the base covariance matrix approach.
+#'   For a complete list, see [ctcov]. Default is the equal to \code{comb}.
 #' @param reduce_form A logical parameter indicating whether the function
 #'   should return the full distribution (\code{FALSE}, \emph{default}) or
 #'   only the distribution corresponding to the high-frequency bottom time

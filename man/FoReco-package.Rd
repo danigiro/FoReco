@@ -27,7 +27,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Yangzhuoran Fin Fin Yang [contributor]
+  \item Yangzhuoran Fin Yang (\href{https://orcid.org/0000-0002-1232-8017}{ORCID}) [contributor]
 }
 
 }
