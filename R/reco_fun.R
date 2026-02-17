@@ -272,7 +272,7 @@ reco.proj_osqp <- function(
       eps_abs = 1e-5,
       eps_rel = 1e-5,
       polish_refine_iter = 100,
-      polish = TRUE
+      polishing = TRUE
     )
   }
 
@@ -300,7 +300,7 @@ reco.proj_osqp <- function(
         c(
           "x" = "OSQP failed: check the results.",
           "i" = "OSQP flag = {rec$info$status_val}",
-          "i" = "OSQP pri_res = {rec$info$pri_res}"
+          "i" = "OSQP prim_res = {rec$info$prim_res}"
         ),
         call = NULL
       )
@@ -321,7 +321,7 @@ reco.proj_osqp <- function(
       rec$info$obj_val,
       rec$info$run_time,
       rec$info$iter,
-      rec$info$pri_res,
+      rec$info$prim_res,
       rec$info$status_val,
       rec$info$status_polish
     )
@@ -343,7 +343,7 @@ reco.proj_osqp <- function(
     "obj_val",
     "run_time",
     "iter",
-    "pri_res",
+    "prim_res",
     "status",
     "status_polish"
   )
@@ -451,7 +451,7 @@ reco.strc_osqp <- function(
       eps_abs = 1e-5,
       eps_rel = 1e-5,
       polish_refine_iter = 100,
-      polish = TRUE
+      polishing = TRUE
     )
   }
 
@@ -479,7 +479,7 @@ reco.strc_osqp <- function(
         c(
           "x" = "OSQP failed: check the results.",
           "i" = "OSQP flag = {rec$info$status_val}",
-          "i" = "OSQP pri_res = {rec$info$pri_res}"
+          "i" = "OSQP prim_res = {rec$info$prim_res}"
         ),
         call = NULL
       )
@@ -500,7 +500,7 @@ reco.strc_osqp <- function(
       rec$info$obj_val,
       rec$info$run_time,
       rec$info$iter,
-      rec$info$pri_res,
+      rec$info$prim_res,
       rec$info$status_val,
       rec$info$status_polish
     )
@@ -522,7 +522,7 @@ reco.strc_osqp <- function(
     "obj_val",
     "run_time",
     "iter",
-    "pri_res",
+    "prim_res",
     "status",
     "status_polish"
   )
