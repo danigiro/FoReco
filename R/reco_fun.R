@@ -448,8 +448,8 @@ reco.strc_osqp <- function(
   if (is.null(settings)) {
     settings <- osqpSettings(
       verbose = FALSE,
-      eps_abs = 1e-5,
-      eps_rel = 1e-5,
+      eps_abs = 1e-6,
+      eps_rel = 1e-6,
       polish_refine_iter = 100,
       polishing = TRUE
     )
