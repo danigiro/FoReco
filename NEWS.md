@@ -1,5 +1,6 @@
-# FoReco (development version)
+# FoReco 1.2.0
 
+* (CRAN Package Check Results) Fixed compatibility issues with [`osqp`](https://CRAN.R-project.org/package=osqp) 1.0. The package is now fully compatible with any version.
 * Added `csmvn()`, `temvn()`, and `ctmvn()` for Gaussian probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the [`distributional`](https://CRAN.R-project.org/package=distributional) package;
 * Added `cssmp()`, `tesmp()`, and `ctsmp()` for sample-based probabilistic forecast reconciliation in the cross-sectional, temporal, and cross-temporal frameworks using the [`distributional`](https://CRAN.R-project.org/package=distributional) package;
 * Added `as_ctmatrix()` and `as_horizon_stacked_ctmatrix()` functions to convert between horizon-stacked (cross-temporal version) and cross-temporal layouts;

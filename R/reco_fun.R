@@ -267,13 +267,23 @@ reco.proj_osqp <- function(
   }
 
   if (is.null(settings)) {
-    settings <- osqpSettings(
-      verbose = FALSE,
-      eps_abs = 1e-5,
-      eps_rel = 1e-5,
-      polish_refine_iter = 100,
-      polishing = TRUE
-    )
+    if ("polishing" %in% names(as.list(args(osqpSettings)))) {
+      settings <- osqpSettings(
+        verbose = FALSE,
+        eps_abs = 1e-5,
+        eps_rel = 1e-5,
+        polish_refine_iter = 100,
+        polishing = TRUE
+      )
+    } else {
+      settings <- osqpSettings(
+        verbose = FALSE,
+        eps_abs = 1e-5,
+        eps_rel = 1e-5,
+        polish_refine_iter = 100,
+        polish = TRUE
+      )
+    }
   }
 
   # OSQP
@@ -294,6 +304,15 @@ reco.proj_osqp <- function(
 
     out <- list()
     out$reco <- rec$x
+
+    # OSQP < v1.0
+    if (is.null(rec$info$prim_res)) {
+      if (!is.null(rec$info$pri_res)) {
+        rec$info$prim_res <- rec$info$pri_res
+      } else {
+        rec$info$prim_res <- NA
+      }
+    }
 
     if (rec$info$status_val != 1) {
       cli_warn(
@@ -446,13 +465,23 @@ reco.strc_osqp <- function(
   }
 
   if (is.null(settings)) {
-    settings <- osqpSettings(
-      verbose = FALSE,
-      eps_abs = 1e-6,
-      eps_rel = 1e-6,
-      polish_refine_iter = 100,
-      polishing = TRUE
-    )
+    if ("polishing" %in% names(as.list(args(osqpSettings)))) {
+      settings <- osqpSettings(
+        verbose = FALSE,
+        eps_abs = 1e-6,
+        eps_rel = 1e-6,
+        polish_refine_iter = 100,
+        polishing = TRUE
+      )
+    } else {
+      settings <- osqpSettings(
+        verbose = FALSE,
+        eps_abs = 1e-6,
+        eps_rel = 1e-6,
+        polish_refine_iter = 100,
+        polish = TRUE
+      )
+    }
   }
 
   # OSQP
@@ -473,6 +502,15 @@ reco.strc_osqp <- function(
 
     out <- list()
     out$reco <- as.numeric(strc_mat %*% rec$x)
+
+    # OSQP < v1.0
+    if (is.null(rec$info$prim_res)) {
+      if (!is.null(rec$info$pri_res)) {
+        rec$info$prim_res <- rec$info$pri_res
+      } else {
+        rec$info$prim_res <- NA
+      }
+    }
 
     if (rec$info$status_val != 1) {
       cli_warn(
