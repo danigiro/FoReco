@@ -1,0 +1,81 @@
+# Replicate the thief package
+
+## Introduction
+
+The dataset
+[`AEdemand`](http://pkg.robjhyndman.com/thief/reference/AEdemand.md) in
+the [`thief`](http://pkg.robjhyndman.com/thief/) package is used to show
+how to get the same results with
+[`FoReco`](https://danigiro.github.io/FoReco). In particular, we take
+the weekly data of Accident and Emergency demand in the UK, AEdemand,
+from 1 January 2011 to 31 December 2014.
+
+``` r
+
+library(FoReco)
+library(thief)
+
+extract_thief <- function(x){
+  out <- NULL
+  for(i in length(x):1) {
+    out <- c(out, x[[i]]$mean)
+  }
+  return(out)
+}
+```
+
+## Base forecasts
+
+``` r
+
+dataset <- window(AEdemand[, 12], start = c(2011, 1), end = c(2014, 52))
+data <- tsaggregates(dataset)
+# Base forecasts
+fc_obj <- list()
+for (i in 1:5) {
+  fc_obj[[i]] <- forecast(auto.arima(data[[i]]))
+}
+fc_obj[[6]] <- forecast(auto.arima(data[[6]]), h = 2)
+# Base forecasts vector
+base <- NULL
+for (i in 6:1) {
+  base <- c(base, fc_obj[[i]]$mean)
+}
+# Residual vector
+res <- NULL
+for (i in 6:1) {
+  res <- c(res, fc_obj[[i]]$residuals)
+}
+```
+
+## Comparisons
+
+``` r
+
+# Tollerance setting
+tol <- 1e-7
+
+## Bottom-up
+thief_bu <- reconcilethief(fc_obj, comb="bu")
+FoReco_bu <- tebu(fc_obj[[1]]$mean, agg_order = 52)
+sum(abs(FoReco_bu - extract_thief(thief_bu)) > tol)
+#> [1] 0
+
+## Ordinary least squares (identity error covariance matrix)
+thief_ols <- reconcilethief(fc_obj, comb="ols")
+FoReco_ols <- terec(base, 52, comb = "ols")
+sum(abs(FoReco_ols - extract_thief(thief_ols)) > tol)
+#> [1] 0
+
+## Weighted least squares (structural variances)
+thief_str <- reconcilethief(fc_obj, comb="struc")
+FoReco_str <- terec(base, 52, comb = "str")
+sum(abs(FoReco_str - extract_thief(thief_str)) > tol)
+#> [1] 0
+
+## Generalized least squares (shrunk covariance matrix)
+thief_shr <- reconcilethief(fc_obj, comb="shr")
+FoReco_shr <- terec(base, 52, comb = "shr", res = res)
+sum(abs(FoReco_shr - extract_thief(thief_shr)) > tol)
+#> [1] 0
+```

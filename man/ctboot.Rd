@@ -4,7 +4,7 @@
 \alias{ctboot}
 \title{Cross-temporal joint block bootstrap}
 \usage{
-ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL)
+ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL, ...)
 }
 \arguments{
 \item{model_list}{A list of \eqn{n} elements, one for each cross-sectional series.
@@ -25,6 +25,8 @@ subset of \eqn{p} factors of \eqn{m}.}
 to the forecast horizon for the most temporally aggregated series.}
 
 \item{seed}{An integer seed.}
+
+\item{...}{Additional arguments for the \code{simulate()} function.}
 }
 \value{
 A list with two elements: the seed used to sample the

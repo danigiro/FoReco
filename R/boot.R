@@ -12,6 +12,7 @@
 #' @param block_size Block size of the bootstrap, which is typically equivalent
 #' to the forecast horizon.
 #' @param seed An integer seed.
+#' @param ... Additional arguments for the \code{simulate()} function.
 #'
 #' @return A list with two elements: the seed used to sample the errors and a 3-d array
 #' (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
@@ -26,19 +27,35 @@
 #' @family Framework: cross-sectional
 #'
 #' @export
-csboot <- function(model_list, boot_size, block_size, seed = NULL){
+csboot <- function(model_list, boot_size, block_size, seed = NULL, ...) {
   res <- sapply(model_list, residuals)
   N <- NROW(res)
 
-  if(is.null(seed)){
+  if (is.null(seed)) {
     seed <- stats::rpois(1, 1000)
   }
 
-  index <- boot_index(N = N, boot_size = boot_size, block_size = block_size, seed = seed)
-  fboot <- apply(index, 2, function(id) sapply(1:length(model_list), function(x){
-    unname(simulate(model_list[[x]], innov = res[id, x],
-                    future = TRUE, nsim = length(res[id, x])))
-  }), simplify = FALSE)
+  index <- boot_index(
+    N = N,
+    boot_size = boot_size,
+    block_size = block_size,
+    seed = seed
+  )
+  fboot <- apply(
+    index,
+    2,
+    function(id) {
+      sapply(1:length(model_list), function(x) {
+        unname(simulate(
+          model_list[[x]],
+          innov = res[id, x],
+          future = TRUE,
+          nsim = length(res[id, x])
+        ))
+      })
+    },
+    simplify = FALSE
+  )
 
   fboot <- simplify2array(fboot)
   dimnames(fboot) <- list(
@@ -46,11 +63,10 @@ csboot <- function(model_list, boot_size, block_size, seed = NULL){
     paste0("s-", 1:dim(fboot)[2]),
     paste0("b-", 1:dim(fboot)[3])
   )
-  if(!is.null(names(model_list))){
+  if (!is.null(names(model_list))) {
     dimnames(fboot)[[2]] <- names(model_list)
   }
-  return(list(sample = fboot,
-              seed = seed))
+  return(list(sample = fboot, seed = seed))
 }
 
 #' Temporal joint block bootstrap
@@ -81,10 +97,17 @@ csboot <- function(model_list, boot_size, block_size, seed = NULL){
 #' @family Framework: temporal
 #'
 #' @export
-teboot <- function(model_list, boot_size, agg_order, block_size = 1, seed = NULL){
+teboot <- function(
+  model_list,
+  boot_size,
+  agg_order,
+  block_size = 1,
+  seed = NULL,
+  ...
+) {
   info <- tetools(agg_order = agg_order)
 
-  if(length(model_list)!=length(info$set)){
+  if (length(model_list) != length(info$set)) {
     cli_abort("Incorrect {.arg model_list} dimension.", call = NULL)
   }
   names(model_list) <- paste0("k", info$set)
@@ -93,24 +116,28 @@ teboot <- function(model_list, boot_size, agg_order, block_size = 1, seed = NULL
 
   N <- NROW(res_list[[paste0("k", info$dim[["m"]])]])
 
-  if(is.null(seed)){
+  if (is.null(seed)) {
     seed <- stats::rpois(1, 1000)
   }
 
-  index <- boot_index(N = N, boot_size = boot_size,
-                      agg_order = info$set, block_size = block_size, seed = seed)
+  index <- boot_index(
+    N = N,
+    boot_size = boot_size,
+    agg_order = info$set,
+    block_size = block_size,
+    seed = seed
+  )
 
-  fboot <- lapply(1:boot_size, function(i){
-    lapply(info$set, function(k){
-      id <- index[[paste0("k",k)]][,i]
-      fit_i <- model_list[[paste0("k",k)]]
-      res_vec <- res_list[[paste0("k",k)]][id]
+  fboot <- lapply(1:boot_size, function(i) {
+    lapply(info$set, function(k) {
+      id <- index[[paste0("k", k)]][, i]
+      fit_i <- model_list[[paste0("k", k)]]
+      res_vec <- res_list[[paste0("k", k)]][id]
       simulate(fit_i, innov = res_vec, future = TRUE)
     })
   })
   fboot <- t(sapply(fboot, Reduce, f = "c"))
-  return(list(sample = fboot,
-              seed = seed))
+  return(list(sample = fboot, seed = seed))
 }
 
 #' Cross-temporal joint block bootstrap
@@ -142,34 +169,47 @@ teboot <- function(model_list, boot_size, agg_order, block_size = 1, seed = NULL
 #' @family Framework: cross-temporal
 #'
 #' @export
-ctboot <- function(model_list, boot_size, agg_order, block_size = 1, seed = NULL){
+ctboot <- function(
+  model_list,
+  boot_size,
+  agg_order,
+  block_size = 1,
+  seed = NULL,
+  ...
+) {
   info <- tetools(agg_order = agg_order)
 
-  if(length(model_list)!=length(info$set)){
+  if (length(model_list) != length(info$set)) {
     cli_abort("Incorrect {.arg model_list} dimension.", call = NULL)
   }
   names(model_list) <- paste0("k", info$set)
 
   res_list <- lapply(model_list, function(mod) sapply(mod, residuals))
 
-  N <- NROW(res_list[[paste0("k",info$dim[["m"]])]])
+  N <- NROW(res_list[[paste0("k", info$dim[["m"]])]])
 
-  if(is.null(seed)){
+  if (is.null(seed)) {
     seed <- stats::rpois(1, 1000)
   }
 
-  index <- boot_index(N = N, boot_size = boot_size,
-                      agg_order = info$set, block_size = block_size, seed = seed)
+  index <- boot_index(
+    N = N,
+    boot_size = boot_size,
+    agg_order = info$set,
+    block_size = block_size,
+    seed = seed,
+    ...
+  )
 
-  fboot <- lapply(1:boot_size, function(i){
-    lapply(info$set, function(k){
-      id <- index[[paste0("k",k)]][,i]
-      fit_i <- model_list[[paste0("k",k)]]
-      res_mat <- res_list[[paste0("k",k)]][id,,drop = FALSE]
-      out <- sapply(1:length(fit_i), function(x){
+  fboot <- lapply(1:boot_size, function(i) {
+    lapply(info$set, function(k) {
+      id <- index[[paste0("k", k)]][, i]
+      fit_i <- model_list[[paste0("k", k)]]
+      res_mat <- res_list[[paste0("k", k)]][id, , drop = FALSE]
+      out <- sapply(1:length(fit_i), function(x) {
         simulate(fit_i[[x]], innov = res_mat[, x], future = TRUE)
       })
-      if(is.vector(out)){
+      if (is.vector(out)) {
         out <- unname(rbind(out))
       }
       colnames(out) <- names(fit_i)
@@ -178,53 +218,61 @@ ctboot <- function(model_list, boot_size, agg_order, block_size = 1, seed = NULL
   })
 
   fboot <- lapply(fboot, Reduce, f = "cbind")
-  return(list(sample = fboot,
-              seed = seed))
+  return(list(sample = fboot, seed = seed))
 }
 
 
-boot_index <- function(N, boot_size, agg_order, block_size, seed){
-  if(missing(agg_order)){
-    if(missing(block_size)){
-      cli_abort("Argument {.arg block_size} is missing, with no default.", call = NULL)
+boot_index <- function(N, boot_size, agg_order, block_size, seed) {
+  if (missing(agg_order)) {
+    if (missing(block_size)) {
+      cli_abort(
+        "Argument {.arg block_size} is missing, with no default.",
+        call = NULL
+      )
     }
 
-    if(is.null(seed)){
+    if (is.null(seed)) {
       cli_warn("No {.arg seed} provided.", call = NULL)
-    }else{
+    } else {
       set.seed(seed)
     }
 
-    index <- sample(1:(N-block_size+1), size = boot_size, replace = TRUE)
-    kid <- sapply(index, function(x){
-      base::seq(x, x+block_size-1, by = 1)
+    index <- sample(1:(N - block_size + 1), size = boot_size, replace = TRUE)
+    kid <- sapply(index, function(x) {
+      base::seq(x, x + block_size - 1, by = 1)
     })
     kid <- rbind(kid)
-  }else{
-    if(missing(block_size)){
+  } else {
+    if (missing(block_size)) {
       block_size <- 1
     }
 
-    if(length(agg_order)>1){
+    if (length(agg_order) > 1) {
       kset <- agg_order
       m <- max(agg_order)
-    }else{
+    } else {
       info <- tetools(agg_order = agg_order)
       kset <- info$set
       m <- info$dim[["m"]]
     }
 
-    if(is.null(seed)){
+    if (is.null(seed)) {
       cli_warn("No {.arg seed} provided.", call = NULL)
-    }else{
+    } else {
       set.seed(seed)
     }
 
-    index <- base::sample(1:(N-block_size+1), size = boot_size, replace = TRUE)
-    kid <- lapply(kset, function(k) sapply(index, function(x){
-      Mk <- m/k
-      base::seq(Mk*(x-1)+1, Mk*(x+block_size-1), by = 1)
-    }))
+    index <- base::sample(
+      1:(N - block_size + 1),
+      size = boot_size,
+      replace = TRUE
+    )
+    kid <- lapply(kset, function(k) {
+      sapply(index, function(x) {
+        Mk <- m / k
+        base::seq(Mk * (x - 1) + 1, Mk * (x + block_size - 1), by = 1)
+      })
+    })
     kid <- lapply(kid, rbind)
     names(kid) <- paste0("k", kset)
   }

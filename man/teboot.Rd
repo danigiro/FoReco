@@ -4,7 +4,7 @@
 \alias{teboot}
 \title{Temporal joint block bootstrap}
 \usage{
-teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL)
+teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL, ...)
 }
 \arguments{
 \item{model_list}{A list of all the \eqn{(k^\ast+m)} base forecasts models ordered
@@ -24,6 +24,8 @@ subset of \eqn{p} factors of \eqn{m}.}
 to the forecast horizon for the most temporally aggregated series.}
 
 \item{seed}{An integer seed.}
+
+\item{...}{Additional arguments for the \code{simulate()} function.}
 }
 \value{
 A list with two elements: the seed used to sample the errors and

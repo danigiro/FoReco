@@ -4,7 +4,7 @@
 \alias{csboot}
 \title{Cross-sectional joint block bootstrap}
 \usage{
-csboot(model_list, boot_size, block_size, seed = NULL)
+csboot(model_list, boot_size, block_size, seed = NULL, ...)
 }
 \arguments{
 \item{model_list}{A list of all the \eqn{n} base forecasts models. A \code{simulate()}
@@ -19,6 +19,8 @@ with the following mandatory parameters: \emph{object},
 to the forecast horizon.}
 
 \item{seed}{An integer seed.}
+
+\item{...}{Additional arguments for the \code{simulate()} function.}
 }
 \value{
 A list with two elements: the seed used to sample the errors and a 3-d array

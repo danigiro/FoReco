@@ -1,0 +1,123 @@
+# Cross-sectional probabilistic reconciliation (sample approach)
+
+This function performs cross-sectional probabilistic forecast
+reconciliation using a sample-based approach (Panagiotelis et al., 2023,
+Girolimetto et al., 2024) for linearly constrained (e.g., hierarchical
+or grouped) multiple time series. Given an array of \\L\\ simulated base
+forecast draws, `cssmp()` applies a chosen FoReco reconciliation
+independently to each draw, producing a coherent sample distribution of
+reconciled forecasts. Typical choices for the reconciliation include
+optimal combination
+([csrec](https://danigiro.github.io/FoReco/reference/csrec.md)) as well
+as top-down
+([cstd](https://danigiro.github.io/FoReco/reference/cstd.md)),
+middle-out
+([csmo](https://danigiro.github.io/FoReco/reference/csmo.md)), bottom-up
+([csbu](https://danigiro.github.io/FoReco/reference/csbu.md)), and
+level-conditional
+([cslcc](https://danigiro.github.io/FoReco/reference/cslcc.md))
+approaches.
+
+## Usage
+
+``` r
+cssmp(sample, fun = csrec, ...)
+```
+
+## Arguments
+
+- sample:
+
+  A (\\h \times n \times L\\) numeric array containing the base
+  forecasts samples to be reconciled; \\h\\ is the forecast horizon,
+  \\n\\ is the total number of time series (\\n = n_a + n_b\\), and
+  \\L\\ is the sample size.
+
+- fun:
+
+  A string specifying the reconciliation function to be used, as
+  implemented in FoReco.
+
+- ...:
+
+  Arguments passed on to `fun`
+
+## Value
+
+A
+[distributional::dist_sample](https://pkg.mitchelloharawild.com/distributional/reference/dist_sample.html)
+object.
+
+## References
+
+Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J.
+(2024), Cross-temporal probabilistic forecast reconciliation:
+Methodological and practical issues. *International Journal of
+Forecasting*, 40, 3, 1134-1151.
+[doi:10.1016/j.ijforecast.2023.10.003](https://doi.org/10.1016/j.ijforecast.2023.10.003)
+
+Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+(2023), Probabilistic forecast reconciliation: Properties, evaluation
+and score optimisation, *European Journal of Operational Research*
+306(2), 693–706.
+[doi:10.1016/j.ejor.2022.07.040](https://doi.org/10.1016/j.ejor.2022.07.040)
+
+## See also
+
+Probabilistic reconciliation:
+[`csmvn()`](https://danigiro.github.io/FoReco/reference/csmvn.md),
+[`ctmvn()`](https://danigiro.github.io/FoReco/reference/ctmvn.md),
+[`ctsmp()`](https://danigiro.github.io/FoReco/reference/ctsmp.md),
+[`temvn()`](https://danigiro.github.io/FoReco/reference/temvn.md),
+[`tesmp()`](https://danigiro.github.io/FoReco/reference/tesmp.md)
+
+Cross-sectional framework:
+[`csboot()`](https://danigiro.github.io/FoReco/reference/csboot.md),
+[`csbu()`](https://danigiro.github.io/FoReco/reference/csbu.md),
+[`cscov()`](https://danigiro.github.io/FoReco/reference/cscov.md),
+[`cslcc()`](https://danigiro.github.io/FoReco/reference/cslcc.md),
+[`csmo()`](https://danigiro.github.io/FoReco/reference/csmo.md),
+[`csmvn()`](https://danigiro.github.io/FoReco/reference/csmvn.md),
+[`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.md),
+[`cstd()`](https://danigiro.github.io/FoReco/reference/cstd.md),
+[`cstools()`](https://danigiro.github.io/FoReco/reference/cstools.md)
+
+## Examples
+
+``` r
+set.seed(123)
+A <- matrix(c(1,1,1,1,  # Z = X + Y
+              1,1,0,0,  # X = XX + XY
+              0,0,1,1), # Y = YX + YY
+              nrow = 3, byrow = TRUE)
+rownames(A) <- c("Z", "X", "Y")
+colnames(A) <- c("XX", "XY", "YX", "YY")
+
+# (100 x 7) base forecasts sample (simulated) for h = 1
+base_h1 <- matrix(rnorm(100*7, mean = c(20, rep(10, 2), rep(5, 4))),
+                  100, byrow = TRUE)
+# (100 x 7) base forecasts sample (simulated) for h = 2
+base_h2 <- matrix(rnorm(100*7, mean = c(20, rep(10, 2), rep(5, 4))),
+                  100, byrow = TRUE)
+# (2 x 7 x 100) base forecasts sample array with
+# 2 forecast horizons, 7 time series and 100 sample
+base_sample <- aperm(simplify2array(list(base_h1, base_h2)), c(3,2,1))
+
+# Top-down probabilistic reconciliation
+reco_dist_td <- cssmp(base_sample[, 1, , drop = FALSE], agg_mat = A,
+                      fun = cstd, weights = c(0.3, 0.2, 0.1, 0.4))
+
+# Middle-out probabilistic reconciliation
+reco_dist_mo <- cssmp(base_sample[, c(2,3), , drop = FALSE], agg_mat = A,
+                      fun = csmo, weights = c(0.3, 0.7, 0.8, 0.2),
+                      id_rows = 2:3)
+
+# Bottom-up probabilistic reconciliation
+reco_dist_bu <- cssmp(base_sample[,-c(1:3),], agg_mat = A, fun = csbu)
+
+# Level conditional coherent probabilistic reconciliation
+reco_dist_lcc <- cssmp(base_sample, agg_mat = A, fun = cslcc)
+
+# Optimal cross-sectional probabilistic reconciliation
+reco_dist_opt <- cssmp(base_sample, agg_mat = A)
+```

@@ -1,0 +1,131 @@
+# Cross-temporal probabilistic reconciliation (sample approach)
+
+This function performs cross-temporal probabilistic forecast
+reconciliation using a sample-based approach (Girolimetto et al., 2024)
+for linearly constrained multiple time series observed across both
+cross-sectional and temporal dimensions (Di Fonzo and Girolimetto,
+2023). Given a \\(n \times h(k^\ast + m) \times L)\\ array of simulated
+base forecast draws, `ctsmp()` applies a chosen FoReco cross-temporal
+reconciliation independently to each draw, enforcing coherence
+simultaneously over aggregation levels and across series. Typical
+choices for the reconciliation include optimal combination
+([ctrec](https://danigiro.github.io/FoReco/reference/ctrec.md)) as well
+as top-down
+([cttd](https://danigiro.github.io/FoReco/reference/cttd.md)),
+middle-out
+([ctmo](https://danigiro.github.io/FoReco/reference/ctmo.md)), bottom-up
+([ctbu](https://danigiro.github.io/FoReco/reference/ctbu.md)), and
+level-conditional
+([ctlcc](https://danigiro.github.io/FoReco/reference/ctlcc.md))
+approaches.
+
+## Usage
+
+``` r
+ctsmp(sample, agg_order, fun = ctrec, ...)
+```
+
+## Arguments
+
+- sample:
+
+  A (\\n \times h(k^\ast + m) \times L\\) numeric array containing the
+  base forecasts samples to be reconciled; \\n\\ is the total number of
+  variables, \\m\\ is the max. order of temporal aggregation, \\k^\ast\\
+  is the sum of (a subset of) (\\p-1\\) factors of \\m\\, excluding
+  \\m\\, \\h\\ is the forecast horizon for the lowest frequency time
+  series, and \\L\\ is the sample size. The row identifies a time
+  series, and the forecasts in each row are ordered from the lowest
+  frequency (most temporally aggregated) to the highest frequency.
+
+- agg_order:
+
+  Highest available sampling frequency per seasonal cycle (max. order of
+  temporal aggregation, \\m\\), or a vector representing a subset of
+  \\p\\ factors of \\m\\.
+
+- fun:
+
+  A string specifying the reconciliation function to be used, as
+  implemented in FoReco.
+
+- ...:
+
+  Arguments passed on to `fun`
+
+## Value
+
+A
+[distributional::dist_sample](https://pkg.mitchelloharawild.com/distributional/reference/dist_sample.html)
+object.
+
+## References
+
+Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast
+reconciliation: Optimal combination method and heuristic alternatives,
+*International Journal of Forecasting*, 39, 1, 39-57.
+[doi:10.1016/j.ijforecast.2021.08.004](https://doi.org/10.1016/j.ijforecast.2021.08.004)
+
+Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J.
+(2024), Cross-temporal probabilistic forecast reconciliation:
+Methodological and practical issues. *International Journal of
+Forecasting*, 40, 3, 1134-1151.
+[doi:10.1016/j.ijforecast.2023.10.003](https://doi.org/10.1016/j.ijforecast.2023.10.003)
+
+## See also
+
+Probabilistic reconciliation:
+[`csmvn()`](https://danigiro.github.io/FoReco/reference/csmvn.md),
+[`cssmp()`](https://danigiro.github.io/FoReco/reference/cssmp.md),
+[`ctmvn()`](https://danigiro.github.io/FoReco/reference/ctmvn.md),
+[`temvn()`](https://danigiro.github.io/FoReco/reference/temvn.md),
+[`tesmp()`](https://danigiro.github.io/FoReco/reference/tesmp.md)
+
+Cross-temporal framework:
+[`ctboot()`](https://danigiro.github.io/FoReco/reference/ctboot.md),
+[`ctbu()`](https://danigiro.github.io/FoReco/reference/ctbu.md),
+[`ctcov()`](https://danigiro.github.io/FoReco/reference/ctcov.md),
+[`ctlcc()`](https://danigiro.github.io/FoReco/reference/ctlcc.md),
+[`ctmo()`](https://danigiro.github.io/FoReco/reference/ctmo.md),
+[`ctmvn()`](https://danigiro.github.io/FoReco/reference/ctmvn.md),
+[`ctrec()`](https://danigiro.github.io/FoReco/reference/ctrec.md),
+[`cttd()`](https://danigiro.github.io/FoReco/reference/cttd.md),
+[`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
+[`iterec()`](https://danigiro.github.io/FoReco/reference/iterec.md),
+[`tcsrec()`](https://danigiro.github.io/FoReco/reference/heuristic-reco.md)
+
+## Examples
+
+``` r
+set.seed(123)
+A <- t(c(1,1)) # Aggregation matrix for Z = X + Y
+m <- 4 # from quarterly to annual temporal aggregation
+
+# (100 x 14) base forecasts sample matrix (simulated), m = 4, h = 2, n = 3
+sample <- simplify2array(lapply(1:100, function(x){
+  rbind(rnorm(14, rep(c(20, 10, 5), 2*c(1, 2, 4))),
+        rnorm(14, rep(c(10, 5, 2.5), 2*c(1, 2, 4))),
+        rnorm(14, rep(c(10, 5, 2.5), 2*c(1, 2, 4))))
+}))
+# (3 x 70) in-sample residuals matrix (simulated)
+res <- rbind(rnorm(70), rnorm(70), rnorm(70))
+
+# Top-down probabilistic reconciliation
+reco_dist_td <- ctsmp(sample[1, 1:2, , drop = FALSE], agg_order = m,
+                      agg_mat = A, fun = cttd, weights = matrix(runif(8), 2))
+
+# Middle-out probabilistic reconciliation
+reco_dist_mo <- ctsmp(sample[1, 3:6, , drop = FALSE], agg_order = m,
+                      agg_mat = A, fun = ctmo, weights = matrix(runif(8), 2),
+                      id_rows = 1, order = 2)
+# Bottom-up probabilistic reconciliation
+reco_dist_bu <- ctsmp(sample[-1,-c(1:6), ], agg_order = m, agg_mat = A,
+                      fun = ctbu)
+
+# Level conditional coherent probabilistic reconciliation
+reco_dist_lcc <- ctsmp(sample, agg_order = m, agg_mat = A, fun = ctlcc)
+
+# Optimal cross-sectional probabilistic reconciliation
+reco_dist_opt <- ctsmp(sample, agg_order = m, agg_mat = A, res = res,
+                       comb = "bdshr")
+```

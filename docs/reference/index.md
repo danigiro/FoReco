@@ -1,0 +1,165 @@
+# Package index
+
+## Cross-sectional reconciliation
+
+All the reconciliation functions for the cross-sectional framework
+
+- [`csbu()`](https://danigiro.github.io/FoReco/reference/csbu.md) :
+  Cross-sectional bottom-up reconciliation
+- [`csmo()`](https://danigiro.github.io/FoReco/reference/csmo.md) :
+  Cross-sectional middle-out reconciliation
+- [`cstd()`](https://danigiro.github.io/FoReco/reference/cstd.md) :
+  Cross-sectional top-down reconciliation
+- [`cslcc()`](https://danigiro.github.io/FoReco/reference/cslcc.md) :
+  Level conditional coherent reconciliation for genuine
+  hierarchical/grouped time series
+- [`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.md) :
+  Optimal combination cross-sectional reconciliation
+- [`cssmp()`](https://danigiro.github.io/FoReco/reference/cssmp.md) :
+  Cross-sectional probabilistic reconciliation (sample approach)
+- [`csmvn()`](https://danigiro.github.io/FoReco/reference/csmvn.md) :
+  Cross-sectional Gaussian probabilistic reconciliation
+
+## Temporal reconciliation
+
+All the reconciliation functions for the temporal framework
+
+- [`tebu()`](https://danigiro.github.io/FoReco/reference/tebu.md) :
+  Temporal bottom-up reconciliation
+- [`temo()`](https://danigiro.github.io/FoReco/reference/temo.md) :
+  Temporal middle-out reconciliation
+- [`tetd()`](https://danigiro.github.io/FoReco/reference/tetd.md) :
+  Temporal top-down reconciliation
+- [`telcc()`](https://danigiro.github.io/FoReco/reference/telcc.md) :
+  Level conditional coherent reconciliation for temporal hierarchies
+- [`terec()`](https://danigiro.github.io/FoReco/reference/terec.md) :
+  Optimal combination temporal reconciliation
+- [`tesmp()`](https://danigiro.github.io/FoReco/reference/tesmp.md) :
+  Temporal probabilistic reconciliation (sample approach)
+- [`temvn()`](https://danigiro.github.io/FoReco/reference/temvn.md) :
+  Temporal Gaussian probabilistic reconciliation
+
+## Cross-temporal reconciliation
+
+All the reconciliation functions for the cross-temporal framework
+
+- [`ctbu()`](https://danigiro.github.io/FoReco/reference/ctbu.md) :
+  Cross-temporal bottom-up reconciliation
+- [`ctmo()`](https://danigiro.github.io/FoReco/reference/ctmo.md) :
+  Cross-temporal middle-out reconciliation
+- [`cttd()`](https://danigiro.github.io/FoReco/reference/cttd.md) :
+  Cross-temporal top-down reconciliation
+- [`ctlcc()`](https://danigiro.github.io/FoReco/reference/ctlcc.md) :
+  Level conditional coherent reconciliation for cross-temporal
+  hierarchies
+- [`ctrec()`](https://danigiro.github.io/FoReco/reference/ctrec.md) :
+  Optimal combination cross-temporal reconciliation
+- [`tcsrec()`](https://danigiro.github.io/FoReco/reference/heuristic-reco.md)
+  [`cstrec()`](https://danigiro.github.io/FoReco/reference/heuristic-reco.md)
+  : Heuristic cross-temporal reconciliation
+- [`iterec()`](https://danigiro.github.io/FoReco/reference/iterec.md) :
+  Iterative cross-temporal reconciliation
+- [`ctsmp()`](https://danigiro.github.io/FoReco/reference/ctsmp.md) :
+  Cross-temporal probabilistic reconciliation (sample approach)
+- [`ctmvn()`](https://danigiro.github.io/FoReco/reference/ctmvn.md) :
+  Cross-temporal Gaussian probabilistic reconciliation
+
+## Datasets
+
+- [`itagdp`](https://danigiro.github.io/FoReco/reference/itagdp.md)
+  [`outside`](https://danigiro.github.io/FoReco/reference/itagdp.md)
+  [`expside`](https://danigiro.github.io/FoReco/reference/itagdp.md)
+  [`incside`](https://danigiro.github.io/FoReco/reference/itagdp.md)
+  [`gdpconsmat`](https://danigiro.github.io/FoReco/reference/itagdp.md)
+  : Italian Quarterly National Accounts
+- [`vndata`](https://danigiro.github.io/FoReco/reference/vndata.md)
+  [`vnaggmat`](https://danigiro.github.io/FoReco/reference/vndata.md) :
+  Australian Tourism Demand dataset
+
+## Reconciliation tools
+
+Functions to compute the reconciliation matrices
+
+- [`cstools()`](https://danigiro.github.io/FoReco/reference/cstools.md)
+  : Cross-sectional reconciliation tools
+- [`csprojmat()`](https://danigiro.github.io/FoReco/reference/csprojmat.md)
+  : Projection matrix for optimal combination cross-sectional
+  reconciliation
+- [`tetools()`](https://danigiro.github.io/FoReco/reference/tetools.md)
+  : Temporal reconciliation tools
+- [`teprojmat()`](https://danigiro.github.io/FoReco/reference/teprojmat.md)
+  : Projection matrix for optimal combination temporal reconciliation
+- [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md)
+  : Cross-temporal reconciliation tools
+- [`ctprojmat()`](https://danigiro.github.io/FoReco/reference/ctprojmat.md)
+  : Projection matrix for optimal combination cross-temporal
+  reconciliation
+
+## Covariance estimation
+
+Functions to compute the covariance matrix estimators
+
+- [`cscov()`](https://danigiro.github.io/FoReco/reference/cscov.md) :
+  Cross-sectional covariance matrix approximation
+- [`tecov()`](https://danigiro.github.io/FoReco/reference/tecov.md) :
+  Temporal covariance matrix approximation
+- [`ctcov()`](https://danigiro.github.io/FoReco/reference/ctcov.md) :
+  Cross-temporal covariance matrix approximation
+- [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md)
+  : Shrinkage of the covariance matrix
+- [`shrink_oasd()`](https://danigiro.github.io/FoReco/reference/shrink_oasd.md)
+  : Shrinkage of the covariance matrix using the Oracle approximation
+
+## Utilities
+
+Functions to manipulate the data and the forecasts
+
+- [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md) :
+  Non-overlapping temporal aggregation of a time series
+- [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md)
+  [`as_hstack_ctlayout()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md)
+  : Convert between horizon-stacked and cross-temporal layouts
+- [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md)
+  [`as_hstack_telayout()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md)
+  : Convert between horizon-stacked and temporal layouts
+- [`balance_hierarchy()`](https://danigiro.github.io/FoReco/reference/balance_hierarchy.md)
+  : Aggregation matrix of a (possibly) unbalanced hierarchy in balanced
+  form
+- [`commat()`](https://danigiro.github.io/FoReco/reference/commat.md)
+  [`commat_index()`](https://danigiro.github.io/FoReco/reference/commat.md)
+  : Commutation matrix
+- [`csboot()`](https://danigiro.github.io/FoReco/reference/csboot.md) :
+  Cross-sectional joint block bootstrap
+- [`csprojmat()`](https://danigiro.github.io/FoReco/reference/csprojmat.md)
+  : Projection matrix for optimal combination cross-sectional
+  reconciliation
+- [`ctboot()`](https://danigiro.github.io/FoReco/reference/ctboot.md) :
+  Cross-temporal joint block bootstrap
+- [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md)
+  : Cross-sectional aggregation matrix of a dataframe
+- [`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md)
+  : Reconciled forecasts to matrix/vector
+- [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md) :
+  Linear combination (aggregation) matrix for a general linearly
+  constrained multiple time series
+- [`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md)
+  : Informations on the reconciliation process
+- [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md)
+  [`arrange_hres()`](https://danigiro.github.io/FoReco/reference/residuals.md)
+  **\[deprecated\]** : One-step and multi-step residuals
+- [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md)
+  : Set bounds for bounded forecast reconciliation
+- [`teboot()`](https://danigiro.github.io/FoReco/reference/teboot.md) :
+  Temporal joint block bootstrap
+- [`new_foreco_info()`](https://danigiro.github.io/FoReco/reference/new_foreco_info.md)
+  : Low-level construction for reconcilied forecasts attribute
+  foreco_info class
+- [`unbalance_hierarchy()`](https://danigiro.github.io/FoReco/reference/unbalance_hierarchy.md)
+  : Aggregation matrix of a balanced hierarchy in (possibly) unbalanced
+  form
+
+## Package
+
+- [`FoReco`](https://danigiro.github.io/FoReco/reference/FoReco-package.md)
+  [`FoReco-package`](https://danigiro.github.io/FoReco/reference/FoReco-package.md)
+  : FoReco: Forecast Reconciliation

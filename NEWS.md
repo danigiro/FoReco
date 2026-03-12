@@ -9,6 +9,7 @@
   * Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal methods and operational solutions. *arXiv*;
   * Kourentzes, N. and Athanasopoulos, G. (2021) Elucidate structure in intermittent demand series. *European Journal of Operational Research*, 288, 141-152. [doi:10.1016/j.ejor.2020.05.046](https://doi.org/10.1016/j.ejor.2020.05.046);
   * Wickramasuriya, S. L., Turlach, B. A., and Hyndman, R. J. (2020), "Optimal non-negative forecast reconciliation", *Statistics and Computing*, 30(5), 1167–1182. [doi:10.1007/s11222-020-09930-0](https://doi.org/10.1007/s11222-020-09930-0);
+* Added `...` for `simulate()` additional arguments in `csboot()`, `teboot()` and `ctboot()`;
 * Fixed bugs and improved stability.
 
 # FoReco 1.1.0
