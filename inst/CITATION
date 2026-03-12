@@ -1,50 +1,54 @@
 citHeader("To cite FoReco in publications, please use: ")
 
 bibentry(
-  bibtype = "Manual",
-  title   = "FoReco: Forecast Reconciliation",
-  author  =  c(person(given = "Daniele",
-                      family = "Girolimetto",
-                      role = c("aut", "cre", "fnd")),
-               person(given = "Tommaso",
-                      family = "Di Fonzo",
-                      role = c("aut", "fnd"))),
-  organization    = "R package",
-  year    = 2025,
-  doi     = "10.32614/CRAN.package.FoReco",
-  url     = "https://cran.r-project.org/package=FoReco"
+       bibtype = "Manual",
+       title = "FoReco: Forecast Reconciliation",
+       author = c(
+              person(
+                     given = "Daniele",
+                     family = "Girolimetto",
+                     role = c("aut", "cre", "fnd")
+              ),
+              person(
+                     given = "Tommaso",
+                     family = "Di Fonzo",
+                     role = c("aut", "fnd")
+              )
+       ),
+       organization = "R package",
+       year = 2026,
+       doi = "10.32614/CRAN.package.FoReco",
+       url = "https://cran.r-project.org/package=FoReco"
 )
 
 bibentry(
-  bibtype = "Article",
-  title   = "Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives",
-  author  = c(person(given = "Tommaso",
-                     family = "Di Fonzo"),
-              person(given = "Daniele",
-                     family = "Girolimetto")),
-  journal = "International Journal of Forecasting",
-  volume  = 39,
-  year    = 2023,
-  number  = 1,
-  pages   = 60--74,
-  doi     = "10.1016/j.ijforecast.2021.08.004"
+       bibtype = "Article",
+       title = "Cross-temporal forecast reconciliation: Optimal combination method and heuristic alternatives",
+       author = c(
+              person(given = "Tommaso", family = "Di Fonzo"),
+              person(given = "Daniele", family = "Girolimetto")
+       ),
+       journal = "International Journal of Forecasting",
+       volume = 39,
+       year = 2023,
+       number = 1,
+       pages = 60 - -74,
+       doi = "10.1016/j.ijforecast.2021.08.004"
 )
 
 bibentry(
-  bibtype = "Article",
-  title   = "Cross-temporal probabilistic forecast reconciliation: Methodological and practical issues",
-  author  = c(person(given = "Daniele",
-                     family = "Girolimetto"),
-              person(given = "George",
-                     family = "Athanasopoulos"),
-              person(given = "Tommaso",
-                     family = "Di Fonzo"),
-              person(given = "Rob J",
-                     family = "Hyndman")),
-  journal = "International Journal of Forecasting",
-  volume  = 40,
-  year    = 2024,
-  number  = 3,
-  pages   = 1134--1151,
-  doi     = "10.1016/j.ijforecast.2023.10.003"
+       bibtype = "Article",
+       title = "Cross-temporal probabilistic forecast reconciliation: Methodological and practical issues",
+       author = c(
+              person(given = "Daniele", family = "Girolimetto"),
+              person(given = "George", family = "Athanasopoulos"),
+              person(given = "Tommaso", family = "Di Fonzo"),
+              person(given = "Rob J", family = "Hyndman")
+       ),
+       journal = "International Journal of Forecasting",
+       volume = 40,
+       year = 2024,
+       number = 3,
+       pages = 1134 - -1151,
+       doi = "10.1016/j.ijforecast.2023.10.003"
 )
