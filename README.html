@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+@font-face {
+font-family: octicons-link;
+src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+body {
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+color: #333;
+font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+font-size: 16px;
+line-height: 1.6;
+word-wrap: break-word;
+}
+a {
+background-color: transparent;
+}
+a:active,
+a:hover {
+outline: 0;
+}
+strong {
+font-weight: bold;
+}
+h1 {
+font-size: 2em;
+margin: 0.67em 0;
+}
+img {
+border: 0;
+}
+hr {
+box-sizing: content-box;
+height: 0;
+}
+pre {
+overflow: auto;
+}
+code,
+kbd,
+pre {
+font-family: monospace, monospace;
+font-size: 1em;
+}
+input {
+color: inherit;
+font: inherit;
+margin: 0;
+}
+html input[disabled] {
+cursor: default;
+}
+input {
+line-height: normal;
+}
+input[type="checkbox"] {
+box-sizing: border-box;
+padding: 0;
+}
+table {
+border-collapse: collapse;
+border-spacing: 0;
+}
+td,
+th {
+padding: 0;
+}
+* {
+box-sizing: border-box;
+}
+input {
+font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+a {
+color: #4078c0;
+text-decoration: none;
+}
+a:hover,
+a:active {
+text-decoration: underline;
+}
+hr {
+height: 0;
+margin: 15px 0;
+overflow: hidden;
+background: transparent;
+border: 0;
+border-bottom: 1px solid #ddd;
+}
+hr:before {
+display: table;
+content: "";
+}
+hr:after {
+display: table;
+clear: both;
+content: "";
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 15px;
+margin-bottom: 15px;
+line-height: 1.1;
+}
+h1 {
+font-size: 30px;
+}
+h2 {
+font-size: 21px;
+}
+h3 {
+font-size: 16px;
+}
+h4 {
+font-size: 14px;
+}
+h5 {
+font-size: 12px;
+}
+h6 {
+font-size: 11px;
+}
+blockquote {
+margin: 0;
+}
+ul,
+ol {
+padding: 0;
+margin-top: 0;
+margin-bottom: 0;
+}
+ol ol,
+ul ol {
+list-style-type: lower-roman;
+}
+ul ul ol,
+ul ol ol,
+ol ul ol,
+ol ol ol {
+list-style-type: lower-alpha;
+}
+dd {
+margin-left: 0;
+}
+code {
+font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+font-size: 12px;
+}
+pre {
+margin-top: 0;
+margin-bottom: 0;
+font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.select::-ms-expand {
+opacity: 0;
+}
+.octicon {
+font: normal normal normal 16px/1 octicons-link;
+display: inline-block;
+text-decoration: none;
+text-rendering: auto;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.octicon-link:before {
+content: '\f05c';
+}
+.markdown-body:before {
+display: table;
+content: "";
+}
+.markdown-body:after {
+display: table;
+clear: both;
+content: "";
+}
+.markdown-body>*:first-child {
+margin-top: 0 !important;
+}
+.markdown-body>*:last-child {
+margin-bottom: 0 !important;
+}
+a:not([href]) {
+color: inherit;
+text-decoration: none;
+}
+.anchor {
+display: inline-block;
+padding-right: 2px;
+margin-left: -18px;
+}
+.anchor:focus {
+outline: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+margin-top: 1em;
+margin-bottom: 16px;
+font-weight: bold;
+line-height: 1.4;
+}
+h1 .octicon-link,
+h2 .octicon-link,
+h3 .octicon-link,
+h4 .octicon-link,
+h5 .octicon-link,
+h6 .octicon-link {
+color: #000;
+vertical-align: middle;
+visibility: hidden;
+}
+h1:hover .anchor,
+h2:hover .anchor,
+h3:hover .anchor,
+h4:hover .anchor,
+h5:hover .anchor,
+h6:hover .anchor {
+text-decoration: none;
+}
+h1:hover .anchor .octicon-link,
+h2:hover .anchor .octicon-link,
+h3:hover .anchor .octicon-link,
+h4:hover .anchor .octicon-link,
+h5:hover .anchor .octicon-link,
+h6:hover .anchor .octicon-link {
+visibility: visible;
+}
+h1 {
+padding-bottom: 0.3em;
+font-size: 2.25em;
+line-height: 1.2;
+border-bottom: 1px solid #eee;
+}
+h1 .anchor {
+line-height: 1;
+}
+h2 {
+padding-bottom: 0.3em;
+font-size: 1.75em;
+line-height: 1.225;
+border-bottom: 1px solid #eee;
+}
+h2 .anchor {
+line-height: 1;
+}
+h3 {
+font-size: 1.5em;
+line-height: 1.43;
+}
+h3 .anchor {
+line-height: 1.2;
+}
+h4 {
+font-size: 1.25em;
+}
+h4 .anchor {
+line-height: 1.2;
+}
+h5 {
+font-size: 1em;
+}
+h5 .anchor {
+line-height: 1.1;
+}
+h6 {
+font-size: 1em;
+color: #777;
+}
+h6 .anchor {
+line-height: 1.1;
+}
+p,
+blockquote,
+ul,
+ol,
+dl,
+table,
+pre {
+margin-top: 0;
+margin-bottom: 16px;
+}
+hr {
+height: 4px;
+padding: 0;
+margin: 16px 0;
+background-color: #e7e7e7;
+border: 0 none;
+}
+ul,
+ol {
+padding-left: 2em;
+}
+ul ul,
+ul ol,
+ol ol,
+ol ul {
+margin-top: 0;
+margin-bottom: 0;
+}
+li>p {
+margin-top: 16px;
+}
+dl {
+padding: 0;
+}
+dl dt {
+padding: 0;
+margin-top: 16px;
+font-size: 1em;
+font-style: italic;
+font-weight: bold;
+}
+dl dd {
+padding: 0 16px;
+margin-bottom: 16px;
+}
+blockquote {
+padding: 0 15px;
+color: #777;
+border-left: 4px solid #ddd;
+}
+blockquote>:first-child {
+margin-top: 0;
+}
+blockquote>:last-child {
+margin-bottom: 0;
+}
+table {
+display: block;
+width: 100%;
+overflow: auto;
+word-break: normal;
+word-break: keep-all;
+}
+table th {
+font-weight: bold;
+}
+table th,
+table td {
+padding: 6px 13px;
+border: 1px solid #ddd;
+}
+table tr {
+background-color: #fff;
+border-top: 1px solid #ccc;
+}
+table tr:nth-child(2n) {
+background-color: #f8f8f8;
+}
+img {
+max-width: 100%;
+box-sizing: content-box;
+background-color: #fff;
+}
+code {
+padding: 0;
+padding-top: 0.2em;
+padding-bottom: 0.2em;
+margin: 0;
+font-size: 85%;
+background-color: rgba(0,0,0,0.04);
+border-radius: 3px;
+}
+code:before,
+code:after {
+letter-spacing: -0.2em;
+content: "\00a0";
+}
+pre>code {
+padding: 0;
+margin: 0;
+font-size: 100%;
+word-break: normal;
+white-space: pre;
+background: transparent;
+border: 0;
+}
+.highlight {
+margin-bottom: 16px;
+}
+.highlight pre,
+pre {
+padding: 16px;
+overflow: auto;
+font-size: 85%;
+line-height: 1.45;
+background-color: #f7f7f7;
+border-radius: 3px;
+}
+.highlight pre {
+margin-bottom: 0;
+word-break: normal;
+}
+pre {
+word-wrap: normal;
+}
+pre code {
+display: inline;
+max-width: initial;
+padding: 0;
+margin: 0;
+overflow: initial;
+line-height: inherit;
+word-wrap: normal;
+background-color: transparent;
+border: 0;
+}
+pre code:before,
+pre code:after {
+content: normal;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font-size: 11px;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.pl-c {
+color: #969896;
+}
+.pl-c1,
+.pl-s .pl-v {
+color: #0086b3;
+}
+.pl-e,
+.pl-en {
+color: #795da3;
+}
+.pl-s .pl-s1,
+.pl-smi {
+color: #333;
+}
+.pl-ent {
+color: #63a35c;
+}
+.pl-k {
+color: #a71d5d;
+}
+.pl-pds,
+.pl-s,
+.pl-s .pl-pse .pl-s1,
+.pl-sr,
+.pl-sr .pl-cce,
+.pl-sr .pl-sra,
+.pl-sr .pl-sre {
+color: #183691;
+}
+.pl-v {
+color: #ed6a43;
+}
+.pl-id {
+color: #b52a1d;
+}
+.pl-ii {
+background-color: #b52a1d;
+color: #f8f8f8;
+}
+.pl-sr .pl-cce {
+color: #63a35c;
+font-weight: bold;
+}
+.pl-ml {
+color: #693a17;
+}
+.pl-mh,
+.pl-mh .pl-en,
+.pl-ms {
+color: #1d3e81;
+font-weight: bold;
+}
+.pl-mq {
+color: #008080;
+}
+.pl-mi {
+color: #333;
+font-style: italic;
+}
+.pl-mb {
+color: #333;
+font-weight: bold;
+}
+.pl-md {
+background-color: #ffecec;
+color: #bd2c00;
+}
+.pl-mi1 {
+background-color: #eaffea;
+color: #55a532;
+}
+.pl-mdr {
+color: #795da3;
+font-weight: bold;
+}
+.pl-mo {
+color: #1d3e81;
+}
+kbd {
+display: inline-block;
+padding: 3px 5px;
+font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+line-height: 10px;
+color: #555;
+vertical-align: middle;
+background-color: #fcfcfc;
+border: solid 1px #ccc;
+border-bottom-color: #bbb;
+border-radius: 3px;
+box-shadow: inset 0 -1px 0 #bbb;
+}
+.task-list-item {
+list-style-type: none;
+}
+.task-list-item+.task-list-item {
+margin-top: 3px;
+}
+.task-list-item input {
+margin: 0 0.35em 0.25em -1.6em;
+vertical-align: middle;
+}
+:checked+.radio-label {
+z-index: 1;
+position: relative;
+border-color: #4078c0;
+}
+.sourceLine {
+display: inline-block;
+}
+code .kw { color: #000000; }
+code .dt { color: #ed6a43; }
+code .dv { color: #009999; }
+code .bn { color: #009999; }
+code .fl { color: #009999; }
+code .ch { color: #009999; }
+code .st { color: #183691; }
+code .co { color: #969896; }
+code .ot { color: #0086b3; }
+code .al { color: #a61717; }
+code .fu { color: #63a35c; }
+code .er { color: #a61717; background-color: #e3d2d2; }
+code .wa { color: #000000; }
+code .cn { color: #008080; }
+code .sc { color: #008080; }
+code .vs { color: #183691; }
+code .ss { color: #183691; }
+code .im { color: #000000; }
+code .va {color: #008080; }
+code .cf { color: #000000; }
+code .op { color: #000000; }
+code .bu { color: #000000; }
+code .ex { color: #000000; }
+code .pp { color: #999999; }
+code .at { color: #008080; }
+code .do { color: #969896; }
+code .an { color: #008080; }
+code .cv { color: #008080; }
+code .in { color: #008080; }
+</style>
+<style>
+body {
+box-sizing: border-box;
+min-width: 200px;
+max-width: 980px;
+margin: 0 auto;
+padding: 45px;
+padding-top: 0px;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<h1 id="foreco-">FoReco
+<img role="img" aria-label="logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNi4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4KCjxzdmcKICAgdmVyc2lvbj0iMS4xIgogICB4PSIwcHgiCiAgIHk9IjBweCIKICAgd2lkdGg9IjEuNzNpbiIKICAgaGVpZ2h0PSIyaW4iCiAgIHZpZXdCb3g9IjAgMCAxNjYuMDggMTkyIgogICBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAxNzAuMDggMTcwLjA4IgogICB4bWw6c3BhY2U9InByZXNlcnZlIgogICBpZD0ic3ZnMzAiCiAgIHNvZGlwb2RpOmRvY25hbWU9ImZvcmVjby5zdmciCiAgIGlua3NjYXBlOnZlcnNpb249IjEuNC4yIChlYmYwZTk0MCwgMjAyNS0wNS0wOCkiCiAgIHhtbG5zOmlua3NjYXBlPSJodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy9uYW1lc3BhY2VzL2lua3NjYXBlIgogICB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnMKICAgaWQ9ImRlZnMzMCIgLz48c29kaXBvZGk6bmFtZWR2aWV3CiAgIGlkPSJuYW1lZHZpZXczMCIKICAgcGFnZWNvbG9yPSIjZmZmZmZmIgogICBib3JkZXJjb2xvcj0iIzAwMDAwMCIKICAgYm9yZGVyb3BhY2l0eT0iMC4yNSIKICAgaW5rc2NhcGU6c2hvd3BhZ2VzaGFkb3c9IjIiCiAgIGlua3NjYXBlOnBhZ2VvcGFjaXR5PSIwLjAiCiAgIGlua3NjYXBlOnBhZ2VjaGVja2VyYm9hcmQ9IjAiCiAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIKICAgaW5rc2NhcGU6em9vbT0iMy4yNzg3MDMiCiAgIGlua3NjYXBlOmN4PSI2MC44NDcyMzEiCiAgIGlua3NjYXBlOmN5PSIxMzMuMjg0NDEiCiAgIGlua3NjYXBlOmN1cnJlbnQtbGF5ZXI9InN2ZzMwIgogICBpbmtzY2FwZTpkb2N1bWVudC11bml0cz0iaW4iIC8+Cgo8ZwogICBpZD0iTGl2ZWxsb18yIgogICB0cmFuc2Zvcm09Im1hdHJpeCgxLjEyODg4NzIsMCwwLDEuMTI4ODg3MiwtMTIuOTU5NDM4LC0zLjA0NDRlLTYpIgogICBzdHlsZT0iZGlzcGxheTppbmxpbmUiCiAgIGlua3NjYXBlOmxhYmVsPSJmb3JlY28iPgoJPHBvbHlnb24KICAgZmlsbD0iIzI2NDc3NiIKICAgcG9pbnRzPSI4NS4wMzksMCAxNTguNTI4LDQyLjUwNiAxNTguNTI4LDEyNy41NTUgODUuMDM5LDE3MC4wNzkgMTEuNTUsMTI3LjU1NSAxMS41NSw0Mi41MDYgIgogICBpZD0icG9seWdvbjEyIgogICBzdHlsZT0iZGlzcGxheTppbmxpbmUiCiAgIGlua3NjYXBlOmxhYmVsPSJoZXgiIC8+Cgk8ZwogICBpZD0iZzE4IgogICBzdHlsZT0iZGlzcGxheTppbmxpbmUiCiAgIGlua3NjYXBlOmxhYmVsPSJ0ZXh0Ij4KCQk8cGF0aAogICBmaWxsPSIjZmVmZWZlIgogICBkPSJtIDM4Ljk4OSw0MC40NjkgdiA0LjAwNCBIIDI4LjY3OCB2IDYuMzQyIGggNy45MDIgdiAzLjkzMyBIIDI4LjY3OCBWIDY1LjIwMSBIIDIzLjcxNyBWIDQwLjQ2OSBaIgogICBpZD0icGF0aDEzIiAvPgoJCTxwYXRoCiAgIGZpbGw9IiNmZWZlZmUiCiAgIGQ9Im0gNDYuMTExLDY0LjI2MiBjIC0xLjUxMiwtMC44MzggLTIuNjk5LC0yLjAyNSAtMy41NjEsLTMuNTYxIC0wLjg2MywtMS41MzUgLTEuMjkzLC0zLjMwNyAtMS4yOTMsLTUuMzE1IDAsLTIuMDA4IDAuNDQzLC0zLjc3OSAxLjMyOSwtNS4zMTUgMC44ODYsLTEuNTM2IDIuMDk2LC0yLjcyMiAzLjYzMiwtMy41NjIgMS41MzYsLTAuODM4IDMuMjQ4LC0xLjI1OCA1LjEzOCwtMS4yNTggMS44OSwwIDMuNjAyLDAuNDIgNS4xMzgsMS4yNTggMS41MzUsMC44MzkgMi43NDcsMi4wMjYgMy42MzIsMy41NjIgMC44ODUsMS41MzYgMS4zMjksMy4zMDcgMS4zMjksNS4zMTUgMCwyLjAwOCAtMC40NTUsMy43OCAtMS4zNjQsNS4zMTUgLTAuOTEsMS41MzYgLTIuMTM4LDIuNzIzIC0zLjY4NSwzLjU2MSAtMS41NDgsMC44MzggLTMuMjc4LDEuMjU4IC01LjE5MSwxLjI1OCAtMS44OTIsMCAtMy41OTIsLTAuNDE5IC01LjEwNCwtMS4yNTggeiBtIDcuNjM2LC0zLjcyIGMgMC43OTEsLTAuNDM3IDEuNDIzLC0xLjA5MiAxLjg5NiwtMS45NjcgMC40NzIsLTAuODc0IDAuNzA4LC0xLjkzNyAwLjcwOCwtMy4xODkgMCwtMS44NjYgLTAuNDksLTMuMzAxIC0xLjQ3LC00LjMwNSAtMC45ODEsLTEuMDAzIC0yLjE3OSwtMS41MDYgLTMuNTk3LC0xLjUwNiAtMS40MTcsMCAtMi42MDQsMC41MDIgLTMuNTYxLDEuNTA2IC0wLjk1NywxLjAwNCAtMS40MzUsMi40MzkgLTEuNDM1LDQuMzA1IDAsMS44NjYgMC40NjYsMy4zMDIgMS4zOTksNC4zMDUgMC45MzMsMS4wMDQgMi4xMDgsMS41MDYgMy41MjYsMS41MDYgMC44OTgsMCAxLjc0MiwtMC4yMTggMi41MzQsLTAuNjU1IHoiCiAgIGlkPSJwYXRoMTQiIC8+CgkJPHBhdGgKICAgZmlsbD0iI2ZlZmVmZSIKICAgZD0ibSA3Ny44NTksNjUuMjAxIC01LjQ1NywtOS42MzggaCAtMi4zMzggdiA5LjYzOCBIIDY1LjEwMyBWIDQwLjQ2OSBoIDkuMjg0IGMgMS45MTMsMCAzLjU0MywwLjMzNyA0Ljg4OSwxLjAxIDEuMzQ3LDAuNjczIDIuMzU2LDEuNTgzIDMuMDI5LDIuNzI5IDAuNjc0LDEuMTQ2IDEuMDExLDIuNDI3IDEuMDExLDMuODQ0IDAsMS42MyAtMC40NzMsMy4xMDEgLTEuNDE3LDQuNDEyIC0wLjk0NSwxLjMxMSAtMi4zNTEsMi4yMTQgLTQuMjE3LDIuNzEgbCA1LjkxNywxMC4wMjggaCAtNS43NCB6IE0gNzAuMDYzLDUxLjg0MyBoIDQuMTQ2IGMgMS4zNDcsMCAyLjM1MSwtMC4zMjQgMy4wMTIsLTAuOTc0IDAuNjYxLC0wLjY1IDAuOTkyLC0xLjU1MyAwLjk5MiwtMi43MTEgMCwtMS4xMzQgLTAuMzMxLC0yLjAxNCAtMC45OTIsLTIuNjQgLTAuNjYyLC0wLjYyNiAtMS42NjYsLTAuOTM5IC0zLjAxMiwtMC45MzkgaCAtNC4xNDYgeiIKICAgaWQ9InBhdGgxNSIgLz4KCQk8cGF0aAogICBmaWxsPSIjZmVmZWZlIgogICBkPSJtIDEwNS45MjEsNTYuODc1IGggLTE0LjM1IGMgMC4xMTcsMS40MTcgMC42MTQsMi41MjggMS40ODcsMy4zMzEgMC44NzMsMC44MDMgMS45NDksMS4yMDUgMy4yMjYsMS4yMDUgMS44NDIsMCAzLjE1MywtMC43OTEgMy45MzIsLTIuMzc0IGggNS4zNTIgYyAtMC41NjcsMS44OSAtMS42NTMsMy40NDMgLTMuMjYxLDQuNjYgLTEuNjA2LDEuMjE3IC0zLjU3OSwxLjgyNSAtNS45MTcsMS44MjUgLTEuODkxLDAgLTMuNTg1LC0wLjQxOSAtNS4wODUsLTEuMjU4IC0xLjUsLTAuODM5IC0yLjY2OSwtMi4wMjUgLTMuNTA3LC0zLjU2MSAtMC44NCwtMS41MzUgLTEuMjU4LC0zLjMwNyAtMS4yNTgsLTUuMzE1IDAsLTIuMDMxIDAuNDEyLC0zLjgxNCAxLjIzOSwtNS4zNSAwLjgyNiwtMS41MzYgMS45ODQsLTIuNzE3IDMuNDcyLC0zLjU0MyAxLjQ4OSwtMC44MjcgMy4yMDIsLTEuMjQxIDUuMTM5LC0xLjI0MSAxLjg2NSwwIDMuNTM4LDAuNDAyIDUuMDE1LDEuMjA1IDEuNDc2LDAuODAzIDIuNjIxLDEuOTQzIDMuNDM3LDMuNDE5IDAuODE0LDEuNDc3IDEuMjIzLDMuMTcxIDEuMjIzLDUuMDg1IC0wLjAwMiwwLjcwNyAtMC4wNDksMS4zNDUgLTAuMTQ0LDEuOTEyIHogbSAtNC45OTYsLTMuMzMyIGMgLTAuMDIzLC0xLjI3NiAtMC40ODQsLTIuMjk3IC0xLjM4MiwtMy4wNjQgLTAuODk4LC0wLjc2OCAtMS45OTYsLTEuMTUyIC0zLjI5NSwtMS4xNTIgLTEuMjI5LDAgLTIuMjYyLDAuMzcyIC0zLjEwMSwxLjExNiAtMC44MzksMC43NDQgLTEuMzUyLDEuNzc4IC0xLjU0MSwzLjEwMSBoIDkuMzE5IHoiCiAgIGlkPSJwYXRoMTYiIC8+CgkJPHBhdGgKICAgZmlsbD0iI2ZlZmVmZSIKICAgZD0ibSAxMDkuNjQyLDUwLjA1MyBjIDAuODI2LC0xLjUyNCAxLjk3MywtMi43MDQgMy40MzgsLTMuNTQzIDEuNDY1LC0wLjgzOCAzLjE0MiwtMS4yNTggNS4wMzEsLTEuMjU4IDIuNDMzLDAgNC40NDcsMC42MDggNi4wNDEsMS44MjUgMS41OTUsMS4yMTggMi42NjIsMi45MjMgMy4yMDcsNS4xMjEgaCAtNS4zNTEgYyAtMC4yODMsLTAuODUxIC0wLjc2MiwtMS41MTggLTEuNDM2LC0yLjAwMiAtMC42NzIsLTAuNDg0IC0xLjUwNSwtMC43MjcgLTIuNDk3LC0wLjcyNyAtMS40MTgsMCAtMi41MzksMC41MTQgLTMuMzY2LDEuNTQxIC0wLjgyNywxLjAyOCAtMS4yNCwyLjQ4NyAtMS4yNCw0LjM3NiAwLDEuODY2IDAuNDEzLDMuMzEzIDEuMjQsNC4zNDEgMC44MjcsMS4wMjcgMS45NDgsMS41NDEgMy4zNjYsMS41NDEgMi4wMDcsMCAzLjMxNywtMC44OTcgMy45MzMsLTIuNjkzIGggNS4zNTEgYyAtMC41NDUsMi4xMjYgLTEuNjE4LDMuODE1IC0zLjIyNiw1LjA2NyAtMS42MDUsMS4yNTIgLTMuNjEzLDEuODc4IC02LjAyMiwxLjg3OCAtMS44OSwwIC0zLjU2NiwtMC40MTkgLTUuMDMxLC0xLjI1OCAtMS40NjUsLTAuODM5IC0yLjYxMSwtMi4wMiAtMy40MzgsLTMuNTQzIC0wLjgyNywtMS41MjMgLTEuMjQsLTMuMzAxIC0xLjI0LC01LjMzMyAtMC4wMDEsLTIuMDMxIDAuNDEyLC0zLjgwOSAxLjI0LC01LjMzMyB6IgogICBpZD0icGF0aDE3IiAvPgoJCTxwYXRoCiAgIGZpbGw9IiNmZWZlZmUiCiAgIGQ9Im0gMTM0LjYyMyw2NC4yNjIgYyAtMS41MTQsLTAuODM4IC0yLjY5OSwtMi4wMjUgLTMuNTYzLC0zLjU2MSAtMC44NjIsLTEuNTM1IC0xLjI5MywtMy4zMDcgLTEuMjkzLC01LjMxNSAwLC0yLjAwOCAwLjQ0MywtMy43NzkgMS4zMjksLTUuMzE1IDAuODg2LC0xLjUzNiAyLjA5NiwtMi43MjIgMy42MzIsLTMuNTYyIDEuNTM0LC0wLjgzOCAzLjI0OCwtMS4yNTggNS4xMzgsLTEuMjU4IDEuODksMCAzLjYwNCwwLjQyIDUuMTM4LDEuMjU4IDEuNTM2LDAuODM5IDIuNzQ3LDIuMDI2IDMuNjMzLDMuNTYyIDAuODg2LDEuNTM2IDEuMzI5LDMuMzA3IDEuMzI5LDUuMzE1IDAsMi4wMDggLTAuNDU3LDMuNzggLTEuMzY2LDUuMzE1IC0wLjkwOCwxLjUzNiAtMi4xMzksMi43MjMgLTMuNjg0LDMuNTYxIC0xLjU0OCwwLjgzOCAtMy4yNzgsMS4yNTggLTUuMTksMS4yNTggLTEuODkyLDAgLTMuNTkyLC0wLjQxOSAtNS4xMDMsLTEuMjU4IHogbSA3LjYzNSwtMy43MiBjIDAuNzkyLC0wLjQzNyAxLjQyNCwtMS4wOTIgMS44OTYsLTEuOTY3IDAuNDcxLC0wLjg3NCAwLjcwOCwtMS45MzcgMC43MDgsLTMuMTg5IDAsLTEuODY2IC0wLjQ5MSwtMy4zMDEgLTEuNDcyLC00LjMwNSAtMC45OCwtMS4wMDMgLTIuMTc4LC0xLjUwNiAtMy41OTYsLTEuNTA2IC0xLjQxNywwIC0yLjYwNCwwLjUwMiAtMy41NiwxLjUwNiAtMC45NTgsMS4wMDQgLTEuNDM3LDIuNDM5IC0xLjQzNyw0LjMwNSAwLDEuODY2IDAuNDY4LDMuMzAyIDEuMzk5LDQuMzA1IDAuOTM1LDEuMDA0IDIuMTA4LDEuNTA2IDMuNTI3LDEuNTA2IDAuOSwwIDEuNzQ0LC0wLjIxOCAyLjUzNSwtMC42NTUgeiIKICAgaWQ9InBhdGgxOCIgLz4KCTwvZz4KCTxnCiAgIGlkPSJnMjQiCiAgIGlua3NjYXBlOmxhYmVsPSJpY29uIj4KCQk8cGF0aAogICBmaWxsPSIjYTVjMmRmIgogICBkPSJtIDc3LjQ3NCw4MS4xNTggYyAtMC40NjIsLTAuNTI2IC0xLjIwMSwtMC42OTggLTEuODk3LC0wLjY0MiAtMS4xLDAuMDg3IC0yLjExNSwtMC4yMzcgLTIuNzgzLC0wLjk5OCAtMS4zMzEsLTEuNTEzIC0wLjc3MSwtNC4xODQgMS4yNDYsLTUuOTU3IDIuMDE2LC0xLjc3MyA0LjczNiwtMS45ODUgNi4wNjcsLTAuNDcyIDAuNjY5LDAuNzYgMC44NiwxLjgwOCAwLjYzNCwyLjg4OCAtMC4xNDYsMC42ODUgLTAuMDcxLDEuNDQgMC4zOSwxLjk2NiAwLjY0NCwwLjczMiAxLjc2LDAuODA0IDIuNDkyLDAuMTYgbCAzLjI0NiwtMi44NTMgYyAxLjUxNCwtMS4zMzEgMy44MjMsLTEuMTgxIDUuMTUsMC4zMzMgbCAxNC40NjcsMTYuNDYgYyAxLjMzMSwxLjUxMyAxLjE4MSwzLjgxOSAtMC4zMyw1LjE1IGwgLTMuMjQ4LDIuODU0IGMgLTAuNzMxLDAuNjQ0IC0xLjg1LDAuNTcxIC0yLjQ5MywtMC4xNTkgLTAuNDYsLTAuNTI4IC0wLjUzNCwtMS4yODEgLTAuMzksLTEuOTY2IDAuMjI4LC0xLjA4IDAuMDM3LC0yLjEyNyAtMC42MzQsLTIuODg5IC0xLjMzLC0xLjUxMyAtNC4wNDgsLTEuMzAzIC02LjA2NywwLjQ3NCAtMi4wMTgsMS43NjkgLTIuNTc3LDQuNDQyIC0xLjI0Nyw1Ljk1NCAwLjY3MSwwLjc2MyAxLjY4NSwxLjA4NCAyLjc4NCwwLjk5OCAwLjY5OCwtMC4wNTUgMS40MzYsMC4xMTYgMS44OTcsMC42NDQgMC42NDMsMC43MjggMC41NywxLjg0NiAtMC4xNTgsMi40ODkgbCAtNi45MDUsNi4wNjcgYyAtMS41MTQsMS4zMjkgLTMuODIzLDEuMTgxIC01LjE1MiwtMC4zMyBsIC02LjA2NywtNi45MDQgYyAtMC42NDIsLTAuNzMzIC0wLjU3MiwtMS44NSAwLjE2LC0yLjQ5MSAwLjUyNywtMC40NjQgMS4yODEsLTAuNTM4IDEuOTY2LC0wLjM5IDEuMDc4LDAuMjI0IDIuMTI1LDAuMDMyIDIuODg3LC0wLjYzNyAxLjUxNSwtMS4zMzEgMS4zMDIsLTQuMDQ5IC0wLjQ3MiwtNi4wNjkgLTEuNzcxLC0yLjAxNyAtNC40NDIsLTIuNTc1IC01Ljk1NywtMS4yNDYgLTAuNzYxLDAuNjcxIC0xLjA4MywxLjY4NyAtMC45OTcsMi43ODQgMC4wNTYsMC42OTcgLTAuMTE1LDEuNDM4IC0wLjY0MSwxLjg5OCAtMC43MzEsMC42NDYgLTEuODQ5LDAuNTcyIC0yLjQ5MiwtMC4xNTkgbCAtMi44NTQsLTMuMjQ4IGMgLTEuMzI5LC0xLjUxMyAtMS4xODEsLTMuODE5IDAuMzMzLC01LjE1MyBsIDYuOTA0LC02LjA2NSBjIDAuNzMxLC0wLjY0MyAwLjgwNiwtMS43NjEgMC4xNjEsLTIuNDkxIHoiCiAgIGlkPSJwYXRoMTkiIC8+CgkJCgkJPHBhdGgKICAgZmlsbD0iI2E1YzJkZiIKICAgZD0ibSA0OC4zNzUsMTEyLjUzNyBjIC0wLjM3NCwtMC41NjEgLTEuMDYsLTAuODIxIC0xLjczNywtMC44NTYgLTEuMDYyLC0wLjA1OCAtMS45OTIsLTAuNDk2IC0yLjUzNCwtMS4zMTEgLTEuMDc4LC0xLjYxOSAtMC4yMDEsLTQuMTAyIDEuOTU1LC01LjUzOCAyLjE1NiwtMS40NDIgNC43ODcsLTEuMjk5IDUuODY1LDAuMzIgMC41NDQsMC44MTQgMC41OTIsMS44NDEgMC4yMzgsMi44NDUgLTAuMjI5LDAuNjM5IC0wLjI1MywxLjM2OCAwLjEyMiwxLjkzMyAwLjUyMiwwLjc4MiAxLjU4MSwwLjk5MiAyLjM2MywwLjQ2OSBsIDMuNDcsLTIuMzEyIGMgMS42MTksLTEuMDg0IDMuODA5LC0wLjY0MiA0Ljg4NywwLjk3NiBsIDIuMzE1LDMuNDcyIGMgMC41MjIsMC43ODIgMS41ODMsMC45OSAyLjM2NCwwLjQ2OSAwLjU2MiwtMC4zNzQgMC44MiwtMS4wNiAwLjg1NCwtMS43MzUgMC4wNiwtMS4wNjUgMC40OTgsLTEuOTkzIDEuMzEyLC0yLjUzMiAxLjYyLC0xLjA4IDQuMTAyLC0wLjIwMSA1LjU0MSwxLjk1MSAxLjQzOSwyLjE1NyAxLjI5Myw0Ljc4NCAtMC4zMjYsNS44NjQgLTAuODExLDAuNTQyIC0xLjgzNywwLjU5MyAtMi44NDIsMC4yNCAtMC42MzcsLTAuMjI5IC0xLjM2NywtMC4yNTIgLTEuOTMsMC4xMjIgLTAuNzgyLDAuNTIzIC0wLjk5NSwxLjU4IC0wLjQ3MiwyLjM2NCBsIDQuOTIxLDcuMzc3IGMgMS4wODEsMS42MiAwLjY0NSwzLjgxMiAtMC45NzYsNC44ODcgbCAtMy40NjgsMi4zMTggYyAtMC43ODMsMC41MTkgLTEuODQyLDAuMzA5IC0yLjM2NSwtMC40NzQgLTAuMzc0LC0wLjU2MSAtMC4zNSwtMS4yOTIgLTAuMTIxLC0xLjkzMSAwLjM1NCwtMS4wMDYgMC4zMDYsLTIuMDMyIC0wLjIzNywtMi44NDIgLTEuMDgsLTEuNjE5IC0zLjcwOSwtMS43NjUgLTUuODY2LC0wLjMyNSAtMi4xNTcsMS40MzcgLTMuMDM1LDMuOTI0IC0xLjk1NCw1LjU0MSAwLjU0MiwwLjgxMiAxLjQ3MSwxLjI1MyAyLjUzNCwxLjMxMSAwLjY3NywwLjAzNCAxLjM2MSwwLjI5MyAxLjczNywwLjg1NSAwLjUyMSwwLjc4MiAwLjMwOSwxLjgzOSAtMC40NzUsMi4zNiBsIC03LjM3OCw0LjkyNSBjIC0xLjYxOSwxLjA3NyAtMy44MDksMC42NDIgLTQuODg5LC0wLjk3OSBMIDM5LjU0OCwxMjQuNzEgYyAtMS4wODEsLTEuNjE5IC0wLjY0NCwtMy44MDkgMC45NzYsLTQuODg5IGwgNy4zNzgsLTQuOTIzIGMgMC43ODMsLTAuNTIgMC45OTQsLTEuNTgyIDAuNDczLC0yLjM2MSB6IgogICBpZD0icGF0aDIwIgogICBzdHlsZT0iZGlzcGxheTppbmxpbmUiIC8+PHBhdGgKICAgZmlsbD0iI2E1YzJkZiIKICAgZD0ibSA4OC4zNTgsMTI5LjI3NSBjIC0wLjY2MywtMC4xMjIgLTEuMzI1LDAuMTg5IC0xLjgyMywwLjY1IC0wLjc4LDAuNzIyIC0xLjc0NCwxLjA4NCAtMi43MDMsMC45MDQgLTEuOTEzLC0wLjM1MSAtMy4wODQsLTIuNzEzIC0yLjYxNCwtNS4yNiAwLjQ2OCwtMi41NDkgMi40MDQsLTQuMzM3IDQuMzE3LC0zLjk4NiAwLjk2LDAuMTc4IDEuNzMxLDAuODYgMi4yMDYsMS44MTMgMC4yOTgsMC42MDkgMC44MDYsMS4xMzMgMS40NjksMS4yNTcgMC45MjYsMC4xNzEgMS44MTQsLTAuNDQ1IDEuOTg2LC0xLjM2NyBsIDAuNzU3LC00LjEwMiBjIDAuMzUyLC0xLjkxMyAyLjE4OSwtMy4xNzcgNC4xMDQsLTIuODI2IGwgNC4xMDIsMC43NTQgYyAwLjkyMywwLjE3MSAxLjgxMywtMC40NDIgMS45ODQsLTEuMzYzIDAuMTIyLC0wLjY2NCAtMC4xODgsLTEuMzI4IC0wLjY1MSwtMS44MjcgLTAuNzIyLC0wLjc3OSAtMS4wODMsLTEuNzQ0IC0wLjkwNiwtMi43MDEgMC4zNTQsLTEuOTE1IDIuNzE0LC0zLjA4NyA1LjI2NCwtMi42MTYgMi41NDgsMC40NjkgNC4zMzQsMi40MDEgMy45ODMsNC4zMTggLTAuMTc5LDAuOTYyIC0wLjg1OSwxLjczIC0xLjgxLDIuMjA2IC0wLjYwOSwwLjI5NyAtMS4xMzYsMC44MDUgLTEuMjU5LDEuNDY5IC0wLjE3LDAuOTI4IDAuNDQyLDEuODEzIDEuMzY3LDEuOTg0IGwgOC43MjQsMS42MDcgYyAxLjkxMiwwLjM1NSAzLjE4LDIuMTg5IDIuODI4LDQuMTA2IGwgLTAuNzU3LDQuMTAyIGMgLTAuMTcxLDAuOTI1IC0xLjA1OSwxLjUzNiAtMS45ODQsMS4zNjggLTAuNjY1LC0wLjEyMiAtMS4xNzIsLTAuNjUgLTEuNDcsLTEuMjYgLTAuNDc3LC0wLjk1MiAtMS4yNDYsLTEuNjMxIC0yLjIwNSwtMS44MDkgLTEuOTE3LC0wLjM1MyAtMy44NTEsMS40MzMgLTQuMzIsMy45ODEgLTAuNDcxLDIuNTUgMC43MDIsNC45MDkgMi42MTUsNS4yNjUgMC45NiwwLjE3MyAxLjkyNCwtMC4xODUgMi43MDQsLTAuOTA2IDAuNDk3LC0wLjQ2NCAxLjE1OSwtMC43NzMgMS44MjUsLTAuNjUzIDAuOTI0LDAuMTcxIDEuNTM1LDEuMDYyIDEuMzY1LDEuOTg2IGwgLTEuNjA3LDguNzIzIGMgLTAuMzU0LDEuOTE0IC0yLjE5NCwzLjE4MSAtNC4xMDUsMi44MjggbCAtOC43MjYsLTEuNjA4IGMgLTAuOTIzLC0wLjE3MSAtMS41MzYsLTEuMDYxIC0xLjM2NCwtMS45ODMgMC4xMjEsLTAuNjY1IDAuNjQ5LC0xLjE3NSAxLjI1NiwtMS40NyAwLjk1MywtMC40NzMgMS42MzQsLTEuMjQ2IDEuODEsLTIuMjA1IDAuMzU0LC0xLjkxNSAtMS40MzMsLTMuODQ5IC0zLjk4MiwtNC4zMjEgLTIuNTQ4LC0wLjQ2OCAtNC45MDgsMC43MDQgLTUuMjYsMi42MTYgLTAuMTc4LDAuOTYyIDAuMTgzLDEuOTI0IDAuOTA0LDIuNzA2IDAuNDYxLDAuNDk4IDAuNzcyLDEuMTYgMC42NDksMS44MiAtMC4xNzEsMC45MjcgLTEuMDYsMS41MzggLTEuOTg0LDEuMzcgbCAtNC4xMDIsLTAuNzU3IGMgLTEuOTE0LC0wLjM1NSAtMy4xNzksLTIuMTkzIC0yLjgyNiwtNC4xMDYgbCAxLjYwNywtOC43MjIgYyAwLjE3LC0wLjkyNCAtMC40NDMsLTEuODE0IC0xLjM2OCwtMS45ODUgeiIKICAgaWQ9InBhdGgyMSIKICAgc3R5bGU9ImRpc3BsYXk6aW5saW5lIiAvPgoJCQoJCQoJCQoJPC9nPgoJCgkKCQoJCgkKCQo8L2c+Cjwvc3ZnPgo=" alt="logo" align="right" width="150" style="border: none; float: right;" /></h1>
+<p><a href="https://github.com/danigiro/FoReco/actions/workflows/R-CMD-check.yaml"><img role="img" aria-label="R-CMD-check" src="data:image/svg+xml; charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTIiIGhlaWdodD0iMjAiPgogIDx0aXRsZT5SLUNNRC1jaGVjayAtIHBhc3Npbmc8L3RpdGxlPgogIDxkZWZzPgogICAgPGxpbmVhckdyYWRpZW50IGlkPSJ3b3JrZmxvdy1maWxsIiB4MT0iNTAlIiB5MT0iMCUiIHgyPSI1MCUiIHkyPSIxMDAlIj4KICAgICAgPHN0b3Agc3RvcC1jb2xvcj0iIzQ0NEQ1NiIgb2Zmc2V0PSIwJSI+PC9zdG9wPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjMjQyOTJFIiBvZmZzZXQ9IjEwMCUiPjwvc3RvcD4KICAgIDwvbGluZWFyR3JhZGllbnQ+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9InN0YXRlLWZpbGwiIHgxPSI1MCUiIHkxPSIwJSIgeDI9IjUwJSIgeTI9IjEwMCUiPgogICAgICA8c3RvcCBzdG9wLWNvbG9yPSIjMzREMDU4IiBvZmZzZXQ9IjAlIj48L3N0b3A+CiAgICAgIDxzdG9wIHN0b3AtY29sb3I9IiMyOEE3NDUiIG9mZnNldD0iMTAwJSI+PC9zdG9wPgogICAgPC9saW5lYXJHcmFkaWVudD4KICA8L2RlZnM+CiAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgIDxnIGZvbnQtZmFtaWx5PSImIzM5O0RlamFWdSBTYW5zJiMzOTssVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+CiAgICAgIDxwYXRoIGlkPSJ3b3JrZmxvdy1iZyIgZD0iTTAsMyBDMCwxLjM0MzEgMS4zNTUyLDAgMy4wMjcwMjcwMywwIEwxMDIsMCBMMTAyLDIwIEwzLjAyNzAyNzAzLDIwIEMxLjM1NTIsMjAgMCwxOC42NTY5IDAsMTcgTDAsMyBaIiBmaWxsPSJ1cmwoI3dvcmtmbG93LWZpbGwpIiBmaWxsLXJ1bGU9Im5vbnplcm8iPjwvcGF0aD4KICAgICAgPHRleHQgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+CiAgICAgICAgPHRzcGFuIHg9IjIyLjE5ODE5ODIiIHk9IjE1IiBhcmlhLWhpZGRlbj0idHJ1ZSI+Ui1DTUQtY2hlY2s8L3RzcGFuPgogICAgICA8L3RleHQ+CiAgICAgIDx0ZXh0IGZpbGw9IiNGRkZGRkYiPgogICAgICAgIDx0c3BhbiB4PSIyMi4xOTgxOTgyIiB5PSIxNCI+Ui1DTUQtY2hlY2s8L3RzcGFuPgogICAgICA8L3RleHQ+CiAgICA8L2c+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDIpIiBmb250LWZhbWlseT0iJiMzOTtEZWphVnUgU2FucyYjMzk7LFZlcmRhbmEsR2VuZXZhLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTEiPgogICAgICA8cGF0aCBkPSJNMCAwaDQ2LjkzOUM0OC42MjkgMCA1MCAxLjM0MyA1MCAzdjE0YzAgMS42NTctMS4zNyAzLTMuMDYxIDNIMFYweiIgaWQ9InN0YXRlLWJnIiBmaWxsPSJ1cmwoI3N0YXRlLWZpbGwpIiBmaWxsLXJ1bGU9Im5vbnplcm8iPjwvcGF0aD4KICAgICAgPHRleHQgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyIgYXJpYS1oaWRkZW49InRydWUiPgogICAgICAgIDx0c3BhbiB4PSI0IiB5PSIxNSI+cGFzc2luZzwvdHNwYW4+CiAgICAgIDwvdGV4dD4KICAgICAgPHRleHQgZmlsbD0iI0ZGRkZGRiI+CiAgICAgICAgPHRzcGFuIHg9IjQiIHk9IjE0Ij5wYXNzaW5nPC90c3Bhbj4KICAgICAgPC90ZXh0PgogICAgPC9nPgogICAgPHBhdGggZmlsbD0iIzk1OURBNSIgZD0iTTExIDNjLTMuODY4IDAtNyAzLjEzMi03IDdhNi45OTYgNi45OTYgMCAwIDAgNC43ODYgNi42NDFjLjM1LjA2Mi40ODItLjE0OC40ODItLjMzMiAwLS4xNjYtLjAxLS43MTgtLjAxLTEuMzA0LTEuNzU4LjMyNC0yLjIxMy0uNDI5LTIuMzUzLS44MjItLjA3OS0uMjAyLS40Mi0uODIzLS43MTctLjk5LS4yNDUtLjEzLS41OTUtLjQ1NC0uMDEtLjQ2My41NTItLjAwOS45NDYuNTA4IDEuMDc3LjcxOC42MyAxLjA1OCAxLjYzNi43NiAyLjAzOS41NzcuMDYxLS40NTUuMjQ1LS43NjEuNDQ2LS45MzYtMS41NTctLjE3NS0zLjE4NS0uNzc5LTMuMTg1LTMuNDU2IDAtLjc2Mi4yNzEtMS4zOTIuNzE4LTEuODgyLS4wNy0uMTc1LS4zMTUtLjg5Mi4wNy0xLjg1NSAwIDAgLjU4Ni0uMTgzIDEuOTI1LjcxOGE2LjUgNi41IDAgMCAxIDEuNzUtLjIzNiA2LjUgNi41IDAgMCAxIDEuNzUuMjM2YzEuMzM4LS45MSAxLjkyNS0uNzE4IDEuOTI1LS43MTguMzg1Ljk2My4xNCAxLjY4LjA3IDEuODU1LjQ0Ni40OS43MTcgMS4xMTIuNzE3IDEuODgyIDAgMi42ODYtMS42MzYgMy4yOC0zLjE5NCAzLjQ1Ni4yNTQuMjE5LjQ3My42MzkuNDczIDEuMjk1IDAgLjkzNi0uMDA5IDEuNjg5LS4wMDkgMS45MjUgMCAuMTg0LjEzMS40MDIuNDgxLjMzMkE3LjAxMSA3LjAxMSAwIDAgMCAxOCAxMGMwLTMuODY3LTMuMTMzLTctNy03eiI+PC9wYXRoPgogIDwvZz4KPC9zdmc+Cgo=" alt="R-CMD-check" /></a> <a href="https://CRAN.R-project.org/package=FoReco"><img role="img" aria-label="CRAN status" src="data:image/svg+xml; charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4NSIgaGVpZ2h0PSIyMCIgYXJpYS1sYWJlbD0iQ1JBTiAxLjIuMCI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJiIiB4Mj0iMCIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxtYXNrIGlkPSJhIj4KICAgIDxyZWN0IHdpZHRoPSI4NSIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz4KICA8L21hc2s+CiAgPGcgbWFzaz0idXJsKCNhKSI+CiAgICA8cGF0aCBmaWxsPSIjNTU1IiBkPSJNMCAwaDQzdjIwSDB6Ii8+CiAgICA8cGF0aCBmaWxsPSIjNGMxIiBkPSJNNDMgMGg2M3YyMEg0M3oiLz4KICAgIDxwYXRoIGZpbGw9InVybCgjYikiIGQ9Ik0wIDBoODV2MjBIMHoiLz4KICA8L2c+CiAgPGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIKICAgICBmb250LWZhbWlseT0iRGVqYVZ1IFNhbnMsVmVyZGFuYSxHZW5ldmEsc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSI+CiAgICA8dGV4dCB4PSIyMS41IiB5PSIxNSIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyI+CiAgICAgIENSQU4KICAgIDwvdGV4dD4KICAgIDx0ZXh0IHg9IjIxLjUiIHk9IjE0Ij4KICAgICAgQ1JBTgogICAgPC90ZXh0PgogICAgPHRleHQgeD0iNjMiIHk9IjE1IiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIj4KICAgICAgMS4yLjAKICAgIDwvdGV4dD4KICAgIDx0ZXh0IHg9IjYzIiB5PSIxNCI+CiAgICAgIDEuMi4wCiAgICA8L3RleHQ+CiAgPC9nPgo8L3N2Zz4=" alt="CRAN status" /></a> <a href="https://github.com/danigiro/FoReco"><img role="img" aria-label="devel version" src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTQiIGhlaWdodD0iMjAiIHJvbGU9ImltZyIgYXJpYS1sYWJlbD0iZGV2ZWwgdmVyc2lvbjogMS4yLjAuOTAwMCI+PHRpdGxlPmRldmVsIHZlcnNpb246IDEuMi4wLjkwMDA8L3RpdGxlPjxsaW5lYXJHcmFkaWVudCBpZD0icyIgeDI9IjAiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiNiYmIiIHN0b3Atb3BhY2l0eT0iLjEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3Atb3BhY2l0eT0iLjEiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aCBpZD0iciI+PHJlY3Qgd2lkdGg9IjE1NCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz48L2NsaXBQYXRoPjxnIGNsaXAtcGF0aD0idXJsKCNyKSI+PHJlY3Qgd2lkdGg9IjgzIiBoZWlnaHQ9IjIwIiBmaWxsPSIjNTU1Ii8+PHJlY3QgeD0iODMiIHdpZHRoPSI3MSIgaGVpZ2h0PSIyMCIgZmlsbD0iIzAwN2VjNiIvPjxyZWN0IHdpZHRoPSIxNTQiIGhlaWdodD0iMjAiIGZpbGw9InVybCgjcykiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTEwIj48dGV4dCBhcmlhLWhpZGRlbj0idHJ1ZSIgeD0iNDI1IiB5PSIxNTAiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB0ZXh0TGVuZ3RoPSI3MzAiPmRldmVsIHZlcnNpb248L3RleHQ+PHRleHQgeD0iNDI1IiB5PSIxNDAiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiBmaWxsPSIjZmZmIiB0ZXh0TGVuZ3RoPSI3MzAiPmRldmVsIHZlcnNpb248L3RleHQ+PHRleHQgYXJpYS1oaWRkZW49InRydWUiIHg9IjExNzUiIHk9IjE1MCIgZmlsbD0iIzAxMDEwMSIgZmlsbC1vcGFjaXR5PSIuMyIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIHRleHRMZW5ndGg9IjYxMCI+MS4yLjAuOTAwMDwvdGV4dD48dGV4dCB4PSIxMTc1IiB5PSIxNDAiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiBmaWxsPSIjZmZmIiB0ZXh0TGVuZ3RoPSI2MTAiPjEuMi4wLjkwMDA8L3RleHQ+PC9nPjwvc3ZnPg==" alt="devel version" /></a> <a href="https://cran.r-project.org/web/licenses/GPL-3"><img role="img" aria-label="License: GPL-3" src="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MCIgaGVpZ2h0PSIyMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJsaWNlbnNlOiBHUEwtMyI+PHRpdGxlPmxpY2Vuc2U6IEdQTC0zPC90aXRsZT48bGluZWFyR3JhZGllbnQgaWQ9InMiIHgyPSIwIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSIjYmJiIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLW9wYWNpdHk9Ii4xIi8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGggaWQ9InIiPjxyZWN0IHdpZHRoPSI5MCIgaGVpZ2h0PSIyMCIgcng9IjMiIGZpbGw9IiNmZmYiLz48L2NsaXBQYXRoPjxnIGNsaXAtcGF0aD0idXJsKCNyKSI+PHJlY3Qgd2lkdGg9IjQ3IiBoZWlnaHQ9IjIwIiBmaWxsPSIjNTU1Ii8+PHJlY3QgeD0iNDciIHdpZHRoPSI0MyIgaGVpZ2h0PSIyMCIgZmlsbD0iZm9yZXN0Z3JlZW4iLz48cmVjdCB3aWR0aD0iOTAiIGhlaWdodD0iMjAiIGZpbGw9InVybCgjcykiLz48L2c+PGcgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC1mYW1pbHk9IlZlcmRhbmEsR2VuZXZhLERlamFWdSBTYW5zLHNhbnMtc2VyaWYiIHRleHQtcmVuZGVyaW5nPSJnZW9tZXRyaWNQcmVjaXNpb24iIGZvbnQtc2l6ZT0iMTEwIj48dGV4dCBhcmlhLWhpZGRlbj0idHJ1ZSIgeD0iMjQ1IiB5PSIxNTAiIGZpbGw9IiMwMTAxMDEiIGZpbGwtb3BhY2l0eT0iLjMiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiB0ZXh0TGVuZ3RoPSIzNzAiPmxpY2Vuc2U8L3RleHQ+PHRleHQgeD0iMjQ1IiB5PSIxNDAiIHRyYW5zZm9ybT0ic2NhbGUoLjEpIiBmaWxsPSIjZmZmIiB0ZXh0TGVuZ3RoPSIzNzAiPmxpY2Vuc2U8L3RleHQ+PHRleHQgYXJpYS1oaWRkZW49InRydWUiIHg9IjY3NSIgeT0iMTUwIiBmaWxsPSIjMDEwMTAxIiBmaWxsLW9wYWNpdHk9Ii4zIiB0cmFuc2Zvcm09InNjYWxlKC4xKSIgdGV4dExlbmd0aD0iMzMwIj5HUEwtMzwvdGV4dD48dGV4dCB4PSI2NzUiIHk9IjE0MCIgdHJhbnNmb3JtPSJzY2FsZSguMSkiIGZpbGw9IiNmZmYiIHRleHRMZW5ndGg9IjMzMCI+R1BMLTM8L3RleHQ+PC9nPjwvc3ZnPg==" alt="License: GPL-3" /></a></p>
+<p><strong>Fo</strong>recast <strong>Reco</strong>nciliation is a a
+post-forecasting process aimed to improve the accuracy and align
+forecasts for a system of linearly constrained
+(e.g. hierarchical/grouped) time series. The <strong>FoReco</strong>
+package provides a comprehensive set of classical (bottom-up, top-down
+and middle-out), and modern (optimal and heuristic combination) forecast
+reconciliation procedures in different frameworks including
+cross-sectional, temporal, or cross-temporal settings.</p>
+<p>The core functions for reconciliation categorized by framework are as
+follows:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Reconciliation</strong></th>
+<th align="center"><strong>Cross-sectional</strong></th>
+<th align="center"><strong>Temporal</strong></th>
+<th align="center"><strong>Cross-Temporal</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Classical reconciliation</em></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>Top-down: <code>*td()</code></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/cstd.html"><code>cstd()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/tetd.html"><code>tetd()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/cttd.html"><code>cttd()</code></a></td>
+</tr>
+<tr>
+<td>Bottom-up: <code>*bu()</code></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/csbu.html"><code>csbu()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/tebu.html"><code>tebu()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/ctbu.html"><code>ctbu()</code></a></td>
+</tr>
+<tr>
+<td>Middle-out: <code>*mo()</code></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/csmo.html"><code>csmo()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/temo.html"><code>temo()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/ctmo.html"><code>ctmo()</code></a></td>
+</tr>
+<tr>
+<td><em>Regression‑based reconciliation</em></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>Least squares: <code>*rec()</code></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/csrec.html"><code>csrec()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/terec.html"><code>terec()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/ctrec.html"><code>ctrec()</code></a></td>
+</tr>
+<tr>
+<td>LCC: <code>*lcc()</code></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/cslcc.html"><code>cslcc()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/telcc.html"><code>telcc()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/ctlcc.html"><code>ctlcc()</code></a></td>
+</tr>
+<tr>
+<td><em>Probabilistic reconciliation</em></td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td>MVN: <code>*mvn()</code></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/csmvn.html"><code>csmvn()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/temvn.html"><code>temvn()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/ctmvn.html"><code>ctmvn()</code></a></td>
+</tr>
+<tr>
+<td>Sample-based: <code>*smp()</code></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/cssmp.html"><code>cssmp()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/tesmp.html"><code>tesmp()</code></a></td>
+<td align="center"><a href="https://danigiro.github.io/FoReco/reference/ctsmp.html"><code>ctsmp()</code></a></td>
+</tr>
+</tbody>
+</table>
+<p>Additionally, <code>FoReco</code> provides various functions for
+different aspects of forecast reconciliation, including aggregating time
+series, balancing hierarchies, computing projection and covariance
+matrices, and more.</p>
+<h2 id="installation">Installation</h2>
+<p>You can install the <strong>stable</strong> version on <a href="https://CRAN.R-project.org/package=FoReco">CRAN</a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;FoReco&quot;</span>)</span></code></pre></div>
+<p>You can also install the <strong>development</strong> version from <a href="https://github.com/danigiro/FoReco">Github</a></p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># install.packages(&quot;devtools&quot;)</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;danigiro/FoReco&quot;</span>)</span></code></pre></div>
+<h2 id="getting-started">Getting Started</h2>
+<p>To get started with using the <code>FoReco</code> package, refer to
+the <a href="https://danigiro.github.io/FoReco/">documentation</a> for
+detailed information on how to apply different forecast reconciliation
+procedures to your data.</p>
+<!-- - [Introduction to `FoReco`](https://danigiro.github.io/FoReco/articles/Introduction-to-FoReco.html) -->
+
+<ul>
+<li><p><a href="https://danigiro.github.io/FoReco/articles/Dataset-vndata-and-itagdp.html">The
+<code>vndata</code> and <code>itagdp</code> dataset</a></p></li>
+<li><p><a href="https://danigiro.github.io/FoReco/articles/Cross-sectional-forecast-reconciliation.html">Cross-sectional
+forecast reconciliation</a></p></li>
+<li><p><a href="https://danigiro.github.io/FoReco/articles/Temporal-forecast-reconciliation.html">Temporal
+forecast reconciliation</a></p></li>
+<li><p><a href="https://danigiro.github.io/FoReco/articles/Cross-temporal-forecast-reconciliation.html">Cross-temporal
+forecast reconciliation</a></p></li>
+<li><p><a href="https://danigiro.github.io/FoReco/articles/Replicate-the-hts-package.html">Replicate
+the <code>hts</code> package</a></p></li>
+<li><p><a href="https://danigiro.github.io/FoReco/articles/Replicate-the-thief-package.html">Replicate
+the <code>thief</code> package</a></p></li>
+</ul>
+<h2 id="issues-and-contributions">Issues and Contributions</h2>
+<p>If you encounter any bugs or have suggestions for improvements,
+please feel free to report them on <a href="https://github.com/danigiro/FoReco/issues">GitHub Issues page</a>.
+Contributions are also welcome!</p>
+
+</body>
+</html>
