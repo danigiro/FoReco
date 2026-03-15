@@ -50,7 +50,8 @@ csboot <- function(model_list, boot_size, block_size, seed = NULL, ...) {
           model_list[[x]],
           innov = res[id, x],
           future = TRUE,
-          nsim = length(res[id, x])
+          nsim = length(res[id, x]),
+          ...
         ))
       })
     },
@@ -133,7 +134,7 @@ teboot <- function(
       id <- index[[paste0("k", k)]][, i]
       fit_i <- model_list[[paste0("k", k)]]
       res_vec <- res_list[[paste0("k", k)]][id]
-      simulate(fit_i, innov = res_vec, future = TRUE)
+      simulate(fit_i, innov = res_vec, future = TRUE, ...)
     })
   })
   fboot <- t(sapply(fboot, Reduce, f = "c"))
@@ -197,8 +198,7 @@ ctboot <- function(
     boot_size = boot_size,
     agg_order = info$set,
     block_size = block_size,
-    seed = seed,
-    ...
+    seed = seed
   )
 
   fboot <- lapply(1:boot_size, function(i) {
@@ -207,7 +207,7 @@ ctboot <- function(
       fit_i <- model_list[[paste0("k", k)]]
       res_mat <- res_list[[paste0("k", k)]][id, , drop = FALSE]
       out <- sapply(1:length(fit_i), function(x) {
-        simulate(fit_i[[x]], innov = res_mat[, x], future = TRUE)
+        simulate(fit_i[[x]], innov = res_mat[, x], future = TRUE, ...)
       })
       if (is.vector(out)) {
         out <- unname(rbind(out))

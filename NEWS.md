@@ -1,5 +1,7 @@
 # FoReco (development version)
 
+* Fix bug `...` for `simulate()` in `csboot()`, `teboot()` and `ctboot()`;
+
 # FoReco 1.2.0
 
 * (CRAN Package Check Results) Fixed compatibility issues with [`osqp`](https://CRAN.R-project.org/package=osqp) 1.0. The package is now fully compatible with any version.
