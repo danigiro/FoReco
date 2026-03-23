@@ -1,35 +1,56 @@
 #' Cross-sectional joint block bootstrap
 #'
-#' Joint block bootstrap for generating probabilistic base forecasts that take into account
-#' the correlation between different time series (Panagiotelis et al. 2023).
+#' Joint block bootstrap for generating probabilistic base forecasts that take
+#' into account the correlation between different time series (Panagiotelis et
+#' al. 2023).
 #'
-#' @param model_list A list of all the \eqn{n} base forecasts models. A \code{simulate()}
-#' function for each model has to be available and implemented according to the
-#' package \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
-#' with the following mandatory parameters: \emph{object},
-#' \emph{innov}, \emph{future}, and \emph{nsim}.
+#' @usage
+#' csboot(model_list, boot_size, block_size, seed = NULL, xreg = NULL, ...)
+#'
+#' @param model_list A list of all the \eqn{n} base forecasts models. A
+#'   \code{simulate()} function for each model has to be available and
+#'   implemented according to the package
+#'   \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
+#'   with the following mandatory parameters: \emph{object}, \emph{innov},
+#'   \emph{future}, and \emph{nsim}.
 #' @param boot_size The number of bootstrap replicates.
 #' @param block_size Block size of the bootstrap, which is typically equivalent
-#' to the forecast horizon.
+#'   to the forecast horizon.
+#' @param xreg An (\eqn{\text{block\_size} \times n}) optional numeric matrix
+#'   containing the new values of \code{xreg} to be used for forecasting.
+#'   It can contains \code{NA}s.
 #' @param seed An integer seed.
 #' @param ... Additional arguments for the \code{simulate()} function.
 #'
-#' @return A list with two elements: the seed used to sample the errors and a 3-d array
-#' (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
+#' @return A list with two elements: the seed used to sample the errors and a
+#'   3-d array (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
 #'
 #' @references
-#' Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-#' Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-#' \emph{European Journal of Operational Research} 306(2), 693–706.
-#' \doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+#' Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+#' (2023), Probabilistic forecast reconciliation: Properties, evaluation and
+#' score optimisation, \emph{European Journal of Operational Research}, 306(2),
+#' 693–706. \doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
 #'
 #' @family Bootstrap samples
 #' @family Framework: cross-sectional
 #'
 #' @export
-csboot <- function(model_list, boot_size, block_size, seed = NULL, ...) {
+csboot <- function(
+  model_list,
+  boot_size,
+  block_size,
+  seed = NULL,
+  xreg = NULL,
+  ...
+) {
   res <- sapply(model_list, residuals)
   N <- NROW(res)
+
+  if (!is.null(xreg)) {
+    if (NCOL(xreg) != NCOL(res)) {
+      cli_abort("Incorrect {.arg xreg} columns dimension.", call = NULL)
+    }
+  }
 
   if (is.null(seed)) {
     seed <- stats::rpois(1, 1000)
@@ -46,13 +67,34 @@ csboot <- function(model_list, boot_size, block_size, seed = NULL, ...) {
     2,
     function(id) {
       sapply(1:length(model_list), function(x) {
-        unname(simulate(
-          model_list[[x]],
-          innov = res[id, x],
-          future = TRUE,
-          nsim = length(res[id, x]),
-          ...
-        ))
+        if (!is.null(xreg)) {
+          if (all(is.na(xreg[, x]))) {
+            unname(simulate(
+              model_list[[x]],
+              innov = res[id, x],
+              future = TRUE,
+              nsim = length(res[id, x]),
+              ...
+            ))
+          } else {
+            unname(simulate(
+              model_list[[x]],
+              innov = res[id, x],
+              future = TRUE,
+              nsim = length(res[id, x]),
+              xreg = xreg[, x],
+              ...
+            ))
+          }
+        } else {
+          unname(simulate(
+            model_list[[x]],
+            innov = res[id, x],
+            future = TRUE,
+            nsim = length(res[id, x]),
+            ...
+          ))
+        }
       })
     },
     simplify = FALSE
@@ -72,27 +114,38 @@ csboot <- function(model_list, boot_size, block_size, seed = NULL, ...) {
 
 #' Temporal joint block bootstrap
 #'
-#' Joint block bootstrap for generating probabilistic base forecasts that take into account
-#' the correlation between different temporal aggregation orders (Girolimetto et al. 2023).
+#' Joint block bootstrap for generating probabilistic base forecasts that take
+#' into account the correlation between different temporal aggregation orders
+#' (Girolimetto et al. 2023).
 #'
-#' @param model_list A list of all the \eqn{(k^\ast+m)} base forecasts models ordered
-#' from the lowest frequency (most temporally aggregated) to the highest frequency.
-#' A \code{simulate()} function for each model has to be available and implemented
-#' according to the package \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
-#' with the following mandatory parameters: \emph{object}, \emph{innov},
-#' \emph{future}, and \emph{nsim}.
+#' @usage
+#' teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
+#'        xreg = NULL, ...)
+#'
+#' @param model_list A list of all the \eqn{(k^\ast+m)} base forecasts models
+#'   ordered from the lowest frequency (most temporally aggregated) to the
+#'   highest frequency. A \code{simulate()} function for each model has to be
+#'   available and implemented according to the package
+#'   \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
+#'   with the following mandatory parameters: \emph{object}, \emph{innov},
+#'   \emph{future}, and \emph{nsim}.
 #' @param block_size Block size of the bootstrap, which is typically equivalent
-#' to the forecast horizon for the most temporally aggregated series.
+#'   to the forecast horizon for the most temporally aggregated series.
+#' @param xreg A (\eqn{\text{boot\_size}(k^\ast+m) \times 1}) optional numeric
+#'   vector containing the new values of \code{xreg} to be used for forecasting
+#'   ordered from the lowest frequency to the highest frequency.
+#'   It can contains \code{NA}s.
 #' @inheritParams terec
 #' @inheritParams csboot
 #'
 #' @return A list with two elements: the seed used to sample the errors and
-#' a (\eqn{\text{boot\_size}\times (k^\ast+m)\text{block\_size}}) matrix.
+#'   a (\eqn{\text{boot\_size}\times (k^\ast+m)\text{block\_size}}) matrix.
 #'
 #' @references
-#' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2023), Cross-temporal
-#' probabilistic forecast reconciliation: Methodological and practical issues.
-#' \emph{International Journal of Forecasting}, 40(3), 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
+#' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
+#' Cross-temporal probabilistic forecast reconciliation: Methodological and
+#' practical issues. \emph{International Journal of Forecasting}, 40, 3,
+#' 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 #'
 #' @family Bootstrap samples
 #' @family Framework: temporal
@@ -104,6 +157,7 @@ teboot <- function(
   agg_order,
   block_size = 1,
   seed = NULL,
+  xreg = NULL,
   ...
 ) {
   info <- tetools(agg_order = agg_order)
@@ -121,6 +175,18 @@ teboot <- function(
     seed <- stats::rpois(1, 1000)
   }
 
+  if (!is.null(xreg)) {
+    kt <- length(model_list)
+
+    if (NCOL(xreg) != 1) {
+      cli_abort("{.arg xreg} is not a vector.", call = NULL)
+    } else if (length(xreg) %% kt != 0) {
+      cli_abort("Incorrect {.arg xreg} length.", call = NULL)
+    } else {
+      xreg <- FoReco2matrix(xreg, agg_order = agg_order)
+    }
+  }
+
   index <- boot_index(
     N = N,
     boot_size = boot_size,
@@ -134,7 +200,16 @@ teboot <- function(
       id <- index[[paste0("k", k)]][, i]
       fit_i <- model_list[[paste0("k", k)]]
       res_vec <- res_list[[paste0("k", k)]][id]
-      simulate(fit_i, innov = res_vec, future = TRUE, ...)
+      if (!is.null(xreg)) {
+        xreg_i <- xreg[[paste0("k", k)]]
+        if (all(is.na(xreg_i))) {
+          simulate(fit_i, innov = res_vec, future = TRUE, ...)
+        } else {
+          simulate(fit_i, innov = res_vec, future = TRUE, xreg = xreg_i, ...)
+        }
+      } else {
+        simulate(fit_i, innov = res_vec, future = TRUE, ...)
+      }
     })
   })
   fboot <- t(sapply(fboot, Reduce, f = "c"))
@@ -143,28 +218,38 @@ teboot <- function(
 
 #' Cross-temporal joint block bootstrap
 #'
-#' Joint block bootstrap for generating probabilistic base forecasts that take into account
-#' the correlation between variables at different temporal aggregation orders
-#' (Girolimetto et al. 2023).
+#' Joint block bootstrap for generating probabilistic base forecasts that take
+#' into account the correlation between variables at different temporal
+#' aggregation orders (Girolimetto et al. 2023).
 #'
-#' @param model_list A list of \eqn{n} elements, one for each cross-sectional series.
-#' Each elements is a list with the \eqn{(k^\ast+m)} base forecasts models ordered
-#' from the lowest frequency (most temporally aggregated) to the highest frequency.
-#' A \code{simulate()} function for each model has to be available and implemented
-#' according to the package \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
-#' with the following mandatory parameters: \emph{object}, \emph{innov},
-#' \emph{future}, and \emph{nsim}.
+#' @usage
+#' ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
+#'        xreg = NULL, ...)
+#'
+#' @param model_list A list of \eqn{n} elements, one for each cross-sectional
+#'   series. Each elements is a list with the \eqn{(k^\ast+m)} base forecasts
+#'   models ordered from the lowest frequency (most temporally aggregated) to
+#'   the highest frequency. A \code{simulate()} function for each model has to
+#'   be available and implemented according to the package
+#'   \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
+#'   with the following mandatory parameters: \emph{object}, \emph{innov},
+#'   \emph{future}, and \emph{nsim}.
+#' @param xreg A (\eqn{n \times \text{boot\_size}(k^\ast+m)}) optional numeric
+#'   matrix containing the new values of \code{xreg} to be used for forecasting
+#'   ordered from the lowest frequency to the highest frequency (columns) for
+#'   each variable (rows). It can contains \code{NA}s.
 #' @inheritParams ctrec
 #' @inheritParams teboot
 #'
-#' @return A list with two elements: the seed used to sample the
-#' errors and a list with \eqn{\text{boot\_size}} matrix of size
-#' (\eqn{n\times(k^\ast+m)\text{block\_size}}) matrix.
+#' @return A list with two elements: the seed used to sample the errors and a
+#'   list with \eqn{\text{boot\_size}} matrix of size
+#'   (\eqn{n\times(k^\ast+m)\text{block\_size}}) matrix.
 #'
 #' @references
-#' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2023), Cross-temporal
-#' probabilistic forecast reconciliation: Methodological and practical issues.
-#' \emph{International Journal of Forecasting}, 40(3), 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
+#' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
+#' Cross-temporal probabilistic forecast reconciliation: Methodological and
+#' practical issues. \emph{International Journal of Forecasting}, 40, 3,
+#' 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
 #'
 #' @family Bootstrap samples
 #' @family Framework: cross-temporal
@@ -176,6 +261,7 @@ ctboot <- function(
   agg_order,
   block_size = 1,
   seed = NULL,
+  xreg = NULL,
   ...
 ) {
   info <- tetools(agg_order = agg_order)
@@ -193,6 +279,19 @@ ctboot <- function(
     seed <- stats::rpois(1, 1000)
   }
 
+  if (!is.null(xreg)) {
+    n <- length(model_list)
+    kt <- length(model_list[[1]])
+
+    if (NCOL(xreg) %% kt != 0) {
+      cli_abort("Incorrect {.arg xreg} columns dimension.", call = NULL)
+    } else if (NROW(xreg) != n) {
+      cli_abort("Incorrect {.arg xreg} rows dimension.", call = NULL)
+    } else {
+      xreg <- FoReco2matrix(xreg, agg_order = agg_order)
+    }
+  }
+
   index <- boot_index(
     N = N,
     boot_size = boot_size,
@@ -206,8 +305,27 @@ ctboot <- function(
       id <- index[[paste0("k", k)]][, i]
       fit_i <- model_list[[paste0("k", k)]]
       res_mat <- res_list[[paste0("k", k)]][id, , drop = FALSE]
+
+      if (!is.null(xreg)) {
+        xreg_i <- xreg[[paste0("k", k)]]
+      }
+
       out <- sapply(1:length(fit_i), function(x) {
-        simulate(fit_i[[x]], innov = res_mat[, x], future = TRUE, ...)
+        if (!is.null(xreg)) {
+          if (all(is.na(xreg_i[, x]))) {
+            simulate(fit_i[[x]], innov = res_mat[, x], future = TRUE, ...)
+          } else {
+            simulate(
+              fit_i[[x]],
+              innov = res_mat[, x],
+              future = TRUE,
+              xreg = xreg_i[, x],
+              ...
+            )
+          }
+        } else {
+          simulate(fit_i[[x]], innov = res_mat[, x], future = TRUE, ...)
+        }
       })
       if (is.vector(out)) {
         out <- unname(rbind(out))

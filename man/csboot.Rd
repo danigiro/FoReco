@@ -4,14 +4,15 @@
 \alias{csboot}
 \title{Cross-sectional joint block bootstrap}
 \usage{
-csboot(model_list, boot_size, block_size, seed = NULL, ...)
+csboot(model_list, boot_size, block_size, seed = NULL, xreg = NULL, ...)
 }
 \arguments{
-\item{model_list}{A list of all the \eqn{n} base forecasts models. A \code{simulate()}
-function for each model has to be available and implemented according to the
-package \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
-with the following mandatory parameters: \emph{object},
-\emph{innov}, \emph{future}, and \emph{nsim}.}
+\item{model_list}{A list of all the \eqn{n} base forecasts models. A
+\code{simulate()} function for each model has to be available and
+implemented according to the package
+\href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
+with the following mandatory parameters: \emph{object}, \emph{innov},
+\emph{future}, and \emph{nsim}.}
 
 \item{boot_size}{The number of bootstrap replicates.}
 
@@ -20,21 +21,26 @@ to the forecast horizon.}
 
 \item{seed}{An integer seed.}
 
+\item{xreg}{An (\eqn{\text{block\_size} \times n}) optional numeric matrix
+containing the new values of \code{xreg} to be used for forecasting.
+It can contains \code{NA}s.}
+
 \item{...}{Additional arguments for the \code{simulate()} function.}
 }
 \value{
-A list with two elements: the seed used to sample the errors and a 3-d array
-(\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
+A list with two elements: the seed used to sample the errors and a
+3-d array (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
 }
 \description{
-Joint block bootstrap for generating probabilistic base forecasts that take into account
-the correlation between different time series (Panagiotelis et al. 2023).
+Joint block bootstrap for generating probabilistic base forecasts that take
+into account the correlation between different time series (Panagiotelis et
+al. 2023).
 }
 \references{
-Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J. (2023),
-Probabilistic forecast reconciliation: Properties, evaluation and score optimisation,
-\emph{European Journal of Operational Research} 306(2), 693–706.
-\doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
+(2023), Probabilistic forecast reconciliation: Properties, evaluation and
+score optimisation, \emph{European Journal of Operational Research}, 306(2),
+693–706. \doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
 }
 \seealso{
 Bootstrap samples:

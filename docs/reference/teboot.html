@@ -5,9 +5,11 @@
       fontURL: "https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/output/chtml/fonts/woff-v2"
     }
   };
-</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Temporal joint block bootstrap — teboot"><meta name="description" content="Joint block bootstrap for generating probabilistic base forecasts that take into account
-the correlation between different temporal aggregation orders (Girolimetto et al. 2023)."><meta property="og:description" content="Joint block bootstrap for generating probabilistic base forecasts that take into account
-the correlation between different temporal aggregation orders (Girolimetto et al. 2023)."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+</script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Temporal joint block bootstrap — teboot"><meta name="description" content="Joint block bootstrap for generating probabilistic base forecasts that take
+into account the correlation between different temporal aggregation orders
+(Girolimetto et al. 2023)."><meta property="og:description" content="Joint block bootstrap for generating probabilistic base forecasts that take
+into account the correlation between different temporal aggregation orders
+(Girolimetto et al. 2023)."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -15,7 +17,7 @@ the correlation between different temporal aggregation orders (Girolimetto et al
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -50,13 +52,15 @@ the correlation between different temporal aggregation orders (Girolimetto et al
     </div>
 
     <div class="ref-description section level2">
-    <p>Joint block bootstrap for generating probabilistic base forecasts that take into account
-the correlation between different temporal aggregation orders (Girolimetto et al. 2023).</p>
+    <p>Joint block bootstrap for generating probabilistic base forecasts that take
+into account the correlation between different temporal aggregation orders
+(Girolimetto et al. 2023).</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">teboot</span><span class="op">(</span><span class="va">model_list</span>, <span class="va">boot_size</span>, <span class="va">agg_order</span>, block_size <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">teboot</span><span class="op">(</span><span class="va">model_list</span>, <span class="va">boot_size</span>, <span class="va">agg_order</span>, block_size <span class="op">=</span> <span class="fl">1</span>, seed <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>       xreg <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -64,10 +68,11 @@ the correlation between different temporal aggregation orders (Girolimetto et al
 
 
 <dl><dt id="arg-model-list">model_list<a class="anchor" aria-label="anchor" href="#arg-model-list"></a></dt>
-<dd><p>A list of all the \((k^\ast+m)\) base forecasts models ordered
-from the lowest frequency (most temporally aggregated) to the highest frequency.
-A <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> function for each model has to be available and implemented
-according to the package <a href="https://CRAN.R-project.org/package=forecast" class="external-link"><span class="pkg">forecast</span></a>,
+<dd><p>A list of all the \((k^\ast+m)\) base forecasts models
+ordered from the lowest frequency (most temporally aggregated) to the
+highest frequency. A <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> function for each model has to be
+available and implemented according to the package
+<a href="https://CRAN.R-project.org/package=forecast" class="external-link"><span class="pkg">forecast</span></a>,
 with the following mandatory parameters: <em>object</em>, <em>innov</em>,
 <em>future</em>, and <em>nsim</em>.</p></dd>
 
@@ -91,6 +96,13 @@ to the forecast horizon for the most temporally aggregated series.</p></dd>
 <dd><p>An integer seed.</p></dd>
 
 
+<dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
+<dd><p>A (\(\text{boot\_size}(k^\ast+m) \times 1\)) optional numeric
+vector containing the new values of <code>xreg</code> to be used for forecasting
+ordered from the lowest frequency to the highest frequency.
+It can contains <code>NA</code>s.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments for the <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> function.</p></dd>
 
@@ -102,9 +114,10 @@ a (\(\text{boot\_size}\times (k^\ast+m)\text{block\_size}\)) matrix.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
-    <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2023), Cross-temporal
-probabilistic forecast reconciliation: Methodological and practical issues.
-<em>International Journal of Forecasting</em>, 40(3), 1134-1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
+    <p>Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
+Cross-temporal probabilistic forecast reconciliation: Methodological and
+practical issues. <em>International Journal of Forecasting</em>, 40, 3,
+1134-1151. <a href="https://doi.org/10.1016/j.ijforecast.2023.10.003" class="external-link">doi:10.1016/j.ijforecast.2023.10.003</a></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
