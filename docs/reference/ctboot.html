@@ -68,11 +68,12 @@ aggregation orders (Girolimetto et al. 2023).</p>
 
 
 <dl><dt id="arg-model-list">model_list<a class="anchor" aria-label="anchor" href="#arg-model-list"></a></dt>
-<dd><p>A list of \(n\) elements, one for each cross-sectional
-series. Each elements is a list with the \((k^\ast+m)\) base forecasts
-models ordered from the lowest frequency (most temporally aggregated) to
-the highest frequency. A <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> function for each model has to
-be available and implemented according to the package
+<dd><p>A list of \(p\) elements, one for each temporal level
+ordered from the lowest frequency (most temporally aggregated) to
+the highest frequency. Each elements is a list with the \(n\) base
+forecasts models for each cross-sectional series. A <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code>
+function for each model has to be available and implemented according
+to the package
 <a href="https://CRAN.R-project.org/package=forecast" class="external-link"><span class="pkg">forecast</span></a>,
 with the following mandatory parameters: <em>object</em>, <em>innov</em>,
 <em>future</em>, and <em>nsim</em>.</p></dd>
@@ -98,10 +99,11 @@ to the forecast horizon for the most temporally aggregated series.</p></dd>
 
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
-<dd><p>A (\(n \times \text{boot\_size}(k^\ast+m)\)) optional numeric
-matrix containing the new values of <code>xreg</code> to be used for forecasting
+<dd><p>An optional 3-d numeric array of dimensions
+(\(n \times \text{boot\_size}(k^\ast+m) \times N_{xreg}\))
+containing the new values of <code>xreg</code> to be used for forecasting
 ordered from the lowest frequency to the highest frequency (columns) for
-each variable (rows). It can contains <code>NA</code>s.</p></dd>
+each variable (rows). It can contain <code>NA</code>s.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>

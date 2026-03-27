@@ -8,7 +8,7 @@ teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
        xreg = NULL, ...)
 }
 \arguments{
-\item{model_list}{A list of all the \eqn{(k^\ast+m)} base forecasts models
+\item{model_list}{A list of all the \eqn{p} base forecasts models
 ordered from the lowest frequency (most temporally aggregated) to the
 highest frequency. A \code{simulate()} function for each model has to be
 available and implemented according to the package
@@ -27,9 +27,9 @@ to the forecast horizon for the most temporally aggregated series.}
 
 \item{seed}{An integer seed.}
 
-\item{xreg}{A (\eqn{\text{boot\_size}(k^\ast+m) \times 1}) optional numeric
-vector containing the new values of \code{xreg} to be used for forecasting
-ordered from the lowest frequency to the highest frequency.
+\item{xreg}{A (\eqn{\text{block\_size}(k^\ast+m) \times N_{xreg}}) optional
+numeric matrix containing the new values of \code{xreg} to be used for
+forecasting ordered from the lowest frequency to the highest frequency.
 It can contains \code{NA}s.}
 
 \item{...}{Additional arguments for the \code{simulate()} function.}

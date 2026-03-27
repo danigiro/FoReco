@@ -8,11 +8,12 @@ ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
        xreg = NULL, ...)
 }
 \arguments{
-\item{model_list}{A list of \eqn{n} elements, one for each cross-sectional
-series. Each elements is a list with the \eqn{(k^\ast+m)} base forecasts
-models ordered from the lowest frequency (most temporally aggregated) to
-the highest frequency. A \code{simulate()} function for each model has to
-be available and implemented according to the package
+\item{model_list}{A list of \eqn{p} elements, one for each temporal level
+ordered from the lowest frequency (most temporally aggregated) to
+the highest frequency. Each elements is a list with the \eqn{n} base
+forecasts models for each cross-sectional series. A \code{simulate()}
+function for each model has to be available and implemented according
+to the package
 \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
 with the following mandatory parameters: \emph{object}, \emph{innov},
 \emph{future}, and \emph{nsim}.}
@@ -28,10 +29,11 @@ to the forecast horizon for the most temporally aggregated series.}
 
 \item{seed}{An integer seed.}
 
-\item{xreg}{A (\eqn{n \times \text{boot\_size}(k^\ast+m)}) optional numeric
-matrix containing the new values of \code{xreg} to be used for forecasting
+\item{xreg}{An optional 3-d numeric array of dimensions
+(\eqn{n \times \text{boot\_size}(k^\ast+m) \times N_{xreg}})
+containing the new values of \code{xreg} to be used for forecasting
 ordered from the lowest frequency to the highest frequency (columns) for
-each variable (rows). It can contains \code{NA}s.}
+each variable (rows). It can contain \code{NA}s.}
 
 \item{...}{Additional arguments for the \code{simulate()} function.}
 }

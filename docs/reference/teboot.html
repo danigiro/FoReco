@@ -68,7 +68,7 @@ into account the correlation between different temporal aggregation orders
 
 
 <dl><dt id="arg-model-list">model_list<a class="anchor" aria-label="anchor" href="#arg-model-list"></a></dt>
-<dd><p>A list of all the \((k^\ast+m)\) base forecasts models
+<dd><p>A list of all the \(p\) base forecasts models
 ordered from the lowest frequency (most temporally aggregated) to the
 highest frequency. A <code><a href="https://rdrr.io/r/stats/simulate.html" class="external-link">simulate()</a></code> function for each model has to be
 available and implemented according to the package
@@ -97,9 +97,9 @@ to the forecast horizon for the most temporally aggregated series.</p></dd>
 
 
 <dt id="arg-xreg">xreg<a class="anchor" aria-label="anchor" href="#arg-xreg"></a></dt>
-<dd><p>A (\(\text{boot\_size}(k^\ast+m) \times 1\)) optional numeric
-vector containing the new values of <code>xreg</code> to be used for forecasting
-ordered from the lowest frequency to the highest frequency.
+<dd><p>A (\(\text{block\_size}(k^\ast+m) \times N_{xreg}\)) optional
+numeric matrix containing the new values of <code>xreg</code> to be used for
+forecasting ordered from the lowest frequency to the highest frequency.
 It can contains <code>NA</code>s.</p></dd>
 
 

@@ -16,9 +16,10 @@
 #' @param boot_size The number of bootstrap replicates.
 #' @param block_size Block size of the bootstrap, which is typically equivalent
 #'   to the forecast horizon.
-#' @param xreg An (\eqn{\text{block\_size} \times n}) optional numeric matrix
+#' @param xreg An optional 3-d numeric array of dimensions
+#'   (\eqn{\text{block\_size} \times n \times N_{xreg}})
 #'   containing the new values of \code{xreg} to be used for forecasting.
-#'   It can contains \code{NA}s.
+#'   It can contain \code{NA}s.
 #' @param seed An integer seed.
 #' @param ... Additional arguments for the \code{simulate()} function.
 #'
@@ -45,10 +46,26 @@ csboot <- function(
 ) {
   res <- sapply(model_list, residuals)
   N <- NROW(res)
+  n <- NCOL(res)
 
   if (!is.null(xreg)) {
-    if (NCOL(xreg) != NCOL(res)) {
-      cli_abort("Incorrect {.arg xreg} columns dimension.", call = NULL)
+    if (!is.array(xreg) || length(dim(xreg)) != 3) {
+      cli_abort(
+        "{.arg xreg} must be a 3-d array of dimensions (block_size x n x N_xreg).",
+        call = NULL
+      )
+    }
+    if (dim(xreg)[1] != block_size) {
+      cli_abort(
+        "First dimension of {.arg xreg} must equal {.arg block_size} ({block_size}).",
+        call = NULL
+      )
+    }
+    if (dim(xreg)[2] != n) {
+      cli_abort(
+        "Second dimension of {.arg xreg} must equal the number of series ({n}).",
+        call = NULL
+      )
     }
   }
 
@@ -62,13 +79,14 @@ csboot <- function(
     block_size = block_size,
     seed = seed
   )
+
   fboot <- apply(
     index,
     2,
     function(id) {
       sapply(1:length(model_list), function(x) {
         if (!is.null(xreg)) {
-          if (all(is.na(xreg[, x]))) {
+          if (all(is.na(xreg[, x, ]))) {
             unname(simulate(
               model_list[[x]],
               innov = res[id, x],
@@ -82,7 +100,7 @@ csboot <- function(
               innov = res[id, x],
               future = TRUE,
               nsim = length(res[id, x]),
-              xreg = xreg[, x],
+              xreg = xreg[, x, ],
               ...
             ))
           }
@@ -122,7 +140,7 @@ csboot <- function(
 #' teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
 #'        xreg = NULL, ...)
 #'
-#' @param model_list A list of all the \eqn{(k^\ast+m)} base forecasts models
+#' @param model_list A list of all the \eqn{p} base forecasts models
 #'   ordered from the lowest frequency (most temporally aggregated) to the
 #'   highest frequency. A \code{simulate()} function for each model has to be
 #'   available and implemented according to the package
@@ -131,9 +149,9 @@ csboot <- function(
 #'   \emph{future}, and \emph{nsim}.
 #' @param block_size Block size of the bootstrap, which is typically equivalent
 #'   to the forecast horizon for the most temporally aggregated series.
-#' @param xreg A (\eqn{\text{boot\_size}(k^\ast+m) \times 1}) optional numeric
-#'   vector containing the new values of \code{xreg} to be used for forecasting
-#'   ordered from the lowest frequency to the highest frequency.
+#' @param xreg A (\eqn{\text{block\_size}(k^\ast+m) \times N_{xreg}}) optional
+#'   numeric matrix containing the new values of \code{xreg} to be used for
+#'   forecasting ordered from the lowest frequency to the highest frequency.
 #'   It can contains \code{NA}s.
 #' @inheritParams terec
 #' @inheritParams csboot
@@ -178,12 +196,10 @@ teboot <- function(
   if (!is.null(xreg)) {
     kt <- length(model_list)
 
-    if (NCOL(xreg) != 1) {
-      cli_abort("{.arg xreg} is not a vector.", call = NULL)
-    } else if (length(xreg) %% kt != 0) {
+    if (NROW(xreg) %% kt != 0) {
       cli_abort("Incorrect {.arg xreg} length.", call = NULL)
     } else {
-      xreg <- FoReco2matrix(xreg, agg_order = agg_order)
+      xreg <- FoReco2matrix(t(xreg), agg_order = agg_order)
     }
   }
 
@@ -197,11 +213,12 @@ teboot <- function(
 
   fboot <- lapply(1:boot_size, function(i) {
     lapply(info$set, function(k) {
+      cat(k, " ")
       id <- index[[paste0("k", k)]][, i]
       fit_i <- model_list[[paste0("k", k)]]
       res_vec <- res_list[[paste0("k", k)]][id]
       if (!is.null(xreg)) {
-        xreg_i <- xreg[[paste0("k", k)]]
+        xreg_i <- xreg[[paste0("k-", k)]]
         if (all(is.na(xreg_i))) {
           simulate(fit_i, innov = res_vec, future = TRUE, ...)
         } else {
@@ -226,18 +243,20 @@ teboot <- function(
 #' ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
 #'        xreg = NULL, ...)
 #'
-#' @param model_list A list of \eqn{n} elements, one for each cross-sectional
-#'   series. Each elements is a list with the \eqn{(k^\ast+m)} base forecasts
-#'   models ordered from the lowest frequency (most temporally aggregated) to
-#'   the highest frequency. A \code{simulate()} function for each model has to
-#'   be available and implemented according to the package
+#' @param model_list A list of \eqn{p} elements, one for each temporal level
+#'   ordered from the lowest frequency (most temporally aggregated) to
+#'   the highest frequency. Each elements is a list with the \eqn{n} base
+#'   forecasts models for each cross-sectional series. A \code{simulate()}
+#'   function for each model has to be available and implemented according
+#'   to the package
 #'   \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
 #'   with the following mandatory parameters: \emph{object}, \emph{innov},
 #'   \emph{future}, and \emph{nsim}.
-#' @param xreg A (\eqn{n \times \text{boot\_size}(k^\ast+m)}) optional numeric
-#'   matrix containing the new values of \code{xreg} to be used for forecasting
+#' @param xreg An optional 3-d numeric array of dimensions
+#'   (\eqn{n \times \text{boot\_size}(k^\ast+m) \times N_{xreg}})
+#'   containing the new values of \code{xreg} to be used for forecasting
 #'   ordered from the lowest frequency to the highest frequency (columns) for
-#'   each variable (rows). It can contains \code{NA}s.
+#'   each variable (rows). It can contain \code{NA}s.
 #' @inheritParams ctrec
 #' @inheritParams teboot
 #'
@@ -280,16 +299,38 @@ ctboot <- function(
   }
 
   if (!is.null(xreg)) {
-    n <- length(model_list)
-    kt <- length(model_list[[1]])
+    n <- length(model_list[[1]])
 
-    if (NCOL(xreg) %% kt != 0) {
-      cli_abort("Incorrect {.arg xreg} columns dimension.", call = NULL)
-    } else if (NROW(xreg) != n) {
-      cli_abort("Incorrect {.arg xreg} rows dimension.", call = NULL)
-    } else {
-      xreg <- FoReco2matrix(xreg, agg_order = agg_order)
+    if (!is.array(xreg) || length(dim(xreg)) != 3) {
+      cli_abort(
+        "{.arg xreg} must be a 3-d array of dimensions (n x boot_size(k*+m) x N_xreg).",
+        call = NULL
+      )
     }
+    if (dim(xreg)[1] != n) {
+      cli_abort(
+        "First dimension of {.arg xreg} must equal the number of series ({n}).",
+        call = NULL
+      )
+    }
+    if (dim(xreg)[2] %% info$dim[["kt"]] != 0) {
+      cli_abort(
+        "Second dimension of {.arg xreg} must be a multiple of {kt}.",
+        call = NULL
+      )
+    }
+
+    # Convert each slice along the third dimension and store as a list of
+    # FoReco2matrix results, then recombine into a 3-d structure
+    xreg <- lapply(seq_len(dim(xreg)[3]), function(j) {
+      FoReco2matrix(xreg[,, j], agg_order = agg_order)
+    })
+    # xreg is now a list of length N_xreg, each element is a list keyed by "k..."
+    # Rearrange to: a list keyed by "k...", each element is an array (rows x cols x N_xreg)
+    xreg <- lapply(setNames(nm = paste0("k-", info$set)), function(k) {
+      slices <- lapply(xreg, function(j) j[[k]])
+      simplify2array(slices) # rows x cols x N_xreg
+    })
   }
 
   index <- boot_index(
@@ -307,19 +348,20 @@ ctboot <- function(
       res_mat <- res_list[[paste0("k", k)]][id, , drop = FALSE]
 
       if (!is.null(xreg)) {
-        xreg_i <- xreg[[paste0("k", k)]]
+        xreg_i <- xreg[[paste0("k-", k)]] # rows x cols x N_xreg
       }
 
       out <- sapply(1:length(fit_i), function(x) {
         if (!is.null(xreg)) {
-          if (all(is.na(xreg_i[, x]))) {
+          xreg_x <- xreg_i[, x, ] # rows x N_xreg matrix for series x
+          if (all(is.na(xreg_x))) {
             simulate(fit_i[[x]], innov = res_mat[, x], future = TRUE, ...)
           } else {
             simulate(
               fit_i[[x]],
               innov = res_mat[, x],
               future = TRUE,
-              xreg = xreg_i[, x],
+              xreg = xreg_x,
               ...
             )
           }

@@ -21,9 +21,10 @@ to the forecast horizon.}
 
 \item{seed}{An integer seed.}
 
-\item{xreg}{An (\eqn{\text{block\_size} \times n}) optional numeric matrix
+\item{xreg}{An optional 3-d numeric array of dimensions
+(\eqn{\text{block\_size} \times n \times N_{xreg}})
 containing the new values of \code{xreg} to be used for forecasting.
-It can contains \code{NA}s.}
+It can contain \code{NA}s.}
 
 \item{...}{Additional arguments for the \code{simulate()} function.}
 }
