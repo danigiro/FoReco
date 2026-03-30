@@ -213,7 +213,6 @@ teboot <- function(
 
   fboot <- lapply(1:boot_size, function(i) {
     lapply(info$set, function(k) {
-      cat(k, " ")
       id <- index[[paste0("k", k)]][, i]
       fit_i <- model_list[[paste0("k", k)]]
       res_vec <- res_list[[paste0("k", k)]][id]
