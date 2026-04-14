@@ -7,20 +7,20 @@ orders (Girolimetto et al. 2023).
 ## Usage
 
 ``` r
-teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL, ...)
+teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
+       xreg = NULL, ...)
 ```
 
 ## Arguments
 
 - model_list:
 
-  A list of all the \\(k^\ast+m)\\ base forecasts models ordered from
-  the lowest frequency (most temporally aggregated) to the highest
-  frequency. A [`simulate()`](https://rdrr.io/r/stats/simulate.html)
-  function for each model has to be available and implemented according
-  to the package
-  [forecast](https://CRAN.R-project.org/package=forecast), with the
-  following mandatory parameters: *object*, *innov*, *future*, and
+  A list of all the \\p\\ base forecasts models ordered from the lowest
+  frequency (most temporally aggregated) to the highest frequency. A
+  [`simulate()`](https://rdrr.io/r/stats/simulate.html) function for
+  each model has to be available and implemented according to the
+  package [forecast](https://CRAN.R-project.org/package=forecast), with
+  the following mandatory parameters: *object*, *innov*, *future*, and
   *nsim*.
 
 - boot_size:
@@ -42,6 +42,13 @@ teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL, ...)
 
   An integer seed.
 
+- xreg:
+
+  A (\\\text{block\\size}(k^\ast+m) \times N\_{xreg}\\) optional numeric
+  matrix containing the new values of `xreg` to be used for forecasting
+  ordered from the lowest frequency to the highest frequency. It can
+  contains `NA`s.
+
 - ...:
 
   Additional arguments for the
@@ -55,9 +62,9 @@ A list with two elements: the seed used to sample the errors and a
 ## References
 
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J.
-(2023), Cross-temporal probabilistic forecast reconciliation:
+(2024), Cross-temporal probabilistic forecast reconciliation:
 Methodological and practical issues. *International Journal of
-Forecasting*, 40(3), 1134-1151.
+Forecasting*, 40, 3, 1134-1151.
 [doi:10.1016/j.ijforecast.2023.10.003](https://doi.org/10.1016/j.ijforecast.2023.10.003)
 
 ## See also

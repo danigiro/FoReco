@@ -7,17 +7,18 @@ temporal aggregation orders (Girolimetto et al. 2023).
 ## Usage
 
 ``` r
-ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL, ...)
+ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
+       xreg = NULL, ...)
 ```
 
 ## Arguments
 
 - model_list:
 
-  A list of \\n\\ elements, one for each cross-sectional series. Each
-  elements is a list with the \\(k^\ast+m)\\ base forecasts models
-  ordered from the lowest frequency (most temporally aggregated) to the
-  highest frequency. A
+  A list of \\p\\ elements, one for each temporal level ordered from the
+  lowest frequency (most temporally aggregated) to the highest
+  frequency. Each elements is a list with the \\n\\ base forecasts
+  models for each cross-sectional series. A
   [`simulate()`](https://rdrr.io/r/stats/simulate.html) function for
   each model has to be available and implemented according to the
   package [forecast](https://CRAN.R-project.org/package=forecast), with
@@ -43,6 +44,14 @@ ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL, ...)
 
   An integer seed.
 
+- xreg:
+
+  An optional 3-d numeric array of dimensions (\\n \times
+  \text{boot\\size}(k^\ast+m) \times N\_{xreg}\\) containing the new
+  values of `xreg` to be used for forecasting ordered from the lowest
+  frequency to the highest frequency (columns) for each variable (rows).
+  It can contain `NA`s.
+
 - ...:
 
   Additional arguments for the
@@ -57,9 +66,9 @@ with \\\text{boot\\size}\\ matrix of size
 ## References
 
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J.
-(2023), Cross-temporal probabilistic forecast reconciliation:
+(2024), Cross-temporal probabilistic forecast reconciliation:
 Methodological and practical issues. *International Journal of
-Forecasting*, 40(3), 1134-1151.
+Forecasting*, 40, 3, 1134-1151.
 [doi:10.1016/j.ijforecast.2023.10.003](https://doi.org/10.1016/j.ijforecast.2023.10.003)
 
 ## See also

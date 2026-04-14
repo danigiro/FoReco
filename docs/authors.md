@@ -16,7 +16,7 @@
 Source:
 [`inst/CITATION`](https://github.com/danigiro/FoReco/blob/HEAD/inst/CITATION)
 
-Girolimetto D, Di Fonzo T (2025). *FoReco: Forecast Reconciliation*. R
+Girolimetto D, Di Fonzo T (2026). *FoReco: Forecast Reconciliation*. R
 package.
 [doi:10.32614/CRAN.package.FoReco](https://doi.org/10.32614/CRAN.package.FoReco),
 <https://cran.r-project.org/package=FoReco>.
@@ -25,7 +25,7 @@ package.
       title = {FoReco: Forecast Reconciliation},
       author = {Daniele Girolimetto and Tommaso {Di Fonzo}},
       organization = {R package},
-      year = {2025},
+      year = {2026},
       doi = {10.32614/CRAN.package.FoReco},
       url = {https://cran.r-project.org/package=FoReco},
     }

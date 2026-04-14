@@ -1,6 +1,6 @@
-# FoReco (development version)
+# FoReco 1.2.1
 
-* Fix bug `...` for `simulate()` in `csboot()`, `teboot()` and `ctboot()`;
+* Fixed bug `...` for `simulate()` in `csboot()`, `teboot()` and `ctboot()` and added `xreg` param in `csboot()`, `teboot()` and `ctboot()`.
 
 # FoReco 1.2.0
 

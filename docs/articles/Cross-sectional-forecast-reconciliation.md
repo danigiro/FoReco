@@ -181,8 +181,8 @@ tmp <- recoinfo(rf_osqp)
 #> ℹ Covariance approximation: `shr`
 #> ℹ Non-negative forecasts: `TRUE`
 tmp$info # OSQP information matrix 
-#>     obj_val  run_time iter     prim_res status status_polish
-#> 1 -3197.129 0.1961903  500 3.289149e-11      1             1
+#>     obj_val run_time iter     prim_res status status_polish
+#> 1 -3197.129 0.193211  500 3.289149e-11      1             1
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** ([Di Fonzo &
@@ -257,7 +257,7 @@ class(reco_csjb) # distribution object
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:12, 1:525] 49890 21825 25102 29751 23455 ...
+#>  num [1:12, 1:525] 49400 21759 25116 29837 23660 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -383,7 +383,7 @@ reco_csjb # distribution object
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:4, 1:21] 434200 452825 450863 482203 169295 ...
+#>  num [1:4, 1:21] 434104 453117 450604 481495 169297 ...
 ```
 
 Alternatively, we can use a parametric method.

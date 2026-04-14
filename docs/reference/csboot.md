@@ -7,7 +7,7 @@ take into account the correlation between different time series
 ## Usage
 
 ``` r
-csboot(model_list, boot_size, block_size, seed = NULL, ...)
+csboot(model_list, boot_size, block_size, seed = NULL, xreg = NULL, ...)
 ```
 
 ## Arguments
@@ -34,6 +34,12 @@ csboot(model_list, boot_size, block_size, seed = NULL, ...)
 
   An integer seed.
 
+- xreg:
+
+  An optional 3-d numeric array of dimensions (\\\text{block\\size}
+  \times n \times N\_{xreg}\\) containing the new values of `xreg` to be
+  used for forecasting. It can contain `NA`s.
+
 - ...:
 
   Additional arguments for the
@@ -48,7 +54,7 @@ array (\\\text{block\\size} \times n \times \text{boot\\size}\\).
 
 Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
 (2023), Probabilistic forecast reconciliation: Properties, evaluation
-and score optimisation, *European Journal of Operational Research*
+and score optimisation, *European Journal of Operational Research*,
 306(2), 693–706.
 [doi:10.1016/j.ejor.2022.07.040](https://doi.org/10.1016/j.ejor.2022.07.040)
 

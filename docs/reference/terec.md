@@ -265,5 +265,5 @@ nnreco <- terec(base = base, agg_order = m, comb = "wlsv",
                 res = res, nn = "osqp")
 recoinfo(nnreco, verbose = FALSE)$info
 #>     obj_val   run_time iter     prim_res status status_polish
-#> 1 -421.8914 3.9707e-05   25 9.816134e-16      1             1
+#> 1 -421.8914 4.4833e-05   25 9.816134e-16      1             1
 ```

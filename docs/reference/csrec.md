@@ -264,5 +264,5 @@ nnreco <- csrec(base = base, agg_mat = A, comb = "wls", res = res,
                 nn = "osqp")
 recoinfo(nnreco, verbose = FALSE)$info
 #>     obj_val   run_time iter     prim_res status status_polish
-#> 1 -352.4619 3.6999e-05   25 1.242965e-15      1             1
+#> 1 -352.4619 3.7874e-05   25 1.242965e-15      1             1
 ```
