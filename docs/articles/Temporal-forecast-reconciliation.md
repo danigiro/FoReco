@@ -221,7 +221,7 @@ tmp <- recoinfo(rf_osqp)
 #> ℹ Non-negative forecasts: `TRUE`
 tmp$info # OSQP information matrix 
 #>     obj_val    run_time iter     prim_res status status_polish
-#> 1 -16.58821 0.000293582   50 2.828089e-17      1             1
+#> 1 -16.58821 0.000257666   50 2.828089e-17      1             1
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** ([Di Fonzo &
@@ -306,7 +306,7 @@ reco_tejb # distribution object
 
 # Extracts mean:
 str(as_tevector(mean(reco_tejb), agg_order = m), give.attr = FALSE)
-#>  Named num [1:28] 5.546 1.53 4.016 0.469 3.986 ...
+#>  Named num [1:28] 6.002 1.192 4.81 0.517 4.279 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian) to generate

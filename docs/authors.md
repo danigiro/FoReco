@@ -32,7 +32,7 @@ package.
 
 Di Fonzo T, Girolimetto D (2023). “Cross-temporal forecast
 reconciliation: Optimal combination method and heuristic alternatives.”
-*International Journal of Forecasting*, **39**(1), 134.
+*International Journal of Forecasting*, **39**(1), 60–74.
 [doi:10.1016/j.ijforecast.2021.08.004](https://doi.org/10.1016/j.ijforecast.2021.08.004).
 
     @Article{,
@@ -42,14 +42,14 @@ reconciliation: Optimal combination method and heuristic alternatives.”
       volume = {39},
       year = {2023},
       number = {1},
-      pages = {134},
+      pages = {60--74},
       doi = {10.1016/j.ijforecast.2021.08.004},
     }
 
 Girolimetto D, Athanasopoulos G, Di Fonzo T, Hyndman R (2024).
 “Cross-temporal probabilistic forecast reconciliation: Methodological
 and practical issues.” *International Journal of Forecasting*,
-**40**(3), 2285.
+**40**(3), 1134–1151.
 [doi:10.1016/j.ijforecast.2023.10.003](https://doi.org/10.1016/j.ijforecast.2023.10.003).
 
     @Article{,
@@ -59,6 +59,6 @@ and practical issues.” *International Journal of Forecasting*,
       volume = {40},
       year = {2024},
       number = {3},
-      pages = {2285},
+      pages = {1134--1151},
       doi = {10.1016/j.ijforecast.2023.10.003},
     }

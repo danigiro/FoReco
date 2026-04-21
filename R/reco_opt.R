@@ -212,7 +212,7 @@ csrec <- function(
     cov_mat <- cscov(
       comb = comb,
       n = n,
-      agg_mat = agg_mat,
+      agg_mat = tmp$agg_mat,
       res = res,
       strc_mat = strc_mat,
       ...

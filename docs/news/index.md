@@ -1,13 +1,27 @@
 # Changelog
 
+## FoReco (development version)
+
+- Fixed a bug in
+  [`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.md) that
+  occurred when the constraint matrix was not in the form derived by the
+  aggregation matrix.
+
 ## FoReco 1.2.1
 
-- Fix bug `...` for
+CRAN release: 2026-04-15
+
+- Fixed bug `...` for
   [`simulate()`](https://rdrr.io/r/stats/simulate.html) in
   [`csboot()`](https://danigiro.github.io/FoReco/reference/csboot.md),
   [`teboot()`](https://danigiro.github.io/FoReco/reference/teboot.md)
   and
-  [`ctboot()`](https://danigiro.github.io/FoReco/reference/ctboot.md);
+  [`ctboot()`](https://danigiro.github.io/FoReco/reference/ctboot.md)
+  and added `xreg` param in
+  [`csboot()`](https://danigiro.github.io/FoReco/reference/csboot.md),
+  [`teboot()`](https://danigiro.github.io/FoReco/reference/teboot.md)
+  and
+  [`ctboot()`](https://danigiro.github.io/FoReco/reference/ctboot.md).
 
 ## FoReco 1.2.0
 

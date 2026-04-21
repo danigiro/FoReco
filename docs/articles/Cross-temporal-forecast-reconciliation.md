@@ -307,7 +307,7 @@ tmp <- recoinfo(rf_osqp)
 #> ℹ Non-negative forecasts: `TRUE`
 tmp$info # OSQP information matrix 
 #>         obj_val run_time iter     prim_res status status_polish
-#> 1 -220421550178 13.52317  100 7.152467e-22      1             1
+#> 1 -220421550178 12.75283  100 7.152467e-22      1             1
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** ([Di Fonzo &
@@ -385,9 +385,9 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m)$sample 
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
+#>  $ : num [1:525, 1:28] 329951 101384 63231 80663 21751 ...
 #>  $ : num [1:525, 1:28] 340334 103766 64980 80788 22279 ...
-#>  $ : num [1:525, 1:28] 331408 102430 66257 76281 21865 ...
-#>  $ : num [1:525, 1:28] 309171 97214 63243 75583 20454 ...
+#>  $ : num [1:525, 1:28] 309468 93268 60379 74758 20430 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
                       res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
@@ -400,7 +400,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = sum(dim(vnaggmat)), 
                          row_names = unlist(dimnames(vnaggmat)))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:525, 1:28] 325739 98833 64995 80793 20534 ...
+#>  num [1:525, 1:28] 328462 99337 65400 81277 20643 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -567,9 +567,9 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m)$sample 
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
-#>  $ : num [1:21, 1:7] 1834508 743121 1781496 1439204 343284 ...
-#>  $ : num [1:21, 1:7] 1840756 736737 1774115 1438427 340865 ...
-#>  $ : num [1:21, 1:7] 1759150 718220 1659052 1384158 279198 ...
+#>  $ : num [1:21, 1:7] 1844020 757393 1769287 1435996 342160 ...
+#>  $ : num [1:21, 1:7] 1715859 708966 1655955 1382431 281299 ...
+#>  $ : num [1:21, 1:7] 1715859 708966 1655955 1382431 281299 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
                       res = res_mat, comb = "wlsv")
@@ -584,7 +584,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = NCOL(gdpconsmat), 
                          row_names = colnames(gdpconsmat))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:21, 1:7] 1817163 733913 1749156 1420422 328734 ...
+#>  num [1:21, 1:7] 1811413 732586 1742231 1417622 324610 ...
 ```
 
 Alternatively, we can use a parametric method.

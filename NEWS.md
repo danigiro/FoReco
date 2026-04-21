@@ -1,4 +1,5 @@
 # FoReco (development version)
+* Fixed a bug in `csrec()` that occurred when the constraint matrix was not in the form derived by the aggregation matrix.
 
 # FoReco 1.2.1
 

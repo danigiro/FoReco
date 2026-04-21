@@ -32,7 +32,7 @@ bibentry(
        volume = 39,
        year = 2023,
        number = 1,
-       pages = 60 - -74,
+       pages = "60--74",
        doi = "10.1016/j.ijforecast.2021.08.004"
 )
 
@@ -49,6 +49,6 @@ bibentry(
        volume = 40,
        year = 2024,
        number = 3,
-       pages = 1134 - -1151,
+       pages = "1134--1151",
        doi = "10.1016/j.ijforecast.2023.10.003"
 )
