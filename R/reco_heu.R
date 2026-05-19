@@ -1,4 +1,4 @@
-#' Iterative cross-temporal reconciliation
+#' Iterative Cross-temporal Reconciliation
 #'
 #' This function performs the iterative procedure described in Di Fonzo and Girolimetto (2023),
 #' which produces cross-temporally reconciled forecasts by alternating forecast
@@ -291,22 +291,40 @@ iterec <- function(
   out <- as.matrix(tmp)
   colnames(out) <- namesTE(kset = kset, h = h)
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base))
-  attr(out, "FoReco") <- new_foreco_info(list(
-    discrepancy = dmat,
-    flag = flag,
-    ite = i,
-    norm = norm,
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    comb = c("cs" = cslist$comb, "te" = telist$comb)[rorder],
-    te_set = kset,
-    cs_n = n,
-    rfun = "iterec"
+  # attr(out, "FoReco") <- new_foreco_info(list(
+  #   discrepancy = dmat,
+  #   flag = flag,
+  #   ite = i,
+  #   norm = norm,
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   comb = c("cs" = cslist$comb, "te" = telist$comb)[rorder],
+  #   te_set = kset,
+  #   cs_n = n,
+  #   rfun = "iterec"
+  # ))
+  # return(out)
+
+  return(new_foreco_class(
+    out,
+    framework = "cross-temporal",
+    rfun = "iterec",
+    rtype = "point",
+    rinfo = list(
+      discrepancy = dmat,
+      flag = flag,
+      ite = i,
+      norm = norm,
+      forecast_horizon = h,
+      comb = c("cs" = cslist$comb, "te" = telist$comb)[rorder],
+      te_set = kset,
+      cs_n = n,
+      nn = all(!(out < 0))
+    )
   ))
-  return(out)
 }
 
-#' Heuristic cross-temporal reconciliation
+#' Heuristic Cross-temporal Reconciliation
 #'
 #' [tcsrec] replicates the procedure by Kourentzes and Athanasopoulos (2019):
 #' (i) for each time series the forecasts at any temporal aggregation order are
@@ -447,16 +465,31 @@ tcsrec <- function(base, cslist, telist, res = NULL, avg = "KA") {
   out <- as.matrix(mM %*% step1)
   colnames(out) <- namesTE(kset = kset, h = h)
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base))
-  attr(out, "FoReco") <- new_foreco_info(list(
-    proj_mean = mM,
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    comb = c("te" = telist$comb, "cs" = cslist$comb),
-    te_set = kset,
-    cs_n = n,
-    rfun = "tcsrec"
+  # attr(out, "FoReco") <- new_foreco_info(list(
+  #   proj_mean = mM,
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   comb = c("te" = telist$comb, "cs" = cslist$comb),
+  #   te_set = kset,
+  #   cs_n = n,
+  #   rfun = "tcsrec"
+  # ))
+  # return(out)
+
+  return(new_foreco_class(
+    out,
+    framework = "cross-temporal",
+    rfun = "tcsrec",
+    rtype = "point",
+    rinfo = list(
+      proj_mean = mM,
+      forecast_horizon = h,
+      comb = c("te" = telist$comb, "cs" = cslist$comb),
+      te_set = kset,
+      cs_n = n,
+      nn = all(!(out < 0))
+    )
   ))
-  return(out)
 }
 
 #' @rdname heuristic-reco
@@ -542,20 +575,36 @@ cstrec <- function(base, cslist, telist, res = NULL) {
   h_pos <- rep(rep(1:h, length(kset)), rep((max(kset) / kset), each = h))
   out <- matrix(NA, NROW(base), NCOL(base))
   for (i in 1:h) {
-    out[, i == h_pos] <- as.vector(step1[, i == h_pos, drop = FALSE] %*% t(mM))
+    step1_h <- tcrossprod(step1[, i == h_pos, drop = FALSE], mM)
+    out[, i == h_pos] <- as.vector(step1_h)
   }
   colnames(out) <- namesTE(kset = kset, h = h)
   rownames(out) <- namesCS(n = NROW(out), names_vec = rownames(base))
-  attr(out, "FoReco") <- new_foreco_info(list(
-    proj_mean = mM,
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    comb = c("cs" = cslist$comb, "te" = telist$comb),
-    te_set = kset,
-    cs_n = n,
-    rfun = "cstrec"
+  # attr(out, "FoReco") <- new_foreco_info(list(
+  #   proj_mean = mM,
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   comb = c("cs" = cslist$comb, "te" = telist$comb),
+  #   te_set = kset,
+  #   cs_n = n,
+  #   rfun = "cstrec"
+  # ))
+  # return(out)
+
+  return(new_foreco_class(
+    out,
+    framework = "cross-temporal",
+    rfun = "cstrec",
+    rtype = "point",
+    rinfo = list(
+      proj_mean = mM,
+      forecast_horizon = h,
+      comb = c("cs" = cslist$comb, "te" = telist$comb),
+      te_set = kset,
+      cs_n = n,
+      nn = all(!(out < 0))
+    )
   ))
-  return(out)
 }
 
 # Projection matrix mean (cross-sectional framework)
@@ -653,7 +702,7 @@ csstep <- function(base, cslist, csc_list, kset, ...) {
   if (is.null(cslist$comb) || cslist$comb %in% c("ols", "str")) {
     cslist$base <- t(base)
     out <- do.call("csrec", cslist)
-    return(unname(t(out)))
+    return(unname(t(unclass(out))))
   } else {
     base <- mat2list(base, kset)
     input_list <- NULL
@@ -776,15 +825,15 @@ discrepancy <- function(mat, cs_const_mat, te_const_mat) {
   )
   dmat[, 1] <- c(
     max(abs(cs_const_mat %*% mat)),
-    max(abs(mat %*% t(te_const_mat)))
+    max(abs(tcrossprod(mat, te_const_mat)))
   )
   dmat[, 2] <- c(
     sum(abs(cs_const_mat %*% mat)),
-    sum(abs(mat %*% t(te_const_mat)))
+    sum(abs(tcrossprod(mat, te_const_mat)))
   )
   dmat[, 3] <- c(
     sum((cs_const_mat %*% mat)^2),
-    sum((mat %*% t(te_const_mat))^2)
+    sum((tcrossprod(mat, te_const_mat))^2)
   )
   dmat[dmat < sqrt(.Machine$double.eps)] <- 0
   dmat

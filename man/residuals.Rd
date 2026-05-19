@@ -3,7 +3,7 @@
 \name{res2matrix}
 \alias{res2matrix}
 \alias{arrange_hres}
-\title{One-step and multi-step residuals}
+\title{One-Step and Multi-Step Residuals}
 \usage{
 res2matrix(res, agg_order)
 
@@ -20,16 +20,17 @@ highest frequency (columns) for each variable (rows).}
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a
 subset of \eqn{p} factors of \eqn{m}.}
 
-\item{list_res}{A list of \eqn{H} multi-step residuals. Each element in the list
-can be either a (\eqn{T \times 1}) vector (temporal framework) or a (\eqn{T \times n})
-matrix (cross-temporal framework).}
+\item{list_res}{A list of \eqn{H} multi-step residuals. Each element in the
+list can be either a (\eqn{T \times 1}) vector (temporal framework) or a
+(\eqn{T \times n}) matrix (cross-temporal framework).}
 }
 \value{
 \link{res2matrix} returns a (\eqn{N \times n(k^\ast + m)}) matrix, where
 \eqn{n = 1} for the temporal framework.
 
-\link{arrange_hres} returns a (\eqn{N(k^\ast+m) \times 1}) vector (temporal framework)
-or a (\eqn{n \times N(k^\ast+m)}) matrix  (cross-temporal framework) of multi-step residuals.
+\link{arrange_hres} returns a (\eqn{N(k^\ast+m) \times 1}) vector
+(temporal framework) or a (\eqn{n \times N(k^\ast+m)}) matrix
+(cross-temporal framework) of multi-step residuals.
 }
 \description{
 These functions can be used to arrange residuals to reconcile temporal or
@@ -43,18 +44,21 @@ are ordered based on the specific arrangement as described in Di Fonzo and
 Girolimetto (2023). Please see \link{as_hstack_ctlayout} and \link{as_hstack_telayout}.
 
 \link{arrange_hres} takes as input a list of multi-step residuals and is
-designed to organize them in accordance with their time order (Girolimetto et al.
-2023). When applied, this function ensures that the sequence of multi-step
-residuals aligns with the chronological order in which they occurred.
+designed to organize them in accordance with their time order (Girolimetto
+et al. 2023). When applied, this function ensures that the sequence
+of multi-step residuals aligns with the chronological order in which
+they occurred.
 }
 \details{
-Let \eqn{Z_t}, \eqn{t=1,\dots,T}, be a univariate time series. We can define the multi-step
-residuals such us
+Let \eqn{Z_t}, \eqn{t=1,\dots,T}, be a univariate time series. We can define
+the multi-step residuals such us
 \deqn{\widehat{\varepsilon}_{h,t} = Z_{t+h} - \widehat{Z}_{t+h|t} \qquad h \le t \le T-h}
-where \eqn{\widehat{Z}_{t+h|t}} is the \eqn{h}-step fitted value, calculated as the \eqn{h}-step ahead
-forecast condition to the information up to time \eqn{t}. Given the list of errors at different steps
+where \eqn{\widehat{Z}_{t+h|t}} is the \eqn{h}-step fitted value, calculated
+as the \eqn{h}-step ahead forecast condition to the information up to time
+\eqn{t}. Given the list of errors at different steps
 \deqn{\left([\widehat{\varepsilon}_{1,1}, \; \dots, \; \widehat{\varepsilon}_{1,T}], \dots, [\widehat{\varepsilon}_{H,1}, \; \dots, \; \widehat{\varepsilon}_{H,T}]\right),}
-\link{arrange_hres} returns a \eqn{T}-vector with the residuals, organized in the following way:
+\link{arrange_hres} returns a \eqn{T}-vector with the residuals, organized in the
+following way:
 \deqn{[\varepsilon_{1,1} \; \varepsilon_{2,2} \; \dots \; \varepsilon_{H,H} \; \varepsilon_{1,H+1} \; \dots \; \varepsilon_{H,T-H}]'}
 A similar organisation can be apply to a multivariate time series.
 }
@@ -96,7 +100,6 @@ practical issues. \emph{International Journal of Forecasting}, 40, 3,
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -108,7 +111,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},
 \code{\link{shrink_oasd}()},

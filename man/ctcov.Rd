@@ -22,7 +22,7 @@
 \alias{ctcov.hsam}
 \alias{ctcov.bshr}
 \alias{ctcov.bsam}
-\title{Cross-temporal covariance matrix approximation}
+\title{Cross-temporal Covariance Matrix Approximation}
 \usage{
 ctcov(comb = "ols", agg_mat = NULL, agg_order = NULL, tew = "sum",
       res = NULL, n = NULL, mse = TRUE, shrink_fun = shrink_estim, ...)

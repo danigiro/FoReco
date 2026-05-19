@@ -1,4 +1,4 @@
-#' @title Commutation matrix
+#' Commutation Matrix
 #'
 #' @description
 #' This function returns the (\eqn{r c \times r c})
@@ -50,7 +50,7 @@ commat_index <- function(r, c) {
   return(seq(1:(r * c))[order(rep(1:r, c))])
 }
 
-#' @title Shrinkage of the covariance matrix
+#' @title Shrinkage of the Covariance Matrix
 #'
 #' @description
 #' Shrinkage of the covariance matrix according to \enc{Schäfer}{Schafer} and Strimmer (2005).
@@ -67,6 +67,15 @@ commat_index <- function(r, c) {
 #' to large-scale covariance matrix estimation and implications for functional
 #' genomics, \emph{Statistical Applications in Genetics and Molecular Biology},
 #' 4, 1. \doi{10.2202/1544-6115.1175}
+#'
+#' @examples
+#' set.seed(123)
+#' # Simulated in-sample residuals: 50 observations of a 4-variate process
+#' res <- matrix(rnorm(50 * 4), nrow = 50, ncol = 4)
+#' # Schafer-Strimmer shrunk covariance matrix
+#' shr <- shrink_estim(res)
+#' # Shrinkage intensity selected by the procedure
+#' attr(shr, "lambda")
 #'
 #' @family Utilities
 #'
@@ -123,7 +132,7 @@ shrink_estim <- function(x, mse = TRUE) {
   return(shrink_cov)
 }
 
-#' @title Shrinkage of the covariance matrix using the Oracle approximation
+#' Shrinkage of the Covariance Matrix Using the Oracle Approximation
 #'
 #' @description
 #' Shrinkage of the covariance matrix according to the Oracle Approximating
@@ -144,6 +153,15 @@ shrink_estim <- function(x, mse = TRUE) {
 #' Chen, Y., Wiesel, A., and Hero, A. O. (2009), Shrinkage estimation of high
 #' dimensional covariance matrices, \emph{2009 IEEE international conference on
 #' acoustics, speech and signal processing}, 2937–2940. IEEE.
+#'
+#' @examples
+#' set.seed(123)
+#' # Simulated in-sample residuals: 50 observations of a 4-variate process
+#' res <- matrix(rnorm(50 * 4), nrow = 50, ncol = 4)
+#' # Oracle Approximating Shrinkage (OAS) covariance matrix
+#' shr <- shrink_oasd(res)
+#' # Shrinkage intensity selected by the procedure
+#' attr(shr, "lambda")
 #'
 #' @family Utilities
 #'
@@ -189,7 +207,7 @@ shrink_oasd <- function(x, mse = TRUE) {
   return(shrink_cov)
 }
 
-#' Aggregation matrix of a (possibly) unbalanced hierarchy in balanced form
+#' Aggregation Matrix of a (Possibly) Unbalanced Hierarchy in Balanced Form
 #'
 #' A hierarchy with \eqn{L} upper levels is said to be balanced if each variable
 #' at level \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't
@@ -343,7 +361,7 @@ find_nodes <- function(agg_mat) {
   ))
 }
 
-#' Aggregation matrix of a balanced hierarchy in (possibly) unbalanced form
+#' Aggregation Matrix of a Balanced Hierarchy in (Possibly) Unbalanced Form
 #'
 #' A hierarchy with \eqn{L} upper levels is said to be balanced if each variable
 #' at level \eqn{l} has at least one child at level \eqn{l+1}. When this doesn't
@@ -413,96 +431,7 @@ unbalance_hierarchy <- function(agg_mat, more_info = FALSE, sparse = TRUE) {
   return(sparse2dense(out, sparse = sparse))
 }
 
-
-#' Reconciled forecasts to matrix/vector
-#'
-#' @description
-#' This function splits the temporal vectors and the cross-temporal matrices
-#' in a list according to the temporal aggregation order
-#'
-#' @param x An output from any reconciliation function implemented by
-#' \pkg{FoReco}.
-#' @inheritParams ctrec
-#' @param keep_names If \code{FALSE} (\emph{default}), the rownames names of
-#' the output matrices are removed.
-#' @param temporal_names A character vector containing the names of the temporal
-#' aggregation levels.
-#'
-#' @returns A list of matrices or vectors distinct by temporal aggregation
-#' order.
-#'
-#' @family Utilities
-#' @examples
-#' set.seed(123)
-#' # (3 x 7) base forecasts matrix (simulated), Z = X + Y and m = 4
-#' base <- rbind(rnorm(7, rep(c(20, 10, 5), c(1, 2, 4))),
-#'               rnorm(7, rep(c(10, 5, 2.5), c(1, 2, 4))),
-#'               rnorm(7, rep(c(10, 5, 2.5), c(1, 2, 4))))
-#'
-#' reco <- ctrec(base = base, agg_mat = t(c(1,1)), agg_order = 4, comb = "ols")
-#' matrix_list <- FoReco2matrix(reco)
-#'
-#' # With temporal names
-#' temporal_names <- c("Annual", "Semi-annual", "Quarterly")
-#' matrix_list <- FoReco2matrix(reco, temporal_names = temporal_names)
-#'
-#' @export
-FoReco2matrix <- function(
-  x,
-  agg_order,
-  keep_names = FALSE,
-  temporal_names = NULL
-) {
-  if (!is.null(attr(x, "FoReco"))) {
-    fr <- recoinfo(x, verbose = FALSE)
-    frame <- fr$framework
-    set <- fr$te_set
-    h <- fr$forecast_horizon
-  } else if (!missing(agg_order)) {
-    frame <- ifelse(NCOL(x) == 1, "Temporal", "Cross-temporal")
-    set <- tetools(agg_order = agg_order)$set
-    h <- ifelse(NCOL(x) == 1, length(x), NCOL(x)) / sum(max(set) / set)
-  } else {
-    frame <- "Cross-sectional"
-  }
-
-  if (frame == "Cross-sectional") {
-    attr(x, "FoReco") <- NULL
-    return(list("k-1" = x))
-  } else {
-    id <- rep(set, h * max(set) / set)
-
-    if (NCOL(x) == 1) {
-      out <- split(x, factor(id, set))
-      if (!keep_names) {
-        out <- lapply(out, unname)
-      }
-    } else {
-      out <- lapply(setNames(set, set), function(k) {
-        mat <- t(x[, id == k, drop = FALSE])
-        if (!keep_names) {
-          rownames(mat) <- NULL
-        }
-        mat
-      })
-    }
-
-    names(out) <- paste0("k-", names(out))
-    if (!is.null(temporal_names)) {
-      if (length(temporal_names) == length(out)) {
-        names(out) <- paste0(temporal_names, " (", names(out), ")")
-      } else {
-        cli_warn(
-          "Length of {.arg temporal_names} is different from the number of temporal aggregation levels.",
-          call = NULL
-        )
-      }
-    }
-    return(out)
-  }
-}
-
-#' Cross-sectional aggregation matrix of a dataframe
+#' Cross-sectional Aggregation Matrix of a Dataframe
 #'
 #' @description
 #' This function allows the user to easily build the (\eqn{n_a \times n_b})
@@ -671,7 +600,7 @@ df2aggmat <- function(
 }
 
 
-#' Non-overlapping temporal aggregation of a time series
+#' Non-Overlapping Temporal Aggregation of a Time Series
 #'
 #' @description
 #' Non-overlapping temporal aggregation of a time series according
@@ -824,7 +753,7 @@ aggts <- function(y, agg_order, tew = "sum", align = "end", rm_na = FALSE) {
   }
 }
 
-#' Set bounds for bounded forecast reconciliation
+#' Set Bounds for Bounded Forecast Reconciliation
 #'
 #' This function defines the bounds matrix considering cross-sectional,
 #' temporal, or cross-temporal frameworks. The output matrix can be used as

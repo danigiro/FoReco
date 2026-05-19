@@ -1,4 +1,4 @@
-#' Italian Quarterly National Accounts
+#' Italian Quarterly National Accounts Dataset
 #'
 #' @description
 #' A subset of the data used by Girolimetto et al. (2023) from the Italian
@@ -69,7 +69,7 @@
 #' constraints matrix encompassing output, expenditure and income sides.
 "gdpconsmat"
 
-#' Australian Tourism Demand dataset
+#' Australian Tourism Demand Dataset
 #'
 #' @description
 #' The Australian Tourism Demand dataset (Wickramasuriya et al. 2019) measures

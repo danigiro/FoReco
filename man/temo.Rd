@@ -2,7 +2,7 @@
 % Please edit documentation in R/middleout.R
 \name{temo}
 \alias{temo}
-\title{Temporal middle-out reconciliation}
+\title{Temporal Middle-out Reconciliation}
 \usage{
 temo(base, agg_order, weights, order = max(agg_order), tew = "sum",
      normalize = TRUE)

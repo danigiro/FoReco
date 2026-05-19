@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_gauss.R
 \name{temvn}
 \alias{temvn}
-\title{Temporal Gaussian probabilistic reconciliation}
+\title{Temporal Gaussian Probabilistic Reconciliation}
 \usage{
 temvn(base, agg_order, tew = "sum", comb = "ols", res = NULL,
       approach = "proj", comb_base = comb, reduce_form = FALSE, ...)

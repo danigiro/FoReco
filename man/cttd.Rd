@@ -2,7 +2,7 @@
 % Please edit documentation in R/topdown.R
 \name{cttd}
 \alias{cttd}
-\title{Cross-temporal top-down reconciliation}
+\title{Cross-temporal Top-down Reconciliation}
 \usage{
 cttd(base, agg_mat, agg_order, weights, tew = "sum", normalize = TRUE)
 }

@@ -1,4 +1,4 @@
-#' Optimal combination cross-sectional reconciliation
+#' Optimal Combination Cross-sectional Reconciliation
 #'
 #' @description This function performs optimal (in least squares sense)
 #' combination cross-sectional forecast reconciliation for a linearly
@@ -112,7 +112,7 @@
 #' base[1,3] <- -base[1,3]
 #' nnreco <- csrec(base = base, agg_mat = A, comb = "wls", res = res,
 #'                 nn = "osqp")
-#' recoinfo(nnreco, verbose = FALSE)$info
+#' summary(nnreco)
 #'
 #' @family Reco: regression-based
 #' @family Framework: cross-sectional
@@ -253,21 +253,37 @@ csrec <- function(
       names_list = dimnames(agg_mat)
     )
   }
-
-  rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
-  attr(reco_mat, "FoReco") <- new_foreco_info(list(
-    info = attr(reco_mat, "info"),
-    framework = "Cross-sectional",
-    forecast_horizon = NROW(reco_mat),
-    comb = comb,
-    cs_n = n,
-    rfun = "csrec"
-  ))
+  nn_info <- attr(reco_mat, "info")
   attr(reco_mat, "info") <- NULL
-  return(reco_mat)
+  rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
+
+  return(new_foreco_class(
+    reco_mat,
+    framework = "cross-sectional",
+    rfun = "csrec",
+    rtype = "point",
+    rinfo = list(
+      comb = comb,
+      cs_n = n,
+      nn = all(!(reco_mat < 0)),
+      forecast_horizon = NROW(reco_mat)
+    ),
+    nninfo = nn_info
+  ))
+
+  # attr(reco_mat, "FoReco") <- new_foreco_info(list(
+  #   info = attr(reco_mat, "info"),
+  #   framework = "cross-sectional",
+  #   forecast_horizon = NROW(reco_mat),
+  #   comb = comb,
+  #   cs_n = n,
+  #   rfun = "csrec"
+  # ))
+  # attr(reco_mat, "info") <- NULL
+  # return(reco_mat)
 }
 
-#' Optimal combination temporal reconciliation
+#' Optimal Combination Temporal Reconciliation
 #'
 #' @description This function performs forecast reconciliation for a single time
 #' series using temporal hierarchies (Athanasopoulos et al., 2017, Nystrup et
@@ -384,7 +400,7 @@ csrec <- function(
 #' base[7] <- -base[7] # Making negative one of the quarterly base forecasts
 #' nnreco <- terec(base = base, agg_order = m, comb = "wlsv",
 #'                 res = res, nn = "osqp")
-#' recoinfo(nnreco, verbose = FALSE)$info
+#' summary(nnreco)
 #'
 #' @family Reco: regression-based
 #' @family Framework: temporal
@@ -538,20 +554,37 @@ terec <- function(
     settings = settings
   )
 
-  # Convert 'reco_mat' back to vector
+  nn_info <- attr(reco_mat, "info")
+  attr(reco_mat, "info") <- NULL
   out <- hmat2vec(reco_mat, h = h, kset = kset)
-  attr(out, "FoReco") <- new_foreco_info(list(
-    info = attr(reco_mat, "info"),
-    framework = "Temporal",
-    forecast_horizon = h,
-    comb = comb,
-    te_set = tmp$set,
-    rfun = "terec"
+  return(new_foreco_class(
+    out,
+    framework = "temporal",
+    rfun = "terec",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = h,
+      comb = comb,
+      te_set = tmp$set,
+      nn = all(!(reco_mat < 0))
+    ),
+    nninfo = nn_info
   ))
-  return(out)
+
+  # # Convert 'reco_mat' back to vector
+  # out <- hmat2vec(reco_mat, h = h, kset = kset)
+  # attr(out, "FoReco") <- new_foreco_info(list(
+  #   info = attr(reco_mat, "info"),
+  #   framework = "Temporal",
+  #   forecast_horizon = h,
+  #   comb = comb,
+  #   te_set = tmp$set,
+  #   rfun = "terec"
+  # ))
+  # return(out)
 }
 
-#' Optimal combination cross-temporal reconciliation
+#' Optimal Combination Cross-temporal Reconciliation
 #'
 #' @description This function performs optimal (in least squares sense)
 #' combination cross-temporal forecast reconciliation (Di Fonzo and Girolimetto
@@ -760,7 +793,7 @@ terec <- function(
 #' base[2,7] <- -2*base[2,7]
 #' nnreco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv",
 #'                 res = res, nn = "osqp")
-#' recoinfo(nnreco, verbose = FALSE)$info
+#' summary(nnreco)
 #'
 #' @family Reco: regression-based
 #' @family Framework: cross-temporal
@@ -984,15 +1017,31 @@ ctrec <- function(
     names_vec = rownames(base),
     names_list = dimnames(agg_mat)
   )
+  nn_info <- attr(reco_mat, "info")
 
-  attr(out, "FoReco") <- new_foreco_info(list(
-    info = attr(reco_mat, "info"),
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    comb = comb,
-    te_set = tmp$set,
-    cs_n = tmp$dim[["n"]],
-    rfun = "ctrec"
+  return(new_foreco_class(
+    out,
+    framework = "cross-temporal",
+    rfun = "ctrec",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = h,
+      comb = comb,
+      te_set = tmp$set,
+      nn = all(!(reco_mat < 0)),
+      cs_n = tmp$dim[["n"]]
+    ),
+    nninfo = nn_info
   ))
-  return(out)
+
+  # attr(out, "FoReco") <- new_foreco_info(list(
+  #   info = attr(reco_mat, "info"),
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   comb = comb,
+  #   te_set = tmp$set,
+  #   cs_n = tmp$dim[["n"]],
+  #   rfun = "ctrec"
+  # ))
+  # return(out)
 }

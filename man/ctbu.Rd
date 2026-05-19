@@ -2,7 +2,7 @@
 % Please edit documentation in R/bottomup.R
 \name{ctbu}
 \alias{ctbu}
-\title{Cross-temporal bottom-up reconciliation}
+\title{Cross-temporal Bottom-up Reconciliation}
 \usage{
 ctbu(base, agg_mat, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fun_export.R
 \name{shrink_estim}
 \alias{shrink_estim}
-\title{Shrinkage of the covariance matrix}
+\title{Shrinkage of the Covariance Matrix}
 \usage{
 shrink_estim(x, mse = TRUE)
 }
@@ -19,6 +19,16 @@ A shrunk covariance matrix.
 \description{
 Shrinkage of the covariance matrix according to \enc{Schäfer}{Schafer} and Strimmer (2005).
 }
+\examples{
+set.seed(123)
+# Simulated in-sample residuals: 50 observations of a 4-variate process
+res <- matrix(rnorm(50 * 4), nrow = 50, ncol = 4)
+# Schafer-Strimmer shrunk covariance matrix
+shr <- shrink_estim(res)
+# Shrinkage intensity selected by the procedure
+attr(shr, "lambda")
+
+}
 \references{
 \enc{Schäfer}{Schafer}, J.L. and Strimmer, K. (2005), A shrinkage approach
 to large-scale covariance matrix estimation and implications for functional
@@ -27,7 +37,6 @@ genomics, \emph{Statistical Applications in Genetics and Molecular Biology},
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -39,7 +48,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_oasd}()},

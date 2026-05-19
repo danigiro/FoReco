@@ -3,7 +3,7 @@
 \name{commat}
 \alias{commat}
 \alias{commat_index}
-\title{Commutation matrix}
+\title{Commutation Matrix}
 \usage{
 # Commutation matrix
 commat(r, c)
@@ -39,7 +39,6 @@ in Statistics and Econometrics, third edition, New York, Wiley, pp. 54-55.
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -50,7 +49,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

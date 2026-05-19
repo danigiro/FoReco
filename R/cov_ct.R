@@ -1,4 +1,4 @@
-#' Cross-temporal covariance matrix approximation
+#' Cross-temporal Covariance Matrix Approximation
 #'
 #' @description
 #' This function provides an approximation of the cross-temporal base forecasts
@@ -41,9 +41,9 @@
 #'   }
 #' @param n Cross-sectional number of variables.
 #' @param mse If \code{TRUE} (\emph{default}) the errors used to compute the
-#' covariance matrix are not mean-corrected.
+#'   covariance matrix are not mean-corrected.
 #' @param shrink_fun Shrinkage function of the covariance matrix,
-#' [shrink_estim] (\emph{default}).
+#'   [shrink_estim] (\emph{default}).
 #' @param ... Not used.
 #'
 #' @returns A (\eqn{n(k^\ast+m) \times n(k^\ast+m)}) symmetric matrix.
@@ -619,7 +619,7 @@ ctcov.bdshr <- function(
   })
   W <- rep(Wlist, (m / kset))
   P <- commat(n, sum(max(kset) / kset))
-  P %*% bdiag(W) %*% t(P)
+  P %*% tcrossprod(bdiag(W), P)
 }
 
 #' @export
@@ -660,7 +660,7 @@ ctcov.bdsam <- function(
   })
   W <- rep(Wlist, (m / kset))
   P <- commat(n, sum(max(kset) / kset))
-  P %*% bdiag(W) %*% t(P)
+  P %*% tcrossprod(bdiag(W), P)
 }
 
 #' @export
@@ -714,7 +714,7 @@ ctcov.hbshr <- function(
     n = n
   )
   cov <- shrink_fun(res_mat[, nid > na & kid == 1], mse = mse)
-  Omega <- strc_mat %*% cov %*% t(strc_mat)
+  Omega <- strc_mat %*% tcrossprod(cov, strc_mat)
 
   if (is.null(eps_ridge)) {
     eigenvalues <- eigen(Omega)$values
@@ -769,7 +769,7 @@ ctcov.hbsam <- function(
   nid <- rep(1:n, each = sum(max(kset) / kset))
   res_mat <- mat2hmat(res, h = N, kset = kset, n = n)
   cov <- sample_estim(res_mat[, nid > na & kid == 1], mse = mse)
-  Omega <- strc_mat %*% cov %*% t(strc_mat)
+  Omega <- strc_mat %*% tcrossprod(cov, strc_mat)
 
   if (is.null(eps_ridge)) {
     eigenvalues <- eigen(Omega)$values

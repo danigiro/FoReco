@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_sample.R
 \name{cssmp}
 \alias{cssmp}
-\title{Cross-sectional probabilistic reconciliation (sample approach)}
+\title{Cross-sectional Probabilistic Reconciliation (Sample Approach)}
 \usage{
 cssmp(sample, fun = csrec, ...)
 }

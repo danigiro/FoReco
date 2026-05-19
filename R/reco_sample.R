@@ -1,4 +1,4 @@
-#' Cross-sectional probabilistic reconciliation (sample approach)
+#' Cross-sectional Probabilistic Reconciliation (Sample Approach)
 #'
 #' @description This function performs cross-sectional probabilistic forecast
 #' reconciliation using a sample-based approach (Panagiotelis et al., 2023,
@@ -13,11 +13,11 @@
 #' @usage cssmp(sample, fun = csrec, ...)
 #'
 #' @param sample A (\eqn{h \times n \times L}) numeric array containing the
-#' base forecasts samples to be reconciled; \eqn{h} is the forecast horizon,
-#' \eqn{n} is the total number of time series (\eqn{n = n_a + n_b}), and
-#' \eqn{L} is the sample size.
+#'   base forecasts samples to be reconciled; \eqn{h} is the forecast horizon,
+#'   \eqn{n} is the total number of time series (\eqn{n = n_a + n_b}), and
+#'   \eqn{L} is the sample size.
 #' @param fun A string specifying the reconciliation function to be used,
-#' as implemented in \pkg{FoReco}.
+#'   as implemented in \pkg{FoReco}.
 #' @param ... Arguments passed on to \code{fun}
 #'
 #' @returns A [distributional::dist_sample] object.
@@ -99,10 +99,13 @@ cssmp <- function(sample, fun = csrec, ...) {
   reco_mat <- fun(base = sample, ...)
 
   colnames_save <- colnames(reco_mat)
-  obj <- recoinfo(reco_mat, verbose = FALSE)
+  obj <- summary(reco_mat)
   obj$sample_size <- tmp_dim[3]
   obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
-  obj$pfun <- "cssmp"
+  nn_info <- obj$info
+  rfun <- paste0("cssmp(", obj$rfun, ")")
+  framework <- obj$framework
+  obj$framework <- obj$rfun <- obj$info <- obj$rtype <- NULL
 
   # matrix to array
   tmp_dim[2] <- NCOL(reco_mat)
@@ -125,12 +128,20 @@ cssmp <- function(sample, fun = csrec, ...) {
   dimnames(reco_dist) <- colnames_save
   names(reco_dist) <- paste0("h-", 1:tmp_dim[1])
 
-  attr(reco_dist, "FoReco") <- new_foreco_info(obj)
-  return(reco_dist)
+  # obj$pfun <- "cssmp"
+  # attr(reco_dist, "FoReco") <- new_foreco_info(obj)
+  # return(reco_dist)
+  return(new_foreco_class(
+    reco_dist,
+    framework = framework,
+    rfun = rfun,
+    rtype = "probabilistic",
+    rinfo = obj,
+    nninfo = nn_info
+  ))
 }
 
-
-#' Temporal probabilistic reconciliation (sample approach)
+#' Temporal Probabilistic Reconciliation (Sample Approach)
 #'
 #' @description This function performs temporal probabilistic forecast
 #' reconciliation using a sample-based approach (Girolimetto et al., 2024) for
@@ -146,10 +157,10 @@ cssmp <- function(sample, fun = csrec, ...) {
 #' @usage tesmp(sample, agg_order, fun = terec, ...)
 #'
 #' @param sample A (\eqn{L \times h(k^\ast + m)}) numeric matrix containing the
-#' base forecasts samples to be reconciled; \eqn{m} is the max aggregation
-#' order, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of
-#' \eqn{m}, excluding \eqn{m}, \eqn{h} is the forecast horizon for the lowest
-#' frequency time series, and \eqn{L} is the sample size.
+#'   base forecasts samples to be reconciled; \eqn{m} is the max aggregation
+#'   order, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of
+#'   \eqn{m}, excluding \eqn{m}, \eqn{h} is the forecast horizon for the lowest
+#'   frequency time series, and \eqn{L} is the sample size.
 #' @inheritParams cssmp
 #' @inheritParams terec
 #'
@@ -220,14 +231,17 @@ tesmp <- function(sample, agg_order, fun = terec, ...) {
   reco_mat <- fun(base = sample, agg_order = agg_order, ...)
 
   # info
-  obj <- recoinfo(reco_mat, verbose = FALSE)
+  obj <- summary(reco_mat)
   if (is.null(sample_size)) {
     obj$sample_size <- obj$forecast_horizon
   } else {
     obj$sample_size <- sample_size
   }
   obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
-  obj$pfun <- "tesmp"
+  nn_info <- obj$info
+  rfun <- paste0("tesmp(", obj$rfun, ")")
+  framework <- obj$framework
+  obj$framework <- obj$rfun <- obj$info <- obj$rtype <- NULL
 
   # Names
   names_te <- namesTE(kset = obj$te_set, h = 1)
@@ -252,11 +266,20 @@ tesmp <- function(sample, agg_order, fun = terec, ...) {
   dimnames(reco_dist) <- names_te
   names(reco_dist) <- paste0("tao-", 1:length(reco_dist))
 
-  attr(reco_dist, "FoReco") <- new_foreco_info(obj)
-  return(reco_dist)
+  # obj$pfun <- "tesmp"
+  # attr(reco_dist, "FoReco") <- new_foreco_info(obj)
+  # return(reco_dist)
+  return(new_foreco_class(
+    reco_dist,
+    framework = framework,
+    rfun = rfun,
+    rtype = "probabilistic",
+    rinfo = obj,
+    nninfo = nn_info
+  ))
 }
 
-#' Cross-temporal probabilistic reconciliation (sample approach)
+#' Cross-temporal Probabilistic Reconciliation (Sample Approach)
 #'
 #' @description This function performs cross-temporal probabilistic forecast
 #' reconciliation using a sample-based approach (Girolimetto et al., 2024) for
@@ -273,13 +296,13 @@ tesmp <- function(sample, agg_order, fun = terec, ...) {
 #' @usage ctsmp(sample, agg_order, fun = ctrec, ...)
 #'
 #' @param sample A (\eqn{n \times h(k^\ast + m) \times L}) numeric array
-#' containing the base forecasts samples to be reconciled; \eqn{n} is the total
-#' number of variables, \eqn{m} is the max. order of temporal aggregation,
-#' \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of \eqn{m},
-#' excluding \eqn{m}, \eqn{h} is the forecast horizon for the lowest frequency
-#' time series, and \eqn{L} is the sample size. The row identifies a time
-#' series, and the forecasts in each row are ordered from the lowest frequency
-#' (most temporally aggregated) to the highest frequency.
+#'   containing the base forecasts samples to be reconciled; \eqn{n} is the
+#'   total number of variables, \eqn{m} is the max. order of temporal
+#'   aggregation, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors
+#'   of \eqn{m}, excluding \eqn{m}, \eqn{h} is the forecast horizon for the
+#'   lowest frequency time series, and \eqn{L} is the sample size. The row
+#'   identifies a time series, and the forecasts in each row are ordered from
+#'   the lowest frequency (most temporally aggregated) to the highest frequency.
 #' @inheritParams cssmp
 #' @inheritParams ctrec
 #'
@@ -362,10 +385,13 @@ ctsmp <- function(sample, agg_order, fun = ctrec, ...) {
   rownames_save <- colnames(reco_mat)
 
   # Reco info
-  obj <- recoinfo(reco_mat, verbose = FALSE)
+  obj <- summary(reco_mat)
   obj$sample_size <- tmp_dim[3]
   obj$forecast_horizon <- obj$forecast_horizon / obj$sample_size
-  obj$pfun <- "ctsmp"
+  nn_info <- obj$info
+  rfun <- paste0("ctsmp(", obj$rfun, ")")
+  framework <- obj$framework
+  obj$framework <- obj$rfun <- obj$info <- obj$rtype <- NULL
 
   # Names
   names_cs <- paste0("s-", 1:obj$cs_n)
@@ -396,6 +422,16 @@ ctsmp <- function(sample, agg_order, fun = ctrec, ...) {
   dimnames(reco_dist) <- names_ct
   names(reco_dist) <- paste0("tao-", 1:length(reco_dist))
 
-  attr(reco_dist, "FoReco") <- new_foreco_info(obj)
-  return(reco_dist)
+  #obj$pfun <- "ctsmp"
+  # attr(reco_dist, "FoReco") <- new_foreco_info(obj)
+  # return(reco_dist)
+
+  return(new_foreco_class(
+    reco_dist,
+    framework = framework,
+    rfun = rfun,
+    rtype = "probabilistic",
+    rinfo = obj,
+    nninfo = nn_info
+  ))
 }

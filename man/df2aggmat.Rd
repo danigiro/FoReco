@@ -2,7 +2,7 @@
 % Please edit documentation in R/fun_export.R
 \name{df2aggmat}
 \alias{df2aggmat}
-\title{Cross-sectional aggregation matrix of a dataframe}
+\title{Cross-sectional Aggregation Matrix of a Dataframe}
 \usage{
 df2aggmat(formula, data, sep = "_", sparse = TRUE, top_label = "Total",
           verbose = TRUE)
@@ -80,7 +80,6 @@ agg_mat <- df2aggmat(~ Y1 * X1, data_bts, sep = "", verbose = FALSE)
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -91,7 +90,6 @@ Utilities:
 \code{\link{ctprojmat}()},
 \code{\link{cttools}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

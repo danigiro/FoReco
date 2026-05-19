@@ -1,4 +1,4 @@
-#' Cross-sectional bottom-up reconciliation
+#' Cross-sectional Bottom-up Reconciliation
 #'
 #' This function computes the cross-sectional bottom-up reconciled forecasts
 #' (Dunn et al., 1976) for all series by appropriate summation of the bottom
@@ -87,23 +87,35 @@ csbu <- function(base, agg_mat, sntz = FALSE, round = FALSE) {
     base <- round(base)
   }
 
-  reco_mat <- as.matrix(base %*% t(strc_mat))
+  reco_mat <- as.matrix(tcrossprod(base, strc_mat))
   rownames(reco_mat) <- paste0("h-", 1:NROW(reco_mat))
   if (!is.null(colnames(agg_mat)) & !is.null(rownames(agg_mat))) {
     colnames(reco_mat) <- unlist(dimnames(agg_mat))
   } else {
     colnames(reco_mat) <- paste0("s-", 1:NCOL(reco_mat))
   }
-  attr(reco_mat, "FoReco") <- new_foreco_info(list(
-    framework = "Cross-sectional",
-    forecast_horizon = NROW(reco_mat),
-    cs_n = csdim[["n"]],
-    rfun = "csbu"
+  # attr(reco_mat, "FoReco") <- new_foreco_info(list(
+  #   framework = "cross-sectional",
+  #   forecast_horizon = NROW(reco_mat),
+  #   cs_n = csdim[["n"]],
+  #   rfun = "csbu"
+  # ))
+  # return(reco_mat)
+
+  return(new_foreco_class(
+    reco_mat,
+    framework = "cross-sectional",
+    rfun = "csbu",
+    rtype = "point",
+    rinfo = list(
+      cs_n = csdim[["n"]],
+      nn = all(!(reco_mat < 0)),
+      forecast_horizon = NROW(reco_mat)
+    )
   ))
-  return(reco_mat)
 }
 
-#' Temporal bottom-up reconciliation
+#' Temporal Bottom-up Reconciliation
 #'
 #' Temporal bottom-up reconciled forecasts at any temporal aggregation level are
 #' computed by appropriate aggregation of the high-frequency base forecasts,
@@ -172,18 +184,30 @@ tebu <- function(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE) {
     base <- round(base)
   }
 
-  reco_vec <- base %*% t(strc_mat)
+  reco_vec <- tcrossprod(base, strc_mat)
   reco_vec <- hmat2vec(reco_vec, h = h, kset = kset)
-  attr(reco_vec, "FoReco") <- new_foreco_info(list(
-    framework = "Temporal",
-    forecast_horizon = h,
-    te_set = tmp$set,
-    rfun = "tebu"
+  # attr(reco_vec, "FoReco") <- new_foreco_info(list(
+  #   framework = "Temporal",
+  #   forecast_horizon = h,
+  #   te_set = tmp$set,
+  #   rfun = "tebu"
+  # ))
+  # return(reco_vec)
+
+  return(new_foreco_class(
+    reco_vec,
+    framework = "temporal",
+    rfun = "tebu",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = h,
+      te_set = tmp$set,
+      nn = all(!(reco_vec < 0))
+    )
   ))
-  return(reco_vec)
 }
 
-#' Cross-temporal bottom-up reconciliation
+#' Cross-temporal Bottom-up Reconciliation
 #'
 #' Cross-temporal bottom-up reconciled forecasts for all series at any temporal
 #' aggregation level are computed by appropriate summation of the high-frequency
@@ -271,19 +295,32 @@ ctbu <- function(
     base <- round(base)
   }
 
-  reco_mat <- as.matrix(cs_strc_mat %*% base %*% t(te_strc_mat))
+  reco_mat <- as.matrix(tcrossprod(cs_strc_mat %*% base, te_strc_mat))
 
   rownames(reco_mat) <- namesCS(
     n = NROW(reco_mat),
     names_list = dimnames(agg_mat)
   )
   colnames(reco_mat) <- namesTE(kset = tetmp$set, h = h)
-  attr(reco_mat, "FoReco") <- new_foreco_info(list(
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    te_set = tetmp$set,
-    cs_n = cstmp$dim[["n"]],
-    rfun = "ctbu"
+  # attr(reco_mat, "FoReco") <- new_foreco_info(list(
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   te_set = tetmp$set,
+  #   cs_n = cstmp$dim[["n"]],
+  #   rfun = "ctbu"
+  # ))
+  # return(reco_mat)
+
+  return(new_foreco_class(
+    reco_mat,
+    framework = "cross-temporal",
+    rfun = "ctbu",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = h,
+      cs_n = cstmp$dim[["n"]],
+      te_set = tetmp$set,
+      nn = all(!(reco_mat < 0))
+    )
   ))
-  return(reco_mat)
 }

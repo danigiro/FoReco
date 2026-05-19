@@ -65,7 +65,7 @@ if (require(testthat)) {
     expect_equal(r1, r2, ignore_attr = TRUE)
     expect_equal(r1, r3, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
-    expect_equal(unlist(FoReco2matrix(r1)), r1, ignore_attr = TRUE)
+    expect_equal(unlist(components(r1)), r1, ignore_attr = TRUE)
     expect_equal(max(abs(C %*% r1)), 0)
   })
 
@@ -238,11 +238,11 @@ if (require(testthat)) {
     fix <- unlist(mapply(
       function(z, y) z[y],
       y = list(1, c(2, 3), c(4:7)),
-      z = recoinfo(r1, verbose = FALSE)$lcc
+      z = summary(r1)$lcc
     ))
 
     expect_equal(max(abs(fix - base)), 0)
-    expect_equal(recoinfo(r1, verbose = FALSE)$lcc[[3]], r2)
+    expect_equal(summary(r1)$lcc[[3]], r2)
     expect_equal(max(abs(C %*% r1)), 0)
     expect_equal(max(abs(C %*% r2)), 0)
     expect_equal(max(abs(C %*% r3)), 0)

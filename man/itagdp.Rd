@@ -7,7 +7,7 @@
 \alias{expside}
 \alias{incside}
 \alias{gdpconsmat}
-\title{Italian Quarterly National Accounts}
+\title{Italian Quarterly National Accounts Dataset}
 \format{
 \code{itagdp} is a \eqn{(80 \times 21)} \code{ts} object, corresponding to
 21 time series of the Italian Quarterly National Accounts (2000:Q1-2019:Q4).

@@ -98,7 +98,7 @@ if (require(testthat)) {
     expect_equal(r1, r5, ignore_attr = TRUE)
     expect_equal(r1, r6, ignore_attr = TRUE)
     expect_equal(r1, r7, ignore_attr = TRUE)
-    expect_equal(FoReco2matrix(r1)$`k-1`, r1, ignore_attr = TRUE)
+    expect_equal(components(r1)$`k-1`, r1, ignore_attr = TRUE)
     expect_equal(max(abs(C %*% t(r1))), 0)
   })
 
@@ -339,7 +339,7 @@ if (require(testthat)) {
       immutable = 1,
       nn = "osqp"
     )
-    expect_no_error(suppressMessages(recoinfo(r1, verbose = TRUE)))
+    expect_no_error(suppressMessages(summary(r1)))
 
     fix_r <- c(r1[1, 1], r2[1, 1], r3[1, 1], r4[1, 1], r5[1, 1], r6[1, 1])
 
@@ -371,14 +371,14 @@ if (require(testthat)) {
     fix <- unlist(mapply(
       function(z, y) z[, y],
       y = list(1, c(2, 3), c(4:7)),
-      z = recoinfo(r1, verbose = FALSE)$lcc
+      z = summary(r1)$lcc
     ))
 
-    expect_no_error(suppressMessages(recoinfo(r1, verbose = TRUE)))
-    expect_no_error(suppressMessages(recoinfo(r2, verbose = TRUE)))
+    expect_no_error(suppressMessages(summary(r1)))
+    expect_no_error(suppressMessages(summary(r2)))
     expect_equal(max(abs(fix - base)), 0)
     expect_equal(r1, r0, ignore_attr = TRUE)
-    expect_equal(recoinfo(r1, verbose = FALSE)$lcc[[3]], r2)
+    expect_equal(summary(r1)$lcc[[3]], r2)
     expect_equal(max(abs(C %*% t(r1))), 0)
     expect_equal(max(abs(C %*% t(r2))), 0)
     expect_equal(max(abs(C %*% t(r3))), 0)
@@ -409,8 +409,8 @@ if (require(testthat)) {
       weights = fix_weights,
       id_rows = 2:3
     )
-    expect_no_error(suppressMessages(recoinfo(r1, verbose = TRUE)))
-    expect_no_error(suppressMessages(recoinfo(r4, verbose = TRUE)))
+    expect_no_error(suppressMessages(summary(r1)))
+    expect_no_error(suppressMessages(summary(r4)))
 
     expect_equal(max(abs(r1[, 1] - topf)), 0)
     expect_equal(max(abs(r6[, 2:3] - topf)), 0)

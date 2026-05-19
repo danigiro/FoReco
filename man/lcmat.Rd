@@ -2,14 +2,14 @@
 % Please edit documentation in R/lcmat.R
 \name{lcmat}
 \alias{lcmat}
-\title{Linear combination (aggregation) matrix for a general linearly constrained multiple time series}
+\title{Linear Combination (Aggregation) Matrix for a General Linearly Constrained Multiple Time Series}
 \usage{
 lcmat(cons_mat, method = "rref", tol = sqrt(.Machine$double.eps),
        verbose = FALSE, sparse = TRUE)
 }
 \arguments{
-\item{cons_mat}{A (\eqn{r \times n}) numeric matrix representing the cross-sectional
-zero constraints.}
+\item{cons_mat}{A (\eqn{r \times n}) numeric matrix representing the
+cross-sectional zero constraints.}
 
 \item{method}{Method to use: "\code{rref}" for the Reduced Row Echelon
 Form through Gauss-Jordan elimination (\emph{default}), or "\code{qr}"
@@ -17,26 +17,30 @@ for the (pivoting) QR decomposition (Strang, 2019).}
 
 \item{tol}{Tolerance for the "\code{rref}" or "\code{qr}" method.}
 
-\item{verbose}{If \code{TRUE}, intermediate steps are printed (\emph{default} is \code{FALSE}).}
+\item{verbose}{If \code{TRUE}, intermediate steps are printed
+(\emph{default} is \code{FALSE}).}
 
-\item{sparse}{Option to return a sparse matrix (\emph{default} is \code{TRUE}).}
+\item{sparse}{Option to return a sparse matrix
+(\emph{default} is \code{TRUE}).}
 }
 \value{
-A list with two elements: (i) the linear combination (aggregation) matrix
-(\code{agg_mat}) and (ii) the vector of the column permutations (\code{pivot}).
+A list with two elements: (i) the linear combination (aggregation)
+matrix (\code{agg_mat}) and (ii) the vector of the column permutations
+(\code{pivot}).
 }
 \description{
-This function transforms a general (possibly redundant) zero constraints matrix into a
-linear combination (aggregation) matrix \eqn{\mathbf{A}_{cs}}.
+This function transforms a general (possibly redundant) zero constraints
+matrix into a linear combination (aggregation) matrix \eqn{\mathbf{A}_{cs}}.
 When working with a general linearly constrained multiple (\eqn{n}-variate)
-time series, getting a linear combination matrix \eqn{\mathbf{A}_{cs}} is a critical
-step to obtain a structural-like representation such that
+time series, getting a linear combination matrix \eqn{\mathbf{A}_{cs}} is a
+critical step to obtain a structural-like representation such that
 \deqn{\mathbf{C}_{cs} = [\mathbf{I} \quad -\mathbf{A}],}
-where \eqn{\mathbf{C}_{cs}} is the full rank zero constraints matrix (Girolimetto and
-Di Fonzo, 2023).
+where \eqn{\mathbf{C}_{cs}} is the full rank zero constraints matrix
+(Girolimetto and Di Fonzo, 2023).
 }
 \examples{
-## Two hierarchy sharing the same top-level variable, but not sharing the bottom variables
+# Two hierarchy sharing the same top-level variable,
+# but not sharing the bottom variables
 #        X            X
 #    |-------|    |-------|
 #    A       B    C       D
@@ -54,15 +58,16 @@ pivot <- obj$pivot # Pivot vector
 
 }
 \references{
-Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast reconciliation
-for general linearly constrained multiple time series,
-\emph{Statistical Methods & Applications}, 33, 581-607. \doi{10.1007/s10260-023-00738-6}.
+Girolimetto, D. and Di Fonzo, T. (2023), Point and probabilistic forecast
+reconciliation for general linearly constrained multiple time series,
+\emph{Statistical Methods & Applications}, 33, 581-607.
+\doi{10.1007/s10260-023-00738-6}.
 
-Strang, G. (2019), \emph{Linear algebra and learning from data}, Wellesley, Cambridge Press.
+Strang, G. (2019), \emph{Linear algebra and learning from data},
+Wellesley, Cambridge Press.
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -73,7 +78,6 @@ Utilities:
 \code{\link{ctprojmat}()},
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

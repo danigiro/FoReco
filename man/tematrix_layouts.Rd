@@ -3,7 +3,7 @@
 \name{as_tevector}
 \alias{as_tevector}
 \alias{as_hstack_telayout}
-\title{Convert between horizon-stacked and temporal layouts}
+\title{Convert Between Horizon-stacked and Temporal Layouts}
 \usage{
 as_tevector(hmat, agg_order)
 
@@ -61,7 +61,6 @@ tevec <- as_tevector(hmat, agg_order = m)
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{balance_hierarchy}()},
@@ -72,7 +71,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

@@ -2,7 +2,7 @@
 % Please edit documentation in R/topdown.R
 \name{cstd}
 \alias{cstd}
-\title{Cross-sectional top-down reconciliation}
+\title{Cross-sectional Top-down Reconciliation}
 \usage{
 cstd(base, agg_mat, weights, normalize = TRUE)
 }

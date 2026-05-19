@@ -119,14 +119,12 @@ reference:
       - csprojmat
       - ctboot
       - df2aggmat
-      - FoReco2matrix
       - lcmat
-      - recoinfo
       - res2matrix
       - set_bounds
       - teboot
-      - new_foreco_info
       - unbalance_hierarchy
+      - foreco-class
   - title: Package
     contents:
       - FoReco-package

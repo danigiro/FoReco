@@ -2,7 +2,7 @@
 % Please edit documentation in R/fun_export.R
 \name{set_bounds}
 \alias{set_bounds}
-\title{Set bounds for bounded forecast reconciliation}
+\title{Set Bounds for Bounded Forecast Reconciliation}
 \usage{
 set_bounds(n, k, h, lb = -Inf, ub = Inf, approach = "osqp", bounds = NULL)
 }
@@ -79,7 +79,6 @@ bounds_mat <- set_bounds(n = rep(c(2, 3), each = 12),
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -91,7 +90,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{shrink_estim}()},
 \code{\link{shrink_oasd}()},

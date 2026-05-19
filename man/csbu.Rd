@@ -2,7 +2,7 @@
 % Please edit documentation in R/bottomup.R
 \name{csbu}
 \alias{csbu}
-\title{Cross-sectional bottom-up reconciliation}
+\title{Cross-sectional Bottom-up Reconciliation}
 \usage{
 csbu(base, agg_mat, sntz = FALSE, round = FALSE)
 }

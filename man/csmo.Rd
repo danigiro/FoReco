@@ -2,7 +2,7 @@
 % Please edit documentation in R/middleout.R
 \name{csmo}
 \alias{csmo}
-\title{Cross-sectional middle-out reconciliation}
+\title{Cross-sectional Middle-out Reconciliation}
 \usage{
 csmo(base, agg_mat, weights, id_rows = 1, normalize = TRUE)
 }

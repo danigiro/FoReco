@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_heu.R
 \name{iterec}
 \alias{iterec}
-\title{Iterative cross-temporal reconciliation}
+\title{Iterative Cross-temporal Reconciliation}
 \usage{
 iterec(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
        type = "tcs", norm = "inf", verbose = TRUE)

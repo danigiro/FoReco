@@ -256,7 +256,7 @@ It is not always true that reconciled forecasts will remain non-negative even if
 #| label: nn-opt-vn
 rf_ols <- ctrec(base = base_mat, agg_order = m, agg_mat = vnaggmat,
                 comb = "ols", approach = "strc")
-recoinfo(rf_ols)
+summary(rf_ols)
 ```
 To address this issue, we can use two approaches:
 
@@ -266,8 +266,7 @@ To address this issue, we can use two approaches:
 #| label: osqp-opt-vn
 rf_osqp <- ctrec(base = base_mat, agg_order = m, agg_mat = vnaggmat, 
                  approach = "strc", comb = "ols", nn = "osqp")
-tmp <- recoinfo(rf_osqp)
-tmp$info # OSQP information matrix 
+summary(rf_osqp) # OSQP information matrix 
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** [@Di_Fonzo2023-ae].
@@ -276,7 +275,7 @@ tmp$info # OSQP information matrix
 #| label: sntz-opt-vn
 rf_sntz <- ctrec(base = base_mat, agg_order = m, agg_mat = vnaggmat,
                  approach = "strc", comb = "ols", nn = "sntz")
-recoinfo(rf_sntz)
+summary(rf_sntz)
 ```
 
 ### A priori constrained (immutable) forecasts

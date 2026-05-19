@@ -1,4 +1,4 @@
-#' Cross-sectional top-down reconciliation
+#' Cross-sectional Top-down Reconciliation
 #'
 #' Top-down forecast reconciliation for genuine hierarchical/grouped time series
 #' (Gross and Sohl, 1990), where the forecast of a `Total' (top-level series,
@@ -96,16 +96,28 @@ cstd <- function(base, agg_mat, weights, normalize = TRUE) {
   bbf <- weights *
     matrix(base / wsum, nrow = NROW(weights), ncol = NCOL(weights))
   reco_mat <- csbu(bbf, agg_mat = tmp$agg_mat)
-  attr(reco_mat, "FoReco") <- new_foreco_info(list(
-    framework = "Cross-sectional",
-    forecast_horizon = NROW(reco_mat),
-    cs_n = NCOL(reco_mat),
-    rfun = "cstd"
+  # attr(reco_mat, "FoReco") <- new_foreco_info(list(
+  #   framework = "cross-sectional",
+  #   forecast_horizon = NROW(reco_mat),
+  #   cs_n = NCOL(reco_mat),
+  #   rfun = "cstd"
+  # ))
+  # return(reco_mat)
+
+  return(new_foreco_class(
+    reco_mat,
+    framework = "cross-sectional",
+    rfun = "cstd",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = NROW(reco_mat),
+      cs_n = NCOL(reco_mat),
+      nn = all(!(reco_mat < 0))
+    )
   ))
-  return(reco_mat)
 }
 
-#' Temporal top-down reconciliation
+#' Temporal Top-down Reconciliation
 #'
 #' Top-down forecast reconciliation for a univariate time series, where the forecast
 #' of the most aggregated temporal level is disaggregated according to a proportional
@@ -192,16 +204,28 @@ tetd <- function(base, agg_order, weights, tew = "sum", normalize = TRUE) {
 
   hfbf <- rep(base / wsum, each = tmp$dim[["m"]]) * weights
   reco_vec <- tebu(hfbf, agg_order = tmp$set, tew = tew)
-  attr(reco_vec, "FoReco") <- new_foreco_info(list(
-    framework = "Temporal",
-    forecast_horizon = length(base),
-    te_set = tmp$set,
-    rfun = "tetd"
+  # attr(reco_vec, "FoReco") <- new_foreco_info(list(
+  #   framework = "Temporal",
+  #   forecast_horizon = length(base),
+  #   te_set = tmp$set,
+  #   rfun = "tetd"
+  # ))
+  # return(reco_vec)
+
+  return(new_foreco_class(
+    reco_vec,
+    framework = "temporal",
+    rfun = "tetd",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = length(base),
+      te_set = tmp$set,
+      nn = all(!(reco_vec < 0))
+    )
   ))
-  return(reco_vec)
 }
 
-#' Cross-temporal top-down reconciliation
+#' Cross-temporal Top-down Reconciliation
 #'
 #' Top-down forecast reconciliation for cross-temporal hierarchical/grouped
 #' time series, where the forecast of a `Total' (top-level series, expected
@@ -318,12 +342,26 @@ cttd <- function(
     agg_order = tetmp$set,
     tew = tew
   )
-  attr(reco_mat, "FoReco") <- new_foreco_info(list(
-    framework = "Cross-temporal",
-    forecast_horizon = length(base),
-    te_set = tetmp$set,
-    cs_n = cstmp$dim[["n"]],
-    rfun = "cttd"
+  reco_vec <- unclass(reco_mat)
+  # attr(reco_mat, "FoReco") <- new_foreco_info(list(
+  #   framework = "Cross-temporal",
+  # forecast_horizon = length(base),
+  # te_set = tetmp$set,
+  # cs_n = cstmp$dim[["n"]],
+  #   rfun = "cttd"
+  # ))
+  # return(reco_mat)
+
+  return(new_foreco_class(
+    reco_mat,
+    framework = "cross-temporal",
+    rfun = "cttd",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = length(base),
+      te_set = tetmp$set,
+      cs_n = cstmp$dim[["n"]],
+      nn = all(!(reco_mat < 0))
+    )
   ))
-  return(reco_mat)
 }

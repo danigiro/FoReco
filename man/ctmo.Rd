@@ -2,7 +2,7 @@
 % Please edit documentation in R/middleout.R
 \name{ctmo}
 \alias{ctmo}
-\title{Cross-temporal middle-out reconciliation}
+\title{Cross-temporal Middle-out Reconciliation}
 \usage{
 ctmo(base, agg_mat, agg_order, weights, id_rows = 1, order = max(agg_order),
      tew = "sum", normalize = TRUE)

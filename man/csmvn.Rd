@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_gauss.R
 \name{csmvn}
 \alias{csmvn}
-\title{Cross-sectional Gaussian probabilistic reconciliation}
+\title{Cross-sectional Gaussian Probabilistic Reconciliation}
 \usage{
 csmvn(base, agg_mat, cons_mat, comb = "ols", res = NULL,
       approach = "proj", comb_base = comb, reduce_form = FALSE, ...)

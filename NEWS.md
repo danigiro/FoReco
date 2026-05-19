@@ -1,5 +1,24 @@
 # FoReco (development version)
+
+## Breaking changes
+
+* `FoReco2matrix()` is no longer exported. Use the new `components()` method on `foreco` objects (see *New features* below), which provides the same splitting of reconciled forecasts by temporal aggregation order.
+* `recoinfo()` has been removed. The same information is now available via `summary()` on a `foreco` object.
+* `res2matrix()` is soft-deprecated via `lifecycle::deprecate_warn()` and will be removed in a future release. Use `as_hstack_telayout()` or `as_hstack_ctlayout()` instead.
+
+## New features
+
+* New S3 class `foreco` for reconciled forecasts, returned by every reconciliation function (`csrec()`, `terec()`, `ctrec()`, `csbu()`, `tebu()`, `ctbu()`, `cstd()`, `tetd()`, `cttd()`, `csmo()`, `temo()`, `ctmo()`, `cslcc()`, `telcc()`, `ctlcc()`, `csmvn()`, `temvn()`, `ctmvn()`, `cssmp()`, `tesmp()`, `ctsmp()`, `tcsrec()`, `cstrec()`, `iterec()`). The class extends the underlying matrix or distributional object with a `"FoReco"` attribute that stores framework, function used, forecast type (`"point"` or `"probabilistic"`) and reconciliation-specific metadata, and provides dedicated `print()`, `summary()`, `plot()`, `components()` methods.
+* Exported low-level constructor `new_foreco_class()` so that companion packages can produce objects that integrate with FoReco's `print()`, `summary()`, `plot()` and `components()` methods.
+* Implemented the `generics::components()` method for `foreco` objects, with `cs`, `te`, `keep_names` and `temporal_names` arguments to filter series and temporal aggregation orders.
+
+## Bug fixes and documentation 
+
 * Fixed a bug in `csrec()` that occurred when the constraint matrix was not in the form derived by the aggregation matrix.
+* Added `examples` block to every exported function that was previously missing one (e.g. `teboot()`).
+* Revised the `title` field of every file so that all man page titles consistently follow title case.
+* Replaced patterns of the form `t(A) %*% B` and `A %*% t(B)` throughout the internal routines with `crossprod(A, B)` and `tcrossprod(A, B)` respectively.
+
 
 # FoReco 1.2.1
 

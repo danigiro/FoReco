@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_opt.R
 \name{csrec}
 \alias{csrec}
-\title{Optimal combination cross-sectional reconciliation}
+\title{Optimal Combination Cross-sectional Reconciliation}
 \usage{
 csrec(base, agg_mat, cons_mat, comb = "ols", res = NULL, approach = "proj",
       nn = NULL, settings = NULL, bounds = NULL, immutable = NULL, ...)
@@ -148,7 +148,7 @@ reco <- csrec(base = base, cons_mat = C, comb = "wls", res = res)
 base[1,3] <- -base[1,3]
 nnreco <- csrec(base = base, agg_mat = A, comb = "wls", res = res,
                 nn = "osqp")
-recoinfo(nnreco, verbose = FALSE)$info
+summary(nnreco)
 
 }
 \references{

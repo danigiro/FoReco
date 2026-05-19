@@ -82,7 +82,7 @@ if (require(testthat)) {
     )
 
     expect_equal(r1, r2, ignore_attr = TRUE)
-    expect_equal(t(do.call(rbind, FoReco2matrix(r1))), r1, ignore_attr = TRUE)
+    expect_equal(t(do.call(rbind, components(r1))), r1, ignore_attr = TRUE)
     expect_equal(r1, r3, ignore_attr = TRUE)
     expect_equal(r1, r4, ignore_attr = TRUE)
     expect_equal(r1, r5, ignore_attr = TRUE)
@@ -395,7 +395,7 @@ if (require(testthat)) {
     expect_error(ctbu(base[-c(1:3), ], agg_order = agg_order, agg_mat = A))
 
     expect_equal(r1, r0, ignore_attr = TRUE)
-    expect_equal(recoinfo(r1, verbose = FALSE)$lcc[[9]], r2, ignore_attr = TRUE)
+    expect_equal(summary(r1)$lcc[[9]], r2, ignore_attr = TRUE)
     expect_equal(max(abs(Ccs %*% t(r1))), 0)
     expect_equal(max(abs(Cte %*% r1)), 0)
     expect_equal(max(abs(Ccs %*% t(r2))), 0)

@@ -2,19 +2,19 @@
 % Please edit documentation in R/reco_sample.R
 \name{ctsmp}
 \alias{ctsmp}
-\title{Cross-temporal probabilistic reconciliation (sample approach)}
+\title{Cross-temporal Probabilistic Reconciliation (Sample Approach)}
 \usage{
 ctsmp(sample, agg_order, fun = ctrec, ...)
 }
 \arguments{
 \item{sample}{A (\eqn{n \times h(k^\ast + m) \times L}) numeric array
-containing the base forecasts samples to be reconciled; \eqn{n} is the total
-number of variables, \eqn{m} is the max. order of temporal aggregation,
-\eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors of \eqn{m},
-excluding \eqn{m}, \eqn{h} is the forecast horizon for the lowest frequency
-time series, and \eqn{L} is the sample size. The row identifies a time
-series, and the forecasts in each row are ordered from the lowest frequency
-(most temporally aggregated) to the highest frequency.}
+containing the base forecasts samples to be reconciled; \eqn{n} is the
+total number of variables, \eqn{m} is the max. order of temporal
+aggregation, \eqn{k^\ast} is the sum of (a subset of) (\eqn{p-1}) factors
+of \eqn{m}, excluding \eqn{m}, \eqn{h} is the forecast horizon for the
+lowest frequency time series, and \eqn{L} is the sample size. The row
+identifies a time series, and the forecasts in each row are ordered from
+the lowest frequency (most temporally aggregated) to the highest frequency.}
 
 \item{agg_order}{Highest available sampling frequency per seasonal cycle
 (max. order of temporal aggregation, \eqn{m}), or a vector representing a

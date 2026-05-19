@@ -2,7 +2,7 @@
 % Please edit documentation in R/boot.R
 \name{ctboot}
 \alias{ctboot}
-\title{Cross-temporal joint block bootstrap}
+\title{Cross-temporal Joint Block Bootstrap}
 \usage{
 ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
        xreg = NULL, ...)
@@ -13,7 +13,7 @@ ordered from the lowest frequency (most temporally aggregated) to
 the highest frequency. Each elements is a list with the \eqn{n} base
 forecasts models for each cross-sectional series. A \code{simulate()}
 function for each model has to be available and implemented according
-to the package
+to the package.
 \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
 with the following mandatory parameters: \emph{object}, \emph{innov},
 \emph{future}, and \emph{nsim}.}
@@ -46,6 +46,45 @@ list with \eqn{\text{boot\_size}} matrix of size
 Joint block bootstrap for generating probabilistic base forecasts that take
 into account the correlation between variables at different temporal
 aggregation orders (Girolimetto et al. 2023).
+}
+\examples{
+set.seed(123)
+
+# Minimal example functions: each "model" stores Gaussian residuals;
+# simulate() draws new innovations (innov=NULL) or uses the supplied
+# ones (innov given).
+simple_model <- function(res) {
+  structure(list(residuals = res, sigma = sd(res)), class = "simple_model")
+}
+simulate.simple_model <- function(object, nsim = 1, innov = NULL,
+                                  future = TRUE, ...) {
+  if (is.null(innov)) {
+    rnorm(nsim, mean = 0, sd = object$sigma)
+  } else {
+    as.numeric(innov)[seq_len(nsim)]
+  }
+}
+
+# Cross-temporal hierarchy:
+# - cross-sectional: Z = X + Y  => n = 3
+# - temporal: annual-quarterly  => m = 4, kset = c(4, 2, 1), p = 3 levels
+n <- 3
+m <- 4
+kset <- c(4, 2, 1)
+n_obs_per_k <- 40 / kset
+
+# Nested list: outer level = p temporal aggregation orders (low -> high
+# frequency), inner level = n cross-sectional series.
+model_list <- lapply(seq_along(kset), function(i) {
+  lapply(seq_len(n), function(j) {
+    simple_model(rnorm(n_obs_per_k[i]))
+  })
+})
+
+# Joint block bootstrap: 50 replicates, block_size = 1
+boot <- ctboot(model_list = model_list, boot_size = 50, agg_order  = m,
+               block_size = 1, seed = 1)
+
 }
 \references{
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fun_export.R
 \name{unbalance_hierarchy}
 \alias{unbalance_hierarchy}
-\title{Aggregation matrix of a balanced hierarchy in (possibly) unbalanced form}
+\title{Aggregation Matrix of a Balanced Hierarchy in (Possibly) Unbalanced Form}
 \usage{
 unbalance_hierarchy(agg_mat, more_info = FALSE, sparse = TRUE)
 }
@@ -49,7 +49,6 @@ obj
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -61,7 +60,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

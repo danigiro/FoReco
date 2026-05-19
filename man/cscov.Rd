@@ -8,7 +8,7 @@
 \alias{cscov.wls}
 \alias{cscov.shr}
 \alias{cscov.sam}
-\title{Cross-sectional covariance matrix approximation}
+\title{Cross-sectional Covariance Matrix Approximation}
 \usage{
 cscov(comb = "ols", agg_mat = NULL, res = NULL, n = NULL, mse = TRUE,
       shrink_fun = shrink_estim, ...)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{tetools}
 \alias{tetools}
-\title{Temporal reconciliation tools}
+\title{Temporal Reconciliation Tools}
 \usage{
 tetools(agg_order, fh = 1, tew = "sum", sparse = TRUE)
 }
@@ -52,7 +52,6 @@ Temporal framework:
 \code{\link{tetd}()}
 
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -64,7 +63,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

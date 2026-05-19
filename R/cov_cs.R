@@ -1,4 +1,4 @@
-#' Cross-sectional covariance matrix approximation
+#' Cross-sectional Covariance Matrix Approximation
 #'
 #' @description
 #' This function provides an approximation of the cross-sectional base
@@ -34,9 +34,9 @@
 #'      }
 #'   }
 #' @param mse If \code{TRUE} (\emph{default}) the errors used to compute the
-#' covariance matrix are not mean-corrected.
+#'   covariance matrix are not mean-corrected.
 #' @param shrink_fun Shrinkage function of the covariance matrix,
-#' [shrink_estim] (\emph{default}).
+#'   [shrink_estim] (\emph{default}).
 #' @param ... Not used.
 #'
 #' @returns A (\eqn{n \times n}) symmetric positive (semi-)definite matrix.

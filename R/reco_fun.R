@@ -175,7 +175,7 @@ reco.strc <- function(base, strc_mat, cov_mat, ...) {
     return(as.matrix(reco))
   } else {
     Q <- lin_sys(cov_mat, strc_mat)
-    lm_sx1 <- methods::as(t(strc_mat) %*% Q, "CsparseMatrix")
+    lm_sx1 <- methods::as(crossprod(strc_mat, Q), "CsparseMatrix")
     lm_dx1 <- methods::as(t(base %*% Q), "CsparseMatrix")
     reco <- t(strc_mat %*% lin_sys(lm_sx1, lm_dx1))
     return(as.matrix(reco))
@@ -294,7 +294,7 @@ reco.proj_osqp <- function(
       l <- c(l, x[immutable])
       u <- c(u, x[immutable])
     }
-    q <- (-1) * t(P) %*% as.vector(x)
+    q <- (-1) * crossprod(P, as.vector(x))
     rec <- solve_osqp(P, q, A, l, u, settings)
 
     # Fix a problem of osqp
@@ -437,11 +437,11 @@ reco.strc_osqp <- function(
   # P matrix and q1 vector
   if (isDiagonal(cov_mat)) {
     Q <- Diagonal(x = diag(cov_mat)^(-1))
-    P <- t(strc_mat) %*% Q %*% strc_mat
+    P <- crossprod(strc_mat, Q) %*% strc_mat
     q1 <- (-1) * t(Q %*% strc_mat)
   } else {
     Q <- lin_sys(cov_mat, strc_mat)
-    P <- t(strc_mat) %*% Q
+    P <- crossprod(strc_mat, Q)
     q1 <- (-1) * t(Q)
   }
 
@@ -609,6 +609,8 @@ reco.sntz <- function(
   }
 
   bts <- reco[, id_nn == 1, drop = FALSE]
+  id_check <- which(rowSums(bts < 0) != 0)
+
   if (is.null(settings$type)) {
     sntz_type <- "bu"
   } else {
@@ -730,14 +732,15 @@ reco.sntz <- function(
   )
   end_time <- Sys.time()
 
-  reco <- as.matrix(bts %*% t(strc_mat))
+  reco <- as.matrix(tcrossprod(bts, strc_mat))
 
   info <- cbind(
     run_time = as.numeric(end_time - start_time),
     tol = tol,
     iter = as.vector(iter)
   )
-  rownames(info) <- 1:NROW(reco)
+  rownames(info) <- 1:NROW(info)
+  info <- info[id_check, , drop = FALSE]
   attr(reco, "info") <- info
   return(reco)
 }
@@ -959,7 +962,7 @@ reco.strc_immutable <- function(
   snew <- transform_strc_mat(strc_mat, new_basis)
   S1 <- snew[-immutable, -which(new_basis %in% immutable), drop = FALSE]
   S2 <- snew[-new_basis, which(new_basis %in% immutable), drop = FALSE]
-  S2u <- base[, immutable, drop = FALSE] %*% t(S2)
+  S2u <- tcrossprod(base[, immutable, drop = FALSE], S2)
   base2 <- Matrix(base)
   base2[, -new_basis] <- (base[, -new_basis, drop = FALSE] - S2u)
   reco_bts <- base2[, new_basis, drop = FALSE]
@@ -970,7 +973,7 @@ reco.strc_immutable <- function(
     cov_mat = cov_mat_red
   )[, find_bts(S1), drop = FALSE]
   reco_bts[, !(new_basis %in% immutable)] <- tmp
-  reco <- reco_bts %*% t(snew)
+  reco <- tcrossprod(reco_bts, snew)
   return(as.matrix(reco))
 }
 
@@ -1305,8 +1308,8 @@ reco.bpv <- function(
   maxp <- pbar
 
   z <- t(solve(cov_mat, strc_mat))
-  grad_all <- -t(strc_mat) %*% solve(cov_mat, t(base0))
-  grad0 <- z %*% t(reco0) + grad_all
+  grad_all <- -crossprod(strc_mat, solve(cov_mat, t(base0)))
+  grad0 <- tcrossprod(z, reco0) + grad_all
 
   bpv_step <- lapply(1:length(rowid), function(j) {
     start <- Sys.time()
@@ -1477,5 +1480,5 @@ reco.sftb <- function(base, reco, strc_mat, id_nn = NULL, bounds = NULL, ...) {
   }))
 
   bts <- reco[, id_nn == 1, drop = FALSE]
-  as.matrix(bts %*% t(strc_mat))
+  as.matrix(tcrossprod(bts, strc_mat))
 }

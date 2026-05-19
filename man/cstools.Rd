@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{cstools}
 \alias{cstools}
-\title{Cross-sectional reconciliation tools}
+\title{Cross-sectional Reconciliation Tools}
 \usage{
 cstools(agg_mat, cons_mat, sparse = TRUE)
 }
@@ -17,7 +17,8 @@ equation, and each column represents a variable. The matrix can be of full
 rank, meaning the rows are linearly independent, but this is not a strict
 requirement, as the function allows for redundancy in the constraints.}
 
-\item{sparse}{Option to return sparse matrices (\emph{default} is \code{TRUE}).}
+\item{sparse}{Option to return sparse matrices
+(\emph{default} is \code{TRUE}).}
 }
 \value{
 A list with four elements:
@@ -51,7 +52,6 @@ Cross-sectional framework:
 \code{\link{cstd}()}
 
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -62,7 +62,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

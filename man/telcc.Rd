@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_lcc.R
 \name{telcc}
 \alias{telcc}
-\title{Level conditional coherent reconciliation for temporal hierarchies}
+\title{Level Conditional Coherent Reconciliation for Temporal Hierarchies}
 \usage{
 telcc(base, agg_order, tew = "sum", comb = "ols", res = NULL,
       approach = "proj", nn = NULL, settings = NULL, CCC = TRUE,
@@ -150,7 +150,7 @@ exo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", hfts = naive,
                  res = res, CCC = TRUE)
 
 # Results detailed by level:
-info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+info_exo <- summary(exo_CCC)
 # info_exo$lcc
 
 ## ENDOGENOUS CONSTRAINTS
@@ -163,7 +163,7 @@ endo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", res = res,
                   CCC = TRUE, const = "endogenous")
 
 # Results detailed by level:
-info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+info_endo <- summary(endo_CCC)
 # info_endo$lcc
 
 }

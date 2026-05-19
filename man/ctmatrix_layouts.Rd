@@ -3,7 +3,7 @@
 \name{as_ctmatrix}
 \alias{as_ctmatrix}
 \alias{as_hstack_ctlayout}
-\title{Convert between horizon-stacked and cross-temporal layouts}
+\title{Convert Between Horizon-stacked and Cross-temporal Layouts}
 \usage{
 as_ctmatrix(hmat, agg_order, n, row_names = NULL)
 
@@ -69,7 +69,6 @@ ctmat <- as_ctmatrix(hmat, agg_order = m, n = n)
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
@@ -80,7 +79,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

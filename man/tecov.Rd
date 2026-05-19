@@ -13,7 +13,7 @@
 \alias{tecov.har1}
 \alias{tecov.shr}
 \alias{tecov.sam}
-\title{Temporal covariance matrix approximation}
+\title{Temporal Covariance Matrix Approximation}
 \usage{
 tecov(comb, agg_order = NULL, tew = "sum", res = NULL, mse = TRUE,
       shrink_fun = shrink_estim, ...)

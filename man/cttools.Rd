@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{cttools}
 \alias{cttools}
-\title{Cross-temporal reconciliation tools}
+\title{Cross-temporal Reconciliation Tools}
 \usage{
 cttools(agg_mat, cons_mat, agg_order, tew = "sum", fh = 1, sparse = TRUE)
 }
@@ -68,7 +68,6 @@ Cross-temporal framework:
 \code{\link{tcsrec}()}
 
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -79,7 +78,6 @@ Utilities:
 \code{\link{ctprojmat}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

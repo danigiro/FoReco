@@ -2,7 +2,7 @@
 % Please edit documentation in R/fun_export.R
 \name{aggts}
 \alias{aggts}
-\title{Non-overlapping temporal aggregation of a time series}
+\title{Non-Overlapping Temporal Aggregation of a Time Series}
 \usage{
 aggts(y, agg_order, tew = "sum", align = "end", rm_na = FALSE)
 }
@@ -52,7 +52,6 @@ x5 <- aggts(y2, c(2, 4), align = c(1, 3))
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
 \code{\link{balance_hierarchy}()},
@@ -63,7 +62,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

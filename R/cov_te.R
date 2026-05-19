@@ -1,4 +1,4 @@
-#' Temporal covariance matrix approximation
+#' Temporal Covariance Matrix Approximation
 #'
 #' @description
 #' This function provides an approximation of the temporal base forecasts
@@ -36,9 +36,9 @@
 #'      }
 #'   }
 #' @param mse If \code{TRUE} (\emph{default}) the errors used to compute
-#' the covariance matrix are not mean-corrected.
+#'   the covariance matrix are not mean-corrected.
 #' @param shrink_fun Shrinkage function of the covariance matrix,
-#' [shrink_estim] (\emph{default})
+#'   [shrink_estim] (\emph{default})
 #' @param ... Not used.
 #'
 #' @returns A (\eqn{(k^\ast+m) \times (k^\ast+m)}) symmetric matrix.

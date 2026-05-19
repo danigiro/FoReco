@@ -198,7 +198,7 @@ The following table shows some options for the optimal combination cross-section
 Unfortunately, our reconciled forecasts contain negative values, even though we used non-negative base forecasts during the reconciliation.
 ```{r}
 #| label: nn-opt-vn
-recoinfo(rf_opt)
+summary(rf_opt)
 ```
 To address this issue, we can use two approaches:
 
@@ -207,8 +207,7 @@ To address this issue, we can use two approaches:
 ```{r}
 #| label: osqp-opt-vn
 rf_osqp <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", nn = "osqp")
-tmp <- recoinfo(rf_osqp)
-tmp$info # OSQP information matrix 
+summary(rf_osqp) # OSQP information matrix 
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** [@Di_Fonzo2023-ae].
@@ -216,8 +215,8 @@ tmp$info # OSQP information matrix
 ```{r}
 #| label: sntz-opt-vn
 rf_sntz <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", 
-                     nn = "sntz")
-recoinfo(rf_sntz)
+                 nn = "sntz")
+summary(rf_sntz)
 ```
 
 ### A priori constrained (immutable) forecasts
@@ -275,30 +274,6 @@ class(reco_csjb) # distribution object
 str(mean(reco_csjb), give.attr = FALSE)
 ```
 A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts.
-```{r}
-#| label: gauss-vn-old
-#| include: false
-#| eval: false
-# Multi-step residuals
-hres <- lapply(1:12, function(h) 
-  sapply(model, residuals, type='response', h = h))
-# List of H=12 covariance matrix (one for each forecast horizon)
-cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
-
-# Base forecasts' sample:
-# we simulate from a multivariate normal distribution.
-base_csg <- lapply(1:12, function(h) MASS::mvrnorm(n = B, mu = base[h, ], Sigma = cov_shr[[h]]))
-base_csg <- simplify2array(base_csg)
-dimnames(base_csg) <- dimnames(base_csjb)
-
-# Reconciled forecasts' sample:
-# we reconcile each member of the base forecasts' sample.
-reco_csg <- apply(base_csg, 3, csrec, agg_mat = vnaggmat, res = res, nn = "sntz",
-                   comb = "shr", keep = "recf", simplify = FALSE)
-reco_csg <- simplify2array(reco_csg)
-rownames(reco_csg) <- rownames(base_csg)
-str(reco_csg, give.attr = FALSE)
-```
 
 ```{r}
 #| label: gauss-vn

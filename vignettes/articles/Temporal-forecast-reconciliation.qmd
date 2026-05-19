@@ -216,7 +216,7 @@ It is not always true that reconciled forecasts will remain non-negative even if
 #| label: nn-opt-vn
 rf_opt_shr <- terec(base = base_vec, agg_order = m,
                     res = res_vec, comb = "shr")
-recoinfo(rf_opt_shr)
+summary(rf_opt_shr)
 ```
 
 To address this issue, we can use two approaches:
@@ -227,8 +227,7 @@ To address this issue, we can use two approaches:
 #| label: osqp-opt-vn
 rf_osqp <- terec(base = base_vec, agg_order = m,
                 res = res_vec, comb = "shr", nn = "osqp")
-tmp <- recoinfo(rf_osqp)
-tmp$info # OSQP information matrix 
+summary(rf_osqp)
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** [@Di_Fonzo2023-ae].
@@ -237,7 +236,7 @@ tmp$info # OSQP information matrix
 #| label: sntz-opt-vn
 rf_sntz <- terec(base = base_vec, agg_order = m,
                 res = res_vec, comb = "shr", nn = "sntz")
-recoinfo(rf_sntz)
+summary(rf_sntz)
 ```
 
 ### A priori constrained (immutable) forecasts
@@ -275,22 +274,6 @@ str(rf_sub, give.attr = FALSE)
 Following @Panagiotelis2023-se and @Girolimetto2023-jm, the reconciliation of probabilistic forecasts is a two-step process: first, we sample from an incoherent distributio, and then we reconcile each sample.
 
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
-```{r}
-#| label: tejb-vn-old
-#| include: false
-#| eval: false
-# Base forecasts' sample:
-# we simulate from the base models by sampling errors 
-# while keeping the cross-sectional dimension fixed.
-B <- 100
-base_tejb <- teboot(model, B, m)$sample
-dim(base_tejb)
-# Reconciled forecasts' sample: 
-# we reconcile each member of a sample from the incoherent distribution.
-reco_tejb <- t(apply(base_tejb, 1, terec, agg_order = m, res = res_vec, nn = "sntz",
-                   comb = "sar1"))
-str(reco_tejb, give.attr = FALSE)
-```
 ```{r}
 #| label: tejb-vn
 # Base forecasts' sample:

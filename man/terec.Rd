@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_opt.R
 \name{terec}
 \alias{terec}
-\title{Optimal combination temporal reconciliation}
+\title{Optimal Combination Temporal Reconciliation}
 \usage{
 terec(base, agg_order, tew = "sum", comb = "ols", res = NULL,
       approach = "proj", nn = NULL, settings = NULL, bounds = NULL,
@@ -160,7 +160,7 @@ immreco <- terec(base = base, agg_order = m, comb = "wlsv",
 base[7] <- -base[7] # Making negative one of the quarterly base forecasts
 nnreco <- terec(base = base, agg_order = m, comb = "wlsv",
                 res = res, nn = "osqp")
-recoinfo(nnreco, verbose = FALSE)$info
+summary(nnreco)
 
 }
 \references{

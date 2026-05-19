@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_gauss.R
 \name{ctmvn}
 \alias{ctmvn}
-\title{Cross-temporal Gaussian probabilistic reconciliation}
+\title{Cross-temporal Gaussian Probabilistic Reconciliation}
 \usage{
 ctmvn(base, agg_mat, cons_mat, agg_order, tew = "sum", comb = "ols",
       res = NULL, approach = "proj", comb_base = comb,

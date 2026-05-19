@@ -2,7 +2,7 @@
 % Please edit documentation in R/fun_export.R
 \name{shrink_oasd}
 \alias{shrink_oasd}
-\title{Shrinkage of the covariance matrix using the Oracle approximation}
+\title{Shrinkage of the Covariance Matrix Using the Oracle Approximation}
 \usage{
 shrink_oasd(x, mse = TRUE)
 }
@@ -20,6 +20,16 @@ A shrunk covariance matrix.
 Shrinkage of the covariance matrix according to the Oracle Approximating
 Shrinkage (OAS) of Chen et al. (2009) and Ando and Xiao (2023).
 }
+\examples{
+set.seed(123)
+# Simulated in-sample residuals: 50 observations of a 4-variate process
+res <- matrix(rnorm(50 * 4), nrow = 50, ncol = 4)
+# Oracle Approximating Shrinkage (OAS) covariance matrix
+shr <- shrink_oasd(res)
+# Shrinkage intensity selected by the procedure
+attr(shr, "lambda")
+
+}
 \references{
 Ando, S., and Xiao, M. (2023), High-dimensional covariance matrix estimation:
 shrinkage toward a diagonal target. \emph{IMF Working Papers}, 2023(257),
@@ -31,7 +41,6 @@ acoustics, speech and signal processing}, 2937–2940. IEEE.
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -43,7 +52,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

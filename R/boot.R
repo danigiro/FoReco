@@ -1,4 +1,4 @@
-#' Cross-sectional joint block bootstrap
+#' Cross-sectional Joint Block Bootstrap
 #'
 #' Joint block bootstrap for generating probabilistic base forecasts that take
 #' into account the correlation between different time series (Panagiotelis et
@@ -31,6 +31,35 @@
 #' (2023), Probabilistic forecast reconciliation: Properties, evaluation and
 #' score optimisation, \emph{European Journal of Operational Research}, 306(2),
 #' 693–706. \doi{http://dx.doi.org/10.1016/j.ejor.2022.07.040}
+#'
+#' @examples
+#' set.seed(123)
+#'
+#' # Minimal example functions: each "model" stores Gaussian residuals;
+#' # simulate() draws new innovations (innov=NULL) or uses the supplied ones
+#' # (innov given).
+#' simple_model <- function(res) {
+#'   structure(list(residuals = res, sigma = sd(res)), class = "simple_model")
+#' }
+#' simulate.simple_model <- function(object, nsim = 1, innov = NULL,
+#'                                   future = TRUE, ...) {
+#'   if (is.null(innov)) {
+#'     rnorm(nsim, mean = 0, sd = object$sigma)
+#'   } else {
+#'     as.numeric(innov)[seq_len(nsim)]
+#'   }
+#' }
+#'
+#' # Hierarchy Z = X + Y: 3 series, 50 in-sample residuals each
+#' n <- 3
+#' res <- matrix(rnorm(50 * n), nrow = 50, ncol = n)
+#'
+#' # One model per cross-sectional series
+#' model_list <- lapply(seq_len(n), function(i) simple_model(res[, i]))
+#'
+#' # Joint block bootstrap: 100 replicates, forecast horizon h = 4
+#' boot <- csboot(model_list = model_list, boot_size = 100, block_size = 4,
+#'                seed = 1)
 #'
 #' @family Bootstrap samples
 #' @family Framework: cross-sectional
@@ -130,7 +159,7 @@ csboot <- function(
   return(list(sample = fboot, seed = seed))
 }
 
-#' Temporal joint block bootstrap
+#' Temporal Joint Block Bootstrap
 #'
 #' Joint block bootstrap for generating probabilistic base forecasts that take
 #' into account the correlation between different temporal aggregation orders
@@ -164,6 +193,41 @@ csboot <- function(
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
 #' practical issues. \emph{International Journal of Forecasting}, 40, 3,
 #' 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
+#'
+#' @examples
+#' set.seed(123)
+#'
+#' # Minimal example functions: each "model" stores Gaussian residuals;
+#' # simulate() draws new innovations (innov=NULL) or uses the supplied
+#' # ones (innov given).
+#' simple_model <- function(res) {
+#'   structure(list(residuals = res, sigma = sd(res)), class = "simple_model")
+#' }
+#' simulate.simple_model <- function(object, nsim = 1, innov = NULL,
+#'                                   future = TRUE, ...) {
+#'   if (is.null(innov)) {
+#'     rnorm(nsim, mean = 0, sd = object$sigma)
+#'   } else {
+#'     as.numeric(innov)[seq_len(nsim)]
+#'   }
+#' }
+#'
+#' # Temporal hierarchy: annual-quarterly, m = 4
+#' # Aggregation orders k = 4, 2, 1 => k* + m = 1 + 2 + 4 = 7 models,
+#' # ordered from the lowest frequency (annual) to the highest (quarterly).
+#' m <- 4
+#' kset <- c(4, 2, 1)              # k = 4 (annual), 2 (semi), 1 (quarterly)
+#' n_obs_per_k <- 40 / kset        # residuals available at each frequency
+#'
+#' model_list <- lapply(seq_along(kset), function(i) {
+#'   simple_model(rnorm(n_obs_per_k[i]))
+#' })
+#'
+#' # Joint block bootstrap: 100 replicates, block_size = 1 (one annual step)
+#' boot <- teboot(model_list = model_list, boot_size = 100, agg_order = m,
+#'                block_size = 1, seed = 1)
+#'
+#' dim(boot$boot)   # boot_size x (k* + m)*block_size  => 100 x 7
 #'
 #' @family Bootstrap samples
 #' @family Framework: temporal
@@ -232,7 +296,7 @@ teboot <- function(
   return(list(sample = fboot, seed = seed))
 }
 
-#' Cross-temporal joint block bootstrap
+#' Cross-temporal Joint Block Bootstrap
 #'
 #' Joint block bootstrap for generating probabilistic base forecasts that take
 #' into account the correlation between variables at different temporal
@@ -247,7 +311,7 @@ teboot <- function(
 #'   the highest frequency. Each elements is a list with the \eqn{n} base
 #'   forecasts models for each cross-sectional series. A \code{simulate()}
 #'   function for each model has to be available and implemented according
-#'   to the package
+#'   to the package.
 #'   \href{https://CRAN.R-project.org/package=forecast}{\pkg{forecast}},
 #'   with the following mandatory parameters: \emph{object}, \emph{innov},
 #'   \emph{future}, and \emph{nsim}.
@@ -268,6 +332,44 @@ teboot <- function(
 #' Cross-temporal probabilistic forecast reconciliation: Methodological and
 #' practical issues. \emph{International Journal of Forecasting}, 40, 3,
 #' 1134-1151. \doi{10.1016/j.ijforecast.2023.10.003}
+#'
+#' @examples
+#' set.seed(123)
+#'
+#' # Minimal example functions: each "model" stores Gaussian residuals;
+#' # simulate() draws new innovations (innov=NULL) or uses the supplied
+#' # ones (innov given).
+#' simple_model <- function(res) {
+#'   structure(list(residuals = res, sigma = sd(res)), class = "simple_model")
+#' }
+#' simulate.simple_model <- function(object, nsim = 1, innov = NULL,
+#'                                   future = TRUE, ...) {
+#'   if (is.null(innov)) {
+#'     rnorm(nsim, mean = 0, sd = object$sigma)
+#'   } else {
+#'     as.numeric(innov)[seq_len(nsim)]
+#'   }
+#' }
+#'
+#' # Cross-temporal hierarchy:
+#' # - cross-sectional: Z = X + Y  => n = 3
+#' # - temporal: annual-quarterly  => m = 4, kset = c(4, 2, 1), p = 3 levels
+#' n <- 3
+#' m <- 4
+#' kset <- c(4, 2, 1)
+#' n_obs_per_k <- 40 / kset
+#'
+#' # Nested list: outer level = p temporal aggregation orders (low -> high
+#' # frequency), inner level = n cross-sectional series.
+#' model_list <- lapply(seq_along(kset), function(i) {
+#'   lapply(seq_len(n), function(j) {
+#'     simple_model(rnorm(n_obs_per_k[i]))
+#'   })
+#' })
+#'
+#' # Joint block bootstrap: 50 replicates, block_size = 1
+#' boot <- ctboot(model_list = model_list, boot_size = 50, agg_order  = m,
+#'                block_size = 1, seed = 1)
 #'
 #' @family Bootstrap samples
 #' @family Framework: cross-temporal

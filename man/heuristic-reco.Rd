@@ -3,7 +3,7 @@
 \name{tcsrec}
 \alias{tcsrec}
 \alias{cstrec}
-\title{Heuristic cross-temporal reconciliation}
+\title{Heuristic Cross-temporal Reconciliation}
 \usage{
 # First-temporal-then-cross-sectional forecast reconciliation
 tcsrec(base, cslist, telist, res = NULL, avg = "KA")

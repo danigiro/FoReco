@@ -1,4 +1,4 @@
-#' Level conditional coherent reconciliation for genuine hierarchical/grouped time series
+#' Level Conditional Coherent Reconciliation for Genuine Hierarchical/Grouped Time Series
 #'
 #' @description
 #' This function implements the cross-sectional forecast reconciliation procedure that
@@ -91,7 +91,7 @@
 #' # L-1: Level 1 immutable reconciled forecasts for the whole hierarchy
 #' # L-2: Middle-Out reconciled forecasts
 #' # L-3: Bottom-Up reconciled forecasts
-#' info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+#' info_exo <- summary(exo_CCC)
 #' info_exo$lcc
 #'
 #' ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
@@ -109,7 +109,7 @@
 #' # L-1: Level 1 reconciled forecasts for L1 + L3 (bottom level)
 #' # L-2: Level 2 reconciled forecasts for L2 + L3 (bottom level)
 #' # L-3: Bottom-Up reconciled forecasts
-#' info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+#' info_endo <- summary(endo_CCC)
 #' info_endo$lcc
 #'
 #' @family Reco: level conditional coherent
@@ -254,15 +254,30 @@ cslcc <- function(
   if (utd) {
     # Unbiased top-down forecasts
     out <- lccmat[[1]]
-    attr(out, "FoReco") <- new_foreco_info(list(
-      info = attr(lccmat[[1]], "info"),
-      framework = "Cross-sectional",
-      forecast_horizon = NROW(out),
-      comb = comb,
-      cs_n = n,
-      rfun = "cslcc"
+    # attr(out, "FoReco") <- new_foreco_info(list(
+    #   info = attr(lccmat[[1]], "info"),
+    #   framework = "cross-sectional",
+    #   forecast_horizon = NROW(out),
+    #   comb = comb,
+    #   cs_n = n,
+    #   rfun = "cslcc"
+    # ))
+    # return(out)
+    nn_info <- attr(out, "info")
+    return(new_foreco_class(
+      out,
+      framework = "cross-sectional",
+      rfun = "cslcc",
+      rtype = "point",
+      rinfo = list(
+        lcc = lccmat,
+        forecast_horizon = NROW(out),
+        comb = comb,
+        cs_n = n,
+        nn = all(!(out < 0))
+      ),
+      nninfo = nn_info
     ))
-    return(out)
   } else {
     # Mean
     if (CCC) {
@@ -273,19 +288,33 @@ cslcc <- function(
       out <- Reduce("+", lccmat[-length(lccmat)]) / (length(lccmat) - 1)
     }
     names(lccmat) <- paste0("L-", lev_num)
-    attr(out, "FoReco") <- new_foreco_info(list(
-      lcc = lccmat,
-      framework = "Cross-sectional",
-      forecast_horizon = NROW(out),
-      comb = comb,
-      cs_n = n,
-      rfun = "cslcc"
+    # attr(out, "FoReco") <- new_foreco_info(list(
+    #   lcc = lccmat,
+    #   framework = "cross-sectional",
+    #   forecast_horizon = NROW(out),
+    #   comb = comb,
+    #   cs_n = n,
+    #   rfun = "cslcc"
+    # ))
+    # return(out)
+
+    return(new_foreco_class(
+      out,
+      framework = "cross-sectional",
+      rfun = "cslcc",
+      rtype = "point",
+      rinfo = list(
+        lcc = lccmat,
+        forecast_horizon = NROW(out),
+        comb = comb,
+        cs_n = n,
+        nn = all(!(out < 0))
+      )
     ))
-    return(out)
   }
 }
 
-#' Level conditional coherent reconciliation for temporal hierarchies
+#' Level Conditional Coherent Reconciliation for Temporal Hierarchies
 #'
 #' @description
 #' This function implements a forecast reconciliation procedure inspired by the original proposal
@@ -367,7 +396,7 @@ cslcc <- function(
 #'                  res = res, CCC = TRUE)
 #'
 #' # Results detailed by level:
-#' info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+#' info_exo <- summary(exo_CCC)
 #' # info_exo$lcc
 #'
 #' ## ENDOGENOUS CONSTRAINTS
@@ -380,7 +409,7 @@ cslcc <- function(
 #'                   CCC = TRUE, const = "endogenous")
 #'
 #' # Results detailed by level:
-#' info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+#' info_endo <- summary(endo_CCC)
 #' # info_endo$lcc
 #'
 #' @family Reco: level conditional coherent
@@ -514,19 +543,33 @@ telcc <- function(
     out <- Reduce("+", lccmat[-length(lccmat)]) / (length(lccmat) - 1)
   }
   names(lccmat) <- paste0("k-", kset)
-  attr(out, "FoReco") <- new_foreco_info(list(
-    lcc = lccmat,
-    framework = "Temporal",
-    forecast_horizon = h,
-    comb = comb,
-    te_set = tmp$set,
-    rfun = "telcc"
+  # attr(out, "FoReco") <- new_foreco_info(list(
+  #   lcc = lccmat,
+  #   framework = "Temporal",
+  #   forecast_horizon = h,
+  #   comb = comb,
+  #   te_set = tmp$set,
+  #   rfun = "telcc"
+  # ))
+  # return(out)
+
+  return(new_foreco_class(
+    out,
+    framework = "temporal",
+    rfun = "telcc",
+    rtype = "point",
+    rinfo = list(
+      lcc = lccmat,
+      forecast_horizon = h,
+      comb = comb,
+      te_set = tmp$set,
+      nn = all(!(out < 0))
+    )
   ))
-  return(out)
 }
 
 
-#' Level conditional coherent reconciliation for cross-temporal hierarchies
+#' Level Conditional Coherent Reconciliation for Cross-temporal Hierarchies
 #'
 #' @description
 #' This function implements a forecast reconciliation procedure inspired by the original
@@ -617,7 +660,7 @@ telcc <- function(
 #'                 hfbts = naive, res = res, CCC = TRUE)
 #'
 #' # Results detailed by level:
-#' info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+#' info_exo <- summary(exo_CCC)
 #' # info_exo$lcc
 #'
 #' ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
@@ -630,7 +673,7 @@ telcc <- function(
 #'                   res = res, CCC = TRUE, const = "endogenous")
 #'
 #' # Results detailed by level:
-#' info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+#' info_endo <- summary(endo_CCC)
 #' # info_endo$lcc
 #'
 #' @family Reco: level conditional coherent
@@ -787,7 +830,7 @@ ctlcc <- function(
 
       rhfbts <- rmat[, -c(1:length(idx)), drop = FALSE]
 
-      rmat <- as.matrix(rhfbts %*% t(strc_mat))
+      rmat <- as.matrix(tcrossprod(rhfbts, strc_mat))
       remid <- !duplicated(balh$id, fromLast = TRUE)
       rmat <- hmat2mat(rmat, h = h, kset = tmp$set, n = tmp$dim[["n"]])[
         remid,
@@ -824,15 +867,31 @@ ctlcc <- function(
     "_k-",
     rep(kset, (length(nodes) + 1))
   )
-  attr(out, "FoReco") <- new_foreco_info(list(
-    lcc = lccmat,
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    comb = comb,
-    te_set = tmp$set,
-    cs_n = unname(sum(dim(ubam))),
-    balanced = sum(dim(ubam)) == sum(dim(agg_mat)),
-    rfun = "cslcc"
+  # attr(out, "FoReco") <- new_foreco_info(list(
+  #   lcc = lccmat,
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   comb = comb,
+  #   te_set = tmp$set,
+  #   cs_n = unname(sum(dim(ubam))),
+  #   balanced = sum(dim(ubam)) == sum(dim(agg_mat)),
+  #   rfun = "cslcc"
+  # ))
+  # return(out)
+
+  return(new_foreco_class(
+    out,
+    framework = "cross-temporal",
+    rfun = "ctlcc",
+    rtype = "point",
+    rinfo = list(
+      lcc = lccmat,
+      forecast_horizon = h,
+      comb = comb,
+      te_set = tmp$set,
+      cs_n = unname(sum(dim(ubam))),
+      balanced = sum(dim(ubam)) == sum(dim(agg_mat)),
+      nn = all(!(out < 0))
+    )
   ))
-  return(out)
 }

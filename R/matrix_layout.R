@@ -1,4 +1,4 @@
-#' Convert between horizon-stacked and cross-temporal layouts
+#' Convert Between Horizon-stacked and Cross-temporal Layouts
 #'
 #' These functions convert matrix between the two canonical layouts used in
 #' cross-temporal reconciliation.
@@ -46,27 +46,28 @@
 #'
 #' @rdname ctmatrix_layouts
 #' @export
-as_ctmatrix <- function(hmat, agg_order, n, row_names = NULL){
+as_ctmatrix <- function(hmat, agg_order, n, row_names = NULL) {
   tmp <- tetools(agg_order = agg_order)
 
-  if(is.vector(hmat)){
+  if (is.vector(hmat)) {
     hmat <- rbind(hmat)
   }
 
-  if(NCOL(hmat) != tmp$dim["kt"]*n){
-    cli_abort(c("x" = "Incorrect {.arg hmat} columns dimension.",
-                "i" = "Expected {.val {tmp$dim['kt'] * n}} columns, but found {.val {NCOL(hmat)}}.",
-                "i" = "Please check the consistency of {.arg n}, {.arg agg_order}, and {.arg hmat}."),
-              call = NULL)
+  if (NCOL(hmat) != tmp$dim["kt"] * n) {
+    cli_abort(
+      c(
+        "x" = "Incorrect {.arg hmat} columns dimension.",
+        "i" = "Expected {.val {tmp$dim['kt'] * n}} columns, but found {.val {NCOL(hmat)}}.",
+        "i" = "Please check the consistency of {.arg n}, {.arg agg_order}, and {.arg hmat}."
+      ),
+      call = NULL
+    )
   }
 
-  out <- hmat2mat(hmat = hmat,
-                  h = NROW(hmat),
-                  kset = tmp$set,
-                  n = n)
-  if(is.null(row_names) | length(row_names) != n){
+  out <- hmat2mat(hmat = hmat, h = NROW(hmat), kset = tmp$set, n = n)
+  if (is.null(row_names) | length(row_names) != n) {
     rownames(out) <- paste0("s-", 1:NROW(out))
-  }else{
+  } else {
     rownames(out) <- row_names
   }
   return(out)
@@ -79,33 +80,33 @@ as_ctmatrix <- function(hmat, agg_order, n, row_names = NULL){
 #' @rdname ctmatrix_layouts
 #' @family Utilities
 #' @export
-as_hstack_ctlayout <- function(ctmat, agg_order){
+as_hstack_ctlayout <- function(ctmat, agg_order) {
   tmp <- tetools(agg_order = agg_order)
   n <- NROW(ctmat)
-  if(NCOL(ctmat) %% tmp$dim[["kt"]] != 0){
-    cli_abort(c("x" = "Incorrect {.arg ctmat} columns dimension.",
-                "i" = "Please check the consistency of {.arg agg_order} and {.arg ctmat}."),
-              call = NULL)
+  if (NCOL(ctmat) %% tmp$dim[["kt"]] != 0) {
+    cli_abort(
+      c(
+        "x" = "Incorrect {.arg ctmat} columns dimension.",
+        "i" = "Please check the consistency of {.arg agg_order} and {.arg ctmat}."
+      ),
+      call = NULL
+    )
   }
   h <- NCOL(ctmat) / tmp$dim[["kt"]]
-  out <- mat2hmat(mat = ctmat,
-                  h = h,
-                  kset = tmp$set,
-                  n = n)
+  out <- mat2hmat(mat = ctmat, h = h, kset = tmp$set, n = n)
   rownames(out) <- paste0("tao-", 1:NROW(out))
-  if(is.null(rownames(ctmat))){
+  if (is.null(rownames(ctmat))) {
     row_names <- paste0("s-", 1:n)
-  }else{
+  } else {
     row_names <- rownames(ctmat)
   }
-  colnames(out) <- as.vector(sapply(row_names, function(s)
+  colnames(out) <- as.vector(sapply(row_names, function(s) {
     paste0(s, " ", namesTE(kset = tmp$set, h = 1))
-  ))
+  }))
   return(out)
 }
 
-
-#' Convert between horizon-stacked and temporal layouts
+#' Convert Between Horizon-stacked and Temporal Layouts
 #'
 #' These functions convert matrix between the two canonical layouts used in
 #' temporal reconciliation.
@@ -149,19 +150,21 @@ as_hstack_ctlayout <- function(ctmat, agg_order){
 #' @rdname tematrix_layouts
 #' @family Utilities
 #' @export
-as_tevector <- function(hmat, agg_order){
+as_tevector <- function(hmat, agg_order) {
   tmp <- tetools(agg_order = agg_order)
 
-  if(NCOL(hmat) != tmp$dim["kt"]){
-    cli_abort(c("x" = "Incorrect {.arg hmat} columns dimension.",
-                "i" = "Expected {.val {tmp$dim['kt']}} columns, but found {.val {NCOL(hmat)}}.",
-                "i" = "Please check the consistency of {.arg agg_order} and {.arg hmat}."),
-              call = NULL)
+  if (NCOL(hmat) != tmp$dim["kt"]) {
+    cli_abort(
+      c(
+        "x" = "Incorrect {.arg hmat} columns dimension.",
+        "i" = "Expected {.val {tmp$dim['kt']}} columns, but found {.val {NCOL(hmat)}}.",
+        "i" = "Please check the consistency of {.arg agg_order} and {.arg hmat}."
+      ),
+      call = NULL
+    )
   }
 
-  out <- hmat2vec(hmat = hmat,
-                  h = NROW(hmat),
-                  kset = tmp$set)
+  out <- hmat2vec(hmat = hmat, h = NROW(hmat), kset = tmp$set)
   return(out)
 }
 
@@ -171,19 +174,20 @@ as_tevector <- function(hmat, agg_order){
 #'
 #' @rdname tematrix_layouts
 #' @export
-as_hstack_telayout <- function(tevec, agg_order){
+as_hstack_telayout <- function(tevec, agg_order) {
   tmp <- tetools(agg_order = agg_order)
-  if(length(tevec) %% tmp$dim[["kt"]] != 0){
-    cli_abort(c("x" = "Incorrect {.arg tevec} length.",
-                "i" = "Please check the consistency of {.arg agg_order} and {.arg tevec}."),
-              call = NULL)
+  if (length(tevec) %% tmp$dim[["kt"]] != 0) {
+    cli_abort(
+      c(
+        "x" = "Incorrect {.arg tevec} length.",
+        "i" = "Please check the consistency of {.arg agg_order} and {.arg tevec}."
+      ),
+      call = NULL
+    )
   }
   h <- length(tevec) / tmp$dim[["kt"]]
-  out <- vec2hmat(vec = tevec,
-                  h = h,
-                  kset = tmp$set)
+  out <- vec2hmat(vec = tevec, h = h, kset = tmp$set)
   rownames(out) <- paste0("tao-", 1:NROW(out))
   colnames(out) <- namesTE(kset = tmp$set, h = 1)
   return(out)
 }
-

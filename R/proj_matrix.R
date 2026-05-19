@@ -1,4 +1,4 @@
-#' Projection matrix for optimal combination cross-sectional reconciliation
+#' Projection Matrix for Optimal Combination Cross-sectional Reconciliation
 #'
 #' This function computes the projection or the mapping matrix
 #' \eqn{\mathbf{M}} and \eqn{\mathbf{G}}, respectively, such that
@@ -31,13 +31,23 @@
 #'
 #' @family Utilities
 #' @export
-csprojmat <- function(agg_mat, cons_mat, comb = "ols", res = NULL, mat = "M", ...){
+csprojmat <- function(
+  agg_mat,
+  cons_mat,
+  comb = "ols",
+  res = NULL,
+  mat = "M",
+  ...
+) {
   mat <- match.arg(mat, c("M", "G"))
 
-  if(missing(agg_mat) && missing(cons_mat)){
-    cli_abort("Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
-              with no default.", call = NULL)
-  } else if(!missing(agg_mat)){
+  if (missing(agg_mat) && missing(cons_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
+              with no default.",
+      call = NULL
+    )
+  } else if (!missing(agg_mat)) {
     tmp <- cstools(agg_mat = agg_mat)
     n <- tmp$dim[["n"]]
     strc_mat <- tmp$strc_mat
@@ -51,15 +61,25 @@ csprojmat <- function(agg_mat, cons_mat, comb = "ols", res = NULL, mat = "M", ..
   }
 
   cov_mat <- cscov(comb = comb, n = n, agg_mat = agg_mat, res = res, ...)
-  if(NROW(cov_mat) != n | NCOL(cov_mat) != n){
-    cli_abort(c("Incorrect covariance dimensions.",
-                "i"="Check {.arg res} columns dimension."), call = NULL)
+  if (NROW(cov_mat) != n | NCOL(cov_mat) != n) {
+    cli_abort(
+      c(
+        "Incorrect covariance dimensions.",
+        "i" = "Check {.arg res} columns dimension."
+      ),
+      call = NULL
+    )
   }
 
-  projmat(cons_mat = cons_mat, cov_mat = cov_mat, strc_mat = strc_mat, mat = mat)
+  projmat(
+    cons_mat = cons_mat,
+    cov_mat = cov_mat,
+    strc_mat = strc_mat,
+    mat = mat
+  )
 }
 
-#' Projection matrix for optimal combination temporal reconciliation
+#' Projection Matrix for Optimal Combination Temporal Reconciliation
 #'
 #' This function computes the projection or the mapping matrix
 #' \eqn{\mathbf{M}} and \eqn{\mathbf{G}}, respectively, such that
@@ -83,11 +103,21 @@ csprojmat <- function(agg_mat, cons_mat, comb = "ols", res = NULL, mat = "M", ..
 #'
 #' @family Utilities
 #' @export
-teprojmat <- function(agg_order, comb = "ols", res = NULL, mat = "M", tew = "sum", ...){
+teprojmat <- function(
+  agg_order,
+  comb = "ols",
+  res = NULL,
+  mat = "M",
+  tew = "sum",
+  ...
+) {
   mat <- match.arg(mat, c("M", "G"))
 
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
   }
 
   tmp <- tetools(agg_order = agg_order, tew = tew)
@@ -100,17 +130,30 @@ teprojmat <- function(agg_order, comb = "ols", res = NULL, mat = "M", tew = "sum
   strc_mat <- tmp$strc_mat
   cons_mat <- tmp$cons_mat
 
-  cov_mat <- tecov(comb = comb, res = res, agg_order = agg_order, tew = tew, ...)
-  if(NROW(cov_mat) != kt | NCOL(cov_mat) != kt){
-    cli_abort(c("Incorrect covariance dimensions.",
-                "i"="Check {.arg res} length."), call = NULL)
+  cov_mat <- tecov(
+    comb = comb,
+    res = res,
+    agg_order = agg_order,
+    tew = tew,
+    ...
+  )
+  if (NROW(cov_mat) != kt | NCOL(cov_mat) != kt) {
+    cli_abort(
+      c("Incorrect covariance dimensions.", "i" = "Check {.arg res} length."),
+      call = NULL
+    )
   }
 
-  projmat(cons_mat = cons_mat, cov_mat = cov_mat, strc_mat = strc_mat, mat = mat)
+  projmat(
+    cons_mat = cons_mat,
+    cov_mat = cov_mat,
+    strc_mat = strc_mat,
+    mat = mat
+  )
 }
 
 
-#' Projection matrix for optimal combination cross-temporal reconciliation
+#' Projection Matrix for Optimal Combination Cross-temporal Reconciliation
 #'
 #' This function computes the projection or the mapping matrix
 #' \eqn{\mathbf{M}} and \eqn{\mathbf{G}}, respectively, such that
@@ -139,19 +182,34 @@ teprojmat <- function(agg_order, comb = "ols", res = NULL, mat = "M", tew = "sum
 #'
 #' @family Utilities
 #' @export
-ctprojmat <- function(agg_mat, cons_mat, agg_order, comb = "ols", res = NULL, mat = "M", tew = "sum", ...){
+ctprojmat <- function(
+  agg_mat,
+  cons_mat,
+  agg_order,
+  comb = "ols",
+  res = NULL,
+  mat = "M",
+  tew = "sum",
+  ...
+) {
   mat <- match.arg(mat, c("M", "G"))
 
   # Check if 'agg_order' is provided
-  if(missing(agg_order)){
-    cli_abort("Argument {.arg agg_order} is missing, with no default.", call = NULL)
+  if (missing(agg_order)) {
+    cli_abort(
+      "Argument {.arg agg_order} is missing, with no default.",
+      call = NULL
+    )
   }
 
   # Check if either 'agg_mat' or 'cons_mat' is specified
-  if(missing(agg_mat) && missing(cons_mat)){
-    cli_abort("Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
-              with no default.", call = NULL)
-  } else if(!missing(agg_mat)){
+  if (missing(agg_mat) && missing(cons_mat)) {
+    cli_abort(
+      "Argument {.arg agg_mat} (or {.arg cons_mat}) is missing,
+              with no default.",
+      call = NULL
+    )
+  } else if (!missing(agg_mat)) {
     tmp <- cttools(agg_mat = agg_mat, agg_order = agg_order, tew = tew)
     strc_mat <- tmp$strc_mat
     cons_mat <- tmp$cons_mat
@@ -162,38 +220,63 @@ ctprojmat <- function(agg_mat, cons_mat, agg_order, comb = "ols", res = NULL, ma
   }
 
   # Compute covariance
-  cov_mat <- ctcov(comb = comb, res = res, agg_order = agg_order, agg_mat = agg_mat,
-                   n = tmp$dim[["n"]], tew = tew, ...)
-  if(NROW(cov_mat) != prod(tmp$dim[c("kt", "n")]) | NCOL(cov_mat) != prod(tmp$dim[c("kt", "n")])){
-    cli_abort(c("Incorrect covariance dimensions.",
-                "i"="Check {.arg res} dimensions."), call = NULL)
+  cov_mat <- ctcov(
+    comb = comb,
+    res = res,
+    agg_order = agg_order,
+    agg_mat = agg_mat,
+    n = tmp$dim[["n"]],
+    tew = tew,
+    ...
+  )
+  if (
+    NROW(cov_mat) != prod(tmp$dim[c("kt", "n")]) |
+      NCOL(cov_mat) != prod(tmp$dim[c("kt", "n")])
+  ) {
+    cli_abort(
+      c(
+        "Incorrect covariance dimensions.",
+        "i" = "Check {.arg res} dimensions."
+      ),
+      call = NULL
+    )
   }
 
-  projmat(cons_mat = cons_mat, cov_mat = cov_mat, strc_mat = strc_mat, mat = mat)
+  projmat(
+    cons_mat = cons_mat,
+    cov_mat = cov_mat,
+    strc_mat = strc_mat,
+    mat = mat
+  )
 }
 
-projmat <- function(cons_mat, cov_mat, strc_mat, mat = "M"){
+projmat <- function(cons_mat, cov_mat, strc_mat, mat = "M") {
   mat <- match.arg(mat, c("M", "G"))
 
-  if(mat == "M"){
-    slm <- lin_sys(cons_mat %*% cov_mat %*% t(cons_mat), cons_mat)
-    M <- unname(.sparseDiagonal(NCOL(cov_mat)) - cov_mat %*% t(cons_mat) %*% slm)
+  if (mat == "M") {
+    slm <- lin_sys(cons_mat %*% tcrossprod(cov_mat, cons_mat), cons_mat)
+    M <- unname(
+      .sparseDiagonal(NCOL(cov_mat)) - tcrossprod(cov_mat, cons_mat) %*% slm
+    )
     return(Matrix(M))
-  }else{
-    if(!is.null(strc_mat)){
-      if(isDiagonal(cov_mat)){
+  } else {
+    if (!is.null(strc_mat)) {
+      if (isDiagonal(cov_mat)) {
         cov_mat_inv <- .sparseDiagonal(x = diag(cov_mat)^(-1))
-        lm_sx1 <- t(strc_mat) %*% cov_mat_inv %*% strc_mat
-        lm_dx1 <- methods::as(t(strc_mat) %*% cov_mat_inv, "CsparseMatrix")
+        lm_sx1 <- crossprod(strc_mat, cov_mat_inv) %*% strc_mat
+        lm_dx1 <- methods::as(crossprod(strc_mat, cov_mat_inv), "CsparseMatrix")
         G <- unname(lin_sys(lm_sx1, lm_dx1))
-      }else{
+      } else {
         Q <- lin_sys(cov_mat, strc_mat)
-        lm_sx1 <- t(strc_mat) %*% Q
+        lm_sx1 <- crossprod(strc_mat, Q)
         G <- unname(lin_sys(lm_sx1, t(Q)))
       }
       return(Matrix(G))
-    }else{
-      cli_abort("Argument {.arg agg_mat} is missing, with no default.", call = NULL)
+    } else {
+      cli_abort(
+        "Argument {.arg agg_mat} is missing, with no default.",
+        call = NULL
+      )
     }
   }
 }

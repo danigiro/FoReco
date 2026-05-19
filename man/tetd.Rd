@@ -2,7 +2,7 @@
 % Please edit documentation in R/topdown.R
 \name{tetd}
 \alias{tetd}
-\title{Temporal top-down reconciliation}
+\title{Temporal Top-down Reconciliation}
 \usage{
 tetd(base, agg_order, weights, tew = "sum", normalize = TRUE)
 }

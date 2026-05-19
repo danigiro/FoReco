@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_sample.R
 \name{tesmp}
 \alias{tesmp}
-\title{Temporal probabilistic reconciliation (sample approach)}
+\title{Temporal Probabilistic Reconciliation (Sample Approach)}
 \usage{
 tesmp(sample, agg_order, fun = terec, ...)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/boot.R
 \name{teboot}
 \alias{teboot}
-\title{Temporal joint block bootstrap}
+\title{Temporal Joint Block Bootstrap}
 \usage{
 teboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
        xreg = NULL, ...)
@@ -42,6 +42,42 @@ a (\eqn{\text{boot\_size}\times (k^\ast+m)\text{block\_size}}) matrix.
 Joint block bootstrap for generating probabilistic base forecasts that take
 into account the correlation between different temporal aggregation orders
 (Girolimetto et al. 2023).
+}
+\examples{
+set.seed(123)
+
+# Minimal example functions: each "model" stores Gaussian residuals;
+# simulate() draws new innovations (innov=NULL) or uses the supplied
+# ones (innov given).
+simple_model <- function(res) {
+  structure(list(residuals = res, sigma = sd(res)), class = "simple_model")
+}
+simulate.simple_model <- function(object, nsim = 1, innov = NULL,
+                                  future = TRUE, ...) {
+  if (is.null(innov)) {
+    rnorm(nsim, mean = 0, sd = object$sigma)
+  } else {
+    as.numeric(innov)[seq_len(nsim)]
+  }
+}
+
+# Temporal hierarchy: annual-quarterly, m = 4
+# Aggregation orders k = 4, 2, 1 => k* + m = 1 + 2 + 4 = 7 models,
+# ordered from the lowest frequency (annual) to the highest (quarterly).
+m <- 4
+kset <- c(4, 2, 1)              # k = 4 (annual), 2 (semi), 1 (quarterly)
+n_obs_per_k <- 40 / kset        # residuals available at each frequency
+
+model_list <- lapply(seq_along(kset), function(i) {
+  simple_model(rnorm(n_obs_per_k[i]))
+})
+
+# Joint block bootstrap: 100 replicates, block_size = 1 (one annual step)
+boot <- teboot(model_list = model_list, boot_size = 100, agg_order = m,
+               block_size = 1, seed = 1)
+
+dim(boot$boot)   # boot_size x (k* + m)*block_size  => 100 x 7
+
 }
 \references{
 Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),

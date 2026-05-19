@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_lcc.R
 \name{cslcc}
 \alias{cslcc}
-\title{Level conditional coherent reconciliation for genuine hierarchical/grouped time series}
+\title{Level Conditional Coherent Reconciliation for Genuine Hierarchical/Grouped Time Series}
 \usage{
 cslcc(base, agg_mat, comb = "ols", res = NULL, approach = "proj", nn = NULL,
       settings = NULL, CCC = TRUE, const = "exogenous", bts = NULL, ...)
@@ -147,7 +147,7 @@ exo_CCC <- cslcc(base = base, agg_mat = A, comb = "wls", bts = naive,
 # L-1: Level 1 immutable reconciled forecasts for the whole hierarchy
 # L-2: Middle-Out reconciled forecasts
 # L-3: Bottom-Up reconciled forecasts
-info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+info_exo <- summary(exo_CCC)
 info_exo$lcc
 
 ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
@@ -165,7 +165,7 @@ endo_CCC <- cslcc(base = base, agg_mat = A, comb = "wls",
 # L-1: Level 1 reconciled forecasts for L1 + L3 (bottom level)
 # L-2: Level 2 reconciled forecasts for L2 + L3 (bottom level)
 # L-3: Bottom-Up reconciled forecasts
-info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+info_endo <- summary(endo_CCC)
 info_endo$lcc
 
 }

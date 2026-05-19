@@ -2,7 +2,7 @@
 % Please edit documentation in R/proj_matrix.R
 \name{csprojmat}
 \alias{csprojmat}
-\title{Projection matrix for optimal combination cross-sectional reconciliation}
+\title{Projection Matrix for Optimal Combination Cross-sectional Reconciliation}
 \usage{
 csprojmat(agg_mat, cons_mat, comb = "ols", res = NULL, mat = "M", ...)
 }
@@ -65,7 +65,6 @@ practical issues. \emph{International Journal of Forecasting}, 40, 3, 1134-1151.
 }
 \seealso{
 Utilities:
-\code{\link{FoReco2matrix}()},
 \code{\link{aggts}()},
 \code{\link{as_ctmatrix}()},
 \code{\link{as_tevector}()},
@@ -76,7 +75,6 @@ Utilities:
 \code{\link{cttools}()},
 \code{\link{df2aggmat}()},
 \code{\link{lcmat}()},
-\code{\link{recoinfo}()},
 \code{\link{res2matrix}()},
 \code{\link{set_bounds}()},
 \code{\link{shrink_estim}()},

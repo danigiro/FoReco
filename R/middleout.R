@@ -1,4 +1,4 @@
-#' Cross-sectional middle-out reconciliation
+#' Cross-sectional Middle-out Reconciliation
 #'
 #' The middle-out forecast reconciliation (Athanasopoulos et al., 2009) combines
 #' top-down ([cstd]) and bottom-up ([csbu]) for genuine hierarchical/grouped
@@ -112,16 +112,28 @@ csmo <- function(base, agg_mat, weights, id_rows = 1, normalize = TRUE) {
 
   bbf <- ((base / wsum) %*% agg_mat_split) * weights
   reco_mat <- csbu(bbf, agg_mat = agg_mat)
-  attr(reco_mat, "FoReco") <- new_foreco_info(list(
-    framework = "Cross-sectional",
-    forecast_horizon = NROW(reco_mat),
-    cs_n = NCOL(reco_mat),
-    rfun = "csmid"
+  # attr(reco_mat, "FoReco") <- new_foreco_info(list(
+  #   framework = "cross-sectional",
+  #   forecast_horizon = NROW(reco_mat),
+  #   cs_n = NCOL(reco_mat),
+  #   rfun = "csmid"
+  # ))
+  # return(reco_mat)
+
+  return(new_foreco_class(
+    reco_mat,
+    framework = "cross-sectional",
+    rfun = "csmo",
+    rtype = "point",
+    rinfo = list(
+      cs_n = NCOL(reco_mat),
+      nn = all(!(reco_mat < 0)),
+      forecast_horizon = NROW(reco_mat)
+    )
   ))
-  return(reco_mat)
 }
 
-#' Temporal middle-out reconciliation
+#' Temporal Middle-out Reconciliation
 #'
 #' The middle-out forecast reconciliation for temporal hierarchies
 #' combines top-down ([tetd]) and bottom-up ([tebu]) methods. Given
@@ -224,16 +236,28 @@ temo <- function(
   hfbf <- rep(base / wsum, each = order) * weights
   reco_vec <- tebu(hfbf, agg_order = tmp$set, tew = tew)
 
-  attr(reco_vec, "FoReco") <- new_foreco_info(list(
-    framework = "Temporal",
-    forecast_horizon = h,
-    te_set = tmp$set,
-    rfun = "temo"
+  # attr(reco_vec, "FoReco") <- new_foreco_info(list(
+  #   framework = "Temporal",
+  #   forecast_horizon = h,
+  #   te_set = tmp$set,
+  #   rfun = "temo"
+  # ))
+  # return(reco_vec)
+
+  return(new_foreco_class(
+    reco_vec,
+    framework = "temporal",
+    rfun = "temo",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = h,
+      te_set = tmp$set,
+      nn = all(!(reco_vec < 0))
+    )
   ))
-  return(reco_vec)
 }
 
-#' Cross-temporal middle-out reconciliation
+#' Cross-temporal Middle-out Reconciliation
 #'
 #' The cross-temporal middle-out forecast reconciliation combines top-down
 #' ([cttd]) and bottom-up ([ctbu]) methods in the cross-temporal framework for
@@ -352,7 +376,7 @@ ctmo <- function(
   idmat <- do.call(
     cbind,
     apply(
-      t(agg_mat_split) %*% idmat,
+      crossprod(agg_mat_split, idmat),
       2,
       function(x) {
         matrix(rep(x, each = order), cstmp$dim[["nb"]], byrow = TRUE)
@@ -364,7 +388,7 @@ ctmo <- function(
   base <- do.call(
     cbind,
     apply(
-      t(agg_mat_split) %*% base,
+      crossprod(agg_mat_split, base),
       2,
       function(x) {
         matrix(rep(x, each = order), cstmp$dim[["nb"]], byrow = TRUE)
@@ -399,13 +423,26 @@ ctmo <- function(
     tew = tew
   )
 
-  attr(reco_mat, "FoReco") <- new_foreco_info(list(
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    te_set = tetmp$set,
-    cs_n = cstmp$dim[["n"]],
-    rfun = "ctmo"
-  ))
+  # attr(reco_mat, "FoReco") <- new_foreco_info(list(
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   te_set = tetmp$set,
+  #   cs_n = cstmp$dim[["n"]],
+  #   rfun = "ctmo"
+  # ))
 
-  return(reco_mat)
+  # return(reco_mat)
+
+  return(new_foreco_class(
+    reco_mat,
+    framework = "cross-temporal",
+    rfun = "ctmo",
+    rtype = "point",
+    rinfo = list(
+      forecast_horizon = h,
+      te_set = tetmp$set,
+      cs_n = cstmp$dim[["n"]],
+      nn = all(!(reco_mat < 0))
+    )
+  ))
 }

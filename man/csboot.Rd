@@ -2,7 +2,7 @@
 % Please edit documentation in R/boot.R
 \name{csboot}
 \alias{csboot}
-\title{Cross-sectional joint block bootstrap}
+\title{Cross-sectional Joint Block Bootstrap}
 \usage{
 csboot(model_list, boot_size, block_size, seed = NULL, xreg = NULL, ...)
 }
@@ -36,6 +36,36 @@ A list with two elements: the seed used to sample the errors and a
 Joint block bootstrap for generating probabilistic base forecasts that take
 into account the correlation between different time series (Panagiotelis et
 al. 2023).
+}
+\examples{
+set.seed(123)
+
+# Minimal example functions: each "model" stores Gaussian residuals;
+# simulate() draws new innovations (innov=NULL) or uses the supplied ones
+# (innov given).
+simple_model <- function(res) {
+  structure(list(residuals = res, sigma = sd(res)), class = "simple_model")
+}
+simulate.simple_model <- function(object, nsim = 1, innov = NULL,
+                                  future = TRUE, ...) {
+  if (is.null(innov)) {
+    rnorm(nsim, mean = 0, sd = object$sigma)
+  } else {
+    as.numeric(innov)[seq_len(nsim)]
+  }
+}
+
+# Hierarchy Z = X + Y: 3 series, 50 in-sample residuals each
+n <- 3
+res <- matrix(rnorm(50 * n), nrow = 50, ncol = n)
+
+# One model per cross-sectional series
+model_list <- lapply(seq_len(n), function(i) simple_model(res[, i]))
+
+# Joint block bootstrap: 100 replicates, forecast horizon h = 4
+boot <- csboot(model_list = model_list, boot_size = 100, block_size = 4,
+               seed = 1)
+
 }
 \references{
 Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.

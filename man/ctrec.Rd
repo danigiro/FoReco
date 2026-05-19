@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_opt.R
 \name{ctrec}
 \alias{ctrec}
-\title{Optimal combination cross-temporal reconciliation}
+\title{Optimal Combination Cross-temporal Reconciliation}
 \usage{
 ctrec(base, agg_mat, cons_mat, agg_order, tew = "sum", comb = "ols",
       res = NULL, approach = "proj", nn = NULL, settings = NULL,
@@ -188,7 +188,7 @@ immreco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv",
 base[2,7] <- -2*base[2,7]
 nnreco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv",
                 res = res, nn = "osqp")
-recoinfo(nnreco, verbose = FALSE)$info
+summary(nnreco)
 
 }
 \references{

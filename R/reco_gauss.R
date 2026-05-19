@@ -1,4 +1,4 @@
-#' Cross-sectional Gaussian probabilistic reconciliation
+#' Cross-sectional Gaussian Probabilistic Reconciliation
 #'
 #' This function performs cross-sectional probabilistic forecast reconciliation
 #' assuming a multivariate normal base forecast distribution (Panagiotelis et
@@ -203,19 +203,32 @@ csmvn <- function(
   dimnames(reco_dist) <- colnames(reco_mat$mu)
   names(reco_dist) <- paste0("h-", 1:length(reco_dist))
 
-  attr(reco_dist, "FoReco") <- new_foreco_info(list(
-    framework = "Cross-sectional",
-    forecast_horizon = NROW(reco_mat),
-    comb = comb,
-    comb_base = comb_base,
-    cs_n = n,
-    rfun = "csrec",
-    pfun = "csmvn"
+  return(new_foreco_class(
+    reco_dist,
+    framework = "cross-sectional",
+    rfun = "csmvn",
+    rtype = "probabilistic",
+    rinfo = list(
+      forecast_horizon = NROW(reco_mat),
+      comb = comb,
+      comb_base = comb_base,
+      cs_n = n
+    )
   ))
-  return(reco_dist)
+
+  # attr(reco_dist, "FoReco") <- new_foreco_info(list(
+  #   framework = "cross-sectional",
+  #   forecast_horizon = NROW(reco_mat),
+  #   comb = comb,
+  #   comb_base = comb_base,
+  #   cs_n = n,
+  #   rfun = "csrec",
+  #   pfun = "csmvn"
+  # ))
+  # return(reco_dist)
 }
 
-#' Temporal Gaussian probabilistic reconciliation
+#' Temporal Gaussian Probabilistic Reconciliation
 #'
 #' This function performs temporal probabilistic forecast reconciliation
 #' assuming a multivariate normal base forecast distribution (Girolimetto et
@@ -396,19 +409,32 @@ temvn <- function(
   dimnames(reco_dist) <- colnames(reco_mat$mu)
   names(reco_dist) <- paste0("tao-", 1:length(reco_dist))
 
-  attr(reco_dist, "FoReco") <- new_foreco_info(list(
-    framework = "Temporal",
-    forecast_horizon = NROW(reco_mat),
-    comb = comb,
-    comb_base = comb_base,
-    te_set = tmp$set,
-    rfun = "terec",
-    pfun = "temvn"
+  return(new_foreco_class(
+    reco_dist,
+    framework = "temporal",
+    rfun = "temvn",
+    rtype = "probabilistic",
+    rinfo = list(
+      forecast_horizon = NROW(reco_mat),
+      comb = comb,
+      comb_base = comb_base,
+      te_set = tmp$set
+    )
   ))
-  return(reco_dist)
+
+  # attr(reco_dist, "FoReco") <- new_foreco_info(list(
+  #   framework = "Temporal",
+  #   forecast_horizon = NROW(reco_mat),
+  #   comb = comb,
+  #   comb_base = comb_base,
+  #   te_set = tmp$set,
+  #   rfun = "terec",
+  #   pfun = "temvn"
+  # ))
+  # return(reco_dist)
 }
 
-#' Cross-temporal Gaussian probabilistic reconciliation
+#' Cross-temporal Gaussian Probabilistic Reconciliation
 #'
 #' This function performs cross-temporal probabilistic forecast reconciliation
 #' assuming a multivariate normal base forecast distribution (Girolimetto et
@@ -623,17 +649,31 @@ ctmvn <- function(
   dimnames(reco_dist) <- names_ct
   names(reco_dist) <- paste0("tao-", 1:length(reco_dist))
 
-  attr(reco_dist, "FoReco") <- new_foreco_info(list(
-    info = attr(reco_mat, "info"),
-    framework = "Cross-temporal",
-    forecast_horizon = h,
-    comb = comb,
-    te_set = tmp$set,
-    cs_n = tmp$dim[["n"]],
-    rfun = "ctrec",
-    pfun = "ctmvn"
+  return(new_foreco_class(
+    reco_dist,
+    framework = "cross-temporal",
+    rfun = "ctmvn",
+    rtype = "probabilistic",
+    rinfo = list(
+      comb = comb,
+      comb_base = comb_base,
+      te_set = tmp$set,
+      cs_n = tmp$dim[["n"]],
+      forecast_horizon = h
+    )
   ))
-  return(reco_dist)
+
+  # attr(reco_dist, "FoReco") <- new_foreco_info(list(
+  #   info = attr(reco_mat, "info"),
+  #   framework = "Cross-temporal",
+  #   forecast_horizon = h,
+  #   comb = comb,
+  #   te_set = tmp$set,
+  #   cs_n = tmp$dim[["n"]],
+  #   rfun = "ctrec",
+  #   pfun = "ctmvn"
+  # ))
+  # return(reco_dist)
 }
 
 pgreco <- function(

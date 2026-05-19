@@ -2,7 +2,7 @@
 % Please edit documentation in R/bottomup.R
 \name{tebu}
 \alias{tebu}
-\title{Temporal bottom-up reconciliation}
+\title{Temporal Bottom-up Reconciliation}
 \usage{
 tebu(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 }

@@ -4,7 +4,7 @@
 \name{vndata}
 \alias{vndata}
 \alias{vnaggmat}
-\title{Australian Tourism Demand dataset}
+\title{Australian Tourism Demand Dataset}
 \format{
 \code{vndata} is a \eqn{(228 \times 525)} \code{ts} object, corresponding to
 525 time series of the Australian Tourism Demand dataset (1998:01-2016:12).

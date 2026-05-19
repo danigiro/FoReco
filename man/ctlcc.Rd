@@ -2,7 +2,7 @@
 % Please edit documentation in R/reco_lcc.R
 \name{ctlcc}
 \alias{ctlcc}
-\title{Level conditional coherent reconciliation for cross-temporal hierarchies}
+\title{Level Conditional Coherent Reconciliation for Cross-temporal Hierarchies}
 \usage{
 ctlcc(base, agg_mat, agg_order, tew = "sum", comb = "ols", res = NULL,
       approach = "proj", nn = NULL, settings = NULL, CCC = TRUE,
@@ -165,7 +165,7 @@ exo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
                 hfbts = naive, res = res, CCC = TRUE)
 
 # Results detailed by level:
-info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+info_exo <- summary(exo_CCC)
 # info_exo$lcc
 
 ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
@@ -178,7 +178,7 @@ endo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
                   res = res, CCC = TRUE, const = "endogenous")
 
 # Results detailed by level:
-info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+info_endo <- summary(endo_CCC)
 # info_endo$lcc
 
 }
