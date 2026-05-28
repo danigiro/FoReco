@@ -12,13 +12,14 @@ base forecasts samples to be reconciled; \eqn{h} is the forecast horizon,
 \eqn{n} is the total number of time series (\eqn{n = n_a + n_b}), and
 \eqn{L} is the sample size.}
 
-\item{fun}{A string specifying the reconciliation function to be used,
-as implemented in \pkg{FoReco}.}
+\item{fun}{A function performing the reconciliation, as implemented in
+\pkg{FoReco}.}
 
 \item{...}{Arguments passed on to \code{fun}}
 }
 \value{
-A \link[distributional:dist_sample]{distributional::dist_sample} object.
+A \link[distributional:dist_sample]{distributional::dist_sample} of reconciled forecasts,
+of class \code{foreco} (see \link{foreco-class}).
 }
 \description{
 This function performs cross-sectional probabilistic forecast

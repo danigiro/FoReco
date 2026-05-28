@@ -26,7 +26,8 @@
 #'   (\code{TRUE}).
 #' @inheritDotParams cscov mse shrink_fun
 #'
-#' @returns A [distributional::dist_multivariate_normal] object.
+#' @return A [distributional::dist_multivariate_normal] of reconciled forecasts,
+#'   of class \code{foreco} (see \link{foreco-class}).
 #'
 #' @references
 #' Byron, R.P. (1978), The estimation of large social account matrices,
@@ -249,7 +250,7 @@ csmvn <- function(
 #' @inheritParams csmvn
 #' @inheritDotParams tecov mse shrink_fun
 #'
-#' @returns A [distributional::dist_multivariate_normal] object.
+#' @inherit csmvn return
 #'
 #' @references
 #' Athanasopoulos, G., Hyndman, R.J., Kourentzes, N. and Petropoulos, F. (2017),
@@ -282,7 +283,7 @@ csmvn <- function(
 #' res <- rnorm(70)
 #'
 #' m <- 4 # from quarterly to annual temporal aggregation
-#' reco_dist <- terec(base = base, agg_order = m, comb = "wlsv", res = res)
+#' reco_dist <- temvn(base = base, agg_order = m, comb = "wlsv", res = res)
 #'
 #' @family Reco: probabilistic
 #' @family Framework: temporal
@@ -456,7 +457,7 @@ temvn <- function(
 #' @inheritParams csmvn
 #' @inheritDotParams ctcov mse shrink_fun
 #'
-#' @returns A [distributional::dist_multivariate_normal] object.
+#' @inherit csmvn return
 #'
 #' @references
 #' Byron, R.P. (1978), The estimation of large social account matrices,

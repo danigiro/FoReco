@@ -16,14 +16,15 @@ cross-sectional aggregation matrix. It maps the \eqn{n_b} bottom-level
 (free) variables into the \eqn{n_a} upper (constrained) variables.}
 
 \item{sntz}{Logical. If \code{TRUE}, the negative base forecasts are set to
-zero (Di Fonzo and Girolimetto, 2023) before applying bottom-up.
-\emph{Default} is \code{FALSE}.}
+zero (Di Fonzo and Girolimetto, 2023; Girolimetto 2025) before applying
+bottom-up. \emph{Default} is \code{FALSE}.}
 
 \item{round}{Logical. If \code{TRUE}, base forecasts are rounded before
 applying the bottom-up reconciliation. \emph{Default} is \code{FALSE}.}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{h \times n}) numeric matrix of cross-sectional
 reconciled forecasts.
 }
 \description{
@@ -56,6 +57,10 @@ of the American Statistical Association} 71(353), 68–71.
 Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
 solar forecasts, \emph{Solar Energy}, 251, 13–29.
 \doi{10.1016/j.solener.2023.01.003}
+
+Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+methods and operational solutions. \emph{Forecasting}, 7(4), 64;
+\doi{10.3390/forecast7040064}
 }
 \seealso{
 Bottom-up reconciliation:

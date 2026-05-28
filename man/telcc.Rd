@@ -118,7 +118,8 @@ the covariance matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
 reconciled forecasts.
 }
 \description{

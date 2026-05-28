@@ -39,7 +39,8 @@ include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
 reconciled forecasts.
 }
 \description{

@@ -57,7 +57,8 @@ covariance matrix are not mean-corrected.}
   }}
 }
 \value{
-A \link[distributional:dist_multivariate_normal]{distributional::dist_multivariate_normal} object.
+A \link[distributional:dist_multivariate_normal]{distributional::dist_multivariate_normal} of reconciled forecasts,
+of class \code{foreco} (see \link{foreco-class}).
 }
 \description{
 This function performs cross-sectional probabilistic forecast reconciliation

@@ -8,10 +8,11 @@
 \alias{print.summary.foreco}
 \alias{plot.foreco}
 \alias{components.foreco}
+\alias{drop_foreco_class}
 \alias{new_foreco_class}
 \title{FoReco Reconciliation Class}
 \usage{
-new_foreco_class(x, framework, rfun, rtype, rinfo = NULL, nninfo = NULL)
+new_foreco_class(reco, framework, rfun, rtype, rinfo = NULL, nninfo = NULL)
 
 \method{summary}{foreco}(object, keep_forecasts = TRUE, ...)
 
@@ -29,13 +30,12 @@ new_foreco_class(x, framework, rfun, rtype, rinfo = NULL, nninfo = NULL)
   temporal_names = NULL,
   ...
 )
+
+drop_foreco_class(x)
 }
 \arguments{
-\item{x}{For \code{new_foreco_class()}, a numeric matrix of reconciled forecasts
-(when \code{rtype = "point"}) or a distributional object (when
-\code{rtype = "probabilistic"}). For \code{print.foreco()} and \code{plot.foreco()},
-an object of class \code{foreco}. For \code{print.summary.foreco()}, an object of
-class \code{summary.foreco}.}
+\item{reco}{A numeric matrix/vector (when \code{rtype = "point"}) or a
+distributional object (when \code{rtype = "probabilistic"}).}
 
 \item{framework}{A character string identifying the reconciliation framework.
 Must be one of \code{"cross-sectional"}, \code{"temporal"}, or \code{"cross-temporal"}.}
@@ -56,9 +56,6 @@ level-conditional reconciled forecasts \code{lcc}).}
 procedure applied during reconciliation. Stored as the \code{info} field of
 the \code{"FoReco"} attribute.}
 
-\item{object}{An object of class \code{foreco}, passed to \code{summary.foreco()} and
-\code{components.foreco()}.}
-
 \item{keep_forecasts}{Logical; if \code{TRUE} (the default), the reconciled
 forecasts are stored in the \code{rf} element of the returned
 \code{summary.foreco} object (and therefore printed at the end of the summary).
@@ -66,6 +63,8 @@ Set to \code{FALSE} to obtain a lighter summary object that omits them.}
 
 \item{...}{Additional arguments passed to the underlying methods
 (e.g. \code{print()}).}
+
+\item{x, object}{An object of class \code{foreco}.}
 
 \item{n_row, n_col}{Integers giving the maximum number of rows and columns to
 display when printing. If \code{NULL} (the default) all rows/columns are shown.
@@ -92,34 +91,8 @@ match the number of returned orders, otherwise a warning is emitted and
 the default \code{"k-..."} labels are used.}
 }
 \value{
-\code{new_foreco_class()} returns \code{x} with class \code{"foreco"} (prepended to its
-existing class) and a \code{"FoReco"} attribute containing at least:
-\describe{
-\item{\code{framework}}{The reconciliation framework: \code{"cross-sectional"},
-\code{"temporal"} or \code{"cross-temporal"}.}
-\item{\code{rfun}}{The name of the reconciliation function that produced the
-object.}
-\item{\code{rtype}}{The forecast type: \code{"point"} or \code{"probabilistic"}.}
-\item{\code{info}}{A matrix with convergence information of the non-negative
-reconciliation algorithm, when one has been applied; \code{NULL} otherwise.
-Corresponds to the \code{nninfo} argument of \code{new_foreco_class()}.}
-}
-plus all the additional fields supplied through \code{rinfo}, which typically
-include:
-\describe{
-\item{\code{cs_n}}{The cross-sectional number of variables.}
-\item{\code{te_set}}{The set of temporal aggregation orders.}
-\item{\code{forecast_horizon}}{The forecast horizon. In the temporal and
-cross-temporal frameworks it refers to the most temporally aggregated
-series.}
-\item{\code{lcc}}{A list of level-conditional reconciled forecasts (plus
-bottom-up) returned by \code{\link[=cslcc]{cslcc()}}, \code{\link[=telcc]{telcc()}} and \code{\link[=ctlcc]{ctlcc()}}.}
-\item{\code{nn}}{Logical; if \code{TRUE}, all reconciled forecasts are
-non-negative.}
-\item{\code{comb}}{The covariance approximation used in the reconciliation.}
-\item{\code{ml}}{The machine-learning approach used to produce the base
-forecasts, when applicable.}
-}
+A \code{foreco} object extending the reconciled forecasts/distributions with
+reconciliation metadata.
 
 \code{components.foreco()} returns a named list of reconciled forecasts split
 by temporal aggregation order. For the cross-sectional framework the list
@@ -127,11 +100,11 @@ has a single element \code{"k-1"}.
 }
 \description{
 The \code{foreco} class represents reconciled forecasts produced by the FoReco
-package. It extends the base \code{matrix} class with additional attributes that
-store metadata about the reconciliation procedure (framework, function used,
-forecast type, and other reconciliation-specific information). The class
-provides dedicated methods for printing, summarising, extracting components
-and visualising reconciled forecasts.
+package. It extends a numeric matrix, vector, or distributional object with
+additional attributes that store metadata about the reconciliation procedure
+(framework, function used, forecast type, and other reconciliation-specific
+information). The class provides dedicated methods for printing,
+summarising, extracting components and visualising reconciled forecasts.
 }
 \details{
 \code{new_foreco_class()} is the low-level constructor. It is exported so
@@ -152,10 +125,16 @@ A   <- t(c(1, 1))
 bts <- matrix(rnorm(6, mean = 10), 3, 2)
 reco <- csbu(base = bts, agg_mat = A)
 
-# Inspect the reconciled-forecast object
+# Print and summarise the reconciled forecasts
 print(reco)
 print(reco, n_row = 2, n_col = 2)
 summary(reco)
 summary(reco, keep_forecasts = FALSE)
+
+# Extract reconciled forecasts by temporal aggregation order
+components(reco)
+
+# Remove the foreco class
+drop_foreco_class(reco)
 
 }

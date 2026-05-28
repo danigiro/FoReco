@@ -2,19 +2,15 @@
 #'
 #' @description
 #' The `foreco` class represents reconciled forecasts produced by the FoReco
-#' package. It extends the base `matrix` class with additional attributes that
-#' store metadata about the reconciliation procedure (framework, function used,
-#' forecast type, and other reconciliation-specific information). The class
-#' provides dedicated methods for printing, summarising, extracting components
-#' and visualising reconciled forecasts.
+#' package. It extends a numeric matrix, vector, or distributional object with
+#' additional attributes that store metadata about the reconciliation procedure
+#' (framework, function used, forecast type, and other reconciliation-specific
+#' information). The class provides dedicated methods for printing,
+#' summarising, extracting components and visualising reconciled forecasts.
 #'
-#' @param x For `new_foreco_class()`, a numeric matrix of reconciled forecasts
-#'   (when `rtype = "point"`) or a distributional object (when
-#'   `rtype = "probabilistic"`). For `print.foreco()` and `plot.foreco()`,
-#'   an object of class `foreco`. For `print.summary.foreco()`, an object of
-#'   class `summary.foreco`.
-#' @param object An object of class `foreco`, passed to `summary.foreco()` and
-#'   `components.foreco()`.
+#' @param reco A numeric matrix/vector (when `rtype = "point"`) or a
+#'   distributional object (when `rtype = "probabilistic"`).
+#' @param x,object An object of class `foreco`.
 #' @param framework A character string identifying the reconciliation framework.
 #'   Must be one of `"cross-sectional"`, `"temporal"`, or `"cross-temporal"`.
 #' @param rfun A character scalar with the name of the FoReco function that
@@ -67,34 +63,8 @@
 #' dotted lines.
 #'
 #' @return
-#' `new_foreco_class()` returns `x` with class `"foreco"` (prepended to its
-#' existing class) and a `"FoReco"` attribute containing at least:
-#' \describe{
-#'   \item{`framework`}{The reconciliation framework: `"cross-sectional"`,
-#'     `"temporal"` or `"cross-temporal"`.}
-#'   \item{`rfun`}{The name of the reconciliation function that produced the
-#'     object.}
-#'   \item{`rtype`}{The forecast type: `"point"` or `"probabilistic"`.}
-#'   \item{`info`}{A matrix with convergence information of the non-negative
-#'     reconciliation algorithm, when one has been applied; `NULL` otherwise.
-#'     Corresponds to the `nninfo` argument of `new_foreco_class()`.}
-#' }
-#' plus all the additional fields supplied through `rinfo`, which typically
-#' include:
-#' \describe{
-#'   \item{`cs_n`}{The cross-sectional number of variables.}
-#'   \item{`te_set`}{The set of temporal aggregation orders.}
-#'   \item{`forecast_horizon`}{The forecast horizon. In the temporal and
-#'     cross-temporal frameworks it refers to the most temporally aggregated
-#'     series.}
-#'   \item{`lcc`}{A list of level-conditional reconciled forecasts (plus
-#'     bottom-up) returned by [cslcc()], [telcc()] and [ctlcc()].}
-#'   \item{`nn`}{Logical; if `TRUE`, all reconciled forecasts are
-#'     non-negative.}
-#'   \item{`comb`}{The covariance approximation used in the reconciliation.}
-#'   \item{`ml`}{The machine-learning approach used to produce the base
-#'     forecasts, when applicable.}
-#' }
+#' A `foreco` object extending the reconciled forecasts/distributions with
+#' reconciliation metadata.
 #'
 #' `components.foreco()` returns a named list of reconciled forecasts split
 #' by temporal aggregation order. For the cross-sectional framework the list
@@ -107,21 +77,27 @@
 #' bts <- matrix(rnorm(6, mean = 10), 3, 2)
 #' reco <- csbu(base = bts, agg_mat = A)
 #'
-#' # Inspect the reconciled-forecast object
+#' # Print and summarise the reconciled forecasts
 #' print(reco)
 #' print(reco, n_row = 2, n_col = 2)
 #' summary(reco)
 #' summary(reco, keep_forecasts = FALSE)
 #'
+#' # Extract reconciled forecasts by temporal aggregation order
+#' components(reco)
+#'
+#' # Remove the foreco class
+#' drop_foreco_class(reco)
+#'
 #' @name foreco-class
 #' @aliases foreco summary.foreco print.foreco print.summary.foreco plot.foreco
-#'   components.foreco
+#'   components.foreco drop_foreco_class
 NULL
 
 #' @rdname foreco-class
 #' @export
 new_foreco_class <- function(
-  x,
+  reco,
   framework,
   rfun,
   rtype,
@@ -161,12 +137,12 @@ new_foreco_class <- function(
       call = NULL
     )
   }
-  attr(x, "FoReco") <- c(
+  attr(reco, "FoReco") <- c(
     list(framework = framework, rfun = rfun, rtype = rtype, info = nninfo),
     rinfo
   )
-  class(x) <- c("foreco", class(x))
-  return(x)
+  class(reco) <- c("foreco", class(reco))
+  return(reco)
 }
 
 #' @rdname foreco-class
@@ -552,7 +528,7 @@ components.foreco <- function(
 #' @method as.matrix foreco
 #' @export
 as.matrix.foreco <- function(x, ...) {
-  as.matrix(unclass(x))
+  as.matrix(.drop_foreco(x))
 }
 
 #' @method as.data.frame foreco
@@ -579,6 +555,13 @@ Math.foreco <- function(x, ...) {
   NextMethod(.drop_foreco(x))
 }
 
+#' @rdname foreco-class
+#' @export
+drop_foreco_class <- function(x) {
+  .drop_foreco(x)
+}
+
+
 .drop_foreco <- function(x) {
   if (inherits(x, "foreco")) {
     attr(x, "FoReco") <- NULL
@@ -591,7 +574,6 @@ Math.foreco <- function(x, ...) {
   }
   x
 }
-
 
 distr_to_point <- function(x, attr_info) {
   attr(x, "FoReco") <- attr_info

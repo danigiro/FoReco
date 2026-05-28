@@ -148,7 +148,8 @@ covariance matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
 reconciled forecasts.
 }
 \description{

@@ -63,7 +63,8 @@ the covariance matrix are not mean-corrected.}
   }}
 }
 \value{
-A \link[distributional:dist_multivariate_normal]{distributional::dist_multivariate_normal} object.
+A \link[distributional:dist_multivariate_normal]{distributional::dist_multivariate_normal} of reconciled forecasts,
+of class \code{foreco} (see \link{foreco-class}).
 }
 \description{
 This function performs temporal probabilistic forecast reconciliation
@@ -79,7 +80,7 @@ base <- rnorm(7*2, rep(c(20, 10, 5), 2*c(1, 2, 4)))
 res <- rnorm(70)
 
 m <- 4 # from quarterly to annual temporal aggregation
-reco_dist <- terec(base = base, agg_order = m, comb = "wlsv", res = res)
+reco_dist <- temvn(base = base, agg_order = m, comb = "wlsv", res = res)
 
 }
 \references{

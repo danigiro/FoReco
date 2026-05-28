@@ -23,8 +23,8 @@
 #' @param seed An integer seed.
 #' @param ... Additional arguments for the \code{simulate()} function.
 #'
-#' @return A list with two elements: the seed used to sample the errors and a
-#'   3-d array (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
+#' @return
+#'   A 3-d array (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
 #'
 #' @references
 #' Panagiotelis, A., Gamakumara, P., Athanasopoulos, G. and Hyndman, R.J.
@@ -156,7 +156,9 @@ csboot <- function(
   if (!is.null(names(model_list))) {
     dimnames(fboot)[[2]] <- names(model_list)
   }
-  return(list(sample = fboot, seed = seed))
+  #return(list(sample = fboot, seed = seed))
+  attr(fboot, "seed") <- seed
+  return(fboot)
 }
 
 #' Temporal Joint Block Bootstrap
@@ -185,8 +187,8 @@ csboot <- function(
 #' @inheritParams terec
 #' @inheritParams csboot
 #'
-#' @return A list with two elements: the seed used to sample the errors and
-#'   a (\eqn{\text{boot\_size}\times (k^\ast+m)\text{block\_size}}) matrix.
+#' @return
+#'   A (\eqn{\text{boot\_size}\times (k^\ast+m)\text{block\_size}}) matrix.
 #'
 #' @references
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
@@ -226,8 +228,6 @@ csboot <- function(
 #' # Joint block bootstrap: 100 replicates, block_size = 1 (one annual step)
 #' boot <- teboot(model_list = model_list, boot_size = 100, agg_order = m,
 #'                block_size = 1, seed = 1)
-#'
-#' dim(boot$boot)   # boot_size x (k* + m)*block_size  => 100 x 7
 #'
 #' @family Bootstrap samples
 #' @family Framework: temporal
@@ -293,7 +293,8 @@ teboot <- function(
     })
   })
   fboot <- t(sapply(fboot, Reduce, f = "c"))
-  return(list(sample = fboot, seed = seed))
+  attr(fboot, "seed") <- seed
+  return(fboot)
 }
 
 #' Cross-temporal Joint Block Bootstrap
@@ -323,9 +324,8 @@ teboot <- function(
 #' @inheritParams ctrec
 #' @inheritParams teboot
 #'
-#' @return A list with two elements: the seed used to sample the errors and a
-#'   list with \eqn{\text{boot\_size}} matrix of size
-#'   (\eqn{n\times(k^\ast+m)\text{block\_size}}) matrix.
+#' @return A list with \eqn{\text{boot\_size}} matrix of size
+#'   (\eqn{n\times(k^\ast+m)\text{block\_size}}).
 #'
 #' @references
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
@@ -479,7 +479,8 @@ ctboot <- function(
   })
 
   fboot <- lapply(fboot, Reduce, f = "cbind")
-  return(list(sample = fboot, seed = seed))
+  attr(fboot, "seed") <- seed
+  return(fboot)
 }
 
 

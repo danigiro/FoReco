@@ -39,7 +39,8 @@ all the involved projection matrices at step 2 of the procedure (see
 Di Fonzo and Girolimetto, 2023).}
 }
 \value{
-A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
 reconciled forecasts.
 }
 \description{
@@ -76,7 +77,7 @@ rtcs <- tcsrec(base = base,
                telist = list(agg_order = m, comb = "wlsv"),
                res = res)
 
-rcst <- tcsrec(base = base,
+rcst <- cstrec(base = base,
                cslist = list(agg_mat = A, comb = "shr"),
                telist = list(agg_order = m, comb = "wlsv"),
                res = res)

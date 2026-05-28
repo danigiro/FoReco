@@ -16,11 +16,12 @@
 #'   base forecasts samples to be reconciled; \eqn{h} is the forecast horizon,
 #'   \eqn{n} is the total number of time series (\eqn{n = n_a + n_b}), and
 #'   \eqn{L} is the sample size.
-#' @param fun A string specifying the reconciliation function to be used,
-#'   as implemented in \pkg{FoReco}.
+#' @param fun A function performing the reconciliation, as implemented in
+#'   \pkg{FoReco}.
 #' @param ... Arguments passed on to \code{fun}
 #'
-#' @returns A [distributional::dist_sample] object.
+#' @return A [distributional::dist_sample] of reconciled forecasts,
+#'   of class \code{foreco} (see \link{foreco-class}).
 #'
 #' @references
 #' Girolimetto, D., Athanasopoulos, G., Di Fonzo, T. and Hyndman, R.J. (2024),
@@ -164,7 +165,7 @@ cssmp <- function(sample, fun = csrec, ...) {
 #' @inheritParams cssmp
 #' @inheritParams terec
 #'
-#' @returns A [distributional::dist_sample] object.
+#' @inherit cssmp return
 #'
 #' @references
 #' Athanasopoulos, G., Hyndman, R.J., Kourentzes, N. and Petropoulos, F. (2017),
@@ -306,7 +307,7 @@ tesmp <- function(sample, agg_order, fun = terec, ...) {
 #' @inheritParams cssmp
 #' @inheritParams ctrec
 #'
-#' @returns A [distributional::dist_sample] object.
+#' @inherit cssmp return
 #'
 #' @references
 #' Di Fonzo, T. and Girolimetto, D. (2023a), Cross-temporal forecast

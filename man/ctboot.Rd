@@ -38,9 +38,8 @@ each variable (rows). It can contain \code{NA}s.}
 \item{...}{Additional arguments for the \code{simulate()} function.}
 }
 \value{
-A list with two elements: the seed used to sample the errors and a
-list with \eqn{\text{boot\_size}} matrix of size
-(\eqn{n\times(k^\ast+m)\text{block\_size}}) matrix.
+A list with \eqn{\text{boot\_size}} matrix of size
+(\eqn{n\times(k^\ast+m)\text{block\_size}}).
 }
 \description{
 Joint block bootstrap for generating probabilistic base forecasts that take

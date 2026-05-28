@@ -36,8 +36,9 @@
 #'   forecasts (\code{base} parameter) that should be fixed.
 #' @inheritDotParams cscov mse shrink_fun
 #'
-#' @returns A (\eqn{h \times n}) numeric matrix of cross-sectional
-#' reconciled forecasts.
+#' @return An object of class \code{foreco} (see \link{foreco-class})
+#'   with a (\eqn{h \times n}) numeric matrix of cross-sectional
+#'   reconciled forecasts.
 #'
 #' @references
 #' Byron, R.P. (1978), The estimation of large social account matrices,
@@ -334,8 +335,9 @@ csrec <- function(
 #' }
 #' @inheritDotParams tecov mse shrink_fun
 #'
-#' @return A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
-#' reconciled forecasts.
+#' @return An object of class \code{foreco} (see \link{foreco-class})
+#'   with a (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+#'   reconciled forecasts.
 #'
 #' @references
 #' Athanasopoulos, G., Hyndman, R.J., Kourentzes, N. and Petropoulos, F. (2017),
@@ -717,7 +719,8 @@ terec <- function(
 #' }
 #' @inheritDotParams ctcov mse shrink_fun
 #'
-#' @return A (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
+#' @return An object of class \code{foreco} (see \link{foreco-class})
+#'   with a (\eqn{n \times h(k^\ast+m)}) numeric matrix of cross-temporal
 #'   reconciled forecasts.
 #'
 #' @references

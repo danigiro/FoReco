@@ -22,14 +22,15 @@ include: "\code{sum}" (simple summation, \emph{default}), "\code{avg}"
 (last value of the period).}
 
 \item{sntz}{Logical. If \code{TRUE}, the negative base forecasts are set to
-zero (Di Fonzo and Girolimetto, 2023) before applying bottom-up.
-\emph{Default} is \code{FALSE}.}
+zero (Di Fonzo and Girolimetto, 2023; Girolimetto 2025) before applying
+bottom-up. \emph{Default} is \code{FALSE}.}
 
 \item{round}{Logical. If \code{TRUE}, base forecasts are rounded before
 applying the bottom-up reconciliation. \emph{Default} is \code{FALSE}.}
 }
 \value{
-A (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{h(k^\ast+m) \times 1}) numeric vector of temporal
 reconciled forecasts.
 }
 \description{

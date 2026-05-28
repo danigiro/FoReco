@@ -21,7 +21,8 @@ of bottom variables.}
 \item{normalize}{If \code{TRUE} (\emph{default}), the \code{weights} will sum to 1.}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{h \times n}) numeric matrix of cross-sectional
 reconciled forecasts.
 }
 \description{

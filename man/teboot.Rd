@@ -35,8 +35,7 @@ It can contains \code{NA}s.}
 \item{...}{Additional arguments for the \code{simulate()} function.}
 }
 \value{
-A list with two elements: the seed used to sample the errors and
-a (\eqn{\text{boot\_size}\times (k^\ast+m)\text{block\_size}}) matrix.
+A (\eqn{\text{boot\_size}\times (k^\ast+m)\text{block\_size}}) matrix.
 }
 \description{
 Joint block bootstrap for generating probabilistic base forecasts that take
@@ -75,8 +74,6 @@ model_list <- lapply(seq_along(kset), function(i) {
 # Joint block bootstrap: 100 replicates, block_size = 1 (one annual step)
 boot <- teboot(model_list = model_list, boot_size = 100, agg_order = m,
                block_size = 1, seed = 1)
-
-dim(boot$boot)   # boot_size x (k* + m)*block_size  => 100 x 7
 
 }
 \references{

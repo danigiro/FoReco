@@ -379,7 +379,7 @@ iterec <- function(
 #'                telist = list(agg_order = m, comb = "wlsv"),
 #'                res = res)
 #'
-#' rcst <- tcsrec(base = base,
+#' rcst <- cstrec(base = base,
 #'                cslist = list(agg_mat = A, comb = "shr"),
 #'                telist = list(agg_order = m, comb = "wlsv"),
 #'                res = res)

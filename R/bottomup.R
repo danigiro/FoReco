@@ -10,12 +10,9 @@
 #'   (\code{mts} class) containing bottom base forecasts; \eqn{h} is the
 #'   forecast horizon, and \eqn{n_b} is the total number of bottom variables.
 #' @inheritParams csrec
-#' @param sntz Logical. If \code{TRUE}, enforces non-negativity on reconciled
-#'   forecasts using the heuristic "set-negative-to-zero" (Di Fonzo and
-#'   Girolimetto, 2023). \emph{Default} is \code{FALSE}.
 #' @param sntz Logical. If \code{TRUE}, the negative base forecasts are set to
-#'   zero (Di Fonzo and Girolimetto, 2023) before applying bottom-up.
-#'   \emph{Default} is \code{FALSE}.
+#'   zero (Di Fonzo and Girolimetto, 2023; Girolimetto 2025) before applying
+#'   bottom-up. \emph{Default} is \code{FALSE}.
 #' @param round Logical. If \code{TRUE}, base forecasts are rounded before
 #'   applying the bottom-up reconciliation. \emph{Default} is \code{FALSE}.
 #'
@@ -33,6 +30,10 @@
 #' Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation of
 #' solar forecasts, \emph{Solar Energy}, 251, 13–29.
 #' \doi{10.1016/j.solener.2023.01.003}
+#'
+#' Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+#' methods and operational solutions. \emph{Forecasting}, 7(4), 64;
+#' \doi{10.3390/forecast7040064}
 #'
 #' @examples
 #' set.seed(123)

@@ -29,8 +29,7 @@ It can contain \code{NA}s.}
 \item{...}{Additional arguments for the \code{simulate()} function.}
 }
 \value{
-A list with two elements: the seed used to sample the errors and a
-3-d array (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
+A 3-d array (\eqn{\text{block\_size} \times n \times \text{boot\_size}}).
 }
 \description{
 Joint block bootstrap for generating probabilistic base forecasts that take

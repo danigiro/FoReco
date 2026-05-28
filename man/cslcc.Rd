@@ -110,7 +110,8 @@ covariance matrix are not mean-corrected.}
   }}
 }
 \value{
-A (\eqn{h \times n}) numeric matrix of cross-sectional
+An object of class \code{foreco} (see \link{foreco-class})
+with a (\eqn{h \times n}) numeric matrix of cross-sectional
 reconciled forecasts.
 }
 \description{
