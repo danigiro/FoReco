@@ -432,6 +432,10 @@ plot.foreco <- function(x, cs = NULL, te = 1, alpha = 0.95, ...) {
   }
 }
 
+#' @importFrom generics components
+#' @export
+generics::components
+
 #' @rdname foreco-class
 #' @method components foreco
 #' @export
@@ -560,7 +564,6 @@ Math.foreco <- function(x, ...) {
 drop_foreco_class <- function(x) {
   .drop_foreco(x)
 }
-
 
 .drop_foreco <- function(x) {
   if (inherits(x, "foreco")) {
