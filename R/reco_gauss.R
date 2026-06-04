@@ -144,6 +144,17 @@ csmvn <- function(
   # Compute covariance base forecasts
   if (is(comb_base, "Matrix") | is(comb_base, "matrix")) {
     cov_mat_base <- comb_base
+  } else if (is.list(comb_base)) {
+    if (length(comb_base) != NROW(base)) {
+      cli_abort(
+        c(
+          "Incorrect covariance dimensions.",
+          "i" = "Check {.arg comb_base} dimension."
+        ),
+        call = NULL
+      )
+    }
+    cov_mat_base <- comb_base
   } else if (comb_base != comb) {
     cov_mat_base <- cscov(
       comb = comb_base,
@@ -159,14 +170,26 @@ csmvn <- function(
   }
 
   if (!is.null(cov_mat_base)) {
-    if (NROW(cov_mat_base) != n | NCOL(cov_mat_base) != n) {
-      cli_abort(
-        c(
-          "Incorrect base covariance dimensions.",
-          "i" = "Check {.arg res} columns dimension."
-        ),
-        call = NULL
-      )
+    if (is.list(cov_mat_base)) {
+      if (any(sapply(cov_mat_base, dim) != n)) {
+        cli_abort(
+          c(
+            "Incorrect base covariance dimensions.",
+            "i" = "Check {.arg comb_base} dimension."
+          ),
+          call = NULL
+        )
+      }
+    } else {
+      if (NROW(cov_mat_base) != n | NCOL(cov_mat_base) != n) {
+        cli_abort(
+          c(
+            "Incorrect base covariance dimensions.",
+            "i" = "Check {.arg res} columns dimension."
+          ),
+          call = NULL
+        )
+      }
     }
   }
 
@@ -197,10 +220,17 @@ csmvn <- function(
   colnames(reco_mat$mu) <- tmp_name
   rownames(reco_mat$mu) <- paste0("h-", 1:NROW(reco_mat$mu))
 
-  reco_dist <- distributional::dist_multivariate_normal(
-    mu = split(reco_mat$mu, 1:NROW(reco_mat$mu)),
-    sigma = list(as.matrix(reco_mat$sigma))
-  )
+  if (is.list(reco_mat$sigma)) {
+    reco_dist <- distributional::dist_multivariate_normal(
+      mu = split(reco_mat$mu, 1:NROW(reco_mat$mu)),
+      sigma = lapply(reco_mat$sigma, as.matrix)
+    )
+  } else {
+    reco_dist <- distributional::dist_multivariate_normal(
+      mu = split(reco_mat$mu, 1:NROW(reco_mat$mu)),
+      sigma = list(as.matrix(reco_mat$sigma))
+    )
+  }
   dimnames(reco_dist) <- colnames(reco_mat$mu)
   names(reco_dist) <- paste0("h-", 1:length(reco_dist))
 
@@ -727,6 +757,8 @@ pgreco <- function(
       } else {
         covr <- M %*% cov_mat
       }
+    } else if (is.list(cov_mat_base)) {
+      covr <- lapply(cov_mat_base, function(x) M %*% Matrix::tcrossprod(x, M))
     } else {
       covr <- M %*% Matrix::tcrossprod(cov_mat_base, M)
     }
@@ -768,7 +800,13 @@ pgreco <- function(
           covr <- lin_sys(lm_sx1, lm_dx1_cov)
         } else {
           G <- lin_sys(lm_sx1, StWm)
-          covr <- G %*% Matrix::tcrossprod(cov_mat_base, G)
+          if (is.list(cov_mat_base)) {
+            covr <- lapply(cov_mat_base, function(x) {
+              G %*% Matrix::tcrossprod(x, G)
+            })
+          } else {
+            covr <- G %*% Matrix::tcrossprod(cov_mat_base, G)
+          }
         }
       } else {
         reco <- t(strc_mat %*% lin_sys(lm_sx1, lm_dx1))
@@ -780,7 +818,13 @@ pgreco <- function(
           covr <- strc_mat %*% lin_sys(lm_sx1, lm_dx1_cov)
         } else {
           SG <- strc_mat %*% lin_sys(lm_sx1, StWm)
-          covr <- SG %*% Matrix::tcrossprod(cov_mat_base, SG)
+          if (is.list(cov_mat_base)) {
+            covr <- lapply(cov_mat_base, function(x) {
+              SG %*% Matrix::tcrossprod(x, SG)
+            })
+          } else {
+            covr <- SG %*% Matrix::tcrossprod(cov_mat_base, SG)
+          }
         }
       }
     } else {
@@ -800,7 +844,13 @@ pgreco <- function(
           covr <- lin_sys(lm_sx1, lm_dx1_cov)
         } else {
           G <- lin_sys(lm_sx1, t(Q))
-          covr <- G %*% Matrix::tcrossprod(cov_mat_base, G)
+          if (is.list(cov_mat_base)) {
+            covr <- lapply(cov_mat_base, function(x) {
+              G %*% Matrix::tcrossprod(x, G)
+            })
+          } else {
+            covr <- G %*% Matrix::tcrossprod(cov_mat_base, G)
+          }
         }
       } else {
         reco <- t(strc_mat %*% lin_sys(lm_sx1, lm_dx1))
@@ -810,7 +860,13 @@ pgreco <- function(
           covr <- strc_mat %*% lin_sys(lm_sx1, lm_dx1_cov)
         } else {
           SG <- strc_mat %*% lin_sys(lm_sx1, t(Q))
-          covr <- SG %*% Matrix::tcrossprod(cov_mat_base, SG)
+          if (is.list(cov_mat_base)) {
+            covr <- lapply(cov_mat_base, function(x) {
+              SG %*% Matrix::tcrossprod(x, SG)
+            })
+          } else {
+            covr <- SG %*% Matrix::tcrossprod(cov_mat_base, SG)
+          }
         }
       }
     }
