@@ -27,7 +27,7 @@
 #'   the `"FoReco"` attribute.
 #' @param keep_forecasts Logical; if `TRUE` (the default), the reconciled
 #'   forecasts are stored in the `rf` element of the returned
-#'   `summary.foreco` object (and therefore printed at the end of the summary).
+#'   `summary_foreco` object (and therefore printed at the end of the summary).
 #'   Set to `FALSE` to obtain a lighter summary object that omits them.
 #' @param n_row,n_col Integers giving the maximum number of rows and columns to
 #'   display when printing. If `NULL` (the default) all rows/columns are shown.
@@ -90,7 +90,7 @@
 #' drop_foreco_class(reco)
 #'
 #' @name foreco-class
-#' @aliases foreco summary.foreco print.foreco print.summary.foreco plot.foreco
+#' @aliases foreco summary.foreco print.foreco print.summary_foreco plot.foreco
 #'   components.foreco drop_foreco_class
 NULL
 
@@ -151,7 +151,7 @@ new_foreco_class <- function(
 summary.foreco <- function(object, keep_forecasts = TRUE, ...) {
   out <- attr(object, "FoReco")
   if (keep_forecasts) {
-    out$rf <- .drop_foreco(object)
+    out$rf <- object
   }
   if (out$rtype == "point") {
     if (is.matrix(object)) {
@@ -165,17 +165,17 @@ summary.foreco <- function(object, keep_forecasts = TRUE, ...) {
     info_rf <- "distributional object"
   }
   out$info_rf <- info_rf
-  class(out) <- "summary.foreco"
+  class(out) <- "summary_foreco"
   return(out)
 }
 
 #' @rdname foreco-class
-#' @method print summary.foreco
+#' @method print summary_foreco
 #' @export
-print.summary.foreco <- function(
+print.summary_foreco <- function(
   x,
-  n_row = NULL,
-  n_col = NULL,
+  n_row = 4L,
+  n_col = 6L,
   ...
 ) {
   #cli_rule(right = "FoReco reconciliation summary")
@@ -254,10 +254,16 @@ print.summary.foreco <- function(
   invisible(x)
 }
 
+style_comment <- cli::make_ansi_style(
+  grDevices::grey(0.6),
+  grey = TRUE,
+  colors = 256
+)
+
 #' @rdname foreco-class
 #' @method print foreco
 #' @export
-print.foreco <- function(x, n_row = NULL, n_col = NULL, ...) {
+print.foreco <- function(x, n_row = 4L, n_col = 6L, ...) {
   if (is.matrix(x)) {
     attr(x, "FoReco") <- NULL
     nr <- nrow(x)
@@ -282,6 +288,9 @@ print.foreco <- function(x, n_row = NULL, n_col = NULL, ...) {
         " more column",
         if (nc - n_col != 1L) "s" else "",
         ")\n",
+        style_comment(
+          "Use `print(n_row = ..., n_col = ...)` to see more rows and columns"
+        ),
         sep = ""
       )
     }

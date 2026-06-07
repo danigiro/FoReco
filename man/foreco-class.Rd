@@ -5,7 +5,7 @@
 \alias{foreco}
 \alias{summary.foreco}
 \alias{print.foreco}
-\alias{print.summary.foreco}
+\alias{print.summary_foreco}
 \alias{plot.foreco}
 \alias{components.foreco}
 \alias{drop_foreco_class}
@@ -16,9 +16,9 @@ new_foreco_class(reco, framework, rfun, rtype, rinfo = NULL, nninfo = NULL)
 
 \method{summary}{foreco}(object, keep_forecasts = TRUE, ...)
 
-\method{print}{summary.foreco}(x, n_row = NULL, n_col = NULL, ...)
+\method{print}{summary_foreco}(x, n_row = 4L, n_col = 6L, ...)
 
-\method{print}{foreco}(x, n_row = NULL, n_col = NULL, ...)
+\method{print}{foreco}(x, n_row = 4L, n_col = 6L, ...)
 
 \method{plot}{foreco}(x, cs = NULL, te = 1, alpha = 0.95, ...)
 
@@ -58,7 +58,7 @@ the \code{"FoReco"} attribute.}
 
 \item{keep_forecasts}{Logical; if \code{TRUE} (the default), the reconciled
 forecasts are stored in the \code{rf} element of the returned
-\code{summary.foreco} object (and therefore printed at the end of the summary).
+\code{summary_foreco} object (and therefore printed at the end of the summary).
 Set to \code{FALSE} to obtain a lighter summary object that omits them.}
 
 \item{...}{Additional arguments passed to the underlying methods
