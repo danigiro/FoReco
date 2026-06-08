@@ -140,6 +140,8 @@ csmvn <- function(
       call = NULL
     )
   }
+  lambda_info <- attr(cov_mat, "lambda")
+  lambda_info_base <- NULL
 
   # Compute covariance base forecasts
   if (is(comb_base, "Matrix") | is(comb_base, "matrix")) {
@@ -164,9 +166,11 @@ csmvn <- function(
       strc_mat = strc_mat,
       ...
     )
+    lambda_info_base <- attr(cov_mat_base, "lambda")
   } else {
     comb_base <- comb
     cov_mat_base <- NULL
+    lambda_info_base <- lambda_info
   }
 
   if (!is.null(cov_mat_base)) {
@@ -240,6 +244,7 @@ csmvn <- function(
     rfun = "csmvn",
     rtype = "probabilistic",
     rinfo = list(
+      cov_info = list(lambda = lambda_info, lambda_base = lambda_info_base),
       forecast_horizon = NROW(reco_mat),
       comb = comb,
       comb_base = comb_base,
@@ -387,6 +392,8 @@ temvn <- function(
       call = NULL
     )
   }
+  lambda_info <- attr(cov_mat, "lambda")
+  lambda_info_base <- NULL
 
   # Compute covariance base forecasts
   if (is(comb_base, "Matrix") | is(comb_base, "matrix")) {
@@ -403,6 +410,7 @@ temvn <- function(
   } else {
     comb_base <- comb
     cov_mat_base <- NULL
+    lambda_info_base <- lambda_info
   }
 
   if (!is.null(cov_mat_base)) {
@@ -446,6 +454,7 @@ temvn <- function(
     rfun = "temvn",
     rtype = "probabilistic",
     rinfo = list(
+      cov_info = list(lambda = lambda_info, lambda_base = lambda_info_base),
       forecast_horizon = NROW(reco_mat),
       comb = comb,
       comb_base = comb_base,
@@ -621,6 +630,8 @@ ctmvn <- function(
       call = NULL
     )
   }
+  lambda_info <- attr(cov_mat, "lambda")
+  lambda_info_base <- NULL
 
   # Compute covariance base forecasts
   if (is(comb_base, "Matrix") | is(comb_base, "matrix")) {
@@ -639,6 +650,7 @@ ctmvn <- function(
   } else {
     comb_base <- comb
     cov_mat_base <- NULL
+    lambda_info_base <- lambda_info
   }
 
   if (!is.null(cov_mat_base)) {
@@ -686,6 +698,7 @@ ctmvn <- function(
     rfun = "ctmvn",
     rtype = "probabilistic",
     rinfo = list(
+      cov_info = list(lambda = lambda_info, lambda_base = lambda_info_base),
       comb = comb,
       comb_base = comb_base,
       te_set = tmp$set,

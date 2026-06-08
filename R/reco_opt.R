@@ -228,6 +228,7 @@ csrec <- function(
       call = NULL
     )
   }
+  lambda_info <- attr(cov_mat, "lambda")
 
   reco_mat <- reco(
     base = base,
@@ -264,7 +265,8 @@ csrec <- function(
     rfun = "csrec",
     rtype = "point",
     rinfo = list(
-      comb = comb,
+      cov_info = list(lambda = lambda_info),
+      comb = ifelse(is.character(comb), comb, "custom"),
       cs_n = n,
       nn = all(!(reco_mat < 0)),
       forecast_horizon = NROW(reco_mat)
@@ -542,6 +544,7 @@ terec <- function(
       call = NULL
     )
   }
+  lambda_info <- attr(cov_mat, "lambda")
 
   reco_mat <- reco(
     base = base,
@@ -565,8 +568,9 @@ terec <- function(
     rfun = "terec",
     rtype = "point",
     rinfo = list(
+      cov_info = list(lambda = lambda_info),
       forecast_horizon = h,
-      comb = comb,
+      comb = ifelse(is.character(comb), comb, "custom"),
       te_set = tmp$set,
       nn = all(!(reco_mat < 0))
     ),
@@ -999,6 +1003,7 @@ ctrec <- function(
       call = NULL
     )
   }
+  lambda_info <- attr(cov_mat, "lambda")
 
   reco_mat <- reco(
     base = base_hmat,
@@ -1028,8 +1033,9 @@ ctrec <- function(
     rfun = "ctrec",
     rtype = "point",
     rinfo = list(
+      cov_info = list(lambda = lambda_info),
       forecast_horizon = h,
-      comb = comb,
+      comb = ifelse(is.character(comb), comb, "custom"),
       te_set = tmp$set,
       nn = all(!(reco_mat < 0)),
       cs_n = tmp$dim[["n"]]

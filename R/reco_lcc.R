@@ -306,7 +306,7 @@ cslcc <- function(
       rinfo = list(
         lcc = lccmat,
         forecast_horizon = NROW(out),
-        comb = comb,
+        comb = ifelse(is.character(comb), comb, "custom"),
         cs_n = n,
         nn = all(!(out < 0))
       )
@@ -561,7 +561,7 @@ telcc <- function(
     rinfo = list(
       lcc = lccmat,
       forecast_horizon = h,
-      comb = comb,
+      comb = ifelse(is.character(comb), comb, "custom"),
       te_set = tmp$set,
       nn = all(!(out < 0))
     )
@@ -775,6 +775,7 @@ ctlcc <- function(
       call = NULL
     )
   }
+  lambda_info <- attr(cov_mat, "lambda")
 
   lev_num <- 1:((length(nodes) + 1) * length(kset))
   MLk <- matrix(1:length(lev_num), ncol = length(kset), byrow = TRUE)
@@ -885,9 +886,10 @@ ctlcc <- function(
     rfun = "ctlcc",
     rtype = "point",
     rinfo = list(
+      cov_info = list(lambda = lambda_info),
       lcc = lccmat,
       forecast_horizon = h,
-      comb = comb,
+      comb = ifelse(is.character(comb), comb, "custom"),
       te_set = tmp$set,
       cs_n = unname(sum(dim(ubam))),
       balanced = sum(dim(ubam)) == sum(dim(agg_mat)),
