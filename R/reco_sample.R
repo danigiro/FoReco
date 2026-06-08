@@ -368,7 +368,7 @@ ctsmp <- function(sample, agg_order, fun = ctrec, ...) {
     } else {
       rownames_save <- rownames(sample)
       sample <- apply(sample, 1, function(x) {
-        (unlist(lapply(FoReco::FoReco2matrix(t(x), agg_order), as.vector)))
+        (unlist(lapply(FoReco2matrix(t(x), agg_order), as.vector)))
       })
       sample <- t(unname(sample))
       rownames(sample) <- rownames_save

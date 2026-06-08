@@ -263,9 +263,12 @@ style_comment <- cli::make_ansi_style(
 #' @rdname foreco-class
 #' @method print foreco
 #' @export
-print.foreco <- function(x, n_row = 4L, n_col = 6L, ...) {
+print.foreco <- function(x, n_row = NULL, n_col = NULL, ...) {
+  name_x <- deparse(substitute(x))
   if (is.matrix(x)) {
     attr(x, "FoReco") <- NULL
+
+    check_null_values <- is.null(n_row) || is.null(n_col)
     nr <- nrow(x)
     nc <- ncol(x)
     n_row <- if (is.null(n_row)) nr else min(as.integer(n_row), nr)
@@ -276,7 +279,6 @@ print.foreco <- function(x, n_row = 4L, n_col = 6L, ...) {
     }
 
     print(.drop_foreco(x), ...)
-
     if (n_row < nr || n_col < nc) {
       cat(
         "... (",
@@ -289,9 +291,26 @@ print.foreco <- function(x, n_row = 4L, n_col = 6L, ...) {
         if (nc - n_col != 1L) "s" else "",
         ")\n",
         style_comment(
-          "Use `print(n_row = ..., n_col = ...)` to see more rows and columns"
+          paste0(
+            "Use `print(",
+            name_x,
+            ", n_row = ..., n_col = ...)` to see more rows and columns."
+          )
         ),
+        "\n",
         sep = ""
+      )
+    } else if (check_null_values) {
+      cat(
+        style_comment(
+          paste0(
+            "All rows and columns are shown.\n",
+            "Use `print(",
+            name_x,
+            ", n_row = ..., n_col = ...)` to limit the output."
+          )
+        ),
+        "\n"
       )
     }
   } else {

@@ -18,7 +18,7 @@ new_foreco_class(reco, framework, rfun, rtype, rinfo = NULL, nninfo = NULL)
 
 \method{print}{summary_foreco}(x, n_row = 4L, n_col = 6L, ...)
 
-\method{print}{foreco}(x, n_row = 4L, n_col = 6L, ...)
+\method{print}{foreco}(x, n_row = NULL, n_col = NULL, ...)
 
 \method{plot}{foreco}(x, cs = NULL, te = 1, alpha = 0.95, ...)
 
