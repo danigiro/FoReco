@@ -897,7 +897,6 @@ ctrec <- function(
             do.call(c, sapply(tmp$dim[["m"]] / tmp$set, seq.int)) == x[3]
         )
       })
-      #browser()
       # imm_mat[immutable[,1], col_id] <- 1
       imm_mat <- sparseMatrix(
         immutable[, 1],

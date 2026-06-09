@@ -272,7 +272,7 @@ cslcc <- function(
       rinfo = list(
         lcc = lccmat,
         forecast_horizon = NROW(out),
-        comb = comb,
+        comb = ifelse(is.character(comb), comb, "custom"),
         cs_n = n,
         nn = all(!(out < 0))
       ),

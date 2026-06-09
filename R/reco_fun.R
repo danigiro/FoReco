@@ -752,7 +752,6 @@ reco.proj_immutable <- function(
   immutable = NULL,
   ...
 ) {
-  #browser()
   # Check input
   if (missing(base) | missing(cons_mat) | missing(cov_mat)) {
     cli_abort(

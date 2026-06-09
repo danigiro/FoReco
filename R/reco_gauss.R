@@ -246,8 +246,8 @@ csmvn <- function(
     rinfo = list(
       cov_info = list(lambda = lambda_info, lambda_base = lambda_info_base),
       forecast_horizon = NROW(reco_mat),
-      comb = comb,
-      comb_base = comb_base,
+      comb = ifelse(is.character(comb), comb, "custom"),
+      comb_base = ifelse(is.character(comb_base), comb_base, "custom"),
       cs_n = n
     )
   ))
@@ -456,8 +456,8 @@ temvn <- function(
     rinfo = list(
       cov_info = list(lambda = lambda_info, lambda_base = lambda_info_base),
       forecast_horizon = NROW(reco_mat),
-      comb = comb,
-      comb_base = comb_base,
+      comb = ifelse(is.character(comb), comb, "custom"),
+      comb_base = ifelse(is.character(comb_base), comb_base, "custom"),
       te_set = tmp$set
     )
   ))
@@ -699,8 +699,8 @@ ctmvn <- function(
     rtype = "probabilistic",
     rinfo = list(
       cov_info = list(lambda = lambda_info, lambda_base = lambda_info_base),
-      comb = comb,
-      comb_base = comb_base,
+      comb = ifelse(is.character(comb), comb, "custom"),
+      comb_base = ifelse(is.character(comb_base), comb_base, "custom"),
       te_set = tmp$set,
       cs_n = tmp$dim[["n"]],
       forecast_horizon = h

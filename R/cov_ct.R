@@ -577,7 +577,10 @@ ctcov.Sshr <- function(
       mse = mse
     )
   })
-  bdiag(shrink)
+  lambda <- sapply(shrink, attr, "lambda")
+  shrink <- bdiag(shrink)
+  attr(shrink, "lambda") <- lambda
+  return(shrink)
 }
 
 #' @export
@@ -617,9 +620,12 @@ ctcov.bdshr <- function(
   Wlist <- lapply(kset, function(x) {
     shrink_fun(t(res[, rep(kset, N * (m / kset)) == x]), mse = mse)
   })
+  lambda <- sapply(Wlist, attr, "lambda")
   W <- rep(Wlist, (m / kset))
   P <- commat(n, sum(max(kset) / kset))
-  P %*% tcrossprod(bdiag(W), P)
+  W <- P %*% tcrossprod(bdiag(W), P)
+  attr(W, "lambda") <- lambda
+  return(W)
 }
 
 #' @export
@@ -713,14 +719,16 @@ ctcov.hbshr <- function(
     kset = kset,
     n = n
   )
-  cov <- shrink_fun(res_mat[, nid > na & kid == 1], mse = mse)
-  Omega <- strc_mat %*% tcrossprod(cov, strc_mat)
+  cov_mat <- shrink_fun(res_mat[, nid > na & kid == 1], mse = mse)
+  Omega <- strc_mat %*% tcrossprod(cov_mat, strc_mat)
 
   if (is.null(eps_ridge)) {
     eigenvalues <- eigen(Omega)$values
     eps_ridge <- min(eigenvalues[eigenvalues > 1e-6])
   }
-  Omega + diag(eps_ridge, dim(Omega)[1])
+  Omega <- Omega + diag(eps_ridge, dim(Omega)[1])
+  attr(Omega, "lambda") <- attr(cov_mat, "lambda")
+  return(Omega)
 }
 
 #' @export
@@ -813,15 +821,17 @@ ctcov.hshr <- function(
   N <- NCOL(res) / sum(max(kset) / kset)
   kid <- rep(rep(kset, m / kset), n)
   res_mat <- mat2hmat(res, h = N, kset = kset, n = n)
-  cov <- shrink_fun(res_mat[, kid == 1], mse = mse)
+  cov_mat <- shrink_fun(res_mat[, kid == 1], mse = mse)
   kSte <- kronecker(Diagonal(n), Ste)
-  Omega <- kSte %*% cov %*% t(kSte)
+  Omega <- kSte %*% cov_mat %*% t(kSte)
 
   if (is.null(eps_ridge)) {
     eigenvalues <- eigen(Omega)$values
     eps_ridge <- min(eigenvalues[eigenvalues > 1e-6])
   }
-  Omega + diag(eps_ridge, dim(Omega)[1])
+  Omega <- Omega + diag(eps_ridge, dim(Omega)[1])
+  attr(Omega, "lambda") <- attr(cov_mat, "lambda")
+  return(Omega)
 }
 
 #' @export
@@ -907,14 +917,16 @@ ctcov.bshr <- function(
   N <- NCOL(res) / sum(max(kset) / kset)
   nid <- rep(1:n, each = sum(max(kset) / kset))
   res_mat <- mat2hmat(res, h = N, kset = kset, n = n)
-  cov <- shrink_fun(res_mat[, nid > na], mse = mse)
+  cov_mat <- shrink_fun(res_mat[, nid > na], mse = mse)
   kScs <- kronecker(Scs, Diagonal(sum(max(kset) / kset)))
-  Omega <- kScs %*% cov %*% t(kScs)
+  Omega <- kScs %*% cov_mat %*% t(kScs)
   if (is.null(eps_ridge)) {
     eigenvalues <- eigen(Omega)$values
     eps_ridge <- min(eigenvalues[eigenvalues > 1e-6])
   }
-  Omega + diag(eps_ridge, dim(Omega)[1])
+  Omega <- Omega + diag(eps_ridge, dim(Omega)[1])
+  attr(Omega, "lambda") <- attr(cov_mat, "lambda")
+  return(Omega)
 }
 
 #' @export
