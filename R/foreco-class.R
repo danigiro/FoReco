@@ -151,7 +151,7 @@ new_foreco_class <- function(
 summary.foreco <- function(object, keep_forecasts = TRUE, ...) {
   out <- attr(object, "FoReco")
   if (keep_forecasts) {
-    out$rf <- object
+    out$object <- object
   }
   if (out$rtype == "point") {
     if (is.matrix(object)) {
@@ -246,9 +246,9 @@ print.summary_foreco <- function(
     print(x$info)
   }
 
-  if (!is.null(x$rf)) {
+  if (!is.null(x$object)) {
     cli_h3("Reconciled forecasts")
-    print(x$rf, n_row = n_row, n_col = n_col)
+    print(x$object, n_row = n_row, n_col = n_col)
   }
 
   invisible(x)
