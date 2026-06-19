@@ -304,7 +304,7 @@ summary(rf_osqp) # OSQP information matrix
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>     obj_val  run_time iter     prim_res status status_polish
-#> 1 -3197.129 0.1967565  500 2.073845e-11      1             1
+#> 1 -3197.129 0.1774314  500 2.073845e-11      1             1
 #> 
 #> ── Reconciled forecasts
 #>        Total         A         B         C        D        E
@@ -339,7 +339,7 @@ summary(rf_sntz)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 7.867813e-06 1.490116e-08    0
+#> 1 8.821487e-06 1.490116e-08    0
 #> 
 #> ── Reconciled forecasts
 #>        Total         A         B         C        D        E
@@ -440,11 +440,11 @@ summary(reco_csjb)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>      run_time          tol iter
-#> 1 0.002179146 1.490116e-08    0
-#> 2 0.002179146 1.490116e-08    0
-#> 3 0.002179146 1.490116e-08    0
-#> 4 0.002179146 1.490116e-08    0
-#> 5 0.002179146 1.490116e-08    0
+#> 1 0.002269983 1.490116e-08    0
+#> 2 0.002269983 1.490116e-08    0
+#> 3 0.002269983 1.490116e-08    0
+#> 4 0.002269983 1.490116e-08    0
+#> 5 0.002269983 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -457,7 +457,7 @@ summary(reco_csjb)
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:12, 1:525] 49540 21630 25400 29537 23723 ...
+#>  num [1:12, 1:525] 50024 21686 25301 29973 23541 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -501,12 +501,12 @@ summary(reco_css)
 #> • Non-negative forecasts (check): `TRUE`
 #> 
 #> ── Non-negative reconciliation diagnostics
-#>     run_time          tol iter
-#> 1 0.00106287 1.490116e-08    0
-#> 2 0.00106287 1.490116e-08    0
-#> 3 0.00106287 1.490116e-08    0
-#> 4 0.00106287 1.490116e-08    0
-#> 5 0.00106287 1.490116e-08    0
+#>      run_time          tol iter
+#> 1 0.001087904 1.490116e-08    0
+#> 2 0.001087904 1.490116e-08    0
+#> 3 0.001087904 1.490116e-08    0
+#> 4 0.001087904 1.490116e-08    0
+#> 5 0.001087904 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -664,7 +664,7 @@ summary(reco_csjb)
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:4, 1:21] 434242 453315 450772 481781 169017 ...
+#>  num [1:4, 1:21] 434228 452963 451142 481849 169111 ...
 ```
 
 Alternatively, we can use a parametric method.

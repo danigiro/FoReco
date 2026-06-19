@@ -413,7 +413,7 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;     obj_val  run_time iter     prim_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -3197.129 0.1967565  500 2.073845e-11      1             1</span></span>
+<span><span class="co">#&gt; 1 -3197.129 0.1774314  500 2.073845e-11      1             1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt;        Total         A         B         C        D        E</span></span>
@@ -447,7 +447,7 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;       run_time          tol iter</span></span>
-<span><span class="co">#&gt; 1 7.867813e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 1 8.821487e-06 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt;        Total         A         B         C        D        E</span></span>
@@ -533,11 +533,11 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;      run_time          tol iter</span></span>
-<span><span class="co">#&gt; 1 0.002179146 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 2 0.002179146 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 3 0.002179146 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 4 0.002179146 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 5 0.002179146 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 1 0.002269983 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 2 0.002269983 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 3 0.002269983 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 4 0.002269983 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 5 0.002269983 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
@@ -550,7 +550,7 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:12, 1:525] 49540 21630 25400 29537 23723 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:12, 1:525] 50024 21686 25301 29973 23541 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
@@ -591,12 +591,12 @@ supported
 <span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
-<span><span class="co">#&gt;     run_time          tol iter</span></span>
-<span><span class="co">#&gt; 1 0.00106287 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 2 0.00106287 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 3 0.00106287 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 4 0.00106287 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 5 0.00106287 1.490116e-08    0</span></span>
+<span><span class="co">#&gt;      run_time          tol iter</span></span>
+<span><span class="co">#&gt; 1 0.001087904 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 2 0.001087904 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 3 0.001087904 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 4 0.001087904 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 5 0.001087904 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
@@ -735,7 +735,7 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:4, 1:21] 434242 453315 450772 481781 169017 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:4, 1:21] 434228 452963 451142 481849 169111 ...</span></span></code></pre></div>
 </div>
 <p>Alternatively, we can use a parametric method.</p>
 <div class="cell">

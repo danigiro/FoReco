@@ -426,7 +426,7 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;     obj_val    run_time iter     prim_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -16.58821 0.000263166   50 5.551115e-17      1             1</span></span>
+<span><span class="co">#&gt; 1 -16.58821 0.000249207   50 5.551115e-17      1             1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
@@ -558,11 +558,11 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;        run_time          tol iter</span></span>
+<span><span class="co">#&gt; 2  5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 5  5.960464e-06 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; 6  5.960464e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 9  5.960464e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 10 5.960464e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 12 5.960464e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 13 5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 14 5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 15 5.960464e-06 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
@@ -573,7 +573,7 @@ supported
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/tematrix_layouts.html">as_tevector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_tejb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 6.867 3.432 3.435 0.556 5.308 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  Named num [1:28] 5.878 1.651 4.227 0.639 4.024 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian) to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
@@ -645,11 +645,11 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;       run_time          tol iter</span></span>
-<span><span class="co">#&gt; 1 9.059906e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 2 9.059906e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 3 9.059906e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 4 9.059906e-06 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 5 9.059906e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 1 8.106232e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 2 8.106232e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 3 8.106232e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 4 8.106232e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 5 8.106232e-06 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>

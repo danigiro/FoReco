@@ -258,7 +258,6 @@ info_exo$lcc
 #> h-2 38.73494 19.47537 19.25957 9.759815 9.715556 9.423051 9.836517
 #> All rows and columns are shown.
 #> Use `print(x, n_row, n_col)` to limit the output. 
-#> Class structure: foreco > matrix 
 #> 
 #> $`L-2`
 #>          s-1      s-2      s-3      s-4      s-5       s-6       s-7
@@ -266,7 +265,6 @@ info_exo$lcc
 #> h-2 38.86749 19.31315 19.55434 9.685546 9.627601  9.652737  9.901601
 #> All rows and columns are shown.
 #> Use `print(x, n_row, n_col)` to limit the output. 
-#> Class structure: foreco > matrix 
 #> 
 #> $`L-3`
 #>          s-1     s-2      s-3      s-4      s-5      s-6      s-7
@@ -274,7 +272,6 @@ info_exo$lcc
 #> h-2 42.09535 21.5839 20.51145 11.22408 10.35981 10.40077 10.11068
 #> All rows and columns are shown.
 #> Use `print(x, n_row, n_col)` to limit the output. 
-#> Class structure: foreco > matrix 
 #> 
 
 ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
@@ -300,7 +297,6 @@ info_endo$lcc
 #> h-2 39.64745 20.56873 19.07871 10.759321 9.809413  9.284371  9.794343
 #> All rows and columns are shown.
 #> Use `print(x, n_row, n_col)` to limit the output. 
-#> Class structure: foreco > matrix 
 #> 
 #> $`L-2`
 #>          s-1      s-2      s-3       s-4      s-5       s-6       s-7
@@ -308,7 +304,6 @@ info_endo$lcc
 #> h-2 40.11832 20.24956 19.86876 10.613199 9.636364  9.899977  9.968779
 #> All rows and columns are shown.
 #> Use `print(x, n_row, n_col)` to limit the output. 
-#> Class structure: foreco > matrix 
 #> 
 #> $`L-3`
 #>          s-1     s-2      s-3      s-4      s-5      s-6      s-7
@@ -316,6 +311,5 @@ info_endo$lcc
 #> h-2 42.09535 21.5839 20.51145 11.22408 10.35981 10.40077 10.11068
 #> All rows and columns are shown.
 #> Use `print(x, n_row, n_col)` to limit the output. 
-#> Class structure: foreco > matrix 
 #> 
 ```

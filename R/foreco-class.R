@@ -695,17 +695,5 @@ print_foreco <- function(
     attr(x, "FoReco") <- NULL
     print(.drop_foreco(x))
   }
-  cat(
-    style_comment(
-      paste0(
-        "Class structure: ",
-        class_x[1],
-        " > ",
-        class_x[2]
-      )
-    ),
-    "\n"
-  )
-
   invisible(x)
 }

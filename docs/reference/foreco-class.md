@@ -177,14 +177,12 @@ print(reco)
 #> h-3 23.27377 11.558708 11.71506
 #> All rows and columns are shown.
 #> Use `print(x, n_row, n_col)` to limit the output. 
-#> Class structure: foreco > matrix 
 print(reco, n_row = 2, n_col = 2)
 #>          s-1      s-2
 #> h-1 19.51003 9.439524
 #> h-2 19.89911 9.769823
 #> ... (1 more row, 1 more column)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix 
 summary(reco)
 #> ✔ Cross-sectional point forecast reconciliation
 #> 
@@ -202,7 +200,6 @@ summary(reco)
 #> h-1 19.51003  9.439524 10.07051
 #> h-2 19.89911  9.769823 10.12929
 #> h-3 23.27377 11.558708 11.71506
-#> Class structure: foreco > matrix 
 summary(reco, keep_forecasts = FALSE)
 #> ✔ Cross-sectional point forecast reconciliation
 #> 

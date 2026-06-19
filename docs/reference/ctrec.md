@@ -317,8 +317,8 @@ summary(nnreco)
 #> • Non-negative forecasts (check): `TRUE`
 #> 
 #> ── Non-negative reconciliation diagnostics 
-#>     obj_val    run_time iter     prim_res status status_polish
-#> 1 -635.7645 0.000106624   25 8.881784e-16      1             1
+#>     obj_val   run_time iter     prim_res status status_polish
+#> 1 -635.7645 9.4457e-05   25 8.881784e-16      1             1
 #> 
 #> ── Reconciled forecasts 
 #>       k-4 h-1  k-2 h-1   k-2 h-2  k-1 h-1  k-1 h-2  k-1 h-3
@@ -327,5 +327,4 @@ summary(nnreco)
 #> s-3 11.043117 5.318423  5.724694 1.631157 3.687266 2.065709
 #> ... (0 more rows, 1 more column)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix 
 ```

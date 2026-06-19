@@ -499,7 +499,7 @@ summary(rf_osqp) # OSQP information matrix
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>         obj_val run_time iter     prim_res status status_polish
-#> 1 -220421550178 11.75905  100 7.152467e-22      1             1
+#> 1 -220421550178 11.61353  100 7.152467e-22      1             1
 #> 
 #> ── Reconciled forecasts
 #>        k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1  k-4 h-2   k-4 h-3
@@ -535,7 +535,7 @@ summary(rf_sntz)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 1.192093e-05 1.490116e-08    0
+#> 1 1.001358e-05 1.490116e-08    0
 #> 
 #> ── Reconciled forecasts
 #>        k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1  k-4 h-2   k-4 h-3
@@ -651,9 +651,9 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m) 
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
-#>  $ : num [1:525, 1:28] 330973 99636 64103 76370 20833 ...
-#>  $ : num [1:525, 1:28] 335643 97756 64587 83180 21143 ...
-#>  $ : num [1:525, 1:28] 337648 102317 64920 80293 21242 ...
+#>  $ : num [1:525, 1:28] 331408 102430 66257 76281 21865 ...
+#>  $ : num [1:525, 1:28] 341516 103703 66673 79246 20532 ...
+#>  $ : num [1:525, 1:28] 356882 102430 72814 86461 21771 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
                       res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
@@ -673,11 +673,11 @@ summary(reco_ctjb)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 0.0007331371 1.490116e-08    0
-#> 2 0.0007331371 1.490116e-08    0
-#> 3 0.0007331371 1.490116e-08    0
-#> 4 0.0007331371 1.490116e-08    0
-#> 5 0.0007331371 1.490116e-08    0
+#> 1 0.0006680489 1.490116e-08    0
+#> 2 0.0006680489 1.490116e-08    0
+#> 3 0.0006680489 1.490116e-08    0
+#> 4 0.0006680489 1.490116e-08    0
+#> 5 0.0006680489 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -692,7 +692,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = sum(dim(vnaggmat)), 
                          row_names = unlist(dimnames(vnaggmat)))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:525, 1:28] 324113 98347 64404 80742 20413 ...
+#>  num [1:525, 1:28] 324703 98401 64736 81009 20421 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -758,12 +758,12 @@ summary(reco_cts)
 #> • Non-negative forecasts (check): `TRUE`
 #> 
 #> ── Non-negative reconciliation diagnostics
-#>      run_time          tol iter
-#> 1 0.000836134 1.490116e-08    0
-#> 2 0.000836134 1.490116e-08    0
-#> 3 0.000836134 1.490116e-08    0
-#> 4 0.000836134 1.490116e-08    0
-#> 5 0.000836134 1.490116e-08    0
+#>       run_time          tol iter
+#> 1 0.0008831024 1.490116e-08    0
+#> 2 0.0008831024 1.490116e-08    0
+#> 3 0.0008831024 1.490116e-08    0
+#> 4 0.0008831024 1.490116e-08    0
+#> 5 0.0008831024 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -927,9 +927,9 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m) 
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
-#>  $ : num [1:21, 1:7] 1844020 757393 1769287 1435996 342160 ...
-#>  $ : num [1:21, 1:7] 1822313 739358 1763155 1439877 330675 ...
+#>  $ : num [1:21, 1:7] 1821647 743804 1770804 1442052 333871 ...
 #>  $ : num [1:21, 1:7] 1773577 731082 1692280 1385844 307399 ...
+#>  $ : num [1:21, 1:7] 1825237 738841 1757021 1426951 331837 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
                       res = res_mat, comb = "wlsv")
@@ -959,7 +959,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = NCOL(gdpconsmat), 
                          row_names = colnames(gdpconsmat))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:21, 1:7] 1815044 733060 1745594 1418894 326700 ...
+#>  num [1:21, 1:7] 1810213 731770 1741225 1416560 324665 ...
 ```
 
 Alternatively, we can use a parametric method.

@@ -279,11 +279,10 @@ summary(nnreco)
 #> 
 #> ── Non-negative reconciliation diagnostics 
 #>     obj_val   run_time iter     prim_res status status_polish
-#> 1 -352.4619 2.7999e-05   25 1.242965e-15      1             1
+#> 1 -352.4619 3.7374e-05   25 1.242965e-15      1             1
 #> 
 #> ── Reconciled forecasts 
 #>         s-1       s-2      s-3
 #> h-1 15.8337 15.833701  0.00000
 #> h-2 20.4696  9.458141 11.01146
-#> Class structure: foreco > matrix 
 ```

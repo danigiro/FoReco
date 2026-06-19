@@ -325,7 +325,7 @@ summary(rf_osqp)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>     obj_val    run_time iter     prim_res status status_polish
-#> 1 -16.58821 0.000263166   50 5.551115e-17      1             1
+#> 1 -16.58821 0.000249207   50 5.551115e-17      1             1
 #> 
 #> ── Reconciled forecasts
 #>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
@@ -477,11 +477,11 @@ summary(reco_tejb)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>        run_time          tol iter
+#> 2  5.960464e-06 1.490116e-08    0
+#> 5  5.960464e-06 1.490116e-08    0
 #> 6  5.960464e-06 1.490116e-08    0
-#> 9  5.960464e-06 1.490116e-08    0
-#> 10 5.960464e-06 1.490116e-08    0
-#> 12 5.960464e-06 1.490116e-08    0
-#> 13 5.960464e-06 1.490116e-08    0
+#> 14 5.960464e-06 1.490116e-08    0
+#> 15 5.960464e-06 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -492,7 +492,7 @@ summary(reco_tejb)
 
 # Extracts mean:
 str(as_tevector(mean(reco_tejb), agg_order = m), give.attr = FALSE)
-#>  Named num [1:28] 6.867 3.432 3.435 0.556 5.308 ...
+#>  Named num [1:28] 5.878 1.651 4.227 0.639 4.024 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian) to generate
@@ -567,11 +567,11 @@ summary(reco_tes)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 9.059906e-06 1.490116e-08    0
-#> 2 9.059906e-06 1.490116e-08    0
-#> 3 9.059906e-06 1.490116e-08    0
-#> 4 9.059906e-06 1.490116e-08    0
-#> 5 9.059906e-06 1.490116e-08    0
+#> 1 8.106232e-06 1.490116e-08    0
+#> 2 8.106232e-06 1.490116e-08    0
+#> 3 8.106232e-06 1.490116e-08    0
+#> 4 8.106232e-06 1.490116e-08    0
+#> 5 8.106232e-06 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
