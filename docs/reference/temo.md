@@ -1,4 +1,4 @@
-# Temporal middle-out reconciliation
+# Temporal Middle-out Reconciliation
 
 The middle-out forecast reconciliation for temporal hierarchies combines
 top-down ([tetd](https://danigiro.github.io/FoReco/reference/tetd.md))
@@ -55,7 +55,9 @@ temo(base, agg_order, weights, order = max(agg_order), tew = "sum",
 
 ## Value
 
-A (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
 forecasts.
 
 ## See also

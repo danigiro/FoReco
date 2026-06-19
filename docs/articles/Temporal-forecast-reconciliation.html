@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Temporal forecast reconciliation</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2026-04-21</p>
+      <p class="date">2026-06-19</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Temporal-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Temporal-forecast-reconciliation.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -155,13 +155,29 @@
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fc_bts</span> <span class="op">&lt;-</span> <span class="va">base</span><span class="op">$</span><span class="va">`k-1`</span></span>
 <span><span class="va">rf_bu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tebu.html">tebu</a></span><span class="op">(</span><span class="va">fc_bts</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_bu</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 2.137 1.069 1.069 0.712 0.712 ...</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_bu</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `tebu`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt; k-12 h-1  k-6 h-1  k-6 h-2  k-4 h-1 </span></span>
+<span><span class="co">#&gt; 2.137377 1.068688 1.068688 0.712459 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
-<p>To obtain a list of forecasts at different orders of aggregation, we can use the <code>FoReco2matrix</code> function.</p>
+<p>To obtain a list of forecasts at different orders of aggregation, we can use the <code>components</code> function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/FoReco2matrix.html">FoReco2matrix</a></span><span class="op">(</span><span class="va">rf_bu</span><span class="op">)</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://generics.r-lib.org/reference/components.html" class="external-link">components</a></span><span class="op">(</span><span class="va">rf_bu</span><span class="op">)</span>, give.attr<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 6</span></span>
 <span><span class="co">#&gt;  $ k-12: num 2.14</span></span>
 <span><span class="co">#&gt;  $ k-6 : num [1:2] 1.07 1.07</span></span>
@@ -180,14 +196,46 @@
 <span><span class="co"># Average historical proportions - Gross-Sohl method A</span></span>
 <span><span class="va">p_gsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">y_mat</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">/</span><span class="va">x12</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">rf_td_gsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tetd.html">tetd</a></span><span class="op">(</span><span class="va">fc_x12</span>, agg_order <span class="op">=</span> <span class="va">m</span>, weights <span class="op">=</span> <span class="va">p_gsa</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_td_gsa</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 1.314 0.497 0.818 0.216 0.791 ...</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_td_gsa</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `tetd`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 1.3142157 0.4965682 0.8176475 0.2156414 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; foreco</span></span>
 <span></span>
 <span><span class="co"># Proportions of the historical averages - Gross-Sohl method F</span></span>
 <span><span class="va">p_gsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">y_mat</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x12</span><span class="op">)</span></span>
 <span><span class="va">rf_td_gsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tetd.html">tetd</a></span><span class="op">(</span><span class="va">fc_x12</span>, agg_order <span class="op">=</span> <span class="va">m</span>, weights <span class="op">=</span> <span class="va">p_gsf</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_td_gsf</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 1.314 0.501 0.813 0.079 0.99 ...</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_td_gsf</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `tetd`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 1.3142157 0.5007542 0.8134615 0.0790347 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; foreco</span></span></code></pre></div>
 </div>
 <p>To perform temporal reconciliation with <code>FoReco</code> using the base forecasts at any temporal aggregation order, it is necessary to arrange base forecasts (and residuals) in vector form.</p>
 <div class="cell">
@@ -200,16 +248,50 @@
 <div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_lcc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/telcc.html">telcc</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_vec</span>, comb <span class="op">=</span> <span class="st">"wlsv"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_lcc</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 1.326 0.663 0.663 0.442 0.442 ...</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_lcc</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `telcc`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `wlsv`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 1.3258648 0.6629324 0.6629324 0.4419549 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
 <p>Finally we can obtained the optimal (in least squares sense) combination temporal reconciled forecast <span class="citation" data-cites="Athanasopoulos2017-zh">(<a href="#ref-Athanasopoulos2017-zh" role="doc-biblioref">Athanasopoulos et al., 2017</a>)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_opt</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_vec</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_opt</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 1.329 0.665 0.665 0.443 0.443 ...</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_opt</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `terec`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `sar1`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 1.3291002 0.6645501 0.6645501 0.4432082 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
 <p>The following table shows some options for the optimal combination temporal reconciliation function <code><a href="../reference/terec.html">terec()</a></code>.</p>
 <style type="text/css">
@@ -301,11 +383,25 @@ supported
 <div class="sourceCode cell-code" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_opt_shr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>,</span>
 <span>                    res <span class="op">=</span> <span class="va">res_vec</span>, comb <span class="op">=</span> <span class="st">"shr"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">rf_opt_shr</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ✔ Optimal Temporal Forecast Reconciliation</span></span>
-<span><span class="co">#&gt; ℹ FoReco function: `terec`</span></span>
-<span><span class="co">#&gt; ℹ Covariance approximation: `shr`</span></span>
-<span><span class="co">#&gt; ℹ Non-negative forecasts: `FALSE`</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_opt_shr</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `terec`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `shr`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `FALSE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 0.9952037 0.5299384 0.4652653 0.4565095 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
 <p>To address this issue, we can use two approaches:</p>
 <ul>
@@ -315,14 +411,29 @@ supported
 <div class="sourceCode cell-code" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_osqp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_vec</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, nn <span class="op">=</span> <span class="st">"osqp"</span><span class="op">)</span></span>
-<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">rf_osqp</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ✔ Optimal Temporal Forecast Reconciliation</span></span>
-<span><span class="co">#&gt; ℹ FoReco function: `terec`</span></span>
-<span><span class="co">#&gt; ℹ Covariance approximation: `shr`</span></span>
-<span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span>
-<span><span class="va">tmp</span><span class="op">$</span><span class="va">info</span> <span class="co"># OSQP information matrix </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_osqp</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `terec`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `shr`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;     obj_val    run_time iter     prim_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -16.58821 0.000257666   50 2.828089e-17      1             1</span></span></code></pre></div>
+<span><span class="co">#&gt; 1 -16.58821 0.000263166   50 5.551115e-17      1             1</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 1.0625336 0.5934914 0.4690422 0.4557664 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023</a>)</span>.</li>
@@ -331,11 +442,29 @@ supported
 <div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_sntz</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_vec</span>, comb <span class="op">=</span> <span class="st">"shr"</span>, nn <span class="op">=</span> <span class="st">"sntz"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/recoinfo.html">recoinfo</a></span><span class="op">(</span><span class="va">rf_sntz</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ✔ Optimal Temporal Forecast Reconciliation</span></span>
-<span><span class="co">#&gt; ℹ FoReco function: `terec`</span></span>
-<span><span class="co">#&gt; ℹ Covariance approximation: `shr`</span></span>
-<span><span class="co">#&gt; ℹ Non-negative forecasts: `TRUE`</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_sntz</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `terec`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `shr`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
+<span><span class="co">#&gt;       run_time          tol iter</span></span>
+<span><span class="co">#&gt; 1 2.861023e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 1.0632623 0.5954494 0.4678130 0.4565095 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h4 id="a-priori-constrained-immutable-forecasts">A priori constrained (immutable) forecasts<a class="anchor" aria-label="anchor" href="#a-priori-constrained-immutable-forecasts"></a>
 </h4>
@@ -344,8 +473,25 @@ supported
 <div class="sourceCode cell-code" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rf_imm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_vec</span>, comb <span class="op">=</span> <span class="st">"sar1"</span>, immutable <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_imm</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 1.314 0.657 0.657 0.438 0.438 ...</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_imm</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `terec`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `sar1`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 </span></span>
+<span><span class="co">#&gt; 1.3142157 0.6571078 0.6571078 0.4382244 </span></span>
+<span><span class="co">#&gt; ... (24 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="downlit sourceCode r">
@@ -363,8 +509,25 @@ supported
 <span><span class="va">res_vec2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">res</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k-"</span>, <span class="va">te_subset</span><span class="op">)</span><span class="op">]</span>, use.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">rf_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/terec.html">terec</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec2</span>, agg_order <span class="op">=</span> <span class="va">te_subset</span>,</span>
 <span>                res <span class="op">=</span> <span class="va">res_vec2</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">rf_sub</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:17] 1.48 0.371 0.369 0.369 0.371 ...</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">rf_sub</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal point forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `terec`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `sar1`</span></span>
+<span><span class="co">#&gt; • Output: unknown object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 3, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 4, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
+<span><span class="co">#&gt;  k-12 h-1   k-3 h-1   k-3 h-2   k-3 h-3 </span></span>
+<span><span class="co">#&gt; 1.4803010 0.3710480 0.3691025 0.3691025 </span></span>
+<span><span class="co">#&gt; ... (13 more elements)</span></span>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; numeric</span></span></code></pre></div>
 </div>
 </section></section><section class="level2"><h3 id="probabilistic-reconciliation">Probabilistic Reconciliation<a class="anchor" aria-label="anchor" href="#probabilistic-reconciliation"></a>
 </h3>
@@ -376,28 +539,64 @@ supported
 <span><span class="co"># we simulate from the base models by sampling errors </span></span>
 <span><span class="co"># while keeping the cross-sectional dimension fixed.</span></span>
 <span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
-<span><span class="va">base_tejb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teboot.html">teboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, <span class="va">m</span><span class="op">)</span><span class="op">$</span><span class="va">sample</span></span>
+<span><span class="va">base_tejb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/teboot.html">teboot</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">B</span>, <span class="va">m</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">base_tejb</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 100  28</span></span>
 <span><span class="va">reco_tejb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tesmp.html">tesmp</a></span><span class="op">(</span><span class="va">base_tejb</span>, agg_order <span class="op">=</span> <span class="va">m</span>, res <span class="op">=</span> <span class="va">res_vec</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
-<span><span class="va">reco_tejb</span> <span class="co"># distribution object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">reco_tejb</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal probabilistic forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `tesmp(terec)`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `sar1`</span></span>
+<span><span class="co">#&gt; • Output: distributional object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
+<span><span class="co">#&gt;        run_time          tol iter</span></span>
+<span><span class="co">#&gt; 6  5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 9  5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 10 5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 12 5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 13 5.960464e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
 <span><span class="co">#&gt;       tao-1 </span></span>
-<span><span class="co">#&gt; sample[100]</span></span>
+<span><span class="co">#&gt; sample[100] </span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span>
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="../reference/tematrix_layouts.html">as_tevector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_tejb</span><span class="op">)</span>, agg_order <span class="op">=</span> <span class="va">m</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  Named num [1:28] 6.002 1.192 4.81 0.517 4.279 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  Named num [1:28] 6.867 3.432 3.435 0.556 5.308 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian) to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Gaussian reconciled distribution</span></span>
 <span><span class="va">reco_teg_sar1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temvn.html">temvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"sar1"</span>, res <span class="op">=</span> <span class="va">res_vec</span><span class="op">)</span></span>
-<span><span class="va">reco_teg_sar1</span> <span class="co"># distribution object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">reco_teg_sar1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal probabilistic forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `temvn`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `sar1`</span></span>
+<span><span class="co">#&gt; • Output: distributional object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 2, 4, 6, 8, 12, and 24</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
 <span><span class="co">#&gt;   tao-1 </span></span>
-<span><span class="co">#&gt; MVN[28]</span></span>
+<span><span class="co">#&gt; MVN[28] </span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span>
 <span></span>
 <span><span class="co"># Gaussian reconciled distribution with different base covariance matrix</span></span>
 <span><span class="co"># Multi-step residuals</span></span>
@@ -410,18 +609,54 @@ supported
 <span></span>
 <span><span class="va">reco_teg</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/temvn.html">temvn</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">base_vec</span>, agg_order <span class="op">=</span> <span class="va">m</span>, comb <span class="op">=</span> <span class="st">"sar1"</span>, </span>
 <span>                    res <span class="op">=</span> <span class="va">res_vec</span>, comb_base <span class="op">=</span> <span class="va">cov_base</span><span class="op">)</span></span>
-<span><span class="va">reco_teg</span> <span class="co"># distribution object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">reco_teg</span><span class="op">)</span> </span>
+<span><span class="co">#&gt; ✔ Temporal probabilistic forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `temvn`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `sar1`</span></span>
+<span><span class="co">#&gt; • Output: distributional object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 2, 4, 6, 8, 12, and 24</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
 <span><span class="co">#&gt;   tao-1 </span></span>
-<span><span class="co">#&gt; MVN[28]</span></span>
+<span><span class="co">#&gt; MVN[28] </span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span>
 <span></span>
 <span><span class="co"># Reconciled sample distribution starting from gaussian base forecasts</span></span>
 <span><span class="va">base_tes</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/mvrnorm.html" class="external-link">mvrnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="va">B</span>, mu <span class="op">=</span> <span class="va">base_vec</span>, Sigma <span class="op">=</span> <span class="fu"><a href="../reference/shrink_estim.html">shrink_estim</a></span><span class="op">(</span><span class="va">mres</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">reco_tes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tesmp.html">tesmp</a></span><span class="op">(</span><span class="va">base_tes</span>, agg_order <span class="op">=</span> <span class="va">m</span>, res <span class="op">=</span> <span class="va">res_vec</span>, nn <span class="op">=</span> <span class="st">"sntz"</span>, comb <span class="op">=</span> <span class="st">"sar1"</span><span class="op">)</span></span>
-<span><span class="va">reco_tes</span> <span class="co"># distribution object</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">reco_tes</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Temporal probabilistic forecast reconciliation</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Method</span></span>
+<span><span class="co">#&gt; • Function used: `tesmp(terec)`</span></span>
+<span><span class="co">#&gt; • Covariance approximation approach: `sar1`</span></span>
+<span><span class="co">#&gt; • Output: distributional object</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Structure</span></span>
+<span><span class="co">#&gt; • Temporal orders (k): 12, 6, 4, 3, 2, and 1</span></span>
+<span><span class="co">#&gt; • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12</span></span>
+<span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
+<span><span class="co">#&gt;       run_time          tol iter</span></span>
+<span><span class="co">#&gt; 1 9.059906e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 2 9.059906e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 3 9.059906e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 4 9.059906e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 5 9.059906e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt; &lt;distribution[1]&gt;</span></span>
 <span><span class="co">#&gt;       tao-1 </span></span>
-<span><span class="co">#&gt; sample[100]</span></span></code></pre></div>
+<span><span class="co">#&gt; sample[100] </span></span>
+<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span></code></pre></div>
 </div>
 </section></section><section class="section level2"><h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>

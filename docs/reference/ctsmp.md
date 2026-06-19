@@ -1,4 +1,4 @@
-# Cross-temporal probabilistic reconciliation (sample approach)
+# Cross-temporal Probabilistic Reconciliation (Sample Approach)
 
 This function performs cross-temporal probabilistic forecast
 reconciliation using a sample-based approach (Girolimetto et al., 2024)
@@ -46,8 +46,7 @@ ctsmp(sample, agg_order, fun = ctrec, ...)
 
 - fun:
 
-  A string specifying the reconciliation function to be used, as
-  implemented in FoReco.
+  A function performing the reconciliation, as implemented in FoReco.
 
 - ...:
 
@@ -57,7 +56,8 @@ ctsmp(sample, agg_order, fun = ctrec, ...)
 
 A
 [distributional::dist_sample](https://pkg.mitchelloharawild.com/distributional/reference/dist_sample.html)
-object.
+of reconciled forecasts, of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md)).
 
 ## References
 

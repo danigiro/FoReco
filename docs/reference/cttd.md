@@ -1,4 +1,4 @@
-# Cross-temporal top-down reconciliation
+# Cross-temporal Top-down Reconciliation
 
 Top-down forecast reconciliation for cross-temporal hierarchical/grouped
 time series, where the forecast of a \`Total' (top-level series,
@@ -57,8 +57,10 @@ cttd(base, agg_mat, agg_order, weights, tew = "sum", normalize = TRUE)
 
 ## Value
 
-A (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal reconciled
-forecasts.
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal
+reconciled forecasts.
 
 ## See also
 

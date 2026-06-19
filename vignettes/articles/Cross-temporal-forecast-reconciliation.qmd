@@ -106,13 +106,13 @@ Bottom-up reconciliation [@Dunn1976-kv] aggregates the high-frequency forecasts 
 #| label: bu-vn
 fc_bts <- t(base$`k-1`[, colnames(vnaggmat)])
 rf_bu <- ctbu(fc_bts, agg_order = m, agg_mat = vnaggmat)
-str(rf_bu, give.attr=FALSE)
+summary(rf_bu)
 ```
 
-To obtain a list of forecasts at different orders of aggregation, we can use the `FoReco2matrix` function.
+To obtain a list of forecasts at different orders of aggregation, we can use the `components` function.
 ```{r}
 #| label: extract-vn
-str(FoReco2matrix(rf_bu), give.attr=FALSE)
+str(components(rf_bu), give.attr=FALSE)
 ```
 In top-down reconciliation for hierarchical time series, the forecast for the top-level series (Total) is distributed proportionally to ensure the top-level value stays the same and all bottom-level forecasts are non-negative [@Gross1990-uf].
 
@@ -127,14 +127,14 @@ p_gsa <- apply(bts_mat, 2, function(y){
   colMeans(apply(matrix(y, ncol = m, byrow = TRUE), 2, function(x) x/tot_12))
 })
 rf_td_gsa <- cttd(fc_tot_12, agg_order = m, weights = t(p_gsa), agg_mat = vnaggmat)
-str(rf_td_gsa, give.attr=FALSE)
+summary(rf_td_gsa)
 
 # Proportions of the historical averages - Gross-Sohl method F
 p_gsf <- apply(bts_mat, 2, function(y){
   colMeans(matrix(y, ncol = m, byrow = TRUE))/mean(tot_12)
 })
 rf_td_gsf <- cttd(fc_tot_12, agg_order = m, weights = t(p_gsf), agg_mat = vnaggmat)
-str(rf_td_gsf, give.attr=FALSE)
+summary(rf_td_gsf)
 ```
 
 To perform cross-temporal reconciliation with FoReco using the complete set of base forecasts (any cross-sectional and temporal level), it is necessary to arrange base forecasts (and residuals) in matrix form. The rows of the matrix represent the cross-sectional variables, while the columns the temporal dimension.
@@ -151,7 +151,7 @@ The level conditional coherent reconciliation (LCC) is a generalization of the o
 #| label: lcc-vn
 rf_lcc <- ctlcc(base = base_mat, agg_order = m, agg_mat = vnaggmat,
                 res = res_mat, comb = "wlsv")
-str(rf_lcc, give.attr=FALSE)
+summary(rf_lcc)
 ```
 
 The iterative procedure described in @Di_Fonzo2023-dg produces cross-temporally reconciled forecasts by alternating forecast reconciliation along one single dimension (either cross-sectional or temporal) at each iteration step.
@@ -161,7 +161,7 @@ The iterative procedure described in @Di_Fonzo2023-dg produces cross-temporally 
 rf_ite <- iterec(base = base_mat, res = res_mat,
                  cslist = list(agg_mat = vnaggmat, comb = "shr"), 
                  telist = list(agg_order = m, comb = "wlsv"))
-str(rf_ite, give.attr=FALSE)
+summary(rf_ite)
 ```
 
 The cross-temporal method by @Kourentzes2019-dj, involves three steps: first, reconciling forecasts for each time series at different temporal aggregation levels using temporal hierarchies; second, performing cross-sectional reconciliation at each temporal aggregation order; and third, averaging the projection matrices from the second step and using them to cross-sectionally reconcile the forecasts from the first step. In contrast, we can reverses these steps starting with cross-sectional reconciliation followed by temporal reconciliation [@Di_Fonzo2023-dg].
@@ -171,11 +171,11 @@ The cross-temporal method by @Kourentzes2019-dj, involves three steps: first, re
 rf_tcs <- tcsrec(base = base_mat, res = res_mat,
                  cslist = list(agg_mat = vnaggmat, comb = "shr"), 
                  telist = list(agg_order = m, comb = "wlsv"))
-str(rf_tcs, give.attr=FALSE)
+summary(rf_tcs)
 rf_cst <- cstrec(base = base_mat, res = res_mat,
                  cslist = list(agg_mat = vnaggmat, comb = "shr"), 
                  telist = list(agg_order = m, comb = "wlsv"))
-str(rf_cst, give.attr=FALSE)
+summary(rf_cst)
 ```
 
 Finally we can obtained the optimal (in least squares sense) combination cross-temporal reconciled forecast [@Di_Fonzo2023-dg; @Girolimetto2023-jm].
@@ -184,7 +184,7 @@ Finally we can obtained the optimal (in least squares sense) combination cross-t
 #| label: opt-vn
 rf_opt <- ctrec(base = base_mat, agg_order = m, agg_mat = vnaggmat,
                 res = res_mat, comb = "wlsv", approach = "strc")
-str(rf_opt, give.attr=FALSE)
+summary(rf_opt)
 ```
 
 The following table shows some options for the optimal combination cross-temporal reconciliation function `ctrec()`. 
@@ -286,7 +286,7 @@ Sometimes we may wish to incorporate a priori knowledge during the reconciliatio
 #| label: imm-vn
 rf_imm <- ctrec(base = base_mat, agg_order = m, agg_mat = vnaggmat, approach = "strc",
                 res = res_mat, comb = "wlsv", immutable = cbind(2:8, 12, 1))
-str(rf_imm, give.attr=FALSE)
+summary(rf_imm)
 ```
 
 
@@ -306,7 +306,7 @@ base_mat2 <- t(Reduce(rbind, base[paste0("k-", te_subset)]))
 res_mat2 <- t(Reduce(rbind, res[paste0("k-", te_subset)]))
 rf_sub <- ctrec(base = base_mat2, agg_order = te_subset, agg_mat = vnaggmat,
                 res = res_mat2, comb = "wlsv", approach = "strc")
-str(rf_sub, give.attr=FALSE)
+summary(rf_sub)
 ```
 
 ## Probabilistic forecast reconciliation
@@ -316,46 +316,16 @@ str(rf_sub, give.attr=FALSE)
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
 
 ```{r}
-#| label: ctjb-vn-old
-#| include: false
-#| eval: false
-# Base forecasts' sample
-B <- 100
-# Base forecasts' sample
-base_ctjb <- ctboot(model, B, agg_order = m, block_size = 2)$sample 
-str(base_ctjb[1:3], give.attr=FALSE)
-
-# # Reconciled forecasts' sample:
-# reco_ctjb <- lapply(base_ctjb, function(boot_base){
-#   octrec(t(boot_base), m = 12, C = C, res = res_ct, 
-#          comb = "bdshr", keep = "recf", nn = TRUE, nn_type = "sntz")
-# })
-
-# Tip to speed up the time: B reconciliation to 1 reconciliation
-ctjb_mlist <- lapply(base_ctjb, function(x) FoReco2matrix(t(x), agg_order = m))
-ctjb_list <- unlist(ctjb_mlist, recursive=FALSE)
-id <- sort.int(factor(names(ctjb_list), paste0("k-", te_set), ordered = TRUE), 
-               index.return =TRUE)$ix
-base_ctjb_mat <- t(Reduce("rbind", ctjb_list[id]))
-str(base_ctjb_mat, give.attr=FALSE)
-
-# Reconciled forecasts' sample:
-reco_ctjb <- ctrec(base = base_ctjb_mat, agg_order = m, agg_mat = vnaggmat,
-                   res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
-str(reco_ctjb, give.attr=FALSE)
-```
-
-```{r}
 #| label: ctjb-vn
 # Base forecasts' sample
 B <- 100
 # Base forecasts' sample
-base_ctjb <- ctboot(model, B, agg_order = m)$sample 
+base_ctjb <- ctboot(model, B, agg_order = m) 
 str(base_ctjb[1:3], give.attr=FALSE)
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
                       res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
-class(reco_ctjb) # distribution object
+summary(reco_ctjb)
 
 # Extracts mean:
 mean_ctjb <- mean(reco_ctjb)
@@ -366,41 +336,6 @@ str(mean_ctjb, give.attr = FALSE)
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts. Since we have to simulate from a multivariate normal distribution with a size of 14700, we will use a diagonal covariance matrix in this vignette. However, it’s important to note that this choice will result in a significantly narrow variance for the reconciled forecasts.
-
-```{r}
-#| label: gauss-vn-old
-#| include: false
-#| eval: false
-# Multi-step residuals
-hres <- lapply(model, function(fit)
-  lapply(1:frequency(fit[[1]]$x), function(h) 
-    sapply(fit, residuals, type='response', h = h)))
-hres_ct <- t(Reduce("rbind", lapply(hres, arrange_hres)))
-# Re-arrenge multi-step residuals in a matrix form
-mres <- as_hstack_ctlayout(hres, agg_order = m)
-
-# cov_shr <- shrink_estim(na.omit(mres)) # Time and computational intensive to use, but the better one
-cov_wls <- diag(x = diag(cov(na.omit(mres))))
-
-# Base forecasts' sample:
-base_ctg <- GMCM::rmvnormal(B, mu = as_hstack_ctlayout(base_mat, agg_order = m), 
-                            sigma = cov_wls)
-base_ctg <- apply(base_ctg, 1, function(x) matrix(x, ncol = NCOL(itagdp)), simplify = FALSE)
-
-# Tip to speed up the time: B reconciliation to 1 reconciliation
-ctg_mlist <- lapply(base_ctjb, function(x) FoReco2matrix(t(x), agg_order = m))
-ctg_list <- unlist(ctg_mlist, recursive=FALSE)
-id <- sort.int(factor(names(ctg_list), paste0("k-", te_set), ordered = TRUE), 
-               index.return =TRUE)$ix
-base_ctg_mat <- t(Reduce("rbind", ctg_list[id]))
-str(base_ctg_mat, give.attr=FALSE)
-
-# Reconciled forecasts' sample:
-reco_ctg <- ctrec(base = base_ctg_mat, agg_order = m, agg_mat = vnaggmat,
-                  res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
-str(reco_ctg, give.attr=FALSE)
-```
-
 
 ```{r}
 #| label: gauss-vn
@@ -437,7 +372,7 @@ base_cts <- apply(base_cts, 1, as_ctmatrix, agg_order = m,
 base_cts <- simplify2array(base_cts)
 reco_cts <- ctsmp(base_cts, agg_order = m, agg_mat = vnaggmat,
                      res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
-reco_cts # distribution object
+summary(reco_cts)
 ```
 
 # `itagdp`: general linearly constrained multiple quarterly time series
@@ -497,7 +432,7 @@ base_mat <- t(Reduce(rbind, base))
 res_mat <- t(Reduce(rbind, res))
 rf_opt <- ctrec(base = base_mat, agg_order = m, cons_mat = gdpconsmat,
                 res = res_mat, comb = "bdshr")
-str(rf_opt, give.attr = FALSE)
+summary(rf_opt)
 ```
 
 ### Practical challenge: immutable forecast
@@ -507,7 +442,7 @@ In this case, we want to fix the forecasts of the top level series ($GDP$) for t
 #| label: imm-gdp
 rf_imm <- ctrec(base = base_mat, agg_order = m, cons_mat = gdpconsmat,
                 res = res_mat, comb = "wlsv", immutable = rbind(c(1,4,1)))
-str(rf_imm, give.attr = FALSE)
+summary(rf_imm)
 ```
 
 ```{r}
@@ -518,46 +453,18 @@ rf_imm[1,1] - base_mat[1,1]
 ## Probabilistic forecast reconciliation
 
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
-```{r}
-#| label: ctjb-gdp-old
-#| include: false
-#| eval: false
-B <- 100
-# Base forecasts' sample
-base_ctjb <- ctboot(model, B, agg_order = m)$sample 
-str(base_ctjb[1:3], give.attr = FALSE)
-
-# # Reconciled forecasts' sample:
-# reco_ctjb <- lapply(base_ctjb, function(boot_base){
-#   octrec(t(boot_base), m = 12, C = C, res = res_ct, 
-#          comb = "bdshr", keep = "recf", nn = TRUE, nn_type = "sntz")
-# })
-
-# Tip to speed up the time: B reconciliation to 1 reconciliation
-ctjb_mlist <- lapply(base_ctjb, function(x) FoReco2matrix(t(x), agg_order = m))
-ctjb_list <- unlist(ctjb_mlist, recursive=FALSE)
-id <- sort.int(factor(names(ctjb_list), paste0("k-", te_set), ordered = TRUE), 
-               index.return =TRUE)$ix
-base_ctjb_mat <- t(Reduce("rbind", ctjb_list[id]))
-str(base_ctjb_mat, give.attr = FALSE)
-
-# Reconciled forecasts' sample:
-reco_ctjb <- ctrec(base = base_ctjb_mat, agg_order = m, cons_mat = gdpconsmat,
-                   res = res_mat, comb = "wlsv")
-str(reco_ctjb, give.attr = FALSE)
-```
 
 ```{r}
 #| label: ctjb-gdp
 # Base forecasts' sample
 B <- 100
 # Base forecasts' sample
-base_ctjb <- ctboot(model, B, agg_order = m)$sample 
+base_ctjb <- ctboot(model, B, agg_order = m) 
 str(base_ctjb[1:3], give.attr=FALSE)
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
                       res = res_mat, comb = "wlsv")
-reco_ctjb # distribution object
+summary(reco_ctjb)
 
 # Extracts mean:
 mean_ctjb <- mean(reco_ctjb)
@@ -568,39 +475,6 @@ str(mean_ctjb, give.attr = FALSE)
 ```
 
 Alternatively, we can use a parametric method.
-
-```{r}
-#| label: gauss-gdp-old
-#| include: false
-#| eval: false
-# Multi-step residuals
-hres <- lapply(model, function(fit)
-  lapply(1:frequency(fit[[1]]$x), function(h) 
-    sapply(fit, residuals, type='response', h = h)))
-hres_ct <- t(Reduce("rbind", lapply(hres, arrange_hres)))
-# Re-arrenge multi-step residuals in a matrix form
-mres <- as_hstack_ctlayout(hres_ct, agg_order = m)
-
-cov_shr <- shrink_estim(na.omit(mres)) 
-
-# Base forecasts' sample:
-base_ctg <- GMCM::rmvnormal(B, mu = as_hstack_ctlayout(base_mat, agg_order = m), 
-                            sigma = as.matrix(cov_shr))
-base_ctg <- apply(base_ctg, 1, function(x) matrix(x, ncol = NCOL(itagdp)), simplify = FALSE)
-
-# Tip to speed up the time: B reconciliation to 1 reconciliation
-ctg_mlist <- lapply(base_ctjb, function(x) FoReco2matrix(t(x), agg_order = m))
-ctg_list <- unlist(ctg_mlist, recursive=FALSE)
-id <- sort.int(factor(names(ctg_list), paste0("k-", te_set), ordered = TRUE), 
-               index.return =TRUE)$ix
-base_ctg_mat <- t(Reduce("rbind", ctg_list[id]))
-str(base_ctg_mat, give.attr = FALSE)
-
-# Reconciled forecasts' sample:
-reco_ctg <- ctrec(base = base_ctg_mat, agg_order = m, cons_mat = gdpconsmat,
-                   res = res_mat, comb = "wlsv")
-str(reco_ctg, give.attr = FALSE)
-```
 
 ```{r}
 #| label: gauss-gdp
@@ -624,7 +498,7 @@ cov_wls <- diag(x = diag(cov(na.omit(mres))))
 reco_ctg_wls <- ctmvn(base = base_mat, cons_mat = gdpconsmat,
                         agg_order = m, comb = "wlsv", res = res_mat, 
                         comb_base = cov_wls)
-reco_ctg_wls # distribution object
+summary(reco_ctg_wls)
 
 # Reconciled sample distribution starting from Gaussian base forecasts - faster approach
 base_cts <- GMCM::rmvnormal(B, mu = as_hstack_ctlayout(base_mat, agg_order = m), 
@@ -636,7 +510,7 @@ base_cts <- apply(base_cts, 1, as_ctmatrix, agg_order = m,
 base_cts <- simplify2array(base_cts)
 reco_cts <- ctsmp(base_cts, agg_order = m, cons_mat = gdpconsmat,
                      res = res_mat, comb = "wlsv")
-reco_cts # distribution object
+summary(reco_cts)
 ```
 
 # References

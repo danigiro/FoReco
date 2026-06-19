@@ -88,7 +88,7 @@ Bottom-up reconciliation [@Dunn1976-kv] aggregates forecasts from the lowest lev
 #| label: bu-vn
 fc_bts <- base[, colnames(vnaggmat)]
 rf_bu <- csbu(fc_bts, agg_mat = vnaggmat)
-str(rf_bu, give.attr = FALSE)
+summary(rf_bu)
 ```
 
 In the top-down reconciliation for genuine hierarchical/grouped time series [@Gross1990-uf], the forecast of `Total` (top-level series, expected to be positive) is disaggregated according to a proportional scheme (weights) such that:
@@ -107,12 +107,12 @@ fc_total <- base[, "Total"]
 # Average historical proportions - Gross-Sohl method A
 p_gsa <- colMeans(apply(bts, 2, function(x) x/total))
 rf_td_gsa <- cstd(fc_total, agg_mat = vnaggmat, weights = p_gsa)
-str(rf_td_gsa, give.attr = FALSE)
+summary(rf_td_gsa)
 
 # Proportions of the historical averages - Gross-Sohl method F
 p_gsf <- colMeans(bts)/mean(total)
 rf_td_gsf <- cstd(fc_total, agg_mat = vnaggmat, weights = p_gsf)
-str(rf_td_gsf, give.attr = FALSE)
+summary(rf_td_gsf)
 ```
 
 The level conditional coherent reconciliation (LCC) is a generalization of the the original proposal by @Hollyman2021-zq where the reconciled forecasts are conditional to (i.e., constrained by) the base forecasts of a specific upper level of the hierarchy [@DiFonzo2024-ijf].
@@ -121,7 +121,7 @@ The level conditional coherent reconciliation (LCC) is a generalization of the t
 #| label: lcc-vn
 rf_lcc <- cslcc(base = base, agg_mat = vnaggmat,
                 res = res, comb = "wls")
-str(rf_lcc, give.attr = FALSE)
+summary(rf_lcc)
 ```
 
 Finally we can obtained the optimal (in least squares sense) combination cross-sectional reconciled forecast [@Wickramasuriya2019; @Panagiotelis2021-rh; @Girolimetto2023-ft].
@@ -129,7 +129,7 @@ Finally we can obtained the optimal (in least squares sense) combination cross-s
 ```{r}
 #| label: opt-vn
 rf_opt <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr")
-str(rf_opt, give.attr = FALSE)
+summary(rf_opt)
 ```
 
 The following table shows some options for the optimal combination cross-sectional reconciliation function `csrec()`. 
@@ -226,7 +226,7 @@ Sometimes we may wish to incorporate a priori knowledge during the reconciliatio
 ```{r}
 #| label: imm-vn
 rf_imm <- csrec(base = base, agg_mat = vnaggmat, res = res, comb = "shr", immutable = c(2:8))
-str(rf_imm, give.attr = FALSE)
+summary(rf_imm)
 ```
 
 ```{r}
@@ -240,24 +240,6 @@ round(rf_imm[, 2:8] - base[, 2:8], 6)
 
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
 
-```{r}
-#| label: csjb-vn-old
-#| include: false
-#| eval: false
-# Base forecasts' sample:
-# we simulate from the base models by sampling errors 
-# while keeping the cross-sectional dimension fixed.
-B <- 100
-base_csjb <- csboot(model, B, 12)$sample
-
-# Reconciled forecasts' sample: 
-# we reconcile each member of a sample from the incoherent distribution.
-reco_csjb <- apply(base_csjb, 3, csrec, agg_mat = vnaggmat, res = res, nn = "sntz",
-                   comb = "shr", keep = "recf", simplify = FALSE)
-reco_csjb <- simplify2array(reco_csjb)
-rownames(reco_csjb) <- rownames(base_csjb)
-str(reco_csjb, give.attr = FALSE)
-```
 
 ```{r}
 #| label: csjb-vn
@@ -265,10 +247,10 @@ str(reco_csjb, give.attr = FALSE)
 # we simulate from the base models by sampling errors 
 # while keeping the cross-sectional dimension fixed.
 B <- 100
-base_csjb <- csboot(model, B, 12)$sample
+base_csjb <- csboot(model, B, 12)
 reco_csjb <- cssmp(base_csjb, agg_mat = vnaggmat, res = res, nn = "sntz",
                    comb = "shr")
-class(reco_csjb) # distribution object
+summary(reco_csjb)
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
@@ -300,7 +282,7 @@ dimnames(base_css) <- dimnames(base_csjb)
 
 reco_css <- cssmp(base_css, agg_mat = vnaggmat, res = res, nn = "sntz",
                    comb = "shr")
-class(reco_css) # distribution object
+summary(reco_css)
 ```
     
 # `itagdp`: general linearly constrained multiple time series
@@ -345,7 +327,7 @@ We apply the optimal reconciliation method to the base forecasts, considering th
 ```{r}
 #| label: opt-gdp
 rf_opt <- csrec(base = base, cons_mat = gdpconsmat, res = res, comb = "wls")
-str(rf_opt, give.attr = FALSE)
+summary(rf_opt)
 ```
 
 ### Practical challenge: immutable forecast
@@ -353,7 +335,7 @@ In this case, we want to fix the forecasts of the top level series ($GDP$) at th
 ```{r}
 #| label: imm-gdp
 rf_imm <- csrec(base = base, cons_mat = gdpconsmat, res = res, comb = "wls", immutable = c(1))
-str(rf_imm, give.attr = FALSE)
+summary(rf_imm)
 ```
 
 ```{r}
@@ -366,64 +348,20 @@ rf_imm[,1]-base[,1]
 We can use a non-parametric method, the joint block bootstrap to simulate $B$ samples and then reconciled them.
 
 ```{r}
-#| label: csjb-gdp-old
-#| include: false
-#| eval: false
-# Base forecasts' sample:
-# we simulate from the base models by sampling errors 
-# while keeping the cross-sectional dimension fixed.
-B <- 100
-base_csjb <- csboot(model, B, 4)$sample
-
-# Reconciled forecasts' sample: 
-# we reconcile each member of a sample from the incoherent distribution.
-reco_csjb <- apply(base_csjb, 3, csrec, cons_mat = gdpconsmat, res = res, 
-                   comb = "shr", keep = "recf", simplify = FALSE)
-reco_csjb <- simplify2array(reco_csjb)
-rownames(reco_csjb) <- rownames(base_csjb)
-str(reco_csjb, give.attr = FALSE)
-```
-
-```{r}
 #| label: csjb-gdp
 # Base forecasts' sample:
 # we simulate from the base models by sampling errors 
 # while keeping the cross-sectional dimension fixed.
 B <- 100
-base_csjb <- csboot(model, B, 4)$sample
+base_csjb <- csboot(model, B, 4)
 reco_csjb <- cssmp(base_csjb, cons_mat = gdpconsmat, res = res, comb = "shr")
-reco_csjb # distribution object
+summary(reco_csjb)
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
 ```
 
 Alternatively, we can use a parametric method.
-
-```{r}
-#| label: gauss-gdp-old
-#| include: false
-#| eval: false
-# Multi-step residuals
-hres <- lapply(1:4, function(h) 
-  sapply(model, residuals, type='response', h = h))
-# List of H=12 covariance matrix (one for each forecast horizon)
-cov_shr <- lapply(hres, function(r) cscov(comb = "shr", res = r)) 
-
-# Base forecasts' sample:
-# we simulate from a multivariate normal distribution.
-base_csg <- lapply(1:4, function(h) MASS::mvrnorm(n = B, mu = base[h, ], Sigma = cov_shr[[h]]))
-base_csg <- simplify2array(base_csg)
-dimnames(base_csg) <- dimnames(base_csjb)
-
-# Reconciled forecasts' sample:
-# we reconcile each member of the base forecasts' sample.
-reco_csg <- apply(base_csg, 3, csrec, cons_mat = gdpconsmat, res = res, 
-                   comb = "shr", keep = "recf", simplify = FALSE)
-reco_csg <- simplify2array(reco_csg)
-rownames(reco_csg) <- rownames(base_csg)
-str(reco_csg, give.attr = FALSE)
-```
 
 ```{r}
 #| label: gauss-gdp
@@ -450,7 +388,7 @@ base_css <- aperm(simplify2array(base_css), c(3,2,1))
 dimnames(base_css) <- dimnames(base_csjb)
 
 reco_css <- cssmp(base_css, cons_mat = gdpconsmat, res = res, comb = "shr")
-class(reco_css) # distribution object
+summary(reco_css)
 ```
 
 # References

@@ -1,4 +1,4 @@
-# Cross-sectional reconciliation tools
+# Cross-sectional Reconciliation Tools
 
 Some useful tools for the cross-sectional forecast reconciliation of a
 linearly constrained (e.g., hierarchical/grouped) multiple time series.
@@ -65,7 +65,6 @@ Cross-sectional framework:
 [`cstd()`](https://danigiro.github.io/FoReco/reference/cstd.md)
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -76,7 +75,6 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),

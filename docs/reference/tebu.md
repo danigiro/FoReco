@@ -1,4 +1,4 @@
-# Temporal bottom-up reconciliation
+# Temporal Bottom-up Reconciliation
 
 Temporal bottom-up reconciled forecasts at any temporal aggregation
 level are computed by appropriate aggregation of the high-frequency base
@@ -35,8 +35,8 @@ tebu(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 - sntz:
 
   Logical. If `TRUE`, the negative base forecasts are set to zero (Di
-  Fonzo and Girolimetto, 2023) before applying bottom-up. *Default* is
-  `FALSE`.
+  Fonzo and Girolimetto, 2023; Girolimetto 2025) before applying
+  bottom-up. *Default* is `FALSE`.
 
 - round:
 
@@ -45,7 +45,9 @@ tebu(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 
 ## Value
 
-A (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
 forecasts.
 
 ## References

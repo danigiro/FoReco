@@ -1,4 +1,4 @@
-# Set bounds for bounded forecast reconciliation
+# Set Bounds for Bounded Forecast Reconciliation
 
 This function defines the bounds matrix considering cross-sectional,
 temporal, or cross-temporal frameworks. The output matrix can be used as
@@ -71,7 +71,6 @@ A numeric matrix representing the computed bounds, which can be:
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -83,7 +82,6 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),
 [`shrink_oasd()`](https://danigiro.github.io/FoReco/reference/shrink_oasd.md),

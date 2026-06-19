@@ -1,4 +1,4 @@
-# Aggregation matrix of a (possibly) unbalanced hierarchy in balanced form
+# Aggregation Matrix of a (Possibly) Unbalanced Hierarchy in Balanced Form
 
 A hierarchy with \\L\\ upper levels is said to be balanced if each
 variable at level \\l\\ has at least one child at level \\l+1\\. When
@@ -58,7 +58,6 @@ A list containing four elements:
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -69,7 +68,6 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),

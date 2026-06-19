@@ -1,4 +1,4 @@
-# One-step and multi-step residuals
+# One-Step and Multi-Step Residuals
 
 These functions can be used to arrange residuals to reconcile temporal
 or cross-temporal forecasts.
@@ -90,7 +90,6 @@ Forecasting*, 40, 3, 1134-1151.
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -102,7 +101,6 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),
 [`shrink_oasd()`](https://danigiro.github.io/FoReco/reference/shrink_oasd.md),

@@ -1,4 +1,4 @@
-# Cross-sectional Gaussian probabilistic reconciliation
+# Cross-sectional Gaussian Probabilistic Reconciliation
 
 This function performs cross-sectional probabilistic forecast
 reconciliation assuming a multivariate normal base forecast distribution
@@ -90,7 +90,8 @@ csmvn(base, agg_mat, cons_mat, comb = "ols", res = NULL,
 
 A
 [distributional::dist_multivariate_normal](https://pkg.mitchelloharawild.com/distributional/reference/dist_multivariate_normal.html)
-object.
+of reconciled forecasts, of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md)).
 
 ## References
 

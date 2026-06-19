@@ -6,16 +6,16 @@
     }
   };
 </script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet"><link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet"><script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="FoReco Reconciliation Class — foreco-class"><meta name="description" content="The foreco class represents reconciled forecasts produced by the FoReco
-package. It extends the base matrix class with additional attributes that
-store metadata about the reconciliation procedure (framework, function used,
-forecast type, and other reconciliation-specific information). The class
-provides dedicated methods for printing, summarising, extracting components
-and visualising reconciled forecasts."><meta property="og:description" content="The foreco class represents reconciled forecasts produced by the FoReco
-package. It extends the base matrix class with additional attributes that
-store metadata about the reconciliation procedure (framework, function used,
-forecast type, and other reconciliation-specific information). The class
-provides dedicated methods for printing, summarising, extracting components
-and visualising reconciled forecasts."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
+package. It extends a numeric matrix, vector, or distributional object with
+additional attributes that store metadata about the reconciliation procedure
+(framework, function used, forecast type, and other reconciliation-specific
+information). The class provides dedicated methods for printing,
+summarising, extracting components and visualising reconciled forecasts."><meta property="og:description" content="The foreco class represents reconciled forecasts produced by the FoReco
+package. It extends a numeric matrix, vector, or distributional object with
+additional attributes that store metadata about the reconciliation procedure
+(framework, function used, forecast type, and other reconciliation-specific
+information). The class provides dedicated methods for printing,
+summarising, extracting components and visualising reconciled forecasts."><meta property="og:image" content="https://danigiro.github.io/FoReco/logo.svg"></head><body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
@@ -23,7 +23,7 @@ and visualising reconciled forecasts."><meta property="og:image" content="https:
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,22 +59,22 @@ and visualising reconciled forecasts."><meta property="og:image" content="https:
 
     <div class="ref-description section level2">
     <p>The <code>foreco</code> class represents reconciled forecasts produced by the FoReco
-package. It extends the base <code>matrix</code> class with additional attributes that
-store metadata about the reconciliation procedure (framework, function used,
-forecast type, and other reconciliation-specific information). The class
-provides dedicated methods for printing, summarising, extracting components
-and visualising reconciled forecasts.</p>
+package. It extends a numeric matrix, vector, or distributional object with
+additional attributes that store metadata about the reconciliation procedure
+(framework, function used, forecast type, and other reconciliation-specific
+information). The class provides dedicated methods for printing,
+summarising, extracting components and visualising reconciled forecasts.</p>
     </div>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">new_foreco_class</span><span class="op">(</span><span class="va">x</span>, <span class="va">framework</span>, <span class="va">rfun</span>, <span class="va">rtype</span>, rinfo <span class="op">=</span> <span class="cn">NULL</span>, nninfo <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">new_foreco_class</span><span class="op">(</span><span class="va">reco</span>, <span class="va">framework</span>, <span class="va">rfun</span>, <span class="va">rtype</span>, rinfo <span class="op">=</span> <span class="cn">NULL</span>, nninfo <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'foreco'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, keep_forecasts <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># S3 method for class 'summary.foreco'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, n_row <span class="op">=</span> <span class="cn">NULL</span>, n_col <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for class 'summary_foreco'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, n_row <span class="op">=</span> <span class="fl">4L</span>, n_col <span class="op">=</span> <span class="fl">6L</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'foreco'</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, n_row <span class="op">=</span> <span class="cn">NULL</span>, n_col <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -83,26 +83,26 @@ and visualising reconciled forecasts.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, cs <span class="op">=</span> <span class="cn">NULL</span>, te <span class="op">=</span> <span class="fl">1</span>, alpha <span class="op">=</span> <span class="fl">0.95</span>, <span class="va">...</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'foreco'</span></span>
-<span><span class="fu">components</span><span class="op">(</span></span>
+<span><span class="fu"><a href="https://generics.r-lib.org/reference/components.html" class="external-link">components</a></span><span class="op">(</span></span>
 <span>  <span class="va">object</span>,</span>
 <span>  cs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  te <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keep_names <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  temporal_names <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">drop_foreco_class</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>For <code>new_foreco_class()</code>, a numeric matrix of reconciled forecasts
-(when <code>rtype = "point"</code>) or a distributional object (when
-<code>rtype = "probabilistic"</code>). For <code>print.foreco()</code> and <code>plot.foreco()</code>,
-an object of class <code>foreco</code>. For <code>print.summary.foreco()</code>, an object of
-class <code>summary.foreco</code>.</p></dd>
+<dl><dt id="arg-reco">reco<a class="anchor" aria-label="anchor" href="#arg-reco"></a></dt>
+<dd><p>A numeric matrix/vector (when <code>rtype = "point"</code>) or a
+distributional object (when <code>rtype = "probabilistic"</code>).</p></dd>
 
 
 <dt id="arg-framework">framework<a class="anchor" aria-label="anchor" href="#arg-framework"></a></dt>
@@ -134,21 +134,20 @@ procedure applied during reconciliation. Stored as the <code>info</code> field o
 the <code>"FoReco"</code> attribute.</p></dd>
 
 
-<dt id="arg-object">object<a class="anchor" aria-label="anchor" href="#arg-object"></a></dt>
-<dd><p>An object of class <code>foreco</code>, passed to <code>summary.foreco()</code> and
-<code>components.foreco()</code>.</p></dd>
-
-
 <dt id="arg-keep-forecasts">keep_forecasts<a class="anchor" aria-label="anchor" href="#arg-keep-forecasts"></a></dt>
 <dd><p>Logical; if <code>TRUE</code> (the default), the reconciled
 forecasts are stored in the <code>rf</code> element of the returned
-<code>summary.foreco</code> object (and therefore printed at the end of the summary).
+<code>summary_foreco</code> object (and therefore printed at the end of the summary).
 Set to <code>FALSE</code> to obtain a lighter summary object that omits them.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments passed to the underlying methods
 (e.g. <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>).</p></dd>
+
+
+<dt id="arg-x-object">x, object<a class="anchor" aria-label="anchor" href="#arg-x-object"></a></dt>
+<dd><p>An object of class <code>foreco</code>.</p></dd>
 
 
 <dt id="arg-n-row-n-col">n_row, n_col<a class="anchor" aria-label="anchor" href="#arg-n-row-n-col"></a></dt>
@@ -175,7 +174,7 @@ aggregation orders to keep, matched against the elements of <code>te_set</code>.
 
 
 <dt id="arg-keep-names">keep_names<a class="anchor" aria-label="anchor" href="#arg-keep-names"></a></dt>
-<dd><p>Logical; if <code>TRUE</code>, the row/column names of the reconciled
+<dd><p>Logical. If <code>TRUE</code>, the row/column names of the reconciled
 forecasts are preserved in the output of <code>components.foreco()</code>. Defaults
 to <code>FALSE</code>.</p></dd>
 
@@ -186,56 +185,19 @@ aggregation orders returned by <code>components.foreco()</code>. Its length must
 match the number of returned orders, otherwise a warning is emitted and
 the default <code>"k-..."</code> labels are used.</p></dd>
 
+
+<dt id="arg-simplify">simplify<a class="anchor" aria-label="anchor" href="#arg-simplify"></a></dt>
+<dd><p>Logical. If <code>TRUE</code> and the result consists of a single
+component, the underlying object (a matrix or vector) is returned directly
+instead of being wrapped in a named list of length one. If <code>FALSE</code>
+(default), the output is always a named list.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>new_foreco_class()</code> returns <code>x</code> with class <code>"foreco"</code> (prepended to its
-existing class) and a <code>"FoReco"</code> attribute containing at least:</p><dl><dt><code>framework</code></dt>
-<dd><p>The reconciliation framework: <code>"cross-sectional"</code>,
-<code>"temporal"</code> or <code>"cross-temporal"</code>.</p></dd>
-
-<dt><code>rfun</code></dt>
-<dd><p>The name of the reconciliation function that produced the
-object.</p></dd>
-
-<dt><code>rtype</code></dt>
-<dd><p>The forecast type: <code>"point"</code> or <code>"probabilistic"</code>.</p></dd>
-
-<dt><code>info</code></dt>
-<dd><p>A matrix with convergence information of the non-negative
-reconciliation algorithm, when one has been applied; <code>NULL</code> otherwise.
-Corresponds to the <code>nninfo</code> argument of <code>new_foreco_class()</code>.</p></dd>
-
-
-</dl><p>plus all the additional fields supplied through <code>rinfo</code>, which typically
-include:</p><dl><dt><code>cs_n</code></dt>
-<dd><p>The cross-sectional number of variables.</p></dd>
-
-<dt><code>te_set</code></dt>
-<dd><p>The set of temporal aggregation orders.</p></dd>
-
-<dt><code>forecast_horizon</code></dt>
-<dd><p>The forecast horizon. In the temporal and
-cross-temporal frameworks it refers to the most temporally aggregated
-series.</p></dd>
-
-<dt><code>lcc</code></dt>
-<dd><p>A list of level-conditional reconciled forecasts (plus
-bottom-up) returned by <code><a href="cslcc.html">cslcc()</a></code>, <code><a href="telcc.html">telcc()</a></code> and <code><a href="ctlcc.html">ctlcc()</a></code>.</p></dd>
-
-<dt><code>nn</code></dt>
-<dd><p>Logical; if <code>TRUE</code>, all reconciled forecasts are
-non-negative.</p></dd>
-
-<dt><code>comb</code></dt>
-<dd><p>The covariance approximation used in the reconciliation.</p></dd>
-
-<dt><code>ml</code></dt>
-<dd><p>The machine-learning approach used to produce the base
-forecasts, when applicable.</p></dd>
-
-
-</dl><p><code>components.foreco()</code> returns a named list of reconciled forecasts split
+    <p>A <code>foreco</code> object extending the reconciled forecasts/distributions with
+reconciliation metadata.</p>
+<p><code>components.foreco()</code> returns a named list of reconciled forecasts split
 by temporal aggregation order. For the cross-sectional framework the list
 has a single element <code>"k-1"</code>.</p>
     </div>
@@ -243,7 +205,7 @@ has a single element <code>"k-1"</code>.</p>
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>new_foreco_class()</code> is the low-level constructor. It is exported so
 that companion packages can produce objects that integrate with FoReco's
-<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>, <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> and <code>components()</code> methods.</p>
+<code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code>, <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>, <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> and <code><a href="https://generics.r-lib.org/reference/components.html" class="external-link">components()</a></code> methods.</p>
 <p><code>plot.foreco()</code> draws the reconciled forecasts as line/point plots. For
 probabilistic forecasts (<code>rtype = "probabilistic"</code>) it also overlays a
 shaded central <code>alpha * 100%</code> prediction interval, built from the
@@ -260,17 +222,22 @@ dotted lines.</p>
 <span class="r-in"><span><span class="va">bts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">6</span>, mean <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>, <span class="fl">3</span>, <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">reco</span> <span class="op">&lt;-</span> <span class="fu"><a href="csbu.html">csbu</a></span><span class="op">(</span>base <span class="op">=</span> <span class="va">bts</span>, agg_mat <span class="op">=</span> <span class="va">A</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Inspect the reconciled-forecast object</span></span></span>
+<span class="r-in"><span><span class="co"># Print and summarise the reconciled forecasts</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">reco</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          s-1       s-2      s-3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 19.51003  9.439524 10.07051</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 19.89911  9.769823 10.12929</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-3 23.27377 11.558708 11.71506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">All rows and columns are shown.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">Use `print(x, n_row, n_col)` to limit the output.</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">Class structure: foreco &gt; matrix</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">reco</span>, n_row <span class="op">=</span> <span class="fl">2</span>, n_col <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          s-1      s-2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 19.51003 9.439524</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 19.89911 9.769823</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ... (1 more row, 1 more column)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">Class structure: foreco &gt; matrix</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">reco</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Cross-sectional</span> <span style="font-style: italic;">point</span> forecast reconciliation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -288,6 +255,7 @@ dotted lines.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-1 19.51003  9.439524 10.07051</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-2 19.89911  9.769823 10.12929</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> h-3 23.27377 11.558708 11.71506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">Class structure: foreco &gt; matrix</span> </span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">reco</span>, keep_forecasts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> <span style="font-weight: bold;">Cross-sectional</span> <span style="font-style: italic;">point</span> forecast reconciliation</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
@@ -299,9 +267,22 @@ dotted lines.</p>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • Number of cross-sectional series: 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • Forecast horizons (h): 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> • Non-negative forecasts (check): <span style="font-weight: bold;">`TRUE`</span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ── Reconciled forecasts </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "csbu"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Extract reconciled forecasts by temporal aggregation order</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://generics.r-lib.org/reference/components.html" class="external-link">components</a></span><span class="op">(</span><span class="va">reco</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`k-1`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          s-1       s-2      s-3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h-1 19.51003  9.439524 10.07051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h-2 19.89911  9.769823 10.12929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h-3 23.27377 11.558708 11.71506</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Remove the foreco class</span></span></span>
+<span class="r-in"><span><span class="fu">drop_foreco_class</span><span class="op">(</span><span class="va">reco</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          s-1       s-2      s-3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h-1 19.51003  9.439524 10.07051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h-2 19.89911  9.769823 10.12929</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> h-3 23.27377 11.558708 11.71506</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

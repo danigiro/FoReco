@@ -1,4 +1,4 @@
-# Cross-sectional probabilistic reconciliation (sample approach)
+# Cross-sectional Probabilistic Reconciliation (Sample Approach)
 
 This function performs cross-sectional probabilistic forecast
 reconciliation using a sample-based approach (Panagiotelis et al., 2023,
@@ -35,8 +35,7 @@ cssmp(sample, fun = csrec, ...)
 
 - fun:
 
-  A string specifying the reconciliation function to be used, as
-  implemented in FoReco.
+  A function performing the reconciliation, as implemented in FoReco.
 
 - ...:
 
@@ -46,7 +45,8 @@ cssmp(sample, fun = csrec, ...)
 
 A
 [distributional::dist_sample](https://pkg.mitchelloharawild.com/distributional/reference/dist_sample.html)
-object.
+of reconciled forecasts, of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md)).
 
 ## References
 

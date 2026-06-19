@@ -1,4 +1,4 @@
-# Cross-temporal joint block bootstrap
+# Cross-temporal Joint Block Bootstrap
 
 Joint block bootstrap for generating probabilistic base forecasts that
 take into account the correlation between variables at different
@@ -21,7 +21,7 @@ ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
   models for each cross-sectional series. A
   [`simulate()`](https://rdrr.io/r/stats/simulate.html) function for
   each model has to be available and implemented according to the
-  package [forecast](https://CRAN.R-project.org/package=forecast), with
+  package. [forecast](https://CRAN.R-project.org/package=forecast), with
   the following mandatory parameters: *object*, *innov*, *future*, and
   *nsim*.
 
@@ -59,9 +59,8 @@ ctboot(model_list, boot_size, agg_order, block_size = 1, seed = NULL,
 
 ## Value
 
-A list with two elements: the seed used to sample the errors and a list
-with \\\text{boot\\size}\\ matrix of size
-(\\n\times(k^\ast+m)\text{block\\size}\\) matrix.
+A list with \\\text{boot\\size}\\ matrix of size
+(\\n\times(k^\ast+m)\text{block\\size}\\).
 
 ## References
 
@@ -89,3 +88,45 @@ Cross-temporal framework:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`iterec()`](https://danigiro.github.io/FoReco/reference/iterec.md),
 [`tcsrec()`](https://danigiro.github.io/FoReco/reference/heuristic-reco.md)
+
+## Examples
+
+``` r
+set.seed(123)
+
+# Minimal example functions: each "model" stores Gaussian residuals;
+# simulate() draws new innovations (innov=NULL) or uses the supplied
+# ones (innov given).
+simple_model <- function(res) {
+  structure(list(residuals = res, sigma = sd(res)), class = "simple_model")
+}
+simulate.simple_model <- function(object, nsim = 1, innov = NULL,
+                                  future = TRUE, ...) {
+  if (is.null(innov)) {
+    rnorm(nsim, mean = 0, sd = object$sigma)
+  } else {
+    as.numeric(innov)[seq_len(nsim)]
+  }
+}
+
+# Cross-temporal hierarchy:
+# - cross-sectional: Z = X + Y  => n = 3
+# - temporal: annual-quarterly  => m = 4, kset = c(4, 2, 1), p = 3 levels
+n <- 3
+m <- 4
+kset <- c(4, 2, 1)
+n_obs_per_k <- 40 / kset
+
+# Nested list: outer level = p temporal aggregation orders (low -> high
+# frequency), inner level = n cross-sectional series.
+model_list <- lapply(seq_along(kset), function(i) {
+  lapply(seq_len(n), function(j) {
+    simple_model(rnorm(n_obs_per_k[i]))
+  })
+})
+
+# Joint block bootstrap: 50 replicates, block_size = 1
+boot <- ctboot(model_list = model_list, boot_size = 50, agg_order  = m,
+               block_size = 1, seed = 1)
+#> Error in UseMethod("simulate"): no applicable method for 'simulate' applied to an object of class "simple_model"
+```

@@ -1,4 +1,4 @@
-# Cross-sectional bottom-up reconciliation
+# Cross-sectional Bottom-up Reconciliation
 
 This function computes the cross-sectional bottom-up reconciled
 forecasts (Dunn et al., 1976) for all series by appropriate summation of
@@ -29,8 +29,8 @@ csbu(base, agg_mat, sntz = FALSE, round = FALSE)
 - sntz:
 
   Logical. If `TRUE`, the negative base forecasts are set to zero (Di
-  Fonzo and Girolimetto, 2023) before applying bottom-up. *Default* is
-  `FALSE`.
+  Fonzo and Girolimetto, 2023; Girolimetto 2025) before applying
+  bottom-up. *Default* is `FALSE`.
 
 - round:
 
@@ -39,7 +39,9 @@ csbu(base, agg_mat, sntz = FALSE, round = FALSE)
 
 ## Value
 
-A (\\h \times n\\) numeric matrix of cross-sectional reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h \times n\\) numeric matrix of cross-sectional reconciled
 forecasts.
 
 ## References
@@ -52,6 +54,10 @@ American Statistical Association* 71(353), 68–71.
 Di Fonzo, T. and Girolimetto, D. (2023), Spatio-temporal reconciliation
 of solar forecasts, *Solar Energy*, 251, 13–29.
 [doi:10.1016/j.solener.2023.01.003](https://doi.org/10.1016/j.solener.2023.01.003)
+
+Girolimetto, D. (2025), Non-negative forecast reconciliation: Optimal
+methods and operational solutions. *Forecasting*, 7(4), 64;
+[doi:10.3390/forecast7040064](https://doi.org/10.3390/forecast7040064)
 
 ## See also
 

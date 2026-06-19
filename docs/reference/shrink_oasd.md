@@ -1,4 +1,4 @@
-# Shrinkage of the covariance matrix using the Oracle approximation
+# Shrinkage of the Covariance Matrix Using the Oracle Approximation
 
 Shrinkage of the covariance matrix according to the Oracle Approximating
 Shrinkage (OAS) of Chen et al. (2009) and Ando and Xiao (2023).
@@ -38,7 +38,6 @@ conference on acoustics, speech and signal processing*, 2937–2940. IEEE.
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -50,10 +49,22 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),
 [`teprojmat()`](https://danigiro.github.io/FoReco/reference/teprojmat.md),
 [`tetools()`](https://danigiro.github.io/FoReco/reference/tetools.md),
 [`unbalance_hierarchy()`](https://danigiro.github.io/FoReco/reference/unbalance_hierarchy.md)
+
+## Examples
+
+``` r
+set.seed(123)
+# Simulated in-sample residuals: 50 observations of a 4-variate process
+res <- matrix(rnorm(50 * 4), nrow = 50, ncol = 4)
+# Oracle Approximating Shrinkage (OAS) covariance matrix
+shr <- shrink_oasd(res)
+# Shrinkage intensity selected by the procedure
+attr(shr, "lambda")
+#> [1] 1
+```

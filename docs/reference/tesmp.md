@@ -1,4 +1,4 @@
-# Temporal probabilistic reconciliation (sample approach)
+# Temporal Probabilistic Reconciliation (Sample Approach)
 
 This function performs temporal probabilistic forecast reconciliation
 using a sample-based approach (Girolimetto et al., 2024) for a single
@@ -42,8 +42,7 @@ tesmp(sample, agg_order, fun = terec, ...)
 
 - fun:
 
-  A string specifying the reconciliation function to be used, as
-  implemented in FoReco.
+  A function performing the reconciliation, as implemented in FoReco.
 
 - ...:
 
@@ -53,7 +52,8 @@ tesmp(sample, agg_order, fun = terec, ...)
 
 A
 [distributional::dist_sample](https://pkg.mitchelloharawild.com/distributional/reference/dist_sample.html)
-object.
+of reconciled forecasts, of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md)).
 
 ## References
 

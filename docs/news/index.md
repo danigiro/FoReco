@@ -1,11 +1,91 @@
 # Changelog
 
-## FoReco (development version)
+## FoReco 1.3.0
+
+### Breaking changes
+
+- `FoReco2matrix()` is no longer exported. Use the new
+  [`components()`](https://generics.r-lib.org/reference/components.html)
+  method on `foreco` objects (see *New features* below), which provides
+  the same splitting of reconciled forecasts by temporal aggregation
+  order.
+- `recoinfo()` has been removed. The same information is now available
+  via [`summary()`](https://rdrr.io/r/base/summary.html) on a `foreco`
+  object.
+- [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md)
+  is soft-deprecated via
+  [`lifecycle::deprecate_warn()`](https://lifecycle.r-lib.org/reference/deprecate_soft.html)
+  and will be removed in a future release. Use
+  [`as_hstack_telayout()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md)
+  or
+  [`as_hstack_ctlayout()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md)
+  instead.
+
+### New features
+
+- New S3 class `foreco` for reconciled forecasts, returned by every
+  reconciliation function
+  ([`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.md),
+  [`terec()`](https://danigiro.github.io/FoReco/reference/terec.md),
+  [`ctrec()`](https://danigiro.github.io/FoReco/reference/ctrec.md),
+  [`csbu()`](https://danigiro.github.io/FoReco/reference/csbu.md),
+  [`tebu()`](https://danigiro.github.io/FoReco/reference/tebu.md),
+  [`ctbu()`](https://danigiro.github.io/FoReco/reference/ctbu.md),
+  [`cstd()`](https://danigiro.github.io/FoReco/reference/cstd.md),
+  [`tetd()`](https://danigiro.github.io/FoReco/reference/tetd.md),
+  [`cttd()`](https://danigiro.github.io/FoReco/reference/cttd.md),
+  [`csmo()`](https://danigiro.github.io/FoReco/reference/csmo.md),
+  [`temo()`](https://danigiro.github.io/FoReco/reference/temo.md),
+  [`ctmo()`](https://danigiro.github.io/FoReco/reference/ctmo.md),
+  [`cslcc()`](https://danigiro.github.io/FoReco/reference/cslcc.md),
+  [`telcc()`](https://danigiro.github.io/FoReco/reference/telcc.md),
+  [`ctlcc()`](https://danigiro.github.io/FoReco/reference/ctlcc.md),
+  [`csmvn()`](https://danigiro.github.io/FoReco/reference/csmvn.md),
+  [`temvn()`](https://danigiro.github.io/FoReco/reference/temvn.md),
+  [`ctmvn()`](https://danigiro.github.io/FoReco/reference/ctmvn.md),
+  [`cssmp()`](https://danigiro.github.io/FoReco/reference/cssmp.md),
+  [`tesmp()`](https://danigiro.github.io/FoReco/reference/tesmp.md),
+  [`ctsmp()`](https://danigiro.github.io/FoReco/reference/ctsmp.md),
+  [`tcsrec()`](https://danigiro.github.io/FoReco/reference/heuristic-reco.md),
+  [`cstrec()`](https://danigiro.github.io/FoReco/reference/heuristic-reco.md),
+  [`iterec()`](https://danigiro.github.io/FoReco/reference/iterec.md)).
+  The class extends the underlying matrix or distributional object with
+  a `"FoReco"` attribute that stores framework, function used, forecast
+  type (`"point"` or `"probabilistic"`) and reconciliation-specific
+  metadata, and provides dedicated
+  [`print()`](https://rdrr.io/r/base/print.html),
+  [`summary()`](https://rdrr.io/r/base/summary.html),
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html),
+  [`components()`](https://generics.r-lib.org/reference/components.html)
+  methods.
+- Exported low-level constructor
+  [`new_foreco_class()`](https://danigiro.github.io/FoReco/reference/foreco-class.md)
+  so that companion packages can produce objects that integrate with
+  FoReco’s [`print()`](https://rdrr.io/r/base/print.html),
+  [`summary()`](https://rdrr.io/r/base/summary.html),
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) and
+  [`components()`](https://generics.r-lib.org/reference/components.html)
+  methods.
+- Implemented the
+  [`generics::components()`](https://generics.r-lib.org/reference/components.html)
+  method for `foreco` objects, with `cs`, `te`, `keep_names` and
+  `temporal_names` arguments to filter series and temporal aggregation
+  orders.
+
+### Bug fixes and documentation
 
 - Fixed a bug in
   [`csrec()`](https://danigiro.github.io/FoReco/reference/csrec.md) that
   occurred when the constraint matrix was not in the form derived by the
   aggregation matrix.
+- Added `examples` block to every exported function that was previously
+  missing one
+  (e.g. [`teboot()`](https://danigiro.github.io/FoReco/reference/teboot.md)).
+- Revised the `title` field of every file so that all man page titles
+  consistently follow title case.
+- Replaced patterns of the form `t(A) %*% B` and `A %*% t(B)` throughout
+  the internal routines with `crossprod(A, B)` and `tcrossprod(A, B)`
+  respectively.
 
 ## FoReco 1.2.1
 
@@ -144,9 +224,7 @@ CRAN release: 2024-08-20
 
 - **Simplified Function Outputs:** Reconciliation functions now return
   only matrices. Additional information can be accessed using
-  `attr(., "FoReco")` or the
-  [`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md)
-  function.
+  `attr(., "FoReco")` or the `recoinfo()` function.
 
 - **New Datasets:** Two new datasets, `itagdp` (Italian Quarterly
   National Accounts) and `vndata` (Australian Tourism Demand), are
@@ -251,10 +329,8 @@ CRAN release: 2023-05-16
 - Improved docs and bug fixes;
 - Fixed [`ctbu()`](https://danigiro.github.io/FoReco/reference/ctbu.md)
   inputs;
-- Added
-  [`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md)
-  to transform FoReco forecasts input and output in a list of
-  matrix/vector class;
+- Added `FoReco2matrix()` to transform FoReco forecasts input and output
+  in a list of matrix/vector class;
 - Added `agg_ts()`: non-overlapping temporal aggregation of a time
   series according to a specific aggregation order;
 - Added

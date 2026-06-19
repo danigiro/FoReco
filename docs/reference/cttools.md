@@ -1,4 +1,4 @@
-# Cross-temporal reconciliation tools
+# Cross-temporal Reconciliation Tools
 
 Some useful tools for the cross-temporal forecast reconciliation of a
 linearly constrained (e.g., hierarchical/grouped) multiple time series.
@@ -89,7 +89,6 @@ Cross-temporal framework:
 [`tcsrec()`](https://danigiro.github.io/FoReco/reference/heuristic-reco.md)
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -100,7 +99,6 @@ Utilities:
 [`ctprojmat()`](https://danigiro.github.io/FoReco/reference/ctprojmat.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),

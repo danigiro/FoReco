@@ -1,4 +1,4 @@
-# Italian Quarterly National Accounts
+# Italian Quarterly National Accounts Dataset
 
 A subset of the data used by Girolimetto et al. (2023) from the Italian
 Quarterly National Accounts (output, income and expenditure sides)

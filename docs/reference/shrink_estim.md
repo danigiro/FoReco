@@ -1,4 +1,4 @@
-# Shrinkage of the covariance matrix
+# Shrinkage of the Covariance Matrix
 
 Shrinkage of the covariance matrix according to Schäfer and Strimmer
 (2005).
@@ -36,7 +36,6 @@ genomics, *Statistical Applications in Genetics and Molecular Biology*,
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -48,10 +47,22 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_oasd()`](https://danigiro.github.io/FoReco/reference/shrink_oasd.md),
 [`teprojmat()`](https://danigiro.github.io/FoReco/reference/teprojmat.md),
 [`tetools()`](https://danigiro.github.io/FoReco/reference/tetools.md),
 [`unbalance_hierarchy()`](https://danigiro.github.io/FoReco/reference/unbalance_hierarchy.md)
+
+## Examples
+
+``` r
+set.seed(123)
+# Simulated in-sample residuals: 50 observations of a 4-variate process
+res <- matrix(rnorm(50 * 4), nrow = 50, ncol = 4)
+# Schafer-Strimmer shrunk covariance matrix
+shr <- shrink_estim(res)
+# Shrinkage intensity selected by the procedure
+attr(shr, "lambda")
+#> [1] 1
+```

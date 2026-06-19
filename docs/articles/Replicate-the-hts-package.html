@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Replicate the hts package</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2026-04-21</p>
+      <p class="date">2026-06-19</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Replicate-the-hts-package.qmd" class="external-link"><code>vignettes/articles/Replicate-the-hts-package.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -137,6 +137,7 @@
 <span><span class="va">hts_bu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">forecast</a></span><span class="op">(</span><span class="va">htseg2</span>, method <span class="op">=</span> <span class="st">"bu"</span>, fmethod <span class="op">=</span> <span class="st">"arima"</span><span class="op">)</span></span>
 <span><span class="va">FoReco_bu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/csbu.html">csbu</a></span><span class="op">(</span><span class="va">base</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">A</span><span class="op">)</span><span class="op">]</span>, agg_mat <span class="op">=</span> <span class="va">A</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/hts/man/allts.html" class="external-link">allts</a></span><span class="op">(</span><span class="va">hts_bu</span><span class="op">)</span> <span class="op">-</span> <span class="va">FoReco_bu</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
 <span><span class="co">## Top-down</span></span>
@@ -146,6 +147,7 @@
 <span><span class="va">p_gsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">htseg2</span><span class="op">$</span><span class="va">bts</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">htseg2</span><span class="op">$</span><span class="va">bts</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">FoReco_gsa</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cstd.html">cstd</a></span><span class="op">(</span><span class="va">base</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, weights <span class="op">=</span> <span class="va">p_gsa</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/hts/man/allts.html" class="external-link">allts</a></span><span class="op">(</span><span class="va">hts_gsa</span><span class="op">)</span> <span class="op">-</span> <span class="va">FoReco_gsa</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
 <span><span class="co">## Proportions of the historical averages - Gross-Sohl method F</span></span>
@@ -153,6 +155,7 @@
 <span><span class="va">p_gsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">htseg2</span><span class="op">$</span><span class="va">bts</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">htseg2</span><span class="op">$</span><span class="va">bts</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">FoReco_gsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cstd.html">cstd</a></span><span class="op">(</span><span class="va">base</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, weights <span class="op">=</span> <span class="va">p_gsf</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/hts/man/allts.html" class="external-link">allts</a></span><span class="op">(</span><span class="va">hts_gsf</span><span class="op">)</span> <span class="op">-</span> <span class="va">FoReco_gsf</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"</span></span>
 <span><span class="co">#&gt; [1] 0</span></span>
 <span></span>
 <span><span class="co">### Forecast proportions</span></span>
@@ -178,6 +181,7 @@
 <span><span class="va">FoReco_fp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/cstd.html">cstd</a></span><span class="op">(</span><span class="va">base</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, agg_mat <span class="op">=</span> <span class="va">A</span>, weights <span class="op">=</span> <span class="va">p_fp</span>, normalize <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: The `weights` do not add up to 1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/hts/man/allts.html" class="external-link">allts</a></span><span class="op">(</span><span class="va">hts_fp</span><span class="op">)</span> <span class="op">-</span> <span class="va">FoReco_fp</span><span class="op">)</span> <span class="op">&gt;</span> <span class="va">tol</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"</span></span>
 <span><span class="co">#&gt; [1] 0</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="optimal-forecast-reconciliation">Optimal forecast reconciliation<a class="anchor" aria-label="anchor" href="#optimal-forecast-reconciliation"></a>

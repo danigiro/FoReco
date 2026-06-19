@@ -1,4 +1,4 @@
-# Level conditional coherent reconciliation for cross-temporal hierarchies
+# Level Conditional Coherent Reconciliation for Cross-temporal Hierarchies
 
 This function implements a forecast reconciliation procedure inspired by
 the original proposal by Hollyman et al. (2021) for cross-temporal
@@ -175,8 +175,10 @@ ctlcc(base, agg_mat, agg_order, tew = "sum", comb = "ols", res = NULL,
 
 ## Value
 
-A (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal reconciled
-forecasts.
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal
+reconciled forecasts.
 
 ## References
 
@@ -270,7 +272,7 @@ exo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
                 hfbts = naive, res = res, CCC = TRUE)
 
 # Results detailed by level:
-info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+info_exo <- summary(exo_CCC)
 # info_exo$lcc
 
 ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
@@ -283,6 +285,6 @@ endo_CCC <- ctlcc(base = base, agg_mat = A, agg_order = 4, comb = "wlsh",
                   res = res, CCC = TRUE, const = "endogenous")
 
 # Results detailed by level:
-info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+info_endo <- summary(endo_CCC)
 # info_endo$lcc
 ```

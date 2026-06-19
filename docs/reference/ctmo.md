@@ -1,4 +1,4 @@
-# Cross-temporal middle-out reconciliation
+# Cross-temporal Middle-out Reconciliation
 
 The cross-temporal middle-out forecast reconciliation combines top-down
 ([cttd](https://danigiro.github.io/FoReco/reference/cttd.md)) and
@@ -69,8 +69,10 @@ ctmo(base, agg_mat, agg_order, weights, id_rows = 1, order = max(agg_order),
 
 ## Value
 
-A (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal reconciled
-forecasts.
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal
+reconciled forecasts.
 
 ## See also
 

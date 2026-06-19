@@ -1,4 +1,4 @@
-# Australian Tourism Demand dataset
+# Australian Tourism Demand Dataset
 
 The Australian Tourism Demand dataset (Wickramasuriya et al. 2019)
 measures the number of nights Australians spent away from home. It

@@ -1,4 +1,4 @@
-# Level conditional coherent reconciliation for temporal hierarchies
+# Level Conditional Coherent Reconciliation for Temporal Hierarchies
 
 This function implements a forecast reconciliation procedure inspired by
 the original proposal by Hollyman et al. (2021) for temporal
@@ -168,7 +168,9 @@ telcc(base, agg_order, tew = "sum", comb = "ols", res = NULL,
 
 ## Value
 
-A (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
 forecasts.
 
 ## References
@@ -252,7 +254,7 @@ exo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", hfts = naive,
                  res = res, CCC = TRUE)
 
 # Results detailed by level:
-info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+info_exo <- summary(exo_CCC)
 # info_exo$lcc
 
 ## ENDOGENOUS CONSTRAINTS
@@ -265,6 +267,6 @@ endo_CCC <- telcc(base = base, agg_order = 4, comb = "wlsh", res = res,
                   CCC = TRUE, const = "endogenous")
 
 # Results detailed by level:
-info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+info_endo <- summary(endo_CCC)
 # info_endo$lcc
 ```

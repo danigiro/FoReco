@@ -1,4 +1,4 @@
-# Linear combination (aggregation) matrix for a general linearly constrained multiple time series
+# Linear Combination (Aggregation) Matrix for a General Linearly Constrained Multiple Time Series
 
 This function transforms a general (possibly redundant) zero constraints
 matrix into a linear combination (aggregation) matrix
@@ -61,7 +61,6 @@ Cambridge Press.
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -72,7 +71,6 @@ Utilities:
 [`ctprojmat()`](https://danigiro.github.io/FoReco/reference/ctprojmat.md),
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),
@@ -84,7 +82,8 @@ Utilities:
 ## Examples
 
 ``` r
-## Two hierarchy sharing the same top-level variable, but not sharing the bottom variables
+# Two hierarchy sharing the same top-level variable,
+# but not sharing the bottom variables
 #        X            X
 #    |-------|    |-------|
 #    A       B    C       D
@@ -97,7 +96,7 @@ cons_mat <- matrix(c(1,-1,-1,0,0,0,0,
                1,0,0,-1,-1,0,0,
                0,0,0,1,0,-1,-1), nrow = 3, byrow = TRUE)
 obj <- lcmat(cons_mat = cons_mat, verbose = TRUE)
-#> ! A pivot is performed. Remember to apply the pivot also to the base forecast.
+#> ! A pivot is performed. Remind to apply the pivot also to the base forecast.
 #> ℹ E.g. `base[, pivot]` in cross-sectional or `base[pivot, ]` in cross-temporal.
 agg_mat <- obj$agg_mat # linear combination matrix
 pivot <- obj$pivot # Pivot vector

@@ -39,14 +39,18 @@
 #'   aggregation orders to keep, matched against the elements of `te_set`. If
 #'   `NULL` (the default) all orders are returned.
 #' @param alpha Nominal coverage of the prediction interval drawn by
-#' `plot.foreco()` for probabilistic forecasts. Defaults to `0.95`.
-#' @param keep_names Logical; if `TRUE`, the row/column names of the reconciled
+#'   `plot.foreco()` for probabilistic forecasts. Defaults to `0.95`.
+#' @param keep_names Logical. If `TRUE`, the row/column names of the reconciled
 #'   forecasts are preserved in the output of `components.foreco()`. Defaults
 #'   to `FALSE`.
 #' @param temporal_names Optional character vector of labels for the temporal
 #'   aggregation orders returned by `components.foreco()`. Its length must
 #'   match the number of returned orders, otherwise a warning is emitted and
 #'   the default `"k-..."` labels are used.
+#' @param simplify Logical. If \code{TRUE} and the result consists of a single
+#'   component, the underlying object (a matrix or vector) is returned directly
+#'   instead of being wrapped in a named list of length one. If \code{FALSE}
+#'   (default), the output is always a named list.
 #' @param ... Additional arguments passed to the underlying methods
 #'   (e.g. `print()`).
 #'
@@ -243,12 +247,23 @@ print.summary_foreco <- function(
 
   if (!is.null(x$info)) {
     cli_h3("Non-negative reconciliation diagnostics")
-    print(x$info)
+    print(head(x$info, n = 5))
+    if (NROW(x$info) > 5) {
+      cli_alert_info(
+        "Showing the first 5 rows of the non-negativity diagnostics info matrix."
+      )
+    }
   }
 
   if (!is.null(x$object)) {
     cli_h3("Reconciled forecasts")
-    print(x$object, n_row = n_row, n_col = n_col)
+    print_foreco(
+      x$object,
+      n_row = n_row,
+      n_col = n_col,
+      .caller = "print",
+      .name = deparse(substitute(x))
+    )
   }
 
   invisible(x)
@@ -264,61 +279,7 @@ style_comment <- cli::make_ansi_style(
 #' @method print foreco
 #' @export
 print.foreco <- function(x, n_row = NULL, n_col = NULL, ...) {
-  name_x <- deparse(substitute(x))
-  if (is.matrix(x)) {
-    attr(x, "FoReco") <- NULL
-
-    check_null_values <- is.null(n_row) || is.null(n_col)
-    nr <- nrow(x)
-    nc <- ncol(x)
-    n_row <- if (is.null(n_row)) nr else min(as.integer(n_row), nr)
-    n_col <- if (is.null(n_col)) nc else min(as.integer(n_col), nc)
-
-    if (n_row < nr || n_col < nc) {
-      x <- x[seq_len(n_row), seq_len(n_col), drop = FALSE]
-    }
-
-    print(.drop_foreco(x), ...)
-    if (n_row < nr || n_col < nc) {
-      cat(
-        "... (",
-        nr - n_row,
-        " more row",
-        if (nr - n_row != 1L) "s" else "",
-        ", ",
-        nc - n_col,
-        " more column",
-        if (nc - n_col != 1L) "s" else "",
-        ")\n",
-        style_comment(
-          paste0(
-            "Use `print(",
-            name_x,
-            ", n_row = ..., n_col = ...)` to see more rows and columns."
-          )
-        ),
-        "\n",
-        sep = ""
-      )
-    } else if (check_null_values) {
-      cat(
-        style_comment(
-          paste0(
-            "All rows and columns are shown.\n",
-            "Use `print(",
-            name_x,
-            ", n_row = ..., n_col = ...)` to limit the output."
-          )
-        ),
-        "\n"
-      )
-    }
-  } else {
-    attr(x, "FoReco") <- NULL
-    print(.drop_foreco(x))
-  }
-
-  invisible(x)
+  print_foreco(x = x, n_row = n_row, n_col = n_col, ...)
 }
 
 #' @rdname foreco-class
@@ -473,6 +434,7 @@ components.foreco <- function(
   te = NULL,
   keep_names = FALSE,
   temporal_names = NULL,
+  simplify = FALSE,
   ...
 ) {
   fr <- summary(object)
@@ -494,7 +456,11 @@ components.foreco <- function(
       x <- x[, cs, drop = FALSE]
     }
 
-    return(list("k-1" = x))
+    if (simplify) {
+      return(x)
+    } else {
+      return(list("k-1" = x))
+    }
   } else {
     id <- rep(set, h * max(set) / set)
 
@@ -553,7 +519,12 @@ components.foreco <- function(
         )
       }
     }
-    return(out)
+
+    if (simplify && length(out) == 1) {
+      return(out[[1]])
+    } else {
+      return(out)
+    }
   }
 }
 
@@ -611,4 +582,130 @@ distr_to_point <- function(x, attr_info) {
   attr(x, "FoReco")$rtype <- "point"
   class(x) <- c("foreco", class(x))
   return(x)
+}
+
+
+print_foreco <- function(
+  x,
+  n_row = NULL,
+  n_col = NULL,
+  .caller = "print",
+  .name = NULL,
+  ...
+) {
+  if (is.null(.name)) {
+    name_x <- deparse(substitute(x))
+  } else {
+    name_x <- .name
+  }
+  class_x <- class(x)
+  if (is.matrix(x)) {
+    attr(x, "FoReco") <- NULL
+
+    check_null_values <- is.null(n_row) || is.null(n_col)
+    nr <- nrow(x)
+    nc <- ncol(x)
+    n_row <- if (is.null(n_row)) nr else min(as.integer(n_row), nr)
+    n_col <- if (is.null(n_col)) nc else min(as.integer(n_col), nc)
+
+    if (n_row < nr || n_col < nc) {
+      x <- x[seq_len(n_row), seq_len(n_col), drop = FALSE]
+    }
+
+    print(.drop_foreco(x), ...)
+    if (n_row < nr || n_col < nc) {
+      cat(
+        "... (",
+        nr - n_row,
+        " more row",
+        if (nr - n_row != 1L) "s" else "",
+        ", ",
+        nc - n_col,
+        " more column",
+        if (nc - n_col != 1L) "s" else "",
+        ")\n",
+        style_comment(
+          paste0(
+            "Use `",
+            .caller,
+            "(",
+            name_x,
+            ", n_row, n_col)` to see more rows and columns."
+          )
+        ),
+        "\n",
+        sep = ""
+      )
+    } else if (check_null_values) {
+      cat(
+        style_comment(
+          paste0(
+            "All rows and columns are shown.\n",
+            "Use `print(",
+            name_x,
+            ", n_row, n_col)` to limit the output."
+          )
+        ),
+        "\n"
+      )
+    }
+  } else if (NCOL(x) == 1) {
+    attr(x, "FoReco") <- NULL
+
+    check_null_values <- is.null(n_row)
+    nr <- length(x)
+    n_row <- if (is.null(n_row)) nr else min(as.integer(n_row), nr)
+
+    if (n_row < nr) {
+      x <- x[seq_len(n_row)]
+    }
+
+    print(.drop_foreco(x), ...)
+    if (n_row < nr) {
+      cat(
+        "... (",
+        nr - n_row,
+        " more element",
+        if (nr - n_row != 1L) "s" else "",
+        ")\n",
+        style_comment(
+          paste0(
+            "Use `print(",
+            name_x,
+            ", n_row)` to see more elements."
+          )
+        ),
+        "\n",
+        sep = ""
+      )
+    } else if (check_null_values) {
+      cat(
+        style_comment(
+          paste0(
+            "All elements are shown. ",
+            "Use `print(",
+            name_x,
+            ", n_row)` to limit the output."
+          )
+        ),
+        "\n"
+      )
+    }
+  } else {
+    attr(x, "FoReco") <- NULL
+    print(.drop_foreco(x))
+  }
+  cat(
+    style_comment(
+      paste0(
+        "Class structure: ",
+        class_x[1],
+        " > ",
+        class_x[2]
+      )
+    ),
+    "\n"
+  )
+
+  invisible(x)
 }

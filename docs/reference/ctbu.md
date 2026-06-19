@@ -1,4 +1,4 @@
-# Cross-temporal bottom-up reconciliation
+# Cross-temporal Bottom-up Reconciliation
 
 Cross-temporal bottom-up reconciled forecasts for all series at any
 temporal aggregation level are computed by appropriate summation of the
@@ -44,8 +44,8 @@ ctbu(base, agg_mat, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 - sntz:
 
   Logical. If `TRUE`, the negative base forecasts are set to zero (Di
-  Fonzo and Girolimetto, 2023) before applying bottom-up. *Default* is
-  `FALSE`.
+  Fonzo and Girolimetto, 2023; Girolimetto 2025) before applying
+  bottom-up. *Default* is `FALSE`.
 
 - round:
 
@@ -54,8 +54,10 @@ ctbu(base, agg_mat, agg_order, tew = "sum", sntz = FALSE, round = FALSE)
 
 ## Value
 
-A (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal reconciled
-forecasts.
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal
+reconciled forecasts.
 
 ## References
 

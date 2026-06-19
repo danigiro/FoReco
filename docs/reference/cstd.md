@@ -1,4 +1,4 @@
-# Cross-sectional top-down reconciliation
+# Cross-sectional Top-down Reconciliation
 
 Top-down forecast reconciliation for genuine hierarchical/grouped time
 series (Gross and Sohl, 1990), where the forecast of a \`Total'
@@ -42,7 +42,9 @@ cstd(base, agg_mat, weights, normalize = TRUE)
 
 ## Value
 
-A (\\h \times n\\) numeric matrix of cross-sectional reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h \times n\\) numeric matrix of cross-sectional reconciled
 forecasts.
 
 ## References

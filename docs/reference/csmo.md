@@ -1,4 +1,4 @@
-# Cross-sectional middle-out reconciliation
+# Cross-sectional Middle-out Reconciliation
 
 The middle-out forecast reconciliation (Athanasopoulos et al., 2009)
 combines top-down
@@ -47,7 +47,9 @@ csmo(base, agg_mat, weights, id_rows = 1, normalize = TRUE)
 
 ## Value
 
-A (\\h \times n\\) numeric matrix of cross-sectional reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h \times n\\) numeric matrix of cross-sectional reconciled
 forecasts.
 
 ## References

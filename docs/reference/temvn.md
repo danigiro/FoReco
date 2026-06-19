@@ -1,4 +1,4 @@
-# Temporal Gaussian probabilistic reconciliation
+# Temporal Gaussian Probabilistic Reconciliation
 
 This function performs temporal probabilistic forecast reconciliation
 assuming a multivariate normal base forecast distribution (Girolimetto
@@ -96,7 +96,8 @@ temvn(base, agg_order, tew = "sum", comb = "ols", res = NULL,
 
 A
 [distributional::dist_multivariate_normal](https://pkg.mitchelloharawild.com/distributional/reference/dist_multivariate_normal.html)
-object.
+of reconciled forecasts, of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md)).
 
 ## References
 
@@ -154,5 +155,5 @@ base <- rnorm(7*2, rep(c(20, 10, 5), 2*c(1, 2, 4)))
 res <- rnorm(70)
 
 m <- 4 # from quarterly to annual temporal aggregation
-reco_dist <- terec(base = base, agg_order = m, comb = "wlsv", res = res)
+reco_dist <- temvn(base = base, agg_order = m, comb = "wlsv", res = res)
 ```

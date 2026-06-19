@@ -1,4 +1,4 @@
-# Temporal covariance matrix approximation
+# Temporal Covariance Matrix Approximation
 
 This function provides an approximation of the temporal base forecasts
 errors covariance matrix using different reconciliation methods (see Di

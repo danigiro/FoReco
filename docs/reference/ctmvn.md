@@ -1,4 +1,4 @@
-# Cross-temporal Gaussian probabilistic reconciliation
+# Cross-temporal Gaussian Probabilistic Reconciliation
 
 This function performs cross-temporal probabilistic forecast
 reconciliation assuming a multivariate normal base forecast distribution
@@ -114,7 +114,8 @@ ctmvn(base, agg_mat, cons_mat, agg_order, tew = "sum", comb = "ols",
 
 A
 [distributional::dist_multivariate_normal](https://pkg.mitchelloharawild.com/distributional/reference/dist_multivariate_normal.html)
-object.
+of reconciled forecasts, of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md)).
 
 ## References
 

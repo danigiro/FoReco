@@ -67,6 +67,7 @@ tol <- 1e-7
 hts_bu <- forecast(htseg2, method = "bu", fmethod = "arima")
 FoReco_bu <- csbu(base[, colnames(A)], agg_mat = A)
 sum(abs(allts(hts_bu) - FoReco_bu) > tol)
+#> Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"
 #> [1] 0
 
 ## Top-down
@@ -76,6 +77,7 @@ hts_gsa <- forecast(htseg2, method = "tdgsa", fmethod = "arima")
 p_gsa <- colMeans(apply(htseg2$bts, 2, function(x) x/rowSums(htseg2$bts)))
 FoReco_gsa <- cstd(base[, 1], agg_mat = A, weights = p_gsa)
 sum(abs(allts(hts_gsa) - FoReco_gsa) > tol)
+#> Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"
 #> [1] 0
 
 ## Proportions of the historical averages - Gross-Sohl method F
@@ -83,6 +85,7 @@ hts_gsf <- forecast(htseg2, method = "tdgsf", fmethod = "arima")
 p_gsf <- colMeans(htseg2$bts)/mean(rowSums(htseg2$bts))
 FoReco_gsf <- cstd(base[, 1], agg_mat = A, weights = p_gsf)
 sum(abs(allts(hts_gsf) - FoReco_gsf) > tol)
+#> Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"
 #> [1] 0
 
 ### Forecast proportions
@@ -108,6 +111,7 @@ for(i in 1:NROW(base)){
 FoReco_fp <- cstd(base[, 1], agg_mat = A, weights = p_fp, normalize = F)
 #> Warning: The `weights` do not add up to 1
 sum(abs(allts(hts_fp) - FoReco_fp) > tol)
+#> Warning: Incompatible methods ("Ops.ts", "Ops.foreco") for "-"
 #> [1] 0
 ```
 

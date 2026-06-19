@@ -102,16 +102,32 @@ temporal levels ([Girolimetto et al., 2024](#ref-Girolimetto2023-jm)).
 
 fc_bts <- base$`k-1`
 rf_bu <- tebu(fc_bts, agg_order = m)
-str(rf_bu, give.attr = FALSE)
-#>  Named num [1:28] 2.137 1.069 1.069 0.712 0.712 ...
+summary(rf_bu)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `tebu`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Reconciled forecasts
+#> k-12 h-1  k-6 h-1  k-6 h-2  k-4 h-1 
+#> 2.137377 1.068688 1.068688 0.712459 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 To obtain a list of forecasts at different orders of aggregation, we can
-use the `FoReco2matrix` function.
+use the `components` function.
 
 ``` r
 
-str(FoReco2matrix(rf_bu), give.attr=FALSE)
+str(components(rf_bu), give.attr=FALSE)
 #> List of 6
 #>  $ k-12: num 2.14
 #>  $ k-6 : num [1:2] 1.07 1.07
@@ -135,14 +151,46 @@ fc_x12 <- base$`k-12`
 # Average historical proportions - Gross-Sohl method A
 p_gsa <- colMeans(apply(y_mat, 2, function(x) x/x12), na.rm = TRUE)
 rf_td_gsa <- tetd(fc_x12, agg_order = m, weights = p_gsa)
-str(rf_td_gsa, give.attr = FALSE)
-#>  Named num [1:28] 1.314 0.497 0.818 0.216 0.791 ...
+summary(rf_td_gsa)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `tetd`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 1.3142157 0.4965682 0.8176475 0.2156414 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > foreco
 
 # Proportions of the historical averages - Gross-Sohl method F
 p_gsf <- colMeans(y_mat)/mean(x12)
 rf_td_gsf <- tetd(fc_x12, agg_order = m, weights = p_gsf)
-str(rf_td_gsf, give.attr = FALSE)
-#>  Named num [1:28] 1.314 0.501 0.813 0.079 0.99 ...
+summary(rf_td_gsf)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `tetd`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 1.3142157 0.5007542 0.8134615 0.0790347 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > foreco
 ```
 
 To perform temporal reconciliation with `FoReco` using the base
@@ -164,8 +212,25 @@ of the original proposal by Hollyman et al.
 
 rf_lcc <- telcc(base = base_vec, agg_order = m,
                 res = res_vec, comb = "wlsv")
-str(rf_lcc, give.attr = FALSE)
-#>  Named num [1:28] 1.326 0.663 0.663 0.442 0.442 ...
+summary(rf_lcc)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `telcc`
+#> • Covariance approximation approach: `wlsv`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 1.3258648 0.6629324 0.6629324 0.4419549 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 Finally we can obtained the optimal (in least squares sense) combination
@@ -176,8 +241,25 @@ temporal reconciled forecast ([Athanasopoulos et al.,
 
 rf_opt <- terec(base = base_vec, agg_order = m,
                 res = res_vec, comb = "sar1")
-str(rf_opt, give.attr = FALSE)
-#>  Named num [1:28] 1.329 0.665 0.665 0.443 0.443 ...
+summary(rf_opt)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `terec`
+#> • Covariance approximation approach: `sar1`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 1.3291002 0.6645501 0.6645501 0.4432082 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 The following table shows some options for the optimal combination
@@ -198,11 +280,25 @@ case of an shrinkage covariance matrix (`"shr"`).
 
 rf_opt_shr <- terec(base = base_vec, agg_order = m,
                     res = res_vec, comb = "shr")
-recoinfo(rf_opt_shr)
-#> ✔ Optimal Temporal Forecast Reconciliation
-#> ℹ FoReco function: `terec`
-#> ℹ Covariance approximation: `shr`
-#> ℹ Non-negative forecasts: `FALSE`
+summary(rf_opt_shr)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `terec`
+#> • Covariance approximation approach: `shr`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `FALSE`
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 0.9952037 0.5299384 0.4652653 0.4565095 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 To address this issue, we can use two approaches:
@@ -214,14 +310,29 @@ To address this issue, we can use two approaches:
 
 rf_osqp <- terec(base = base_vec, agg_order = m,
                 res = res_vec, comb = "shr", nn = "osqp")
-tmp <- recoinfo(rf_osqp)
-#> ✔ Optimal Temporal Forecast Reconciliation
-#> ℹ FoReco function: `terec`
-#> ℹ Covariance approximation: `shr`
-#> ℹ Non-negative forecasts: `TRUE`
-tmp$info # OSQP information matrix 
+summary(rf_osqp)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `terec`
+#> • Covariance approximation approach: `shr`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Non-negative reconciliation diagnostics
 #>     obj_val    run_time iter     prim_res status status_polish
-#> 1 -16.58821 0.000257666   50 2.828089e-17      1             1
+#> 1 -16.58821 0.000263166   50 5.551115e-17      1             1
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 1.0625336 0.5934914 0.4690422 0.4557664 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** ([Di Fonzo &
@@ -231,11 +342,29 @@ tmp$info # OSQP information matrix
 
 rf_sntz <- terec(base = base_vec, agg_order = m,
                 res = res_vec, comb = "shr", nn = "sntz")
-recoinfo(rf_sntz)
-#> ✔ Optimal Temporal Forecast Reconciliation
-#> ℹ FoReco function: `terec`
-#> ℹ Covariance approximation: `shr`
-#> ℹ Non-negative forecasts: `TRUE`
+summary(rf_sntz)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `terec`
+#> • Covariance approximation approach: `shr`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Non-negative reconciliation diagnostics
+#>       run_time          tol iter
+#> 1 2.861023e-06 1.490116e-08    0
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 1.0632623 0.5954494 0.4678130 0.4565095 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 #### A priori constrained (immutable) forecasts
@@ -250,8 +379,25 @@ forecasts values.
 
 rf_imm <- terec(base = base_vec, agg_order = m,
                 res = res_vec, comb = "sar1", immutable = rbind(c(12,1)))
-str(rf_imm, give.attr = FALSE)
-#>  Named num [1:28] 1.314 0.657 0.657 0.438 0.438 ...
+summary(rf_imm)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `terec`
+#> • Covariance approximation approach: `sar1`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
+#> 1.3142157 0.6571078 0.6571078 0.4382244 
+#> ... (24 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 ``` r
@@ -275,8 +421,25 @@ base_vec2 <- unlist(base[paste0("k-", te_subset)], use.names = FALSE)
 res_vec2 <- unlist(res[paste0("k-", te_subset)], use.names = FALSE)
 rf_sub <- terec(base = base_vec2, agg_order = te_subset,
                 res = res_vec2, comb = "sar1")
-str(rf_sub, give.attr = FALSE)
-#>  Named num [1:17] 1.48 0.371 0.369 0.369 0.371 ...
+summary(rf_sub)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `terec`
+#> • Covariance approximation approach: `sar1`
+#> • Output: unknown object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 3, and 1
+#> • Forecast horizons (h) per k: 1, 4, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Reconciled forecasts
+#>  k-12 h-1   k-3 h-1   k-3 h-2   k-3 h-3 
+#> 1.4803010 0.3710480 0.3691025 0.3691025 
+#> ... (13 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric
 ```
 
 ### Probabilistic Reconciliation
@@ -295,18 +458,41 @@ simulate \\B\\ samples and then reconciled them.
 # we simulate from the base models by sampling errors 
 # while keeping the cross-sectional dimension fixed.
 B <- 100
-base_tejb <- teboot(model, B, m)$sample
+base_tejb <- teboot(model, B, m)
 dim(base_tejb)
 #> [1] 100  28
 reco_tejb <- tesmp(base_tejb, agg_order = m, res = res_vec, nn = "sntz", comb = "sar1")
-reco_tejb # distribution object
+summary(reco_tejb)
+#> ✔ Temporal probabilistic forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `tesmp(terec)`
+#> • Covariance approximation approach: `sar1`
+#> • Output: distributional object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Non-negative reconciliation diagnostics
+#>        run_time          tol iter
+#> 6  5.960464e-06 1.490116e-08    0
+#> 9  5.960464e-06 1.490116e-08    0
+#> 10 5.960464e-06 1.490116e-08    0
+#> 12 5.960464e-06 1.490116e-08    0
+#> 13 5.960464e-06 1.490116e-08    0
+#> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
+#> 
+#> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100]
+#> sample[100] 
+#> Class structure: foreco > distribution
 
 # Extracts mean:
 str(as_tevector(mean(reco_tejb), agg_order = m), give.attr = FALSE)
-#>  Named num [1:28] 6.002 1.192 4.81 0.517 4.279 ...
+#>  Named num [1:28] 6.867 3.432 3.435 0.556 5.308 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian) to generate
@@ -316,10 +502,23 @@ the incoherent sample set of forecasts.
 
 # Gaussian reconciled distribution
 reco_teg_sar1 <- temvn(base = base_vec, agg_order = m, comb = "sar1", res = res_vec)
-reco_teg_sar1 # distribution object
+summary(reco_teg_sar1)
+#> ✔ Temporal probabilistic forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `temvn`
+#> • Covariance approximation approach: `sar1`
+#> • Output: distributional object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 2, 4, 6, 8, 12, and 24
+#> 
+#> ── Reconciled forecasts
 #> <distribution[1]>
 #>   tao-1 
-#> MVN[28]
+#> MVN[28] 
+#> Class structure: foreco > distribution
 
 # Gaussian reconciled distribution with different base covariance matrix
 # Multi-step residuals
@@ -332,18 +531,54 @@ cov_base <- shrink_estim(mres)
 
 reco_teg <- temvn(base = base_vec, agg_order = m, comb = "sar1", 
                     res = res_vec, comb_base = cov_base)
-reco_teg # distribution object
+summary(reco_teg) 
+#> ✔ Temporal probabilistic forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `temvn`
+#> • Covariance approximation approach: `sar1`
+#> • Output: distributional object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 2, 4, 6, 8, 12, and 24
+#> 
+#> ── Reconciled forecasts
 #> <distribution[1]>
 #>   tao-1 
-#> MVN[28]
+#> MVN[28] 
+#> Class structure: foreco > distribution
 
 # Reconciled sample distribution starting from gaussian base forecasts
 base_tes <- MASS::mvrnorm(n = B, mu = base_vec, Sigma = shrink_estim(mres))
 reco_tes <- tesmp(base_tes, agg_order = m, res = res_vec, nn = "sntz", comb = "sar1")
-reco_tes # distribution object
+summary(reco_tes)
+#> ✔ Temporal probabilistic forecast reconciliation
+#> 
+#> ── Method
+#> • Function used: `tesmp(terec)`
+#> • Covariance approximation approach: `sar1`
+#> • Output: distributional object
+#> 
+#> ── Structure
+#> • Temporal orders (k): 12, 6, 4, 3, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, 3, 4, 6, and 12
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Non-negative reconciliation diagnostics
+#>       run_time          tol iter
+#> 1 9.059906e-06 1.490116e-08    0
+#> 2 9.059906e-06 1.490116e-08    0
+#> 3 9.059906e-06 1.490116e-08    0
+#> 4 9.059906e-06 1.490116e-08    0
+#> 5 9.059906e-06 1.490116e-08    0
+#> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
+#> 
+#> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100]
+#> sample[100] 
+#> Class structure: foreco > distribution
 ```
 
 ## References

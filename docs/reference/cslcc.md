@@ -1,4 +1,4 @@
-# Level conditional coherent reconciliation for genuine hierarchical/grouped time series
+# Level Conditional Coherent Reconciliation for Genuine Hierarchical/Grouped Time Series
 
 This function implements the cross-sectional forecast reconciliation
 procedure that extends the original proposal by Hollyman et al. (2021).
@@ -159,7 +159,9 @@ cslcc(base, agg_mat, comb = "ols", res = NULL, approach = "proj", nn = NULL,
 
 ## Value
 
-A (\\h \times n\\) numeric matrix of cross-sectional reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h \times n\\) numeric matrix of cross-sectional reconciled
 forecasts.
 
 ## References
@@ -248,25 +250,31 @@ exo_CCC <- cslcc(base = base, agg_mat = A, comb = "wls", bts = naive,
 # L-1: Level 1 immutable reconciled forecasts for the whole hierarchy
 # L-2: Middle-Out reconciled forecasts
 # L-3: Bottom-Up reconciled forecasts
-info_exo <- recoinfo(exo_CCC, verbose = FALSE)
+info_exo <- summary(exo_CCC)
 info_exo$lcc
 #> $`L-1`
 #>          s-1      s-2      s-3      s-4      s-5      s-6      s-7
 #> h-1 39.43952 19.76757 19.67196 9.893588 9.873979 9.744387 9.927570
 #> h-2 38.73494 19.47537 19.25957 9.759815 9.715556 9.423051 9.836517
-#> attr(,"FoReco")
+#> All rows and columns are shown.
+#> Use `print(x, n_row, n_col)` to limit the output. 
+#> Class structure: foreco > matrix 
 #> 
 #> $`L-2`
 #>          s-1      s-2      s-3      s-4      s-5       s-6       s-7
 #> h-1 41.32853 19.76982 21.55871 9.894620 9.875202 11.214555 10.344153
 #> h-2 38.86749 19.31315 19.55434 9.685546 9.627601  9.652737  9.901601
-#> attr(,"FoReco")
+#> All rows and columns are shown.
+#> Use `print(x, n_row, n_col)` to limit the output. 
+#> Class structure: foreco > matrix 
 #> 
 #> $`L-3`
 #>          s-1     s-2      s-3      s-4      s-5      s-6      s-7
 #> h-1 42.37578 20.1998 22.17598 10.07051 10.12929 11.71506 10.46092
 #> h-2 42.09535 21.5839 20.51145 11.22408 10.35981 10.40077 10.11068
-#> attr(,"FoReco")
+#> All rows and columns are shown.
+#> Use `print(x, n_row, n_col)` to limit the output. 
+#> Class structure: foreco > matrix 
 #> 
 
 ## ENDOGENOUS CONSTRAINTS (Di Fonzo and Girolimetto, 2024)
@@ -284,24 +292,30 @@ endo_CCC <- cslcc(base = base, agg_mat = A, comb = "wls",
 # L-1: Level 1 reconciled forecasts for L1 + L3 (bottom level)
 # L-2: Level 2 reconciled forecasts for L2 + L3 (bottom level)
 # L-3: Bottom-Up reconciled forecasts
-info_endo <- recoinfo(endo_CCC, verbose = FALSE)
+info_endo <- summary(endo_CCC)
 info_endo$lcc
 #> $`L-1`
 #>          s-1      s-2      s-3       s-4      s-5       s-6       s-7
 #> h-1 40.23685 19.31277 20.92408  9.664411 9.648359 10.739579 10.184505
 #> h-2 39.64745 20.56873 19.07871 10.759321 9.809413  9.284371  9.794343
-#> attr(,"FoReco")
+#> All rows and columns are shown.
+#> Use `print(x, n_row, n_col)` to limit the output. 
+#> Class structure: foreco > matrix 
 #> 
 #> $`L-2`
 #>          s-1      s-2      s-3       s-4      s-5       s-6       s-7
 #> h-1 41.70862 19.94714 21.76149  9.954836 9.992300 11.392087 10.369398
 #> h-2 40.11832 20.24956 19.86876 10.613199 9.636364  9.899977  9.968779
-#> attr(,"FoReco")
+#> All rows and columns are shown.
+#> Use `print(x, n_row, n_col)` to limit the output. 
+#> Class structure: foreco > matrix 
 #> 
 #> $`L-3`
 #>          s-1     s-2      s-3      s-4      s-5      s-6      s-7
 #> h-1 42.37578 20.1998 22.17598 10.07051 10.12929 11.71506 10.46092
 #> h-2 42.09535 21.5839 20.51145 11.22408 10.35981 10.40077 10.11068
-#> attr(,"FoReco")
+#> All rows and columns are shown.
+#> Use `print(x, n_row, n_col)` to limit the output. 
+#> Class structure: foreco > matrix 
 #> 
 ```

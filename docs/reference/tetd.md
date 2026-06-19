@@ -1,4 +1,4 @@
-# Temporal top-down reconciliation
+# Temporal Top-down Reconciliation
 
 Top-down forecast reconciliation for a univariate time series, where the
 forecast of the most aggregated temporal level is disaggregated
@@ -48,7 +48,9 @@ tetd(base, agg_order, weights, tew = "sum", normalize = TRUE)
 
 ## Value
 
-A (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
 forecasts.
 
 ## See also

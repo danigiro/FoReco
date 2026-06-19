@@ -1,4 +1,4 @@
-# Cross-sectional covariance matrix approximation
+# Cross-sectional Covariance Matrix Approximation
 
 This function provides an approximation of the cross-sectional base
 forecasts errors covariance matrix using different reconciliation

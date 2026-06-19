@@ -1,4 +1,4 @@
-# Optimal combination temporal reconciliation
+# Optimal Combination Temporal Reconciliation
 
 This function performs forecast reconciliation for a single time series
 using temporal hierarchies (Athanasopoulos et al., 2017, Nystrup et al.,
@@ -173,7 +173,9 @@ terec(base, agg_order, tew = "sum", comb = "ols", res = NULL,
 
 ## Value
 
-A (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h(k^\ast+m) \times 1\\) numeric vector of temporal reconciled
 forecasts.
 
 ## References
@@ -263,7 +265,27 @@ immreco <- terec(base = base, agg_order = m, comb = "wlsv",
 base[7] <- -base[7] # Making negative one of the quarterly base forecasts
 nnreco <- terec(base = base, agg_order = m, comb = "wlsv",
                 res = res, nn = "osqp")
-recoinfo(nnreco, verbose = FALSE)$info
+summary(nnreco)
+#> ✔ Temporal point forecast reconciliation
+#> 
+#> ── Method 
+#> • Function used: `terec`
+#> • Covariance approximation approach: `wlsv`
+#> • Output: unknown object
+#> 
+#> ── Structure 
+#> • Temporal orders (k): 4, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, and 4
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Non-negative reconciliation diagnostics 
 #>     obj_val   run_time iter     prim_res status status_polish
-#> 1 -421.8914 4.4833e-05   25 9.816134e-16      1             1
+#> 1 -421.8914 4.2041e-05   25 9.816134e-16      1             1
+#> 
+#> ── Reconciled forecasts 
+#>   k-4 h-1   k-2 h-1   k-2 h-2   k-1 h-1 
+#> 19.265312 10.043448  9.221864  4.992334 
+#> ... (3 more elements)
+#> Use `print(x, n_row)` to see more elements.
+#> Class structure: foreco > numeric 
 ```

@@ -1,4 +1,4 @@
-# Iterative cross-temporal reconciliation
+# Iterative Cross-temporal Reconciliation
 
 This function performs the iterative procedure described in Di Fonzo and
 Girolimetto (2023), which produces cross-temporally reconciled forecasts
@@ -70,8 +70,10 @@ iterec(base, cslist, telist, res = NULL, itmax = 100, tol = 1e-5,
 
 ## Value
 
-A (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal reconciled
-forecasts.
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal
+reconciled forecasts.
 
 ## References
 

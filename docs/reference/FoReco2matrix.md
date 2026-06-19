@@ -1,4 +1,4 @@
-# Reconciled forecasts to matrix/vector
+# Reconciled Forecasts to Matrix/Vector
 
 This function splits the temporal vectors and the cross-temporal
 matrices in a list according to the temporal aggregation order
@@ -49,7 +49,6 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),
@@ -69,8 +68,10 @@ base <- rbind(rnorm(7, rep(c(20, 10, 5), c(1, 2, 4))),
 
 reco <- ctrec(base = base, agg_mat = t(c(1,1)), agg_order = 4, comb = "ols")
 matrix_list <- FoReco2matrix(reco)
+#> Error in FoReco2matrix(reco): could not find function "FoReco2matrix"
 
 # With temporal names
 temporal_names <- c("Annual", "Semi-annual", "Quarterly")
 matrix_list <- FoReco2matrix(reco, temporal_names = temporal_names)
+#> Error in FoReco2matrix(reco, temporal_names = temporal_names): could not find function "FoReco2matrix"
 ```

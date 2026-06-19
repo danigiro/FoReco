@@ -1,4 +1,4 @@
-# Heuristic cross-temporal reconciliation
+# Heuristic Cross-temporal Reconciliation
 
 tcsrec replicates the procedure by Kourentzes and Athanasopoulos (2019):
 (i) for each time series the forecasts at any temporal aggregation order
@@ -62,8 +62,10 @@ cstrec(base, cslist, telist, res = NULL)
 
 ## Value
 
-A (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal reconciled
-forecasts.
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal
+reconciled forecasts.
 
 ## Warning
 
@@ -117,7 +119,7 @@ rtcs <- tcsrec(base = base,
                telist = list(agg_order = m, comb = "wlsv"),
                res = res)
 
-rcst <- tcsrec(base = base,
+rcst <- cstrec(base = base,
                cslist = list(agg_mat = A, comb = "shr"),
                telist = list(agg_order = m, comb = "wlsv"),
                res = res)

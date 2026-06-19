@@ -1,4 +1,4 @@
-# Convert between horizon-stacked and cross-temporal layouts
+# Convert Between Horizon-stacked and Cross-temporal Layouts
 
 These functions convert matrix between the two canonical layouts used in
 cross-temporal reconciliation. Let \\m\\ be the maximum temporal
@@ -69,7 +69,6 @@ as_hstack_ctlayout returns a \\h \times n(k^\ast+m)\\ numeric matrix in
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
 [`balance_hierarchy()`](https://danigiro.github.io/FoReco/reference/balance_hierarchy.md),
@@ -80,7 +79,6 @@ Utilities:
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`df2aggmat()`](https://danigiro.github.io/FoReco/reference/df2aggmat.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),

@@ -28,6 +28,7 @@ new_foreco_class(reco, framework, rfun, rtype, rinfo = NULL, nninfo = NULL)
   te = NULL,
   keep_names = FALSE,
   temporal_names = NULL,
+  simplify = FALSE,
   ...
 )
 
@@ -81,7 +82,7 @@ aggregation orders to keep, matched against the elements of \code{te_set}. If
 \item{alpha}{Nominal coverage of the prediction interval drawn by
 \code{plot.foreco()} for probabilistic forecasts. Defaults to \code{0.95}.}
 
-\item{keep_names}{Logical; if \code{TRUE}, the row/column names of the reconciled
+\item{keep_names}{Logical. If \code{TRUE}, the row/column names of the reconciled
 forecasts are preserved in the output of \code{components.foreco()}. Defaults
 to \code{FALSE}.}
 
@@ -89,6 +90,11 @@ to \code{FALSE}.}
 aggregation orders returned by \code{components.foreco()}. Its length must
 match the number of returned orders, otherwise a warning is emitted and
 the default \code{"k-..."} labels are used.}
+
+\item{simplify}{Logical. If \code{TRUE} and the result consists of a single
+component, the underlying object (a matrix or vector) is returned directly
+instead of being wrapped in a named list of length one. If \code{FALSE}
+(default), the output is always a named list.}
 }
 \value{
 A \code{foreco} object extending the reconciled forecasts/distributions with

@@ -1,4 +1,4 @@
-# Optimal combination cross-sectional reconciliation
+# Optimal Combination Cross-sectional Reconciliation
 
 This function performs optimal (in least squares sense) combination
 cross-sectional forecast reconciliation for a linearly constrained
@@ -160,7 +160,9 @@ csrec(base, agg_mat, cons_mat, comb = "ols", res = NULL, approach = "proj",
 
 ## Value
 
-A (\\h \times n\\) numeric matrix of cross-sectional reconciled
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\h \times n\\) numeric matrix of cross-sectional reconciled
 forecasts.
 
 ## References
@@ -262,7 +264,26 @@ reco <- csrec(base = base, cons_mat = C, comb = "wls", res = res)
 base[1,3] <- -base[1,3]
 nnreco <- csrec(base = base, agg_mat = A, comb = "wls", res = res,
                 nn = "osqp")
-recoinfo(nnreco, verbose = FALSE)$info
+summary(nnreco)
+#> ✔ Cross-sectional point forecast reconciliation
+#> 
+#> ── Method 
+#> • Function used: `csrec`
+#> • Covariance approximation approach: `wls`
+#> • Output: (2 x 3) matrix
+#> 
+#> ── Structure 
+#> • Number of cross-sectional series: 3
+#> • Forecast horizons (h): 2
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Non-negative reconciliation diagnostics 
 #>     obj_val   run_time iter     prim_res status status_polish
-#> 1 -352.4619 3.7874e-05   25 1.242965e-15      1             1
+#> 1 -352.4619 2.7999e-05   25 1.242965e-15      1             1
+#> 
+#> ── Reconciled forecasts 
+#>         s-1       s-2      s-3
+#> h-1 15.8337 15.833701  0.00000
+#> h-2 20.4696  9.458141 11.01146
+#> Class structure: foreco > matrix 
 ```

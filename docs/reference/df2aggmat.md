@@ -1,4 +1,4 @@
-# Cross-sectional aggregation matrix of a dataframe
+# Cross-sectional Aggregation Matrix of a Dataframe
 
 This function allows the user to easily build the (\\n_a \times n_b\\)
 cross-sectional aggregation matrix starting from a data frame.
@@ -48,7 +48,6 @@ A (`na x nb`) matrix.
 ## See also
 
 Utilities:
-[`FoReco2matrix()`](https://danigiro.github.io/FoReco/reference/FoReco2matrix.md),
 [`aggts()`](https://danigiro.github.io/FoReco/reference/aggts.md),
 [`as_ctmatrix()`](https://danigiro.github.io/FoReco/reference/ctmatrix_layouts.md),
 [`as_tevector()`](https://danigiro.github.io/FoReco/reference/tematrix_layouts.md),
@@ -59,7 +58,6 @@ Utilities:
 [`ctprojmat()`](https://danigiro.github.io/FoReco/reference/ctprojmat.md),
 [`cttools()`](https://danigiro.github.io/FoReco/reference/cttools.md),
 [`lcmat()`](https://danigiro.github.io/FoReco/reference/lcmat.md),
-[`recoinfo()`](https://danigiro.github.io/FoReco/reference/recoinfo.md),
 [`res2matrix()`](https://danigiro.github.io/FoReco/reference/residuals.md),
 [`set_bounds()`](https://danigiro.github.io/FoReco/reference/set_bounds.md),
 [`shrink_estim()`](https://danigiro.github.io/FoReco/reference/shrink_estim.md),

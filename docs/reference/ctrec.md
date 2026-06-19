@@ -1,4 +1,4 @@
-# Optimal combination cross-temporal reconciliation
+# Optimal Combination Cross-temporal Reconciliation
 
 This function performs optimal (in least squares sense) combination
 cross-temporal forecast reconciliation (Di Fonzo and Girolimetto 2023a,
@@ -198,8 +198,10 @@ ctrec(base, agg_mat, cons_mat, agg_order, tew = "sum", comb = "ols",
 
 ## Value
 
-A (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal reconciled
-forecasts.
+An object of class `foreco` (see
+[foreco-class](https://danigiro.github.io/FoReco/reference/foreco-class.md))
+with a (\\n \times h(k^\ast+m)\\) numeric matrix of cross-temporal
+reconciled forecasts.
 
 ## References
 
@@ -300,7 +302,30 @@ immreco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv",
 base[2,7] <- -2*base[2,7]
 nnreco <- ctrec(base = base, cons_mat = C, agg_order = m, comb = "wlsv",
                 res = res, nn = "osqp")
-recoinfo(nnreco, verbose = FALSE)$info
-#>     obj_val   run_time iter     prim_res status status_polish
-#> 1 -635.7645 9.5832e-05   25 8.881784e-16      1             1
+summary(nnreco)
+#> ✔ Cross-temporal point forecast reconciliation
+#> 
+#> ── Method 
+#> • Function used: `ctrec`
+#> • Covariance approximation approach: `wlsv`
+#> • Output: (3 x 7) matrix
+#> 
+#> ── Structure 
+#> • Number of cross-sectional series: 3
+#> • Temporal orders (k): 4, 2, and 1
+#> • Forecast horizons (h) per k: 1, 2, and 4
+#> • Non-negative forecasts (check): `TRUE`
+#> 
+#> ── Non-negative reconciliation diagnostics 
+#>     obj_val    run_time iter     prim_res status status_polish
+#> 1 -635.7645 0.000106624   25 8.881784e-16      1             1
+#> 
+#> ── Reconciled forecasts 
+#>       k-4 h-1  k-2 h-1   k-2 h-2  k-1 h-1  k-1 h-2  k-1 h-3
+#> s-1 20.010693 9.804085 10.206608 4.644146 5.159939 6.547623
+#> s-2  8.967576 4.485662  4.481914 3.012989 1.472672 4.481914
+#> s-3 11.043117 5.318423  5.724694 1.631157 3.687266 2.065709
+#> ... (0 more rows, 1 more column)
+#> Use `print(x, n_row, n_col)` to see more rows and columns.
+#> Class structure: foreco > matrix 
 ```

@@ -1,4 +1,4 @@
-# Cross-temporal covariance matrix approximation
+# Cross-temporal Covariance Matrix Approximation
 
 This function provides an approximation of the cross-temporal base
 forecasts errors covariance matrix using different reconciliation
