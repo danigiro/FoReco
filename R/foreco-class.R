@@ -279,7 +279,13 @@ style_comment <- cli::make_ansi_style(
 #' @method print foreco
 #' @export
 print.foreco <- function(x, n_row = NULL, n_col = NULL, ...) {
-  print_foreco(x = x, n_row = n_row, n_col = n_col, ...)
+  print_foreco(
+    x = x,
+    n_row = n_row,
+    n_col = n_col,
+    .name = deparse(substitute(x)),
+    ...
+  )
 }
 
 #' @rdname foreco-class
