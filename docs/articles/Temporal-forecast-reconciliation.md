@@ -119,7 +119,6 @@ summary(rf_bu)
 #> 2.137377 1.068688 1.068688 0.712459 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 To obtain a list of forecasts at different orders of aggregation, we can
@@ -168,7 +167,6 @@ summary(rf_td_gsa)
 #> 1.3142157 0.4965682 0.8176475 0.2156414 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > foreco
 
 # Proportions of the historical averages - Gross-Sohl method F
 p_gsf <- colMeans(y_mat)/mean(x12)
@@ -190,7 +188,6 @@ summary(rf_td_gsf)
 #> 1.3142157 0.5007542 0.8134615 0.0790347 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > foreco
 ```
 
 To perform temporal reconciliation with `FoReco` using the base
@@ -230,7 +227,6 @@ summary(rf_lcc)
 #> 1.3258648 0.6629324 0.6629324 0.4419549 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 Finally we can obtained the optimal (in least squares sense) combination
@@ -259,7 +255,6 @@ summary(rf_opt)
 #> 1.3291002 0.6645501 0.6645501 0.4432082 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 The following table shows some options for the optimal combination
@@ -298,7 +293,6 @@ summary(rf_opt_shr)
 #> 0.9952037 0.5299384 0.4652653 0.4565095 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 To address this issue, we can use two approaches:
@@ -325,14 +319,13 @@ summary(rf_osqp)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>     obj_val    run_time iter     prim_res status status_polish
-#> 1 -16.58821 0.000249207   50 5.551115e-17      1             1
+#> 1 -16.58821 0.000254749   50 5.551115e-17      1             1
 #> 
 #> ── Reconciled forecasts
 #>  k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1 
 #> 1.0625336 0.5934914 0.4690422 0.4557664 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** ([Di Fonzo &
@@ -364,7 +357,6 @@ summary(rf_sntz)
 #> 1.0632623 0.5954494 0.4678130 0.4565095 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 #### A priori constrained (immutable) forecasts
@@ -397,7 +389,6 @@ summary(rf_imm)
 #> 1.3142157 0.6571078 0.6571078 0.4382244 
 #> ... (24 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 ``` r
@@ -439,7 +430,6 @@ summary(rf_sub)
 #> 1.4803010 0.3710480 0.3691025 0.3691025 
 #> ... (13 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > numeric
 ```
 
 ### Probabilistic Reconciliation
@@ -477,22 +467,21 @@ summary(reco_tejb)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>        run_time          tol iter
-#> 2  5.960464e-06 1.490116e-08    0
-#> 5  5.960464e-06 1.490116e-08    0
-#> 6  5.960464e-06 1.490116e-08    0
-#> 14 5.960464e-06 1.490116e-08    0
-#> 15 5.960464e-06 1.490116e-08    0
+#> 11 6.914139e-06 1.490116e-08    0
+#> 12 6.914139e-06 1.490116e-08    0
+#> 13 6.914139e-06 1.490116e-08    0
+#> 21 6.914139e-06 1.490116e-08    0
+#> 22 6.914139e-06 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100]
 
 # Extracts mean:
 str(as_tevector(mean(reco_tejb), agg_order = m), give.attr = FALSE)
-#>  Named num [1:28] 5.878 1.651 4.227 0.639 4.024 ...
+#>  Named num [1:28] 5.968 2.046 3.922 0.548 4.145 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian) to generate
@@ -517,8 +506,7 @@ summary(reco_teg_sar1)
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>   tao-1 
-#> MVN[28] 
-#> Class structure: foreco > distribution
+#> MVN[28]
 
 # Gaussian reconciled distribution with different base covariance matrix
 # Multi-step residuals
@@ -546,8 +534,7 @@ summary(reco_teg)
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>   tao-1 
-#> MVN[28] 
-#> Class structure: foreco > distribution
+#> MVN[28]
 
 # Reconciled sample distribution starting from gaussian base forecasts
 base_tes <- MASS::mvrnorm(n = B, mu = base_vec, Sigma = shrink_estim(mres))
@@ -567,18 +554,17 @@ summary(reco_tes)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 8.106232e-06 1.490116e-08    0
-#> 2 8.106232e-06 1.490116e-08    0
-#> 3 8.106232e-06 1.490116e-08    0
-#> 4 8.106232e-06 1.490116e-08    0
-#> 5 8.106232e-06 1.490116e-08    0
+#> 1 1.001358e-05 1.490116e-08    0
+#> 2 1.001358e-05 1.490116e-08    0
+#> 3 1.001358e-05 1.490116e-08    0
+#> 4 1.001358e-05 1.490116e-08    0
+#> 5 1.001358e-05 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100]
 ```
 
 ## References

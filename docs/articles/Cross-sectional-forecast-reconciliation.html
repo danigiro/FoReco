@@ -34,7 +34,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">FoReco</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.3.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
       <img src="../logo.svg" class="logo" alt=""><h1>Cross-sectional forecast reconciliation</h1>
 
       <p class="author">Daniele Girolimetto</p>
-      <p class="date">2026-06-19</p>
+      <p class="date">2026-06-25</p>
 
       <small class="dont-index">Source: <a href="https://github.com/danigiro/FoReco/blob/HEAD/vignettes/articles/Cross-sectional-forecast-reconciliation.qmd" class="external-link"><code>vignettes/articles/Cross-sectional-forecast-reconciliation.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -161,8 +161,7 @@
 <span><span class="co">#&gt; h-3 20585.12  6592.540  4482.910 4183.151 1301.891 2849.777</span></span>
 <span><span class="co">#&gt; h-4 25563.48  8609.232  5174.437 5631.049 1729.393 3352.184</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <p>In the top-down reconciliation for genuine hierarchical/grouped time series <span class="citation" data-cites="Gross1990-uf">(<a href="#ref-Gross1990-uf" role="doc-biblioref">Gross &amp; Sohl, 1990</a>)</span>, the forecast of <code>Total</code> (top-level series, expected to be positive) is disaggregated according to a proportional scheme (weights) such that:</p>
 <ul>
@@ -198,7 +197,6 @@
 <span><span class="co">#&gt; h-4 29799.97  9561.352 5682.958  7860.916 2010.601 3082.425</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
 <span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; foreco</span></span>
 <span></span>
 <span><span class="co"># Proportions of the historical averages - Gross-Sohl method F</span></span>
 <span><span class="va">p_gsf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums-methods.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">bts</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">total</span><span class="op">)</span></span>
@@ -222,8 +220,7 @@
 <span><span class="co">#&gt; h-3 24566.98  7933.423 4744.628  6404.201 1663.975 2522.900</span></span>
 <span><span class="co">#&gt; h-4 29799.97  9623.313 5755.277  7768.354 2018.417 3060.301</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; foreco</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <p>The level conditional coherent reconciliation (LCC) is a generalization of the the original proposal by <span class="citation" data-cites="Hollyman2021-zq">Hollyman et al. (<a href="#ref-Hollyman2021-zq" role="doc-biblioref">2021</a>)</span> where the reconciled forecasts are conditional to (i.e., constrained by) the base forecasts of a specific upper level of the hierarchy <span class="citation" data-cites="DiFonzo2024-ijf">(<a href="#ref-DiFonzo2024-ijf" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2024</a>)</span>.</p>
 <div class="cell">
@@ -250,8 +247,7 @@
 <span><span class="co">#&gt; h-3 23275.65  7339.439  5072.770 4895.165 1509.840 3108.643</span></span>
 <span><span class="co">#&gt; h-4 28275.20  9332.229  5714.468 6388.531 1894.417 3671.172</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <p>Finally we can obtained the optimal (in least squares sense) combination cross-sectional reconciled forecast <span class="citation" data-cites="Wickramasuriya2019 Panagiotelis2021-rh Girolimetto2023-ft">(<a href="#ref-Girolimetto2023-ft" role="doc-biblioref">Girolimetto &amp; Di Fonzo, 2023</a>; <a href="#ref-Panagiotelis2021-rh" role="doc-biblioref">Panagiotelis et al., 2021</a>; <a href="#ref-Wickramasuriya2019" role="doc-biblioref">Wickramasuriya et al., 2018</a>)</span>.</p>
 <div class="cell">
@@ -277,8 +273,7 @@
 <span><span class="co">#&gt; h-3 24815.28  7597.319  5422.476  5169.599 1691.818 3334.412</span></span>
 <span><span class="co">#&gt; h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <p>The following table shows some options for the optimal combination cross-sectional reconciliation function <code><a href="../reference/csrec.html">csrec()</a></code>.</p>
 <style type="text/css">
@@ -388,8 +383,7 @@ supported
 <span><span class="co">#&gt; h-3 24815.28  7597.319  5422.476  5169.599 1691.818 3334.412</span></span>
 <span><span class="co">#&gt; h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <p>To address this issue, we can use two approaches:</p>
 <ul>
@@ -413,7 +407,7 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;     obj_val  run_time iter     prim_res status status_polish</span></span>
-<span><span class="co">#&gt; 1 -3197.129 0.1774314  500 2.073845e-11      1             1</span></span>
+<span><span class="co">#&gt; 1 -3197.129 0.1883435  500 2.073845e-11      1             1</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt;        Total         A         B         C        D        E</span></span>
@@ -422,8 +416,7 @@ supported
 <span><span class="co">#&gt; h-3 24815.28  7597.319  5422.476  5169.599 1691.818 3334.412</span></span>
 <span><span class="co">#&gt; h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <ul>
 <li>Simple heuristic strategy: set-negative-to-zero, <strong>sntz</strong> <span class="citation" data-cites="Di_Fonzo2023-ae">(<a href="#ref-Di_Fonzo2023-ae" role="doc-biblioref">Di Fonzo &amp; Girolimetto, 2023</a>)</span>.</li>
@@ -447,7 +440,7 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;       run_time          tol iter</span></span>
-<span><span class="co">#&gt; 1 8.821487e-06 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 1 1.001358e-05 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt;        Total         A         B         C        D        E</span></span>
@@ -456,8 +449,7 @@ supported
 <span><span class="co">#&gt; h-3 24815.28  7597.319  5422.476  5169.599 1691.818 3334.412</span></span>
 <span><span class="co">#&gt; h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 </section><section class="level3"><h4 id="a-priori-constrained-immutable-forecasts">A priori constrained (immutable) forecasts<a class="anchor" aria-label="anchor" href="#a-priori-constrained-immutable-forecasts"></a>
 </h4>
@@ -485,8 +477,7 @@ supported
 <span><span class="co">#&gt; h-3 24397.73  7685.102  5426.145  4932.492 1679.915 3188.778</span></span>
 <span><span class="co">#&gt; h-4 29663.68  9787.558  6028.565  6497.439 2021.066 3872.930</span></span>
 <span><span class="co">#&gt; ... (8 more rows, 519 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="downlit sourceCode r">
@@ -533,11 +524,11 @@ supported
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
 <span><span class="co">#&gt;      run_time          tol iter</span></span>
-<span><span class="co">#&gt; 1 0.002269983 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 2 0.002269983 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 3 0.002269983 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 4 0.002269983 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 5 0.002269983 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 1 0.002312899 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 2 0.002312899 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 3 0.002312899 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 4 0.002312899 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 5 0.002312899 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
@@ -546,11 +537,10 @@ supported
 <span><span class="co">#&gt; sample[100] sample[100] sample[100] sample[100] </span></span>
 <span><span class="co">#&gt; ... (8 more elements)</span></span>
 <span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span>
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:12, 1:525] 50024 21686 25301 29973 23541 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:12, 1:525] 49632 21863 24884 29685 23302 ...</span></span></code></pre></div>
 </div>
 <p>A parametric method assumes a normal distribution (Gaussian), to generate the incoherent sample set of forecasts.</p>
 <div class="cell">
@@ -591,12 +581,12 @@ supported
 <span><span class="co">#&gt; • Non-negative forecasts (check): `TRUE`</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Non-negative reconciliation diagnostics</span></span>
-<span><span class="co">#&gt;      run_time          tol iter</span></span>
-<span><span class="co">#&gt; 1 0.001087904 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 2 0.001087904 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 3 0.001087904 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 4 0.001087904 1.490116e-08    0</span></span>
-<span><span class="co">#&gt; 5 0.001087904 1.490116e-08    0</span></span>
+<span><span class="co">#&gt;       run_time          tol iter</span></span>
+<span><span class="co">#&gt; 1 0.0009860992 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 2 0.0009860992 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 3 0.0009860992 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 4 0.0009860992 1.490116e-08    0</span></span>
+<span><span class="co">#&gt; 5 0.0009860992 1.490116e-08    0</span></span>
 <span><span class="co">#&gt; ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
@@ -604,8 +594,7 @@ supported
 <span><span class="co">#&gt;         h-1         h-2         h-3         h-4 </span></span>
 <span><span class="co">#&gt; sample[100] sample[100] sample[100] sample[100] </span></span>
 <span><span class="co">#&gt; ... (8 more elements)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row)` to see more elements.</span></span></code></pre></div>
 </div>
 </section></section><section class="section level2"><h2 id="itagdp-general-linearly-constrained-multiple-time-series">
 <code>itagdp</code>: general linearly constrained multiple time series<a class="anchor" aria-label="anchor" href="#itagdp-general-linearly-constrained-multiple-time-series"></a>
@@ -665,8 +654,7 @@ supported
 <span><span class="co">#&gt; h-3 451278.0 172359.1 429331.7 354245.5 75086.25    276233.6</span></span>
 <span><span class="co">#&gt; h-4 482268.9 208754.0 464192.2 369154.7 95037.46    271789.6</span></span>
 <span><span class="co">#&gt; ... (0 more rows, 15 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <section class="level3"><h4 id="practical-challenge-immutable-forecast">Practical challenge: immutable forecast<a class="anchor" aria-label="anchor" href="#practical-challenge-immutable-forecast"></a>
 </h4>
@@ -694,8 +682,7 @@ supported
 <span><span class="co">#&gt; h-3 451935.2 172407.3 429701.2 354347.1 75354.13    276293.9</span></span>
 <span><span class="co">#&gt; h-4 483302.0 208829.7 464773.1 369314.5 95458.58    271884.3</span></span>
 <span><span class="co">#&gt; ... (0 more rows, 15 more columns)</span></span>
-<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; matrix</span></span></code></pre></div>
+<span><span class="co">#&gt; Use `print(x, n_row, n_col)` to see more rows and columns.</span></span></code></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="downlit sourceCode r">
@@ -730,12 +717,11 @@ supported
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt; &lt;distribution[4]&gt;</span></span>
 <span><span class="co">#&gt;         h-1         h-2         h-3         h-4 </span></span>
-<span><span class="co">#&gt; sample[100] sample[100] sample[100] sample[100] </span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span>
+<span><span class="co">#&gt; sample[100] sample[100] sample[100] sample[100]</span></span>
 <span></span>
 <span><span class="co"># Extracts mean:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">reco_csjb</span><span class="op">)</span>, give.attr <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  num [1:4, 1:21] 434228 452963 451142 481849 169111 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  num [1:4, 1:21] 434413 453137 450430 481573 169002 ...</span></span></code></pre></div>
 </div>
 <p>Alternatively, we can use a parametric method.</p>
 <div class="cell">
@@ -778,8 +764,7 @@ supported
 <span><span class="co">#&gt; ── Reconciled forecasts</span></span>
 <span><span class="co">#&gt; &lt;distribution[4]&gt;</span></span>
 <span><span class="co">#&gt;         h-1         h-2         h-3         h-4 </span></span>
-<span><span class="co">#&gt; sample[100] sample[100] sample[100] sample[100] </span></span>
-<span><span class="co">#&gt; Class structure: foreco &gt; distribution</span></span></code></pre></div>
+<span><span class="co">#&gt; sample[100] sample[100] sample[100] sample[100]</span></span></code></pre></div>
 </div>
 </section></section><section class="section level2"><h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>

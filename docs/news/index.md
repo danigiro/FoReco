@@ -1,6 +1,10 @@
 # Changelog
 
+## FoReco (development version)
+
 ## FoReco 1.3.0
+
+CRAN release: 2026-06-22
 
 ### Breaking changes
 

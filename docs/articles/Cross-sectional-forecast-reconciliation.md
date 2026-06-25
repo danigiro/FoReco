@@ -105,7 +105,6 @@ summary(rf_bu)
 #> h-4 25563.48  8609.232  5174.437 5631.049 1729.393 3352.184
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 In the top-down reconciliation for genuine hierarchical/grouped time
@@ -146,7 +145,6 @@ summary(rf_td_gsa)
 #> h-4 29799.97  9561.352 5682.958  7860.916 2010.601 3082.425
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > foreco
 
 # Proportions of the historical averages - Gross-Sohl method F
 p_gsf <- colMeans(bts)/mean(total)
@@ -171,7 +169,6 @@ summary(rf_td_gsf)
 #> h-4 29799.97  9623.313 5755.277  7768.354 2018.417 3060.301
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > foreco
 ```
 
 The level conditional coherent reconciliation (LCC) is a generalization
@@ -206,7 +203,6 @@ summary(rf_lcc)
 #> h-4 28275.20  9332.229  5714.468 6388.531 1894.417 3671.172
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 Finally we can obtained the optimal (in least squares sense) combination
@@ -239,7 +235,6 @@ summary(rf_opt)
 #> h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 The following table shows some options for the optimal combination
@@ -278,7 +273,6 @@ summary(rf_opt)
 #> h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 To address this issue, we can use two approaches:
@@ -304,7 +298,7 @@ summary(rf_osqp) # OSQP information matrix
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>     obj_val  run_time iter     prim_res status status_polish
-#> 1 -3197.129 0.1774314  500 2.073845e-11      1             1
+#> 1 -3197.129 0.1883435  500 2.073845e-11      1             1
 #> 
 #> ── Reconciled forecasts
 #>        Total         A         B         C        D        E
@@ -314,7 +308,6 @@ summary(rf_osqp) # OSQP information matrix
 #> h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** ([Di Fonzo &
@@ -339,7 +332,7 @@ summary(rf_sntz)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 8.821487e-06 1.490116e-08    0
+#> 1 1.001358e-05 1.490116e-08    0
 #> 
 #> ── Reconciled forecasts
 #>        Total         A         B         C        D        E
@@ -349,7 +342,6 @@ summary(rf_sntz)
 #> h-4 29432.98  9453.527  5950.275  6592.491 2040.414 3892.674
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 #### A priori constrained (immutable) forecasts
@@ -384,7 +376,6 @@ summary(rf_imm)
 #> h-4 29663.68  9787.558  6028.565  6497.439 2021.066 3872.930
 #> ... (8 more rows, 519 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 ``` r
@@ -440,11 +431,11 @@ summary(reco_csjb)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>      run_time          tol iter
-#> 1 0.002269983 1.490116e-08    0
-#> 2 0.002269983 1.490116e-08    0
-#> 3 0.002269983 1.490116e-08    0
-#> 4 0.002269983 1.490116e-08    0
-#> 5 0.002269983 1.490116e-08    0
+#> 1 0.002312899 1.490116e-08    0
+#> 2 0.002312899 1.490116e-08    0
+#> 3 0.002312899 1.490116e-08    0
+#> 4 0.002312899 1.490116e-08    0
+#> 5 0.002312899 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -453,11 +444,10 @@ summary(reco_csjb)
 #> sample[100] sample[100] sample[100] sample[100] 
 #> ... (8 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > distribution
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:12, 1:525] 50024 21686 25301 29973 23541 ...
+#>  num [1:12, 1:525] 49632 21863 24884 29685 23302 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -501,12 +491,12 @@ summary(reco_css)
 #> • Non-negative forecasts (check): `TRUE`
 #> 
 #> ── Non-negative reconciliation diagnostics
-#>      run_time          tol iter
-#> 1 0.001087904 1.490116e-08    0
-#> 2 0.001087904 1.490116e-08    0
-#> 3 0.001087904 1.490116e-08    0
-#> 4 0.001087904 1.490116e-08    0
-#> 5 0.001087904 1.490116e-08    0
+#>       run_time          tol iter
+#> 1 0.0009860992 1.490116e-08    0
+#> 2 0.0009860992 1.490116e-08    0
+#> 3 0.0009860992 1.490116e-08    0
+#> 4 0.0009860992 1.490116e-08    0
+#> 5 0.0009860992 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -515,7 +505,6 @@ summary(reco_css)
 #> sample[100] sample[100] sample[100] sample[100] 
 #> ... (8 more elements)
 #> Use `print(x, n_row)` to see more elements.
-#> Class structure: foreco > distribution
 ```
 
 ## `itagdp`: general linearly constrained multiple time series
@@ -588,7 +577,6 @@ summary(rf_opt)
 #> h-4 482268.9 208754.0 464192.2 369154.7 95037.46    271789.6
 #> ... (0 more rows, 15 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 #### Practical challenge: immutable forecast
@@ -620,7 +608,6 @@ summary(rf_imm)
 #> h-4 483302.0 208829.7 464773.1 369314.5 95458.58    271884.3
 #> ... (0 more rows, 15 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 ``` r
@@ -659,12 +646,11 @@ summary(reco_csjb)
 #> ── Reconciled forecasts
 #> <distribution[4]>
 #>         h-1         h-2         h-3         h-4 
-#> sample[100] sample[100] sample[100] sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100] sample[100] sample[100] sample[100]
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:4, 1:21] 434228 452963 451142 481849 169111 ...
+#>  num [1:4, 1:21] 434413 453137 450430 481573 169002 ...
 ```
 
 Alternatively, we can use a parametric method.
@@ -709,8 +695,7 @@ summary(reco_css)
 #> ── Reconciled forecasts
 #> <distribution[4]>
 #>         h-1         h-2         h-3         h-4 
-#> sample[100] sample[100] sample[100] sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100] sample[100] sample[100] sample[100]
 ```
 
 ## References

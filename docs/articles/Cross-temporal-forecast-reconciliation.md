@@ -139,7 +139,6 @@ summary(rf_bu)
 #> C      69366.03  32688.48  36677.55  22773.06 22923.39 23669.58
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 To obtain a list of forecasts at different orders of aggregation, we can
@@ -194,7 +193,6 @@ summary(rf_td_gsa)
 #> C      85397.48  39956.82  45440.66  27996.67 28007.38  29393.44
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > foreco
 
 # Proportions of the historical averages - Gross-Sohl method F
 p_gsf <- apply(bts_mat, 2, function(y){
@@ -222,7 +220,6 @@ summary(rf_td_gsf)
 #> C      85289.86  39911.00  45378.86  27963.87 27969.69  29356.30
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > foreco
 ```
 
 To perform cross-temporal reconciliation with FoReco using the complete
@@ -268,7 +265,6 @@ summary(rf_lcc)
 #> C      79421.25  37508.95  41912.30  26046.70 26248.17  27126.39
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 The iterative procedure described in Di Fonzo & Girolimetto
@@ -327,7 +323,6 @@ summary(rf_ite)
 #> C      80221.08  37794.23  42426.85  26292.03 26508.79  27420.25
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 The cross-temporal method by Kourentzes & Athanasopoulos
@@ -368,7 +363,6 @@ summary(rf_tcs)
 #> C      80090.80  37731.19  42359.60  26253.76 26455.23  27381.81
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 rf_cst <- cstrec(base = base_mat, res = res_mat,
                  cslist = list(agg_mat = vnaggmat, comb = "shr"), 
                  telist = list(agg_order = m, comb = "wlsv"))
@@ -394,7 +388,6 @@ summary(rf_cst)
 #> C      80416.33  37890.65  42525.68  26369.61 26560.39  27486.33
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 Finally we can obtained the optimal (in least squares sense) combination
@@ -428,7 +421,6 @@ summary(rf_opt)
 #> C      77793.96  36597.82  41196.14  25458.94 25729.03  26606.00
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 The following table shows some options for the optimal combination
@@ -471,7 +463,6 @@ summary(rf_ols)
 #> C      79771.73  37507.25  42264.49  26215.22 26231.87  27324.65
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 To address this issue, we can use two approaches:
@@ -499,7 +490,7 @@ summary(rf_osqp) # OSQP information matrix
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>         obj_val run_time iter     prim_res status status_polish
-#> 1 -220421550178 11.61353  100 7.152467e-22      1             1
+#> 1 -220421550178 12.28267  100 7.152467e-22      1             1
 #> 
 #> ── Reconciled forecasts
 #>        k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1  k-4 h-2   k-4 h-3
@@ -509,7 +500,6 @@ summary(rf_osqp) # OSQP information matrix
 #> C      79772.05  37507.45  42264.60  26215.47 26231.76  27324.83
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 - Simple heuristic strategy: set-negative-to-zero, **sntz** ([Di Fonzo &
@@ -535,7 +525,7 @@ summary(rf_sntz)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 1.001358e-05 1.490116e-08    0
+#> 1 2.503395e-05 1.490116e-08    0
 #> 
 #> ── Reconciled forecasts
 #>        k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1  k-4 h-2   k-4 h-3
@@ -545,7 +535,6 @@ summary(rf_sntz)
 #> C      79855.06  37564.75  42290.31  26261.46 26243.13  27350.47
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 #### A priori constrained (immutable) forecasts
@@ -582,7 +571,6 @@ summary(rf_imm)
 #> C      79347.67  37374.67  41973.00  25976.84 26246.93  27123.90
 #> ... (521 more rows, 22 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 ``` r
@@ -628,7 +616,6 @@ summary(rf_sub)
 #> C      77556.52 19098.27 17339.99 22163.56 18954.70  9779.126
 #> ... (521 more rows, 11 more columns)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 ### Probabilistic forecast reconciliation
@@ -651,9 +638,9 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m) 
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
-#>  $ : num [1:525, 1:28] 331408 102430 66257 76281 21865 ...
-#>  $ : num [1:525, 1:28] 341516 103703 66673 79246 20532 ...
-#>  $ : num [1:525, 1:28] 356882 102430 72814 86461 21771 ...
+#>  $ : num [1:525, 1:28] 329951 101384 63231 80663 21751 ...
+#>  $ : num [1:525, 1:28] 331564 99976 64008 79848 21893 ...
+#>  $ : num [1:525, 1:28] 309171 97214 63243 75583 20454 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
                       res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
@@ -673,18 +660,17 @@ summary(reco_ctjb)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 0.0006680489 1.490116e-08    0
-#> 2 0.0006680489 1.490116e-08    0
-#> 3 0.0006680489 1.490116e-08    0
-#> 4 0.0006680489 1.490116e-08    0
-#> 5 0.0006680489 1.490116e-08    0
+#> 1 0.0007350445 1.490116e-08    0
+#> 2 0.0007350445 1.490116e-08    0
+#> 3 0.0007350445 1.490116e-08    0
+#> 4 0.0007350445 1.490116e-08    0
+#> 5 0.0007350445 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100]
 
 # Extracts mean:
 mean_ctjb <- mean(reco_ctjb)
@@ -692,7 +678,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = sum(dim(vnaggmat)), 
                          row_names = unlist(dimnames(vnaggmat)))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:525, 1:28] 324703 98401 64736 81009 20421 ...
+#>  num [1:525, 1:28] 327989 98798 65657 81125 20639 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -713,8 +699,7 @@ reco_ctg_wlsv # distribution object
 #> <distribution[1]>
 #>      tao-1 
 #> MVN[14700] 
-#> All elements are shown. Use `print(x, n_row)` to limit the output. 
-#> Class structure: foreco > distribution
+#> All elements are shown. Use `print(x, n_row)` to limit the output.
 
 # Gaussian reconciled distribution with different base covariance matrix
 # Multi-step residuals
@@ -759,18 +744,17 @@ summary(reco_cts)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 0.0008831024 1.490116e-08    0
-#> 2 0.0008831024 1.490116e-08    0
-#> 3 0.0008831024 1.490116e-08    0
-#> 4 0.0008831024 1.490116e-08    0
-#> 5 0.0008831024 1.490116e-08    0
+#> 1 0.0009059906 1.490116e-08    0
+#> 2 0.0009059906 1.490116e-08    0
+#> 3 0.0009059906 1.490116e-08    0
+#> 4 0.0009059906 1.490116e-08    0
+#> 5 0.0009059906 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100]
 ```
 
 ## `itagdp`: general linearly constrained multiple quarterly time series
@@ -869,7 +853,6 @@ summary(rf_opt)
 #> P3    1417380.6 696115.0 721265.6 345387.2 350727.8 353386.0
 #> ... (17 more rows, 1 more column)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 #### Practical challenge: immutable forecast
@@ -904,7 +887,6 @@ summary(rf_imm)
 #> P3    1418685.0 696685.6 721999.4 345652.1 351033.4 353726.5
 #> ... (17 more rows, 1 more column)
 #> Use `print(x, n_row, n_col)` to see more rows and columns.
-#> Class structure: foreco > matrix
 ```
 
 ``` r
@@ -928,8 +910,8 @@ base_ctjb <- ctboot(model, B, agg_order = m)
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
 #>  $ : num [1:21, 1:7] 1821647 743804 1770804 1442052 333871 ...
-#>  $ : num [1:21, 1:7] 1773577 731082 1692280 1385844 307399 ...
-#>  $ : num [1:21, 1:7] 1825237 738841 1757021 1426951 331837 ...
+#>  $ : num [1:21, 1:7] 1822313 739358 1763155 1439877 330675 ...
+#>  $ : num [1:21, 1:7] 1819285 752538 1756781 1423806 334557 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
                       res = res_mat, comb = "wlsv")
@@ -950,8 +932,7 @@ summary(reco_ctjb)
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100]
 
 # Extracts mean:
 mean_ctjb <- mean(reco_ctjb)
@@ -959,7 +940,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = NCOL(gdpconsmat), 
                          row_names = colnames(gdpconsmat))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:21, 1:7] 1810213 731770 1741225 1416560 324665 ...
+#>  num [1:21, 1:7] 1814864 733444 1746798 1419871 326927 ...
 ```
 
 Alternatively, we can use a parametric method.
@@ -973,8 +954,7 @@ reco_ctg_wlsv # distribution object
 #> <distribution[1]>
 #>    tao-1 
 #> MVN[147] 
-#> All elements are shown. Use `print(x, n_row)` to limit the output. 
-#> Class structure: foreco > distribution
+#> All elements are shown. Use `print(x, n_row)` to limit the output.
 
 # Gaussian reconciled distribution with different base covariance matrix
 # Multi-step residuals
@@ -1006,8 +986,7 @@ summary(reco_ctg_wls)
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>    tao-1 
-#> MVN[147] 
-#> Class structure: foreco > distribution
+#> MVN[147]
 
 # Reconciled sample distribution starting from Gaussian base forecasts - faster approach
 base_cts <- GMCM::rmvnormal(B, mu = as_hstack_ctlayout(base_mat, agg_order = m), 
@@ -1036,8 +1015,7 @@ summary(reco_cts)
 #> ── Reconciled forecasts
 #> <distribution[1]>
 #>       tao-1 
-#> sample[100] 
-#> Class structure: foreco > distribution
+#> sample[100]
 ```
 
 ## References

@@ -176,13 +176,13 @@ print(reco)
 #> h-2 19.89911  9.769823 10.12929
 #> h-3 23.27377 11.558708 11.71506
 #> All rows and columns are shown.
-#> Use `print(x, n_row, n_col)` to limit the output. 
+#> Use `print(reco, n_row, n_col)` to limit the output. 
 print(reco, n_row = 2, n_col = 2)
 #>          s-1      s-2
 #> h-1 19.51003 9.439524
 #> h-2 19.89911 9.769823
 #> ... (1 more row, 1 more column)
-#> Use `print(x, n_row, n_col)` to see more rows and columns.
+#> Use `print(reco, n_row, n_col)` to see more rows and columns.
 summary(reco)
 #> ✔ Cross-sectional point forecast reconciliation
 #> 
