@@ -80,3 +80,4 @@ Utilities:
 \code{\link{unbalance_hierarchy}()}
 }
 \concept{Utilities}
+\keyword{internal}

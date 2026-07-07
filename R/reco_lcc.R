@@ -153,7 +153,10 @@ cslcc <- function(
   }
 
   if (NCOL(base) != sum(dim(agg_mat))) {
-    cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
+    cli_abort(
+      '{.arg base} must have {sum(dim(agg_mat))} columns, but it has {NCOL(base)}.',
+      call = NULL
+    )
   }
 
   # Balanced hierarchy
@@ -453,7 +456,10 @@ telcc <- function(
 
   # Calculate 'h' and 'base_hmat'
   if (length(base) %% kt != 0) {
-    cli_abort("Incorrect {.arg base} length.", call = NULL)
+    cli_abort(
+      'The length of {.arg base} must be a multiple of {kt}, but it is {length(base)}.',
+      call = NULL
+    )
   } else {
     h <- length(base) / kt
     base <- vec2hmat(vec = base, h = h, kset = kset)
@@ -708,7 +714,10 @@ ctlcc <- function(
   }
 
   if (NROW(base) != sum(dim(agg_mat))) {
-    cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
+    cli_abort(
+      '{.arg base} must have {sum(dim(agg_mat))} rows, but it has {NROW(base)}.',
+      call = NULL
+    )
   }
 
   # Check if 'agg_mat' is provided and balance the hierarchy
@@ -742,7 +751,10 @@ ctlcc <- function(
 
   # Calculate 'h' and 'base_hmat'
   if (NCOL(base) %% tmp$dim[["kt"]] != 0) {
-    cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
+    cli_abort(
+      'The number of columns of {.arg base} must be a multiple of {tmp$dim[["kt"]]}, but it is {NCOL(base)}.',
+      call = NULL
+    )
   } else {
     h <- NCOL(base) / tmp$dim[["kt"]]
     base_hmat <- mat2hmat(base, h = h, kset = tmp$set, n = tmp$dim[["n"]])

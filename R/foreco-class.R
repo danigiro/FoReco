@@ -543,7 +543,12 @@ as.matrix.foreco <- function(x, ...) {
 #' @method as.data.frame foreco
 #' @export
 as.data.frame.foreco <- function(x, ...) {
-  as.data.frame(.drop_foreco(x), ...)
+  nm <- deparse(substitute(x))
+  out <- as.data.frame(.drop_foreco(x), ...)
+  if (ncol(out) == 1L) {
+    names(out) <- nm
+  }
+  out
 }
 
 #' @method Ops foreco

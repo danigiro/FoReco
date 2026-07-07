@@ -2,17 +2,6 @@
 % Please edit documentation in R/cov_te.R
 \name{tecov}
 \alias{tecov}
-\alias{tecov.default}
-\alias{tecov.ols}
-\alias{tecov.str}
-\alias{tecov.wlsv}
-\alias{tecov.wlsh}
-\alias{tecov.acov}
-\alias{tecov.strar1}
-\alias{tecov.sar1}
-\alias{tecov.har1}
-\alias{tecov.shr}
-\alias{tecov.sam}
 \title{Temporal Covariance Matrix Approximation}
 \usage{
 tecov(comb, agg_order = NULL, tew = "sum", res = NULL, mse = TRUE,

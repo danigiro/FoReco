@@ -123,10 +123,15 @@ covcor <- function(V) {
 # Sample covariance matrix
 sample_estim <- function(x, mse = TRUE) {
   if (mse) {
-    if (any(is.na(x))) {
+    if (anyNA(x)) {
       x <- remove_na(x)
+      # remove_na() only drops rows/columns that are ENTIRELY missing;
+      # partial NAs may remain. If so, use a pairwise-complete estimator
+      # (crossproduct divided by the pairwise sample sizes); otherwise use
+      # the standard full-sample estimator.
     }
-    if (any(is.na(x))) {
+
+    if (anyNA(x)) {
       if (is.vector(x)) {
         n <- sum(!is.na(x))
       } else {
@@ -192,24 +197,41 @@ transform_strc_mat <- function(strc_mat, bts) {
   return(strc_mat)
 }
 
-# Remove NA values (row and columns)
+# Remove fully-missing rows and (if needed) columns.
+# NB: partial NAs are intentionally kept.
 remove_na <- function(x) {
   if (is.vector(x)) {
-    x <- stats::na.omit(x)
-  } else {
-    inax <- is.na(x)
-    if (any(inax)) {
-      out <- stats::na.omit(x)
-      if (NROW(out) == 0) {
-        x <- x[, !(colSums(!inax) == 0)]
-        inax <- is.na(x)
-        #out <- stats::na.omit(x)
-      }
-      row_na <- rowSums(inax)
-      x <- x[!(rowSums(inax) == NCOL(x)), , drop = FALSE]
-    }
+    # Vector case: drop the missing entries directly.
+    return(stats::na.omit(x))
   }
-  return(x)
+
+  inax <- is.na(x)
+  if (!anyNA(x)) {
+    return(x)
+  }
+
+  # If no row is complete (every row has at least one NA), first drop any
+  # column that is entirely NA. `drop = FALSE` keeps x a matrix even when a
+  # single column survives, avoiding a collapse-to-vector error below.
+  if (!any(rowSums(inax) == 0)) {
+    x <- x[, colSums(!inax) > 0, drop = FALSE]
+    inax <- is.na(x)
+  }
+
+  # Drop rows that are entirely NA.
+  x <- x[rowSums(inax) < NCOL(x), , drop = FALSE]
+  if (NROW(x) < 1L || NCOL(x) < 1L) {
+    cli_abort(
+      c(
+        "Not enough non-missing data in {.arg x}.",
+        "i" = "After removing fully-missing rows and columns, {.arg x} has \\
+             {NROW(x)} row{?s} and {NCOL(x)} column{?s}."
+      ),
+      call = NULL
+    )
+  } else {
+    return(x)
+  }
 }
 
 # Reconciled Forecasts to Matrix/Vector

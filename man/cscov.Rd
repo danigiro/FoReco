@@ -2,12 +2,6 @@
 % Please edit documentation in R/cov_cs.R
 \name{cscov}
 \alias{cscov}
-\alias{cscov.default}
-\alias{cscov.ols}
-\alias{cscov.str}
-\alias{cscov.wls}
-\alias{cscov.shr}
-\alias{cscov.sam}
 \title{Cross-sectional Covariance Matrix Approximation}
 \usage{
 cscov(comb = "ols", agg_mat = NULL, res = NULL, n = NULL, mse = TRUE,

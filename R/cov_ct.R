@@ -91,11 +91,6 @@
 #' ctcov.ols2 <- function(comb, x) diag(x)
 #' cov20 <- ctcov(comb = "ols2", x = 21) # == ctcov("ols", n = 3, agg_order = 4)
 #'
-#' @aliases ctcov.default ctcov.ols ctcov.str ctcov.csstr ctcov.testr ctcov.sam
-#' @aliases ctcov.wlsh ctcov.wlsv ctcov.shr ctcov.acov ctcov.Ssam ctcov.Sshr
-#' @aliases ctcov.bdshr ctcov.bdsam ctcov.hbshr ctcov.hbsam ctcov.hshr
-#' @aliases ctcov.hsam ctcov.bshr ctcov.bsam
-#'
 #' @family Framework: cross-temporal
 #' @export
 ctcov <- function(
@@ -119,7 +114,10 @@ ctcov <- function(
   }
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.default <- function(
   comb,
   agg_mat = NULL,
@@ -137,7 +135,10 @@ ctcov.default <- function(
   )
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.ols <- function(comb = "ols", ..., n = NULL, agg_order = NULL) {
   if (is.null(n) || is.null(agg_order)) {
     cli_abort(
@@ -169,7 +170,10 @@ ctcov.ols <- function(comb = "ols", ..., n = NULL, agg_order = NULL) {
   .sparseDiagonal(n * sum(max(kset) / kset)) # Omega
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.str <- function(
   comb = "str",
   ...,
@@ -210,7 +214,10 @@ ctcov.str <- function(
   .sparseDiagonal(x = rowSums(abs(strc_mat))) # Omega
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.csstr <- function(comb = "csstr", ..., agg_mat = NULL, agg_order = NULL) {
   if (is.null(agg_mat) || is.null(agg_order)) {
     cli_abort(
@@ -243,7 +250,10 @@ ctcov.csstr <- function(comb = "csstr", ..., agg_mat = NULL, agg_order = NULL) {
   .sparseDiagonal(x = rep(rowSums(Scs), each = sum(max(kset) / kset))) # Omega
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.testr <- function(
   comb = "testr",
   ...,
@@ -276,7 +286,10 @@ ctcov.testr <- function(
   .sparseDiagonal(x = rep(rowSums(Ste), n))
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.sam <- function(
   comb = "sam",
   ...,
@@ -304,7 +317,10 @@ ctcov.sam <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   res_mat <- mat2hmat(
@@ -316,7 +332,10 @@ ctcov.sam <- function(
   sample_estim(res_mat, mse = mse)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.wlsh <- function(
   comb = "wlsh",
   ...,
@@ -344,7 +363,10 @@ ctcov.wlsh <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   res_mat <- mat2hmat(
@@ -360,7 +382,10 @@ ctcov.wlsh <- function(
   )
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.wlsv <- function(
   comb = "wlsv",
   ...,
@@ -388,7 +413,10 @@ ctcov.wlsv <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   N <- NCOL(res) / sum(max(kset) / kset)
@@ -401,7 +429,10 @@ ctcov.wlsv <- function(
   .sparseDiagonal(x = rep(as.vector(var_freq), rep((m / kset), n)))
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.shr <- function(
   comb = "shr",
   ...,
@@ -430,7 +461,10 @@ ctcov.shr <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   res_mat <- mat2hmat(
@@ -442,7 +476,10 @@ ctcov.shr <- function(
   shrink_fun(res_mat, mse = mse)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.acov <- function(
   comb = "acov",
   ...,
@@ -470,7 +507,10 @@ ctcov.acov <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   m <- max(kset)
@@ -487,7 +527,10 @@ ctcov.acov <- function(
   sample_estim(res_mat, mse = mse) * mat1
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.Ssam <- function(
   comb = "Ssam",
   ...,
@@ -515,7 +558,10 @@ ctcov.Ssam <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   m <- max(kset)
@@ -533,7 +579,10 @@ ctcov.Ssam <- function(
   sample_estim(res_mat, mse = mse) * mat1
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.Sshr <- function(
   comb = "Sshr",
   ...,
@@ -562,7 +611,10 @@ ctcov.Sshr <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   res_mat <- mat2hmat(
@@ -583,7 +635,10 @@ ctcov.Sshr <- function(
   return(shrink)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.bdshr <- function(
   comb = "bdshr",
   ...,
@@ -612,7 +667,10 @@ ctcov.bdshr <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   m <- max(kset)
@@ -628,7 +686,10 @@ ctcov.bdshr <- function(
   return(W)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.bdsam <- function(
   comb = "bdsam",
   ...,
@@ -656,7 +717,10 @@ ctcov.bdsam <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   m <- max(kset)
@@ -669,7 +733,10 @@ ctcov.bdsam <- function(
   P %*% tcrossprod(bdiag(W), P)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.hbshr <- function(
   comb = "hbshr",
   ...,
@@ -705,7 +772,10 @@ ctcov.hbshr <- function(
   )$strc_mat
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   n <- sum(dim(agg_mat))
@@ -731,7 +801,10 @@ ctcov.hbshr <- function(
   return(Omega)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.hbsam <- function(
   comb = "hbsam",
   ...,
@@ -766,7 +839,10 @@ ctcov.hbsam <- function(
   )$strc_mat
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   n <- sum(dim(agg_mat))
@@ -786,7 +862,10 @@ ctcov.hbsam <- function(
   Omega + diag(eps_ridge, dim(Omega)[1])
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.hshr <- function(
   comb = "hshr",
   ...,
@@ -813,7 +892,10 @@ ctcov.hshr <- function(
   kset <- tmp$set
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   Ste <- tmp$strc_mat
@@ -834,7 +916,10 @@ ctcov.hshr <- function(
   return(Omega)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.hsam <- function(
   comb = "hsam",
   ...,
@@ -860,7 +945,10 @@ ctcov.hsam <- function(
   kset <- tmp$set
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   Ste <- tmp$strc_mat
@@ -879,7 +967,10 @@ ctcov.hsam <- function(
   Omega + diag(eps_ridge, dim(Omega)[1])
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.bshr <- function(
   comb = "bshr",
   ...,
@@ -908,7 +999,10 @@ ctcov.bshr <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   Scs <- cstools(agg_mat = agg_mat)$strc_mat
@@ -929,7 +1023,10 @@ ctcov.bshr <- function(
   return(Omega)
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.bsam <- function(
   comb = "bsam",
   ...,
@@ -957,7 +1054,10 @@ ctcov.bsam <- function(
   }
 
   if (NCOL(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+    cli_abort(
+      "The number of columns of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {NCOL(res)}.",
+      call = NULL
+    )
   }
 
   Scs <- cstools(agg_mat = agg_mat)$strc_mat
@@ -976,7 +1076,10 @@ ctcov.bsam <- function(
   Omega + diag(eps_ridge, dim(Omega)[1])
 }
 
-#' @export
+#' @rdname ctcov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 ctcov.bu <- function(
   comb = "bu",
   ...,

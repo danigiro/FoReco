@@ -40,7 +40,6 @@
 #' @param ... Not used.
 #'
 #' @returns A (\eqn{n \times n}) symmetric positive (semi-)definite matrix.
-#' @aliases cscov.default cscov.ols cscov.str cscov.wls cscov.shr cscov.sam
 #' @family Framework: cross-sectional
 #'
 #' @examples
@@ -99,7 +98,10 @@ cscov <- function(
 #  UseMethod(".cscov", comb)
 #}
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.default <- function(
   comb,
   agg_mat = NULL,
@@ -115,7 +117,10 @@ cscov.default <- function(
   )
 }
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.ols <- function(comb = "ols", ..., n = NULL) {
   if (is.null(n)) {
     cli_abort("Argument {.arg n} is NULL.", call = NULL)
@@ -141,7 +146,10 @@ cscov.ols <- function(comb = "ols", ..., n = NULL) {
   .sparseDiagonal(n)
 }
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.str <- function(comb = "str", ..., agg_mat = NULL, strc_mat = NULL) {
   if (is.null(strc_mat)) {
     if (is.null(agg_mat)) {
@@ -168,7 +176,10 @@ cscov.str <- function(comb = "str", ..., agg_mat = NULL, strc_mat = NULL) {
   .sparseDiagonal(x = rowSums(abs(strc_mat)))
 }
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.wls <- function(comb = "wls", ..., res = NULL, mse = TRUE) {
   if (is.null(res)) {
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
@@ -180,7 +191,10 @@ cscov.wls <- function(comb = "wls", ..., res = NULL, mse = TRUE) {
   )
 }
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.shr <- function(
   comb = "shr",
   ...,
@@ -194,7 +208,10 @@ cscov.shr <- function(
   shrink_fun(res, mse = mse)
 }
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.oasd <- function(comb = "shr", ..., res = NULL, mse = TRUE) {
   if (is.null(res)) {
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
@@ -202,7 +219,10 @@ cscov.oasd <- function(comb = "shr", ..., res = NULL, mse = TRUE) {
   shrink_oasd(res, mse = mse)
 }
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.sam <- function(comb = "sam", ..., res = NULL, mse = TRUE) {
   if (is.null(res)) {
     cli_abort("Argument {.arg res} is NULL.", call = NULL)
@@ -210,7 +230,10 @@ cscov.sam <- function(comb = "sam", ..., res = NULL, mse = TRUE) {
   sample_estim(res, mse = mse)
 }
 
-#' @export
+#' @rdname cscov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 cscov.bu <- function(
   comb = "bu",
   ...,

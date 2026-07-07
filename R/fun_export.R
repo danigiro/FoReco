@@ -22,6 +22,7 @@
 #' in Statistics and Econometrics, third edition, New York, Wiley, pp. 54-55.
 #'
 #' @family Utilities
+#' @keywords internal
 #'
 #' @examples
 #' Y <- matrix(rnorm(30), 5, 6)
@@ -81,9 +82,16 @@ commat_index <- function(r, c) {
 #'
 #' @export
 shrink_estim <- function(x, mse = TRUE) {
-  if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) {
-    cli_abort("{.arg x} is not a numeric matrix.", call = NULL)
+  if (length(dim(x)) != 2L || !typeof(x) %in% c("double", "integer")) {
+    cli_abort(
+      c(
+        "{.arg x} must be a numeric matrix.",
+        "x" = "You supplied {.obj_type_friendly {x}} of type {.val {typeof(x)}}."
+      ),
+      call = NULL
+    )
   }
+
   x <- remove_na(x)
   n <- nrow(x)
 
@@ -167,8 +175,14 @@ shrink_estim <- function(x, mse = TRUE) {
 #'
 #' @export
 shrink_oasd <- function(x, mse = TRUE) {
-  if (is.matrix(x) == TRUE && is.numeric(x) == FALSE) {
-    cli_abort("{.arg x} is not a numeric matrix.", call = NULL)
+  if (length(dim(x)) != 2L || !typeof(x) %in% c("double", "integer")) {
+    cli_abort(
+      c(
+        "{.arg x} must be a numeric matrix.",
+        "x" = "You supplied {.obj_type_friendly {x}} of type {.val {typeof(x)}}."
+      ),
+      call = NULL
+    )
   }
   x <- remove_na(x)
   n <- nrow(x)

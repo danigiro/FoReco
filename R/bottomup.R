@@ -166,7 +166,10 @@ tebu <- function(base, agg_order, tew = "sum", sntz = FALSE, round = FALSE) {
   } else if (NCOL(base) != 1) {
     cli_abort("{.arg base} is not a vector.", call = NULL)
   } else if (length(base) %% max(agg_order) != 0) {
-    cli_abort("Incorrect {.arg base} length.", call = NULL)
+    cli_abort(
+      'The length of {.arg base} must be a multiple of {max(agg_order)}, but it is {length(base)}.',
+      call = NULL
+    )
   }
 
   h <- length(base) / max(agg_order)
@@ -270,7 +273,10 @@ ctbu <- function(
     cstmp <- cstools(agg_mat = agg_mat, sparse = TRUE)
     cs_strc_mat <- cstmp$strc_mat
     if (NROW(base) != cstmp$dim[["nb"]]) {
-      cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
+      cli_abort(
+        '{.arg base} must have {cstmp$dim[["nb"]]} rows, but it has {NROW(base)}.',
+        call = NULL
+      )
     }
   }
 
@@ -281,7 +287,10 @@ ctbu <- function(
     )
   } else {
     if (NCOL(base) %% max(agg_order) != 0) {
-      cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
+      cli_abort(
+        '{.arg base} must have a number of columns that is a multiple of {max(agg_order)}, but it has {NCOL(base)}.',
+        call = NULL
+      )
     }
     h <- NCOL(base) / max(agg_order)
     tetmp <- tetools(agg_order = agg_order, tew = tew, fh = h)

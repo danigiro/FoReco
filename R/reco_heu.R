@@ -86,11 +86,17 @@ iterec <- function(
 
     # Check dimension of base and res
     if (NCOL(base) %% tmp$dim[["kt"]] != 0) {
-      cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
+      cli_abort(
+        'The number of columns of {.arg base} must be a multiple of {tmp$dim[["kt"]]}, but it is {NCOL(base)}.',
+        call = NULL
+      )
     }
 
     if (!is.null(res) && NCOL(res) %% tmp$dim[["kt"]] != 0) {
-      cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+      cli_abort(
+        'The number of columns of {.arg res} must be a multiple of {tmp$dim[["kt"]]}, but it is {NCOL(res)}.',
+        call = NULL
+      )
     }
 
     te_const_mat <- tetools(
@@ -116,11 +122,17 @@ iterec <- function(
     n <- NCOL(cs_const_mat)
     # Check dimension of base and res
     if (NROW(base) != n) {
-      cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
+      cli_abort(
+        "{.arg base} must have {n} rows, but it has {NROW(base)}.",
+        call = NULL
+      )
     }
 
     if (!is.null(res) && NROW(res) != n) {
-      cli_abort("Incorrect {.arg res} rows dimension.", call = NULL)
+      cli_abort(
+        "{.arg res} must have {n} rows, but it has {NROW(res)}.",
+        call = NULL
+      )
     }
   } else {
     cli_abort(
@@ -412,11 +424,17 @@ tcsrec <- function(base, cslist, telist, res = NULL, avg = "KA") {
 
     # Check dimension of base and res
     if (NCOL(base) %% tmp$dim[["kt"]] != 0) {
-      cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
+      cli_abort(
+        'The number of columns of {.arg base} must be a multiple of {tmp$dim[["kt"]]}, but it is {NCOL(base)}.',
+        call = NULL
+      )
     }
 
     if (!is.null(res) && NCOL(res) %% tmp$dim[["kt"]] != 0) {
-      cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+      cli_abort(
+        'The number of columns of {.arg res} must be a multiple of {tmp$dim[["kt"]]}, but it is {NCOL(res)}.',
+        call = NULL
+      )
     }
   } else {
     cli_abort(
@@ -436,11 +454,17 @@ tcsrec <- function(base, cslist, telist, res = NULL, avg = "KA") {
 
     # Check dimension of base and res
     if (NROW(base) != n) {
-      cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
+      cli_abort(
+        "{.arg base} must have {n} rows, but it has {NROW(base)}.",
+        call = NULL
+      )
     }
 
     if (!is.null(res) && NROW(res) != n) {
-      cli_abort("Incorrect {.arg res} rows dimension.", call = NULL)
+      cli_abort(
+        "{.arg res} must have {n} rows, but it has {NROW(res)}.",
+        call = NULL
+      )
     }
   } else {
     cli_abort(
@@ -522,11 +546,17 @@ cstrec <- function(base, cslist, telist, res = NULL) {
 
     # Check dimension of base and res
     if (NCOL(base) %% tmp$dim[["kt"]] != 0) {
-      cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
+      cli_abort(
+        'The number of columns of {.arg base} must be a multiple of {tmp$dim[["kt"]]}, but it is {NCOL(base)}.',
+        call = NULL
+      )
     }
 
     if (!is.null(res) && NCOL(res) %% tmp$dim[["kt"]] != 0) {
-      cli_abort("Incorrect {.arg res} columns dimension.", call = NULL)
+      cli_abort(
+        'The number of columns of {.arg res} must be a multiple of {tmp$dim[["kt"]]}, but it is {NCOL(res)}.',
+        call = NULL
+      )
     }
   } else {
     cli_abort(
@@ -546,11 +576,17 @@ cstrec <- function(base, cslist, telist, res = NULL) {
 
     # Check dimension of base and res
     if (NROW(base) != n) {
-      cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
+      cli_abort(
+        "{.arg base} must have {n} rows, but it has {NROW(base)}.",
+        call = NULL
+      )
     }
 
     if (!is.null(res) && NROW(res) != n) {
-      cli_abort("Incorrect {.arg res} rows dimension.", call = NULL)
+      cli_abort(
+        "{.arg res} must have {n} rows, but it has {NROW(res)}.",
+        call = NULL
+      )
     }
   } else {
     cli_abort(

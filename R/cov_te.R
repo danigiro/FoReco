@@ -68,9 +68,6 @@
 #' tecov.ols2 <- function(comb, x) diag(x)
 #' tecov(comb = "ols2", x = 7) # == tecov("ols", agg_order = 4)
 #'
-#' @aliases tecov.default tecov.ols tecov.str tecov.wlsv tecov.wlsh tecov.acov tecov.strar1
-#' @aliases tecov.sar1 tecov.har1 tecov.shr tecov.sam
-#'
 #' @family Framework: temporal
 #' @export
 tecov <- function(
@@ -92,7 +89,10 @@ tecov <- function(
   }
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.default <- function(
   comb,
   agg_order = NULL,
@@ -108,7 +108,10 @@ tecov.default <- function(
   )
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.ols <- function(comb = "ols", ..., agg_order = NULL) {
   if (is.null(agg_order)) {
     cli_abort("Argument {.arg agg_order} is NULL.", call = NULL)
@@ -136,7 +139,10 @@ tecov.ols <- function(comb = "ols", ..., agg_order = NULL) {
   .sparseDiagonal(sum(max(kset) / kset))
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.str <- function(
   comb = "str",
   ...,
@@ -168,7 +174,10 @@ tecov.str <- function(
   .sparseDiagonal(x = rowSums(strc_mat))
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.wlsv <- function(
   comb = "wlsv",
   ...,
@@ -193,7 +202,10 @@ tecov.wlsv <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   m <- max(kset)
@@ -205,7 +217,10 @@ tecov.wlsv <- function(
   .sparseDiagonal(x = rep(var_freq, (m / kset)))
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.wlsh <- function(
   comb = "wlsh",
   ...,
@@ -230,7 +245,10 @@ tecov.wlsh <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   N <- length(res) / sum(max(kset) / kset)
@@ -238,7 +256,10 @@ tecov.wlsh <- function(
   .sparseDiagonal(x = apply(res_mat, 2, sample_estim, mse = mse))
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.acov <- function(
   comb = "acov",
   ...,
@@ -263,7 +284,10 @@ tecov.acov <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   N <- length(res) / sum(max(kset) / kset)
@@ -275,7 +299,10 @@ tecov.acov <- function(
   }))
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.strar1 <- function(
   comb = "strar1",
   ...,
@@ -298,7 +325,10 @@ tecov.strar1 <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   N <- length(res) / sum(max(kset) / kset)
@@ -318,7 +348,10 @@ tecov.strar1 <- function(
   return(Ostr2 %*% Gam %*% Ostr2)
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.sar1 <- function(
   comb = "sar1",
   ...,
@@ -344,7 +377,10 @@ tecov.sar1 <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   N <- length(res) / sum(max(kset) / kset)
@@ -366,7 +402,10 @@ tecov.sar1 <- function(
   return(Os2 %*% Gam %*% Os2)
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.har1 <- function(
   comb = "har1",
   ...,
@@ -391,7 +430,10 @@ tecov.har1 <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   N <- length(res) / sum(max(kset) / kset)
@@ -413,7 +455,10 @@ tecov.har1 <- function(
   return(Oh2 %*% Gam %*% Oh2)
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.shr <- function(
   comb = "shr",
   ...,
@@ -439,7 +484,10 @@ tecov.shr <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   N <- length(res) / sum(max(kset) / kset)
@@ -447,7 +495,10 @@ tecov.shr <- function(
   shrink_fun(res_mat, mse = mse)
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.sam <- function(
   comb = "sam",
   ...,
@@ -472,7 +523,10 @@ tecov.sam <- function(
   if (NCOL(res) != 1) {
     cli_abort("{.arg res} is not a vector.", call = NULL)
   } else if (length(res) %% sum(max(kset) / kset) != 0) {
-    cli_abort("Incorrect {.arg res} length.", call = NULL)
+    cli_abort(
+      "The length of {.arg res} must be a multiple of {sum(max(kset)/kset)}, but it is {length(res)}.",
+      call = NULL
+    )
   }
 
   N <- length(res) / sum(max(kset) / kset)
@@ -480,7 +534,10 @@ tecov.sam <- function(
   sample_estim(res_mat, mse = mse)
 }
 
-#' @export
+#' @rdname tecov
+#' @aliases NULL
+#' @usage NULL
+#' @exportS3Method
 tecov.bu <- function(
   comb = "bu",
   ...,

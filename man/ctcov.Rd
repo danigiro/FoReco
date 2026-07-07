@@ -2,26 +2,6 @@
 % Please edit documentation in R/cov_ct.R
 \name{ctcov}
 \alias{ctcov}
-\alias{ctcov.default}
-\alias{ctcov.ols}
-\alias{ctcov.str}
-\alias{ctcov.csstr}
-\alias{ctcov.testr}
-\alias{ctcov.sam}
-\alias{ctcov.wlsh}
-\alias{ctcov.wlsv}
-\alias{ctcov.shr}
-\alias{ctcov.acov}
-\alias{ctcov.Ssam}
-\alias{ctcov.Sshr}
-\alias{ctcov.bdshr}
-\alias{ctcov.bdsam}
-\alias{ctcov.hbshr}
-\alias{ctcov.hbsam}
-\alias{ctcov.hshr}
-\alias{ctcov.hsam}
-\alias{ctcov.bshr}
-\alias{ctcov.bsam}
 \title{Cross-temporal Covariance Matrix Approximation}
 \usage{
 ctcov(comb = "ols", agg_mat = NULL, agg_order = NULL, tew = "sum",

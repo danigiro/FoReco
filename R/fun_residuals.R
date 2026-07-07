@@ -48,6 +48,7 @@
 #'
 #' @family Utilities
 #' @rdname residuals
+#' @keywords internal
 #'
 #' @export
 res2matrix <- function(res, agg_order) {

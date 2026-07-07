@@ -203,7 +203,10 @@ temo <- function(
   } else if (NCOL(base) != 1) {
     cli_abort("Argument {.arg base} is not a vector.", call = NULL)
   } else if (length(base) %% (tmp$dim[["m"]] / order) != 0) {
-    cli_abort("Incorrect {.arg base} length.", call = NULL)
+    cli_abort(
+      'The length of {.arg base} must be a multiple of {tmp$dim[["m"]]/order}, but it is {length(base)}.',
+      call = NULL
+    )
   }
 
   if (missing(weights)) {
@@ -333,7 +336,10 @@ ctmo <- function(
     strc_mat <- cstmp$strc_mat
     agg_mat_split <- strc_mat[id_rows, , drop = FALSE]
     if (NROW(base) != NROW(agg_mat_split)) {
-      cli_abort("Incorrect {.arg base} rows dimension.", call = NULL)
+      cli_abort(
+        "{.arg base} must have {NROW(agg_mat_split)} rows, but it has {NROW(base)}.",
+        call = NULL
+      )
     }
   }
 
@@ -353,7 +359,10 @@ ctmo <- function(
     }
 
     if (NCOL(base) %% (tetmp$dim[["m"]] / order) != 0) {
-      cli_abort("Incorrect {.arg base} columns dimension.", call = NULL)
+      cli_abort(
+        'The number of columns of {.arg base} must be a multiple of {tetmp$dim[["m"]]/order}, but it is {NCOL(base)}.',
+        call = NULL
+      )
     }
 
     h <- NCOL(base) * order / tetmp$dim[["m"]]

@@ -45,6 +45,9 @@
 #' # all.equal(ctmat, input_ct, check.attributes = FALSE)
 #'
 #' @rdname ctmatrix_layouts
+#' @family Utilities
+#' @keywords internal
+#'
 #' @export
 as_ctmatrix <- function(hmat, agg_order, n, row_names = NULL) {
   tmp <- tetools(agg_order = agg_order)
@@ -78,7 +81,6 @@ as_ctmatrix <- function(hmat, agg_order, n, row_names = NULL) {
 #' matrix in \emph{horizon-stacked} layout (cross-temporal version).
 #'
 #' @rdname ctmatrix_layouts
-#' @family Utilities
 #' @export
 as_hstack_ctlayout <- function(ctmat, agg_order) {
   tmp <- tetools(agg_order = agg_order)
@@ -149,6 +151,7 @@ as_hstack_ctlayout <- function(ctmat, agg_order) {
 #'
 #' @rdname tematrix_layouts
 #' @family Utilities
+#' @keywords internal
 #' @export
 as_tevector <- function(hmat, agg_order) {
   tmp <- tetools(agg_order = agg_order)
