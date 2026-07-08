@@ -38,7 +38,6 @@ The core functions for reconciliation categorized by framework are as follows:
 
 Additionally, `FoReco` provides various functions for different aspects of forecast reconciliation, including aggregating time series, balancing hierarchies, computing projection and covariance matrices, and more.
 
-
 ## Installation
 
 You can install the **stable** version on [CRAN](https://CRAN.R-project.org/package=FoReco)

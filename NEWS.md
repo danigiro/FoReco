@@ -1,4 +1,9 @@
-# FoReco (development version)
+# FoReco 1.3.1
+
+* User-facing functions now validate their arguments more strictly and fail with informative error messages that state the expected value and report the one actually supplied, replacing the previous generic diagnostics.
+* Replaced `any(is.na())` with `anyNA()`.
+* Internal helpers, S3 methods underlying the generics (e.g. the `cscov()`, `tecov()` and `ctcov()` methods) and the soft-deprecated `res2matrix()` are no longer listed in `help(package = "FoReco")`, so the help index now exposes only the user-facing functions.
+* Fixed the single-column name produced by `as.data.frame()` on a `foreco` object, which now uses the name of the object supplied by the user.
 
 # FoReco 1.3.0
 

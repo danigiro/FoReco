@@ -298,7 +298,7 @@ summary(rf_osqp) # OSQP information matrix
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>     obj_val  run_time iter     prim_res status status_polish
-#> 1 -3197.129 0.1883435  500 2.073845e-11      1             1
+#> 1 -3197.129 0.2367756  500 2.073845e-11      1             1
 #> 
 #> ── Reconciled forecasts
 #>        Total         A         B         C        D        E
@@ -332,7 +332,7 @@ summary(rf_sntz)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 1.001358e-05 1.490116e-08    0
+#> 1 1.120567e-05 1.490116e-08    0
 #> 
 #> ── Reconciled forecasts
 #>        Total         A         B         C        D        E
@@ -430,12 +430,12 @@ summary(reco_csjb)
 #> • Non-negative forecasts (check): `TRUE`
 #> 
 #> ── Non-negative reconciliation diagnostics
-#>      run_time          tol iter
-#> 1 0.002312899 1.490116e-08    0
-#> 2 0.002312899 1.490116e-08    0
-#> 3 0.002312899 1.490116e-08    0
-#> 4 0.002312899 1.490116e-08    0
-#> 5 0.002312899 1.490116e-08    0
+#>       run_time          tol iter
+#> 1 0.0007169247 1.490116e-08    0
+#> 2 0.0007169247 1.490116e-08    0
+#> 3 0.0007169247 1.490116e-08    0
+#> 4 0.0007169247 1.490116e-08    0
+#> 5 0.0007169247 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -447,7 +447,7 @@ summary(reco_csjb)
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:12, 1:525] 49632 21863 24884 29685 23302 ...
+#>  num [1:12, 1:525] 49842 21688 24916 29911 23538 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -491,12 +491,12 @@ summary(reco_css)
 #> • Non-negative forecasts (check): `TRUE`
 #> 
 #> ── Non-negative reconciliation diagnostics
-#>       run_time          tol iter
-#> 1 0.0009860992 1.490116e-08    0
-#> 2 0.0009860992 1.490116e-08    0
-#> 3 0.0009860992 1.490116e-08    0
-#> 4 0.0009860992 1.490116e-08    0
-#> 5 0.0009860992 1.490116e-08    0
+#>      run_time          tol iter
+#> 1 0.001044035 1.490116e-08    0
+#> 2 0.001044035 1.490116e-08    0
+#> 3 0.001044035 1.490116e-08    0
+#> 4 0.001044035 1.490116e-08    0
+#> 5 0.001044035 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -650,7 +650,7 @@ summary(reco_csjb)
 
 # Extracts mean:
 str(mean(reco_csjb), give.attr = FALSE)
-#>  num [1:4, 1:21] 434413 453137 450430 481573 169002 ...
+#>  num [1:4, 1:21] 434455 453462 451439 482439 169470 ...
 ```
 
 Alternatively, we can use a parametric method.

@@ -490,7 +490,7 @@ summary(rf_osqp) # OSQP information matrix
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>         obj_val run_time iter     prim_res status status_polish
-#> 1 -220421550178 12.28267  100 7.152467e-22      1             1
+#> 1 -220421550178  12.5692  100 7.152467e-22      1             1
 #> 
 #> ── Reconciled forecasts
 #>        k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1  k-4 h-2   k-4 h-3
@@ -525,7 +525,7 @@ summary(rf_sntz)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 2.503395e-05 1.490116e-08    0
+#> 1 1.096725e-05 1.490116e-08    0
 #> 
 #> ── Reconciled forecasts
 #>        k-12 h-1   k-6 h-1   k-6 h-2   k-4 h-1  k-4 h-2   k-4 h-3
@@ -638,9 +638,9 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m) 
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
-#>  $ : num [1:525, 1:28] 329951 101384 63231 80663 21751 ...
-#>  $ : num [1:525, 1:28] 331564 99976 64008 79848 21893 ...
-#>  $ : num [1:525, 1:28] 309171 97214 63243 75583 20454 ...
+#>  $ : num [1:525, 1:28] 305455 93053 59753 76427 18089 ...
+#>  $ : num [1:525, 1:28] 331164 98131 60354 87924 20222 ...
+#>  $ : num [1:525, 1:28] 340214 101263 67203 82541 20915 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, agg_mat = vnaggmat,
                       res = res_mat, comb = "wlsv", approach = "strc", nn = "sntz")
@@ -660,11 +660,11 @@ summary(reco_ctjb)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 0.0007350445 1.490116e-08    0
-#> 2 0.0007350445 1.490116e-08    0
-#> 3 0.0007350445 1.490116e-08    0
-#> 4 0.0007350445 1.490116e-08    0
-#> 5 0.0007350445 1.490116e-08    0
+#> 1 0.0007648468 1.490116e-08    0
+#> 2 0.0007648468 1.490116e-08    0
+#> 3 0.0007648468 1.490116e-08    0
+#> 4 0.0007648468 1.490116e-08    0
+#> 5 0.0007648468 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -678,7 +678,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = sum(dim(vnaggmat)), 
                          row_names = unlist(dimnames(vnaggmat)))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:525, 1:28] 327989 98798 65657 81125 20639 ...
+#>  num [1:525, 1:28] 323733 98517 64665 80830 20098 ...
 ```
 
 A parametric method assumes a normal distribution (Gaussian), to
@@ -744,11 +744,11 @@ summary(reco_cts)
 #> 
 #> ── Non-negative reconciliation diagnostics
 #>       run_time          tol iter
-#> 1 0.0009059906 1.490116e-08    0
-#> 2 0.0009059906 1.490116e-08    0
-#> 3 0.0009059906 1.490116e-08    0
-#> 4 0.0009059906 1.490116e-08    0
-#> 5 0.0009059906 1.490116e-08    0
+#> 1 0.0008330345 1.490116e-08    0
+#> 2 0.0008330345 1.490116e-08    0
+#> 3 0.0008330345 1.490116e-08    0
+#> 4 0.0008330345 1.490116e-08    0
+#> 5 0.0008330345 1.490116e-08    0
 #> ℹ Showing the first 5 rows of the non-negativity diagnostics info matrix.
 #> 
 #> ── Reconciled forecasts
@@ -909,9 +909,9 @@ B <- 100
 base_ctjb <- ctboot(model, B, agg_order = m) 
 str(base_ctjb[1:3], give.attr=FALSE)
 #> List of 3
-#>  $ : num [1:21, 1:7] 1821647 743804 1770804 1442052 333871 ...
-#>  $ : num [1:21, 1:7] 1822313 739358 1763155 1439877 330675 ...
-#>  $ : num [1:21, 1:7] 1819285 752538 1756781 1423806 334557 ...
+#>  $ : num [1:21, 1:7] 1825237 738841 1757021 1426951 331837 ...
+#>  $ : num [1:21, 1:7] 1805001 737769 1751547 1431916 323729 ...
+#>  $ : num [1:21, 1:7] 1803527 742817 1734769 1406326 330324 ...
 
 reco_ctjb <- ctsmp(simplify2array(base_ctjb), agg_order = m, cons_mat = gdpconsmat,
                       res = res_mat, comb = "wlsv")
@@ -940,7 +940,7 @@ mean_ctjb <- as_ctmatrix(mean_ctjb, agg_order = m,
                          n = NCOL(gdpconsmat), 
                          row_names = colnames(gdpconsmat))
 str(mean_ctjb, give.attr = FALSE)
-#>  num [1:21, 1:7] 1814864 733444 1746798 1419871 326927 ...
+#>  num [1:21, 1:7] 1813092 732263 1742744 1417217 325527 ...
 ```
 
 Alternatively, we can use a parametric method.

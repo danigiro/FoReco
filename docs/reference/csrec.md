@@ -279,7 +279,7 @@ summary(nnreco)
 #> 
 #> ── Non-negative reconciliation diagnostics 
 #>     obj_val   run_time iter     prim_res status status_polish
-#> 1 -352.4619 4.3832e-05   25 1.242965e-15      1             1
+#> 1 -352.4619 3.5707e-05   25 1.242965e-15      1             1
 #> 
 #> ── Reconciled forecasts 
 #>         s-1       s-2      s-3
