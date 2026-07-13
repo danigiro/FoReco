@@ -1,3 +1,5 @@
+# FoReco (development version)
+
 # FoReco 1.3.1
 
 * User-facing functions now validate their arguments more strictly and fail with informative error messages that state the expected value and report the one actually supplied, replacing the previous generic diagnostics.
