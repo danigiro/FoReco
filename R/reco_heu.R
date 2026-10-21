@@ -823,7 +823,7 @@ check_results <- function(flag, dmat, i, itmax, norm, verbose) {
       cli_alert_success("Convergence achieved at iteration {i}.")
     }
     check_sorted <- all(apply(dmat[, norm, , ], c(1, 3), function(x) {
-      !is.unsorted(rev(na.omit(x[-1])))
+      all(diff(na.omit(x[-1])) <= sqrt(.Machine$double.eps))
     }))
     if (!check_sorted) {
       # incoherence has increased in the next iteration (at least one time)
@@ -868,9 +868,9 @@ discrepancy <- function(mat, cs_const_mat, te_const_mat) {
     sum(abs(tcrossprod(mat, te_const_mat)))
   )
   dmat[, 3] <- c(
-    sum((cs_const_mat %*% mat)^2),
-    sum((tcrossprod(mat, te_const_mat))^2)
+    sqrt(sum((cs_const_mat %*% mat)^2)),
+    sqrt(sum((tcrossprod(mat, te_const_mat))^2))
   )
-  dmat[dmat < sqrt(.Machine$double.eps)] <- 0
+  #dmat[dmat < sqrt(.Machine$double.eps)] <- 0
   dmat
 }
