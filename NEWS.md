@@ -1,5 +1,9 @@
 # FoReco (development version)
 
+* Fixed segfault in `approach = "strc"` when no mutable bottom series remain after accounting for `immutable` (#21)
+* In `iterec()`, `norm = "two"` now uses the Euclidean norm (was the squared norm) and discrepancies are no longer truncated at `sqrt(.Machine$double.eps)`, so `tol` is respected (#23).
+* Non-negativity and bounds tolerances are now relative to the scale of the base forecasts (`sqrt(.Machine$double.eps) * min(max(abs(base)), 1)`), so small-scale data are reconciled coherently; results for data with `max(abs(base)) >= 1` are unchanged (#22).
+
 # FoReco 1.3.1
 
 * User-facing functions now validate their arguments more strictly and fail with informative error messages that state the expected value and report the one actually supplied, replacing the previous generic diagnostics.
