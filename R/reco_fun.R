@@ -965,6 +965,9 @@ reco.strc_immutable <- function(
   base2 <- Matrix(base)
   base2[, -new_basis] <- (base[, -new_basis, drop = FALSE] - S2u)
   reco_bts <- base2[, new_basis, drop = FALSE]
+  if (length(mutable) == 0) {
+    return(as.matrix(tcrossprod(reco_bts, snew)))
+  }
   cov_mat_red <- cov_mat[-immutable, -immutable, drop = FALSE]
   tmp <- reco.strc(
     base2[, -immutable, drop = FALSE],

@@ -102,6 +102,27 @@ if (require(testthat)) {
     expect_equal(max(abs(C %*% t(r1))), 0)
   })
 
+  test_that("strc immutable with no mutable bottom series", {
+    A <- matrix(c(1, 1), nrow = 1)
+    b <- matrix(c(10, 8, 4), nrow = 1)
+    r1 <- csrec(
+      base = b,
+      agg_mat = A,
+      comb = "ols",
+      approach = "strc",
+      immutable = c(2, 3)
+    )
+    r2 <- csrec(
+      base = b,
+      agg_mat = A,
+      comb = "ols",
+      approach = "strc",
+      immutable = c(1, 2)
+    )
+    expect_equal(as.numeric(r1), c(12, 8, 4))
+    expect_equal(as.numeric(r2), c(10, 8, 2))
+  })
+
   test_that("Bounds", {
     tmp <- set_bounds(n = c(4:7), lb = 10)
     r1 <- csrec(
