@@ -7,6 +7,7 @@ reco <- function(
   ...
 ) {
   tsp(base) <- NULL # Remove ts
+  tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
 
   if (
     approach %in%
@@ -41,7 +42,7 @@ reco <- function(
       nn <- paste(approach, "osqp", sep = "_")
     }
 
-    if (!all(rmat >= -sqrt(.Machine$double.eps))) {
+    if (!all(rmat >= -tol_rel)) {
       class(approach)[length(class(approach))] <- nn
       rmat <- .reco(
         approach = approach,
@@ -49,6 +50,7 @@ reco <- function(
         nn = nn,
         reco = rmat,
         immutable = immutable,
+        tol_rel = tol_rel,
         ...
       )
     } else if (!all(rmat >= 0)) {
@@ -60,8 +62,8 @@ reco <- function(
     nbid <- bounds[, 1, drop = TRUE]
 
     checkb <- apply(rmat, 1, function(x) {
-      idl <- any(x[nbid] < bounds[, 2, drop = TRUE] - sqrt(.Machine$double.eps))
-      idb <- any(x[nbid] > bounds[, 3, drop = TRUE] + sqrt(.Machine$double.eps))
+      idl <- any(x[nbid] < bounds[, 2, drop = TRUE] - tol_rel)
+      idb <- any(x[nbid] > bounds[, 3, drop = TRUE] + tol_rel)
 
       idl0 <- any(x[nbid] < bounds[, 2, drop = TRUE])
       idb0 <- any(x[nbid] > bounds[, 3, drop = TRUE])
@@ -82,14 +84,15 @@ reco <- function(
         bounds = bounds,
         reco = rmat,
         immutable = immutable,
+        tol_rel = tol_rel,
         ...
       )
     } else if (any(checkb[2, ])) {
       rmat <- t(apply(rmat, 1, function(x) {
-        id <- x[nbid] <= bounds[, 2, drop = TRUE] + sqrt(.Machine$double.eps)
+        id <- x[nbid] <= bounds[, 2, drop = TRUE] + tol_rel
         x[nbid][id] <- bounds[, 2, drop = TRUE][id]
 
-        id <- x[nbid] >= bounds[, 3, drop = TRUE] - sqrt(.Machine$double.eps)
+        id <- x[nbid] >= bounds[, 3, drop = TRUE] - tol_rel
         x[nbid][id] <- bounds[, 3, drop = TRUE][id]
         x
       }))
@@ -192,6 +195,7 @@ reco.proj_osqp <- function(
   reco = NULL,
   settings = NULL,
   immutable = NULL,
+  tol_rel = NULL,
   ...
 ) {
   # check input
@@ -210,8 +214,12 @@ reco.proj_osqp <- function(
     id_nn <- rep(1, NCOL(base))
   }
 
+  if (is.null(tol_rel)) {
+    tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
+  }
+
   if (!is.null(nn) & !is.null(reco)) {
-    id <- which(rowSums(reco < (-sqrt(.Machine$double.eps))) != 0)
+    id <- which(rowSums(reco < (-tol_rel)) != 0)
     if (!is.null(bounds)) {
       id_b <- which(apply(reco[, bounds[, 1], drop = FALSE], 1, function(x) {
         any(x <= bounds[, 2]) | any(x >= bounds[, 3])
@@ -328,12 +336,10 @@ reco.proj_osqp <- function(
 
     if (!is.null(bounds)) {
       nbid <- bounds[, 1, drop = TRUE]
-      id <- out$reco[nbid] <=
-        bounds[, 2, drop = TRUE] + sqrt(.Machine$double.eps)
+      id <- out$reco[nbid] <= bounds[, 2, drop = TRUE] + tol_rel
       out$reco[nbid][id] <- bounds[, 2, drop = TRUE][id]
 
-      id <- out$reco[nbid] >=
-        bounds[, 3, drop = TRUE] - sqrt(.Machine$double.eps)
+      id <- out$reco[nbid] >= bounds[, 3, drop = TRUE] - tol_rel
       out$reco[nbid][id] <- bounds[, 3, drop = TRUE][id]
     }
 
@@ -353,7 +359,7 @@ reco.proj_osqp <- function(
   # Point reconciled forecasts
   reco[id, ] <- do.call("rbind", osqp_step[, "reco"])
   if (!is.null(nn)) {
-    reco[which(reco <= sqrt(.Machine$double.eps))] <- 0
+    reco[which(reco <= tol_rel)] <- 0
   }
 
   class(reco) <- setdiff(class(reco), "proj_osqp")
@@ -382,6 +388,7 @@ reco.strc_osqp <- function(
   reco = NULL,
   settings = NULL,
   immutable = NULL,
+  tol_rel = NULL,
   ...
 ) {
   # check input
@@ -409,8 +416,12 @@ reco.strc_osqp <- function(
     id_nn[bts] <- 1
   }
 
+  if (is.null(tol_rel)) {
+    tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
+  }
+
   if (!is.null(nn) & !is.null(reco)) {
-    id <- which(rowSums(reco < (-sqrt(.Machine$double.eps))) != 0)
+    id <- which(rowSums(reco < (-tol_rel)) != 0)
     if (!is.null(bounds)) {
       id_b <- which(apply(reco, 1, function(x) {
         all(bounds[, 1] <= x) & all(bounds[, 2] >= x)
@@ -527,12 +538,10 @@ reco.strc_osqp <- function(
 
     if (!is.null(bounds)) {
       nbid <- bounds[, 1, drop = TRUE]
-      id <- out$reco[nbid] <=
-        bounds[, 2, drop = TRUE] + sqrt(.Machine$double.eps)
+      id <- out$reco[nbid] <= bounds[, 2, drop = TRUE] + tol_rel
       out$reco[nbid][id] <- bounds[, 2, drop = TRUE][id]
 
-      id <- out$reco[nbid] >=
-        bounds[, 3, drop = TRUE] - sqrt(.Machine$double.eps)
+      id <- out$reco[nbid] >= bounds[, 3, drop = TRUE] - tol_rel
       out$reco[nbid][id] <- bounds[, 3, drop = TRUE][id]
     }
 
@@ -552,7 +561,7 @@ reco.strc_osqp <- function(
   # Point reconciled forecasts
   reco[id, ] <- do.call("rbind", osqp_step[, "reco"])
   if (!is.null(nn)) {
-    reco[which(reco <= sqrt(.Machine$double.eps))] <- 0
+    reco[which(reco <= tol_rel)] <- 0
   }
 
   class(reco) <- setdiff(class(reco), "strc_osqp")
@@ -578,6 +587,7 @@ reco.sntz <- function(
   cov_mat,
   id_nn = NULL,
   settings = NULL,
+  tol_rel = NULL,
   ...
 ) {
   # Check input
@@ -602,6 +612,10 @@ reco.sntz <- function(
     )
   }
 
+  if (is.null(tol_rel)) {
+    tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
+  }
+
   if (is.null(id_nn)) {
     bts <- find_bts(strc_mat)
     id_nn <- rep(0, NCOL(reco))
@@ -618,7 +632,7 @@ reco.sntz <- function(
   }
 
   if (is.null(settings$tol)) {
-    tol <- sqrt(.Machine$double.eps)
+    tol <- tol_rel
   } else {
     tol <- settings$tol
   }
@@ -989,6 +1003,7 @@ reco.nfca <- function(
   reco = NULL,
   settings = NULL,
   immutable = NULL,
+  tol_rel = NULL,
   ...
 ) {
   # Check input
@@ -999,10 +1014,10 @@ reco.nfca <- function(
     )
   }
 
-  tol <- settings$tol
-  if (is.null(tol)) {
-    tol <- sqrt(.Machine$double.eps)
+  if (is.null(tol_rel)) {
+    tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
   }
+  tol <- if (is.null(settings$tol)) tol_rel else settings$tol
 
   itmax <- settings$itmax
   if (is.null(itmax)) {
@@ -1026,11 +1041,11 @@ reco.nfca <- function(
     return(reco)
   }
 
-  rowid <- which(rowSums(reco < (-sqrt(.Machine$double.eps))) != 0)
+  rowid <- which(rowSums(reco < (-tol_rel)) != 0)
   nfca_step <- apply(reco[rowid, , drop = FALSE], 1, function(x) {
     start <- Sys.time()
     for (i in 1:itmax) {
-      x[x < sqrt(.Machine$double.eps)] <- 0
+      x[x < tol_rel] <- 0
       if (approach == "strc") {
         x <- reco.strc(base = rbind(x), strc_mat = strc_mat, cov_mat = cov_mat)
       } else {
@@ -1047,7 +1062,7 @@ reco.nfca <- function(
     }
 
     if (flag == 1) {
-      x[x <= sqrt(.Machine$double.eps)] <- 0
+      x[x <= tol_rel] <- 0
       if (i == itmax) {
         flag <- 2
       }
@@ -1091,6 +1106,7 @@ reco.nnic <- function(
   reco = NULL,
   settings = NULL,
   immutable = NULL,
+  tol_rel = NULL,
   ...
 ) {
   # Check input
@@ -1101,10 +1117,10 @@ reco.nnic <- function(
     )
   }
 
-  tol <- settings$tol
-  if (is.null(tol)) {
-    tol <- sqrt(.Machine$double.eps)
+  if (is.null(tol_rel)) {
+    tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
   }
+  tol <- if (is.null(settings$tol)) tol_rel else settings$tol
 
   itmax <- settings$itmax
   if (is.null(itmax)) {
@@ -1142,7 +1158,7 @@ reco.nnic <- function(
   }
 
   if (all(reco > -tol)) {
-    reco[reco <= sqrt(.Machine$double.eps)] <- 0
+    reco[reco <= tol_rel] <- 0
     return(reco)
   }
 
@@ -1257,6 +1273,7 @@ reco.bpv <- function(
   settings = NULL,
   immutable = NULL,
   approach = "proj",
+  tol_rel = NULL,
   ...
 ) {
   if (!is.null(immutable)) {
@@ -1292,12 +1309,15 @@ reco.bpv <- function(
   #controls
   nb <- NCOL(strc_mat)
 
-  tol <- ifelse(is.null(settings$tol), sqrt(.Machine$double.eps), settings$tol)
+  if (is.null(tol_rel)) {
+    tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
+  }
+  tol <- if (is.null(settings$tol)) tol_rel else settings$tol
   pbar <- ifelse(is.null(settings$pbar), 10, settings$pbar)
   ptype <- ifelse(is.null(settings$ptype), "fixed", settings$ptype)
   gtol <- ifelse(
     is.null(settings$gtol),
-    sqrt(.Machine$double.eps),
+    tol_rel,
     settings$gtol
   )
   itmax <- ifelse(is.null(settings$itmax), 100, settings$itmax)
@@ -1413,7 +1433,7 @@ reco.bpv <- function(
     }
 
     if (flag == 1) {
-      rfc[rfc <= sqrt(.Machine$double.eps)] <- 0
+      rfc[rfc <= tol_rel] <- 0
       if (i == itmax) {
         flag <- 2
       }
@@ -1438,7 +1458,15 @@ reco.bpv <- function(
   return(reco)
 }
 
-reco.sftb <- function(base, reco, strc_mat, id_nn = NULL, bounds = NULL, ...) {
+reco.sftb <- function(
+  base,
+  reco,
+  strc_mat,
+  id_nn = NULL,
+  bounds = NULL,
+  tol_rel = NULL,
+  ...
+) {
   # Check input
   if (missing(strc_mat)) {
     cli_abort(
@@ -1453,6 +1481,10 @@ reco.sftb <- function(base, reco, strc_mat, id_nn = NULL, bounds = NULL, ...) {
 
   if (is.null(bounds)) {
     return(reco)
+  }
+
+  if (is.null(tol_rel)) {
+    tol_rel <- sqrt(.Machine$double.eps) * min(max(abs(base), na.rm = TRUE), 1)
   }
 
   if (is.null(strc_mat)) {
@@ -1473,10 +1505,10 @@ reco.sftb <- function(base, reco, strc_mat, id_nn = NULL, bounds = NULL, ...) {
 
   nbid <- bounds[, 1, drop = TRUE]
   reco <- t(apply(reco, 1, function(x) {
-    id <- x[nbid] <= bounds[, 2, drop = TRUE] + sqrt(.Machine$double.eps)
+    id <- x[nbid] <= bounds[, 2, drop = TRUE] + tol_rel
     x[nbid][id] <- bounds[, 2, drop = TRUE][id]
 
-    id <- x[nbid] >= bounds[, 3, drop = TRUE] - sqrt(.Machine$double.eps)
+    id <- x[nbid] >= bounds[, 3, drop = TRUE] - tol_rel
     x[nbid][id] <- bounds[, 3, drop = TRUE][id]
     x
   }))
